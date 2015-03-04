@@ -1,0 +1,57 @@
+<resources>
+
+    <string name="app_name">Hangouyou</string>
+    <!-- Alert Term -->
+    <string name="term_alert">알림</string>
+    <string name="term_ok">확인</string>
+    <string name="term_cancel">취소</string>
+
+    <!-- Guide Term -->
+    <string name="term_skip">넘어가기</string>
+
+    <!-- MainMenu Term -->
+    <string name="term_recommand_seoul">추천서울</string>
+    <string name="term_famous_place">여행명소</string>
+    <string name="term_travel_schedule">여행일정</string>
+    <string name="term_shopping_mall">쇼핑몰</string>
+    <string name="term_map">지도</string>
+    <string name="term_subway">지하철</string>
+    <string name="term_photolog">포토로그</string>
+    <string name="term_ticket_and_coupon">"티켓 / 쿠폰"</string>
+    <string name="term_reservation_hotel">호텔예약</string>
+    <string name="term_home">홈</string>
+    <string name="term_my_page">마이페이지</string>
+    <string name="term_register_photolog">포토로그 등록</string>
+    <string name="term_wishlist">위시리스트</string>
+    <string name="term_search">검색</string>
+
+    <!-- Mypage Term -->
+    <string name="term_setting">설정</string>
+    <string name="term_my_schedule">내일정</string>
+    <string name="term_my_place">내장소</string>
+    <string name="term_my_ticket_coupon">"티켓/쿠폰"</string>
+    <string name="term_my_photolog">내포토로그</string>
+    <string name="term_my_bookmark">북마크</string>
+    <string name="term_my_order_cart">"구매내역\n\장바구니"</string>
+    <string name="term_profile">프로필</string>
+    <string name="term_save">저장</string>
+    <string name="term_logout">로그아웃</string>
+    <string name="term_sync">동기화</string>
+    <string name="term_sync_only_wifi">WIFI에서만 동기화 처리</string>
+    <string name="term_setting_notification">알림설정</string>
+    <string name="term_about">About</string>
+    <string name="term_version_info">버전 정보</string>
+    <string name="term_rating_app">앱 평가하기</string>
+    <string name="term_notice">공지사항</string>
+    <string name="term_current_version">"현재버전 : "</string>
+    <string name="term_update">업데이트하러 가기</string>
+    <string name="term_agreement">이용약관</string>
+    <string name="term_private_agreement">개인정보 약관</string>
+    <string name="term_gps_info_agreement">위치정보 약관</string>
+
+    <!-- Message - Intro -->
+    <string name="message_alert_lte_mode">3G/LTE 모드에서 서비스를 이용할 경우, 데이터 요금이 청구 될 수 있습니다. 계속 진행하시겠습니까?</string>
+    <string name="message_alert_download_seoul_info">서울 정보를 확인중입니다.\n잠시만 기다려주세요.</string>
+    <string name="message_alert_allow_notification">"'Hangouyou'에서 알림을 보내고자 합니다. 허용하시겠습니까?"</string>
+
+</resources>
