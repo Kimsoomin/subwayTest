@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.activities.sub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,6 +31,8 @@ public class MyPageSettingActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_setting);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     editName = (EditText) findViewById(R.id.edit_name);
     btnNameSave = (Button) findViewById(R.id.save_my_name);
@@ -64,6 +67,15 @@ public class MyPageSettingActivity extends ActionBarActivity
     containerVersionInfo.setOnClickListener(containerClickListener);
   }
   
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    if (item.getItemId() == android.R.id.home)
+      finish();
+    return super.onOptionsItemSelected(item);
+  }
+  
   private OnClickListener nameSaveListener = new OnClickListener()
   {
     @Override
@@ -88,7 +100,7 @@ public class MyPageSettingActivity extends ActionBarActivity
       }
       else if (v.getId() == containerNotice.getId())
       {
-        Toast.makeText(MyPageSettingActivity.this, "준비중입니다", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(MyPageSettingActivity.this, NoticeActivity.class));
       }
       
     }

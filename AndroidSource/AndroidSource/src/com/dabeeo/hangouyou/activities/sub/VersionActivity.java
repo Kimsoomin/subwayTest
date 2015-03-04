@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,6 +27,8 @@ public class VersionActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_version);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     textVersion = (TextView) findViewById(R.id.text_version);
     btnUpdate = (Button) findViewById(R.id.btn_update);
@@ -37,7 +40,7 @@ public class VersionActivity extends ActionBarActivity
     {
       PackageManager manager = this.getPackageManager();
       PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-      textVersion.setText(info.versionName);
+      textVersion.setText(getString(R.string.term_current_version) + info.versionName);
     }
     catch (Exception e)
     {
@@ -48,6 +51,15 @@ public class VersionActivity extends ActionBarActivity
     containerAgreement.setOnClickListener(clickListener);
     containerPrivateAgreement.setOnClickListener(clickListener);
     containerGpsInfoAgreement.setOnClickListener(clickListener);
+  }
+  
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    if (item.getItemId() == android.R.id.home)
+      finish();
+    return super.onOptionsItemSelected(item);
   }
   
   private OnClickListener clickListener = new OnClickListener()
