@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.activities.sub.MyPageSettingActivity;
 
 /**
@@ -36,8 +37,11 @@ import com.dabeeo.hangouyou.activities.sub.MyPageSettingActivity;
  */
 public class MyPageFragment extends Fragment
 {
+  private Activity activity;
   private View view;
+  @SuppressWarnings("unused")
   private ImageView imageCover, imageProfile;
+  @SuppressWarnings("unused")
   private TextView textName;
   
   private Button btnSetting;
@@ -57,6 +61,7 @@ public class MyPageFragment extends Fragment
   public void onAttach(final Activity activity)
   {
     super.onAttach(activity);
+    this.activity = activity;
     if (view == null)
       view = LayoutInflater.from(activity).inflate(R.layout.fragment_my_page, null, false);
     
@@ -97,7 +102,7 @@ public class MyPageFragment extends Fragment
     {
       if (v.getId() == btnMySchedule.getId())
       {
-        
+        startActivity(new Intent(activity, MySchedulesActivity.class));
       }
       else if (v.getId() == btnMyPlace.getId())
       {
