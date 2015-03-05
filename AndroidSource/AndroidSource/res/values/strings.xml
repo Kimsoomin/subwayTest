@@ -51,7 +51,7 @@
 
     <!-- MyPage's sub activities term -->
     <string name="term_month">"日"</string>
-
+    <string name="term_product_info">상품 정보</string>
     <!-- Menus term -->
     <string name="term_edit">편집</string>
     <string name="term_close">닫기</string>

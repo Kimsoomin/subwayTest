@@ -1,5 +1,6 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,6 +38,8 @@ public class MySchedulesActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_schedule);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     
@@ -47,6 +52,15 @@ public class MySchedulesActivity extends ActionBarActivity
     listView = (ListView) findViewById(R.id.listview);
     adapter = new MySchedulesListAdapter(this);
     listView.setAdapter(adapter);
+    
+    listView.setOnItemClickListener(new OnItemClickListener()
+    {
+      @Override
+      public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+      {
+        startActivity(new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class));
+      }
+    });
     
     listView.setOnScrollListener(new OnScrollListener()
     {

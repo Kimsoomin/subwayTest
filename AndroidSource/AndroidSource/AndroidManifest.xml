@@ -34,6 +34,12 @@
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity"
+            android:label="@string/term_my_schedule"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity"
+            android:label="@string/term_my_schedule"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!-- Sub Activities -->
