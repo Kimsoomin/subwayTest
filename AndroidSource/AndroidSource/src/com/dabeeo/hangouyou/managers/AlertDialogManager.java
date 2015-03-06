@@ -68,7 +68,6 @@ public class AlertDialogManager
       progressDialog.setIndeterminate(false);
       progressDialog.setCancelable(false);
     }
-    
     progressDialog.setMessage(message);
     
     if (!progressDialog.isShowing())

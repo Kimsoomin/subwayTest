@@ -2,6 +2,7 @@ package com.dabeeo.hangouyou;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -66,7 +67,18 @@ public class IntroActivity extends ActionBarActivity
     alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.message_alert_download_seoul_info));
     
     //추후 아랫부분 삭제 후 네트워크 연결
-    checkAllowAlarm();
+    // memory leak warning 제거 
+    Runnable runn = new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        alertManager.hideProgressDialog();
+        checkAllowAlarm();
+      }
+    };
+    Handler handler = new Handler();
+    handler.postDelayed(runn, 3000);
   }
   
   
