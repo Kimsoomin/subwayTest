@@ -3,7 +3,9 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
@@ -49,10 +51,21 @@ public class MyPlaceDetailActivity extends ActionBarActivity
   
   
   @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
+    return true;
+  }
+  
+  
+  @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
-    if (item.getItemId() == android.R.id.home)
+    int id = item.getItemId();
+    if (id == android.R.id.home)
       finish();
+    else if (id == R.id.map)
+      Log.i("MyPlaceDetailActivity.java | onOptionsItemSelected", "|" + "map" + "|");
     return super.onOptionsItemSelected(item);
   }
   
