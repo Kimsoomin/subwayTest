@@ -19,6 +19,7 @@ import com.dabeeo.hangouyou.views.PlaceDetailTitleView;
 public class MyPlaceDetailActivity extends ActionBarActivity
 {
   private ScrollView scrollView;
+//  private LinearLayout container;
   
   private PlaceDetailHeaderView headerView;
   private PlaceDetailTitleView titleView;
@@ -34,6 +35,7 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     scrollView = (ScrollView) findViewById(R.id.scrollview);
+//    container = (LinearLayout) findViewById(R.id.content_container);
     detailTextView = (TextView) findViewById(R.id.text_detail);
     
     headerView = (PlaceDetailHeaderView) findViewById(R.id.header_view);
