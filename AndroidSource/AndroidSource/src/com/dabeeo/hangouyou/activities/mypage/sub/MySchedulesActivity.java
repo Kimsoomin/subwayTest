@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,8 @@ import android.widget.ProgressBar;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.MyScheduleBean;
 import com.dabeeo.hangouyou.controllers.MySchedulesListAdapter;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 
 public class MySchedulesActivity extends ActionBarActivity
 {
@@ -149,18 +152,52 @@ public class MySchedulesActivity extends ActionBarActivity
   
   private OnClickListener deleteBtnClickListener = new OnClickListener()
   {
-    
     @Override
     public void onClick(View v)
     {
+      AlertListener listener;
+      
       if (v.getId() == btnDelete.getId())
       {
-        //Delete 
+        listener = new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            adapter.delete();
+          }
+          
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            
+          }
+        };
       }
       else
       {
-        //DeleteAll
+        listener = new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            adapter.clear();
+            isEditMode = false;
+            displayEditMode();
+          }
+          
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            
+          }
+        };
       }
+      
+      AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
+      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), listener);
     }
   };
   
