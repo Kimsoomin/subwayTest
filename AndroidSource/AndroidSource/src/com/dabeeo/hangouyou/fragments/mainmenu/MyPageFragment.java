@@ -15,11 +15,14 @@
 
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
-import android.annotation.SuppressLint;
+import java.io.File;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +33,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
+import com.dabeeo.hangouyou.activities.sub.LocalPhotoActivity;
 import com.dabeeo.hangouyou.activities.sub.MyPageSettingActivity;
 
 /**
@@ -39,9 +43,7 @@ public class MyPageFragment extends Fragment
 {
   private Activity activity;
   private View view;
-  @SuppressWarnings("unused")
   private ImageView imageCover, imageProfile;
-  @SuppressWarnings("unused")
   private TextView textName;
   
   private Button btnSetting;
@@ -51,22 +53,33 @@ public class MyPageFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    
     return view;
   }
   
   
-  @SuppressLint("InflateParams")
   @Override
   public void onAttach(final Activity activity)
   {
     super.onAttach(activity);
     this.activity = activity;
     if (view == null)
-      view = LayoutInflater.from(activity).inflate(R.layout.fragment_my_page, null, false);
+    {
+      int resId = R.layout.fragment_my_page;
+      view = LayoutInflater.from(activity).inflate(resId, null, false);
+    }
     
     imageCover = (ImageView) view.findViewById(R.id.image_cover);
     imageProfile = (ImageView) view.findViewById(R.id.image_profile);
+    imageProfile.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent intent = new Intent(getActivity(), LocalPhotoActivity.class);
+        intent.putExtra("can_select_multiple", true);
+        startActivityForResult(intent, 1111);
+      }
+    });
     
     textName = (TextView) view.findViewById(R.id.text_name);
     btnSetting = (Button) view.findViewById(R.id.btn_setting);
@@ -93,6 +106,25 @@ public class MyPageFragment extends Fragment
     btnMyPhotoLog.setOnClickListener(menuClickListener);
     btnMyBookmark.setOnClickListener(menuClickListener);
     btnMyOrders.setOnClickListener(menuClickListener);
+  }
+  
+  
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data)
+  {
+    super.onActivityResult(requestCode, resultCode, data);
+    Log.i("MyPageFragment.java | onActivityResult", "|" + "==========" + "|" + resultCode);
+    if (resultCode != Activity.RESULT_OK)
+      return;
+    
+    if (data.hasExtra("photos"))
+    {
+      String[] photos = data.getStringArrayExtra("photos");
+      if (photos.length == 0)
+        return;
+      
+      imageProfile.setImageURI(Uri.fromFile(new File(photos[0])));
+    }
   }
   
   private OnClickListener menuClickListener = new OnClickListener()
@@ -126,5 +158,4 @@ public class MyPageFragment extends Fragment
       }
     }
   };
-  
 }
