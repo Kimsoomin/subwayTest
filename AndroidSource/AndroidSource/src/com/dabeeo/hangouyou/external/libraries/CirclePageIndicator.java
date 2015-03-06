@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.external.libraries;
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.widget.LinearLayout.HORIZONTAL;
 import static android.widget.LinearLayout.VERTICAL;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -19,7 +20,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-
 import com.dabeeo.hangouyou.R;
 
 /**
@@ -325,6 +325,7 @@ public class CirclePageIndicator extends View implements PageIndicator
   }
   
   
+  @SuppressLint("ClickableViewAccessibility")
   public boolean onTouchEvent(android.view.MotionEvent ev)
   {
     if (super.onTouchEvent(ev))
@@ -654,7 +655,6 @@ public class CirclePageIndicator extends View implements PageIndicator
       dest.writeInt(currentPage);
     }
     
-    @SuppressWarnings("UnusedDeclaration")
     public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>()
     {
       @Override

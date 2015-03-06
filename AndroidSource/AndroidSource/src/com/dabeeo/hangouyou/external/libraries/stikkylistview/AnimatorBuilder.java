@@ -1,7 +1,6 @@
 package com.dabeeo.hangouyou.external.libraries.stikkylistview;
 
 import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.Rect;
 import android.view.View;
 
