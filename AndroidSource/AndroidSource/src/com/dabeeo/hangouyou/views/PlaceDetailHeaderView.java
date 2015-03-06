@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 
-public class ScheduleDetailTitleView extends RelativeLayout
+public class PlaceDetailHeaderView extends RelativeLayout
 {
   private Context context;
   
   
-  public ScheduleDetailTitleView(Context context)
+  public PlaceDetailHeaderView(Context context)
   {
     super(context);
     this.context = context;
@@ -23,7 +23,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
-  public ScheduleDetailTitleView(Context context, AttributeSet attrs, int defStyle)
+  public PlaceDetailHeaderView(Context context, AttributeSet attrs, int defStyle)
   {
     super(context, attrs, defStyle);
     this.context = context;
@@ -31,7 +31,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
-  public ScheduleDetailTitleView(Context context, AttributeSet attrs)
+  public PlaceDetailHeaderView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
     this.context = context;
@@ -41,22 +41,14 @@ public class ScheduleDetailTitleView extends RelativeLayout
   
   public void init()
   {
-    int resId = R.layout.view_schedule_detail_title;
+    int resId = R.layout.view_place_detail_header;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
-    @SuppressWarnings("unused")
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    TextView name = (TextView) view.findViewById(R.id.name);
-    TextView time = (TextView) view.findViewById(R.id.time);
-    TextView likeCount = (TextView) view.findViewById(R.id.like_count);
-    TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
+    TextView imageCount = (TextView) view.findViewById(R.id.image_count);
     
     //가데이터
-    name.setText("planb");
-    time.setText("2015.01.01 16:53");
-    likeCount.setText("970");
-    reviewCount.setText("321");
-    
+    imageCount.setText("10");
     addView(view);
   }
 }

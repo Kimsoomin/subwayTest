@@ -17,16 +17,16 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.MyScheduleBean;
-import com.dabeeo.hangouyou.controllers.MySchedulesListAdapter;
+import com.dabeeo.hangouyou.beans.MyPlaceBean;
+import com.dabeeo.hangouyou.controllers.MyPlaceListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 
-public class MySchedulesActivity extends ActionBarActivity
+public class MyPlacesActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private ListView listView;
-  private MySchedulesListAdapter adapter;
+  private MyPlaceListAdapter adapter;
   
   private Button btnDeleteAll, btnDelete;
   private LinearLayout deleteContainer;
@@ -39,7 +39,7 @@ public class MySchedulesActivity extends ActionBarActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my_schedule);
+    setContentView(R.layout.activity_my_place);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
@@ -52,7 +52,7 @@ public class MySchedulesActivity extends ActionBarActivity
     btnDeleteAll.setOnClickListener(deleteBtnClickListener);
     
     listView = (ListView) findViewById(R.id.listview);
-    adapter = new MySchedulesListAdapter(this);
+    adapter = new MyPlaceListAdapter(this);
     listView.setAdapter(adapter);
     
     listView.setOnItemClickListener(new OnItemClickListener()
@@ -60,7 +60,7 @@ public class MySchedulesActivity extends ActionBarActivity
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
       {
-        startActivity(new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class));
+        startActivity(new Intent(MyPlacesActivity.this, MyPlaceDetailActivity.class));
       }
     });
     
@@ -84,27 +84,34 @@ public class MySchedulesActivity extends ActionBarActivity
       }
     });
     
-    loadSchedules();
+    loadPlaces();
   }
   
   
-  private void loadSchedules()
+  private void loadPlaces()
   {
     progressBar.setVisibility(View.VISIBLE);
     
     //테스트 가데이터 
-    MyScheduleBean bean = new MyScheduleBean();
-    bean.title = "서울 2박 3일 여행";
-    bean.month = 3;
-    bean.likeCount = 70;
+    MyPlaceBean bean = new MyPlaceBean();
+    bean.title = "왓슨스";
+    bean.category = "Shopping";
+    bean.likeCount = 7;
     bean.reviewCount = 11;
     adapter.add(bean);
     
-    bean = new MyScheduleBean();
-    bean.title = "명동 쇼핑";
-    bean.month = 1;
-    bean.likeCount = 50;
-    bean.reviewCount = 13;
+    bean = new MyPlaceBean();
+    bean.title = "GS편의점";
+    bean.category = "Shopping";
+    bean.likeCount = 0;
+    bean.reviewCount = 11;
+    adapter.add(bean);
+    
+    bean = new MyPlaceBean();
+    bean.title = "SM Ent.";
+    bean.category = "Culture";
+    bean.likeCount = 150;
+    bean.reviewCount = 11;
     adapter.add(bean);
     
     progressBar.setVisibility(View.GONE);
@@ -195,7 +202,7 @@ public class MySchedulesActivity extends ActionBarActivity
         };
       }
       
-      AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
+      AlertDialogManager alert = new AlertDialogManager(MyPlacesActivity.this);
       alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), listener);
     }
   };

@@ -78,7 +78,7 @@ public class IntroActivity extends ActionBarActivity
       }
     };
     Handler handler = new Handler();
-    handler.postDelayed(runn, 3000);
+    handler.postDelayed(runn, 1000);
   }
   
   

@@ -22,7 +22,6 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyPlacesActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.activities.sub.LocalPhotoActivity;
 import com.dabeeo.hangouyou.activities.sub.MyPageSettingActivity;
@@ -65,7 +65,7 @@ public class MyPageFragment extends Fragment
     if (view == null)
     {
       int resId = R.layout.fragment_my_page;
-      view = LayoutInflater.from(activity).inflate(resId, null, false);
+      view = LayoutInflater.from(activity).inflate(resId, null);
     }
     
     imageCover = (ImageView) view.findViewById(R.id.image_cover);
@@ -76,7 +76,7 @@ public class MyPageFragment extends Fragment
       public void onClick(View arg0)
       {
         Intent intent = new Intent(getActivity(), LocalPhotoActivity.class);
-        intent.putExtra("can_select_multiple", true);
+        intent.putExtra("can_select_multiple", false);
         startActivityForResult(intent, 1111);
       }
     });
@@ -113,7 +113,6 @@ public class MyPageFragment extends Fragment
   public void onActivityResult(int requestCode, int resultCode, Intent data)
   {
     super.onActivityResult(requestCode, resultCode, data);
-    Log.i("MyPageFragment.java | onActivityResult", "|" + "==========" + "|" + resultCode);
     if (resultCode != Activity.RESULT_OK)
       return;
     
@@ -138,7 +137,7 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == btnMyPlace.getId())
       {
-        
+        startActivity(new Intent(activity, MyPlacesActivity.class));
       }
       else if (v.getId() == btnMyTicket.getId())
       {

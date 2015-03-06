@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 
-public class ScheduleDetailTitleView extends RelativeLayout
+public class PlaceDetailTitleView extends RelativeLayout
 {
   private Context context;
   
   
-  public ScheduleDetailTitleView(Context context)
+  public PlaceDetailTitleView(Context context)
   {
     super(context);
     this.context = context;
@@ -23,7 +23,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
-  public ScheduleDetailTitleView(Context context, AttributeSet attrs, int defStyle)
+  public PlaceDetailTitleView(Context context, AttributeSet attrs, int defStyle)
   {
     super(context, attrs, defStyle);
     this.context = context;
@@ -31,7 +31,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
-  public ScheduleDetailTitleView(Context context, AttributeSet attrs)
+  public PlaceDetailTitleView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
     this.context = context;
@@ -41,10 +41,9 @@ public class ScheduleDetailTitleView extends RelativeLayout
   
   public void init()
   {
-    int resId = R.layout.view_schedule_detail_title;
+    int resId = R.layout.view_place_detail_title;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
-    @SuppressWarnings("unused")
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView name = (TextView) view.findViewById(R.id.name);
     TextView time = (TextView) view.findViewById(R.id.time);

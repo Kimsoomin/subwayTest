@@ -1,6 +1,5 @@
 package com.dabeeo.hangouyou.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -40,12 +39,11 @@ public class ScheduleDetailHeaderView extends RelativeLayout
   }
   
   
-  @SuppressLint("InflateParams")
   public void init()
   {
-    View view = LayoutInflater.from(context).inflate(R.layout.view_schedule_detail_header, null);
+    int resId = R.layout.view_schedule_detail_header;
+    View view = LayoutInflater.from(context).inflate(resId, null);
     
-    @SuppressWarnings("unused")
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView month = (TextView) view.findViewById(R.id.month);

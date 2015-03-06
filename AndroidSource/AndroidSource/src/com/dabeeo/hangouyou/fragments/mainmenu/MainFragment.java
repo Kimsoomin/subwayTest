@@ -15,7 +15,6 @@
 
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -45,13 +44,15 @@ public class MainFragment extends Fragment
   }
   
   
-  @SuppressLint("InflateParams")
   @Override
   public void onAttach(final Activity activity)
   {
     super.onAttach(activity);
     if (view == null)
-      view = LayoutInflater.from(activity).inflate(R.layout.fragment_main_menu, null, false);
+    {
+      int resId = R.layout.fragment_main_menu;
+      view = LayoutInflater.from(activity).inflate(resId, null);
+    }
     
     containerRecommandSeoul = (RelativeLayout) view.findViewById(R.id.container_recommand_seoul);
     containerFamousPlace = (RelativeLayout) view.findViewById(R.id.container_famous_place);
