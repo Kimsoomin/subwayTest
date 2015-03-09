@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.MyPlaceBean;
-import com.dabeeo.hangouyou.beans.MyScheduleBean;
 
 public class MyPlaceListAdapter extends BaseAdapter
 {
