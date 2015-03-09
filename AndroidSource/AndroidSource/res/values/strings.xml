@@ -30,9 +30,9 @@
     <string name="term_my_schedule">내 일정</string>
     <string name="term_my_place">내 장소</string>
     <string name="term_my_ticket_coupon">"티켓/쿠폰"</string>
-    <string name="term_my_photolog">내포토로그</string>
+    <string name="term_my_photolog">내 포토로그</string>
     <string name="term_my_bookmark">북마크</string>
-    <string name="term_my_order_cart">"구매내역\n\장바구니"</string>
+    <string name="term_my_order_cart">"구매내역\n/장바구니"</string>
     <string name="term_profile">프로필</string>
     <string name="term_save">저장</string>
     <string name="term_logout">로그아웃</string>
