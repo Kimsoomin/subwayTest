@@ -43,6 +43,7 @@ public class PlaceDetailTitleView extends RelativeLayout
   {
     int resId = R.layout.view_place_detail_title;
     View view = LayoutInflater.from(context).inflate(resId, null);
+    view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView name = (TextView) view.findViewById(R.id.name);
