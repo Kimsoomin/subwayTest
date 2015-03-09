@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.views.PhotoLogDaySeperater;
@@ -14,7 +15,7 @@ import com.dabeeo.hangouyou.views.PhotoLogDayView;
 public class MyPhotoLogDetailActivity extends ActionBarActivity
 {
   private ViewGroup container;
-  
+  private TextView title, likeCount;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -24,6 +25,8 @@ public class MyPhotoLogDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    title = (TextView)findViewById(R.id.title);
+    likeCount = (TextView)findViewById(R.id.like_count);
     container = (ViewGroup) findViewById(R.id.container);
     
     displayContents();
@@ -52,6 +55,9 @@ public class MyPhotoLogDetailActivity extends ActionBarActivity
   
   private void displayContents()
   {
+    title.setText("planB님의 포토로그");
+    likeCount.setText(Integer.toString(99));
+    
     PhotoLogDaySeperater seperater = new PhotoLogDaySeperater(this, 1);
     container.addView(seperater);
     
