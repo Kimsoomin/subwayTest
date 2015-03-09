@@ -39,118 +39,65 @@
             </LinearLayout>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <TextView
                 android:id="@+id/text_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="phone|web" />
 
-            <!--
-                 <LinearLayout
-                android:id="@+id/content_container"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btn_recommend_by_expert"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#0f0"
-                android:gravity="center_horizontal"
-                android:orientation="vertical" />
-            -->
+                android:text="전문가 추천글 보기" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:background="#D77D00"
+                android:padding="8dp"
+                android:text="추천 상품"
+                android:textColor="@android:color/white" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+            <com.dabeeo.hangouyou.views.RecommendProductView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|top"
-                        android:orientation="vertical" >
+            <Button
+                android:id="@+id/btn_more_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="상품 더보기" />
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_launcher" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-                        <TextView
-                            android:id="@+id/product1_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="상품명1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#D77D00"
+                android:padding="8dp"
+                android:text="리뷰(11)"
+                android:textColor="@android:color/white" />
 
-                        <TextView
-                            android:id="@+id/original1_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$9998" />
+            <com.dabeeo.hangouyou.views.PlaceReviewView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                        <TextView
-                            android:id="@+id/discount1_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$887"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        android:gravity="center_horizontal|top"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:layout_width="1dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:background="@android:color/darker_gray" />
-
-                        <Space
-                            android:layout_width="1dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|top"
-                        android:orientation="vertical" >
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_launcher" />
-
-                        <TextView
-                            android:id="@+id/product2_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="상품명2" />
-
-                        <TextView
-                            android:id="@+id/original2_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$1234" />
-
-                        <TextView
-                            android:id="@+id/discount2_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$989078"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_more_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="리뷰 더보기" />
         </LinearLayout>
     </ScrollView>
 
