@@ -29,7 +29,7 @@ public class MyPlaceDetailActivity extends ActionBarActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my_detail_place);
+    setContentView(R.layout.activity_my_place_detail);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     

@@ -18,9 +18,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.MyPhotoLogBean;
-import com.dabeeo.hangouyou.beans.MyPlaceBean;
 import com.dabeeo.hangouyou.controllers.MyPhotoLogListAdapter;
-import com.dabeeo.hangouyou.controllers.MyPlaceListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 
@@ -62,7 +60,7 @@ public class MyPhotoLogMainActivity extends ActionBarActivity
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
       {
-        startActivity(new Intent(MyPhotoLogMainActivity.this, MyPlaceDetailActivity.class));
+        startActivity(new Intent(MyPhotoLogMainActivity.this, MyPhotoLogDetailActivity.class));
       }
     });
     

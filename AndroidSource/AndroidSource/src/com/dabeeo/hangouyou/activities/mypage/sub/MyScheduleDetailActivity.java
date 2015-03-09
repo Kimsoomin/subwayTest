@@ -28,7 +28,7 @@ public class MyScheduleDetailActivity extends ActionBarActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my_detail_schedule);
+    setContentView(R.layout.activity_my_schedule_detail);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
