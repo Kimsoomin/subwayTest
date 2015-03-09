@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 
 public class ImageUtil
 {
@@ -11,7 +12,8 @@ public class ImageUtil
    * 
    * @param context
    * @param path
-   * @return
+   *          /storage/sdcard0/DCIM/100LGDSC/CAM00039.jpg
+   * @return /storage/sdcard0/DCIM/.thumbnails/1425454566357.jpg
    */
   public static String getThumnailPath(Context context, String path)
   {
@@ -42,6 +44,9 @@ public class ImageUtil
     {
       e.printStackTrace();
     }
+    
+    if (TextUtils.isEmpty(result))
+      result = path;
     
     return result;
   }

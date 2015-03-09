@@ -8,7 +8,6 @@ import java.util.Comparator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +41,6 @@ public class LocalPhotoAdapter extends BaseAdapter
     LocalPhotoBean bean = new LocalPhotoBean();
     bean.path = path;
     bean.thumbnailPath = ImageUtil.getThumnailPath(context, path);
-    if (TextUtils.isEmpty(bean.thumbnailPath))
-      bean.thumbnailPath = bean.path;
     
     if (index == -1)
       items.add(bean);
