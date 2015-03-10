@@ -66,6 +66,11 @@
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mypage.sub.NewPhotoLogActivity"
+            android:label="@string/term_my_photolog"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <!-- Sub Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.sub.GuideActivity"

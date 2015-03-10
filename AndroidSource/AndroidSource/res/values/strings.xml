@@ -52,6 +52,10 @@
     <!-- MyPage's sub activities term -->
     <string name="term_month">"日"</string>
     <string name="term_product_info">상품 정보</string>
+    <string name="term_publish">공개</string>
+    <string name="term_insert_title_here">제목을 입력해주세요.</string>
+    <string name="term_memo">메모</string>
+    <string name="term_change_location">위치 변경</string>
     <!-- Menus term -->
     <string name="term_edit">편집</string>
     <string name="term_close">닫기</string>

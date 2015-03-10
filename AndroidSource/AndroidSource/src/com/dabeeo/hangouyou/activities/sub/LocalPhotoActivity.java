@@ -33,6 +33,8 @@ public class LocalPhotoActivity extends Activity
   private String rootPath;
   private Spinner directorySpinner;
   private String takedPhotoPath;
+  private boolean isCallFromCustomView = false;
+  private String callbackKeyCallForCustomView;
   
   
   @Override
@@ -47,6 +49,10 @@ public class LocalPhotoActivity extends Activity
     findViewById(R.id.btn_ok).setOnClickListener(clickListener);
     
     rootPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/";
+    
+    isCallFromCustomView = getIntent().getBooleanExtra("is_call_from_custom_view", false);
+    if (isCallFromCustomView)
+      callbackKeyCallForCustomView = getIntent().getStringExtra("callback_key_for_custom_view");
     
     photoAdapter = new LocalPhotoAdapter(getApplicationContext(), getIntent().getBooleanExtra("can_select_multiple", false));
     GridView grid = (GridView) findViewById(R.id.gridView);
@@ -162,7 +168,16 @@ public class LocalPhotoActivity extends Activity
       {
         Intent intent = new Intent();
         intent.putExtra("photos", photoAdapter.selectedPhotos());
-        setResult(RESULT_OK, intent);
+        
+        if (isCallFromCustomView)
+        {
+          intent.setAction(callbackKeyCallForCustomView);
+          sendBroadcast(intent);
+        }
+        else
+        {
+          setResult(RESULT_OK, intent);
+        }
       }
       
       finish();
