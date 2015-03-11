@@ -63,12 +63,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/app_button"
                 android:text="@string/term_publish" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/app_button"
                 android:text="@string/term_edit" />
         </LinearLayout>
     </LinearLayout>

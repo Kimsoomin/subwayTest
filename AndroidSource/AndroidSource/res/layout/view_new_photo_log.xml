@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="@drawable/list_item_background"
             android:contentDescription="@null"
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_menu_add" />
@@ -31,6 +32,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/app_button"
         android:gravity="center"
         android:text="@string/term_change_location" />
 
