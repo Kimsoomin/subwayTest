@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ProductBean;
@@ -76,7 +76,7 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     if (id == android.R.id.home)
       finish();
     else if (id == R.id.map)
-      Log.i("MyPlaceDetailActivity.java | onOptionsItemSelected", "|" + "map" + "|");
+      Toast.makeText(this, "준비 중입니다", Toast.LENGTH_LONG).show();
     return super.onOptionsItemSelected(item);
   }
   

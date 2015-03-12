@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogMainActivity;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogListActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
@@ -146,7 +146,7 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == btnMyPhotoLog.getId())
       {
-        startActivity(new Intent(activity, MyPhotoLogMainActivity.class));
+        startActivity(new Intent(activity, MyPhotoLogListActivity.class));
       }
       else if (v.getId() == btnMyBookmark.getId())
       {

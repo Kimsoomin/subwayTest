@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
-import com.dabeeo.hangouyou.activities.mypage.sub.NewPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
+import com.dabeeo.hangouyou.activities.sub.NewPhotoLogActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.MyPageFragment;
 import com.dabeeo.hangouyou.managers.PreferenceManager;

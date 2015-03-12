@@ -17,12 +17,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.sub.NewPhotoLogActivity;
 import com.dabeeo.hangouyou.beans.MyPhotoLogBean;
 import com.dabeeo.hangouyou.controllers.MyPhotoLogListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 
-public class MyPhotoLogMainActivity extends ActionBarActivity
+public class MyPhotoLogListActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private ListView listView;
@@ -33,6 +34,8 @@ public class MyPhotoLogMainActivity extends ActionBarActivity
   
   private MenuItem editMenuItem, closeMenuItem;
   private boolean isEditMode = false;
+  
+  private Button btnRegister;
   
   
   @Override
@@ -47,6 +50,7 @@ public class MyPhotoLogMainActivity extends ActionBarActivity
     
     deleteContainer = (LinearLayout) findViewById(R.id.container_delete);
     btnDelete = (Button) findViewById(R.id.btn_delete);
+    btnRegister = (Button) findViewById(R.id.btn_register_photolog);
     btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
     btnDelete.setOnClickListener(deleteBtnClickListener);
     btnDeleteAll.setOnClickListener(deleteBtnClickListener);
@@ -60,10 +64,9 @@ public class MyPhotoLogMainActivity extends ActionBarActivity
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
       {
-        startActivity(new Intent(MyPhotoLogMainActivity.this, MyPhotoLogDetailActivity.class));
+        startActivity(new Intent(MyPhotoLogListActivity.this, MyPhotoLogDetailActivity.class));
       }
     });
-    
     listView.setOnScrollListener(new OnScrollListener()
     {
       @Override
@@ -84,6 +87,14 @@ public class MyPhotoLogMainActivity extends ActionBarActivity
       }
     });
     
+    btnRegister.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        startActivity(new Intent(MyPhotoLogListActivity.this, NewPhotoLogActivity.class));
+      }
+    });
     loadPlaces();
   }
   
@@ -205,7 +216,7 @@ public class MyPhotoLogMainActivity extends ActionBarActivity
         };
       }
       
-      AlertDialogManager alert = new AlertDialogManager(MyPhotoLogMainActivity.this);
+      AlertDialogManager alert = new AlertDialogManager(MyPhotoLogListActivity.this);
       alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), listener);
     }
   };

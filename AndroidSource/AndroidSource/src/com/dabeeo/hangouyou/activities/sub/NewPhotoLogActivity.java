@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.activities.mypage.sub;
+package com.dabeeo.hangouyou.activities.sub;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
