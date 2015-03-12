@@ -1,5 +1,6 @@
 package com.dabeeo.hangouyou.activities.sub;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -73,15 +74,21 @@ public class VersionActivity extends ActionBarActivity
       }
       else if (v.getId() == containerAgreement.getId())
       {
-        Toast.makeText(VersionActivity.this, "준비 중입니다", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(VersionActivity.this, AgreementActivity.class);
+        i.putExtra("type", AgreementActivity.TYPE_AGREEMENT);
+        startActivity(i);
       }
       else if (v.getId() == containerPrivateAgreement.getId())
       {
-        Toast.makeText(VersionActivity.this, "준비 중입니다", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(VersionActivity.this, AgreementActivity.class);
+        i.putExtra("type", AgreementActivity.TYPE_AGREEMENT_PRIVATE);
+        startActivity(i);
       }
       else if (v.getId() == containerGpsInfoAgreement.getId())
       {
-        Toast.makeText(VersionActivity.this, "준비 중입니다", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(VersionActivity.this, AgreementActivity.class);
+        i.putExtra("type", AgreementActivity.TYPE_AGREEMENT_GPS);
+        startActivity(i);
       }
     }
   };
