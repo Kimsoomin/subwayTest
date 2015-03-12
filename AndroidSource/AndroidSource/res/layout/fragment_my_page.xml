@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -30,12 +31,14 @@
                 android:gravity="center"
                 android:orientation="vertical" >
 
-                <ImageView
+                <com.dabeeo.hangouyou.external.libraries.RoundedImageView
                     android:id="@+id/image_profile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
                     android:background="@drawable/shape_circle_button_pressed"
-                    android:contentDescription="@null" />
+                    app:riv_corner_radius="45dp" />
 
                 <TextView
                     android:id="@+id/text_name"

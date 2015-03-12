@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -169,18 +168,14 @@ public class PhotoSelectActivity extends Activity
       {
         Intent intent = new Intent();
         intent.putExtra("photos", photoAdapter.selectedPhotos());
-        
         if (isCallFromCustomView)
         {
           intent.setAction(callbackKeyCallForCustomView);
           sendBroadcast(intent);
         }
         else
-        {
           setResult(RESULT_OK, intent);
-        }
       }
-      
       finish();
     }
   };

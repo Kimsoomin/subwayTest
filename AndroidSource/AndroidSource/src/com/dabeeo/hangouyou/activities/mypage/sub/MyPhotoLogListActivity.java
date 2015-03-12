@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.sub.NewPhotoLogActivity;
 import com.dabeeo.hangouyou.beans.MyPhotoLogBean;
 import com.dabeeo.hangouyou.controllers.MyPhotoLogListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;

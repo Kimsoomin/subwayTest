@@ -50,6 +50,8 @@
     <string name="term_gps_info_agreement">위치정보 약관</string>
 
     <!-- MyPage's sub activities term -->
+    <string name="term_change_background">배경화면 변경</string>
+    <string name="term_change_profile">프로필사진 변경</string>
     <string name="term_month">"日"</string>
     <string name="term_product_info">상품 정보</string>
     <string name="term_publish">공개</string>
