@@ -22,15 +22,15 @@
             android:layout_height="wrap_content"
             android:hint="@string/term_insert_title_here" />
 
-        <com.dabeeo.hangouyou.views.NewPhotoLogView
+        <com.dabeeo.hangouyou.views.photolog.NewPhotoLogView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.dabeeo.hangouyou.views.NewPhotoLogView
+        <com.dabeeo.hangouyou.views.photolog.NewPhotoLogView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.dabeeo.hangouyou.views.NewPhotoLogView
+        <com.dabeeo.hangouyou.views.photolog.NewPhotoLogView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

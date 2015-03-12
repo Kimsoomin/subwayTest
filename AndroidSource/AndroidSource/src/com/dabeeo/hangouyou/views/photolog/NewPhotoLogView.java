@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.views;
+package com.dabeeo.hangouyou.views.photolog;
 
 import java.io.File;
 
@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.sub.LocalPhotoActivity;
+import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
 
 public class NewPhotoLogView extends LinearLayout
 {
@@ -68,7 +68,7 @@ public class NewPhotoLogView extends LinearLayout
       IntentFilter filter = new IntentFilter(this.toString());
       context.registerReceiver(receiver, filter);
       
-      Intent intent = new Intent(context, LocalPhotoActivity.class);
+      Intent intent = new Intent(context, PhotoSelectActivity.class);
       intent.putExtra("is_call_from_custom_view", true);
       intent.putExtra("callback_key_for_custom_view", this.toString());
       

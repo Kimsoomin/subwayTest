@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mypage.sub.PlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 
 public class ScheduleView extends RelativeLayout
 {
@@ -44,7 +44,7 @@ public class ScheduleView extends RelativeLayout
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(context, PlaceDetailActivity.class);
+        Intent i = new Intent(context, MyPlaceDetailActivity.class);
         context.startActivity(i);
       }
     });

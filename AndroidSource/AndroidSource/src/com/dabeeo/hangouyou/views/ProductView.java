@@ -10,20 +10,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.ProductBean;
 
 public class ProductView extends RelativeLayout
 {
   private Context context;
+  private ProductBean bean;
   
   
   public ProductView(Context context)
   {
     super(context);
     this.context = context;
+  }
+  
+  
+  public void setBean(ProductBean bean)
+  {
+    this.bean = bean;
     init();
   }
   
   
+  @SuppressWarnings("unused")
   public void init()
   {
     int resId = R.layout.view_product;
@@ -39,8 +48,15 @@ public class ProductView extends RelativeLayout
     title.setText("수분크림");
     originalPrice.setText("¥ 150.00");
     discountPrice.setText("¥ 93.00");
-    
     originalPrice.setPaintFlags(originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    
+    if (bean != null)
+    {
+      title.setText(bean.title);
+      originalPrice.setText("¥ " + bean.originalCount);
+      discountPrice.setText("¥ " + bean.discountCount);
+      originalPrice.setPaintFlags(originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    }
     
     btnWishList.setOnClickListener(new OnClickListener()
     {

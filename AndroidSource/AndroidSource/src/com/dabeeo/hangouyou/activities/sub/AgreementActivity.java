@@ -2,6 +2,7 @@ package com.dabeeo.hangouyou.activities.sub;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -20,6 +21,8 @@ public class AgreementActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_agreement);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     type = getIntent().getStringExtra("type");
     
@@ -31,5 +34,13 @@ public class AgreementActivity extends ActionBarActivity
       setTitle(getString(R.string.term_gps_info_agreement));
     
     content = (TextView) findViewById(R.id.content);
+  }
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    if (item.getItemId() == android.R.id.home)
+      finish();
+    return super.onOptionsItemSelected(item);
   }
 }

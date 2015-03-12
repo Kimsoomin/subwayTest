@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.views;
+package com.dabeeo.hangouyou.views.photolog;
 
 import android.content.Context;
 import android.view.LayoutInflater;

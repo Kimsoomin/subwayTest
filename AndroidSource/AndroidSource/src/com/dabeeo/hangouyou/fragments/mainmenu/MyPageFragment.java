@@ -34,7 +34,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogMainActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
-import com.dabeeo.hangouyou.activities.sub.LocalPhotoActivity;
+import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
 import com.dabeeo.hangouyou.activities.sub.MyPageSettingActivity;
 
 /**
@@ -76,7 +76,7 @@ public class MyPageFragment extends Fragment
       @Override
       public void onClick(View arg0)
       {
-        Intent intent = new Intent(getActivity(), LocalPhotoActivity.class);
+        Intent intent = new Intent(getActivity(), PhotoSelectActivity.class);
         intent.putExtra("can_select_multiple", false);
         startActivityForResult(intent, 1111);
       }

@@ -9,32 +9,38 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.ReviewBean;
 
-public class PlaceReviewView extends RelativeLayout
+public class ReviewView extends RelativeLayout
 {
   private Context context;
+  private ReviewBean bean;
   
   
-  public PlaceReviewView(Context context)
+  public ReviewView(Context context)
   {
     super(context);
     this.context = context;
-    init();
   }
   
   
-  public PlaceReviewView(Context context, AttributeSet attrs, int defStyle)
+  public ReviewView(Context context, AttributeSet attrs, int defStyle)
   {
     super(context, attrs, defStyle);
-    this.context = context; 
-    init();
+    this.context = context;
   }
   
   
-  public PlaceReviewView(Context context, AttributeSet attrs)
+  public ReviewView(Context context, AttributeSet attrs)
   {
     super(context, attrs);
     this.context = context;
+  }
+  
+  
+  public void setBean(ReviewBean bean)
+  {
+    this.bean = bean;
     init();
   }
   
@@ -48,10 +54,16 @@ public class PlaceReviewView extends RelativeLayout
     ImageView icon = (ImageView) view.findViewById(R.id.icon);
     TextView name = (TextView) view.findViewById(R.id.name);
     TextView time = (TextView) view.findViewById(R.id.time);
+    TextView content = (TextView) view.findViewById(R.id.content);
     
     name.setText("planb");
     time.setText("2015.01.01 16:53");
     
+    if (bean != null)
+    {
+      name.setText(bean.userName);
+      content.setText(bean.content);
+    }
     addView(view);
   }
 }

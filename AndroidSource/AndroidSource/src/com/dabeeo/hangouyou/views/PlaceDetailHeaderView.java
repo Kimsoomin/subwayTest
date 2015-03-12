@@ -44,6 +44,7 @@ public class PlaceDetailHeaderView extends RelativeLayout
     int resId = R.layout.view_place_detail_header;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
+    @SuppressWarnings("unused")
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView imageCount = (TextView) view.findViewById(R.id.image_count);
     

@@ -8,13 +8,18 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.ProductBean;
+import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.views.PlaceDetailHeaderView;
 import com.dabeeo.hangouyou.views.PlaceDetailTitleView;
+import com.dabeeo.hangouyou.views.ProductView;
+import com.dabeeo.hangouyou.views.ReviewView;
 
 public class MyPlaceDetailActivity extends ActionBarActivity
 {
@@ -22,7 +27,10 @@ public class MyPlaceDetailActivity extends ActionBarActivity
   
   private PlaceDetailHeaderView headerView;
   private PlaceDetailTitleView titleView;
-  private TextView detailTextView;
+  private TextView textDetail;
+  private TextView textRate;
+  
+  private LinearLayout containerProduct, containerReview;
   
   
   @Override
@@ -34,7 +42,10 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     scrollView = (ScrollView) findViewById(R.id.scrollview);
-    detailTextView = (TextView) findViewById(R.id.text_detail);
+    textDetail = (TextView) findViewById(R.id.text_detail);
+    textRate = (TextView) findViewById(R.id.text_rate);
+    containerProduct = (LinearLayout) findViewById(R.id.container_product);
+    containerReview = (LinearLayout) findViewById(R.id.container_review);
     
     headerView = (PlaceDetailHeaderView) findViewById(R.id.header_view);
     titleView = (PlaceDetailTitleView) findViewById(R.id.title_view);
@@ -72,10 +83,36 @@ public class MyPlaceDetailActivity extends ActionBarActivity
   
   private void displayContentData()
   {
-    detailTextView.setText("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+    setTitle("왓슨스");
+    textRate.setText("5.0");
+    textDetail.setText("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         + "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         + "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
         + "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." + "\n\n주소\n161-1, gangnam-gu, seoul, korea\n\nTel\n+82-2-376-1234"
         + "\n\nhomepage\nwww.dabeeo.com");
+    
+    containerProduct.removeAllViews();
+    ProductView productView = new ProductView(MyPlaceDetailActivity.this);
+    ProductBean bean = new ProductBean();
+    bean.title = "XXX 수분크림";
+    bean.originalCount = 150;
+    bean.discountCount = 93;
+    productView.setBean(bean);
+    containerProduct.addView(productView);
+    
+    containerReview.removeAllViews();
+    ReviewView reviewView = new ReviewView(MyPlaceDetailActivity.this);
+    ReviewBean reviewBean = new ReviewBean();
+    reviewBean.userName = "planB";
+    reviewBean.content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do";
+    reviewView.setBean(reviewBean);
+    containerReview.addView(reviewView);
+    
+    reviewView = new ReviewView(MyPlaceDetailActivity.this);
+    reviewBean = new ReviewBean();
+    reviewBean.userName = "planB";
+    reviewBean.content = "좋네요!";
+    reviewView.setBean(reviewBean);
+    containerReview.addView(reviewView);
   }
 }

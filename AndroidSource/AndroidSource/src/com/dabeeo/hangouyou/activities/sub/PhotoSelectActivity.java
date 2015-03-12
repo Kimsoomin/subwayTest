@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,7 +28,7 @@ import android.widget.Spinner;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.controllers.LocalPhotoAdapter;
 
-public class LocalPhotoActivity extends Activity
+public class PhotoSelectActivity extends Activity
 {
   private LocalPhotoAdapter photoAdapter;
   private String rootPath;

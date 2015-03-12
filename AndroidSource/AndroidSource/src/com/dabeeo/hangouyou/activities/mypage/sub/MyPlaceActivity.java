@@ -19,6 +19,7 @@ import com.dabeeo.hangouyou.controllers.MyPlaceViewPagerAdapter;
 @SuppressWarnings("deprecation")
 public class MyPlaceActivity extends ActionBarActivity implements TabListener
 {
+  @SuppressWarnings("unused")
   private ProgressBar progressBar;
   private MenuItem editMenuItem, closeMenuItem;
   private ViewPager viewPager;

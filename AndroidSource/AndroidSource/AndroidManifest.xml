@@ -53,7 +53,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.PlaceDetailActivity"
+            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -96,7 +96,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.LocalPhotoActivity"
+            android:name="com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>

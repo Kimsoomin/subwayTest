@@ -31,7 +31,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mypage.sub.PlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.MyPlaceListAdapter;
 
@@ -76,7 +76,7 @@ public class MyPlaceListFragment extends Fragment
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
       {
-        startActivity(new Intent(activity, PlaceDetailActivity.class));
+        startActivity(new Intent(activity, MyPlaceDetailActivity.class));
       }
     });
     

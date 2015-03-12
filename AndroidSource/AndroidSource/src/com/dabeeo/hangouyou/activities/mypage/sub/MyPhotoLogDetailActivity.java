@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.views.PhotoLogDaySeperater;
-import com.dabeeo.hangouyou.views.PhotoLogDayView;
+import com.dabeeo.hangouyou.views.photolog.PhotoLogDaySeperater;
+import com.dabeeo.hangouyou.views.photolog.PhotoLogDayView;
 
 public class MyPhotoLogDetailActivity extends ActionBarActivity
 {
