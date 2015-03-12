@@ -7,21 +7,23 @@
     android:padding="10dp" >
 
     <TextView
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Day" />
+        android:text="@string/term_day"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/day"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="1" />
+        android:layout_marginLeft="4dp"
+        android:textStyle="bold" />
 
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@android:color/darker_gray" />
 
 </LinearLayout>

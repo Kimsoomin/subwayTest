@@ -62,6 +62,8 @@
     <string name="term_review">리뷰</string>
     <string name="term_review_more">리뷰 더보기</string>
     <string name="term_product_more">상품 더보기</string>
+    <string name="term_day">Day</string>
+    <string name="term_plus">+</string>
     <!-- Menus term -->
     <string name="term_edit">편집</string>
     <string name="term_close">닫기</string>
