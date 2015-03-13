@@ -16,7 +16,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -224,7 +223,6 @@ public class PhotoSelectActivity extends Activity
         
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         takedPhotoPath = image.getAbsolutePath();
-        Log.i("PhotoSelectActivity.java | onItemClick", "|" + takedPhotoPath + "|");
         
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
