@@ -31,6 +31,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_bottom_menu_home" />
 
             <TextView
@@ -55,6 +56,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_bottom_menu_mypage" />
 
             <TextView
@@ -79,6 +81,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_bottom_menu_photolog" />
 
             <TextView
@@ -103,6 +106,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_bottom_menu_wishlist" />
 
             <TextView
@@ -127,6 +131,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_bottom_menu_search" />
 
             <TextView

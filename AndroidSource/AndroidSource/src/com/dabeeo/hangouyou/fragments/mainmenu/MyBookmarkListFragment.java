@@ -32,7 +32,6 @@ import android.widget.ProgressBar;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.BookmarkBean;
-import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.MyBookmarkListAdapter;
 
 /**
@@ -52,6 +51,7 @@ public class MyBookmarkListFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
+    setHasOptionsMenu(true);
     return view;
   }
   
@@ -63,7 +63,7 @@ public class MyBookmarkListFragment extends Fragment
     this.activity = activity;
     if (view == null)
     {
-      int resId = R.layout.fragment_my_place_list;
+      int resId = R.layout.fragment_my_bookmark_list;
       view = LayoutInflater.from(activity).inflate(resId, null);
     }
     

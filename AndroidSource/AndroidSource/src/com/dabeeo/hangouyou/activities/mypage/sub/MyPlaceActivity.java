@@ -16,12 +16,11 @@ import android.widget.ProgressBar;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.controllers.MyPlaceViewPagerAdapter;
 
-@SuppressWarnings("deprecation")
 public class MyPlaceActivity extends ActionBarActivity implements TabListener
 {
-  @SuppressWarnings("unused")
   private ProgressBar progressBar;
   private MenuItem editMenuItem, closeMenuItem;
+  private boolean isEditMode = false;
   private ViewPager viewPager;
   private MyPlaceViewPagerAdapter adapter;
   
@@ -77,8 +76,8 @@ public class MyPlaceActivity extends ActionBarActivity implements TabListener
     getMenuInflater().inflate(R.menu.menu_edit, menu);
     editMenuItem = menu.findItem(R.id.edit);
     closeMenuItem = menu.findItem(R.id.close);
-    editMenuItem.setVisible(true);
-    closeMenuItem.setVisible(false);
+    editMenuItem.setVisible(!isEditMode);
+    closeMenuItem.setVisible(isEditMode);
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -90,6 +89,13 @@ public class MyPlaceActivity extends ActionBarActivity implements TabListener
       finish();
     else if (item.getItemId() == editMenuItem.getItemId())
     {
+      isEditMode = true;
+      invalidateOptionsMenu();
+    }
+    else if (item.getItemId() == closeMenuItem.getItemId())
+    {
+      isEditMode = false;
+      invalidateOptionsMenu();
     }
     return super.onOptionsItemSelected(item);
   }
