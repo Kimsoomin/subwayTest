@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.dabeeo.hangouyou.activities.mypage.sub.NewPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
+import com.dabeeo.hangouyou.activities.sub.SearchActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.MyPageFragment;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
@@ -105,9 +106,8 @@ public class MainActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuSearch.getId())
       {
-        
+        startActivity(new Intent(getApplicationContext(), SearchActivity.class));
       }
-      
     }
   };
 }
