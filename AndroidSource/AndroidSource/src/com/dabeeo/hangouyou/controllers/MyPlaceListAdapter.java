@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 
-@SuppressLint("InflateParams")
 public class MyPlaceListAdapter extends BaseAdapter
 {
   private ArrayList<PlaceBean> beans = new ArrayList<>();
@@ -69,13 +68,13 @@ public class MyPlaceListAdapter extends BaseAdapter
   }
   
   
-  @SuppressWarnings("unused")
   @SuppressLint("ViewHolder")
   @Override
-  public View getView(final int arg0, View arg1, ViewGroup arg2)
+  public View getView(int position, View convertView, ViewGroup parent)
   {
-    PlaceBean bean = (PlaceBean) beans.get(arg0);
-    View view = LayoutInflater.from(context).inflate(R.layout.list_item_place, null);
+    PlaceBean bean = (PlaceBean) beans.get(position);
+    int resId = R.layout.list_item_place;
+    View view = LayoutInflater.from(context).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);

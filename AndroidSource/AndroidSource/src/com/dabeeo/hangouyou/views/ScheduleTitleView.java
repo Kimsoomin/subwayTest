@@ -1,6 +1,5 @@
 package com.dabeeo.hangouyou.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +21,10 @@ public class ScheduleTitleView extends RelativeLayout
   }
   
   
-  @SuppressLint("InflateParams")
   public void init()
   {
-    View view = LayoutInflater.from(context).inflate(R.layout.view_schedule_title, null);
+    int resId = R.layout.view_schedule_title;
+    View view = LayoutInflater.from(context).inflate(resId, null);
     
     TextView title = (TextView) view.findViewById(R.id.title);
     

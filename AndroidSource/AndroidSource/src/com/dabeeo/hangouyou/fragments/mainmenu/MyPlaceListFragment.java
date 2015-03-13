@@ -15,7 +15,6 @@
 
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,14 +55,16 @@ public class MyPlaceListFragment extends Fragment
   }
   
   
-  @SuppressLint("InflateParams")
   @Override
   public void onAttach(final Activity activity)
   {
     super.onAttach(activity);
     this.activity = activity;
     if (view == null)
-      view = LayoutInflater.from(activity).inflate(R.layout.fragment_my_place_list, null, false);
+    {
+      int resId = R.layout.fragment_my_place_list;
+      view = LayoutInflater.from(activity).inflate(resId, null);
+    }
     
     progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
     

@@ -41,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogListActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
@@ -214,7 +215,7 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == btnMyBookmark.getId())
       {
-        Toast.makeText(activity, "준비중입니다", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(activity, MyBookmarkActivity.class));
       }
       else if (v.getId() == btnMyOrders.getId())
       {

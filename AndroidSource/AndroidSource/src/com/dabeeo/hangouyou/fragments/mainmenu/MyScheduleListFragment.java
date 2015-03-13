@@ -1,6 +1,5 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -40,14 +39,16 @@ public class MyScheduleListFragment extends Fragment
   }
   
   
-  @SuppressLint("InflateParams")
   @Override
   public void onAttach(final Activity activity)
   {
     super.onAttach(activity);
     this.activity = activity;
     if (view == null)
-      view = LayoutInflater.from(activity).inflate(R.layout.fragment_my_schedule_list, null, false);
+    {
+      int resId = R.layout.fragment_my_schedule_list;
+      view = LayoutInflater.from(activity).inflate(resId, null);
+    }
     
     scrollView = (ScrollView) view.findViewById(R.id.scrollview);
     container = (LinearLayout) view.findViewById(R.id.content_container);
@@ -88,6 +89,6 @@ public class MyScheduleListFragment extends Fragment
     container.addView(view);
     view = new ScheduleView(activity);
     container.addView(view);
-
+    
   }
 }
