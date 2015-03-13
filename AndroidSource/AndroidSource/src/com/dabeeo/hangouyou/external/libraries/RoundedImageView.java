@@ -27,7 +27,6 @@ import android.widget.ImageView;
 
 import com.dabeeo.hangouyou.R;
 
-@SuppressWarnings("UnusedDeclaration")
 public class RoundedImageView extends ImageView
 {
   

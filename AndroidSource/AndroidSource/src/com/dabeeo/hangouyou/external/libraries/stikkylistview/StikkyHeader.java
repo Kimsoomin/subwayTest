@@ -32,7 +32,7 @@ public abstract class StikkyHeader
           int height = mHeader.getHeight();
           if (height > 0)
           {
-            mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            mHeader.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             setHeightHeader(height);
           }
         }
