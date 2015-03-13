@@ -1,11 +1,14 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -55,6 +58,9 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     FrameLayout header = (FrameLayout) findViewById(R.id.header);
     Resources r = getResources();
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
+    
+    findViewById(R.id.btn_bookmark).setOnClickListener(clickListener);
+    findViewById(R.id.btn_share).setOnClickListener(clickListener);
     
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
     displayContentData();
@@ -115,4 +121,26 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     reviewView.setBean(reviewBean);
     containerReview.addView(reviewView);
   }
+  
+  /**************************************************
+   * listener
+   ***************************************************/
+  private OnClickListener clickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == R.id.btn_bookmark)
+      {
+        // 북마크 토글
+      }
+      else if (v.getId() == R.id.btn_share)
+      {
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "공유테스트");
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, null));
+      }
+    }
+  };
 }

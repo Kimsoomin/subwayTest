@@ -66,6 +66,8 @@
     <string name="term_product_more">상품 더보기</string>
     <string name="term_day">Day</string>
     <string name="term_plus">+</string>
+    <string name="term_bookmark">북마크</string>
+    <string name="term_share">공유하기</string>
     <!-- Menus term -->
     <string name="term_edit">편집</string>
     <string name="term_close">닫기</string>

@@ -68,7 +68,8 @@ public class GuideActivity extends Activity
     @Override
     public Object instantiateItem(View pager, int position)
     {
-      View v = LayoutInflater.from(GuideActivity.this).inflate(R.layout.view_guide, null);
+      int resId = R.layout.view_guide;
+      View v = LayoutInflater.from(GuideActivity.this).inflate(resId, null);
       ImageView image = (ImageView) v.findViewById(R.id.guide_image);
       TextView text = (TextView) v.findViewById(R.id.guide_text);
       if (position == 0)
