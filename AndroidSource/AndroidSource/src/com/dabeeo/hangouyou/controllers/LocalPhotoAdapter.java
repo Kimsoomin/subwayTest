@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.LocalPhotoBean;
-import com.dabeeo.hangouyou.utils.ImageUtil;
 import com.dabeeo.hangouyou.views.SquareImageView;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +39,6 @@ public class LocalPhotoAdapter extends BaseAdapter
   {
     LocalPhotoBean bean = new LocalPhotoBean();
     bean.path = path;
-    bean.thumbnailPath = ImageUtil.getThumnailPath(context, path);
     
     if (index == -1)
       items.add(bean);
@@ -121,7 +119,7 @@ public class LocalPhotoAdapter extends BaseAdapter
       photo.setImageResource(android.R.drawable.ic_menu_camera);
     else
     {
-      Picasso.with(context).load(Uri.fromFile(new File(bean.thumbnailPath)).toString()).resize(100, 100).centerCrop().into(photo);
+      Picasso.with(context).load(Uri.fromFile(new File(bean.path)).toString()).resize(100, 100).centerCrop().into(photo);
       
       convertView.setOnClickListener(new View.OnClickListener()
       {
