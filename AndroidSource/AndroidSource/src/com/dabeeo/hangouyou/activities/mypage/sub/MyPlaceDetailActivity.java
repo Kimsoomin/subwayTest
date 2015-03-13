@@ -136,6 +136,7 @@ public class MyPlaceDetailActivity extends ActionBarActivity
       }
       else if (v.getId() == R.id.btn_share)
       {
+        // 공유하기
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, "공유테스트");
         sendIntent.setType("text/plain");
