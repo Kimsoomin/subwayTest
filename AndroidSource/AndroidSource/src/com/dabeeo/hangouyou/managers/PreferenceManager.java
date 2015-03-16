@@ -1,6 +1,11 @@
 package com.dabeeo.hangouyou.managers;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+
 import android.content.Context;
+import android.text.TextUtils;
 
 public class PreferenceManager extends BasePreferenceManager
 {
@@ -22,6 +27,7 @@ public class PreferenceManager extends BasePreferenceManager
   
   private static final String KEY_IS_FIRST = "key_is_first";
   private static final String KEY_IS_ALLOW_POPUP = "key_is_allow_pop_up";
+  private static final String KEY_RECENT_SEARCH_WORD = "key_recent_search_word";
   
   
   public void setIsFirst(boolean value)
@@ -45,5 +51,49 @@ public class PreferenceManager extends BasePreferenceManager
   public boolean getAllowPopup()
   {
     return get(KEY_IS_ALLOW_POPUP, true);
+  }
+  
+  
+  public void setRecentSearchWord(String word)
+  {
+    ArrayList<String> result = getRecentSearchWord();
+    if (result.contains(word))
+      result.remove(word);
+    
+    result.add(0, word);
+    
+    JSONArray array = new JSONArray();
+    for (String string : result)
+    {
+      array.put(string);
+    }
+    
+    put(KEY_RECENT_SEARCH_WORD, array.toString());
+  }
+  
+  
+  public ArrayList<String> getRecentSearchWord()
+  {
+    ArrayList<String> result = new ArrayList<>();
+    
+    String json = get(KEY_RECENT_SEARCH_WORD);
+    if (TextUtils.isEmpty(json))
+      json = "[]";
+    
+    try
+    {
+      JSONArray array = new JSONArray(json);
+      
+      for (int i = 0; i < array.length(); i++)
+      {
+        result.add(array.getString(i));
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    
+    return result;
   }
 }
