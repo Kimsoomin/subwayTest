@@ -40,10 +40,17 @@
         <!-- MainMenu Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity"
-            android:label="@string/term_my_schedule"
+            android:label="@string/term_famous_place"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity"
+            android:label="@string/term_write_review"
+            android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity"

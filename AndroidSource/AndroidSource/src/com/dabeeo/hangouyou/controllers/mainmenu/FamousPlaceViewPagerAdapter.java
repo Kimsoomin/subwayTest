@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPlaceListFragment;
 
 public class FamousPlaceViewPagerAdapter extends FragmentPagerAdapter
@@ -33,8 +34,8 @@ public class FamousPlaceViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public Fragment getItem(int position)
   {
-    Fragment fragment = new MyPlaceListFragment();
-    ((MyPlaceListFragment) fragment).setCategoryId(-1);
+    Fragment fragment = new PlaceListFragment();
+    ((PlaceListFragment) fragment).setCategoryId(-1);
     return fragment;
   }
   

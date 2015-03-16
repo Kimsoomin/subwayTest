@@ -25,6 +25,11 @@
     <string name="term_wishlist">위시리스트</string>
     <string name="term_search">검색</string>
 
+    <!-- Place activities term -->
+    <string name="term_review_best">최고에요</string>
+    <string name="term_review_soso">그저그래요</string>
+    <string name="term_review_worst">별로에요</string>
+
     <!-- Mypage Term -->
     <string name="term_setting">설정</string>
     <string name="term_my_schedule">내 일정</string>
@@ -67,6 +72,8 @@
     <string name="term_day">Day</string>
     <string name="term_plus">+</string>
     <string name="term_bookmark">북마크</string>
+    <string name="term_like">좋아요</string>
+    <string name="term_write_review">리뷰쓰기</string>
     <string name="term_share">공유하기</string>
     <!-- Menus term -->
     <string name="term_edit">편집</string>
@@ -78,5 +85,7 @@
     <string name="message_alert_lte_mode">3G/LTE 모드에서 서비스를 이용할 경우, 데이터 요금이 청구 될 수 있습니다. 계속 진행하시겠습니까?</string>
     <string name="message_alert_download_seoul_info">서울 정보를 확인중입니다.\n잠시만 기다려주세요.</string>
     <string name="message_alert_allow_notification">"'Hangouyou'에서 알림을 보내고자 합니다. 허용하시겠습니까?"</string>
+    <string name="message_write_review">리뷰를 남겨주세요</string>
+    <string name="msg_empty_value">필드를 모두 채워주세요</string>
 
 </resources>
