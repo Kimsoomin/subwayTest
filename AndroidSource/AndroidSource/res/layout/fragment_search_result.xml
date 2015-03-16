@@ -12,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="검색어를 입력하세요"
+        android:hint="@string/search_word_here"
         android:imeOptions="actionSearch"
+        android:inputType="text"
         android:singleLine="true" >
 
         <requestFocus />
@@ -28,9 +29,23 @@
         android:dividerHeight="0dp" />
 
     <LinearLayout
-        android:id="@+id/layout_recommend_product"
+        android:id="@+id/layout_recommend_product_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+            android:text="@string/popular_recommend_product"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:id="@+id/layout_recommend_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
 
 </LinearLayout>

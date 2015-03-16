@@ -1,9 +1,11 @@
 package com.dabeeo.hangouyou.beans;
 
+import org.json.JSONObject;
+
 public class SearchResultBean
 {
   public static final int TYPE_NORMAL = -1;
-  public static final int TYPE_LOCATION = 0;
+  public static final int TYPE_PLACE = 0;
   public static final int TYPE_PRODUCT = 1;
   public static final int TYPE_RECOMMEND_SEOUL = 2;
   public static final int TYPE_SCHEDULE = 3;
@@ -12,13 +14,37 @@ public class SearchResultBean
   public String text;
   public boolean isTitle = false;
   public int moreCount = 0;
-  public int titleType = TYPE_NORMAL;
+  public int type = TYPE_NORMAL;
   
   
-  public void addText(String text)
+  public SearchResultBean()
+  {
+    
+  }
+  
+  
+  public SearchResultBean(String json)
+  {
+    try
+    {
+      JSONObject obj = new JSONObject(json);
+      isTitle = obj.getBoolean("is_title");
+      text = obj.getString("text");
+      moreCount = obj.getInt("more_count");
+      type = obj.getInt("type");
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
+  public void addText(String text, int type)
   {
     this.text = text;
     this.isTitle = false;
+    this.type = type;
   }
   
   
@@ -37,7 +63,7 @@ public class SearchResultBean
    */
   public void addNormalTitle(String title, int moreCount)
   {
-    this.titleType = TYPE_NORMAL;
+    this.type = TYPE_NORMAL;
     addTitle(title, moreCount);
   }
   
@@ -48,9 +74,9 @@ public class SearchResultBean
    * @param title
    * @param moreCount
    */
-  public void addLocationTitle(String title, int moreCount)
+  public void addPlaceTitle(String title, int moreCount)
   {
-    this.titleType = TYPE_LOCATION;
+    this.type = TYPE_PLACE;
     addTitle(title, moreCount);
   }
   
@@ -63,7 +89,7 @@ public class SearchResultBean
    */
   public void addProductTitle(String title, int moreCount)
   {
-    this.titleType = TYPE_PRODUCT;
+    this.type = TYPE_PRODUCT;
     addTitle(title, moreCount);
   }
   
@@ -76,7 +102,7 @@ public class SearchResultBean
    */
   public void addRecommendSeoulTitle(String title, int moreCount)
   {
-    this.titleType = TYPE_RECOMMEND_SEOUL;
+    this.type = TYPE_RECOMMEND_SEOUL;
     addTitle(title, moreCount);
   }
   
@@ -89,7 +115,7 @@ public class SearchResultBean
    */
   public void addScheduleTitle(String title, int moreCount)
   {
-    this.titleType = TYPE_SCHEDULE;
+    this.type = TYPE_SCHEDULE;
     addTitle(title, moreCount);
   }
   
@@ -102,7 +128,27 @@ public class SearchResultBean
    */
   public void addPhotoLogTitle(String title, int moreCount)
   {
-    this.titleType = TYPE_PHOTO_LOG;
+    this.type = TYPE_PHOTO_LOG;
     addTitle(title, moreCount);
+  }
+  
+  
+  public JSONObject toJsonObject()
+  {
+    JSONObject result = new JSONObject();
+    
+    try
+    {
+      result.put("is_title", isTitle);
+      result.put("text", text);
+      result.put("type", type);
+      result.put("more_count", moreCount);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    
+    return result;
   }
 }

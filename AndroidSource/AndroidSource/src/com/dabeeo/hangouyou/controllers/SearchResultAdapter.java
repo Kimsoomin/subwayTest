@@ -2,6 +2,8 @@ package com.dabeeo.hangouyou.controllers;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,22 @@ public class SearchResultAdapter extends BaseAdapter
   public void clear()
   {
     items.clear();
+  }
+  
+  
+  public String getJsonStringForParameter(int type)
+  {
+    JSONArray result = new JSONArray();
+    
+    for (SearchResultBean bean : items)
+    {
+      if (bean.type == type && !bean.isTitle)
+      {
+        result.put(bean.toJsonObject());
+      }
+    }
+    
+    return result.toString();
   }
   
   
@@ -70,7 +88,7 @@ public class SearchResultAdapter extends BaseAdapter
       ViewGroup layoutContainer = (ViewGroup) convertView.findViewById(R.id.layout_container);
       TextView moreCount = (TextView) convertView.findViewById(R.id.text_more_count);
       
-      if (bean.titleType == SearchResultBean.TYPE_NORMAL)
+      if (bean.type == SearchResultBean.TYPE_NORMAL)
       {
         layoutContainer.setClickable(true); // 왜 false일 때가 클릭이 되는걸까?
         
