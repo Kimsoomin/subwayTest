@@ -73,19 +73,17 @@ public class RecommendSeoulListAdapter extends BaseAdapter
   public View getView(int position, View convertView, ViewGroup parent)
   {
     RecommendSeoulBean bean = (RecommendSeoulBean) beans.get(position);
-    int resId = R.layout.list_item_place;
+    int resId = R.layout.list_item_recommend_seoul;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView category = (TextView) view.findViewById(R.id.category);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
-    TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
     title.setText(bean.title);
     category.setText(bean.category);
     likeCount.setText(Integer.toString(bean.likeCount));
-    reviewCount.setText(Integer.toString(bean.reviewCount));
     return view;
   }
 }

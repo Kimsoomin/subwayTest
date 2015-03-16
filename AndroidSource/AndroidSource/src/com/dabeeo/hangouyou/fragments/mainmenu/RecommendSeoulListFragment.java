@@ -116,14 +116,12 @@ public class RecommendSeoulListFragment extends Fragment
     bean.title = "왓슨스";
     bean.category = "Shopping";
     bean.likeCount = 7;
-    bean.reviewCount = 11;
     adapter.add(bean);
     
     bean = new RecommendSeoulBean();
     bean.title = "GS편의점";
     bean.category = "Shopping";
     bean.likeCount = 50;
-    bean.reviewCount = 13;
     adapter.add(bean);
     
     progressBar.setVisibility(View.GONE);
