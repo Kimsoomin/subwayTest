@@ -79,22 +79,6 @@ public class SearchResultFragment extends Fragment
     productBean.discountPrice = 40;
     productView.setBean(productBean);
     layoutRecommedProduct.addView(productView);
-    
-    productView = new ProductView(getActivity());
-    productBean = new ProductBean();
-    productBean.title = "상품명2";
-    productBean.originalPrice = 100;
-    productBean.discountPrice = 40;
-    productView.setBean(productBean);
-    layoutRecommedProduct.addView(productView);
-    
-    productView = new ProductView(getActivity());
-    productBean = new ProductBean();
-    productBean.title = "상품명3";
-    productBean.originalPrice = 100;
-    productBean.discountPrice = 40;
-    productView.setBean(productBean);
-    layoutRecommedProduct.addView(productView);
   }
   
   
