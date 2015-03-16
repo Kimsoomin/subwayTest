@@ -145,13 +145,13 @@ public class SearchResultFragment extends Fragment
     }
     
     SearchResultBean recommendSeoulBean = new SearchResultBean();
-    recommendSeoulBean.addRecommendSeoulTitle(getString(R.string.term_recommand_seoul), 100);
+    recommendSeoulBean.addRecommendSeoulTitle(getString(R.string.term_recommend_seoul), 100);
     adapter.add(recommendSeoulBean);
     
     for (int i = 0; i < 3; i++)
     {
       SearchResultBean bean = new SearchResultBean();
-      bean.addText(text + " " + getString(R.string.term_recommand_seoul) + i, SearchResultBean.TYPE_RECOMMEND_SEOUL);
+      bean.addText(text + " " + getString(R.string.term_recommend_seoul) + i, SearchResultBean.TYPE_RECOMMEND_SEOUL);
       adapter.add(bean);
     }
     

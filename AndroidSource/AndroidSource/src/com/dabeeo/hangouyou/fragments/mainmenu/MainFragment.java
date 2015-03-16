@@ -56,7 +56,7 @@ public class MainFragment extends Fragment
       view = LayoutInflater.from(activity).inflate(resId, null);
     }
     
-    containerRecommandSeoul = (RelativeLayout) view.findViewById(R.id.container_recommand_seoul);
+    containerRecommandSeoul = (RelativeLayout) view.findViewById(R.id.container_recommend_seoul);
     containerFamousPlace = (RelativeLayout) view.findViewById(R.id.container_famous_place);
     containerTravelSchedule = (RelativeLayout) view.findViewById(R.id.container_travel_schedule);
     containerShoppingMall = (RelativeLayout) view.findViewById(R.id.container_shopping_mall);

@@ -10,7 +10,7 @@
     <string name="term_skip">넘어가기</string>
 
     <!-- MainMenu Term -->
-    <string name="term_recommand_seoul">추천서울</string>
+    <string name="term_recommend_seoul">추천서울</string>
     <string name="term_famous_place">여행명소</string>
     <string name="term_travel_schedule">여행일정</string>
     <string name="term_shopping_mall">쇼핑몰</string>
@@ -65,7 +65,7 @@
     <string name="term_change_location">위치 변경</string>
     <string name="term_rate">평점</string>
     <string name="term_more_pro_guide">전문가 추천글 보기</string>
-    <string name="term_recommand_product">추천 상품</string>
+    <string name="term_recommend_product">추천 상품</string>
     <string name="term_review">리뷰</string>
     <string name="term_review_more">리뷰 더보기</string>
     <string name="term_product_more">상품 더보기</string>
