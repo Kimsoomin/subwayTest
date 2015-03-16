@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.NoticeBean;
-import com.dabeeo.hangouyou.controllers.NoticeAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.NoticeAdapter;
 
 public class NoticeActivity extends ActionBarActivity
 {

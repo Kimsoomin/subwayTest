@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.MyPhotoLogBean;
-import com.dabeeo.hangouyou.controllers.MyPhotoLogListAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.MyPhotoLogListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 

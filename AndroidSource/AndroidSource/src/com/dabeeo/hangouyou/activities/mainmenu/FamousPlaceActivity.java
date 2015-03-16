@@ -1,8 +1,9 @@
-package com.dabeeo.hangouyou.activities.mypage.sub;
+package com.dabeeo.hangouyou.activities.mainmenu;
 
 import java.util.ArrayList;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -11,28 +12,31 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.controllers.mypage.MyScheduleViewPagerAdapter;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
+import com.dabeeo.hangouyou.controllers.mainmenu.FamousPlaceViewPagerAdapter;
 
 @SuppressWarnings("deprecation")
-public class MyScheduleDetailActivity extends ActionBarActivity implements TabListener
+public class FamousPlaceActivity extends ActionBarActivity implements TabListener
 {
+  private ProgressBar progressBar;
   private ViewPager viewPager;
-  private MyScheduleViewPagerAdapter adapter;
+  private FamousPlaceViewPagerAdapter adapter;
   
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my_schedule_detail);
+    setContentView(R.layout.activity_my_place);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     viewPager = (ViewPager) findViewById(R.id.viewpager);
-    adapter = new MyScheduleViewPagerAdapter(this, getSupportFragmentManager());
+    adapter = new FamousPlaceViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);
     viewPager.setOffscreenPageLimit(100);
     
@@ -43,19 +47,10 @@ public class MyScheduleDetailActivity extends ActionBarActivity implements TabLi
   private void displayTitles()
   {
     ArrayList<String> titles = new ArrayList<>();
-    titles.add("1日");
-    titles.add("2日");
-    titles.add("3日");
-    titles.add("4日");
-    titles.add("5日");
-    titles.add("6日");
-    titles.add("7日");
-    titles.add("8日");
-    titles.add("9日");
-    titles.add("10日");
-    titles.add("11日");
-    titles.add("12日");
-    
+    titles.add("전체");
+    titles.add("명소");
+    titles.add("쇼핑");
+    titles.add("레스토랑");
     adapter.setTitles(titles);
     
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -79,7 +74,7 @@ public class MyScheduleDetailActivity extends ActionBarActivity implements TabLi
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-    getMenuInflater().inflate(R.menu.menu_map, menu);
+    getMenuInflater().inflate(R.menu.menu_my_place, menu);
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -89,8 +84,8 @@ public class MyScheduleDetailActivity extends ActionBarActivity implements TabLi
   {
     if (item.getItemId() == android.R.id.home)
       finish();
-    if (item.getItemId() == R.id.map)
-      Toast.makeText(this, "준비 중입니다", Toast.LENGTH_LONG).show();
+    else if (item.getItemId() == R.id.my_place)
+      startActivity(new Intent(FamousPlaceActivity.this, MyPlaceActivity.class));
     return super.onOptionsItemSelected(item);
   }
   

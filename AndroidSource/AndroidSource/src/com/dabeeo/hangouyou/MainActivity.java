@@ -14,7 +14,7 @@ import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
 import com.dabeeo.hangouyou.activities.sub.SearchActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
-import com.dabeeo.hangouyou.fragments.mainmenu.MyPageFragment;
+import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 
 public class MainActivity extends ActionBarActivity

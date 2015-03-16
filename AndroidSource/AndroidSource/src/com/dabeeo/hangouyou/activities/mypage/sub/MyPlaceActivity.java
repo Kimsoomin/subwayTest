@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.controllers.MyPlaceViewPagerAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.MyPlaceViewPagerAdapter;
 
 public class MyPlaceActivity extends ActionBarActivity implements TabListener
 {

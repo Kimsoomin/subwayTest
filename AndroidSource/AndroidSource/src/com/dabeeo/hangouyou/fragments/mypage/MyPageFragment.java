@@ -13,7 +13,7 @@
  * the possibility of such damages.
  ******************************************************************************/
 
-package com.dabeeo.hangouyou.fragments.mainmenu;
+package com.dabeeo.hangouyou.fragments.mypage;
 
 import java.io.File;
 import java.io.FileInputStream;

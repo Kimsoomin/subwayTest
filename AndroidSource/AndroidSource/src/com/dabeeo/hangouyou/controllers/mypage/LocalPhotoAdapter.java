@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers;
+package com.dabeeo.hangouyou.controllers.mypage;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.MyScheduleBean;
-import com.dabeeo.hangouyou.controllers.MySchedulesListAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 

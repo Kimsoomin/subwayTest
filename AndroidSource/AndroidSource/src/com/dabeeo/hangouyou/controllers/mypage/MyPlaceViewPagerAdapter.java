@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers;
+package com.dabeeo.hangouyou.controllers.mypage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.fragments.mainmenu.MyScheduleListFragment;
+import com.dabeeo.hangouyou.fragments.mypage.MyPlaceListFragment;
 
-public class MyScheduleViewPagerAdapter extends FragmentPagerAdapter
+public class MyPlaceViewPagerAdapter extends FragmentPagerAdapter
 {
   public static int pos = 0;
   private List<String> titles = new ArrayList<String>();
   
   
-  public MyScheduleViewPagerAdapter(Context context, FragmentManager fm)
+  public MyPlaceViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
     
@@ -33,7 +33,8 @@ public class MyScheduleViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public Fragment getItem(int position)
   {
-    Fragment fragment = new MyScheduleListFragment();
+    Fragment fragment = new MyPlaceListFragment();
+    ((MyPlaceListFragment) fragment).setCategoryId(-1);
     return fragment;
   }
   
@@ -62,6 +63,6 @@ public class MyScheduleViewPagerAdapter extends FragmentPagerAdapter
   
   public static void setPos(int pos)
   {
-    MyScheduleViewPagerAdapter.pos = pos;
+    MyPlaceViewPagerAdapter.pos = pos;
   }
 }

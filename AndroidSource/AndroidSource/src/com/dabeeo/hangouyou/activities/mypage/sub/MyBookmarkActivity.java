@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.controllers.MyBookmarkViewPagerAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.MyBookmarkViewPagerAdapter;
 
 public class MyBookmarkActivity extends ActionBarActivity implements TabListener
 {

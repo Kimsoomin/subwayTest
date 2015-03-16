@@ -13,7 +13,7 @@
  * the possibility of such damages.
  ******************************************************************************/
 
-package com.dabeeo.hangouyou.fragments.mainmenu;
+package com.dabeeo.hangouyou.fragments.mypage;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,13 +31,13 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
-import com.dabeeo.hangouyou.beans.PlaceBean;
-import com.dabeeo.hangouyou.controllers.MyPlaceListAdapter;
+import com.dabeeo.hangouyou.beans.BookmarkBean;
+import com.dabeeo.hangouyou.controllers.mypage.MyBookmarkListAdapter;
 
 /**
  * Fragment that allows controlling the colour of lights using HSV colour wheel.
  */
-public class MyPlaceListFragment extends Fragment
+public class MyBookmarkListFragment extends Fragment
 {
   private Activity activity;
   private View view;
@@ -45,12 +45,13 @@ public class MyPlaceListFragment extends Fragment
   
   private ProgressBar progressBar;
   private ListView listView;
-  private MyPlaceListAdapter adapter;
+  private MyBookmarkListAdapter adapter;
   
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
+    setHasOptionsMenu(true);
     return view;
   }
   
@@ -62,14 +63,14 @@ public class MyPlaceListFragment extends Fragment
     this.activity = activity;
     if (view == null)
     {
-      int resId = R.layout.fragment_my_place_list;
+      int resId = R.layout.fragment_my_bookmark_list;
       view = LayoutInflater.from(activity).inflate(resId, null);
     }
     
     progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
     
     listView = (ListView) view.findViewById(R.id.listview);
-    adapter = new MyPlaceListAdapter(activity);
+    adapter = new MyBookmarkListAdapter(activity);
     listView.setAdapter(adapter);
     
     listView.setOnItemClickListener(new OnItemClickListener()
@@ -112,18 +113,32 @@ public class MyPlaceListFragment extends Fragment
     progressBar.setVisibility(View.VISIBLE);
     
     //테스트 가데이터 
-    PlaceBean bean = new PlaceBean();
-    bean.title = "왓슨스";
-    bean.category = "Shopping";
-    bean.likeCount = 7;
+    BookmarkBean bean = new BookmarkBean();
+    bean.title = "인사동";
+    bean.category = "culture";
+    bean.likeCount = 964;
     bean.reviewCount = 11;
     adapter.add(bean);
     
-    bean = new PlaceBean();
-    bean.title = "GS편의점";
-    bean.category = "Shopping";
+    bean = new BookmarkBean();
+    bean.title = "삼청동길";
+    bean.category = " culture";
     bean.likeCount = 50;
     bean.reviewCount = 13;
+    adapter.add(bean);
+    
+    bean = new BookmarkBean();
+    bean.title = "쌈지길";
+    bean.category = " culture";
+    bean.likeCount = 1234;
+    bean.reviewCount = 12;
+    adapter.add(bean);
+    
+    bean = new BookmarkBean();
+    bean.title = "감로당길";
+    bean.category = " culture";
+    bean.likeCount = 123;
+    bean.reviewCount = 12;
     adapter.add(bean);
     
     progressBar.setVisibility(View.GONE);

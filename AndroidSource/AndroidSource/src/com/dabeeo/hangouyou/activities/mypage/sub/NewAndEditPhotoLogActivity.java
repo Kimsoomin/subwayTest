@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.controllers.EditPhotoLogListAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.EditPhotoLogListAdapter;
 import com.dabeeo.hangouyou.external.libraries.DragSortController;
 import com.dabeeo.hangouyou.external.libraries.DragSortListView;
 

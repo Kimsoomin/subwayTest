@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.fragments.mainmenu;
+package com.dabeeo.hangouyou.fragments.mypage;
 
 import android.app.Activity;
 import android.content.res.Resources;

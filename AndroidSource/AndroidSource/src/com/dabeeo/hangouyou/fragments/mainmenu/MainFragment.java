@@ -17,6 +17,7 @@ package com.dabeeo.hangouyou.fragments.mainmenu;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity;
 
 /**
  * Fragment that allows controlling the colour of lights using HSV colour wheel.
@@ -86,7 +88,7 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerFamousPlace.getId())
       {
-        
+        startActivity(new Intent(getActivity(), FamousPlaceActivity.class));
       }
       else if (v.getId() == containerTravelSchedule.getId())
       {

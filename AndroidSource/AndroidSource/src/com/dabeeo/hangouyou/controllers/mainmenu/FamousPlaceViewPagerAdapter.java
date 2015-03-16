@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers;
+package com.dabeeo.hangouyou.controllers.mainmenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkListFragment;
+import com.dabeeo.hangouyou.fragments.mypage.MyPlaceListFragment;
 
-public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
+public class FamousPlaceViewPagerAdapter extends FragmentPagerAdapter
 {
   public static int pos = 0;
   private List<String> titles = new ArrayList<String>();
   
   
-  public MyBookmarkViewPagerAdapter(Context context, FragmentManager fm)
+  public FamousPlaceViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
+    
   }
   
   
@@ -32,8 +33,8 @@ public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public Fragment getItem(int position)
   {
-    Fragment fragment = new MyBookmarkListFragment();
-    ((MyBookmarkListFragment) fragment).setCategoryId(-1);
+    Fragment fragment = new MyPlaceListFragment();
+    ((MyPlaceListFragment) fragment).setCategoryId(-1);
     return fragment;
   }
   
@@ -62,6 +63,6 @@ public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
   
   public static void setPos(int pos)
   {
-    MyBookmarkViewPagerAdapter.pos = pos;
+    FamousPlaceViewPagerAdapter.pos = pos;
   }
 }

@@ -36,6 +36,14 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <!-- MainMenu Activities -->
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity"
+            android:label="@string/term_my_schedule"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity"
@@ -76,6 +84,7 @@
             android:label="@string/term_my_bookmark"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
         <!-- Sub Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.sub.GuideActivity"

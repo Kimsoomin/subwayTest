@@ -26,7 +26,7 @@ import android.widget.GridView;
 import android.widget.Spinner;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.controllers.LocalPhotoAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.LocalPhotoAdapter;
 
 public class PhotoSelectActivity extends Activity
 {
