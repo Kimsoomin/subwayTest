@@ -112,10 +112,6 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.SearchActivity"
-            android:label="@string/term_search"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

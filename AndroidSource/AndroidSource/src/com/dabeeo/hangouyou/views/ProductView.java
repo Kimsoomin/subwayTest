@@ -2,6 +2,7 @@ package com.dabeeo.hangouyou.views;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.dabeeo.hangouyou.beans.ProductBean;
 
 public class ProductView extends RelativeLayout
 {
+  
   private Context context;
   private ProductBean bean;
   
@@ -32,7 +34,6 @@ public class ProductView extends RelativeLayout
   }
   
   
-  @SuppressWarnings("unused")
   public void init()
   {
     int resId = R.layout.view_product;
@@ -53,17 +54,17 @@ public class ProductView extends RelativeLayout
     if (bean != null)
     {
       title.setText(bean.title);
-      originalPrice.setText("¥ " + bean.originalCount);
-      discountPrice.setText("¥ " + bean.discountCount);
+      originalPrice.setText("¥ " + bean.originalPrice);
+      discountPrice.setText("¥ " + bean.discountPrice);
       originalPrice.setPaintFlags(originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
     
     btnWishList.setOnClickListener(new OnClickListener()
     {
       @Override
-      public void onClick(View arg0)
+      public void onClick(View v)
       {
-        
+        Log.i("ProductView.java | init", "|" + "위시리스트에 담기" + "|");
       }
     });
     addView(view);

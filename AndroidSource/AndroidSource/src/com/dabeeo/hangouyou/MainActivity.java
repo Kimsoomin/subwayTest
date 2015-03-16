@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
-import com.dabeeo.hangouyou.activities.sub.SearchActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.SearchFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 
@@ -70,6 +70,11 @@ public class MainActivity extends ActionBarActivity
         setTitle(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
+      
+      case POSITION_SEARCH:
+        setTitle(R.string.term_search);
+        fragment = new SearchFragment();
+        break;
     }
     
     this.currentFragmentPosition = position;
@@ -106,7 +111,7 @@ public class MainActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuSearch.getId())
       {
-        startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+        setFragments(POSITION_SEARCH);
       }
     }
   };

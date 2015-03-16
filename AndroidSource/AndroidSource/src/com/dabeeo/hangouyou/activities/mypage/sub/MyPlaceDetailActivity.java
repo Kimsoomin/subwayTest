@@ -101,8 +101,8 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     ProductView productView = new ProductView(MyPlaceDetailActivity.this);
     ProductBean bean = new ProductBean();
     bean.title = "XXX 수분크림";
-    bean.originalCount = 150;
-    bean.discountCount = 93;
+    bean.originalPrice = 150;
+    bean.discountPrice = 93;
     productView.setBean(bean);
     containerProduct.addView(productView);
     

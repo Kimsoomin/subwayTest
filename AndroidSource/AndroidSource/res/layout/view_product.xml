@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="8dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/round_stroke_box"
         android:orientation="horizontal"
@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -31,25 +31,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:text="@null" />
 
             <TextView
                 android:id="@+id/original_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                android:text="@null" />
 
             <TextView
                 android:id="@+id/discount_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:text="@null"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
@@ -68,8 +71,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="8dp"
-                android:contentDescription="@null"
-                android:background="@color/darker_gray" />
+                android:background="@color/darker_gray"
+                android:contentDescription="@null" />
         </LinearLayout>
     </LinearLayout>
 

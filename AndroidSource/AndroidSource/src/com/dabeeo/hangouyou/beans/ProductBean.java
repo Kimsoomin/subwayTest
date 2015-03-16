@@ -4,6 +4,6 @@ public class ProductBean
 {
   public String title;
   public String imageUrl;
-  public int originalCount;
-  public int discountCount;
+  public int originalPrice;
+  public int discountPrice;
 }
