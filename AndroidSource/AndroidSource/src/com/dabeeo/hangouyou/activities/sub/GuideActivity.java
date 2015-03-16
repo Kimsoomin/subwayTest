@@ -28,7 +28,7 @@ public class GuideActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_guide);
     
-    viewPager = (ViewPager) findViewById(R.id.view_pager);
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setAdapter(new PagerAdapterClass(getApplicationContext()));
     
     CirclePageIndicator circleIndicator = (CirclePageIndicator) findViewById(R.id.indicator);

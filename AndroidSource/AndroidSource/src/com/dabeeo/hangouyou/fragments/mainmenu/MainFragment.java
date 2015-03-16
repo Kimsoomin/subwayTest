@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity;
 
 /**
  * Fragment that allows controlling the colour of lights using HSV colour wheel.
@@ -34,7 +35,7 @@ import com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity;
 public class MainFragment extends Fragment
 {
   private View view;
-  private RelativeLayout containerRecommandSeoul, containerFamousPlace, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerPhotolog, containerTicketAndCoupon,
+  private RelativeLayout containerRecommendSeoul, containerFamousPlace, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerPhotolog, containerTicketAndCoupon,
       containerReservationHotel;
   
   
@@ -56,7 +57,7 @@ public class MainFragment extends Fragment
       view = LayoutInflater.from(activity).inflate(resId, null);
     }
     
-    containerRecommandSeoul = (RelativeLayout) view.findViewById(R.id.container_recommend_seoul);
+    containerRecommendSeoul = (RelativeLayout) view.findViewById(R.id.container_recommend_seoul);
     containerFamousPlace = (RelativeLayout) view.findViewById(R.id.container_famous_place);
     containerTravelSchedule = (RelativeLayout) view.findViewById(R.id.container_travel_schedule);
     containerShoppingMall = (RelativeLayout) view.findViewById(R.id.container_shopping_mall);
@@ -66,7 +67,7 @@ public class MainFragment extends Fragment
     containerTicketAndCoupon = (RelativeLayout) view.findViewById(R.id.container_ticket_and_coupon);
     containerReservationHotel = (RelativeLayout) view.findViewById(R.id.container_reservation_hotel);
     
-    containerRecommandSeoul.setOnClickListener(menuClickListener);
+    containerRecommendSeoul.setOnClickListener(menuClickListener);
     containerFamousPlace.setOnClickListener(menuClickListener);
     containerTravelSchedule.setOnClickListener(menuClickListener);
     containerShoppingMall.setOnClickListener(menuClickListener);
@@ -82,9 +83,9 @@ public class MainFragment extends Fragment
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == containerRecommandSeoul.getId())
+      if (v.getId() == containerRecommendSeoul.getId())
       {
-        
+        startActivity(new Intent(getActivity(), RecommendSeoulActivity.class));
       }
       else if (v.getId() == containerFamousPlace.getId())
       {
