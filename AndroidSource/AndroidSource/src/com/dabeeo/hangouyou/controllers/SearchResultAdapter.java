@@ -2,7 +2,6 @@ package com.dabeeo.hangouyou.controllers;
 
 import java.util.ArrayList;
 
-import android.R.attr;
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,12 @@ public class SearchResultAdapter extends BaseAdapter
   public void add(SearchResultBean bean)
   {
     items.add(bean);
+  }
+  
+  
+  public void clear()
+  {
+    items.clear();
   }
   
   
@@ -52,17 +57,43 @@ public class SearchResultAdapter extends BaseAdapter
     SearchResultBean bean = items.get(position);
     
     int resId = R.layout.list_item_search_result;
+    if (bean.isTitle)
+      resId = R.layout.list_item_search_result_title;
+    
     convertView = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     TextView title = (TextView) convertView.findViewById(android.R.id.text1);
     title.setText(bean.text);
+    
     if (bean.isTitle)
     {
-      title.setClickable(true); // 왜 false일 때가 클릭이 되는걸까?
-      title.setTextAppearance(parent.getContext(), android.R.style.TextAppearance_Large);
+      ViewGroup layoutContainer = (ViewGroup) convertView.findViewById(R.id.layout_container);
+      TextView moreCount = (TextView) convertView.findViewById(R.id.text_more_count);
       
-      TextView seperater = (TextView) convertView.findViewById(R.id.seperater);
-      seperater.setVisibility(View.GONE);
+      if (bean.titleType == SearchResultBean.TYPE_NORMAL)
+      {
+        layoutContainer.setClickable(true); // 왜 false일 때가 클릭이 되는걸까?
+        
+        if (bean.moreCount != 0)
+        {
+          moreCount.setText("(" + bean.moreCount + ")");
+          moreCount.setVisibility(View.VISIBLE);
+        }
+      }
+      else
+      {
+        if (bean.moreCount > 3)
+        {
+          TextView more = (TextView) convertView.findViewById(R.id.text_more);
+          moreCount.setText("(" + bean.moreCount + ")");
+          moreCount.setVisibility(View.VISIBLE);
+          more.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+          layoutContainer.setClickable(true); // 왜 false일 때가 클릭이 되는걸까?
+        }
+      }
     }
     
     return convertView;

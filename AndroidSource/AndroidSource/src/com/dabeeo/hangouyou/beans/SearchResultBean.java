@@ -35,10 +35,10 @@ public class SearchResultBean
    * 
    * @param title
    */
-  public void addNormalTitle(String title)
+  public void addNormalTitle(String title, int moreCount)
   {
     this.titleType = TYPE_NORMAL;
-    addTitle(title, 0);
+    addTitle(title, moreCount);
   }
   
   

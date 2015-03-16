@@ -62,6 +62,12 @@ public class PreferenceManager extends BasePreferenceManager
     
     result.add(0, word);
     
+    // 최근 3개만 남기기
+    for (int i = result.size() - 1; i >= 3; i--)
+    {
+      result.remove(i);
+    }
+    
     JSONArray array = new JSONArray();
     for (String string : result)
     {

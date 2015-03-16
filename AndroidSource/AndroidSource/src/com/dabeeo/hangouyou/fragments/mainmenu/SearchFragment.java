@@ -6,13 +6,14 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,6 +47,7 @@ public class SearchFragment extends Fragment
     
     adapter = new SearchResultAdapter();
     listView = (ListView) view.findViewById(android.R.id.list);
+    listView.setOnItemClickListener(itemClickListener);
     listView.setAdapter(adapter);
     
     return view;
@@ -66,18 +68,92 @@ public class SearchFragment extends Fragment
     layoutRecommedProduct.addView(productView);
     
     SearchResultBean resultBean = new SearchResultBean();
-    resultBean.addNormalTitle("최근 검색어");
+    resultBean.addNormalTitle("최근 검색어", 0);
     adapter.add(resultBean);
     
     ArrayList<String> recentWords = PreferenceManager.getInstance(getActivity()).getRecentSearchWord();
     for (String string : recentWords)
     {
-      resultBean = new SearchResultBean();
-      resultBean.addText(string);
-      adapter.add(resultBean);
+      SearchResultBean bean = new SearchResultBean();
+      bean.addText(string);
+      adapter.add(bean);
     }
     
     adapter.notifyDataSetChanged();
+  }
+  
+  
+  private void search(String text)
+  {
+    PreferenceManager.getInstance(getActivity()).setRecentSearchWord(text);
+    
+    adapter.clear();
+    
+    SearchResultBean resultBean = new SearchResultBean();
+    resultBean.addNormalTitle("검색결과", 300);
+    adapter.add(resultBean);
+    
+    SearchResultBean locationBean = new SearchResultBean();
+    locationBean.addLocationTitle("장소", 100);
+    adapter.add(locationBean);
+    
+    for (int i = 0; i < 3; i++)
+    {
+      SearchResultBean bean = new SearchResultBean();
+      bean.addText(text + " 장소" + i);
+      adapter.add(bean);
+    }
+    
+    SearchResultBean productBean = new SearchResultBean();
+    productBean.addProductTitle("상품", 3);
+    adapter.add(productBean);
+    
+    for (int i = 0; i < 3; i++)
+    {
+      SearchResultBean bean = new SearchResultBean();
+      bean.addText(text + " 상품" + i);
+      adapter.add(bean);
+    }
+    
+    SearchResultBean recommendSeoulBean = new SearchResultBean();
+    recommendSeoulBean.addRecommendSeoulTitle("추천서울", 100);
+    adapter.add(recommendSeoulBean);
+    
+    for (int i = 0; i < 3; i++)
+    {
+      SearchResultBean bean = new SearchResultBean();
+      bean.addText(text + " 추천서울" + i);
+      adapter.add(bean);
+    }
+    
+    SearchResultBean scheduleBean = new SearchResultBean();
+    scheduleBean.addScheduleTitle("스케줄", 100);
+    adapter.add(scheduleBean);
+    
+    for (int i = 0; i < 3; i++)
+    {
+      SearchResultBean bean = new SearchResultBean();
+      bean.addText(text + " 스케줄" + i);
+      adapter.add(bean);
+    }
+    SearchResultBean photoLogBean = new SearchResultBean();
+    photoLogBean.addScheduleTitle("포토로그", 100);
+    adapter.add(photoLogBean);
+    
+    for (int i = 0; i < 3; i++)
+    {
+      SearchResultBean bean = new SearchResultBean();
+      bean.addText(text + " 포토로그" + i);
+      adapter.add(bean);
+    }
+    
+    adapter.notifyDataSetChanged();
+  }
+  
+  
+  private void detail(SearchResultBean searchResultBean)
+  {
+    
   }
   
   /**************************************************
@@ -94,16 +170,27 @@ public class SearchFragment extends Fragment
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         
         String text = v.getText().toString();
-        Log.i("SearchFragment.java | onEditorAction", "|" + text + "|");
         if (TextUtils.isEmpty(text))
+        {
+          layoutRecommedProduct.setVisibility(View.VISIBLE);
           return false;
+        }
+        else
+          layoutRecommedProduct.setVisibility(View.GONE);
         
-        PreferenceManager.getInstance(getActivity()).setRecentSearchWord(text);
-        
-        layoutRecommedProduct.setVisibility(View.GONE);
+        search(text);
       }
       
       return false;
+    }
+  };
+  
+  private OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener()
+  {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+      detail((SearchResultBean) adapter.getItem(position));
     }
   };
 }
