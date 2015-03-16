@@ -15,24 +15,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:padding="8dp"
             android:text="@string/term_publish" />
 
-        <EditText
+        <com.dabeeo.hangouyou.external.libraries.DragSortListView
+            android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/term_insert_title_here" />
-
-        <com.dabeeo.hangouyou.views.photolog.NewPhotoLogView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.dabeeo.hangouyou.views.photolog.NewPhotoLogView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.dabeeo.hangouyou.views.photolog.NewPhotoLogView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:divider="@null"
+            android:dividerHeight="3dp" />
     </LinearLayout>
 
 </ScrollView>

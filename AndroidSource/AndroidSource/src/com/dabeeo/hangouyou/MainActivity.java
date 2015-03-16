@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
-import com.dabeeo.hangouyou.activities.mypage.sub.NewPhotoLogActivity;
+import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
 import com.dabeeo.hangouyou.activities.sub.SearchActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
@@ -98,7 +98,7 @@ public class MainActivity extends ActionBarActivity
       else if (v.getId() == bottomMenuPhotolog.getId())
       {
         //로그인 체크 후 실행
-        startActivity(new Intent(getApplicationContext(), NewPhotoLogActivity.class));
+        startActivity(new Intent(getApplicationContext(), NewAndEditPhotoLogActivity.class));
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {

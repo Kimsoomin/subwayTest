@@ -1,5 +1,6 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +27,7 @@ public class MyPhotoLogListActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private ListView listView;
+  
   private MyPhotoLogListAdapter adapter;
   
   private Button btnDeleteAll, btnDelete;
@@ -37,6 +39,7 @@ public class MyPhotoLogListActivity extends ActionBarActivity
   private Button btnRegister;
   
   
+  @SuppressLint("ClickableViewAccessibility")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -91,9 +94,10 @@ public class MyPhotoLogListActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        startActivity(new Intent(MyPhotoLogListActivity.this, NewPhotoLogActivity.class));
+        startActivity(new Intent(MyPhotoLogListActivity.this, NewAndEditPhotoLogActivity.class));
       }
     });
+    isEditMode = true;
     loadPlaces();
   }
   

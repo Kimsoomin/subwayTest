@@ -67,7 +67,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.NewPhotoLogActivity"
+            android:name="com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity"
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
