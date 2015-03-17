@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="more"
+        android:text="@string/more"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:visibility="gone" />
 

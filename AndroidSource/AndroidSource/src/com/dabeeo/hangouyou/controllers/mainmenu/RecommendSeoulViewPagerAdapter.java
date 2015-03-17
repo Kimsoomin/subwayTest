@@ -8,9 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.RecommendSeoulListFragment;
-import com.dabeeo.hangouyou.fragments.mypage.MyPlaceListFragment;
 
 public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
 {

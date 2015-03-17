@@ -11,7 +11,8 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_margin="8dp"
-        android:background="@color/darker_gray" />
+        android:background="@color/darker_gray"
+        android:contentDescription="@null" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -43,6 +44,7 @@
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_heart" />
 
             <TextView
@@ -55,6 +57,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginLeft="8dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_review" />
 
             <TextView

@@ -94,5 +94,6 @@
     <string name="product">상품</string>
     <string name="popular_recommend_product">인기 추천 상품</string>
     <string name="search_word_here">검색어를 입력하세요</string>
+    <string name="more">more</string>
 
 </resources>
