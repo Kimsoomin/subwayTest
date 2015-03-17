@@ -113,15 +113,21 @@ public class RecommendSeoulListFragment extends Fragment
     
     //테스트 가데이터 
     RecommendSeoulBean bean = new RecommendSeoulBean();
-    bean.title = "왓슨스";
-    bean.category = "Shopping";
-    bean.likeCount = 7;
+    bean.title = "홍대 라이브클럽의 산 역사";
+    bean.category = "DGBD Drug";
+    bean.likeCount = 100;
     adapter.add(bean);
     
     bean = new RecommendSeoulBean();
-    bean.title = "GS편의점";
-    bean.category = "Shopping";
+    bean.title = "연남동 느리게 걷기";
+    bean.category = "PLAY";
     bean.likeCount = 50;
+    adapter.add(bean);
+    
+    bean = new RecommendSeoulBean();
+    bean.title = "서울 여행자";
+    bean.category = "인사동 쌈지길";
+    bean.likeCount = 20;
     adapter.add(bean);
     
     progressBar.setVisibility(View.GONE);
