@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers;
+package com.dabeeo.hangouyou.controllers.mainmenu;
 
 import java.util.ArrayList;
 
@@ -12,28 +12,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
+import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
 
-public class RecommendSeoulListAdapter extends BaseAdapter
+public class TravelScheduleListAdapter extends BaseAdapter
 {
-  private ArrayList<RecommendSeoulBean> beans = new ArrayList<>();
+  private ArrayList<ScheduleBean> beans = new ArrayList<>();
   private Context context;
   
   
-  public RecommendSeoulListAdapter(Context context)
+  public TravelScheduleListAdapter(Context context)
   {
     this.context = context;
   }
   
   
-  public void add(RecommendSeoulBean bean)
+  public void add(ScheduleBean bean)
   {
     this.beans.add(bean);
     notifyDataSetChanged();
   }
   
   
-  public void addAll(ArrayList<RecommendSeoulBean> beans)
+  public void addAll(ArrayList<ScheduleBean> beans)
   {
     this.beans.addAll(beans);
     notifyDataSetChanged();
@@ -72,18 +73,24 @@ public class RecommendSeoulListAdapter extends BaseAdapter
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
-    RecommendSeoulBean bean = (RecommendSeoulBean) beans.get(position);
-    int resId = R.layout.list_item_recommend_seoul;
+    ScheduleBean bean = (ScheduleBean) beans.get(position);
+    int resId = R.layout.list_item_travel_schedule;
+    
+    if (position == 0)
+      resId = R.layout.list_item_travel_schedule_first_row;
+    
     View view = LayoutInflater.from(context).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
-    TextView category = (TextView) view.findViewById(R.id.category);
+    TextView month = (TextView) view.findViewById(R.id.month);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
+    TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
     title.setText(bean.title);
-    category.setText(bean.category);
+    month.setText(Integer.toString(bean.month) + context.getString(R.string.term_month));
     likeCount.setText(Integer.toString(bean.likeCount));
+    reviewCount.setText(Integer.toString(bean.reviewCount));
     return view;
   }
 }

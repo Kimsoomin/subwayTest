@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.MyScheduleBean;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
 
 public class MySchedulesListAdapter extends BaseAdapter
 {
-  private ArrayList<MyScheduleBean> beans = new ArrayList<>();
+  private ArrayList<ScheduleBean> beans = new ArrayList<>();
   private Context context;
   private boolean isEditMode = false;
   
@@ -37,14 +37,14 @@ public class MySchedulesListAdapter extends BaseAdapter
   }
   
   
-  public void add(MyScheduleBean bean)
+  public void add(ScheduleBean bean)
   {
     this.beans.add(bean);
     notifyDataSetChanged();
   }
   
   
-  public void addAll(ArrayList<MyScheduleBean> beans)
+  public void addAll(ArrayList<ScheduleBean> beans)
   {
     this.beans.addAll(beans);
     notifyDataSetChanged();
@@ -62,7 +62,7 @@ public class MySchedulesListAdapter extends BaseAdapter
   {
     for (int i = beans.size() - 1; i >= 0; i--)
     {
-      MyScheduleBean bean = beans.get(i);
+      ScheduleBean bean = beans.get(i);
       if (bean.isChecked)
         beans.remove(i);
     }
@@ -71,9 +71,9 @@ public class MySchedulesListAdapter extends BaseAdapter
   }
   
   
-  public ArrayList<MyScheduleBean> getCheckedArrayList()
+  public ArrayList<ScheduleBean> getCheckedArrayList()
   {
-    ArrayList<MyScheduleBean> checkedLists = new ArrayList<>();
+    ArrayList<ScheduleBean> checkedLists = new ArrayList<>();
     for (int i = 0; i < beans.size(); i++)
     {
       if (beans.get(i).isChecked)
@@ -108,7 +108,7 @@ public class MySchedulesListAdapter extends BaseAdapter
   @Override
   public View getView(final int position, View convertView, ViewGroup parent)
   {
-    MyScheduleBean bean = (MyScheduleBean) beans.get(position);
+    ScheduleBean bean = (ScheduleBean) beans.get(position);
     int resId = R.layout.list_item_my_schedule;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
@@ -123,7 +123,7 @@ public class MySchedulesListAdapter extends BaseAdapter
       @Override
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
-        ((MyScheduleBean) beans.get(position)).isChecked = isChecked;
+        ((ScheduleBean) beans.get(position)).isChecked = isChecked;
       }
     });
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);

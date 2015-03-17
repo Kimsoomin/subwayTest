@@ -55,6 +55,10 @@
             android:name="com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity"
             android:label="@string/term_recommend_seoul"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity"
+            android:label="@string/term_travel_schedule"
+            android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity"

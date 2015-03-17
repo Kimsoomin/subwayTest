@@ -30,23 +30,21 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulDetailActivity;
-import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulListAdapter;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
+import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 
 /**
  * Fragment that allows controlling the colour of lights using HSV colour wheel.
  */
-public class RecommendSeoulListFragment extends Fragment
+public class TravelScheduleListFragment extends Fragment
 {
   private Activity activity;
   private View view;
-  private int categoryId = -1;
   
   private ProgressBar progressBar;
   private ListView listView;
-  private RecommendSeoulListAdapter adapter;
+  private TravelScheduleListAdapter adapter;
   
   
   @Override
@@ -63,14 +61,14 @@ public class RecommendSeoulListFragment extends Fragment
     this.activity = activity;
     if (view == null)
     {
-      int resId = R.layout.fragment_recommend_seoul_list;
+      int resId = R.layout.fragment_travel_schedule_list;
       view = LayoutInflater.from(activity).inflate(resId, null);
     }
     
     progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
     
     listView = (ListView) view.findViewById(R.id.listview);
-    adapter = new RecommendSeoulListAdapter(activity);
+    adapter = new TravelScheduleListAdapter(activity);
     listView.setAdapter(adapter);
     
     listView.setOnItemClickListener(new OnItemClickListener()
@@ -78,7 +76,7 @@ public class RecommendSeoulListFragment extends Fragment
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
       {
-        startActivity(new Intent(activity, RecommendSeoulDetailActivity.class));
+        startActivity(new Intent(activity, MyPlaceDetailActivity.class));
       }
     });
     
@@ -102,42 +100,50 @@ public class RecommendSeoulListFragment extends Fragment
       }
     });
     
-    loadPlaces();
+    loadSchedules();
   }
   
   
-  private void loadPlaces()
+  private void loadSchedules()
   {
-    //Category Id 활용해서 써야 함 
-    
     progressBar.setVisibility(View.VISIBLE);
     
     //테스트 가데이터 
-    RecommendSeoulBean bean = new RecommendSeoulBean();
-    bean.title = "홍대 라이브클럽의 산 역사";
-    bean.category = "DGBD Drug";
-    bean.likeCount = 100;
+    ScheduleBean bean = new ScheduleBean();
+    bean.title = "쇼핑천국 서울";
+    bean.month = 1;
+    bean.likeCount = 7;
+    bean.reviewCount = 11;
     adapter.add(bean);
     
-    bean = new RecommendSeoulBean();
-    bean.title = "연남동 느리게 걷기";
-    bean.category = "PLAY";
+    bean = new ScheduleBean();
+    bean.title = "서울투어1";
+    bean.month = 2;
     bean.likeCount = 50;
+    bean.reviewCount = 13;
     adapter.add(bean);
     
-    bean = new RecommendSeoulBean();
-    bean.title = "서울 여행자";
-    bean.category = "인사동 쌈지길";
-    bean.likeCount = 20;
+    bean = new ScheduleBean();
+    bean.title = "서울투어2";
+    bean.month = 2;
+    bean.likeCount = 50;
+    bean.reviewCount = 13;
+    adapter.add(bean);
+    
+    bean = new ScheduleBean();
+    bean.title = "서울투어3";
+    bean.month = 2;
+    bean.likeCount = 50;
+    bean.reviewCount = 13;
+    adapter.add(bean);
+    
+    bean = new ScheduleBean();
+    bean.title = "서울투어4";
+    bean.month = 2;
+    bean.likeCount = 50;
+    bean.reviewCount = 13;
     adapter.add(bean);
     
     progressBar.setVisibility(View.GONE);
-  }
-  
-  
-  public void setCategoryId(int categoryId)
-  {
-    //전체, 명소, 쇼핑 등 
-    this.categoryId = categoryId;
   }
 }

@@ -1,6 +1,6 @@
 package com.dabeeo.hangouyou.beans;
 
-public class MyScheduleBean
+public class ScheduleBean
 {
   public String title;
   public int month = 1;

@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity;
 
 /**
  * Fragment that allows controlling the colour of lights using HSV colour wheel.
@@ -93,7 +94,7 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerTravelSchedule.getId())
       {
-        
+        startActivity(new Intent(getActivity(), TravelSchedulesActivity.class));
       }
       else if (v.getId() == containerShoppingMall.getId())
       {

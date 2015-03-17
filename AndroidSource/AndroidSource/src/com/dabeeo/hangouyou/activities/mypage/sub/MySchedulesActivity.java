@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.MyScheduleBean;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
@@ -93,14 +93,14 @@ public class MySchedulesActivity extends ActionBarActivity
     progressBar.setVisibility(View.VISIBLE);
     
     //테스트 가데이터 
-    MyScheduleBean bean = new MyScheduleBean();
+    ScheduleBean bean = new ScheduleBean();
     bean.title = "서울 2박 3일 여행";
     bean.month = 3;
     bean.likeCount = 70;
     bean.reviewCount = 11;
     adapter.add(bean);
     
-    bean = new MyScheduleBean();
+    bean = new ScheduleBean();
     bean.title = "명동 쇼핑";
     bean.month = 1;
     bean.likeCount = 50;
