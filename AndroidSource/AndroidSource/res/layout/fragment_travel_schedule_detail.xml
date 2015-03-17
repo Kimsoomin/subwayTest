@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:paddingTop="@dimen/max_height_header" >
+
+        <!-- 하단 내용 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/content_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/term_review"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/container_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/btn_more_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/list_item_background"
+                android:text="@string/term_review_more"
+                android:textColor="@color/darker_gray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/max_height_header" >
+
+        <!-- 첫번째 이미지 -->
+
+        <com.dabeeo.hangouyou.views.ScheduleDetailHeaderView
+            android:id="@+id/header_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:paddingBottom="70dp" />
+
+        <!-- 중간 유저에 대한 내용 박스 -->
+
+        <com.dabeeo.hangouyou.views.ScheduleDetailTitleView
+            android:id="@+id/title_view"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom" />
+    </FrameLayout>
+
+</RelativeLayout>

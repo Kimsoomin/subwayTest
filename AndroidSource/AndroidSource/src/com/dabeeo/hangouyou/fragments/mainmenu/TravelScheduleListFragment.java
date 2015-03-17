@@ -30,7 +30,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 
@@ -76,7 +76,7 @@ public class TravelScheduleListFragment extends Fragment
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
       {
-        startActivity(new Intent(activity, MyPlaceDetailActivity.class));
+        startActivity(new Intent(activity, TravelScheduleDetailActivity.class));
       }
     });
     

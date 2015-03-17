@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.fragments.mypage;
+package com.dabeeo.hangouyou.fragments.mainmenu;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -13,30 +13,26 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
+import com.dabeeo.hangouyou.beans.ProductBean;
+import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.views.ProductView;
+import com.dabeeo.hangouyou.views.ReviewView;
 import com.dabeeo.hangouyou.views.ScheduleDetailHeaderView;
 import com.dabeeo.hangouyou.views.ScheduleDetailTitleView;
 import com.dabeeo.hangouyou.views.ScheduleTitleView;
 import com.dabeeo.hangouyou.views.ScheduleView;
 
-public class MyScheduleListFragment extends Fragment
+public class TravelScheduleDetailFragment extends Fragment
 {
   private Activity activity;
-  private View view;
   
   private ScrollView scrollView;
-  private LinearLayout container;
+  private LinearLayout contentContainer, containerReview;
   
   private ScheduleDetailHeaderView headerView;
   private ScheduleDetailTitleView titleView;
-  
-  
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-  {
-    return view;
-  }
   
   
   @Override
@@ -44,14 +40,18 @@ public class MyScheduleListFragment extends Fragment
   {
     super.onAttach(activity);
     this.activity = activity;
-    if (view == null)
-    {
-      int resId = R.layout.fragment_my_schedule_list;
-      view = LayoutInflater.from(activity).inflate(resId, null);
-    }
+  }
+  
+  
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+  {
+    int resId = R.layout.fragment_travel_schedule_detail;
+    View view = inflater.inflate(resId, null);
     
     scrollView = (ScrollView) view.findViewById(R.id.scrollview);
-    container = (LinearLayout) view.findViewById(R.id.content_container);
+    contentContainer = (LinearLayout) view.findViewById(R.id.content_container);
+    containerReview = (LinearLayout) view.findViewById(R.id.container_review);
     
     headerView = (ScheduleDetailHeaderView) view.findViewById(R.id.header_view);
     titleView = (ScheduleDetailTitleView) view.findViewById(R.id.title_view);
@@ -64,31 +64,52 @@ public class MyScheduleListFragment extends Fragment
     
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
     displayContentData();
+    
+    return view;
   }
   
   
   private void displayContentData()
   {
-    container.removeAllViews();
+    contentContainer.removeAllViews();
     
     ProductView productView = new ProductView(activity);
-    container.addView(productView);
+    ProductBean bean = new ProductBean();
+    bean.title = "XXX 수분크림";
+    bean.originalPrice = 150;
+    bean.discountPrice = 93;
+    productView.setBean(bean);
+    contentContainer.addView(productView);
     
     ScheduleTitleView tView = new ScheduleTitleView(activity);
-    container.addView(tView);
+    contentContainer.addView(tView);
     
     ScheduleView view = new ScheduleView(activity);
-    container.addView(view);
+    contentContainer.addView(view);
     view = new ScheduleView(activity);
-    container.addView(view);
+    contentContainer.addView(view);
     view = new ScheduleView(activity);
-    container.addView(view);
+    contentContainer.addView(view);
     view = new ScheduleView(activity);
-    container.addView(view);
+    contentContainer.addView(view);
     view = new ScheduleView(activity);
-    container.addView(view);
+    contentContainer.addView(view);
     view = new ScheduleView(activity);
-    container.addView(view);
+    contentContainer.addView(view);
     
+    containerReview.removeAllViews();
+    ReviewView reviewView = new ReviewView(activity);
+    ReviewBean reviewBean = new ReviewBean();
+    reviewBean.userName = "planB";
+    reviewBean.content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do";
+    reviewView.setBean(reviewBean);
+    containerReview.addView(reviewView);
+    
+    reviewView = new ReviewView(activity);
+    reviewBean = new ReviewBean();
+    reviewBean.userName = "planB";
+    reviewBean.content = "좋네요!";
+    reviewView.setBean(reviewBean);
+    containerReview.addView(reviewView);
   }
 }
