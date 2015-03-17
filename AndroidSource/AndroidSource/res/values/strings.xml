@@ -96,4 +96,14 @@
     <string name="search_word_here">검색어를 입력하세요</string>
     <string name="more">more</string>
 
+    <!-- 추천서울 -->
+    <string name="place_detail_info">장소 상세정보</string>
+    <string name="address">주소</string>
+    <string name="phone">전화번호</string>
+    <string name="homepage">홈페이지</string>
+    <string name="working_time">운영시간</string>
+    <string name="price_info">가격정보</string>
+    <string name="traffic">교통정보</string>
+    <string name="description">설명</string>
+
 </resources>

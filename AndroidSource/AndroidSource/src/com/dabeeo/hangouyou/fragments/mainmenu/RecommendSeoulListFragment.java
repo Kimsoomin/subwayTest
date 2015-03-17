@@ -31,6 +31,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulDetailActivity;
 import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
 import com.dabeeo.hangouyou.controllers.RecommendSeoulListAdapter;
 
@@ -77,7 +78,7 @@ public class RecommendSeoulListFragment extends Fragment
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
       {
-        startActivity(new Intent(activity, PlaceDetailActivity.class));
+        startActivity(new Intent(activity, RecommendSeoulDetailActivity.class));
       }
     });
     

@@ -126,6 +126,9 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.sub.SearchResultDetail"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
