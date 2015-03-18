@@ -1,6 +1,13 @@
 <resources>
 
     <string name="app_name">Hangouyou</string>
+
+    <!-- 서버 -->
+    <string name="server_address">http://aimper.mintshop.com/api/v1/</string>
+    <!-- 개발용 -->
+    <!-- <string name="server_address">http://10.0.1.11:3000/api/v1/</string> -->
+
+
     <!-- Alert Term -->
     <string name="term_alert">알림</string>
     <string name="term_ok">확인</string>

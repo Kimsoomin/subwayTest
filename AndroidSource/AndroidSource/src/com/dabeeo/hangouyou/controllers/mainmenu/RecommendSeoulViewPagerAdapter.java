@@ -1,19 +1,18 @@
 package com.dabeeo.hangouyou.controllers.mainmenu;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.dabeeo.hangouyou.beans.RecommendSeoulCategoryBean;
 import com.dabeeo.hangouyou.fragments.mainmenu.RecommendSeoulListFragment;
 
 public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
 {
-  public static int pos = 0;
-  private List<String> titles = new ArrayList<String>();
+  private ArrayList<RecommendSeoulCategoryBean> items = new ArrayList<>();
   
   
   public RecommendSeoulViewPagerAdapter(Context context, FragmentManager fm)
@@ -22,46 +21,29 @@ public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
-  public void setTitles(ArrayList<String> titles)
+  public void add(RecommendSeoulCategoryBean bean)
   {
-    this.titles.addAll(titles);
-    notifyDataSetChanged();
+    items.add(bean);
   }
   
   
   @Override
   public Fragment getItem(int position)
   {
-    Fragment fragment = new RecommendSeoulListFragment();
-    ((RecommendSeoulListFragment) fragment).setCategoryId(-1);
-    return fragment;
+    return new RecommendSeoulListFragment(items.get(position).categoryId);
   }
   
   
   @Override
   public int getCount()
   {
-    return titles.size();
+    return items.size();
   }
   
   
   @Override
   public CharSequence getPageTitle(int position)
   {
-    setPos(position);
-    String PageTitle = titles.get(position);
-    return PageTitle;
-  }
-  
-  
-  public static int getPos()
-  {
-    return pos;
-  }
-  
-  
-  public static void setPos(int pos)
-  {
-    RecommendSeoulViewPagerAdapter.pos = pos;
+    return items.get(position).title;
   }
 }

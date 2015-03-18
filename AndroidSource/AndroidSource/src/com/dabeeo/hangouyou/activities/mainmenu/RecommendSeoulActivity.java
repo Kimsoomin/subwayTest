@@ -1,6 +1,8 @@
 package com.dabeeo.hangouyou.activities.mainmenu;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -9,10 +11,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.RecommendSeoulCategoryBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
+import com.dabeeo.hangouyou.managers.NetworkManager;
 
 public class RecommendSeoulActivity extends ActionBarActivity
 {
@@ -27,13 +35,19 @@ public class RecommendSeoulActivity extends ActionBarActivity
     setContentView(R.layout.activity_recommend_seoul);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
-    viewPager = (ViewPager) findViewById(R.id.viewpager);
     adapter = new RecommendSeoulViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
+    RecommendSeoulCategoryBean bean = new RecommendSeoulCategoryBean("전체", -1);
+    adapter.add(bean);
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setAdapter(adapter);
     viewPager.setOffscreenPageLimit(100);
+    viewPager.setOnPageChangeListener(pageChangeListener);
     
-    displayTitles();
+    String url = getString(R.string.server_address) + "store_spheres.json";
+    JsonArrayRequest request = new JsonArrayRequest(url, titleListener, errorListener);
+    NetworkManager.instance(this).call(request);
   }
   
   
@@ -48,20 +62,6 @@ public class RecommendSeoulActivity extends ActionBarActivity
   
   private void displayTitles()
   {
-    ArrayList<String> titles = new ArrayList<>();
-    titles.add("전체");
-    titles.add("홍대");
-    titles.add("명동");
-    titles.add("종로");
-    titles.add("인사동");
-    titles.add("삼청동");
-    titles.add("압구정");
-    titles.add("강남");
-    titles.add("한류지역");
-    adapter.setTitles(titles);
-    
-    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    viewPager.setOnPageChangeListener(pageChangeListener);
     for (int i = 0; i < adapter.getCount(); i++)
     {
       getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
@@ -98,6 +98,39 @@ public class RecommendSeoulActivity extends ActionBarActivity
     public void onPageSelected(int position)
     {
       getSupportActionBar().setSelectedNavigationItem(position);
+    }
+  };
+  
+  private Response.Listener<JSONArray> titleListener = new Response.Listener<JSONArray>()
+  {
+    @Override
+    public void onResponse(JSONArray jsonArray)
+    {
+      try
+      {
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+          JSONObject obj = jsonArray.getJSONObject(i);
+          adapter.add(new RecommendSeoulCategoryBean(obj.getString("title"), obj.getInt("id")));
+        }
+        adapter.notifyDataSetChanged();
+      }
+      catch (JSONException e)
+      {
+        e.printStackTrace();
+      }
+      
+      displayTitles();
+    }
+  };
+  
+  private Response.ErrorListener errorListener = new Response.ErrorListener()
+  {
+    @Override
+    public void onErrorResponse(VolleyError e)
+    {
+      Log.e("RecommendSeoulActivity.java | onErrorResponse", "|" + e.getLocalizedMessage() + "|" + e.getMessage() + "|");
+      displayTitles();
     }
   };
 }
