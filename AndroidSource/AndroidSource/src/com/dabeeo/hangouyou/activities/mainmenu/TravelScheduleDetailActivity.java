@@ -17,7 +17,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 
 @SuppressWarnings("deprecation")
-public class TravelScheduleDetailActivity extends ActionBarActivity implements TabListener
+public class TravelScheduleDetailActivity extends ActionBarActivity
 {
   private ViewPager viewPager;
   private TravelScheduleDetailViewPagerAdapter adapter;
@@ -30,9 +30,11 @@ public class TravelScheduleDetailActivity extends ActionBarActivity implements T
     setContentView(R.layout.activity_travel_schedule_detail);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
-    viewPager = (ViewPager) findViewById(R.id.viewpager);
     adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setAdapter(adapter);
     viewPager.setOffscreenPageLimit(100);
     
@@ -58,20 +60,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity implements T
     
     adapter.setTitles(titles);
     
-    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-    {
-      @Override
-      public void onPageSelected(int position)
-      {
-        invalidateOptionsMenu();
-        getSupportActionBar().setSelectedNavigationItem(position);
-      }
-    });
-    
     for (int i = 0; i < adapter.getCount(); i++)
     {
-      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
+      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
     }
   }
   
@@ -94,22 +85,38 @@ public class TravelScheduleDetailActivity extends ActionBarActivity implements T
     return super.onOptionsItemSelected(item);
   }
   
-  
-  @Override
-  public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+  /**************************************************
+   * listener
+   ***************************************************/
+  private TabListener tabListener = new TabListener()
   {
-  }
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft)
+    {
+      viewPager.setCurrentItem(tab.getPosition());
+    }
+    
+    
+    @Override
+    public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+    
+    
+    @Override
+    public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+  };
   
-  
-  @Override
-  public void onTabSelected(Tab tab, FragmentTransaction arg1)
+  private ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {
-    viewPager.setCurrentItem(tab.getPosition());
-  }
-  
-  
-  @Override
-  public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
-  {
-  }
+    @Override
+    public void onPageSelected(int position)
+    {
+      getSupportActionBar().setSelectedNavigationItem(position);
+    }
+  };
 }

@@ -2,11 +2,11 @@ package com.dabeeo.hangouyou.activities.mainmenu;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
@@ -19,7 +19,7 @@ import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.controllers.mainmenu.FamousPlaceViewPagerAdapter;
 
 @SuppressWarnings("deprecation")
-public class FamousPlaceActivity extends ActionBarActivity implements TabListener
+public class FamousPlaceActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private ViewPager viewPager;
@@ -30,13 +30,16 @@ public class FamousPlaceActivity extends ActionBarActivity implements TabListene
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my_place);
+    setContentView(R.layout.activity_famous_place);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    
     adapter = new FamousPlaceViewPagerAdapter(this, getSupportFragmentManager());
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setAdapter(adapter);
     viewPager.setOffscreenPageLimit(100);
     
@@ -52,21 +55,11 @@ public class FamousPlaceActivity extends ActionBarActivity implements TabListene
     titles.add("쇼핑");
     titles.add("레스토랑");
     adapter.setTitles(titles);
-    
-    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-    {
-      @Override
-      public void onPageSelected(int position)
-      {
-        invalidateOptionsMenu();
-        getSupportActionBar().setSelectedNavigationItem(position);
-      }
-    });
+    adapter.notifyDataSetChanged();
     
     for (int i = 0; i < adapter.getCount(); i++)
     {
-      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
+      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
     }
   }
   
@@ -89,22 +82,38 @@ public class FamousPlaceActivity extends ActionBarActivity implements TabListene
     return super.onOptionsItemSelected(item);
   }
   
-  
-  @Override
-  public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+  /**************************************************
+   * listener
+   ***************************************************/
+  private TabListener tabListener = new TabListener()
   {
-  }
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft)
+    {
+      viewPager.setCurrentItem(tab.getPosition());
+    }
+    
+    
+    @Override
+    public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+    
+    
+    @Override
+    public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+  };
   
-  
-  @Override
-  public void onTabSelected(Tab tab, FragmentTransaction arg1)
+  private ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {
-    viewPager.setCurrentItem(tab.getPosition());
-  }
-  
-  
-  @Override
-  public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
-  {
-  }
+    @Override
+    public void onPageSelected(int position)
+    {
+      getSupportActionBar().setSelectedNavigationItem(position);
+    }
+  };
 }

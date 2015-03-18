@@ -22,6 +22,7 @@ import com.dabeeo.hangouyou.beans.RecommendSeoulCategoryBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.NetworkManager;
 
+@SuppressWarnings("deprecation")
 public class RecommendSeoulActivity extends ActionBarActivity
 {
   private ViewPager viewPager;
@@ -41,9 +42,10 @@ public class RecommendSeoulActivity extends ActionBarActivity
     RecommendSeoulCategoryBean bean = new RecommendSeoulCategoryBean("전체", -1);
     adapter.add(bean);
     viewPager = (ViewPager) findViewById(R.id.viewpager);
+    viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setAdapter(adapter);
     viewPager.setOffscreenPageLimit(100);
-    viewPager.setOnPageChangeListener(pageChangeListener);
+    
     
     String url = getString(R.string.server_address) + "store_spheres.json";
     JsonArrayRequest request = new JsonArrayRequest(url, titleListener, errorListener);
@@ -71,14 +73,11 @@ public class RecommendSeoulActivity extends ActionBarActivity
   /**************************************************
    * listener
    ***************************************************/
+  /**************************************************
+   * listener
+   ***************************************************/
   private TabListener tabListener = new TabListener()
   {
-    @Override
-    public void onTabUnselected(Tab tab, FragmentTransaction ft)
-    {
-    }
-    
-    
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft)
     {
@@ -87,8 +86,16 @@ public class RecommendSeoulActivity extends ActionBarActivity
     
     
     @Override
-    public void onTabReselected(Tab tab, FragmentTransaction ft)
+    public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
     {
+      
+    }
+    
+    
+    @Override
+    public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
     }
   };
   

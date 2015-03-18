@@ -18,7 +18,8 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 
-public class TravelSchedulesActivity extends ActionBarActivity implements TabListener
+@SuppressWarnings("deprecation")
+public class TravelSchedulesActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private ViewPager viewPager;
@@ -32,10 +33,13 @@ public class TravelSchedulesActivity extends ActionBarActivity implements TabLis
     setContentView(R.layout.activity_travel_schedules);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-    viewPager = (ViewPager) findViewById(R.id.viewpager);
+
     adapter = new TravelScheduleViewPagerAdapter(this, getSupportFragmentManager());
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setAdapter(adapter);
     viewPager.setOffscreenPageLimit(100);
     
@@ -55,20 +59,9 @@ public class TravelSchedulesActivity extends ActionBarActivity implements TabLis
     titles.add("6일 일정");
     adapter.setTitles(titles);
     
-    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-    {
-      @Override
-      public void onPageSelected(int position)
-      {
-        invalidateOptionsMenu();
-        getSupportActionBar().setSelectedNavigationItem(position);
-      }
-    });
-    
     for (int i = 0; i < adapter.getCount(); i++)
     {
-      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
+      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
     }
   }
   
@@ -91,22 +84,38 @@ public class TravelSchedulesActivity extends ActionBarActivity implements TabLis
     return super.onOptionsItemSelected(item);
   }
   
-  
-  @Override
-  public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+  /**************************************************
+   * listener
+   ***************************************************/
+  private TabListener tabListener = new TabListener()
   {
-  }
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft)
+    {
+      viewPager.setCurrentItem(tab.getPosition());
+    }
+    
+    
+    @Override
+    public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+    
+    
+    @Override
+    public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+  };
   
-  
-  @Override
-  public void onTabSelected(Tab tab, FragmentTransaction arg1)
+  private ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {
-    viewPager.setCurrentItem(tab.getPosition());
-  }
-  
-  
-  @Override
-  public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
-  {
-  }
+    @Override
+    public void onPageSelected(int position)
+    {
+      getSupportActionBar().setSelectedNavigationItem(position);
+    }
+  };
 }

@@ -19,7 +19,6 @@ public class FamousPlaceViewPagerAdapter extends FragmentPagerAdapter
   public FamousPlaceViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
-    
   }
   
   
@@ -33,8 +32,9 @@ public class FamousPlaceViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public Fragment getItem(int position)
   {
-    Fragment fragment = new PlaceListFragment();
-    ((PlaceListFragment) fragment).setCategoryId(-1);
+    PlaceListFragment fragment = new PlaceListFragment();
+    fragment.setCategoryId(-1);
+    
     return fragment;
   }
   
