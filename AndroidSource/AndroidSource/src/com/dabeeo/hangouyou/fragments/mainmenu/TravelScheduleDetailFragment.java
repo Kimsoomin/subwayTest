@@ -1,6 +1,5 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
@@ -26,21 +24,11 @@ import com.dabeeo.hangouyou.views.ScheduleView;
 
 public class TravelScheduleDetailFragment extends Fragment
 {
-  private Activity activity;
-  
   private ScrollView scrollView;
   private LinearLayout contentContainer, containerReview;
   
   private ScheduleDetailHeaderView headerView;
   private ScheduleDetailTitleView titleView;
-  
-  
-  @Override
-  public void onAttach(final Activity activity)
-  {
-    super.onAttach(activity);
-    this.activity = activity;
-  }
   
   
   @Override
@@ -55,17 +43,24 @@ public class TravelScheduleDetailFragment extends Fragment
     
     headerView = (ScheduleDetailHeaderView) view.findViewById(R.id.header_view);
     titleView = (ScheduleDetailTitleView) view.findViewById(R.id.title_view);
-    headerView.init();
-    titleView.init();
     
     FrameLayout header = (FrameLayout) view.findViewById(R.id.header);
     Resources r = getResources();
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
-    
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
-    displayContentData();
     
     return view;
+  }
+  
+  
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState)
+  {
+    super.onActivityCreated(savedInstanceState);
+    
+    headerView.init();
+    titleView.init();
+    displayContentData();
   }
   
   
@@ -73,7 +68,7 @@ public class TravelScheduleDetailFragment extends Fragment
   {
     contentContainer.removeAllViews();
     
-    ProductView productView = new ProductView(activity);
+    ProductView productView = new ProductView(getActivity());
     ProductBean bean = new ProductBean();
     bean.title = "XXX 수분크림";
     bean.originalPrice = 150;
@@ -81,31 +76,31 @@ public class TravelScheduleDetailFragment extends Fragment
     productView.setBean(bean);
     contentContainer.addView(productView);
     
-    ScheduleTitleView tView = new ScheduleTitleView(activity);
+    ScheduleTitleView tView = new ScheduleTitleView(getActivity());
     contentContainer.addView(tView);
     
-    ScheduleView view = new ScheduleView(activity);
+    ScheduleView view = new ScheduleView(getActivity());
     contentContainer.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     contentContainer.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     contentContainer.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     contentContainer.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     contentContainer.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     contentContainer.addView(view);
     
     containerReview.removeAllViews();
-    ReviewView reviewView = new ReviewView(activity);
+    ReviewView reviewView = new ReviewView(getActivity());
     ReviewBean reviewBean = new ReviewBean();
     reviewBean.userName = "planB";
     reviewBean.content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do";
     reviewView.setBean(reviewBean);
     containerReview.addView(reviewView);
     
-    reviewView = new ReviewView(activity);
+    reviewView = new ReviewView(getActivity());
     reviewBean = new ReviewBean();
     reviewBean.userName = "planB";
     reviewBean.content = "좋네요!";

@@ -1,6 +1,5 @@
 package com.dabeeo.hangouyou.fragments.mypage;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,9 +22,6 @@ import com.dabeeo.hangouyou.views.ScheduleView;
 
 public class MyScheduleDetailFragment extends Fragment
 {
-  private Activity activity;
-  private View view;
-  
   private ScrollView scrollView;
   private LinearLayout container;
   
@@ -36,34 +32,31 @@ public class MyScheduleDetailFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    return view;
-  }
-  
-  
-  @Override
-  public void onAttach(final Activity activity)
-  {
-    super.onAttach(activity);
-    this.activity = activity;
-    if (view == null)
-    {
-      int resId = R.layout.fragment_my_schedule_detail;
-      view = LayoutInflater.from(activity).inflate(resId, null);
-    }
+    int resId = R.layout.fragment_my_schedule_detail;
+    View view = inflater.inflate(resId, null);
     
     scrollView = (ScrollView) view.findViewById(R.id.scrollview);
     container = (LinearLayout) view.findViewById(R.id.content_container);
     
     headerView = (ScheduleDetailHeaderView) view.findViewById(R.id.header_view);
     titleView = (ScheduleDetailTitleView) view.findViewById(R.id.title_view);
-    headerView.init();
-    titleView.init();
     
     FrameLayout header = (FrameLayout) view.findViewById(R.id.header);
     Resources r = getResources();
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
     
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
+    
+    return view;
+  }
+  
+  
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState)
+  {
+    super.onActivityCreated(savedInstanceState);
+    headerView.init();
+    titleView.init();
     displayContentData();
   }
   
@@ -72,7 +65,7 @@ public class MyScheduleDetailFragment extends Fragment
   {
     container.removeAllViews();
     
-    ProductView productView = new ProductView(activity);
+    ProductView productView = new ProductView(getActivity());
     ProductBean bean = new ProductBean();
     bean.title = "XXX 수분크림";
     bean.originalPrice = 150;
@@ -80,21 +73,20 @@ public class MyScheduleDetailFragment extends Fragment
     productView.setBean(bean);
     container.addView(productView);
     
-    ScheduleTitleView tView = new ScheduleTitleView(activity);
+    ScheduleTitleView tView = new ScheduleTitleView(getActivity());
     container.addView(tView);
     
-    ScheduleView view = new ScheduleView(activity);
+    ScheduleView view = new ScheduleView(getActivity());
     container.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     container.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     container.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     container.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     container.addView(view);
-    view = new ScheduleView(activity);
+    view = new ScheduleView(getActivity());
     container.addView(view);
-    
   }
 }

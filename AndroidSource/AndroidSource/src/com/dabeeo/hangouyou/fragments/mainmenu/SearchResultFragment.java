@@ -52,10 +52,8 @@ public class SearchResultFragment extends Fragment
     layoutRecommedProductParent = (LinearLayout) view.findViewById(R.id.layout_recommend_product_parent);
     layoutRecommedProduct = (LinearLayout) view.findViewById(R.id.layout_recommend_product);
     
-    adapter = new SearchResultAdapter();
     listView = (ListView) view.findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
-    listView.setAdapter(adapter);
     
     return view;
   }
@@ -65,6 +63,10 @@ public class SearchResultFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    adapter = new SearchResultAdapter();
+    listView.setAdapter(adapter);
+    
     loadRecentSearchWord();
     loadRecommendProduct();
   }

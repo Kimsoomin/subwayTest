@@ -52,8 +52,7 @@ public class RecommendSeoulListFragment extends Fragment
   private ProgressBar progressBar;
   private ListView listView;
   private RecommendSeoulListAdapter adapter;
-  private boolean isLoading = false;
-  private int offset = 0, limit = 4;
+  private int offset = 0, limit = 10;
   
   
   public RecommendSeoulListFragment(int categoryId)
@@ -71,7 +70,6 @@ public class RecommendSeoulListFragment extends Fragment
     progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
     
     listView = (ListView) view.findViewById(R.id.listview);
-    
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
@@ -93,7 +91,6 @@ public class RecommendSeoulListFragment extends Fragment
   
   private void load(int offset)
   {
-    isLoading = true;
     progressBar.setVisibility(View.VISIBLE);
     String url = getString(R.string.server_address) + "stores.json?limit=" + limit + "&offset=" + offset;
     if (categoryId != -1)
@@ -109,7 +106,7 @@ public class RecommendSeoulListFragment extends Fragment
   private OnItemClickListener itemClickListener = new OnItemClickListener()
   {
     @Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
       startActivity(new Intent(getActivity(), RecommendSeoulDetailActivity.class));
     }
@@ -126,8 +123,7 @@ public class RecommendSeoulListFragment extends Fragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-      int position = firstVisibleItem + visibleItemCount;
-      if (!isLoading && totalItemCount > 0 && totalItemCount > offset && position >= totalItemCount)
+      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
       {
         offset += limit;
         load(offset);
@@ -164,7 +160,6 @@ public class RecommendSeoulListFragment extends Fragment
       }
       
       progressBar.setVisibility(View.GONE);
-      isLoading = false;
     }
   };
   
@@ -174,7 +169,6 @@ public class RecommendSeoulListFragment extends Fragment
     public void onErrorResponse(VolleyError e)
     {
       progressBar.setVisibility(View.GONE);
-      isLoading = false;
       Log.e("RecommendSeoulActivity.java | onErrorResponse", "|" + e.getLocalizedMessage() + "|" + e.getMessage() + "|");
     }
   };
