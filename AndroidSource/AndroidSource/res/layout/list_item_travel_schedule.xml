@@ -44,6 +44,7 @@
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_heart" />
 
             <TextView
@@ -56,6 +57,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginLeft="8dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_review" />
 
             <TextView

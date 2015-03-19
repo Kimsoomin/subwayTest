@@ -47,7 +47,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:background="@color/darker_gray" />
+            android:background="@color/darker_gray"
+            android:contentDescription="@null" />
     </LinearLayout>
 
 </RelativeLayout>
