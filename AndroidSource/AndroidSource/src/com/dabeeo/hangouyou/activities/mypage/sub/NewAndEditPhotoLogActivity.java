@@ -5,16 +5,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.MyPhotoLogBean;
 import com.dabeeo.hangouyou.controllers.mypage.EditPhotoLogListAdapter;
 import com.dabeeo.hangouyou.external.libraries.DragSortController;
 import com.dabeeo.hangouyou.external.libraries.DragSortListView;
 
 public class NewAndEditPhotoLogActivity extends ActionBarActivity
 {
-  private ViewGroup container;
   private DragSortListView listView;
   private DragSortController controller;
   private EditPhotoLogListAdapter adapter;
@@ -31,8 +30,8 @@ public class NewAndEditPhotoLogActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
-    listView = (DragSortListView) findViewById(R.id.listview);
     adapter = new EditPhotoLogListAdapter(this);
+    listView = (DragSortListView) findViewById(R.id.listview);
     listView.setAdapter(adapter);
     listView.setDropListener(onDropListener);
     
@@ -81,5 +80,18 @@ public class NewAndEditPhotoLogActivity extends ActionBarActivity
   
   private void displayContents()
   {
+    MyPhotoLogBean bean1 = new MyPhotoLogBean();
+    bean1.title = "1";
+    adapter.add(bean1);
+    MyPhotoLogBean bean2 = new MyPhotoLogBean();
+    bean2.title = "2";
+    adapter.add(bean2);
+    MyPhotoLogBean bean3 = new MyPhotoLogBean();
+    bean3.title = "3";
+    adapter.add(bean3);
+    MyPhotoLogBean bean4 = new MyPhotoLogBean();
+    bean4.title = "3";
+    adapter.add(bean4);
+    adapter.notifyDataSetChanged();
   }
 }
