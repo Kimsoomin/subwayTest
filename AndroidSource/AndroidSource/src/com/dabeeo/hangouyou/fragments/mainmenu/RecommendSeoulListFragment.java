@@ -1,18 +1,3 @@
-/******************************************************************************
- * Copyright (C) Cambridge Silicon Radio Limited 2014 This software is provided
- * to the customer for evaluation purposes only and, as such early feedback on
- * performance and operation is anticipated. The software source code is subject
- * to change and not intended for production. Use of developmental release
- * software is at the user's own risk. This software is provided "as is," and
- * CSR cautions users to determine for themselves the suitability of using the
- * beta release version of this software. CSR makes no warranty or
- * representation whatsoever of merchantability or fitness of the product for
- * any particular purpose or use. In no event shall CSR be liable for any
- * consequential, incidental or special damages whatsoever arising out of the
- * use of or inability to use this software, even if the user has advised CSR of
- * the possibility of such damages.
- ******************************************************************************/
-
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
 import org.json.JSONArray;
@@ -42,15 +27,11 @@ import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulListAdapter;
 import com.dabeeo.hangouyou.managers.NetworkManager;
 
-/**
- * Fragment that allows controlling the colour of lights using HSV colour wheel.
- */
 public class RecommendSeoulListFragment extends Fragment
 {
   private int categoryId = -1;
   
   private ProgressBar progressBar;
-  private ListView listView;
   private RecommendSeoulListAdapter adapter;
   private int offset = 0, limit = 10;
   
@@ -65,16 +46,7 @@ public class RecommendSeoulListFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_recommend_seoul_list;
-    View view = inflater.inflate(resId, null);
-    
-    progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-    
-    listView = (ListView) view.findViewById(R.id.listview);
-    listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
-    listView.setAdapter(adapter);
-    
-    return view;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -82,7 +54,14 @@ public class RecommendSeoulListFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+    
     adapter = new RecommendSeoulListAdapter(getActivity());
+    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
+    listView.setAdapter(adapter);
     listView.setAdapter(adapter);
     
     load(offset);

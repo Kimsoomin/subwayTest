@@ -18,7 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.RecommendSeoulCategoryBean;
+import com.dabeeo.hangouyou.beans.TitleCategoryBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.NetworkManager;
 
@@ -33,19 +33,18 @@ public class RecommendSeoulActivity extends ActionBarActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_recommend_seoul);
+    setContentView(R.layout.activity_navigation_tab);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
     adapter = new RecommendSeoulViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
-    RecommendSeoulCategoryBean bean = new RecommendSeoulCategoryBean("전체", -1);
+    TitleCategoryBean bean = new TitleCategoryBean("전체", -1);
     adapter.add(bean);
     viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setAdapter(adapter);
     viewPager.setOffscreenPageLimit(100);
-    
     
     String url = getString(R.string.server_address) + "store_spheres.json";
     JsonArrayRequest request = new JsonArrayRequest(url, titleListener, errorListener);
@@ -70,9 +69,6 @@ public class RecommendSeoulActivity extends ActionBarActivity
     }
   }
   
-  /**************************************************
-   * listener
-   ***************************************************/
   /**************************************************
    * listener
    ***************************************************/
@@ -118,7 +114,7 @@ public class RecommendSeoulActivity extends ActionBarActivity
         for (int i = 0; i < jsonArray.length(); i++)
         {
           JSONObject obj = jsonArray.getJSONObject(i);
-          adapter.add(new RecommendSeoulCategoryBean(obj.getString("title"), obj.getInt("id")));
+          adapter.add(new TitleCategoryBean(obj.getString("title"), obj.getInt("id")));
         }
         adapter.notifyDataSetChanged();
       }

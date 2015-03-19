@@ -1,8 +1,13 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,33 +18,35 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
+import com.dabeeo.hangouyou.managers.NetworkManager;
 
 public class PlaceListFragment extends Fragment
 {
   private int categoryId = -1;
   
   private ProgressBar progressBar;
-  private ListView listView;
   private MyPlaceListAdapter adapter;
+  private int offset = 0, limit = 10;
+  
+  
+  public PlaceListFragment(int categoryId)
+  {
+    this.categoryId = categoryId;
+  }
   
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_my_place_list;
-    View view = inflater.inflate(resId, null);
-    
-    progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-    
-    listView = (ListView) view.findViewById(R.id.listview);
-    listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
-    
-    return view;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -48,35 +55,28 @@ public class PlaceListFragment extends Fragment
   {
     super.onActivityCreated(savedInstanceState);
     
+    progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+    
     adapter = new MyPlaceListAdapter(getActivity());
+    
+    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
-    loadPlaces();
+    load(0);
   }
   
   
-  private void loadPlaces()
+  private void load(int offset)
   {
-    //Category Id 활용해서 써야 함 
-    
     progressBar.setVisibility(View.VISIBLE);
+    String url = getString(R.string.server_address) + "stores.json?limit=" + limit + "&offset=" + offset;
+    if (categoryId != -1)
+      url += "&sphere_id=" + categoryId;
     
-    //테스트 가데이터 
-    PlaceBean bean = new PlaceBean();
-    bean.title = "왓슨스";
-    bean.category = "Shopping";
-    bean.likeCount = 7;
-    bean.reviewCount = 11;
-    adapter.add(bean);
-    
-    bean = new PlaceBean();
-    bean.title = "GS편의점";
-    bean.category = "Shopping";
-    bean.likeCount = 50;
-    bean.reviewCount = 13;
-    adapter.add(bean);
-    
-    progressBar.setVisibility(View.GONE);
+    JsonObjectRequest request = new JsonObjectRequest(url, null, successListener, errorListener);
+    NetworkManager.instance(getActivity()).call(request);
   }
   
   
@@ -109,11 +109,55 @@ public class PlaceListFragment extends Fragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-//      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
-//      {
-//        offset += limit;
-//        load(offset);
-//      }
+      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        offset += limit;
+        load(offset);
+      }
+    }
+  };
+  
+  private Response.Listener<JSONObject> successListener = new Response.Listener<JSONObject>()
+  {
+    @Override
+    public void onResponse(JSONObject jsonObject)
+    {
+      try
+      {
+        JSONArray stroes = jsonObject.getJSONArray("stores");
+        for (int i = 0; i < stroes.length(); i++)
+        {
+          JSONObject store = stroes.getJSONObject(i);
+          
+          PlaceBean bean = new PlaceBean();
+          bean.title = store.getString("name");
+          bean.likeCount = store.getInt("like_count");
+          
+          JSONObject category = store.getJSONObject("category");
+          bean.category = category.getString("title");
+          
+          bean.reviewCount = 11;
+          
+          adapter.add(bean);
+        }
+        adapter.notifyDataSetChanged();
+      }
+      catch (JSONException e)
+      {
+        e.printStackTrace();
+      }
+      
+      progressBar.setVisibility(View.GONE);
+    }
+  };
+  
+  private Response.ErrorListener errorListener = new Response.ErrorListener()
+  {
+    @Override
+    public void onErrorResponse(VolleyError e)
+    {
+      progressBar.setVisibility(View.GONE);
+      Log.e("RecommendSeoulActivity.java | onErrorResponse", "|" + e.getLocalizedMessage() + "|" + e.getMessage() + "|");
     }
   };
 }

@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
@@ -21,7 +20,6 @@ import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 @SuppressWarnings("deprecation")
 public class TravelSchedulesActivity extends ActionBarActivity
 {
-  private ProgressBar progressBar;
   private ViewPager viewPager;
   private TravelScheduleViewPagerAdapter adapter;
   
@@ -30,13 +28,11 @@ public class TravelSchedulesActivity extends ActionBarActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_travel_schedules);
+    setContentView(R.layout.activity_navigation_tab);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
-    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
     adapter = new TravelScheduleViewPagerAdapter(this, getSupportFragmentManager());
     viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setOnPageChangeListener(pageChangeListener);

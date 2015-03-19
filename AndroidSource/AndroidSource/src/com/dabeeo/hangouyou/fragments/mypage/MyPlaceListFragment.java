@@ -23,7 +23,6 @@ public class MyPlaceListFragment extends Fragment
   private int categoryId = -1;
   
   private ProgressBar progressBar;
-  private ListView listView;
   private MyPlaceListAdapter adapter;
   
   
@@ -31,15 +30,7 @@ public class MyPlaceListFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_my_place_list;
-    View view = inflater.inflate(resId, null);
-    
-    progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-    
-    listView = (ListView) view.findViewById(R.id.listview);
-    listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
-    
-    return view;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -47,7 +38,13 @@ public class MyPlaceListFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+    
     adapter = new MyPlaceListAdapter(getActivity());
+    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
     loadPlaces();

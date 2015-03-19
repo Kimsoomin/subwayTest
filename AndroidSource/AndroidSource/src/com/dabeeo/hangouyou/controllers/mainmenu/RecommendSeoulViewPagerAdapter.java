@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.beans.RecommendSeoulCategoryBean;
+import com.dabeeo.hangouyou.beans.TitleCategoryBean;
 import com.dabeeo.hangouyou.fragments.mainmenu.RecommendSeoulListFragment;
 
 public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
 {
-  private ArrayList<RecommendSeoulCategoryBean> items = new ArrayList<>();
+  private ArrayList<TitleCategoryBean> items = new ArrayList<>();
   
   
   public RecommendSeoulViewPagerAdapter(Context context, FragmentManager fm)
@@ -21,7 +21,7 @@ public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
-  public void add(RecommendSeoulCategoryBean bean)
+  public void add(TitleCategoryBean bean)
   {
     items.add(bean);
   }

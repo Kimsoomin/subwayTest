@@ -24,7 +24,6 @@ import com.dabeeo.hangouyou.views.ScheduleView;
 
 public class TravelScheduleDetailFragment extends Fragment
 {
-  private ScrollView scrollView;
   private LinearLayout contentContainer, containerReview;
   
   private ScheduleDetailHeaderView headerView;
@@ -35,21 +34,7 @@ public class TravelScheduleDetailFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_travel_schedule_detail;
-    View view = inflater.inflate(resId, null);
-    
-    scrollView = (ScrollView) view.findViewById(R.id.scrollview);
-    contentContainer = (LinearLayout) view.findViewById(R.id.content_container);
-    containerReview = (LinearLayout) view.findViewById(R.id.container_review);
-    
-    headerView = (ScheduleDetailHeaderView) view.findViewById(R.id.header_view);
-    titleView = (ScheduleDetailTitleView) view.findViewById(R.id.title_view);
-    
-    FrameLayout header = (FrameLayout) view.findViewById(R.id.header);
-    Resources r = getResources();
-    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
-    StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
-    
-    return view;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -58,8 +43,20 @@ public class TravelScheduleDetailFragment extends Fragment
   {
     super.onActivityCreated(savedInstanceState);
     
+    ScrollView scrollView = (ScrollView) getView().findViewById(R.id.scrollview);
+    contentContainer = (LinearLayout) getView().findViewById(R.id.content_container);
+    containerReview = (LinearLayout) getView().findViewById(R.id.container_review);
+    
+    headerView = (ScheduleDetailHeaderView) getView().findViewById(R.id.header_view);
+    titleView = (ScheduleDetailTitleView) getView().findViewById(R.id.title_view);
     headerView.init();
     titleView.init();
+    
+    FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
+    Resources r = getResources();
+    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
+    StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
+    
     displayContentData();
   }
   

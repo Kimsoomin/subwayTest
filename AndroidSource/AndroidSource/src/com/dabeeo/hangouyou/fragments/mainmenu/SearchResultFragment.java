@@ -36,7 +36,6 @@ import com.dabeeo.hangouyou.views.ProductView;
 public class SearchResultFragment extends Fragment
 {
   private EditText inputWord;
-  private ListView listView;
   private ViewGroup layoutRecommedProductParent, layoutRecommedProduct;
   private SearchResultAdapter adapter;
   
@@ -44,18 +43,8 @@ public class SearchResultFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    View view = inflater.inflate(R.layout.fragment_search_result, container, false);
-    
-    inputWord = (EditText) view.findViewById(R.id.input_word);
-    inputWord.setOnEditorActionListener(editorActionListener);
-    
-    layoutRecommedProductParent = (LinearLayout) view.findViewById(R.id.layout_recommend_product_parent);
-    layoutRecommedProduct = (LinearLayout) view.findViewById(R.id.layout_recommend_product);
-    
-    listView = (ListView) view.findViewById(android.R.id.list);
-    listView.setOnItemClickListener(itemClickListener);
-    
-    return view;
+    int resId = R.layout.fragment_search_result;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -64,7 +53,15 @@ public class SearchResultFragment extends Fragment
   {
     super.onActivityCreated(savedInstanceState);
     
+    inputWord = (EditText) getView().findViewById(R.id.input_word);
+    inputWord.setOnEditorActionListener(editorActionListener);
+    
+    layoutRecommedProductParent = (LinearLayout) getView().findViewById(R.id.layout_recommend_product_parent);
+    layoutRecommedProduct = (LinearLayout) getView().findViewById(R.id.layout_recommend_product);
+    
     adapter = new SearchResultAdapter();
+    ListView listView = (ListView) getView().findViewById(android.R.id.list);
+    listView.setOnItemClickListener(itemClickListener);
     listView.setAdapter(adapter);
     
     loadRecentSearchWord();

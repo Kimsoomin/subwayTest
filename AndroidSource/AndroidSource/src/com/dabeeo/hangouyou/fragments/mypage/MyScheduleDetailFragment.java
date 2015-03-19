@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.dabeeo.hangouyou.R;
@@ -22,8 +21,7 @@ import com.dabeeo.hangouyou.views.ScheduleView;
 
 public class MyScheduleDetailFragment extends Fragment
 {
-  private ScrollView scrollView;
-  private LinearLayout container;
+  private ViewGroup container;
   
   private ScheduleDetailHeaderView headerView;
   private ScheduleDetailTitleView titleView;
@@ -33,21 +31,7 @@ public class MyScheduleDetailFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_my_schedule_detail;
-    View view = inflater.inflate(resId, null);
-    
-    scrollView = (ScrollView) view.findViewById(R.id.scrollview);
-    container = (LinearLayout) view.findViewById(R.id.content_container);
-    
-    headerView = (ScheduleDetailHeaderView) view.findViewById(R.id.header_view);
-    titleView = (ScheduleDetailTitleView) view.findViewById(R.id.title_view);
-    
-    FrameLayout header = (FrameLayout) view.findViewById(R.id.header);
-    Resources r = getResources();
-    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
-    
-    StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
-    
-    return view;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -55,8 +39,21 @@ public class MyScheduleDetailFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    ScrollView scrollView = (ScrollView) getView().findViewById(R.id.scrollview);
+    container = (ViewGroup) getView().findViewById(R.id.content_container);
+    
+    headerView = (ScheduleDetailHeaderView) getView().findViewById(R.id.header_view);
+    titleView = (ScheduleDetailTitleView) getView().findViewById(R.id.title_view);
     headerView.init();
     titleView.init();
+    
+    FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
+    Resources r = getResources();
+    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
+    
+    StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
+    
     displayContentData();
   }
   

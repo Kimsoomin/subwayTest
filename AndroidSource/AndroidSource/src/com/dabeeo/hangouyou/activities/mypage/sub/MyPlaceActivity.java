@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceViewPagerAdapter;
@@ -19,7 +18,6 @@ import com.dabeeo.hangouyou.controllers.mypage.MyPlaceViewPagerAdapter;
 @SuppressWarnings("deprecation")
 public class MyPlaceActivity extends ActionBarActivity
 {
-  private ProgressBar progressBar;
   private MenuItem editMenuItem, closeMenuItem;
   private boolean isEditMode = false;
   private ViewPager viewPager;
@@ -30,12 +28,10 @@ public class MyPlaceActivity extends ActionBarActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my_place);
+    setContentView(R.layout.activity_navigation_tab);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    
-    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     
     adapter = new MyPlaceViewPagerAdapter(this, getSupportFragmentManager());
     viewPager = (ViewPager) findViewById(R.id.viewpager);

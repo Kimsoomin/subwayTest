@@ -21,7 +21,6 @@ import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 public class TravelScheduleListFragment extends Fragment
 {
   private ProgressBar progressBar;
-  private ListView listView;
   private TravelScheduleListAdapter adapter;
   
   
@@ -29,15 +28,7 @@ public class TravelScheduleListFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_travel_schedule_list;
-    View view = inflater.inflate(resId, null);
-    
-    progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-    
-    listView = (ListView) view.findViewById(R.id.listview);
-    listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
-    
-    return view;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -46,7 +37,12 @@ public class TravelScheduleListFragment extends Fragment
   {
     super.onActivityCreated(savedInstanceState);
     
+    progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+    
     adapter = new TravelScheduleListAdapter(getActivity());
+    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
     loadSchedules();

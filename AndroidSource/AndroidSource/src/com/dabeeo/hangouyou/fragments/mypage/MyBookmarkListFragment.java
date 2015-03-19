@@ -23,7 +23,6 @@ public class MyBookmarkListFragment extends Fragment
   private int categoryId = -1;
   
   private ProgressBar progressBar;
-  private ListView listView;
   private MyBookmarkListAdapter adapter;
   
   
@@ -33,15 +32,7 @@ public class MyBookmarkListFragment extends Fragment
     setHasOptionsMenu(true);
     
     int resId = R.layout.fragment_my_bookmark_list;
-    View view = inflater.inflate(resId, null);
-    
-    progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-    
-    listView = (ListView) view.findViewById(R.id.listview);
-    listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
-    
-    return view;
+    return inflater.inflate(resId, null);
   }
   
   
@@ -49,7 +40,13 @@ public class MyBookmarkListFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+    
     adapter = new MyBookmarkListAdapter(getActivity());
+    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
     loadPlaces();
