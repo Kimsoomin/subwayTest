@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.controllers.mypage;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +16,9 @@ import com.dabeeo.hangouyou.beans.MyPhotoLogBean;
 public class EditPhotoLogListAdapter extends BaseAdapter
 {
   private ArrayList<MyPhotoLogBean> beans = new ArrayList<>();
-  private Context context;
   private boolean isEditMode = false;
   private ImageView photo;
   private ImageButton btnLocalPhoto;
-  
-  
-  public EditPhotoLogListAdapter(Context context)
-  {
-    this.context = context;
-  }
   
   
   public void setEditMode(boolean isEditMode)
@@ -109,7 +101,7 @@ public class EditPhotoLogListAdapter extends BaseAdapter
   {
     MyPhotoLogBean bean = (MyPhotoLogBean) beans.get(position);
     int resId = R.layout.view_new_photo_log;
-    View view = LayoutInflater.from(context).inflate(resId, null);
+    View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     photo = (ImageView) view.findViewById(R.id.photo);
 //    photo.setOnClickListener(clickListener);

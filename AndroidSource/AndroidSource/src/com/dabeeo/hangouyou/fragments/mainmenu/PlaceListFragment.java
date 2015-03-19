@@ -57,7 +57,7 @@ public class PlaceListFragment extends Fragment
     
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new MyPlaceListAdapter(getActivity());
+    adapter = new MyPlaceListAdapter();
     
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);

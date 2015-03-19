@@ -12,14 +12,12 @@ import com.dabeeo.hangouyou.fragments.mypage.MyPlaceListFragment;
 
 public class MyPlaceViewPagerAdapter extends FragmentPagerAdapter
 {
-  public static int pos = 0;
   private List<String> titles = new ArrayList<String>();
   
   
   public MyPlaceViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
-    
   }
   
   
@@ -49,20 +47,6 @@ public class MyPlaceViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public CharSequence getPageTitle(int position)
   {
-    setPos(position);
-    String PageTitle = titles.get(position);
-    return PageTitle;
-  }
-  
-  
-  public static int getPos()
-  {
-    return pos;
-  }
-  
-  
-  public static void setPos(int pos)
-  {
-    MyPlaceViewPagerAdapter.pos = pos;
+    return titles.get(position);
   }
 }

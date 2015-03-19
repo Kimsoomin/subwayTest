@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.controllers.mypage;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,6 @@ import com.dabeeo.hangouyou.beans.BookmarkBean;
 public class MyBookmarkListAdapter extends BaseAdapter
 {
   private ArrayList<BookmarkBean> beans = new ArrayList<>();
-  private Context context;
-  
-  
-  public MyBookmarkListAdapter(Context context)
-  {
-    this.context = context;
-  }
   
   
   public void add(BookmarkBean bean)
@@ -75,7 +67,7 @@ public class MyBookmarkListAdapter extends BaseAdapter
     BookmarkBean bean = (BookmarkBean) beans.get(position);
     
     int resId = R.layout.list_item_bookmark;
-    View view = LayoutInflater.from(context).inflate(resId, null);
+    View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);

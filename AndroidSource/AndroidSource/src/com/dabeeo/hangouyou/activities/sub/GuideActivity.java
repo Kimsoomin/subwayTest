@@ -21,16 +21,13 @@ import com.dabeeo.hangouyou.external.libraries.CirclePageIndicator;
 
 public class GuideActivity extends Activity
 {
-  private ViewPager viewPager;
-  
-  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_guide);
     
-    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setAdapter(new PagerAdapterClass(getApplicationContext()));
     
     CirclePageIndicator circleIndicator = (CirclePageIndicator) findViewById(R.id.indicator);

@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,6 @@ import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
 public class RecommendSeoulListAdapter extends BaseAdapter
 {
   private ArrayList<RecommendSeoulBean> beans = new ArrayList<>();
-  private Context context;
-  
-  
-  public RecommendSeoulListAdapter(Context context)
-  {
-    this.context = context;
-  }
   
   
   public void add(RecommendSeoulBean bean)
@@ -74,7 +66,7 @@ public class RecommendSeoulListAdapter extends BaseAdapter
   {
     RecommendSeoulBean bean = (RecommendSeoulBean) beans.get(position);
     int resId = R.layout.list_item_recommend_seoul;
-    View view = LayoutInflater.from(context).inflate(resId, null);
+    View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);

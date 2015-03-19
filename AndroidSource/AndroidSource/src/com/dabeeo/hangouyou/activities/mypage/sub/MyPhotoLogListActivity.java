@@ -1,6 +1,5 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -36,10 +35,7 @@ public class MyPhotoLogListActivity extends ActionBarActivity
   private MenuItem editMenuItem, closeMenuItem;
   private boolean isEditMode = false;
   
-  private Button btnRegister;
   
-  
-  @SuppressLint("ClickableViewAccessibility")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -52,44 +48,17 @@ public class MyPhotoLogListActivity extends ActionBarActivity
     
     deleteContainer = (LinearLayout) findViewById(R.id.container_delete);
     btnDelete = (Button) findViewById(R.id.btn_delete);
-    btnRegister = (Button) findViewById(R.id.btn_register_photolog);
     btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
     btnDelete.setOnClickListener(deleteBtnClickListener);
     btnDeleteAll.setOnClickListener(deleteBtnClickListener);
     
-    listView = (ListView) findViewById(R.id.listview);
-    adapter = new MyPhotoLogListAdapter(this);
+    adapter = new MyPhotoLogListAdapter();
+    listView = (ListView) findViewById(android.R.id.list);
     listView.setAdapter(adapter);
+    listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
     
-    listView.setOnItemClickListener(new OnItemClickListener()
-    {
-      @Override
-      public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-      {
-        startActivity(new Intent(MyPhotoLogListActivity.this, MyPhotoLogDetailActivity.class));
-      }
-    });
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-        
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-//        if (!isLoading && !isLoadEnded && (totalItemCount > 0 && (totalItemCount - firstVisibleItem <= visibleItemCount)))
-//        {
-//          offset = offset + limit;
-//          loadSchedules();
-//        }
-      }
-    });
-    
-    btnRegister.setOnClickListener(new OnClickListener()
+    findViewById(R.id.btn_register_photolog).setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View arg0)
@@ -173,6 +142,21 @@ public class MyPhotoLogListActivity extends ActionBarActivity
     return super.onOptionsItemSelected(item);
   }
   
+  
+  private void displayEditMode()
+  {
+    if (isEditMode)
+      deleteContainer.setVisibility(View.VISIBLE);
+    else
+      deleteContainer.setVisibility(View.GONE);
+    
+    adapter.setEditMode(isEditMode);
+    invalidateOptionsMenu();
+  }
+  
+  /**************************************************
+   * listener
+   ***************************************************/
   private OnClickListener deleteBtnClickListener = new OnClickListener()
   {
     @Override
@@ -224,15 +208,33 @@ public class MyPhotoLogListActivity extends ActionBarActivity
     }
   };
   
-  
-  private void displayEditMode()
+  /**************************************************
+   * listener
+   ***************************************************/
+  private OnItemClickListener itemClickListener = new OnItemClickListener()
   {
-    if (isEditMode)
-      deleteContainer.setVisibility(View.VISIBLE);
-    else
-      deleteContainer.setVisibility(View.GONE);
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+      startActivity(new Intent(MyPhotoLogListActivity.this, MyPhotoLogDetailActivity.class));
+    }
+  };
+  private OnScrollListener scrollListener = new OnScrollListener()
+  {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+    }
     
-    adapter.setEditMode(isEditMode);
-    invalidateOptionsMenu();
-  }
+    
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+//      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
+//      {
+//        offset += limit;
+//        load(offset);
+//      }
+    }
+  };
 }

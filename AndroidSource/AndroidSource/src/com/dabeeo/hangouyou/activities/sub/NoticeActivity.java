@@ -39,8 +39,8 @@ public class NoticeActivity extends ActionBarActivity
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     
-    listView = (ExpandableListView) findViewById(R.id.list_view);
-    adapter = new NoticeAdapter(this, titles, contents);
+    listView = (ExpandableListView) findViewById(android.R.id.list);
+    adapter = new NoticeAdapter(titles, contents);
     listView.setAdapter(adapter);
     
     listView.setOnScrollListener(scrollListener);
@@ -81,8 +81,8 @@ public class NoticeActivity extends ActionBarActivity
   }
   
   /**************************************************
-   * 
-***************************************************/
+   * listener
+   ***************************************************/
   private OnScrollListener scrollListener = new OnScrollListener()
   {
     @Override

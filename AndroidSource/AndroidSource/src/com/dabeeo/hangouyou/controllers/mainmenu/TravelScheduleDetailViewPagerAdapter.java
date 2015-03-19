@@ -12,14 +12,12 @@ import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleDetailFragment;
 
 public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
 {
-  public static int pos = 0;
   private List<String> titles = new ArrayList<String>();
   
   
   public TravelScheduleDetailViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
-    
   }
   
   
@@ -48,20 +46,6 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public CharSequence getPageTitle(int position)
   {
-    setPos(position);
-    String PageTitle = titles.get(position);
-    return PageTitle;
-  }
-  
-  
-  public static int getPos()
-  {
-    return pos;
-  }
-  
-  
-  public static void setPos(int pos)
-  {
-    TravelScheduleDetailViewPagerAdapter.pos = pos;
+    return titles.get(position);
   }
 }

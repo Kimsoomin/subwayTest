@@ -110,6 +110,7 @@ public class IntroActivity extends ActionBarActivity
       startMainActivity();
   }
   
+  
   private void startGuideActivity()
   {
     PreferenceManager.getInstance(this).setIsFirst(false);

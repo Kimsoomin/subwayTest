@@ -54,7 +54,7 @@ public class PhotoSelectActivity extends Activity
     if (isCallFromCustomView)
       callbackKeyCallForCustomView = getIntent().getStringExtra("callback_key_for_custom_view");
     
-    photoAdapter = new LocalPhotoAdapter(getApplicationContext(), getIntent().getBooleanExtra("can_select_multiple", false));
+    photoAdapter = new LocalPhotoAdapter(getIntent().getBooleanExtra("can_select_multiple", false));
     GridView grid = (GridView) findViewById(R.id.gridView);
     grid.setAdapter(photoAdapter);
     grid.setOnItemClickListener(itemClickListener);

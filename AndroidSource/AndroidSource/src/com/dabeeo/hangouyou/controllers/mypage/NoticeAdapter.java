@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.controllers.mypage;
 import java.util.HashMap;
 import java.util.List;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.method.LinkMovementMethod;
@@ -14,14 +13,12 @@ import android.widget.TextView;
 
 public class NoticeAdapter extends BaseExpandableListAdapter
 {
-  private Context context;
   private List<String> titles;
   private HashMap<String, List<String>> childs;
   
   
-  public NoticeAdapter(Context context, List<String> titles, HashMap<String, List<String>> childs)
+  public NoticeAdapter(List<String> titles, HashMap<String, List<String>> childs)
   {
-    this.context = context;
     this.titles = titles;
     this.childs = childs;
   }
@@ -46,7 +43,7 @@ public class NoticeAdapter extends BaseExpandableListAdapter
   {
     final String childText = (String) getChild(groupPosition, childPosition);
     
-    convertView = new TextView(context);
+    convertView = new TextView(parent.getContext());
     ((TextView) convertView).setPadding(16, 16, 16, 16);
     ((TextView) convertView).setTextSize(16);
     ((TextView) convertView).setMovementMethod(LinkMovementMethod.getInstance());
@@ -88,7 +85,7 @@ public class NoticeAdapter extends BaseExpandableListAdapter
   {
     String headerTitle = (String) getGroup(groupPosition);
     
-    convertView = new TextView(context);
+    convertView = new TextView(parent.getContext());
     ((TextView) convertView).setPadding(80, 16, 16, 16);
     ((TextView) convertView).setTextSize(18);
     ((TextView) convertView).setSingleLine();

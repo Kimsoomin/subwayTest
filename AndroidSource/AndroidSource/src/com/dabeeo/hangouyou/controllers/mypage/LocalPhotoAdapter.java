@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +21,13 @@ import com.squareup.picasso.Picasso;
 
 public class LocalPhotoAdapter extends BaseAdapter
 {
-  private Context context;
   private ArrayList<LocalPhotoBean> items = new ArrayList<>();
   private int selectIndex = 1;
   private boolean canSelectMultiple;
   
   
-  public LocalPhotoAdapter(Context context, boolean canMultipleSelect)
+  public LocalPhotoAdapter(boolean canMultipleSelect)
   {
-    this.context = context;
     this.canSelectMultiple = canMultipleSelect;
   }
   
@@ -119,7 +116,7 @@ public class LocalPhotoAdapter extends BaseAdapter
       photo.setImageResource(android.R.drawable.ic_menu_camera);
     else
     {
-      Picasso.with(context).load(Uri.fromFile(new File(bean.path)).toString()).resize(100, 100).centerCrop().into(photo);
+      Picasso.with(parent.getContext()).load(Uri.fromFile(new File(bean.path)).toString()).resize(100, 100).centerCrop().into(photo);
       
       convertView.setOnClickListener(new View.OnClickListener()
       {

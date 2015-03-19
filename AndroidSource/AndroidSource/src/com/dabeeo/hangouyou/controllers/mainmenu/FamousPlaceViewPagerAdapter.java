@@ -12,7 +12,6 @@ import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
 
 public class FamousPlaceViewPagerAdapter extends FragmentPagerAdapter
 {
-  public static int pos = 0;
   private ArrayList<TitleCategoryBean> items = new ArrayList<>();
   
   

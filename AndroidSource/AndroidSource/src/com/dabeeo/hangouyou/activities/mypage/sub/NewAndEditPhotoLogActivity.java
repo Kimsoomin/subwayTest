@@ -30,8 +30,8 @@ public class NewAndEditPhotoLogActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
-    adapter = new EditPhotoLogListAdapter(this);
-    listView = (DragSortListView) findViewById(R.id.listview);
+    adapter = new EditPhotoLogListAdapter();
+    listView = (DragSortListView) findViewById(android.R.id.list);
     listView.setAdapter(adapter);
     listView.setDropListener(onDropListener);
     

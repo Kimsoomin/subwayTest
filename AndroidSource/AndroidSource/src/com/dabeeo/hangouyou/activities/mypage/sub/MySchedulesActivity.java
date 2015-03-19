@@ -51,38 +51,11 @@ public class MySchedulesActivity extends ActionBarActivity
     btnDelete.setOnClickListener(deleteBtnClickListener);
     btnDeleteAll.setOnClickListener(deleteBtnClickListener);
     
-    listView = (ListView) findViewById(R.id.listview);
-    adapter = new MySchedulesListAdapter(this);
+    adapter = new MySchedulesListAdapter();
+    listView = (ListView) findViewById(android.R.id.list);
     listView.setAdapter(adapter);
-    
-    listView.setOnItemClickListener(new OnItemClickListener()
-    {
-      @Override
-      public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-      {
-        startActivity(new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class));
-      }
-    });
-    
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-        
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-//        if (!isLoading && !isLoadEnded && (totalItemCount > 0 && (totalItemCount - firstVisibleItem <= visibleItemCount)))
-//        {
-//          offset = offset + limit;
-//          loadSchedules();
-//        }
-      }
-    });
+    listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
     
     loadSchedules();
   }
@@ -149,6 +122,21 @@ public class MySchedulesActivity extends ActionBarActivity
     return super.onOptionsItemSelected(item);
   }
   
+  
+  private void displayEditMode()
+  {
+    if (isEditMode)
+      deleteContainer.setVisibility(View.VISIBLE);
+    else
+      deleteContainer.setVisibility(View.GONE);
+    
+    adapter.setEditMode(isEditMode);
+    invalidateOptionsMenu();
+  }
+  
+  /**************************************************
+   * listener
+   ***************************************************/
   private OnClickListener deleteBtnClickListener = new OnClickListener()
   {
     @Override
@@ -200,16 +188,31 @@ public class MySchedulesActivity extends ActionBarActivity
     }
   };
   
-  
-  private void displayEditMode()
+  private OnItemClickListener itemClickListener = new OnItemClickListener()
   {
-    if (isEditMode)
-      deleteContainer.setVisibility(View.VISIBLE);
-    else
-      deleteContainer.setVisibility(View.GONE);
-    
-    adapter.setEditMode(isEditMode);
-    invalidateOptionsMenu();
-  }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+      startActivity(new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class));
+    }
+  };
   
+  private OnScrollListener scrollListener = new OnScrollListener()
+  {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+    }
+    
+    
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+//      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
+//      {
+//        offset += limit;
+//        load(offset);
+//      }
+    }
+  };
 }

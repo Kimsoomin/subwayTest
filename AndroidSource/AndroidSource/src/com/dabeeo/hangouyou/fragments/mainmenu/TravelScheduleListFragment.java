@@ -39,7 +39,7 @@ public class TravelScheduleListFragment extends Fragment
     
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new TravelScheduleListAdapter(getActivity());
+    adapter = new TravelScheduleListAdapter();
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
