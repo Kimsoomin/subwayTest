@@ -45,7 +45,7 @@ public class PlaceListFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    int resId = R.layout.fragment_my_place_list;
+    int resId = R.layout.fragment_list;
     return inflater.inflate(resId, null);
   }
   
@@ -59,7 +59,7 @@ public class PlaceListFragment extends Fragment
     
     adapter = new MyPlaceListAdapter(getActivity());
     
-    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);

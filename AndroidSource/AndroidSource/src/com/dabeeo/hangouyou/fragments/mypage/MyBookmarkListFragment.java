@@ -31,7 +31,7 @@ public class MyBookmarkListFragment extends Fragment
   {
     setHasOptionsMenu(true);
     
-    int resId = R.layout.fragment_my_bookmark_list;
+    int resId = R.layout.fragment_list;
     return inflater.inflate(resId, null);
   }
   
@@ -44,7 +44,7 @@ public class MyBookmarkListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     adapter = new MyBookmarkListAdapter(getActivity());
-    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);

@@ -45,7 +45,7 @@ public class RecommendSeoulListFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    int resId = R.layout.fragment_recommend_seoul_list;
+    int resId = R.layout.fragment_list;
     return inflater.inflate(resId, null);
   }
   
@@ -58,7 +58,7 @@ public class RecommendSeoulListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     adapter = new RecommendSeoulListAdapter(getActivity());
-    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
