@@ -26,10 +26,7 @@ public class NoticeActivity extends ActionBarActivity
   private HashMap<String, List<String>> contents = new HashMap<String, List<String>>();
   
   private ProgressBar progressBar;
-  private boolean isLoading = false;
-  private boolean isLoadEnded = false;
-  private int limit = 20;
-  private int offset = 0;
+  private int limit = 20, offset = 0;
   
   
   @Override
@@ -46,25 +43,7 @@ public class NoticeActivity extends ActionBarActivity
     adapter = new NoticeAdapter(this, titles, contents);
     listView.setAdapter(adapter);
     
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-        
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-//        if (!isLoading && !isLoadEnded && (totalItemCount > 0 && (totalItemCount - firstVisibleItem <= visibleItemCount)))
-//        {
-//          offset = offset + limit;
-//          loadNotices();
-//        }
-      }
-    });
+    listView.setOnScrollListener(scrollListener);
     
     loadNotices();
   }
@@ -100,4 +79,26 @@ public class NoticeActivity extends ActionBarActivity
     
     progressBar.setVisibility(View.GONE);
   }
+  
+  /**************************************************
+   * 
+***************************************************/
+  private OnScrollListener scrollListener = new OnScrollListener()
+  {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+    }
+    
+    
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+//        offset += limit;
+//        load(offset);
+      }
+    }
+  };
 }
