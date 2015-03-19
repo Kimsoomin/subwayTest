@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -56,16 +54,4 @@ public class NetworkManager
     Log.i("NetworkManager.java | call", "========================\n" + request.getUrl() + "\n========================");
     queue.add(request);
   }
-  
-  /**************************************************
-   * listener
-   ***************************************************/
-  public Response.ErrorListener errorListener = new Response.ErrorListener()
-  {
-    @Override
-    public void onErrorResponse(VolleyError e)
-    {
-      Log.e("NetworkManager.java | onErrorResponse", "|" + e.getLocalizedMessage() + "|");
-    }
-  };
 }

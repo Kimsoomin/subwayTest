@@ -48,13 +48,9 @@ public class GuideActivity extends Activity
   
   private class PagerAdapterClass extends PagerAdapter
   {
-    private Context context;
-    
-    
     public PagerAdapterClass(Context c)
     {
       super();
-      this.context = c;
     }
     
     
@@ -74,17 +70,17 @@ public class GuideActivity extends Activity
       TextView text = (TextView) v.findViewById(R.id.guide_text);
       if (position == 0)
       {
-        image.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_1));
+        image.setImageResource(R.drawable.ic_guide_1);
         text.setText("Guide 1입니다");
       }
       else if (position == 1)
       {
-        image.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_2));
+        image.setImageResource(R.drawable.ic_guide_2);
         text.setText("Guide 2입니다");
       }
       else
       {
-        image.setImageDrawable(getResources().getDrawable(R.drawable.ic_guide_3));
+        image.setImageResource(R.drawable.ic_guide_3);
         text.setText("Guide 3입니다");
       }
       ((ViewPager) pager).addView(v, 0);

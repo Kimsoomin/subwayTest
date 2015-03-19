@@ -21,6 +21,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
@@ -271,7 +272,7 @@ public class RoundedImageView extends ImageView
     {
       try
       {
-        d = rsrc.getDrawable(mResource);
+        d = ResourcesCompat.getDrawable(getResources(), mResource, null);
       }
       catch (Exception e)
       {
