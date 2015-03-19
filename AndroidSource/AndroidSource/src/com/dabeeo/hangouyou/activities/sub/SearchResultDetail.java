@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
@@ -88,11 +89,11 @@ public class SearchResultDetail extends ActionBarActivity
           break;
         
         case SearchResultBean.TYPE_PRODUCT:
-          Log.i("SearchResultFragment.java | detail", "|" + "상품 상세화면으로 가기" + "|");
+          Log.i("SearchResultFragment.java | detail", "|" + "상품 상세화면으로 가기" + "|"); 
           break;
         
         case SearchResultBean.TYPE_RECOMMEND_SEOUL:
-          Log.i("SearchResultFragment.java | detail", "|" + "추천서울 상세화면으로 가기" + "|");
+          startActivity(new Intent(SearchResultDetail.this, RecommendSeoulDetailActivity.class));
           break;
         
         case SearchResultBean.TYPE_SCHEDULE:

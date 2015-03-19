@@ -11,18 +11,15 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
-import com.dabeeo.hangouyou.activities.sub.GuideActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SearchResultFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
-import com.dabeeo.hangouyou.managers.PreferenceManager;
 
 public class MainActivity extends ActionBarActivity
 {
   public final static int POSITION_HOME = 0;
   public final static int POSITION_MY_PAGE = 1;
   public final static int POSITION_SEARCH = 2;
-  private int currentFragmentPosition = 0;
   
   private FragmentManager fragmentManager;
   private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
@@ -46,12 +43,6 @@ public class MainActivity extends ActionBarActivity
     bottomMenuPhotolog.setOnClickListener(bottomMenuClickListener);
     bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
     bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
-    
-    if (PreferenceManager.getInstance(this).getIsFirst())
-    {
-      startActivity(new Intent(MainActivity.this, GuideActivity.class));
-      PreferenceManager.getInstance(this).setIsFirst(true);
-    }
   }
   
   
@@ -77,7 +68,6 @@ public class MainActivity extends ActionBarActivity
         break;
     }
     
-    this.currentFragmentPosition = position;
     if (fragment != null)
     {
       FragmentTransaction ft = fragmentManager.beginTransaction();

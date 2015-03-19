@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 
+import com.dabeeo.hangouyou.activities.sub.GuideActivity;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
@@ -93,7 +94,7 @@ public class IntroActivity extends ActionBarActivity
             public void onPositiveButtonClickListener()
             {
               PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
-              startMainActivity();
+              startGuideActivity();
             }
             
             
@@ -101,7 +102,7 @@ public class IntroActivity extends ActionBarActivity
             public void onNegativeButtonClickListener()
             {
               PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(false);
-              startMainActivity();
+              startGuideActivity();
             }
           });
     }
@@ -109,11 +110,16 @@ public class IntroActivity extends ActionBarActivity
       startMainActivity();
   }
   
+  private void startGuideActivity()
+  {
+    PreferenceManager.getInstance(this).setIsFirst(false);
+    startActivity(new Intent(IntroActivity.this, GuideActivity.class));
+  }
+  
   
   private void startMainActivity()
   {
-    Intent i = new Intent(IntroActivity.this, MainActivity.class);
-    startActivity(i);
+    startActivity(new Intent(IntroActivity.this, MainActivity.class));
     finish();
   }
 }

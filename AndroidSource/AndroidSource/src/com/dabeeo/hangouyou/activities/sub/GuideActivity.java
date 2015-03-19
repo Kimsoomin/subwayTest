@@ -2,6 +2,7 @@ package com.dabeeo.hangouyou.activities.sub;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.external.libraries.CirclePageIndicator;
 
@@ -41,6 +43,7 @@ public class GuideActivity extends Activity
       @Override
       public void onClick(View arg0)
       {
+        startActivity(new Intent(GuideActivity.this, MainActivity.class));
         finish();
       }
     });

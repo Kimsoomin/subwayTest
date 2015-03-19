@@ -24,6 +24,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
 import com.dabeeo.hangouyou.activities.sub.SearchResultDetail;
@@ -201,7 +202,7 @@ public class SearchResultFragment extends Fragment
           break;
         
         case SearchResultBean.TYPE_RECOMMEND_SEOUL:
-          Log.i("SearchResultFragment.java | detail", "|" + "추천서울 상세화면으로 가기" + "|");
+          startActivity(new Intent(getActivity(), RecommendSeoulDetailActivity.class));
           break;
         
         case SearchResultBean.TYPE_SCHEDULE:
