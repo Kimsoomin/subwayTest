@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity;
 
 public class MainFragment extends Fragment
@@ -75,7 +76,7 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerSubway.getId())
       {
-        
+        startActivity(new Intent(getActivity(), SubwayActivity.class));
       }
       else if (v.getId() == containerPhotolog.getId())
       {

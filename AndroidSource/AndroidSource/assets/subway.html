@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>서울지하철</title>
+        <script src="file:///android_asset/snap.svg-min.js"></script>
+        <script src="file:///android_asset/jquery-2.1.3.min.js" charset="utf-8"></script>
+        <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
+        <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
+        <script src="file:///android_asset/subway.js" charset="utf-8"></script>
+
+         <meta name="viewport" content="width=device-width, initial-scale=5.0">
+      <style>
+        /*html, body { margin:0; padding:0 }*/
+        /*embed { width: 100%; height: 100% }*/
+
+        /*html, body { margin:0; padding:0; overflow:hidden }
+        svg { position:fixed; top:0; bottom:0; left:0; right:0 }*/
+            /*#svg {
+                width: 100%;
+                height: 1024px;
+            }*/
+      </style>
+      <style type="text/css">
+      * {
+          -webkit-touch-callout: none;
+          -webkit-user-select: none; /* Disable selection/copy in UIWebView */
+      }
+      </style>
+    </head>
+    <body width="1333" height="1000">
+      <svg id="svg" viewBox="0 0 1587.4 1190.55">
+      </svg>
+<!--      <svg id="svg" viewBox="0 0 5724 5292" style="-->
+<!--          display: inline-block;-->
+<!--          position: fixed;-->
+<!--          top: 0;-->
+<!--          bottom: 0;-->
+<!--          left: 0;-->
+<!--          right: 0;-->
+<!--          width: 100%;-->
+<!--          height: 100%;-->
+<!--          margin: auto;-->
+<!--          background-color: #FFFFFF;"></svg>-->
+<!--       <embed type="image/svg+xml" src="Seoul_subway_linemap_en.svg"> -->
+      <script type="text/javascript">
+        var s = Snap("#svg");
+        function onTouchStation (param){
+          // alert("TEST");
+          window.myClient.onTouchStation(param);
+        };
+
+        var subway = {
+          start_station: undefined,
+          start_station_id: undefined,
+          end_station: undefined,
+          end_station_id: undefined,
+          marked_stations: [],
+          set_start_station: function(station_id) {
+            if (this.start_station) {
+              this.start_station.remove()
+            }
+            station = Snap.select(".station#"+station_id)
+            bound = station.getBBox()
+            margin = 1
+            rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
+            rect.attr({"fill":"#FF5555", stroke: "#000", strokeWidth: 1})
+            text = s.text(bound.cx, bound.cy, "출발")
+            text.attr({"font-size":6, "text-anchor":"middle", "alignment-baseline":"central"})
+            this.start_station = s.g(rect, text)
+            this.start_station_id = station_id
+            // animation_1 = function() {
+            //   rect.animate({"fill":"#FFFFFF"}, 1000, mina.linear, animation_2)  
+            // }
+            // animation_2 = function() {
+            //   rect.animate({"fill":"#FF5555"}, 1000, mina.linear, animation_1)
+            // }
+            // animation_1()
+            if (this.end_station_id) {
+              this.clear_marked_stations()
+              this.mark_stations(path_for_stations(this.start_station_id, this.end_station_id))
+            }
+          },
+          set_end_station: function(station_id) {
+            if (this.end_station) {
+              this.end_station.remove()
+            }
+            station = Snap.select(".station#"+station_id)
+            bound = station.getBBox()
+            margin = 1
+            rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
+            rect.attr({"fill":"#55FF55", stroke: "#000", strokeWidth: 1})
+            text = s.text(bound.cx, bound.cy, "도착")
+            text.attr({"font-size":6, "text-anchor":"middle", "alignment-baseline":"central"})
+            this.end_station = s.g(rect, text)
+            this.end_station_id = station_id
+            // animation_1 = function() {
+            //   rect.animate({"fill":"#FFFFFF"}, 1000, mina.linear, animation_2)  
+            // }
+            // animation_2 = function() {
+            //   rect.animate({"fill":"#55FF55"}, 1000, mina.linear, animation_1)
+            // }
+            // animation_1()
+            if (this.start_station_id) {
+              this.clear_marked_stations()
+              this.mark_stations(path_for_stations(this.start_station_id, this.end_station_id))
+            }
+          },
+          mark_station: function(station_id) {
+            var station = Snap.select(".station[id*="+station_id+"]")
+            var bound = station.getBBox()
+            var margin = 1
+            rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
+            rect.attr({"fill":"none", stroke: "#AA0000", strokeWidth: 2})
+            // animation_1 = function() {
+            //   rect.animate({strokeWidth:3}, 1000, mina.linear, animation_2)  
+            // }
+            // animation_2 = function() {
+            //   rect.animate({strokeWidth:2}, 1000, mina.linear, animation_1)
+            // }
+            // animation_1()
+            this.marked_stations.push(rect)
+          },
+          clear_marked_stations: function() {
+            var length = this.marked_stations.length
+            for (var i = 0; i < length; i++) {
+              var marked_station = this.marked_stations[i]
+              marked_station.remove()
+            }
+            this.marked_stations = []
+          },
+          mark_stations: function(array) {
+            var length = array.length
+            for (var i = 0; i < length; i++)
+              this.mark_station(array[i])
+          }
+        }
+        Snap.load("file:///android_asset/subway.svg", function(data) {
+          onStart = function(station) {
+
+          }
+          onClick = function(e) {
+            // subway.clear_marked_stations()
+            // subway.mark_station(this.node.id)
+            var station = Snap.select(".station#" + this.node.id)
+            var bound = station.getBBox()
+            // onTouchStation($(this.node).attr("id"), bound.cx / 1587.4, bound.cy / 1190.55)
+            onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
+          }
+          onDblClick = function(e) {
+            subway.set_end_station(this.node.id)
+            // bound = station.getBBox()
+            // onTouchStation($(this.node).attr("id"), bound.cx / 1587.4, bound.cy / 1190.55)
+          }
+          s.append(data);
+          $('path').filter(function() {
+            return this.id.match(/line\w{0,1}\d+/);
+          }).each(function(i) {
+            bound = this.getBBox();
+            rect = s.rect(bound.x, bound.y, bound.width, bound.height, bound.height / 2.0, bound.height / 2.0)
+            rect.attr({"fill-opacity": 0.0, "id": this.id})
+            rect.addClass("station")
+            rect.click(onClick)
+            rect.dblclick(onDblClick)
+          })
+        });
+      </script>
+    </body>
+</html>
