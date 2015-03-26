@@ -3,13 +3,17 @@
     <head>
         <meta charset="utf-8">
         <title>서울지하철</title>
-        <script src="file:///android_asset/snap.svg-min.js"></script>
-        <script src="file:///android_asset/jquery-2.1.3.min.js" charset="utf-8"></script>
-        <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
-        <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
-        <script src="file:///android_asset/subway.js" charset="utf-8"></script>
-
-         <meta name="viewport" content="width=device-width, initial-scale=5.0">
+         <script src="file:///android_asset/snap.svg-min.js"></script>
+          <script src="file:///android_asset/jquery-2.1.3.min.js" charset="utf-8"></script>
+          <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
+          <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
+          <script src="file:///android_asset/subway.js" charset="utf-8"></script> 
+        <!-- <script src="snap.svg-min.js"></script>
+        // <script src="jquery-2.1.3.min.js" charset="utf-8"></script>
+        // <script src="d3.v3.min.js" charset="utf-8"></script>
+        // <script src="subway_data.js" charset="utf-8"></script>
+        // <script src="subway.js" charset="utf-8"></script> -->
+         <meta name="viewport" content="width=device-width, initial-scale=3.0">
       <style>
         /*html, body { margin:0; padding:0 }*/
         /*embed { width: 100%; height: 100% }*/
@@ -46,8 +50,11 @@
       <script type="text/javascript">
         var s = Snap("#svg");
         function onTouchStation (param){
-          // alert("TEST");
           window.myClient.onTouchStation(param);
+        };
+
+        function completeMarkStation (station_json_array_string){
+          window.myClient.completeMarkStation(station_json_array_string);
         };
 
         var subway = {
@@ -131,10 +138,24 @@
           },
           mark_stations: function(array) {
             var length = array.length
-            for (var i = 0; i < length; i++)
+
+            var jsonArray = new Array();
+            for (var i = 0; i < length; i++){
               this.mark_station(array[i])
+
+              var jsonObject = new Object();
+              var stationInfo = stations[array[i]];
+
+              jsonObject.name = stationInfo.name_ko;
+              jsonObject.id = array[i]
+              jsonObject.line = stationInfo.line;
+              jsonArray.push(jsonObject);
+           }
+            var jsonInfo = JSON.stringify(jsonArray);
+            completeMarkStation(jsonInfo); 
           }
         }
+        //file:///android_asset/subway.svg
         Snap.load("file:///android_asset/subway.svg", function(data) {
           onStart = function(station) {
 
