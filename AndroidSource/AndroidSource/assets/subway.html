@@ -33,7 +33,7 @@
       </style>
     </head>
     <body width="1333" height="1000">
-      <svg id="svg" viewBox="0 0 1587.4 1190.55">
+      <svg id="svg" viewBox="0 0 2614.199 1991.775">
       </svg>
 <!--      <svg id="svg" viewBox="0 0 5724 5292" style="-->
 <!--          display: inline-block;-->
@@ -49,6 +49,16 @@
 <!--       <embed type="image/svg+xml" src="Seoul_subway_linemap_en.svg"> -->
       <script type="text/javascript">
         var s = Snap("#svg");
+
+        function checkReady() {
+            // var svg = document.getElementById("svg").getSVGDocument();
+            if (s != null) {
+                // setTimeout("checkReady()", 300);
+            // } else {
+                window.myClient.onSvgLoadEnded();
+            }
+        }
+
         function onTouchStation (param){
           window.myClient.onTouchStation(param);
         };

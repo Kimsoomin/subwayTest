@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -20,6 +21,8 @@ import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -40,7 +43,8 @@ public class SubwayActivity extends ActionBarActivity
   private ImageView detailStationInfo;
   
   
-  @SuppressLint("SetJavaScriptEnabled")
+  @SuppressWarnings("deprecation")
+  @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -63,17 +67,27 @@ public class SubwayActivity extends ActionBarActivity
     });
     
     webview = (WebView) findViewById(R.id.webview);
+//    if (Build.VERSION.SDK_INT >= 19)
+//      webview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+    
     webview.getSettings().setJavaScriptEnabled(true);
     webview.getSettings().setAllowFileAccessFromFileURLs(true);
     webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
     webview.getSettings().setUseWideViewPort(true);
     webview.getSettings().setBuiltInZoomControls(true);
     webview.getSettings().setDisplayZoomControls(false);
+    webview.getSettings().setAppCacheEnabled(true);
+    webview.getSettings().setDomStorageEnabled(true);
+    webview.getSettings().setRenderPriority(RenderPriority.HIGH);
+    webview.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
+    webview.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+    webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
     
     webview.addJavascriptInterface(new JavaScriptInterface(), "myClient");
     webview.setWebViewClient(webViewClient);
     webview.setWebChromeClient(webChromeClient);
     webview.loadUrl("file:///android_asset/subway.html");
+    webview.scrollTo(1000, 10);
   }
   
   

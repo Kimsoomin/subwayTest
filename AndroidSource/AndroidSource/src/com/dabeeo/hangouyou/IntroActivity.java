@@ -1,12 +1,18 @@
 package com.dabeeo.hangouyou;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
@@ -17,8 +23,12 @@ public class IntroActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private AlertDialogManager alertManager;
+  private WebView webview;
+  private Handler handler = new Handler();
   
   
+  @SuppressWarnings("deprecation")
+  @SuppressLint("SetJavaScriptEnabled")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -27,6 +37,27 @@ public class IntroActivity extends ActionBarActivity
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     alertManager = new AlertDialogManager(this);
+    
+    webview = (WebView) findViewById(R.id.webview);
+    webview.getSettings().setJavaScriptEnabled(true);
+    webview.getSettings().setAllowFileAccessFromFileURLs(true);
+    webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
+    webview.getSettings().setUseWideViewPort(true);
+    webview.getSettings().setBuiltInZoomControls(true);
+    webview.getSettings().setDisplayZoomControls(false);
+    webview.getSettings().setDomStorageEnabled(true);
+    webview.getSettings().setAppCacheEnabled(true);
+    webview.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
+    webview.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+    webview.addJavascriptInterface(new JavaScriptInterface(), "myClient");
+  }
+  
+  
+  @Override
+  protected void onDestroy()
+  {
+    handler.removeCallbacksAndMessages(null);
+    super.onDestroy();
   }
   
   
@@ -35,28 +66,20 @@ public class IntroActivity extends ActionBarActivity
   {
     super.onResume();
     progressBar.bringToFront();
-    if (SystemUtil.isConnectNetwork(this) && !SystemUtil.isConnectedWiFi(this))
-    {
-      //3G or LTE Mode
-      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-      {
-        @Override
-        public void onPositiveButtonClickListener()
-        {
-          checkDownloadInfo();
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-          finish();
-        }
-      });
-    }
-    else
-      checkDownloadInfo();
+    webview.loadUrl("file:///android_asset/subway.html");
+    handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
   }
+  
+  private Runnable checkSubwayNativeLoadRunnable = new Runnable()
+  {
+    @Override
+    public void run()
+    {
+      Log.w("WARN", "call checkReady");
+      webview.loadUrl("javascript:checkReady()");
+      handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
+    }
+  };
   
   
   private void checkDownloadInfo()
@@ -122,5 +145,52 @@ public class IntroActivity extends ActionBarActivity
   {
     startActivity(new Intent(IntroActivity.this, MainActivity.class));
     finish();
+  }
+  
+  /**
+   * Subway pre loading
+   */
+  private class JavaScriptInterface
+  {
+    @JavascriptInterface
+    public void onSvgLoadEnded()
+    {
+      Log.w("WARN", "onSVGLoadEnded");
+      handler.removeCallbacks(checkSubwayNativeLoadRunnable);
+//      checkDownloadInfo();
+      if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+      {
+        //3G or LTE Mode
+        alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            checkDownloadInfo();
+          }
+          
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            finish();
+          }
+        });
+      }
+      else
+        checkDownloadInfo();
+    }
+    
+    
+    @JavascriptInterface
+    public void completeMarkStation(String stationsJSONString)
+    {
+    }
+    
+    
+    @JavascriptInterface
+    public void onTouchStation(final String station)
+    {
+    }
   }
 }
