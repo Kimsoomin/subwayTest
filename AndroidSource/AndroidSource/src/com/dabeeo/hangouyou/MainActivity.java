@@ -13,10 +13,12 @@ import android.widget.LinearLayout;
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SearchResultFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
 
 public class MainActivity extends ActionBarActivity
 {
+  public static SubwayFragment subwayFrament;
   public final static int POSITION_HOME = 0;
   public final static int POSITION_MY_PAGE = 1;
   public final static int POSITION_SEARCH = 2;
@@ -105,4 +107,5 @@ public class MainActivity extends ActionBarActivity
       }
     }
   };
+  
 }

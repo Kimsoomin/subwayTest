@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dabeeo.hangouyou"
-    android:versionCode="3"
-    android:versionName="1.0.3" >
+    android:versionCode="4"
+    android:versionName="1.0.4" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -44,6 +44,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.SubwayStationsActivity"
+            android:label="@string/term_famous_place"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity"
             android:label="@string/term_famous_place"
             android:launchMode="singleTask"
@@ -58,7 +63,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity"
-            android:label="@string/term_recommend_seoul"
+            android:label="@string/term_strategy_seoul"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity"

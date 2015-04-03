@@ -1,6 +1,8 @@
 package com.dabeeo.hangouyou;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
+import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
@@ -27,7 +30,7 @@ public class IntroActivity extends ActionBarActivity
   private Handler handler = new Handler();
   
   
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings("static-access")
   @SuppressLint("SetJavaScriptEnabled")
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -38,18 +41,16 @@ public class IntroActivity extends ActionBarActivity
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     alertManager = new AlertDialogManager(this);
     
-    webview = (WebView) findViewById(R.id.webview);
-    webview.getSettings().setJavaScriptEnabled(true);
-    webview.getSettings().setAllowFileAccessFromFileURLs(true);
-    webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
-    webview.getSettings().setUseWideViewPort(true);
-    webview.getSettings().setBuiltInZoomControls(true);
-    webview.getSettings().setDisplayZoomControls(false);
-    webview.getSettings().setDomStorageEnabled(true);
-    webview.getSettings().setAppCacheEnabled(true);
-    webview.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
-    webview.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
-    webview.addJavascriptInterface(new JavaScriptInterface(), "myClient");
+    if (MainActivity.subwayFrament != null)
+      MainActivity.subwayFrament.viewClear();
+    MainActivity.subwayFrament = new SubwayFragment();
+    FragmentManager fragmentManager = getFragmentManager();
+    if (MainActivity.subwayFrament != null)
+    {
+      FragmentTransaction ft = fragmentManager.beginTransaction();
+      ft.replace(R.id.content, MainActivity.subwayFrament);
+      ft.commit();
+    }
   }
   
   
@@ -66,7 +67,6 @@ public class IntroActivity extends ActionBarActivity
   {
     super.onResume();
     progressBar.bringToFront();
-    webview.loadUrl("file:///android_asset/subway.html");
     handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
   }
   
@@ -76,8 +76,30 @@ public class IntroActivity extends ActionBarActivity
     public void run()
     {
       Log.w("WARN", "call checkReady");
-      webview.loadUrl("javascript:checkReady()");
-      handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
+      if (MainActivity.subwayFrament.isLoadEnded())
+        if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+        {
+          //3G or LTE Mode
+          alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+          {
+            @Override
+            public void onPositiveButtonClickListener()
+            {
+              checkDownloadInfo();
+            }
+            
+            
+            @Override
+            public void onNegativeButtonClickListener()
+            {
+              finish();
+            }
+          });
+        }
+        else
+          checkDownloadInfo();
+      else
+        handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
     }
   };
   
@@ -147,50 +169,4 @@ public class IntroActivity extends ActionBarActivity
     finish();
   }
   
-  /**
-   * Subway pre loading
-   */
-  private class JavaScriptInterface
-  {
-    @JavascriptInterface
-    public void onSvgLoadEnded()
-    {
-      Log.w("WARN", "onSVGLoadEnded");
-      handler.removeCallbacks(checkSubwayNativeLoadRunnable);
-//      checkDownloadInfo();
-      if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
-      {
-        //3G or LTE Mode
-        alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-        {
-          @Override
-          public void onPositiveButtonClickListener()
-          {
-            checkDownloadInfo();
-          }
-          
-          
-          @Override
-          public void onNegativeButtonClickListener()
-          {
-            finish();
-          }
-        });
-      }
-      else
-        checkDownloadInfo();
-    }
-    
-    
-    @JavascriptInterface
-    public void completeMarkStation(String stationsJSONString)
-    {
-    }
-    
-    
-    @JavascriptInterface
-    public void onTouchStation(final String station)
-    {
-    }
-  }
 }

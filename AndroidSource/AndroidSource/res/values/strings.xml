@@ -17,18 +17,18 @@
     <string name="term_skip">넘어가기</string>
 
     <!-- MainMenu Term -->
-    <string name="term_recommend_seoul">추천서울</string>
+    <string name="term_strategy_seoul">여행공략</string>
     <string name="term_famous_place">여행명소</string>
     <string name="term_travel_schedule">여행일정</string>
-    <string name="term_shopping_mall">쇼핑몰</string>
+    <string name="term_shopping_mall">트렌디한국</string>
     <string name="term_map">지도</string>
     <string name="term_subway">지하철</string>
     <string name="term_photolog">포토로그</string>
     <string name="term_ticket_and_coupon">"티켓 / 쿠폰"</string>
-    <string name="term_reservation_hotel">호텔예약</string>
+    <string name="term_reservation">예약</string>
     <string name="term_home">홈</string>
     <string name="term_my_page">마이페이지</string>
-    <string name="term_register_photolog">포토로그 등록</string>
+    <string name="term_register_photolog">후기등록</string>
     <string name="term_wishlist">위시리스트</string>
     <string name="term_search">검색</string>
 

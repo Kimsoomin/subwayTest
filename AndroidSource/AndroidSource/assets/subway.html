@@ -3,20 +3,14 @@
     <head>
         <meta charset="utf-8">
         <title>서울지하철</title>
-         <script src="file:///android_asset/snap.svg-min.js"></script>
-          <script src="file:///android_asset/jquery-2.1.3.min.js" charset="utf-8"></script>
-          <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
-          <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
-          <script src="file:///android_asset/subway.js" charset="utf-8"></script> 
-        <!-- <script src="snap.svg-min.js"></script>
-        // <script src="jquery-2.1.3.min.js" charset="utf-8"></script>
-        // <script src="d3.v3.min.js" charset="utf-8"></script>
-        // <script src="subway_data.js" charset="utf-8"></script>
-        // <script src="subway.js" charset="utf-8"></script> -->
-         <meta name="viewport" content="width=device-width, initial-scale=3.0">
+        <script src="file:///android_asset/snap.svg-min.js"></script>
+        <script src="file:///android_asset/jquery-2.1.3.min.js" charset="utf-8"></script>
+        <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
+        <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
+        <script src="file:///android_asset/subway.js" charset="utf-8"></script>
       <style>
-        /*html, body { margin:0; padding:0 }*/
-        /*embed { width: 100%; height: 100% }*/
+        /*html, body { margin:0; padding:0 }
+        embed { width: 100%; height: 100% }*/
 
         /*html, body { margin:0; padding:0; overflow:hidden }
         svg { position:fixed; top:0; bottom:0; left:0; right:0 }*/
@@ -32,40 +26,32 @@
       }
       </style>
     </head>
-    <body width="1333" height="1000">
-      <svg id="svg" viewBox="0 0 2614.199 1991.775">
+    <body width="100%" height="100%">
+      <svg id="svg" width="2614" height="1991">
       </svg>
-<!--      <svg id="svg" viewBox="0 0 5724 5292" style="-->
-<!--          display: inline-block;-->
-<!--          position: fixed;-->
-<!--          top: 0;-->
-<!--          bottom: 0;-->
-<!--          left: 0;-->
-<!--          right: 0;-->
-<!--          width: 100%;-->
-<!--          height: 100%;-->
-<!--          margin: auto;-->
-<!--          background-color: #FFFFFF;"></svg>-->
-<!--       <embed type="image/svg+xml" src="Seoul_subway_linemap_en.svg"> -->
+      
       <script type="text/javascript">
         var s = Snap("#svg");
 
+        function setSize(){
+
+        }
+
         function checkReady() {
-            // var svg = document.getElementById("svg").getSVGDocument();
-            if (s != null) {
-                // setTimeout("checkReady()", 300);
-            // } else {
-                window.myClient.onSvgLoadEnded();
-            }
+          if (s != null) {
+              window.myClient.onSvgLoadEnded();
+          }
         }
 
         function onTouchStation (param){
           window.myClient.onTouchStation(param);
         };
 
-        function completeMarkStation (station_json_array_string){
-          window.myClient.completeMarkStation(station_json_array_string);
+        function completeMarkStation (station_json_array_string, time){
+          window.myClient.completeMarkStation(station_json_array_string, time);
         };
+
+
 
         var subway = {
           start_station: undefined,
@@ -94,8 +80,7 @@
             // }
             // animation_1()
             if (this.end_station_id) {
-              this.clear_marked_stations()
-              this.mark_stations(path_for_stations(this.start_station_id, this.end_station_id))
+              this.calcRoute()
             }
           },
           set_end_station: function(station_id) {
@@ -119,9 +104,20 @@
             // }
             // animation_1()
             if (this.start_station_id) {
-              this.clear_marked_stations()
-              this.mark_stations(path_for_stations(this.start_station_id, this.end_station_id))
+              this.calcRoute()
             }
+          },
+          calcRoute: function() {
+            this.clear_marked_stations()
+            var path = path_for_stations(this.start_station_id, this.end_station_id)
+            this.mark_stations(path)
+            var path_infos = new Array()
+            for (var i = 0; i < path.length; i++) {
+              path_infos.push(stations[path[i]])
+            }
+            time = floyd_time(this.start_station_id, this.end_station_id)
+
+            onRouteCalculated(path_infos, time)
           },
           mark_station: function(station_id) {
             var station = Snap.select(".station[id*="+station_id+"]")
@@ -148,7 +144,6 @@
           },
           mark_stations: function(array) {
             var length = array.length
-
             var jsonArray = new Array();
             for (var i = 0; i < length; i++){
               this.mark_station(array[i])
@@ -160,36 +155,32 @@
               jsonObject.id = array[i]
               jsonObject.line = stationInfo.line;
               jsonArray.push(jsonObject);
-           }
+            }
             var jsonInfo = JSON.stringify(jsonArray);
-            completeMarkStation(jsonInfo); 
+            completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           }
         }
-        //file:///android_asset/subway.svg
         Snap.load("file:///android_asset/subway.svg", function(data) {
           onStart = function(station) {
 
           }
           onClick = function(e) {
-            // subway.clear_marked_stations()
-            // subway.mark_station(this.node.id)
             var station = Snap.select(".station#" + this.node.id)
             var bound = station.getBBox()
-            // onTouchStation($(this.node).attr("id"), bound.cx / 1587.4, bound.cy / 1190.55)
             onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
           }
           onDblClick = function(e) {
-            subway.set_end_station(this.node.id)
-            // bound = station.getBBox()
-            // onTouchStation($(this.node).attr("id"), bound.cx / 1587.4, bound.cy / 1190.55)
           }
           s.append(data);
           $('path').filter(function() {
-            return this.id.match(/line\w{0,1}\d+/);
+            return this.id.match(/(n\w{0,1}[\d-]+)+/);
           }).each(function(i) {
             bound = this.getBBox();
             rect = s.rect(bound.x, bound.y, bound.width, bound.height, bound.height / 2.0, bound.height / 2.0)
-            rect.attr({"fill-opacity": 0.0, "id": this.id})
+            var transformedId = this.id
+            transformedId = transformedId.replace(/n(\w{0,1}[\d-]+)/g, "line$1")
+            transformedId = transformedId.toLowerCase()
+            rect.attr({"fill-opacity": 0.0, "id": transformedId})
             rect.addClass("station")
             rect.click(onClick)
             rect.dblclick(onDblClick)

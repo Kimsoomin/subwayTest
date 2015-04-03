@@ -22,3 +22,8 @@ path_for_stations = function(station_a, station_b) {
 	return path
 }
 
+floyd_time = function(station_a, station_b) {
+	var i = station_ids.indexOf(station_a)
+	var j = station_ids.indexOf(station_b)
+	return floyd_table[i][j]
+}

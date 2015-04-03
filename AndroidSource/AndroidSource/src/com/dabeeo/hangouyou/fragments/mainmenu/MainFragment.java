@@ -17,8 +17,7 @@ import com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity;
 
 public class MainFragment extends Fragment
 {
-  private RelativeLayout containerRecommendSeoul, containerFamousPlace, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerPhotolog, containerTicketAndCoupon,
-      containerReservationHotel;
+  private RelativeLayout containerStrategySeoul, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerTicketAndCoupon, containerReservation;
   
   
   @Override
@@ -27,25 +26,21 @@ public class MainFragment extends Fragment
     int resId = R.layout.fragment_main_menu;
     View view = inflater.inflate(resId, null);
     
-    containerRecommendSeoul = (RelativeLayout) view.findViewById(R.id.container_recommend_seoul);
-    containerFamousPlace = (RelativeLayout) view.findViewById(R.id.container_famous_place);
+    containerStrategySeoul = (RelativeLayout) view.findViewById(R.id.container_strategy_seoul);
     containerTravelSchedule = (RelativeLayout) view.findViewById(R.id.container_travel_schedule);
     containerShoppingMall = (RelativeLayout) view.findViewById(R.id.container_shopping_mall);
     containerMap = (RelativeLayout) view.findViewById(R.id.container_map);
     containerSubway = (RelativeLayout) view.findViewById(R.id.container_subway);
-    containerPhotolog = (RelativeLayout) view.findViewById(R.id.container_photo_log);
     containerTicketAndCoupon = (RelativeLayout) view.findViewById(R.id.container_ticket_and_coupon);
-    containerReservationHotel = (RelativeLayout) view.findViewById(R.id.container_reservation_hotel);
+    containerReservation = (RelativeLayout) view.findViewById(R.id.container_reservation);
     
-    containerRecommendSeoul.setOnClickListener(menuClickListener);
-    containerFamousPlace.setOnClickListener(menuClickListener);
+    containerStrategySeoul.setOnClickListener(menuClickListener);
     containerTravelSchedule.setOnClickListener(menuClickListener);
     containerShoppingMall.setOnClickListener(menuClickListener);
     containerMap.setOnClickListener(menuClickListener);
     containerSubway.setOnClickListener(menuClickListener);
-    containerPhotolog.setOnClickListener(menuClickListener);
     containerTicketAndCoupon.setOnClickListener(menuClickListener);
-    containerReservationHotel.setOnClickListener(menuClickListener);
+    containerReservation.setOnClickListener(menuClickListener);
     return view;
   }
   
@@ -54,13 +49,9 @@ public class MainFragment extends Fragment
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == containerRecommendSeoul.getId())
+      if (v.getId() == containerStrategySeoul.getId())
       {
         startActivity(new Intent(getActivity(), RecommendSeoulActivity.class));
-      }
-      else if (v.getId() == containerFamousPlace.getId())
-      {
-        startActivity(new Intent(getActivity(), FamousPlaceActivity.class));
       }
       else if (v.getId() == containerTravelSchedule.getId())
       {
@@ -78,15 +69,11 @@ public class MainFragment extends Fragment
       {
         startActivity(new Intent(getActivity(), SubwayActivity.class));
       }
-      else if (v.getId() == containerPhotolog.getId())
-      {
-        //네트워크 연결 체크 후 연결했을 때만 실행 
-      }
       else if (v.getId() == containerTicketAndCoupon.getId())
       {
         //네트워크 연결 체크 후 연결했을 때만 실행 
       }
-      else if (v.getId() == containerReservationHotel.getId())
+      else if (v.getId() == containerReservation.getId())
       {
         //네트워크 연결 체크 후 연결했을 때만 실행 
       }
