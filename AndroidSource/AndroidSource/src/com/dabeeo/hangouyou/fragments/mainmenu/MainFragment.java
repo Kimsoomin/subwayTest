@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity;

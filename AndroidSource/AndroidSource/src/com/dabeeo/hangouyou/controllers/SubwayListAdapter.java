@@ -2,8 +2,6 @@ package com.dabeeo.hangouyou.controllers;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.beans.StationBean;
 
 public class SubwayListAdapter extends BaseAdapter
