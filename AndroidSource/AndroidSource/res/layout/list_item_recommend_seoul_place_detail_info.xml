@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@null"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 
     <TextView
@@ -17,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoLink="phone|web"
-        android:text="@null"
-        android:textAppearance="?android:attr/textAppearance" />
+        android:text="@null" />
 
 </LinearLayout>

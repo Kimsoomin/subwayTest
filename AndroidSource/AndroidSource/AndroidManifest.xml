@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dabeeo.hangouyou"
-    android:versionCode="4"
-    android:versionName="1.0.4" >
+    android:versionCode="5"
+    android:versionName="1.0.5" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -115,6 +115,11 @@
             android:screenOrientation="portrait" />
 
         <!-- Sub Activities -->
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity"
+            android:label="@string/term_famous_place"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.sub.GuideActivity"
             android:launchMode="singleTask"

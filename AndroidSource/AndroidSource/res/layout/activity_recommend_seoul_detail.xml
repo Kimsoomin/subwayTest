@@ -20,9 +20,23 @@
                 android:id="@+id/imageview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/darker_gray"
                 android:contentDescription="@null"
-                android:minHeight="150dp" />
+                android:minHeight="150dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/darker_gray" />
 
             <TextView
                 android:id="@+id/text_detail"
@@ -39,7 +53,7 @@
                 <LinearLayout
                     android:id="@+id/horizontal_images_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="120dp"
                     android:orientation="horizontal" >
                 </LinearLayout>
             </HorizontalScrollView>
@@ -48,14 +62,16 @@
                 android:id="@+id/layout_place_detail_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:layout_margin="8dp"
+                android:background="@drawable/round_gray_box"
+                android:orientation="vertical"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="장소 상세정보"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/holo_blue_bright"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

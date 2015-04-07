@@ -1,7 +1,6 @@
 package com.dabeeo.hangouyou.activities.mainmenu;
 
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -10,12 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
 import com.dabeeo.hangouyou.views.SquareImageView;
+import com.squareup.picasso.Picasso;
 
 public class RecommendSeoulDetailActivity extends ActionBarActivity
 {
@@ -38,6 +40,8 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
     findViewById(R.id.btn_share).setOnClickListener(clickListener);
     findViewById(R.id.btn_like).setOnClickListener(clickListener);
     
+    Picasso.with(this).load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/522/photos/small/mallee_11.jpg?1427044001").into(
+        (ImageView) findViewById(R.id.imageview));
     displayContentData();
   }
   
@@ -76,15 +80,162 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
     bean.description = "역시 마찬가지로, 단순히 고통이라는 이유 때문에 고통 그 자체를 사랑하거나 추구하거나 소유하려는 자는 없다. 다만 노역과 고통이 아주 큰 즐거움을 선사하는 상황이 때로는 발생하기 때문에 고통을 찾는 사람이 있는 것이다. 간단한 예를 들자면, 모종의 이익을 얻을 수도 없는데 힘든 육체적 노력을 기꺼이 할 사람이 우리들 중에 과연 있겠는가? 하지만 귀찮은 일이 뒤따르지 않는 즐거움을 누리는 것을 선택한 사람, 혹은 아무런 즐거움도 생기지 않는 고통을 회피하는 사람을 누가 탓할 수 있겠는가?";
     
     setTitle(bean.title);
+    ((TextView) findViewById(R.id.text_title)).setText("서울 여행자");
+    ((TextView) findViewById(R.id.text_description)).setText("인사동 쌈지길");
     textDetail.setText(bean.detail);
     
     int resId = R.layout.list_item_recommend_seoul_photo;
-    for (int i = 0; i < 10; i++)
+    View parentView = getLayoutInflater().inflate(resId, null);
+    ImageView view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
     {
-      SquareImageView view = (SquareImageView) getLayoutInflater().inflate(resId, null);
-      view.setImageResource(R.drawable.ic_launcher);
-      horizontalImagesView.addView(view);
-    }
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
+    
+    parentView = getLayoutInflater().inflate(resId, null);
+    view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/498/photos/small/Punkt_6.jpg?1426234741")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/498/photos/small/Punkt_6.jpg?1426234741");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
+    
+    parentView = getLayoutInflater().inflate(resId, null);
+    view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/521/photos/small/mallee_10.jpg?1427043989")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/521/photos/small/mallee_10.jpg?1427043989");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
+    
+    parentView = getLayoutInflater().inflate(resId, null);
+    view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/497/photos/small/Nebbia_09.JPG?1426234581")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/497/photos/small/Nebbia_09.JPG?1426234581");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
+    
+    parentView = getLayoutInflater().inflate(resId, null);
+    view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/495/photos/small/Nebbia_07.JPG?1426234580")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/495/photos/small/Nebbia_07.JPG?1426234580");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
+    
+    parentView = getLayoutInflater().inflate(resId, null);
+    view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/479/photos/small/020_BAGAZIMURI_2.JPG?1425825633")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/479/photos/small/020_BAGAZIMURI_2.JPG?1425825633");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
+    
+    parentView = getLayoutInflater().inflate(resId, null);
+    view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/520/photos/small/mallee_9.jpg?1427043973")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/520/photos/small/mallee_9.jpg?1427043973");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
+    
+    parentView = getLayoutInflater().inflate(resId, null);
+    view = (ImageView) parentView.findViewById(R.id.photo);
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/504/photos/small/Harman_03.jpg?1426236309")
+           .resize(300, 300)
+           .centerCrop()
+           .into(view);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/504/photos/small/Harman_03.jpg?1426236309");
+        startActivity(i);
+      }
+    });
+    horizontalImagesView.addView(view);
     
     addDetailInfo(getString(R.string.term_address), bean.address);
     addDetailInfo(getString(R.string.term_phone), bean.phone);
@@ -105,7 +256,6 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       TextView titleView = (TextView) view.findViewById(android.R.id.text1);
       TextView textView = (TextView) view.findViewById(android.R.id.text2);
       titleView.setText(title);
-      titleView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
       textView.setText(text);
       layoutDetailPlaceInfo.addView(view);
     }
@@ -119,7 +269,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-     if (v.getId() == R.id.btn_share)
+      if (v.getId() == R.id.btn_share)
       {
         // 공유하기
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
