@@ -35,8 +35,6 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
     horizontalImagesView = (ViewGroup) findViewById(R.id.horizontal_images_view);
     layoutDetailPlaceInfo = (ViewGroup) findViewById(R.id.layout_place_detail_info);
     
-    findViewById(R.id.btn_place_detail_info).setOnClickListener(clickListener);
-    findViewById(R.id.btn_bookmark).setOnClickListener(clickListener);
     findViewById(R.id.btn_share).setOnClickListener(clickListener);
     findViewById(R.id.btn_like).setOnClickListener(clickListener);
     
@@ -121,15 +119,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == R.id.btn_place_detail_info)
-      {
-        layoutDetailPlaceInfo.setVisibility(layoutDetailPlaceInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
-      }
-      else if (v.getId() == R.id.btn_bookmark)
-      {
-        // 북마크 토글
-      }
-      else if (v.getId() == R.id.btn_share)
+     if (v.getId() == R.id.btn_share)
       {
         // 공유하기
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
