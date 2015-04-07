@@ -30,6 +30,7 @@ public class RecommendSeoulActivity extends BaseNavigationTabActivity
   private ArrayList<TitleCategoryBean> spheres = new ArrayList<>();
   
   
+  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {

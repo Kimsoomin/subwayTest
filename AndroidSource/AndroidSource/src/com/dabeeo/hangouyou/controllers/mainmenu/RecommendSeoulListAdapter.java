@@ -1,10 +1,8 @@
 package com.dabeeo.hangouyou.controllers.mainmenu;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
