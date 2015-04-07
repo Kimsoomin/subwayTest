@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/search_word_here"
+        android:hint="@string/message_search_word_here"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:singleLine="true" >
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-            android:text="@string/popular_recommend_product"
+            android:text="@string/term_popular_recommend_product"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout

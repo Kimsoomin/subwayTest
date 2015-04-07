@@ -85,7 +85,7 @@ public class SearchResultFragment extends Fragment
   private void loadRecentSearchWord()
   {
     SearchResultBean resultBean = new SearchResultBean();
-    resultBean.addNormalTitle(getString(R.string.recent_search_word), 0);
+    resultBean.addNormalTitle(getString(R.string.term_recent_search_word), 0);
     adapter.add(resultBean);
     
     ArrayList<String> recentWords = PreferenceManager.getInstance(getActivity()).getRecentSearchWord();
@@ -119,28 +119,28 @@ public class SearchResultFragment extends Fragment
     PreferenceManager.getInstance(getActivity()).setRecentSearchWord(text);
     
     SearchResultBean resultBean = new SearchResultBean();
-    resultBean.addNormalTitle(getString(R.string.search_result), 300);
+    resultBean.addNormalTitle(getString(R.string.term_search_result), 300);
     adapter.add(resultBean);
     
     SearchResultBean locationBean = new SearchResultBean();
-    locationBean.addPlaceTitle(getString(R.string.place), 100);
+    locationBean.addPlaceTitle(getString(R.string.term_place), 100);
     adapter.add(locationBean);
     
     for (int i = 0; i < 3; i++)
     {
       SearchResultBean bean = new SearchResultBean();
-      bean.addText(text + " " + getString(R.string.place) + i, SearchResultBean.TYPE_PLACE);
+      bean.addText(text + " " + getString(R.string.term_place) + i, SearchResultBean.TYPE_PLACE);
       adapter.add(bean);
     }
     
     SearchResultBean productBean = new SearchResultBean();
-    productBean.addProductTitle(getString(R.string.product), 3);
+    productBean.addProductTitle(getString(R.string.term_product), 3);
     adapter.add(productBean);
     
     for (int i = 0; i < 3; i++)
     {
       SearchResultBean bean = new SearchResultBean();
-      bean.addText(text + " " + getString(R.string.product) + i, SearchResultBean.TYPE_PRODUCT);
+      bean.addText(text + " " + getString(R.string.term_product) + i, SearchResultBean.TYPE_PRODUCT);
       adapter.add(bean);
     }
     
@@ -185,7 +185,7 @@ public class SearchResultFragment extends Fragment
     if (searchResultBean.isTitle)
     {
       Intent intent = new Intent(getActivity(), SearchResultDetail.class);
-      intent.putExtra("title", searchResultBean.text + " " + getString(R.string.search_result));
+      intent.putExtra("title", searchResultBean.text + " " + getString(R.string.term_search_result));
       intent.putExtra("results", adapter.getJsonStringForParameter(searchResultBean.type));
       startActivity(intent);
     }

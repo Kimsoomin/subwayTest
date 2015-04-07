@@ -88,13 +88,13 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       horizontalImagesView.addView(view);
     }
     
-    addDetailInfo(getString(R.string.address), bean.address);
-    addDetailInfo(getString(R.string.phone), bean.phone);
-    addDetailInfo(getString(R.string.homepage), bean.homepage);
-    addDetailInfo(getString(R.string.working_time), bean.workingTime);
-    addDetailInfo(getString(R.string.price_info), bean.price);
-    addDetailInfo(getString(R.string.traffic), bean.traffic);
-    addDetailInfo(getString(R.string.description), bean.description);
+    addDetailInfo(getString(R.string.term_address), bean.address);
+    addDetailInfo(getString(R.string.term_phone), bean.phone);
+    addDetailInfo(getString(R.string.term_homepage), bean.homepage);
+    addDetailInfo(getString(R.string.term_working_time), bean.workingTime);
+    addDetailInfo(getString(R.string.term_price_info), bean.price);
+    addDetailInfo(getString(R.string.term_traffic), bean.traffic);
+    addDetailInfo(getString(R.string.term_description), bean.description);
   }
   
   

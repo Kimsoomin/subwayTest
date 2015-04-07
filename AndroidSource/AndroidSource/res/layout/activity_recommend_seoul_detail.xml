@@ -51,7 +51,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/app_button"
-                android:text="@string/place_detail_info" />
+                android:text="@string/term_place_detail_info" />
 
             <LinearLayout
                 android:id="@+id/layout_place_detail_info"

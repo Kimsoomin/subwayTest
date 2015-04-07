@@ -129,6 +129,9 @@ public class RecommendSeoulListFragment extends Fragment
           JSONObject category = store.getJSONObject("category");
           bean.category = category.getString("title");
           
+          JSONObject photo = store.getJSONObject("main_photo");
+          bean.photoUrl = photo.getString("original_url");
+          
           adapter.add(bean);
         }
         adapter.notifyDataSetChanged();

@@ -1,8 +1,10 @@
 package com.dabeeo.hangouyou.controllers.mainmenu;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
+import com.squareup.picasso.Picasso;
 
 public class RecommendSeoulListAdapter extends BaseAdapter
 {
@@ -76,6 +79,8 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     title.setText(bean.title);
     category.setText(bean.category);
     likeCount.setText(Integer.toString(bean.likeCount));
+    
+    Picasso.with(parent.getContext()).load(bean.photoUrl).into(imageView);
     return view;
   }
 }

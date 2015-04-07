@@ -14,7 +14,6 @@ public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
 {
   private ArrayList<TitleCategoryBean> items = new ArrayList<>();
   
-  
   public RecommendSeoulViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
