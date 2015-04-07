@@ -3,12 +3,19 @@
     <head>
         <meta charset="utf-8">
         <title>서울지하철</title>
-        <script src="file:///android_asset/snap.svg-min.js"></script>
+        <!-- <script src="file:///android_asset/snap.svg-min.js"></script>
         <script src="file:///android_asset/jquery-2.1.3.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
-        <script src="file:///android_asset/subway.js" charset="utf-8"></script>
+        <script src="file:///android_asset/subway.js" charset="utf-8"></script>-->
+        
+        <script src="snap.svg-min.js"></script>
+        <script src="jquery-2.1.3.min.js" charset="utf-8"></script>
+        <script src="d3.v3.min.js" charset="utf-8"></script>
+        <script src="subway_data.js" charset="utf-8"></script>
+        <script src="subway.js" charset="utf-8"></script>
       <style>
+
         /*html, body { margin:0; padding:0 }
         embed { width: 100%; height: 100% }*/
 
@@ -26,7 +33,7 @@
       }
       </style>
     </head>
-    <body width="100%" height="100%">
+    <body width="100%" height="100%" style="zoom: 80%">
       <svg id="svg" width="2614" height="1991">
       </svg>
       
@@ -51,7 +58,12 @@
           window.myClient.completeMarkStation(station_json_array_string, time);
         };
 
+        function completeLoadAllStation (station_json_array_string){
+          window.myClient.completeLoadAllStation(station_json_array_string);
+        };
 
+
+       
 
         var subway = {
           start_station: undefined,
@@ -64,6 +76,7 @@
               this.start_station.remove()
             }
             station = Snap.select(".station#"+station_id)
+
             bound = station.getBBox()
             margin = 1
             rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
@@ -72,13 +85,9 @@
             text.attr({"font-size":6, "text-anchor":"middle", "alignment-baseline":"central"})
             this.start_station = s.g(rect, text)
             this.start_station_id = station_id
-            // animation_1 = function() {
-            //   rect.animate({"fill":"#FFFFFF"}, 1000, mina.linear, animation_2)  
-            // }
-            // animation_2 = function() {
-            //   rect.animate({"fill":"#FF5555"}, 1000, mina.linear, animation_1)
-            // }
-            // animation_1()
+
+           
+
             if (this.end_station_id) {
               this.calcRoute()
             }
@@ -96,13 +105,7 @@
             text.attr({"font-size":6, "text-anchor":"middle", "alignment-baseline":"central"})
             this.end_station = s.g(rect, text)
             this.end_station_id = station_id
-            // animation_1 = function() {
-            //   rect.animate({"fill":"#FFFFFF"}, 1000, mina.linear, animation_2)  
-            // }
-            // animation_2 = function() {
-            //   rect.animate({"fill":"#55FF55"}, 1000, mina.linear, animation_1)
-            // }
-            // animation_1()
+
             if (this.start_station_id) {
               this.calcRoute()
             }
@@ -125,13 +128,7 @@
             var margin = 1
             rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
             rect.attr({"fill":"none", stroke: "#AA0000", strokeWidth: 2})
-            // animation_1 = function() {
-            //   rect.animate({strokeWidth:3}, 1000, mina.linear, animation_2)  
-            // }
-            // animation_2 = function() {
-            //   rect.animate({strokeWidth:2}, 1000, mina.linear, animation_1)
-            // }
-            // animation_1()
+
             this.marked_stations.push(rect)
           },
           clear_marked_stations: function() {
@@ -158,13 +155,30 @@
             }
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
+          },
+          get_all_station: function() {
+            var jsonArray = new Array();
+            for (var i = 0; i < station_ids.length; i++){
+              var station = stations[station_ids[i]];
+              var stationInfo = station;
+
+              var jsonObject = new Object();
+              jsonObject.name = stationInfo.name_ko;
+              jsonObject.id = station_ids[i];
+              jsonObject.line = stationInfo.line;
+              jsonArray.push(jsonObject);
+            }
+            var jsonInfo = JSON.stringify(jsonArray);
+            completeLoadAllStation(jsonInfo); 
           }
         }
-        Snap.load("file:///android_asset/subway.svg", function(data) {
+        //file:///android_asset/subway.svg
+        Snap.load("subway.svg", function(data) {
           onStart = function(station) {
 
           }
           onClick = function(e) {
+            console.log("click");
             var station = Snap.select(".station#" + this.node.id)
             var bound = station.getBBox()
             onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])

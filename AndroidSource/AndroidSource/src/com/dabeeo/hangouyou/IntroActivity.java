@@ -22,7 +22,6 @@ public class IntroActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private AlertDialogManager alertManager;
-  private WebView webview;
   private Handler handler = new Handler();
   
   
@@ -71,29 +70,40 @@ public class IntroActivity extends ActionBarActivity
     @Override
     public void run()
     {
-      Log.w("WARN", "call checkReady");
+//      Log.w("WARN", "call checkReady");
       if (MainActivity.subwayFrament.isLoadEnded())
-        if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+      {
+        MainActivity.subwayFrament.loadAllStations(new Runnable()
         {
-          //3G or LTE Mode
-          alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+          @Override
+          public void run()
           {
-            @Override
-            public void onPositiveButtonClickListener()
+            if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
             {
+              //3G or LTE Mode
+              alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel),
+                  new AlertListener()
+                  {
+                    @Override
+                    public void onPositiveButtonClickListener()
+                    {
+                      checkDownloadInfo();
+                    }
+                    
+                    
+                    @Override
+                    public void onNegativeButtonClickListener()
+                    {
+                      finish();
+                    }
+                  });
+            }
+            else
               checkDownloadInfo();
-            }
-            
-            
-            @Override
-            public void onNegativeButtonClickListener()
-            {
-              finish();
-            }
-          });
-        }
-        else
-          checkDownloadInfo();
+          }
+        });
+        
+      }
       else
         handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
     }

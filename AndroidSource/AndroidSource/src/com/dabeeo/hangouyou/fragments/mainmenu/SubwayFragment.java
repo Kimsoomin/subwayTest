@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayStationsActivity;
 import com.dabeeo.hangouyou.beans.StationBean;
+import com.dabeeo.hangouyou.managers.SubwayManager;
 
 @SuppressWarnings("deprecation")
 @SuppressLint("SetJavaScriptEnabled")
@@ -48,6 +49,7 @@ public class SubwayFragment extends Fragment
   private ArrayList<StationBean> stations = new ArrayList<>();
   private ImageView detailStationInfo;
   private boolean isLoadEnded;
+  private Runnable afterLoadSubwaysRunnable;
   
   
   @Override
@@ -80,8 +82,6 @@ public class SubwayFragment extends Fragment
     detailStationInfo = (ImageView) view.findViewById(R.id.image_stations_info_detail);
     
     webview = (WebView) view.findViewById(R.id.webview);
-//    if (Build.VERSION.SDK_INT >= 19)
-//      webview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
     
     webview.getSettings().setJavaScriptEnabled(true);
     webview.getSettings().setAllowFileAccessFromFileURLs(true);
@@ -101,7 +101,7 @@ public class SubwayFragment extends Fragment
     webview.setWebChromeClient(webChromeClient);
     webview.loadUrl("file:///android_asset/subway.html");
     
-    handler.postDelayed(checkSubwayNativeLoadRunnable, 200);
+    handler.postDelayed(checkSubwayNativeLoadRunnable, 1000);
 //    }
     super.onAttach(activity);
   }
@@ -118,9 +118,58 @@ public class SubwayFragment extends Fragment
   };
   
   
+  public void loadAllStations(Runnable run)
+  {
+    this.afterLoadSubwaysRunnable = run;
+    webview.loadUrl("javascript:subway.get_all_station()");
+  }
+  
+  
   public boolean isLoadEnded()
   {
     return isLoadEnded;
+  }
+  
+  
+  public void findStation(final String stationId, String stationName)
+  {
+//    webview.loadUrl("javascript:subway.find_station(" + stationId + ")");
+    CharSequence[] menus = new CharSequence[2];
+    menus[0] = "출발역 설정";
+    menus[1] = "도착역 설정";
+    
+    final CharSequence[] menuTitles = menus;
+    Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setTitle("출도착역 설정");
+    builder.setItems(menus, new DialogInterface.OnClickListener()
+    {
+      public void onClick(DialogInterface dialog, int whichButton)
+      {
+        if (menuTitles[whichButton].equals("출발역 설정"))
+        {
+          handler.post(new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+            }
+          });
+        }
+        else if (menuTitles[whichButton].equals("도착역 설정"))
+        {
+          handler.post(new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+            }
+          });
+        }
+      }
+    });
+    builder.create().show();
   }
   
   private WebViewClient webViewClient = new WebViewClient()
@@ -164,6 +213,33 @@ public class SubwayFragment extends Fragment
   
   private class JavaScriptInterface
   {
+    @JavascriptInterface
+    public void completeLoadAllStation(String stationsJSONString)
+    {
+      Log.w("WARN", "completeLoadAllStations stations Json String : " + stationsJSONString);
+      JSONArray stationsJsonArray;
+      ArrayList<StationBean> stations = new ArrayList<StationBean>();
+      try
+      {
+        stationsJsonArray = new JSONArray(stationsJSONString);
+        for (int i = 0; i < stationsJsonArray.length(); i++)
+        {
+          StationBean bean = new StationBean();
+          bean.setJSONObject(stationsJsonArray.getJSONObject(i));
+          stations.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      Log.w("WARN", "Stations size : " + stations.size());
+      SubwayManager.getInstance(getActivity()).stations.clear();
+      SubwayManager.getInstance(getActivity()).stations.addAll(stations);
+      afterLoadSubwaysRunnable.run();
+    }
+    
+    
     @JavascriptInterface
     public void onSvgLoadEnded()
     {
@@ -228,7 +304,7 @@ public class SubwayFragment extends Fragment
     @JavascriptInterface
     public void onTouchStation(final String station)
     {
-      Log.w("MainActivity.java | bbb", "33333333|" + station + "|");
+      Log.w("MainActivity.java | onTouchStation", "33333333|" + station + "|");
       CharSequence[] menus = new CharSequence[2];
       menus[0] = "출발역 설정";
       menus[1] = "도착역 설정";
