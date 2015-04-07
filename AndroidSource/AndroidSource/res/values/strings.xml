@@ -103,7 +103,7 @@
     <string name="message_search_word_here">검색어를 입력하세요</string>
     <string name="term_more">more</string>
 
-    <!-- 추천서울 -->
+    <!-- 여행공략 -->
     <string name="term_place_detail_info">장소 상세정보</string>
     <string name="term_address">주소</string>
     <string name="term_phone">전화번호</string>
@@ -113,5 +113,9 @@
     <string name="term_traffic">교통정보</string>
     <string name="term_description">설명</string>
     <string name="term_all">전체</string>
+    <string name="term_recommend_seoul">추천서울</string>
+    <string name="term_popular_place">명소</string>
+    <string name="term_shopping">쇼핑</string>
+    <string name="term_restaurant">레스토랑</string>
 
 </resources>

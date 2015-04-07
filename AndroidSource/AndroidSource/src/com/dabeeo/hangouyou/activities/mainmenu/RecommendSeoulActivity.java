@@ -39,10 +39,10 @@ public class RecommendSeoulActivity extends BaseNavigationTabActivity
     adapter = new RecommendSeoulViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
     viewPager.setAdapter(adapter);
     
-    adapter.add(new TitleCategoryBean("추천서울", -1));
-    adapter.add(new TitleCategoryBean("명소", 8));
-    adapter.add(new TitleCategoryBean("쇼핑", 9));
-    adapter.add(new TitleCategoryBean("레스토랑", 4));
+    adapter.add(new TitleCategoryBean(getString(R.string.term_recommend_seoul), -1));
+    adapter.add(new TitleCategoryBean(getString(R.string.term_popular_place), 8));
+    adapter.add(new TitleCategoryBean(getString(R.string.term_shopping), 9));
+    adapter.add(new TitleCategoryBean(getString(R.string.term_restaurant), 4));
     adapter.notifyDataSetChanged();
     
     for (int i = 0; i < adapter.getCount(); i++)
