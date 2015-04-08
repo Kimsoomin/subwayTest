@@ -9,14 +9,20 @@ import android.text.TextUtils;
 
 public class PreferenceManager extends BasePreferenceManager
 {
-  private static PreferenceManager _instance;
+  private static PreferenceManager instance;
   
   
   public static PreferenceManager getInstance(Context context)
   {
-    if (_instance == null)
-      _instance = new PreferenceManager(context);
-    return _instance;
+    if (instance == null)
+    {
+      synchronized (PreferenceManager.class)
+      {
+        if (instance == null)
+          instance = new PreferenceManager(context);
+      }
+    }
+    return instance;
   }
   
   
