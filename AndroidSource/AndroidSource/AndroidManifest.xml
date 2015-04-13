@@ -80,6 +80,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.dabeeo.hangouyou.activities.mypage.sub.FindPasswordActivity"
+            android:label="@string/term_find_password"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.JoinActivity"
             android:label="@string/term_join"
             android:launchMode="singleTask"

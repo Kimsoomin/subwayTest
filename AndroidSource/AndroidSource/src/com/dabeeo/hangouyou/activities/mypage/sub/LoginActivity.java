@@ -12,6 +12,7 @@ import com.dabeeo.hangouyou.R;
 public class LoginActivity extends ActionBarActivity
 {
   private Button btnJoin;
+  private Button btnFindPassword;
   
   
   @Override
@@ -27,6 +28,15 @@ public class LoginActivity extends ActionBarActivity
       public void onClick(View arg0)
       {
         startActivity(new Intent(LoginActivity.this, JoinActivity.class));
+      }
+    });
+    btnFindPassword = (Button) findViewById(R.id.btn_find_password);
+    btnFindPassword.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        startActivity(new Intent(LoginActivity.this, FindPasswordActivity.class));
       }
     });
   }

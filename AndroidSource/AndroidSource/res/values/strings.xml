@@ -139,5 +139,6 @@
     <string name="msg_private_agreement">개인정보약관 동의</string>
     <string name="msg_gps_agreement">위치정보약관 동의</string>
     <string name="msg_date_of_birth">생일을 입력해주세요</string>
+    <string name="term_send">보내기</string>
 
 </resources>
