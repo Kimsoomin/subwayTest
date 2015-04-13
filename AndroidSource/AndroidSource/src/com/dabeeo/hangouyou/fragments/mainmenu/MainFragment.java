@@ -3,16 +3,21 @@ package com.dabeeo.hangouyou.fragments.mainmenu;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity;
+import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class MainFragment extends Fragment
 {
@@ -70,11 +75,31 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerTicketAndCoupon.getId())
       {
-        //네트워크 연결 체크 후 연결했을 때만 실행 
+        //네트워크 연결 체크 후 연결했을 때만 실행
+        if (!SystemUtil.isConnectNetwork(getActivity()))
+        {
+          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
+          return;
+        }
+        
+        if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
+          startActivity(new Intent(getActivity(), LoginActivity.class));
+        else
+          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
       else if (v.getId() == containerReservation.getId())
       {
-        //네트워크 연결 체크 후 연결했을 때만 실행 
+        //네트워크 연결 체크 후 연결했을 때만 실행
+        if (!SystemUtil.isConnectNetwork(getActivity()))
+        {
+          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
+          return;
+        }
+        
+        if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
+          startActivity(new Intent(getActivity(), LoginActivity.class));
+        else
+          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
     }
   };

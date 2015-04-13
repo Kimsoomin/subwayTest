@@ -34,6 +34,7 @@ public class PreferenceManager extends BasePreferenceManager
   private static final String KEY_IS_FIRST = "key_is_first";
   private static final String KEY_IS_ALLOW_POPUP = "key_is_allow_pop_up";
   private static final String KEY_RECENT_SEARCH_WORD = "key_recent_search_word";
+  private static final String KEY_USER_SEQ = "key_user_seq";
   
   
   public void setIsFirst(boolean value)
@@ -57,6 +58,18 @@ public class PreferenceManager extends BasePreferenceManager
   public boolean getAllowPopup()
   {
     return get(KEY_IS_ALLOW_POPUP, true);
+  }
+  
+  
+  public void setUserSeq(String value)
+  {
+    put(KEY_USER_SEQ, value);
+  }
+  
+  
+  public String getUserSeq()
+  {
+    return getWithNullToBlank(KEY_USER_SEQ);
   }
   
   
