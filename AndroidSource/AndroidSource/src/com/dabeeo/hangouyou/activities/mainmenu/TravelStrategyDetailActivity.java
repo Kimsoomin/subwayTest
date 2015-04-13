@@ -1,38 +1,63 @@
 package com.dabeeo.hangouyou.activities.mainmenu;
 
+import org.json.JSONObject;
+
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
-import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
-import com.dabeeo.hangouyou.views.SquareImageView;
+import com.dabeeo.hangouyou.beans.PlaceDetailBean;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.squareup.picasso.Picasso;
 
-public class RecommendSeoulDetailActivity extends ActionBarActivity
+public class TravelStrategyDetailActivity extends ActionBarActivity
 {
   private TextView textDetail;
   private ViewGroup horizontalImagesView, layoutDetailPlaceInfo;
+  
+  private ApiClient apiClient;
+  private ProgressBar progressBar;
+  
+  private int placeIdx = -1;
+  private PlaceDetailBean bean;
+  private ScrollView scrollView;
   
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+    getSupportActionBar().setElevation(05);
+    
     setContentView(R.layout.activity_recommend_seoul_detail);
+    
+    apiClient = new ApiClient(this);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    placeIdx = getIntent().getIntExtra("place_idx", -1);
+    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     textDetail = (TextView) findViewById(R.id.text_detail);
     horizontalImagesView = (ViewGroup) findViewById(R.id.horizontal_images_view);
     layoutDetailPlaceInfo = (ViewGroup) findViewById(R.id.layout_place_detail_info);
@@ -40,9 +65,22 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
     findViewById(R.id.btn_share).setOnClickListener(clickListener);
     findViewById(R.id.btn_like).setOnClickListener(clickListener);
     
-    Picasso.with(this).load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/522/photos/small/mallee_11.jpg?1427044001").into(
-        (ImageView) findViewById(R.id.imageview));
-    displayContentData();
+    scrollView = (ScrollView) findViewById(R.id.scroll_view);
+    scrollView.getViewTreeObserver().addOnScrollChangedListener(new OnScrollChangedListener()
+    {
+      @Override
+      public void onScrollChanged()
+      {
+        int scrollY = scrollView.getScrollY();
+        Log.w("WARN", "ScrollY: " + scrollY);
+        
+        if (scrollY > 255)
+          scrollY = 255;
+        int opacity = 255 - scrollY;
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(opacity, 235, 175, 10)));
+      }
+    });
+    loadPlaceDetail();
   }
   
   
@@ -66,23 +104,61 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
   }
   
   
+  private void loadPlaceDetail()
+  {
+    progressBar.setVisibility(View.VISIBLE);
+    progressBar.bringToFront();
+    new GetPlaceDetailAsyncTask().execute();
+  }
+  
+  private class GetPlaceDetailAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.getPlaceDetail(placeIdx);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      if (result.isSuccess)
+      {
+        try
+        {
+          JSONObject obj = new JSONObject(result.response);
+          bean = new PlaceDetailBean();
+          bean.setJSONObject(obj.getJSONObject("place"));
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        displayContentData();
+      }
+      progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
+  }
+  
+  
   private void displayContentData()
   {
-    RecommendSeoulBean bean = new RecommendSeoulBean();
-    bean.title = "서울 여행자";
-    bean.detail = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-    bean.address = "서울 강남구 신사동 534-27";
-    bean.phone = "02-1111-2222";
-    bean.homepage = "http://google.com";
-    bean.workingTime = "오전 9시 ~ 오후 6시";
-    bean.price = "1000원 부터";
-    bean.traffic = "신사역 8번 출구";
-    bean.description = "역시 마찬가지로, 단순히 고통이라는 이유 때문에 고통 그 자체를 사랑하거나 추구하거나 소유하려는 자는 없다. 다만 노역과 고통이 아주 큰 즐거움을 선사하는 상황이 때로는 발생하기 때문에 고통을 찾는 사람이 있는 것이다. 간단한 예를 들자면, 모종의 이익을 얻을 수도 없는데 힘든 육체적 노력을 기꺼이 할 사람이 우리들 중에 과연 있겠는가? 하지만 귀찮은 일이 뒤따르지 않는 즐거움을 누리는 것을 선택한 사람, 혹은 아무런 즐거움도 생기지 않는 고통을 회피하는 사람을 누가 탓할 수 있겠는가?";
+    if (bean == null)
+      return;
     
     setTitle(bean.title);
-    ((TextView) findViewById(R.id.text_title)).setText("서울 여행자");
-    ((TextView) findViewById(R.id.text_description)).setText("인사동 쌈지길");
-    textDetail.setText(bean.detail);
+    ((TextView) findViewById(R.id.text_title)).setText(bean.title);
+    ((TextView) findViewById(R.id.text_description)).setText(bean.address);
+    textDetail.setText(bean.contents);
+    
+    Picasso.with(this)
+           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759")
+           .resize(300, 300)
+           .centerCrop()
+           .into((ImageView) findViewById(R.id.imageview));
     
     int resId = R.layout.list_item_recommend_seoul_photo;
     View parentView = getLayoutInflater().inflate(resId, null);
@@ -97,7 +173,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759");
         startActivity(i);
       }
@@ -116,7 +192,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/498/photos/small/Punkt_6.jpg?1426234741");
         startActivity(i);
       }
@@ -135,7 +211,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/521/photos/small/mallee_10.jpg?1427043989");
         startActivity(i);
       }
@@ -154,7 +230,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/497/photos/small/Nebbia_09.JPG?1426234581");
         startActivity(i);
       }
@@ -173,7 +249,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/495/photos/small/Nebbia_07.JPG?1426234580");
         startActivity(i);
       }
@@ -192,7 +268,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/479/photos/small/020_BAGAZIMURI_2.JPG?1425825633");
         startActivity(i);
       }
@@ -211,7 +287,7 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/520/photos/small/mallee_9.jpg?1427043973");
         startActivity(i);
       }
@@ -230,20 +306,21 @@ public class RecommendSeoulDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        Intent i = new Intent(RecommendSeoulDetailActivity.this, ImagePopUpActivity.class);
+        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
         i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/504/photos/small/Harman_03.jpg?1426236309");
         startActivity(i);
       }
     });
+    
     horizontalImagesView.addView(view);
     
     addDetailInfo(getString(R.string.term_address), bean.address);
-    addDetailInfo(getString(R.string.term_phone), bean.phone);
+    addDetailInfo(getString(R.string.term_phone), bean.contact);
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);
-    addDetailInfo(getString(R.string.term_working_time), bean.workingTime);
-    addDetailInfo(getString(R.string.term_price_info), bean.price);
-    addDetailInfo(getString(R.string.term_traffic), bean.traffic);
-    addDetailInfo(getString(R.string.term_description), bean.description);
+    addDetailInfo(getString(R.string.term_working_time), bean.businessHours);
+    addDetailInfo(getString(R.string.term_price_info), bean.priceInfo);
+    addDetailInfo(getString(R.string.term_traffic), bean.trafficInfo);
+    addDetailInfo(getString(R.string.term_description), bean.tag);
   }
   
   

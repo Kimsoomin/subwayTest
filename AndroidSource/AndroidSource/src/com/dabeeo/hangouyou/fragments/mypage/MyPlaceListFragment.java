@@ -60,14 +60,12 @@ public class MyPlaceListFragment extends Fragment
     //테스트 가데이터 
     PlaceBean bean = new PlaceBean();
     bean.title = "왓슨스";
-    bean.category = "Shopping";
     bean.likeCount = 7;
     bean.reviewCount = 11;
     adapter.add(bean);
     
     bean = new PlaceBean();
     bean.title = "GS편의점";
-    bean.category = "Shopping";
     bean.likeCount = 50;
     bean.reviewCount = 13;
     adapter.add(bean);

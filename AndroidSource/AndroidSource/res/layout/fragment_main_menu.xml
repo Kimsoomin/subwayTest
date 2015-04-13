@@ -127,12 +127,25 @@
                     android:layout_weight="3"
                     android:background="#b7dee8" >
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/term_map"
-                        android:textStyle="bold" />
+                        android:gravity="center" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/term_map"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/msg_download_map" />
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 

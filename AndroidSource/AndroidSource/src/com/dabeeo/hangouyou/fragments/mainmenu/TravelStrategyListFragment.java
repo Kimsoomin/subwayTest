@@ -20,23 +20,24 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.PlaceListAdapter;
+import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
-public class PlaceListFragment extends Fragment
+public class TravelStrategyListFragment extends Fragment
 {
+  @SuppressWarnings("unused")
   private int categoryId = -1;
   
   private ProgressBar progressBar;
-  private PlaceListAdapter adapter;
+  private RecommendSeoulListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
   
   
-  public PlaceListFragment(int categoryId)
+  public TravelStrategyListFragment(int categoryId)
   {
     this.categoryId = categoryId;
   }
@@ -54,12 +55,11 @@ public class PlaceListFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
-    
     apiClient = new ApiClient(getActivity());
+    
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new PlaceListAdapter();
-    
+    adapter = new RecommendSeoulListAdapter();
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()
@@ -89,6 +89,7 @@ public class PlaceListFragment extends Fragment
   private void load(int offset)
   {
     progressBar.setVisibility(View.VISIBLE);
+    
     new GetStoreAsyncTask().execute();
   }
   
@@ -98,12 +99,7 @@ public class PlaceListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      if (categoryId == 8)
-        return apiClient.getTrablog(page, "Place");
-      else if (categoryId == 9)
-        return apiClient.getTrablog(page, "Product");
-      else
-        return apiClient.getTrablog(page, "Place");
+      return apiClient.getTrablog(page, "premium");
     }
     
     
@@ -136,13 +132,6 @@ public class PlaceListFragment extends Fragment
     }
   }
   
-  
-  public void setCategoryId(int categoryId)
-  {
-    //전체, 명소, 쇼핑 등 
-    this.categoryId = categoryId;
-  }
-  
   /**************************************************
    * listener
    ***************************************************/
@@ -152,10 +141,9 @@ public class PlaceListFragment extends Fragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
       PlaceBean bean = (PlaceBean) adapter.getItem(position);
-      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
+      Intent i = new Intent(getActivity(), TravelStrategyDetailActivity.class);
       i.putExtra("place_idx", bean.idx);
       startActivity(i);
     }
   };
-  
 }

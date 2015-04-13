@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity;
 
@@ -50,7 +50,7 @@ public class MainFragment extends Fragment
     {
       if (v.getId() == containerStrategySeoul.getId())
       {
-        startActivity(new Intent(getActivity(), RecommendSeoulActivity.class));
+        startActivity(new Intent(getActivity(), TravelStrategyActivity.class));
       }
       else if (v.getId() == containerTravelSchedule.getId())
       {

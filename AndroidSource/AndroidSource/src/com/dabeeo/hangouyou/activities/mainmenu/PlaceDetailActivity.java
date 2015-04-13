@@ -1,29 +1,38 @@
 package com.dabeeo.hangouyou.activities.mainmenu;
 
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.ProductBean;
-import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.views.PlaceDetailHeaderView;
 import com.dabeeo.hangouyou.views.PlaceDetailTitleView;
 import com.dabeeo.hangouyou.views.ProductView;
-import com.dabeeo.hangouyou.views.ReviewView;
+import com.squareup.picasso.Picasso;
 
 public class PlaceDetailActivity extends ActionBarActivity
 {
@@ -36,6 +45,12 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private LinearLayout containerProduct, containerReview;
   private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
+  private ProgressBar progressBar;
+  
+  private ApiClient apiClient;
+  private int placeIdx = -1;
+  private PlaceDetailBean bean;
+  private ViewGroup layoutDetailPlaceInfo;
   
   
   @Override
@@ -45,6 +60,12 @@ public class PlaceDetailActivity extends ActionBarActivity
     setContentView(R.layout.activity_place_detail);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    
+    apiClient = new ApiClient(this);
+    placeIdx = getIntent().getIntExtra("place_idx", -1);
+    
+    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+    layoutDetailPlaceInfo = (ViewGroup) findViewById(R.id.layout_place_detail_info);
     
     scrollView = (ScrollView) findViewById(R.id.scrollview);
     textDetail = (TextView) findViewById(R.id.text_detail);
@@ -75,7 +96,48 @@ public class PlaceDetailActivity extends ActionBarActivity
     findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
     
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
-    displayContentData();
+    
+    loadPlaceDetail();
+  }
+  
+  
+  private void loadPlaceDetail()
+  {
+    progressBar.setVisibility(View.VISIBLE);
+    progressBar.bringToFront();
+    new GetPlaceDetailAsyncTask().execute();
+  }
+  
+  private class GetPlaceDetailAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.getPlaceDetail(placeIdx);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      if (result.isSuccess)
+      {
+        try
+        {
+          JSONObject obj = new JSONObject(result.response);
+          bean = new PlaceDetailBean();
+          bean.setJSONObject(obj.getJSONObject("place"));
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        displayContentData();
+      }
+      progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
   }
   
   
@@ -101,13 +163,18 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private void displayContentData()
   {
-    setTitle("왓슨스");
-    textRate.setText("5.0");
-    textDetail.setText("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-        + "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
-        + "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
-        + "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." + "\n\n주소\n161-1, gangnam-gu, seoul, korea\n\nTel\n+82-2-376-1234"
-        + "\n\nhomepage\nwww.dabeeo.com");
+    if (bean == null)
+      return;
+    
+    setTitle(bean.title);
+    textRate.setText(Integer.toString(bean.rate));
+    textDetail.setText(bean.contents);
+    
+    addDetailInfo(getString(R.string.term_address), bean.address);
+    addDetailInfo(getString(R.string.term_phone), bean.contact);
+    addDetailInfo(getString(R.string.term_homepage), bean.homepage);
+    
+    titleView.setBean(bean);
     
     containerProduct.removeAllViews();
     ProductView productView = new ProductView(PlaceDetailActivity.this);
@@ -118,20 +185,27 @@ public class PlaceDetailActivity extends ActionBarActivity
     productView.setBean(bean);
     containerProduct.addView(productView);
     
-    containerReview.removeAllViews();
-    ReviewView reviewView = new ReviewView(PlaceDetailActivity.this);
-    ReviewBean reviewBean = new ReviewBean();
-    reviewBean.userName = "planB";
-    reviewBean.content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do";
-    reviewView.setBean(reviewBean);
-    containerReview.addView(reviewView);
-    
-    reviewView = new ReviewView(PlaceDetailActivity.this);
-    reviewBean = new ReviewBean();
-    reviewBean.userName = "planB";
-    reviewBean.content = "좋네요!";
-    reviewView.setBean(reviewBean);
-    containerReview.addView(reviewView);
+//    reviewView = new ReviewView(PlaceDetailActivity.this);
+//    reviewBean = new ReviewBean();
+//    reviewBean.userName = "planB";
+//    reviewBean.content = "좋네요!";
+//    reviewView.setBean(reviewBean);
+//    containerReview.addView(reviewView);
+  }
+  
+  
+  private void addDetailInfo(String title, String text)
+  {
+    if (!TextUtils.isEmpty(text))
+    {
+      int detailResId = R.layout.list_item_recommend_seoul_place_detail_info;
+      View view = getLayoutInflater().inflate(detailResId, null);
+      TextView titleView = (TextView) view.findViewById(android.R.id.text1);
+      TextView textView = (TextView) view.findViewById(android.R.id.text2);
+      titleView.setText(title);
+      textView.setText(text);
+      layoutDetailPlaceInfo.addView(view);
+    }
   }
   
   /**************************************************
@@ -181,7 +255,10 @@ public class PlaceDetailActivity extends ActionBarActivity
       else if (v.getId() == R.id.btn_write_review)
       {
         //리뷰쓰기
-        startActivity(new Intent(PlaceDetailActivity.this, WriteReviewActivity.class));
+        Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
+        i.putExtra("idx", bean.idx);
+        i.putExtra("type", "place");
+        startActivity(i);
       }
     }
   };

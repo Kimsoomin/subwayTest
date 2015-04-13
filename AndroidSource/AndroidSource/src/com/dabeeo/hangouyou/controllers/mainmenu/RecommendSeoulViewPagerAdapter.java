@@ -8,11 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.dabeeo.hangouyou.beans.TitleCategoryBean;
-import com.dabeeo.hangouyou.fragments.mainmenu.RecommendSeoulListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.TravelStrategyListFragment;
 
 public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
 {
   private ArrayList<TitleCategoryBean> items = new ArrayList<>();
+  
   
   public RecommendSeoulViewPagerAdapter(Context context, FragmentManager fm)
   {
@@ -29,7 +31,10 @@ public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public Fragment getItem(int position)
   {
-    return new RecommendSeoulListFragment(items.get(position).categoryId);
+    if (position == 0)
+      return new TravelStrategyListFragment(items.get(position).categoryId);
+    else
+      return new PlaceListFragment(items.get(position).categoryId);
   }
   
   

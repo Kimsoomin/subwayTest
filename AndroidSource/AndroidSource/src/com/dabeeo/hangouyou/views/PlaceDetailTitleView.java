@@ -9,10 +9,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 
 public class PlaceDetailTitleView extends RelativeLayout
 {
   private Context context;
+  private ImageView imageView;
+  private TextView name, time, likeCount, reviewCount;
   
   
   public PlaceDetailTitleView(Context context)
@@ -39,23 +42,26 @@ public class PlaceDetailTitleView extends RelativeLayout
   }
   
   
+  public void setBean(PlaceDetailBean bean)
+  {
+    name.setText(bean.userName);
+    time.setText(bean.updateDateString);
+    likeCount.setText(Integer.toString(bean.likeCount));
+    reviewCount.setText(Integer.toString(bean.reviewCount));
+  }
+  
+  
   public void init()
   {
     int resId = R.layout.view_place_detail_title;
     View view = LayoutInflater.from(context).inflate(resId, null);
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
-    ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    TextView name = (TextView) view.findViewById(R.id.name);
-    TextView time = (TextView) view.findViewById(R.id.time);
-    TextView likeCount = (TextView) view.findViewById(R.id.like_count);
-    TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
-    
-    //가데이터
-    name.setText("planb");
-    time.setText("2015.01.01 16:53");
-    likeCount.setText("970");
-    reviewCount.setText("321");
+    imageView = (ImageView) view.findViewById(R.id.imageview);
+    name = (TextView) view.findViewById(R.id.name);
+    time = (TextView) view.findViewById(R.id.time);
+    likeCount = (TextView) view.findViewById(R.id.like_count);
+    reviewCount = (TextView) view.findViewById(R.id.review_count);
     
     addView(view);
   }

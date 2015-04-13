@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers.mypage;
+package com.dabeeo.hangouyou.controllers.mainmenu;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 
-public class MyPlaceListAdapter extends BaseAdapter
+public class PlaceListAdapter extends BaseAdapter
 {
   private ArrayList<PlaceBean> beans = new ArrayList<>();
   
@@ -65,7 +65,7 @@ public class MyPlaceListAdapter extends BaseAdapter
   public View getView(int position, View convertView, ViewGroup parent)
   {
     PlaceBean bean = (PlaceBean) beans.get(position);
-    int resId = R.layout.list_item_my_place;
+    int resId = R.layout.list_item_place;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);

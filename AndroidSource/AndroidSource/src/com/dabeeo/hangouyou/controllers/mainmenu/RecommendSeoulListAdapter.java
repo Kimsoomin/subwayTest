@@ -11,22 +11,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.RecommendSeoulBean;
-import com.squareup.picasso.Picasso;
+import com.dabeeo.hangouyou.beans.PlaceBean;
 
 public class RecommendSeoulListAdapter extends BaseAdapter
 {
-  private ArrayList<RecommendSeoulBean> beans = new ArrayList<>();
+  private ArrayList<PlaceBean> beans = new ArrayList<>();
   
   
-  public void add(RecommendSeoulBean bean)
+  public void add(PlaceBean bean)
   {
     this.beans.add(bean);
     notifyDataSetChanged();
   }
   
   
-  public void addAll(ArrayList<RecommendSeoulBean> beans)
+  public void addAll(ArrayList<PlaceBean> beans)
   {
     this.beans.addAll(beans);
     notifyDataSetChanged();
@@ -65,7 +64,7 @@ public class RecommendSeoulListAdapter extends BaseAdapter
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
-    RecommendSeoulBean bean = (RecommendSeoulBean) beans.get(position);
+    PlaceBean bean = (PlaceBean) beans.get(position);
     int resId = R.layout.list_item_recommend_seoul;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
@@ -75,10 +74,10 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     
     title.setText(bean.title);
-    category.setText(bean.category);
+//    category.setText(bean.category);
     likeCount.setText(Integer.toString(bean.likeCount));
     
-    Picasso.with(parent.getContext()).load(bean.photoUrl).into(imageView);
+//    Picasso.with(parent.getContext()).load(bean.photoUrl).into(imageView);
     return view;
   }
 }

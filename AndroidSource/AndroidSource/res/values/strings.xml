@@ -31,7 +31,7 @@
     <string name="term_register_photolog">후기등록</string>
     <string name="term_wishlist">위시리스트</string>
     <string name="term_search">검색</string>
-
+    <string name="msg_download_map">Tip! 무료로 지도를 저장하여 사용해보세요</string>
     <!-- Place activities term -->
     <string name="term_review_best">최고에요</string>
     <string name="term_review_soso">그저그래요</string>
@@ -117,5 +117,7 @@
     <string name="term_popular_place">명소</string>
     <string name="term_shopping">쇼핑</string>
     <string name="term_restaurant">레스토랑</string>
+    <string name="msg_review_success">리뷰가 등록되었습니다.</string>
+    <string name="msg_review_fail">리뷰 등록을 실패했습니다.</string>
 
 </resources>

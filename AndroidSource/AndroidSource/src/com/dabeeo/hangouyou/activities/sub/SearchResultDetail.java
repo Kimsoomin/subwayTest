@@ -14,7 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulDetailActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
@@ -93,7 +93,7 @@ public class SearchResultDetail extends ActionBarActivity
           break;
         
         case SearchResultBean.TYPE_RECOMMEND_SEOUL:
-          startActivity(new Intent(SearchResultDetail.this, RecommendSeoulDetailActivity.class));
+          startActivity(new Intent(SearchResultDetail.this, TravelStrategyDetailActivity.class));
           break;
         
         case SearchResultBean.TYPE_SCHEDULE:

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dabeeo.hangouyou"
-    android:versionCode="5"
-    android:versionName="1.0.5" >
+    android:versionCode="6"
+    android:versionName="1.0.6" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -62,7 +62,7 @@
             android:label="@string/term_write_review"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulActivity"
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyActivity"
             android:label="@string/term_strategy_seoul"
             android:screenOrientation="portrait" />
         <activity
@@ -150,7 +150,7 @@
             android:name="com.dabeeo.hangouyou.activities.sub.SearchResultDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.RecommendSeoulDetailActivity"
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyDetailActivity"
             android:screenOrientation="portrait" />
     </application>
 
