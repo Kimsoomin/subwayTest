@@ -1,21 +1,44 @@
 package com.dabeeo.hangouyou;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
+import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
+import com.dabeeo.hangouyou.managers.SubwayManager;
+import com.dabeeo.hangouyou.map.Global;
+import com.dabeeo.hangouyou.map.MapPlaceDataManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class IntroActivity extends ActionBarActivity
@@ -23,6 +46,7 @@ public class IntroActivity extends ActionBarActivity
   private ProgressBar progressBar;
   private AlertDialogManager alertManager;
   private Handler handler = new Handler();
+  private ProgressDialog mapDialog;
   
   
   @SuppressWarnings("static-access")
@@ -73,41 +97,121 @@ public class IntroActivity extends ActionBarActivity
 //      Log.w("WARN", "call checkReady");
       if (MainActivity.subwayFrament.isLoadEnded())
       {
-        MainActivity.subwayFrament.loadAllStations(new Runnable()
-        {
-          @Override
-          public void run()
-          {
-            if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
-            {
-              //3G or LTE Mode
-              alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel),
-                  new AlertListener()
-                  {
-                    @Override
-                    public void onPositiveButtonClickListener()
-                    {
-                      checkDownloadInfo();
-                    }
-                    
-                    
-                    @Override
-                    public void onNegativeButtonClickListener()
-                    {
-                      finish();
-                    }
-                  });
-            }
-            else
-              checkDownloadInfo();
-          }
-        });
-        
+        checkMap();
       }
       else
         handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
     }
   };
+  
+  
+  private void checkMap()
+  {
+    if (mapDialog == null)
+    {
+      mapDialog = new ProgressDialog(IntroActivity.this);
+      mapDialog.setTitle(getString(R.string.app_name));
+      mapDialog.setMessage(getString(R.string.msg_map_donwload));
+    }
+    
+    if (!mapDialog.isShowing())
+      mapDialog.show();
+    
+    new GetMapAsyncTask().execute();
+  }
+  
+  private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
+  {
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+      if (!directory.exists())
+        directory.mkdirs();
+      
+      File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+      if (!file.exists())
+      {
+        try
+        {
+          file.createNewFile();
+        }
+        catch (IOException e1)
+        {
+          e1.printStackTrace();
+        }
+        
+        Log.w("WARN", "Map Download");
+        AssetManager assetManager = getAssets();
+        
+        InputStream in = null;
+        OutputStream out = null;
+        try
+        {
+          in = assetManager.open(Global.g_strMapDBFileName);
+          String newFileName = Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName);
+          out = new FileOutputStream(newFileName);
+          
+          byte[] buffer = new byte[1024];
+          int read;
+          while ((read = in.read(buffer)) != -1)
+          {
+            out.write(buffer, 0, read);
+          }
+          in.close();
+          in = null;
+          out.flush();
+          out.close();
+          out = null;
+        }
+        catch (Exception e)
+        {
+          Log.e("tag", e.getMessage());
+        }
+        return null;
+      }
+      else
+        return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Boolean result)
+    {
+      if (mapDialog.isShowing())
+        mapDialog.dismiss();
+      
+      MainActivity.subwayFrament.loadAllStations(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+          {
+            //3G or LTE Mode
+            alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+            {
+              @Override
+              public void onPositiveButtonClickListener()
+              {
+                checkDownloadInfo();
+              }
+              
+              
+              @Override
+              public void onNegativeButtonClickListener()
+              {
+                finish();
+              }
+            });
+          }
+          else
+            checkDownloadInfo();
+        }
+      });
+      super.onPostExecute(result);
+    }
+  }
   
   
   private void checkDownloadInfo()
@@ -126,11 +230,76 @@ public class IntroActivity extends ActionBarActivity
       public void run()
       {
         alertManager.hideProgressDialog();
-        checkAllowAlarm();
+        checkMapPlaceData();
       }
     };
     Handler handler = new Handler();
     handler.postDelayed(runn, 1000);
+  }
+  
+  
+  private void checkMapPlaceData()
+  {
+    AssetManager assetManager = getAssets();
+    InputStream inputStream = null;
+    String placeJsonString = "";
+    try
+    {
+      inputStream = assetManager.open("place_json.txt");
+      if (inputStream != null)
+      {
+        Writer writer = new StringWriter();
+        
+        char[] buffer = new char[1024];
+        try
+        {
+          Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+          int n;
+          while ((n = reader.read(buffer)) != -1)
+          {
+            writer.write(buffer, 0, n);
+          }
+        }
+        finally
+        {
+          inputStream.close();
+        }
+        placeJsonString = writer.toString();
+      }
+    }
+    catch (IOException e)
+    {
+      Log.e("message: ", e.getMessage());
+    }
+    
+    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
+    MapPlaceDataManager.getInstance(IntroActivity.this).deleteDatabase();
+    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
+    
+    JSONArray array;
+    try
+    {
+      JSONObject obj = new JSONObject(placeJsonString);
+      array = obj.getJSONArray("place");
+      for (int i = 0; i < array.length(); i++)
+      {
+        PlaceBean bean = new PlaceBean();
+        bean.setJSONObject(array.getJSONObject(i));
+        MapPlaceDataManager.getInstance(IntroActivity.this).addPlace(bean);
+      }
+      
+      ArrayList<StationBean> stations = SubwayManager.getInstance(IntroActivity.this).stations;
+      for (int i = 0; i < stations.size(); i++)
+      {
+        MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(stations.get(i));
+      }
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    
+    checkAllowAlarm();
   }
   
   

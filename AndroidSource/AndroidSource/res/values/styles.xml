@@ -4,4 +4,10 @@
         <item name="windowActionBar">true</item>
     </style>
 
+    <declare-styleable name="CustomTextView">
+        <attr name="textStroke" format="boolean" />
+        <attr name="textStrokeWidth" format="float" />
+        <attr name="textStrokeColor" format="color" />
+    </declare-styleable>
+
 </resources>

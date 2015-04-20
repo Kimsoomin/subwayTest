@@ -12,11 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity;
+import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
+import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class MainFragment extends Fragment
@@ -67,11 +68,28 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerMap.getId())
       {
-        
+        startActivity(new Intent(getActivity(), BlinkingMap.class));
       }
       else if (v.getId() == containerSubway.getId())
       {
-        startActivity(new Intent(getActivity(), SubwayActivity.class));
+        //가까운 지하철 역 찾기
+//        Intent i = new Intent(getActivity(), SubwayActivity.class);
+//        double[] latLon = new double[2];
+//        latLon[0] = 38;
+//        latLon[1] = 128;
+//        i.putExtra("near_by_station_lat_lon", latLon);
+//        startActivity(i);
+        
+        //해당 지하철역 출발역으로 지정
+//        Intent i = new Intent(getActivity(), SubwayActivity.class);
+//        double[] latLon = new double[3];
+//        latLon[0] = 38;
+//        latLon[1] = 128;
+//        latLon[2] = 1;
+//        i.putExtra("set_dest_station_lat_lon", latLon);
+//        startActivity(i);
+        Intent i = new Intent(getActivity(), SubwayActivity.class);
+        startActivity(i);
       }
       else if (v.getId() == containerTicketAndCoupon.getId())
       {

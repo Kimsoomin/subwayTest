@@ -121,6 +121,7 @@
     <string name="msg_review_fail">리뷰 등록을 실패했습니다.</string>
 
     <!-- 추가 String -->
+    <!-- 회원가입 / 로그인 -->
     <string name="term_login">로그인</string>
     <string name="term_join">회원가입</string>
     <string name="term_email">E-mail</string>
@@ -140,5 +141,16 @@
     <string name="msg_gps_agreement">위치정보약관 동의</string>
     <string name="msg_date_of_birth">생일을 입력해주세요</string>
     <string name="term_send">보내기</string>
-
+    <!-- 지하철 -->
+    <string name="term_find_start_station">출발역 찾기</string>
+ 	<!-- 맵 -->
+    <string name="map_notification">알림</string>
+    <string name="map_confirm">확인</string>
+    <string name="map_dialog_message01">원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요.</string>
+    <string name="map_dialog_message02">위치를 찾을 수 없습니다.</string>
+    <string name="map_subway_start">출발지로 선택</string>
+    <string name="map_subway_end">도착지로 선택</string>   
+    
+    <!-- Intro -->
+    <string name="msg_map_donwload">지도 자료를 다운로드 중입니다.</string>
 </resources>

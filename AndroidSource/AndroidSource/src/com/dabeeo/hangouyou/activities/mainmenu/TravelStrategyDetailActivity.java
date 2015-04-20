@@ -21,13 +21,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.squareup.picasso.Picasso;
 
 public class TravelStrategyDetailActivity extends ActionBarActivity
@@ -99,7 +99,11 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     if (id == android.R.id.home)
       finish();
     else if (id == R.id.map)
-      Toast.makeText(this, "준비 중입니다", Toast.LENGTH_LONG).show();
+    {
+      Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
+      i.putExtra("idx", bean.idx);
+      startActivity(i);
+    }
     return super.onOptionsItemSelected(item);
   }
   

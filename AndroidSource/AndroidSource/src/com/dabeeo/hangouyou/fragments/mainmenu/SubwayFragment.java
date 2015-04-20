@@ -24,9 +24,11 @@ import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayStationsActivity;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
+import com.dabeeo.hangouyou.map.BlinkingMap;
 
 @SuppressWarnings("deprecation")
 @SuppressLint("SetJavaScriptEnabled")
@@ -50,6 +53,13 @@ public class SubwayFragment extends Fragment
   private ImageView detailStationInfo;
   private boolean isLoadEnded;
   private Runnable afterLoadSubwaysRunnable;
+  private double startStationLat = -1, startStationLong = -1;
+  private Button btnFindFirstStation;
+  
+  private double findNearByStationLat = -1, findNearByStationLon = -1;
+  private double setDestFindNearStation = -1;
+  
+  private AlertDialog choiceDialog;
   
   
   @Override
@@ -70,16 +80,32 @@ public class SubwayFragment extends Fragment
   }
   
   
+  public void findNearByStation(double lat, double lon)
+  {
+    Log.w("WARN", "지하철 찾기로 진입함");
+    findNearByStationLat = lat;
+    findNearByStationLon = lon;
+  }
+  
+  
+  public void findNearByStation(double lat, double lon, double type)
+  {
+    Log.w("WARN", "지하철을 찾고 출도착역으로 설정");
+    findNearByStationLat = lat;
+    findNearByStationLon = lon;
+    setDestFindNearStation = type;
+  }
+  
+  
   @Override
   public void onAttach(Activity activity)
   {
-//    if (view == null)
-//    {
     int resId = R.layout.fragment_subway;
     view = LayoutInflater.from(activity).inflate(resId, null);
     stationsInfoLayout = (LinearLayout) view.findViewById(R.id.stations_info);
     stationsInfoText = (TextView) view.findViewById(R.id.text_stations_info);
     detailStationInfo = (ImageView) view.findViewById(R.id.image_stations_info_detail);
+    btnFindFirstStation = (Button) view.findViewById(R.id.btn_find_start_station);
     
     webview = (WebView) view.findViewById(R.id.webview);
     
@@ -95,6 +121,7 @@ public class SubwayFragment extends Fragment
     webview.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
     webview.getSettings().setAppCachePath(getActivity().getApplicationContext().getCacheDir().getAbsolutePath());
     webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+    webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
     
     webview.addJavascriptInterface(new JavaScriptInterface(), "myClient");
     webview.setWebViewClient(webViewClient);
@@ -102,10 +129,9 @@ public class SubwayFragment extends Fragment
     webview.loadUrl("file:///android_asset/subway.html");
     
     handler.postDelayed(checkSubwayNativeLoadRunnable, 1000);
-//    }
     super.onAttach(activity);
   }
-  
+   
   private Runnable checkSubwayNativeLoadRunnable = new Runnable()
   {
     @Override
@@ -133,43 +159,23 @@ public class SubwayFragment extends Fragment
   
   public void findStation(final String stationId, String stationName)
   {
-//    webview.loadUrl("javascript:subway.find_station(" + stationId + ")");
-    CharSequence[] menus = new CharSequence[2];
-    menus[0] = "출발역 설정";
-    menus[1] = "도착역 설정";
-    
-    final CharSequence[] menuTitles = menus;
-    Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle("출도착역 설정");
-    builder.setItems(menus, new DialogInterface.OnClickListener()
+    handler.post(new Runnable()
     {
-      public void onClick(DialogInterface dialog, int whichButton)
+      @Override
+      public void run()
       {
-        if (menuTitles[whichButton].equals("출발역 설정"))
+        webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+        handler.postDelayed(new Runnable()
         {
-          handler.post(new Runnable()
+          @Override
+          public void run()
           {
-            @Override
-            public void run()
-            {
-              webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
-            }
-          });
-        }
-        else if (menuTitles[whichButton].equals("도착역 설정"))
-        {
-          handler.post(new Runnable()
-          {
-            @Override
-            public void run()
-            {
-              webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
-            }
-          });
-        }
+            showChoiceStationPopUp(stationId);
+          }
+        }, 500);
       }
     });
-    builder.create().show();
+    
   }
   
   private WebViewClient webViewClient = new WebViewClient()
@@ -187,7 +193,7 @@ public class SubwayFragment extends Fragment
     @Override
     public boolean onConsoleMessage(ConsoleMessage consoleMessage)
     {
-      Log.w("MainActivity.java | onConsoleMessage", "111111111|" + consoleMessage + "|" + consoleMessage.message() + "|" + consoleMessage.sourceId() + "|");
+      Log.w("MainActivity.java | onConsoleMessage", "" + consoleMessage + "|" + consoleMessage.message() + "|" + consoleMessage.sourceId() + "|");
       return super.onConsoleMessage(consoleMessage);
     }
     
@@ -195,7 +201,7 @@ public class SubwayFragment extends Fragment
     @Override
     public boolean onJsAlert(WebView view, String url, String message, JsResult result)
     {
-      Log.w("MainActivity.java | onJsAlert", "222222222|" + url + "|" + message + "|" + result + "|");
+      Log.w("MainActivity.java | onJsAlert", "" + url + "|" + message + "|" + result + "|");
       return super.onJsAlert(view, url, message, result);
     }
   };
@@ -211,12 +217,82 @@ public class SubwayFragment extends Fragment
     }
   };
   
+  
+  private void showChoiceStationPopUp(final String stationId)
+  {
+    CharSequence[] menus = new CharSequence[2];
+    menus[0] = "출발역 설정";
+    menus[1] = "도착역 설정";
+    
+    StationBean bean = SubwayManager.getInstance(getActivity()).findStation(stationId);
+    final CharSequence[] menuTitles = menus;
+    Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setTitle(bean.nameKo);
+    builder.setItems(menus, new DialogInterface.OnClickListener()
+    {
+      public void onClick(DialogInterface dialog, int whichButton)
+      {
+        if (menuTitles[whichButton].equals("출발역 설정"))
+        {
+          handler.post(new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              if (SubwayManager.getInstance(getActivity()).getLatitudeWithSubwayId(stationId) != -1)
+              {
+                double lat = SubwayManager.getInstance(getActivity()).getLatitudeWithSubwayId(stationId);
+                double lon = SubwayManager.getInstance(getActivity()).getLongitudeWithSubwayId(stationId);
+                Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
+                startStationLat = lat;
+                startStationLong = lon;
+                
+                btnFindFirstStation.setVisibility(View.VISIBLE);
+                btnFindFirstStation.setOnClickListener(new OnClickListener()
+                {
+                  @Override
+                  public void onClick(View arg0)
+                  {
+                    Intent i = new Intent(getActivity(), BlinkingMap.class);
+                    i.putExtra("lineId", stationId);
+                    i.putExtra("Latitude", startStationLat);
+                    i.putExtra("Longitude", startStationLong);
+                    startActivity(i);
+                  }
+                });
+              }
+              
+              webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+            }
+          });
+        }
+        else if (menuTitles[whichButton].equals("도착역 설정"))
+        {
+          handler.post(new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+            }
+          });
+          
+        }
+      }
+    });
+    if (choiceDialog == null)
+      choiceDialog = builder.create();
+    
+    if (!choiceDialog.isShowing())
+      choiceDialog.show();
+  }
+  
   private class JavaScriptInterface
   {
     @JavascriptInterface
     public void completeLoadAllStation(String stationsJSONString)
     {
-      Log.w("WARN", "completeLoadAllStations stations Json String : " + stationsJSONString);
+      Log.w("WARN", "모든 지하철역 가져와서 메모리에 저장함 : " + stationsJSONString);
       JSONArray stationsJsonArray;
       ArrayList<StationBean> stations = new ArrayList<StationBean>();
       try
@@ -233,7 +309,6 @@ public class SubwayFragment extends Fragment
       {
         e.printStackTrace();
       }
-      Log.w("WARN", "Stations size : " + stations.size());
       SubwayManager.getInstance(getActivity()).stations.clear();
       SubwayManager.getInstance(getActivity()).stations.addAll(stations);
       afterLoadSubwaysRunnable.run();
@@ -243,16 +318,33 @@ public class SubwayFragment extends Fragment
     @JavascriptInterface
     public void onSvgLoadEnded()
     {
+      Log.w("WARN", "SVG 로드 완료");
       handler.removeCallbacks(checkSubwayNativeLoadRunnable);
       isLoadEnded = true;
+      
+      handler.post(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          if (findNearByStationLat != -1)
+          {
+            //가까운 지하철역을 찾아야 함
+            if (setDestFindNearStation == -1)
+              webview.loadUrl("javascript:subway.findNearByStation('" + findNearByStationLat + "', '" + findNearByStationLon + "')");
+            else
+              webview.loadUrl("javascript:subway.setDestStation('" + findNearByStationLat + "', '" + findNearByStationLon + "','" + setDestFindNearStation + "')");
+          }
+        }
+      });
+      
     }
     
     
     @JavascriptInterface
     public void completeMarkStation(final String stationsJSONString, final int time)
     {
-      Log.w("WARN", "stations Json String : " + stationsJSONString);
-      Log.w("WARN", "Time is : " + time);
+      Log.w("WARN", "지하철 출도착 마킹 완료 : " + stationsJSONString + " ,time : " + time);
       String testNames = "";
       JSONArray stationsJsonArray;
       try
@@ -297,51 +389,69 @@ public class SubwayFragment extends Fragment
           });
         }
       });
-      
+    }
+    
+    
+    @JavascriptInterface
+    public void completedFindNearByStation(final String stationId)
+    {
+      StationBean nearByStation = SubwayManager.getInstance(getActivity()).findStation(stationId);
+      Log.w("WARN", "가까운 지하철 역 찾음:" + nearByStation.nameKo);
+      handler.post(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+          handler.postDelayed(new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              showChoiceStationPopUp(stationId);
+            }
+          }, 500);
+        }
+      });
+    }
+    
+    
+    @JavascriptInterface
+    public void completedSetDestStation(final String stationId)
+    {
+      StationBean nearByStation = SubwayManager.getInstance(getActivity()).findStation(stationId);
+      Log.w("WARN", "출도착 역 설정 완료:" + nearByStation.nameKo);
+      handler.post(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+        }
+      });
     }
     
     
     @JavascriptInterface
     public void onTouchStation(final String station)
     {
-      Log.w("MainActivity.java | onTouchStation", "33333333|" + station + "|");
-      CharSequence[] menus = new CharSequence[2];
-      menus[0] = "출발역 설정";
-      menus[1] = "도착역 설정";
-      
-      final CharSequence[] menuTitles = menus;
-      Builder builder = new AlertDialog.Builder(getActivity());
-      builder.setTitle("출도착역 설정");
-      builder.setItems(menus, new DialogInterface.OnClickListener()
+      Log.w("WARN", "지하철역 터치 됨 :" + station);
+      handler.post(new Runnable()
       {
-        public void onClick(DialogInterface dialog, int whichButton)
+        @Override
+        public void run()
         {
-          if (menuTitles[whichButton].equals("출발역 설정"))
+          webview.loadUrl("javascript:subway.setCenterWithStationId('" + station + "')");
+          handler.postDelayed(new Runnable()
           {
-            handler.post(new Runnable()
+            @Override
+            public void run()
             {
-              @Override
-              public void run()
-              {
-                webview.loadUrl("javascript:subway.set_start_station('" + station + "')");
-              }
-            });
-          }
-          else if (menuTitles[whichButton].equals("도착역 설정"))
-          {
-            handler.post(new Runnable()
-            {
-              @Override
-              public void run()
-              {
-                webview.loadUrl("javascript:subway.set_end_station('" + station + "')");
-              }
-            });
-            
-          }
+              showChoiceStationPopUp(station);
+            }
+          }, 500);
         }
       });
-      builder.create().show();
     }
   }
   

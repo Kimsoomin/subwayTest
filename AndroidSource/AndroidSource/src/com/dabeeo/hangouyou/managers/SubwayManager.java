@@ -33,6 +33,51 @@ public class SubwayManager
   }
   
   
+  public double getLatitudeWithSubwayId(String stationId)
+  {
+    StationBean bean = null;
+    for (int i = 0; i < stations.size(); i++)
+    {
+      if (stations.get(i).stationId.equals(stationId))
+        bean = stations.get(i);
+    }
+    
+    if (bean == null)
+      return -1;
+    else
+      return bean.lat;
+  }
+  
+  
+  public double getLongitudeWithSubwayId(String stationId)
+  {
+    StationBean bean = null;
+    for (int i = 0; i < stations.size(); i++)
+    {
+      if (stations.get(i).stationId.equals(stationId))
+        bean = stations.get(i);
+    }
+    
+    if (bean == null)
+      return -1;
+    else
+      return bean.lon;
+  }
+  
+  
+  public StationBean findStation(String stationId)
+  {
+    StationBean bean = null;
+    for (int i = 0; i < stations.size(); i++)
+    {
+      if (stations.get(i).stationId.equals(stationId))
+        bean = stations.get(i);
+    }
+    
+    return bean;
+  }
+  
+  
   public ArrayList<String> getAllSubwayNames()
   {
     ArrayList<String> names = new ArrayList<String>();

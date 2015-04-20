@@ -29,6 +29,7 @@ import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.views.PlaceDetailHeaderView;
 import com.dabeeo.hangouyou.views.PlaceDetailTitleView;
 import com.dabeeo.hangouyou.views.ProductView;
@@ -156,7 +157,11 @@ public class PlaceDetailActivity extends ActionBarActivity
     if (id == android.R.id.home)
       finish();
     else if (id == R.id.map)
-      Toast.makeText(this, "준비 중입니다", Toast.LENGTH_LONG).show();
+    {
+      Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
+      i.putExtra("idx", bean.idx);
+      startActivity(i);
+    }
     return super.onOptionsItemSelected(item);
   }
   

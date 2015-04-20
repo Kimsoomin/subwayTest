@@ -36,6 +36,7 @@ public class SubwayActivity extends ActionBarActivity
     setContentView(R.layout.activity_subway);
     setTitle(getString(R.string.term_subway));
     
+    Log.w("WARN", "GetIntent data : " + getIntent().getDoubleExtra("Latitude", -1));
     subwayNames.clear();
     subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayNames());
     editSearch = (AutoCompleteTextView) findViewById(R.id.edit_search);
@@ -44,10 +45,26 @@ public class SubwayActivity extends ActionBarActivity
     
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    
+    //위경도로 지하철역 찾기
+    double[] latLong = null;
+    if (getIntent().hasExtra("near_by_station_lat_lon"))
+      latLong = getIntent().getDoubleArrayExtra("near_by_station_lat_lon");
+    
+    double[] destLatLong = null;
+    if (getIntent().hasExtra("set_dest_station_lat_lon"))
+      destLatLong = getIntent().getDoubleArrayExtra("set_dest_station_lat_lon");
+    
     if (MainActivity.subwayFrament != null)
     {
       MainActivity.subwayFrament.viewClear();
       MainActivity.subwayFrament = new SubwayFragment();
+      
+      if (latLong != null)
+        MainActivity.subwayFrament.findNearByStation(latLong[0], latLong[1]);
+      
+      if (destLatLong != null)
+        MainActivity.subwayFrament.findNearByStation(destLatLong[0], destLatLong[1], destLatLong[2]);
     }
     
     FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -75,6 +92,7 @@ public class SubwayActivity extends ActionBarActivity
     int id = item.getItemId();
     if (id == android.R.id.home)
       finish();
+    
     return super.onOptionsItemSelected(item);
   }
 }
