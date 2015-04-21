@@ -10,8 +10,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -31,8 +35,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayStationsActivity;
@@ -49,6 +53,9 @@ public class SubwayFragment extends Fragment
   private Handler handler = new Handler();
   private LinearLayout stationsInfoLayout;
   private TextView stationsInfoText;
+  private TextView startStationName, endStationName;
+  private ImageView startStationImage, endStationImage;
+  
   private ArrayList<StationBean> stations = new ArrayList<>();
   private ImageView detailStationInfo;
   private boolean isLoadEnded;
@@ -59,7 +66,14 @@ public class SubwayFragment extends Fragment
   private double findNearByStationLat = -1, findNearByStationLon = -1;
   private double setDestFindNearStation = -1;
   
+  private ProgressBar progressBar;
   private AlertDialog choiceDialog;
+  private Button btnMap, btnNearByStation;
+  
+  private LocationManager locationManager;
+  private LocationListener locationListener;
+  
+  private Activity activity;
   
   
   @Override
@@ -98,14 +112,21 @@ public class SubwayFragment extends Fragment
   
   
   @Override
-  public void onAttach(Activity activity)
+  public void onAttach(final Activity activity)
   {
+    this.activity = activity;
     int resId = R.layout.fragment_subway;
     view = LayoutInflater.from(activity).inflate(resId, null);
     stationsInfoLayout = (LinearLayout) view.findViewById(R.id.stations_info);
     stationsInfoText = (TextView) view.findViewById(R.id.text_stations_info);
     detailStationInfo = (ImageView) view.findViewById(R.id.image_stations_info_detail);
     btnFindFirstStation = (Button) view.findViewById(R.id.btn_find_start_station);
+    progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+    
+    startStationName = (TextView) view.findViewById(R.id.start_station_name);
+    endStationName = (TextView) view.findViewById(R.id.end_station_name);
+    startStationImage = (ImageView) view.findViewById(R.id.start_station_image);
+    endStationImage = (ImageView) view.findViewById(R.id.end_station_image);
     
     webview = (WebView) view.findViewById(R.id.webview);
     
@@ -119,7 +140,7 @@ public class SubwayFragment extends Fragment
     webview.getSettings().setDomStorageEnabled(true);
     webview.getSettings().setRenderPriority(RenderPriority.HIGH);
     webview.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
-    webview.getSettings().setAppCachePath(getActivity().getApplicationContext().getCacheDir().getAbsolutePath());
+    webview.getSettings().setAppCachePath(activity.getApplicationContext().getCacheDir().getAbsolutePath());
     webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
     webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
     
@@ -129,9 +150,95 @@ public class SubwayFragment extends Fragment
     webview.loadUrl("file:///android_asset/subway.html");
     
     handler.postDelayed(checkSubwayNativeLoadRunnable, 1000);
+    
+    btnMap = (Button) view.findViewById(R.id.btn_map);
+    btnNearByStation = (Button) view.findViewById(R.id.btn_near_by_station);
+    btnMap.setVisibility(View.GONE);
+    btnNearByStation.setVisibility(View.GONE);
+    
+    locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+    locationListener = new SubwayLocationListener();
+    
+    btnMap.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        startActivity(new Intent(activity, BlinkingMap.class));
+      }
+    });
+    btnNearByStation.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+          buildAlertMessageNoGps();
+        else
+        {
+          progressBar.setVisibility(View.VISIBLE);
+          progressBar.bringToFront();
+          
+          locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+      }
+    });
     super.onAttach(activity);
   }
-   
+  
+  
+  private void buildAlertMessageNoGps()
+  {
+    final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    builder.setTitle(R.string.app_name).setMessage(R.string.msg_please_gps_enable).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+    {
+      public void onClick(final DialogInterface dialog, final int id)
+      {
+        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+      }
+    }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+    {
+      public void onClick(final DialogInterface dialog, final int id)
+      {
+        dialog.cancel();
+      }
+    });
+    final AlertDialog alert = builder.create();
+    alert.show();
+  }
+  
+  private class SubwayLocationListener implements LocationListener
+  {
+    
+    @Override
+    public void onLocationChanged(Location loc)
+    {
+      Log.w("WARN", "LocationChanged! " + loc.getLatitude() + " / " + loc.getLongitude());
+      locationManager.removeUpdates(locationListener);
+      webview.loadUrl("javascript:subway.setDestStation('" + loc.getLatitude() + "', '" + loc.getLongitude() + "','" + 0 + "')");
+      
+      progressBar.setVisibility(View.GONE);
+    }
+    
+    
+    @Override
+    public void onProviderDisabled(String provider)
+    {
+    }
+    
+    
+    @Override
+    public void onProviderEnabled(String provider)
+    {
+    }
+    
+    
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras)
+    {
+    }
+  }
+  
   private Runnable checkSubwayNativeLoadRunnable = new Runnable()
   {
     @Override
@@ -206,17 +313,6 @@ public class SubwayFragment extends Fragment
     }
   };
   
-  @SuppressWarnings("unused")
-  private OnClickListener clickListener = new OnClickListener()
-  {
-    @Override
-    public void onClick(View v)
-    {
-      Log.w("MainActivity.java | onClick", "|" + "call javascript function" + "|");
-      webview.loadUrl("javascript:ccc(" + "'aaa'" + ")");
-    }
-  };
-  
   
   private void showChoiceStationPopUp(final String stationId)
   {
@@ -224,10 +320,11 @@ public class SubwayFragment extends Fragment
     menus[0] = "출발역 설정";
     menus[1] = "도착역 설정";
     
-    StationBean bean = SubwayManager.getInstance(getActivity()).findStation(stationId);
+    StationBean bean = SubwayManager.getInstance(activity).findStation(stationId);
     final CharSequence[] menuTitles = menus;
+    
     Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle(bean.nameKo);
+    builder.setTitle(bean.nameCn);
     builder.setItems(menus, new DialogInterface.OnClickListener()
     {
       public void onClick(DialogInterface dialog, int whichButton)
@@ -239,21 +336,22 @@ public class SubwayFragment extends Fragment
             @Override
             public void run()
             {
-              if (SubwayManager.getInstance(getActivity()).getLatitudeWithSubwayId(stationId) != -1)
+              if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
               {
-                double lat = SubwayManager.getInstance(getActivity()).getLatitudeWithSubwayId(stationId);
-                double lon = SubwayManager.getInstance(getActivity()).getLongitudeWithSubwayId(stationId);
+                double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
+                double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
                 Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
                 startStationLat = lat;
                 startStationLong = lon;
                 
                 btnFindFirstStation.setVisibility(View.VISIBLE);
+                btnFindFirstStation.bringToFront();
                 btnFindFirstStation.setOnClickListener(new OnClickListener()
                 {
                   @Override
                   public void onClick(View arg0)
                   {
-                    Intent i = new Intent(getActivity(), BlinkingMap.class);
+                    Intent i = new Intent(activity, BlinkingMap.class);
                     i.putExtra("lineId", stationId);
                     i.putExtra("Latitude", startStationLat);
                     i.putExtra("Longitude", startStationLong);
@@ -263,6 +361,8 @@ public class SubwayFragment extends Fragment
               }
               
               webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+              
+              choiceDialog = null;
             }
           });
         }
@@ -273,13 +373,15 @@ public class SubwayFragment extends Fragment
             @Override
             public void run()
             {
+              Log.w("WARN", "StationId: " + stationId);
               webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+              choiceDialog = null;
             }
           });
-          
         }
       }
     });
+    
     if (choiceDialog == null)
       choiceDialog = builder.create();
     
@@ -309,8 +411,8 @@ public class SubwayFragment extends Fragment
       {
         e.printStackTrace();
       }
-      SubwayManager.getInstance(getActivity()).stations.clear();
-      SubwayManager.getInstance(getActivity()).stations.addAll(stations);
+      SubwayManager.getInstance(activity).stations.clear();
+      SubwayManager.getInstance(activity).stations.addAll(stations);
       afterLoadSubwaysRunnable.run();
     }
     
@@ -327,6 +429,11 @@ public class SubwayFragment extends Fragment
         @Override
         public void run()
         {
+          btnMap.setVisibility(View.VISIBLE);
+          btnNearByStation.setVisibility(View.VISIBLE);
+          btnNearByStation.bringToFront();
+          btnMap.bringToFront();
+          
           if (findNearByStationLat != -1)
           {
             //가까운 지하철역을 찾아야 함
@@ -362,7 +469,6 @@ public class SubwayFragment extends Fragment
       {
         e.printStackTrace();
       }
-      Toast.makeText(getActivity(), testNames, Toast.LENGTH_LONG).show();
       handler.post(new Runnable()
       {
         @Override
@@ -371,20 +477,26 @@ public class SubwayFragment extends Fragment
           stationsInfoLayout.setVisibility(View.VISIBLE);
           StationBean firstStationBean = stations.get(0);
           StationBean lastStationBean = stations.get(stations.size() - 1);
-          String stationsInfoString = firstStationBean.nameKo + " (" + firstStationBean.line + ") > ";
-          stationsInfoString += lastStationBean.nameKo + " (" + lastStationBean.line + ")\n";
-          stationsInfoString += Integer.toString(stations.size()) + "개 역의 이동시간은 " + Integer.toString(time) + "분입니다";
+          
+          startStationName.setText(firstStationBean.nameKo);
+          endStationName.setText(lastStationBean.nameKo);
+          
+          startStationImage.setVisibility(View.GONE);
+          endStationImage.setVisibility(View.GONE);
+          
+          String stationsInfoString = Integer.toString(stations.size()) + "개 역의 이동시간은 " + Integer.toString(time) + "분입니다";
           stationsInfoText.setText(stationsInfoString);
           final String infoString = stationsInfoString;
+          
           stationsInfoLayout.setOnClickListener(new OnClickListener()
           {
             @Override
             public void onClick(View arg0)
             {
-              Intent i = new Intent(getActivity(), SubwayStationsActivity.class);
+              Intent i = new Intent(activity, SubwayStationsActivity.class);
               i.putExtra("stations_info", infoString);
               i.putExtra("stations_json", stationsJSONString);
-              getActivity().startActivity(i);
+              activity.startActivity(i);
             }
           });
         }
@@ -395,7 +507,7 @@ public class SubwayFragment extends Fragment
     @JavascriptInterface
     public void completedFindNearByStation(final String stationId)
     {
-      StationBean nearByStation = SubwayManager.getInstance(getActivity()).findStation(stationId);
+      StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);
       Log.w("WARN", "가까운 지하철 역 찾음:" + nearByStation.nameKo);
       handler.post(new Runnable()
       {
@@ -417,9 +529,9 @@ public class SubwayFragment extends Fragment
     
     
     @JavascriptInterface
-    public void completedSetDestStation(final String stationId)
+    public void completedSetDestStation(final String stationId, final int type)
     {
-      StationBean nearByStation = SubwayManager.getInstance(getActivity()).findStation(stationId);
+      StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);
       Log.w("WARN", "출도착 역 설정 완료:" + nearByStation.nameKo);
       handler.post(new Runnable()
       {
@@ -427,6 +539,33 @@ public class SubwayFragment extends Fragment
         public void run()
         {
           webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+          progressBar.setVisibility(View.GONE);
+          if (type == 0)
+          {
+            if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
+            {
+              double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
+              double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
+              Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
+              startStationLat = lat;
+              startStationLong = lon;
+              
+              btnFindFirstStation.setVisibility(View.VISIBLE);
+              btnFindFirstStation.bringToFront();
+              btnFindFirstStation.setOnClickListener(new OnClickListener()
+              {
+                @Override
+                public void onClick(View arg0)
+                {
+                  Intent i = new Intent(activity, BlinkingMap.class);
+                  i.putExtra("lineId", stationId);
+                  i.putExtra("Latitude", startStationLat);
+                  i.putExtra("Longitude", startStationLong);
+                  startActivity(i);
+                }
+              });
+            }
+          }
         }
       });
     }

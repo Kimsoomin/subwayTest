@@ -100,4 +100,10 @@ public class SubwayManager
     }
     return stationId;
   }
+  
+  
+  public int getSubwayLineResourceId(String line)
+  {
+    return 0;
+  }
 }

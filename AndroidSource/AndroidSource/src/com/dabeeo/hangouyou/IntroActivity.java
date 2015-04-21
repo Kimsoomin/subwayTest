@@ -116,7 +116,7 @@ public class IntroActivity extends ActionBarActivity
     
     if (!mapDialog.isShowing())
       mapDialog.show();
-    
+    Log.w("WARN", "CheckMap");
     new GetMapAsyncTask().execute();
   }
   
@@ -166,7 +166,8 @@ public class IntroActivity extends ActionBarActivity
         }
         catch (Exception e)
         {
-          Log.e("tag", e.getMessage());
+          Log.w("WARN", "File copy error");
+          e.printStackTrace();
         }
         return null;
       }
@@ -289,10 +290,25 @@ public class IntroActivity extends ActionBarActivity
       }
       
       ArrayList<StationBean> stations = SubwayManager.getInstance(IntroActivity.this).stations;
+      ArrayList<StationBean> afterArray = new ArrayList<StationBean>();
+      String append = "";
       for (int i = 0; i < stations.size(); i++)
       {
-        MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(stations.get(i));
+        boolean isContain = false;
+        for (int j = 0; j < afterArray.size(); j++)
+        {
+          if (afterArray.get(j).nameKo.equals(stations.get(i).nameKo))
+            isContain = true;
+        }
+        
+        if (!isContain)
+        {
+          append += stations.get(i).nameKo + " ";
+          MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(stations.get(i));
+        }
+        afterArray.add(stations.get(i));
       }
+      Log.w("WARN", "Stations : " + append);
     }
     catch (JSONException e)
     {

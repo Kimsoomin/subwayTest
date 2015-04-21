@@ -406,6 +406,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     placeinfo = MapPlaceDataManager.getInstance(BlinkingMap.this).getAllPlaces();
 //		placeinfo = testDB.getAllPlace();
     Log.w("WARN", "PlaceInfo size : " + placeinfo.size());
+
+    
     /*
      * ==========================================================================
      * =========== 오픈 스트리트 맵 API 참고 http://wiki.openstreetmap.org/wiki/API_v0.6

@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   private int placeIdx = -1;
   private PlaceDetailBean bean;
   private ScrollView scrollView;
+  private TextView likeCount;
   
   
   @Override
@@ -48,9 +50,9 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-    getSupportActionBar().setElevation(05);
+    getSupportActionBar().setElevation(0);
     
-    setContentView(R.layout.activity_recommend_seoul_detail);
+    setContentView(R.layout.activity_strategy_seoul_detail);
     
     apiClient = new ApiClient(this);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,11 +63,14 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     textDetail = (TextView) findViewById(R.id.text_detail);
     horizontalImagesView = (ViewGroup) findViewById(R.id.horizontal_images_view);
     layoutDetailPlaceInfo = (ViewGroup) findViewById(R.id.layout_place_detail_info);
+    likeCount = (TextView) findViewById(R.id.like_count);
     
     findViewById(R.id.btn_share).setOnClickListener(clickListener);
     findViewById(R.id.btn_like).setOnClickListener(clickListener);
     
     scrollView = (ScrollView) findViewById(R.id.scroll_view);
+    
+    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(0, 45, 189, 182)));
     scrollView.getViewTreeObserver().addOnScrollChangedListener(new OnScrollChangedListener()
     {
       @Override
@@ -75,9 +80,9 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         Log.w("WARN", "ScrollY: " + scrollY);
         
         if (scrollY > 255)
-          scrollY = 255;
-        int opacity = 255 - scrollY;
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(opacity, 235, 175, 10)));
+          scrollY = 254;
+        int opacity = scrollY - 255;
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(opacity, 45, 189, 182)));
       }
     });
     loadPlaceDetail();
@@ -157,6 +162,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
     ((TextView) findViewById(R.id.text_description)).setText(bean.address);
     textDetail.setText(bean.contents);
+    likeCount.setText(Integer.toString(bean.likeCount));
     
     Picasso.with(this)
            .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759")
@@ -332,10 +338,10 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   {
     if (!TextUtils.isEmpty(text))
     {
-      int detailResId = R.layout.list_item_recommend_seoul_place_detail_info;
+      int detailResId = R.layout.list_item_strategy_seoul_place_detail_info;
       View view = getLayoutInflater().inflate(detailResId, null);
-      TextView titleView = (TextView) view.findViewById(android.R.id.text1);
-      TextView textView = (TextView) view.findViewById(android.R.id.text2);
+      TextView titleView = (TextView) view.findViewById(R.id.text_title);
+      TextView textView = (TextView) view.findViewById(R.id.text_description);
       titleView.setText(title);
       textView.setText(text);
       layoutDetailPlaceInfo.addView(view);

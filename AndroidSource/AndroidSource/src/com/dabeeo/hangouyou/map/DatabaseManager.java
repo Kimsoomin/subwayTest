@@ -121,22 +121,11 @@ public class DatabaseManager
   {
     ContentValues initialValues = new ContentValues();
     initialValues.put("idx", bean.stationId);
-//    initialValues.put("seqCode", bean.seqCode);
-//    initialValues.put("cityIdx", bean.cityIdx);
-    initialValues.put("title", bean.nameKo);
+    initialValues.put("title", bean.nameCn);
     initialValues.put("category", 99);
     initialValues.put("lat", bean.lat);
     initialValues.put("lng", bean.lon);
     initialValues.put("address", bean.line);
-//    initialValues.put("popular", bean.popularCount);
-//    initialValues.put("rate", bean.rate);
-//    initialValues.put("likeCount", bean.likeCount);
-//    initialValues.put("bookmarkCount", bean.bookmarkCount);
-//    initialValues.put("shareCount", bean.shareCount);
-//    initialValues.put("reviewCount", bean.reviewCount);
-//    initialValues.put("ownerUserSeq", bean.userSeq);
-//    initialValues.put("userName", bean.userName);
-//    initialValues.put("gender", bean.gender);
     mDb.insert(DATABASE_TABLE_NAME_PLACE_INFO, null, initialValues);
   }
   

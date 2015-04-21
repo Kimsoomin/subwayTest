@@ -203,7 +203,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   {
     if (!TextUtils.isEmpty(text))
     {
-      int detailResId = R.layout.list_item_recommend_seoul_place_detail_info;
+      int detailResId = R.layout.list_item_strategy_seoul_place_detail_info;
       View view = getLayoutInflater().inflate(detailResId, null);
       TextView titleView = (TextView) view.findViewById(android.R.id.text1);
       TextView textView = (TextView) view.findViewById(android.R.id.text2);

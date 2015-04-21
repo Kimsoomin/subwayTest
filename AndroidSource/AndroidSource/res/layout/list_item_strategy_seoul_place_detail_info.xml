@@ -5,17 +5,25 @@
     android:paddingTop="10dp" >
 
     <TextView
-        android:id="@android:id/text1"
+        android:id="@+id/text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@null"
+        android:textColor="@color/darker_gray"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@android:id/text2"
+        android:id="@+id/text_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoLink="phone|web"
-        android:text="@null" />
+        android:text="@null"
+        android:textColor="@color/gray" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gray" />
 
 </LinearLayout>

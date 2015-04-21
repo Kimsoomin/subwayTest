@@ -143,14 +143,17 @@
     <string name="term_send">보내기</string>
     <!-- 지하철 -->
     <string name="term_find_start_station">출발역 찾기</string>
- 	<!-- 맵 -->
+    <string name="msg_please_gps_enable">GPS를 활성화시켜주세요</string>
+    <string name="msg_find_station">지하철역 검색</string>
+    <!-- 맵 -->
     <string name="map_notification">알림</string>
     <string name="map_confirm">확인</string>
     <string name="map_dialog_message01">원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요.</string>
     <string name="map_dialog_message02">위치를 찾을 수 없습니다.</string>
     <string name="map_subway_start">출발지로 선택</string>
-    <string name="map_subway_end">도착지로 선택</string>   
-    
+    <string name="map_subway_end">도착지로 선택</string>
+
     <!-- Intro -->
     <string name="msg_map_donwload">지도 자료를 다운로드 중입니다.</string>
+
 </resources>

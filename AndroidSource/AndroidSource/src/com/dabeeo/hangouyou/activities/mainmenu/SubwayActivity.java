@@ -3,27 +3,40 @@ package com.dabeeo.hangouyou.activities.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.managers.SubwayManager;
+import com.dabeeo.hangouyou.map.BlinkingMap;
 
 public class SubwayActivity extends ActionBarActivity
 {
   private AutoCompleteTextView editSearch;
   private ArrayList<String> subwayNames = new ArrayList<String>();
+  
+  
+  
   
   
   @SuppressWarnings("static-access")
@@ -71,6 +84,7 @@ public class SubwayActivity extends ActionBarActivity
     ft.replace(R.id.content, MainActivity.subwayFrament);
     ft.commit();
     
+    
     editSearch.setOnItemClickListener(new OnItemClickListener()
     {
       @Override
@@ -84,6 +98,9 @@ public class SubwayActivity extends ActionBarActivity
       }
     });
   }
+  
+  
+
   
   
   @Override

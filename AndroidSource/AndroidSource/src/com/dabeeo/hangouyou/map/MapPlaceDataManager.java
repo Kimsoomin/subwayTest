@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.map;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.StationBean;
