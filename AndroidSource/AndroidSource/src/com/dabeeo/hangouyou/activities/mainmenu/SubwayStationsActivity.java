@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.controllers.SubwayListAdapter;
+import com.dabeeo.hangouyou.managers.SubwayManager;
 
 public class SubwayStationsActivity extends ActionBarActivity
 {
@@ -24,6 +25,10 @@ public class SubwayStationsActivity extends ActionBarActivity
   private SubwayListAdapter adapter;
   private TextView infoText;
   private ImageView imageX;
+  
+  private TextView stationsInfoText;
+  private TextView startStationName, endStationName;
+  private ImageView startStationImage, endStationImage;
   
   
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
@@ -39,6 +44,11 @@ public class SubwayStationsActivity extends ActionBarActivity
     String infoString = getIntent().getStringExtra("stations_info");
     String jsonStations = getIntent().getStringExtra("stations_json");
     
+    startStationName = (TextView) findViewById(R.id.start_station_name);
+    endStationName = (TextView) findViewById(R.id.end_station_name);
+    startStationImage = (ImageView) findViewById(R.id.start_station_image);
+    endStationImage = (ImageView) findViewById(R.id.end_station_image);
+    
     imageX = (ImageView) findViewById(R.id.image_x);
     imageX.setOnClickListener(new OnClickListener()
     {
@@ -53,7 +63,7 @@ public class SubwayStationsActivity extends ActionBarActivity
     infoText.setText(infoString);
     
     listView = (ListView) findViewById(R.id.list_view);
-    adapter = new SubwayListAdapter();
+    adapter = new SubwayListAdapter(SubwayStationsActivity.this);
     listView.setAdapter(adapter);
     parseStationsJson(jsonStations);
   }
@@ -79,6 +89,18 @@ public class SubwayStationsActivity extends ActionBarActivity
       e.printStackTrace();
     }
     
+    try
+    {
+      startStationImage.setImageResource(SubwayManager.getInstance(SubwayStationsActivity.this).getSubwayLineResourceId(stations.get(0).line));
+      endStationImage.setImageResource(SubwayManager.getInstance(SubwayStationsActivity.this).getSubwayLineResourceId(stations.get(stations.size() - 1).line));
+      
+      startStationName.setText(stations.get(0).nameKo);
+      endStationName.setText(stations.get(stations.size() - 1).nameKo);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
     adapter.addAll(stations);
   }
   

@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.managers;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.dabeeo.hangouyou.beans.StationBean;
 
@@ -104,6 +105,40 @@ public class SubwayManager
   
   public int getSubwayLineResourceId(String line)
   {
-    return 0;
+    Log.w("WARN", "line: " + line);
+    int resourceId = context.getResources().getIdentifier("drawable/icon_subway_line1", null, context.getPackageName());
+    if (line.equals("2"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line2", null, context.getPackageName());
+    else if (line.equals("3"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line3", null, context.getPackageName());
+    else if (line.equals("4"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line4", null, context.getPackageName());
+    else if (line.equals("5"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line5", null, context.getPackageName());
+    else if (line.equals("6"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line6", null, context.getPackageName());
+    else if (line.equals("7"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line7", null, context.getPackageName());
+    else if (line.equals("8"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line8", null, context.getPackageName());
+    else if (line.equals("9"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_line9", null, context.getPackageName());
+    else if (line.equals("공항철도"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_linea", null, context.getPackageName());
+    else if (line.equals("분당선"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_lineb", null, context.getPackageName());
+    else if (line.equals("에버라인"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_lineever", null, context.getPackageName());
+    else if (line.equals("경춘선"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_linegc", null, context.getPackageName());
+    else if (line.equals("경의중앙선"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_linegj", null, context.getPackageName());
+    else if (line.equals("인천1호선"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_lineinc1", null, context.getPackageName());
+    else if (line.equals("신분당선"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_linesb", null, context.getPackageName());
+    else if (line.equals("수인선"))
+      resourceId = context.getResources().getIdentifier("drawable/icon_subway_linesuin", null, context.getPackageName());
+    return resourceId;
   }
 }

@@ -4,7 +4,6 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -77,7 +76,6 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       public void onScrollChanged()
       {
         int scrollY = scrollView.getScrollY();
-        Log.w("WARN", "ScrollY: " + scrollY);
         
         if (scrollY > 255)
           scrollY = 254;
@@ -108,6 +106,10 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
       i.putExtra("idx", bean.idx);
       startActivity(i);
+    }
+    else if (id == R.id.close)
+    {
+      finish();
     }
     return super.onOptionsItemSelected(item);
   }

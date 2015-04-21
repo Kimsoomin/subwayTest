@@ -61,7 +61,7 @@ public class SubwayFragment extends Fragment
   private boolean isLoadEnded;
   private Runnable afterLoadSubwaysRunnable;
   private double startStationLat = -1, startStationLong = -1;
-  private Button btnFindFirstStation;
+  private LinearLayout btnFindFirstStation;
   
   private double findNearByStationLat = -1, findNearByStationLon = -1;
   private double setDestFindNearStation = -1;
@@ -120,7 +120,7 @@ public class SubwayFragment extends Fragment
     stationsInfoLayout = (LinearLayout) view.findViewById(R.id.stations_info);
     stationsInfoText = (TextView) view.findViewById(R.id.text_stations_info);
     detailStationInfo = (ImageView) view.findViewById(R.id.image_stations_info_detail);
-    btnFindFirstStation = (Button) view.findViewById(R.id.btn_find_start_station);
+    btnFindFirstStation = (LinearLayout) view.findViewById(R.id.layout_find_start_station);
     progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
     
     startStationName = (TextView) view.findViewById(R.id.start_station_name);
@@ -316,77 +316,84 @@ public class SubwayFragment extends Fragment
   
   private void showChoiceStationPopUp(final String stationId)
   {
-    CharSequence[] menus = new CharSequence[2];
-    menus[0] = "출발역 설정";
-    menus[1] = "도착역 설정";
-    
-    StationBean bean = SubwayManager.getInstance(activity).findStation(stationId);
-    final CharSequence[] menuTitles = menus;
-    
-    Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle(bean.nameCn);
-    builder.setItems(menus, new DialogInterface.OnClickListener()
+    try
     {
-      public void onClick(DialogInterface dialog, int whichButton)
+      CharSequence[] menus = new CharSequence[2];
+      menus[0] = "출발역 설정";
+      menus[1] = "도착역 설정";
+      
+      StationBean bean = SubwayManager.getInstance(activity).findStation(stationId);
+      final CharSequence[] menuTitles = menus;
+      
+      Builder builder = new AlertDialog.Builder(getActivity());
+      builder.setTitle(bean.nameCn);
+      builder.setItems(menus, new DialogInterface.OnClickListener()
       {
-        if (menuTitles[whichButton].equals("출발역 설정"))
+        public void onClick(DialogInterface dialog, int whichButton)
         {
-          handler.post(new Runnable()
+          if (menuTitles[whichButton].equals("출발역 설정"))
           {
-            @Override
-            public void run()
+            handler.post(new Runnable()
             {
-              if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
+              @Override
+              public void run()
               {
-                double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
-                double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
-                Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
-                startStationLat = lat;
-                startStationLong = lon;
-                
-                btnFindFirstStation.setVisibility(View.VISIBLE);
-                btnFindFirstStation.bringToFront();
-                btnFindFirstStation.setOnClickListener(new OnClickListener()
+                if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
                 {
-                  @Override
-                  public void onClick(View arg0)
+                  double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
+                  double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
+                  Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
+                  startStationLat = lat;
+                  startStationLong = lon;
+                  
+                  btnFindFirstStation.setVisibility(View.VISIBLE);
+                  btnFindFirstStation.bringToFront();
+                  btnFindFirstStation.setOnClickListener(new OnClickListener()
                   {
-                    Intent i = new Intent(activity, BlinkingMap.class);
-                    i.putExtra("lineId", stationId);
-                    i.putExtra("Latitude", startStationLat);
-                    i.putExtra("Longitude", startStationLong);
-                    startActivity(i);
-                  }
-                });
+                    @Override
+                    public void onClick(View arg0)
+                    {
+                      Intent i = new Intent(activity, BlinkingMap.class);
+                      i.putExtra("lineId", stationId);
+                      i.putExtra("Latitude", startStationLat);
+                      i.putExtra("Longitude", startStationLong);
+                      startActivity(i);
+                    }
+                  });
+                }
+                
+                webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+                
+                choiceDialog = null;
               }
-              
-              webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
-              
-              choiceDialog = null;
-            }
-          });
-        }
-        else if (menuTitles[whichButton].equals("도착역 설정"))
-        {
-          handler.post(new Runnable()
+            });
+          }
+          else if (menuTitles[whichButton].equals("도착역 설정"))
           {
-            @Override
-            public void run()
+            handler.post(new Runnable()
             {
-              Log.w("WARN", "StationId: " + stationId);
-              webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
-              choiceDialog = null;
-            }
-          });
+              @Override
+              public void run()
+              {
+                Log.w("WARN", "StationId: " + stationId);
+                webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+                choiceDialog = null;
+              }
+            });
+          }
         }
-      }
-    });
-    
-    if (choiceDialog == null)
-      choiceDialog = builder.create();
-    
-    if (!choiceDialog.isShowing())
-      choiceDialog.show();
+      });
+      
+      if (choiceDialog == null)
+        choiceDialog = builder.create();
+      
+      if (!choiceDialog.isShowing())
+        choiceDialog.show();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
   
   private class JavaScriptInterface
@@ -481,8 +488,8 @@ public class SubwayFragment extends Fragment
           startStationName.setText(firstStationBean.nameKo);
           endStationName.setText(lastStationBean.nameKo);
           
-          startStationImage.setVisibility(View.GONE);
-          endStationImage.setVisibility(View.GONE);
+          startStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(firstStationBean.line));
+          endStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(lastStationBean.line));
           
           String stationsInfoString = Integer.toString(stations.size()) + "개 역의 이동시간은 " + Integer.toString(time) + "분입니다";
           stationsInfoText.setText(stationsInfoString);
@@ -575,6 +582,7 @@ public class SubwayFragment extends Fragment
     public void onTouchStation(final String station)
     {
       Log.w("WARN", "지하철역 터치 됨 :" + station);
+      StationBean stationBean = SubwayManager.getInstance(activity).findStation(station);
       handler.post(new Runnable()
       {
         @Override

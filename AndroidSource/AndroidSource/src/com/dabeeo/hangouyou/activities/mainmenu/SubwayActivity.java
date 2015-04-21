@@ -36,9 +36,6 @@ public class SubwayActivity extends ActionBarActivity
   private ArrayList<String> subwayNames = new ArrayList<String>();
   
   
-  
-  
-  
   @SuppressWarnings("static-access")
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
   @Override
@@ -68,22 +65,18 @@ public class SubwayActivity extends ActionBarActivity
     if (getIntent().hasExtra("set_dest_station_lat_lon"))
       destLatLong = getIntent().getDoubleArrayExtra("set_dest_station_lat_lon");
     
-    if (MainActivity.subwayFrament != null)
-    {
-      MainActivity.subwayFrament.viewClear();
-      MainActivity.subwayFrament = new SubwayFragment();
-      
-      if (latLong != null)
-        MainActivity.subwayFrament.findNearByStation(latLong[0], latLong[1]);
-      
-      if (destLatLong != null)
-        MainActivity.subwayFrament.findNearByStation(destLatLong[0], destLatLong[1], destLatLong[2]);
-    }
+    MainActivity.subwayFrament.viewClear();
+    MainActivity.subwayFrament = new SubwayFragment();
+    
+    if (latLong != null)
+      MainActivity.subwayFrament.findNearByStation(latLong[0], latLong[1]);
+    
+    if (destLatLong != null)
+      MainActivity.subwayFrament.findNearByStation(destLatLong[0], destLatLong[1], destLatLong[2]);
     
     FragmentTransaction ft = getFragmentManager().beginTransaction();
     ft.replace(R.id.content, MainActivity.subwayFrament);
     ft.commit();
-    
     
     editSearch.setOnItemClickListener(new OnItemClickListener()
     {
@@ -98,9 +91,6 @@ public class SubwayActivity extends ActionBarActivity
       }
     });
   }
-  
-  
-
   
   
   @Override

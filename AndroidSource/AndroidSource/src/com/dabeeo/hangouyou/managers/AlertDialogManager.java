@@ -79,8 +79,15 @@ public class AlertDialogManager
   {
     if (progressDialog != null && progressDialog.isShowing())
     {
-      progressDialog.dismiss();
-      progressDialog = null;
+      try
+      {
+        progressDialog.dismiss();
+        progressDialog = null;
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
     }
   }
   

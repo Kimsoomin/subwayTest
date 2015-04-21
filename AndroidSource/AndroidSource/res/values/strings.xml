@@ -145,6 +145,8 @@
     <string name="term_find_start_station">출발역 찾기</string>
     <string name="msg_please_gps_enable">GPS를 활성화시켜주세요</string>
     <string name="msg_find_station">지하철역 검색</string>
+    <string name="term_start">START</string>
+    <string name="term_finish">FINISH</string>
     <!-- 맵 -->
     <string name="map_notification">알림</string>
     <string name="map_confirm">확인</string>

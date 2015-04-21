@@ -100,21 +100,27 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_find_start_station"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:padding="8dp" >
+        android:layout_margin="8dp"
+        android:background="@drawable/round_white_box"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="gone" >
 
-        <Button
-            android:id="@+id/btn_find_start_station"
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="31dp"
+            android:src="@drawable/pin_subway_start_s" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/app_button"
             android:padding="8dp"
-            android:text="@string/term_find_start_station"
-            android:textColor="@android:color/white"
-            android:visibility="gone" />
+            android:text="@string/term_find_start_station" />
     </LinearLayout>
 
     <LinearLayout
@@ -126,17 +132,17 @@
         android:padding="8dp" >
 
         <Button
-            android:id="@+id/btn_map"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/btn_subway_map" />
-
-        <Button
             android:id="@+id/btn_near_by_station"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/btn_my_location" />
+        
+          <Button
+            android:id="@+id/btn_map"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_subway_map" />
     </LinearLayout>
 
 </RelativeLayout>
