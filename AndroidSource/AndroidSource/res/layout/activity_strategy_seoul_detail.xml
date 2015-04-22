@@ -92,12 +92,13 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/text_detail"
+                <LinearLayout
+                    android:id="@+id/container_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:autoLink="phone|web"
+                    android:orientation="vertical"
                     android:padding="8dp" />
 
                 <HorizontalScrollView

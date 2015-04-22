@@ -77,6 +77,33 @@ public class SubwayListAdapter extends BaseAdapter
     ImageView line = (ImageView) convertView.findViewById(R.id.station_image);
     TextView stationName = (TextView) convertView.findViewById(R.id.text_station_name);
     
+    ImageView transferArrow = (ImageView) convertView.findViewById(R.id.image_right_arrow);
+    ImageView transferStation = (ImageView) convertView.findViewById(R.id.transfer_station);
+    
+    if (bean.line.contains("환승"))
+    {
+      try
+      {
+        StationBean beforeStation = (StationBean) items.get(position - 1);
+        StationBean afterStation = (StationBean) items.get(position + 1);
+        
+        line.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(beforeStation.line));
+        transferStation.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(afterStation.line));
+        transferStation.setVisibility(View.VISIBLE);
+        transferArrow.setVisibility(View.VISIBLE);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    else
+    {
+      line.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.line));
+      transferStation.setVisibility(View.GONE);
+      transferArrow.setVisibility(View.GONE);
+    }
+    
     if (position == 0)
     {
       startText.setVisibility(View.VISIBLE);
@@ -92,7 +119,7 @@ public class SubwayListAdapter extends BaseAdapter
       startText.setVisibility(View.GONE);
       finishText.setVisibility(View.GONE);
     }
-    line.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.line));
+    
     stationName.setText(bean.nameKo);
     return convertView;
   }

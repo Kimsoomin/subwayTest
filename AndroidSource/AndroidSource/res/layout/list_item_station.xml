@@ -11,7 +11,19 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:padding="8dp" />
+        android:padding="4dp" />
+
+    <ImageView
+        android:id="@+id/image_right_arrow"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:src="@drawable/ic_right_arrow" />
+
+    <ImageView
+        android:id="@+id/transfer_station"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="4dp" />
 
     <TextView
         android:id="@+id/text_station_name"

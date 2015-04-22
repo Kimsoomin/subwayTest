@@ -42,6 +42,18 @@ public class ApiClient
   }
   
   
+  public NetworkResult getPremiumDetail(int placeIdx)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_VIEW&idx=" + placeIdx);
+  }
+  
+  
+  public NetworkResult getPremiumList(int page)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_LIST&p=" + page);
+  }
+  
+  
   public NetworkResult getTrablog(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);

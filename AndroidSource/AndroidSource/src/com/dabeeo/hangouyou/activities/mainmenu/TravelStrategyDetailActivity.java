@@ -18,13 +18,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
-import com.dabeeo.hangouyou.beans.PlaceDetailBean;
+import com.dabeeo.hangouyou.beans.ContentBean;
+import com.dabeeo.hangouyou.beans.PremiumDetailBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
@@ -32,14 +34,14 @@ import com.squareup.picasso.Picasso;
 
 public class TravelStrategyDetailActivity extends ActionBarActivity
 {
-  private TextView textDetail;
+  private LinearLayout contentContainer;
   private ViewGroup horizontalImagesView, layoutDetailPlaceInfo;
   
   private ApiClient apiClient;
   private ProgressBar progressBar;
   
   private int placeIdx = -1;
-  private PlaceDetailBean bean;
+  private PremiumDetailBean bean;
   private ScrollView scrollView;
   private TextView likeCount;
   
@@ -59,7 +61,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     
     placeIdx = getIntent().getIntExtra("place_idx", -1);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-    textDetail = (TextView) findViewById(R.id.text_detail);
+    contentContainer = (LinearLayout) findViewById(R.id.container_details);
     horizontalImagesView = (ViewGroup) findViewById(R.id.horizontal_images_view);
     layoutDetailPlaceInfo = (ViewGroup) findViewById(R.id.layout_place_detail_info);
     likeCount = (TextView) findViewById(R.id.like_count);
@@ -128,7 +130,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getPlaceDetail(placeIdx);
+      return apiClient.getPremiumDetail(placeIdx);
     }
     
     
@@ -140,8 +142,8 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         try
         {
           JSONObject obj = new JSONObject(result.response);
-          bean = new PlaceDetailBean();
-          bean.setJSONObject(obj.getJSONObject("place"));
+          bean = new PremiumDetailBean();
+          bean.setJSONObject(obj.getJSONObject("premium"));
         }
         catch (Exception e)
         {
@@ -163,176 +165,60 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     setTitle(bean.title);
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
     ((TextView) findViewById(R.id.text_description)).setText(bean.address);
-    textDetail.setText(bean.contents);
+    
+    //Contents
+    for (int i = 0; i < bean.contents.size(); i++)
+    {
+      int detailResId = R.layout.view_premium_seoul_content;
+      View view = getLayoutInflater().inflate(detailResId, null);
+      TextView text = (TextView) view.findViewById(R.id.text_content);
+      ImageView image = (ImageView) view.findViewById(R.id.image_content);
+      
+      ContentBean contentBean = bean.contents.get(i);
+      if (contentBean.isText)
+        text.setText(contentBean.text);
+      else
+        Picasso.with(this).load(contentBean.imageUrl).into(image);
+      
+      contentContainer.addView(view);
+    }
+    
     likeCount.setText(Integer.toString(bean.likeCount));
     
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759")
-           .resize(300, 300)
-           .centerCrop()
-           .into((ImageView) findViewById(R.id.imageview));
+    //Main Image
+    Picasso.with(this).load(bean.mainImageUrl).resize(300, 300).centerCrop().into((ImageView) findViewById(R.id.imageview));
+    Log.w("WARN", "Image Url : " + bean.mainImageUrl);
     
     int resId = R.layout.list_item_recommend_seoul_photo;
     View parentView = getLayoutInflater().inflate(resId, null);
-    ImageView view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
+    
+    //Scroll small Images
+    horizontalImagesView.removeAllViews();
+    for (int i = 0; i < bean.smallImages.size(); i++)
     {
-      @Override
-      public void onClick(View arg0)
+      final String imageUrl = bean.smallImages.get(i);
+      ImageView view = (ImageView) parentView.findViewById(R.id.photo);
+      Picasso.with(this).load(imageUrl).resize(300, 300).centerCrop().into(view);
+      view.setOnClickListener(new OnClickListener()
       {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759");
-        startActivity(i);
-      }
-    });
-    horizontalImagesView.addView(view);
+        @Override
+        public void onClick(View arg0)
+        {
+          Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
+          i.putExtra("imageUrl", imageUrl);
+          startActivity(i);
+        }
+      });
+      horizontalImagesView.addView(view);
+    }
     
-    parentView = getLayoutInflater().inflate(resId, null);
-    view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/498/photos/small/Punkt_6.jpg?1426234741")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/498/photos/small/Punkt_6.jpg?1426234741");
-        startActivity(i);
-      }
-    });
-    horizontalImagesView.addView(view);
-    
-    parentView = getLayoutInflater().inflate(resId, null);
-    view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/521/photos/small/mallee_10.jpg?1427043989")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/521/photos/small/mallee_10.jpg?1427043989");
-        startActivity(i);
-      }
-    });
-    horizontalImagesView.addView(view);
-    
-    parentView = getLayoutInflater().inflate(resId, null);
-    view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/497/photos/small/Nebbia_09.JPG?1426234581")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/497/photos/small/Nebbia_09.JPG?1426234581");
-        startActivity(i);
-      }
-    });
-    horizontalImagesView.addView(view);
-    
-    parentView = getLayoutInflater().inflate(resId, null);
-    view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/495/photos/small/Nebbia_07.JPG?1426234580")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/495/photos/small/Nebbia_07.JPG?1426234580");
-        startActivity(i);
-      }
-    });
-    horizontalImagesView.addView(view);
-    
-    parentView = getLayoutInflater().inflate(resId, null);
-    view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/479/photos/small/020_BAGAZIMURI_2.JPG?1425825633")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/479/photos/small/020_BAGAZIMURI_2.JPG?1425825633");
-        startActivity(i);
-      }
-    });
-    horizontalImagesView.addView(view);
-    
-    parentView = getLayoutInflater().inflate(resId, null);
-    view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/520/photos/small/mallee_9.jpg?1427043973")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/520/photos/small/mallee_9.jpg?1427043973");
-        startActivity(i);
-      }
-    });
-    horizontalImagesView.addView(view);
-    
-    parentView = getLayoutInflater().inflate(resId, null);
-    view = (ImageView) parentView.findViewById(R.id.photo);
-    Picasso.with(this)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/504/photos/small/Harman_03.jpg?1426236309")
-           .resize(300, 300)
-           .centerCrop()
-           .into(view);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-        i.putExtra("imageUrl", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/504/photos/small/Harman_03.jpg?1426236309");
-        startActivity(i);
-      }
-    });
-    
-    horizontalImagesView.addView(view);
-    
-    addDetailInfo(getString(R.string.term_address), bean.address);
-    addDetailInfo(getString(R.string.term_phone), bean.contact);
-    addDetailInfo(getString(R.string.term_homepage), bean.homepage);
-    addDetailInfo(getString(R.string.term_working_time), bean.businessHours);
-    addDetailInfo(getString(R.string.term_price_info), bean.priceInfo);
-    addDetailInfo(getString(R.string.term_traffic), bean.trafficInfo);
-    addDetailInfo(getString(R.string.term_description), bean.tag);
+//    addDetailInfo(getString(R.string.term_address), bean.address);
+//    addDetailInfo(getString(R.string.term_phone), bean.contact);
+//    addDetailInfo(getString(R.string.term_homepage), bean.homepage);
+//    addDetailInfo(getString(R.string.term_working_time), bean.businessHours);
+//    addDetailInfo(getString(R.string.term_price_info), bean.priceInfo);
+//    addDetailInfo(getString(R.string.term_traffic), bean.trafficInfo);
+//    addDetailInfo(getString(R.string.term_description), bean.tag);
   }
   
   

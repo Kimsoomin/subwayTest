@@ -9,7 +9,6 @@
         android:id="@+id/imageview"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/darker_gray"
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
 

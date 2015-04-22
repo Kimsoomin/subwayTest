@@ -147,6 +147,7 @@
     <string name="msg_find_station">지하철역 검색</string>
     <string name="term_start">START</string>
     <string name="term_finish">FINISH</string>
+    <string name="msg_dont_support_outside_seoul">서울 외 지역은 서비스 준비중입니다.</string>
     <!-- 맵 -->
     <string name="map_notification">알림</string>
     <string name="map_confirm">확인</string>

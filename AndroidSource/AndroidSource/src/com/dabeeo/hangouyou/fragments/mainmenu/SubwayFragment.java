@@ -396,6 +396,16 @@ public class SubwayFragment extends Fragment
     }
   }
   
+  
+  private void showDontSupportOutsideSeoul()
+  {
+    Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setTitle(getString(R.string.app_name));
+    builder.setMessage(getString(R.string.msg_dont_support_outside_seoul));
+    builder.setPositiveButton(android.R.string.ok, null);
+    builder.create().show();
+  }
+  
   private class JavaScriptInterface
   {
     @JavascriptInterface
@@ -460,6 +470,7 @@ public class SubwayFragment extends Fragment
     {
       Log.w("WARN", "지하철 출도착 마킹 완료 : " + stationsJSONString + " ,time : " + time);
       String testNames = "";
+      stations.clear();
       JSONArray stationsJsonArray;
       try
       {
@@ -481,6 +492,7 @@ public class SubwayFragment extends Fragment
         @Override
         public void run()
         {
+          
           stationsInfoLayout.setVisibility(View.VISIBLE);
           StationBean firstStationBean = stations.get(0);
           StationBean lastStationBean = stations.get(stations.size() - 1);
@@ -491,7 +503,7 @@ public class SubwayFragment extends Fragment
           startStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(firstStationBean.line));
           endStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(lastStationBean.line));
           
-          String stationsInfoString = Integer.toString(stations.size()) + "개 역의 이동시간은 " + Integer.toString(time) + "분입니다";
+          String stationsInfoString = Integer.toString(stations.size() - 1) + "개 역의 이동시간은 " + Integer.toString(time) + "분입니다";
           stationsInfoText.setText(stationsInfoString);
           final String infoString = stationsInfoString;
           
@@ -582,23 +594,28 @@ public class SubwayFragment extends Fragment
     public void onTouchStation(final String station)
     {
       Log.w("WARN", "지하철역 터치 됨 :" + station);
-      StationBean stationBean = SubwayManager.getInstance(activity).findStation(station);
-      handler.post(new Runnable()
+      if (station == null || station.equals("null"))
+        showDontSupportOutsideSeoul();
+      else
       {
-        @Override
-        public void run()
+        StationBean stationBean = SubwayManager.getInstance(activity).findStation(station);
+        handler.post(new Runnable()
         {
-          webview.loadUrl("javascript:subway.setCenterWithStationId('" + station + "')");
-          handler.postDelayed(new Runnable()
+          @Override
+          public void run()
           {
-            @Override
-            public void run()
+            webview.loadUrl("javascript:subway.setCenterWithStationId('" + station + "')");
+            handler.postDelayed(new Runnable()
             {
-              showChoiceStationPopUp(station);
-            }
-          }, 500);
-        }
-      });
+              @Override
+              public void run()
+              {
+                showChoiceStationPopUp(station);
+              }
+            }, 500);
+          }
+        });
+      }
     }
   }
   

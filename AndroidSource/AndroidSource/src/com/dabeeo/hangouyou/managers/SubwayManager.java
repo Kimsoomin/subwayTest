@@ -91,6 +91,18 @@ public class SubwayManager
   }
   
   
+  public ArrayList<String> getAllSubwayCnNames()
+  {
+    ArrayList<String> names = new ArrayList<String>();
+    for (int i = 0; i < stations.size(); i++)
+    {
+      names.add(stations.get(i).nameCn);
+      
+    }
+    return names;
+  }
+  
+  
   public String getStationId(String stationName)
   {
     String stationId = "";

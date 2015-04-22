@@ -69,7 +69,7 @@
         function checkReady() {
           if (s != null) {
               window.myClient.onSvgLoadEnded();
-              window.scrollTo(1307, 990);
+              setCenterInitSubway();
           }
         }
 
@@ -91,6 +91,10 @@
 
         function completedSetDestStation (station_id, type){
           window.myClient.completedSetDestStation(station_id, type);
+        };
+
+        function setCenterInitSubway(){
+          window.scrollTo(1307, 995);
         };
 
         var subway = {
@@ -158,9 +162,9 @@
               try{
                 var station = stations[station_id];
                 if(station.line.indexOf("환승역") > -1){
-                   image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 5, bound.y - 12, 40, 40);
+                   image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 13, bound.y - 2, 20, 20);
                 }else{
-                  image = s.image('./ui/images/icon_subway_route.png', bound.x - 5, bound.y - 12, 40, 40);
+                  image = s.image('./ui/images/icon_subway_route.png', bound.x + 5, bound.y - 2, 20, 20);
                 }
               }catch(exception){
 
@@ -170,7 +174,7 @@
                 image.animate({opacity: '0'}, 1000, mina.linear, animation_2)  
               }
               animation_2 = function() {
-                image.animate({opacity: '1'}, 1000, mina.linear)
+                image.animate({opacity: '0.5'}, 1000, mina.linear)
               }
               animation_1()
 
@@ -247,24 +251,6 @@
               jsonObject.lat = stationInfo.location.latitude;
               jsonObject.lon = stationInfo.location.longitude;
               jsonArray.push(jsonObject);
-            }
-
-            for (var i = 0; i < jsonArray.length; i++){
-             // console.log(jsonArray[i].name);
-              try {
-                if(jsonArray[i].line == "환승역")
-                {
-                  if(i == jsonArray.length - 1){
-                    jsonArray.splice(i, 1);
-                    jsonArray.splice(i + 1, 1);
-                  }else{
-                    jsonArray.splice(i - 1, 1);
-                    jsonArray.splice(i, 1);
-                  }
-                }  
-              }
-              catch(exception){
-              }
             }
 
             var jsonInfo = JSON.stringify(jsonArray);
@@ -408,7 +394,28 @@
             console.log("click");
             var station = Snap.select(".station#" + this.node.id)
             var bound = station.getBBox()
-            onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
+
+            var isSeoul = true
+            try{
+              console.log(station.node.id);
+              var stationBean = stations[station.node.id]
+
+              var max_latitude = 37.70453488762476
+              var max_longitude = 127.17361450195312
+              var min_latitude = 37.43677099171195
+              var min_longitude = 126.76300048828125
+
+              if(stationBean.location.longitude > max_longitude || stationBean.location.longitude < min_longitude || stationBean.location.latitude > max_latitude || stationBean.location.latitude < min_latitude){
+                isSeoul = false
+              }             
+            }catch(exception){
+              console.log(exception)
+            }
+
+            if(isSeoul)
+              onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
+            else
+              onTouchStation(null)
           }
           onDblClick = function(e) {
           }

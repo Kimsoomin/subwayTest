@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +12,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.beans.PremiumBean;
+import com.squareup.picasso.Picasso;
 
 public class RecommendSeoulListAdapter extends BaseAdapter
 {
-  private ArrayList<PlaceBean> beans = new ArrayList<>();
+  private ArrayList<PremiumBean> beans = new ArrayList<>();
   
   
-  public void add(PlaceBean bean)
+  public void add(PremiumBean bean)
   {
     this.beans.add(bean);
     notifyDataSetChanged();
   }
   
   
-  public void addAll(ArrayList<PlaceBean> beans)
+  public void addAll(ArrayList<PremiumBean> beans)
   {
     this.beans.addAll(beans);
     notifyDataSetChanged();
@@ -64,7 +66,7 @@ public class RecommendSeoulListAdapter extends BaseAdapter
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
-    PlaceBean bean = (PlaceBean) beans.get(position);
+    PremiumBean bean = (PremiumBean) beans.get(position);
     int resId = R.layout.list_item_recommend_seoul;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
@@ -77,7 +79,8 @@ public class RecommendSeoulListAdapter extends BaseAdapter
 //    category.setText(bean.category);
     likeCount.setText(Integer.toString(bean.likeCount));
     
-//    Picasso.with(parent.getContext()).load(bean.photoUrl).into(imageView);
+    Log.w("WARN","Bean. Image Url : "+ bean.imageUrl);
+    Picasso.with(parent.getContext()).load(bean.imageUrl).into(imageView);
     return view;
   }
 }

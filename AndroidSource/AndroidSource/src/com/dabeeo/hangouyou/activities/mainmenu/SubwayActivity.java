@@ -49,6 +49,7 @@ public class SubwayActivity extends ActionBarActivity
     Log.w("WARN", "GetIntent data : " + getIntent().getDoubleExtra("Latitude", -1));
     subwayNames.clear();
     subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayNames());
+    subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayCnNames());
     editSearch = (AutoCompleteTextView) findViewById(R.id.edit_search);
     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, subwayNames);
     editSearch.setAdapter(adapter);

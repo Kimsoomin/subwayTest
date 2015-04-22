@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.beans.PremiumBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
@@ -99,7 +100,7 @@ public class TravelStrategyListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getTrablog(page, "premium");
+      return apiClient.getPremiumList(page);
     }
     
     
@@ -108,15 +109,15 @@ public class TravelStrategyListFragment extends Fragment
     {
       if (result.isSuccess)
       {
-        ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+        ArrayList<PremiumBean> places = new ArrayList<PremiumBean>();
         try
         {
           JSONObject obj = new JSONObject(result.response);
-          JSONArray arr = obj.getJSONArray("travelog");
+          JSONArray arr = obj.getJSONArray("premium");
           for (int i = 0; i < arr.length(); i++)
           {
             JSONObject objInArr = arr.getJSONObject(i);
-            PlaceBean bean = new PlaceBean();
+            PremiumBean bean = new PremiumBean();
             bean.setJSONObject(objInArr);
             places.add(bean);
           }
@@ -140,7 +141,7 @@ public class TravelStrategyListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-      PlaceBean bean = (PlaceBean) adapter.getItem(position);
+      PremiumBean bean = (PremiumBean) adapter.getItem(position);
       Intent i = new Intent(getActivity(), TravelStrategyDetailActivity.class);
       i.putExtra("place_idx", bean.idx);
       startActivity(i);
