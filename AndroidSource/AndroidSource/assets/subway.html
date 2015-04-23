@@ -207,33 +207,12 @@
               jsonArray.push(jsonObject);
             }
 
-            var previousObject = null;
-            for (var i = 0; i < jsonArray.length; i++){
-             // console.log(jsonArray[i].name);
-              try {
-                if(jsonArray[i].line == "환승역")
-                {
-                  if(i == jsonArray.length - 1){
-                    jsonArray.splice(i, 1);
-                    jsonArray.splice(i + 1, 1);
-                  }else{
-                    jsonArray.splice(i - 1, 1);
-                    jsonArray.splice(i, 1);
-                  }
-                }  
-              }
-              catch(exception){
-                
-              }
-            }
-
             for (var i = 0; i < jsonArray.length; i++){
               if(i != 0 && i != jsonArray.length - 1){
                   this.mark_station(jsonArray[i].id);
               }
             }
-            console.log(jsonArray);
-
+            
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           },
@@ -250,9 +229,15 @@
               jsonObject.line = stationInfo.line;
               jsonObject.lat = stationInfo.location.latitude;
               jsonObject.lon = stationInfo.location.longitude;
+              jsonObject.exit_locations = stationInfo.exits;
+
+              if(i==0){
+                console.log(stationInfo);
+              }
               jsonArray.push(jsonObject);
             }
 
+            // console.log(jsonArray);
             var jsonInfo = JSON.stringify(jsonArray);
             completeLoadAllStation(jsonInfo); 
           },

@@ -20,9 +20,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
@@ -129,22 +131,28 @@ public class IntroActivity extends ActionBarActivity
 		File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
 		if (!file.exists())
 		{
-			try
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
 			{
-				file.createNewFile();
-			} catch (IOException e)
+				public void onClick(DialogInterface dialog, int whichButton)
+				{
+					dialog.cancel();
+					new GetMapAsyncTask().execute();
+				}
+			}).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
 			{
-				e.printStackTrace();
-			}
-			new GetMapAsyncTask().execute();
+				public void onClick(DialogInterface dialog, int whichButton)
+				{
+					dialog.cancel();
+					getAllStations();
+				}
+			});
+			
+			AlertDialog dialog = builder.create();
+			dialog.show();
 		}
 		else
-		{
-			if (mapDialog.isShowing())
-				mapDialog.dismiss();
-			
 			getAllStations();
-		}
 	}
 	
 	private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
@@ -181,6 +189,15 @@ public class IntroActivity extends ActionBarActivity
 				
 				InputStream input = new BufferedInputStream(url.openStream());
 				File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+				try
+				{
+					if (!file.exists())
+						file.createNewFile();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				
 				OutputStream output = new FileOutputStream(file);
 				
 				byte data[] = new byte[1024];
@@ -234,6 +251,9 @@ public class IntroActivity extends ActionBarActivity
 	
 	private void getAllStations()
 	{
+		if (mapDialog.isShowing())
+			mapDialog.dismiss();
+		
 		MainActivity.subwayFrament.loadAllStations(new Runnable()
 		{
 			@Override

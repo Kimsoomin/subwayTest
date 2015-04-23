@@ -81,6 +81,8 @@ public class SubwayFragment extends Fragment
 	private TextView nearStationName;
 	private ImageView nearStationX;
 	
+	private double nearByLat = -1, nearByLon = -1;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -466,7 +468,14 @@ public class SubwayFragment extends Fragment
 						if (setDestFindNearStation == -1)
 							webview.loadUrl("javascript:subway.findNearByStation('" + findNearByStationLat + "', '" + findNearByStationLon + "')");
 						else
+						{
+							if (setDestFindNearStation == 1)
+							{
+								nearByLat = findNearByStationLat;
+								nearByLon = findNearByStationLon;
+							}
 							webview.loadUrl("javascript:subway.setDestStation('" + findNearByStationLat + "', '" + findNearByStationLon + "','" + setDestFindNearStation + "')");
+						}
 					}
 				}
 			});
@@ -474,11 +483,23 @@ public class SubwayFragment extends Fragment
 		}
 		
 		
+		private void checkTransferStation()
+		{
+			for (int i = 0; i < stations.size(); i++)
+			{
+				if (stations.get(i).line.contains("환승"))
+				{
+					stations.remove(i - 1);
+					stations.remove(i);
+				}
+			}
+		}
+		
+		
 		@JavascriptInterface
 		public void completeMarkStation(final String stationsJSONString, final int time)
 		{
 			Log.w("WARN", "지하철 출도착 마킹 완료 : " + stationsJSONString + " ,time : " + time);
-			String testNames = "";
 			stations.clear();
 			JSONArray stationsJsonArray;
 			try
@@ -489,12 +510,13 @@ public class SubwayFragment extends Fragment
 					StationBean bean = new StationBean();
 					bean.setJSONObject(stationsJsonArray.getJSONObject(i));
 					stations.add(bean);
-					testNames += " " + bean.nameKo;
 				}
 			} catch (JSONException e)
 			{
 				e.printStackTrace();
 			}
+			
+			checkTransferStation();
 			handler.post(new Runnable()
 			{
 				@Override
@@ -505,14 +527,18 @@ public class SubwayFragment extends Fragment
 					StationBean firstStationBean = stations.get(0);
 					StationBean lastStationBean = stations.get(stations.size() - 1);
 					
-					startStationName.setText(firstStationBean.nameKo);
-					endStationName.setText(lastStationBean.nameKo);
-					
+					startStationName.setText(firstStationBean.nameCn);
+					endStationName.setText(lastStationBean.nameCn);
+					if (Locale.getDefault().getLanguage().contains("ko"))
+					{
+						startStationName.setText(firstStationBean.nameKo);
+						endStationName.setText(lastStationBean.nameKo);
+					}
 					startStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(firstStationBean.line));
 					endStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(lastStationBean.line));
 					
 					String stationsInfoString = Integer.toString(stations.size() - 1) + "个站预计" + Integer.toString(time) + "分钟到达。";
-					if(Locale.getDefault().getDisplayLanguage().contains("ko")
+					if (Locale.getDefault().getLanguage().contains("ko"))
 						stationsInfoString = Integer.toString(stations.size() - 1) + "개 역의 이동시간은 " + Integer.toString(time) + "분입니다";
 					stationsInfoText.setText(stationsInfoString);
 					final String infoString = stationsInfoString;
@@ -525,6 +551,11 @@ public class SubwayFragment extends Fragment
 							Intent i = new Intent(activity, SubwayStationsActivity.class);
 							i.putExtra("stations_info", infoString);
 							i.putExtra("stations_json", stationsJSONString);
+							if (nearByLat != -1)
+							{
+								i.putExtra("near_by_lat", nearByLat);
+								i.putExtra("near_by_lon", nearByLon);
+							}
 							activity.startActivity(i);
 						}
 					});

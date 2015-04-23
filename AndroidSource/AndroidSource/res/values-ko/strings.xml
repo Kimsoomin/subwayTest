@@ -143,12 +143,14 @@
     <string name="term_send">보내기</string>
     <!-- 지하철 -->
     <string name="term_find_start_station">출발역 찾기</string>
-    <string name="msg_please_gps_enable">"내위치 확인을 위해 ‘설정>개인정보 보호’에서 위치서비스를 켜주세요.내위치 확인을 위해 ‘설정>개인정보 보호’에서 위치서비스를 켜주세요."</string>
+    <string name="msg_please_gps_enable">"원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요"</string>
     <string name="msg_find_station">지하철역 검색</string>
     <string name="term_start">START</string>
     <string name="term_finish">FINISH</string>
     <string name="msg_dont_support_outside_seoul">서울 외 지역은 서비스 준비중입니다.</string>
     <string name="msg_near_by_station">가장 가까운 역입니다.</string>
+    <string name="term_exit_info">출구정보</string>
+
     <!-- 맵 -->
     <string name="map_notification">알림</string>
     <string name="map_confirm">확인</string>
@@ -156,7 +158,7 @@
     <string name="map_dialog_message02">위치를 찾을 수 없습니다.</string>
     <string name="map_subway_start">출발지로 선택</string>
     <string name="map_subway_end">도착지로 선택</string>
-
+	<string name="msg_is_download_map">지도 다운로드 후, 이용가능합니다. 서울지도를 다운로드하시겠습니까?</string>
     <!-- Intro -->
     <string name="msg_map_donwload">지도 자료를 다운로드 중입니다.</string>
 

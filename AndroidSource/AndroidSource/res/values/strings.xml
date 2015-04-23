@@ -120,44 +120,43 @@
     <string name="msg_review_success">点评发布成功</string>
     <string name="msg_review_fail">点评发布失败</string>
 
-    
     <!-- 추가 String -->
     <!-- 회원가입 / 로그인 -->
-    <string name="term_login">로그인</string>
-    <string name="term_join">회원가입</string>
-    <string name="term_email">E-mail</string>
-    <string name="term_password">Password</string>
-    <string name="term_name">Name</string>
-    <string name="term_password_join">Password(User 6-16)</string>
-    <string name="term_re_password_join">Re-Password</string>
-    <string name="term_gender">Gender</string>
-    <string name="term_gender_male">Male</string>
-    <string name="term_gender_female">Female</string>
-    <string name="term_date_of_birth">Date of birth</string>
-    <string name="term_auto_login">자동 로그인</string>
-    <string name="term_find_password">비밀번호 찾기</string>
-    <string name="msg_not_connect_network">네트워크에 연결이 되어 있어야 사용이 가능합니다.</string>
-    <string name="msg_agreement">이용약관 동의</string>
-    <string name="msg_private_agreement">개인정보약관 동의</string>
-    <string name="msg_gps_agreement">위치정보약관 동의</string>
-    <string name="msg_date_of_birth">생일을 입력해주세요</string>
-    <string name="term_send">보내기</string>
+    <string name="term_login">登录</string>
+    <string name="term_join">注册</string>
+    <string name="term_email">邮箱</string>
+    <string name="term_password">密码</string>
+    <string name="term_name">姓名</string>
+    <string name="term_password_join">密码</string>
+    <string name="term_re_password_join">确认密码</string>
+    <string name="term_gender">性别</string>
+    <string name="term_gender_male">男</string>
+    <string name="term_gender_female">女</string>
+    <string name="term_date_of_birth">出生日期</string>
+    <string name="term_auto_login">下次自动登录</string>
+    <string name="term_find_password">忘记密码？</string>
+    <string name="msg_not_connect_network">请开启网络后在试</string>
+    <string name="msg_agreement">同意使用条款</string>
+    <string name="msg_private_agreement">同意隐私条款</string>
+    <string name="msg_gps_agreement">同意位置信息条款</string>
+    <string name="msg_date_of_birth">请输入出生日期</string>
+    <string name="term_send">发送</string>
     <!-- 지하철 -->
     <string name="term_find_start_station">搜索出发站位置</string>
-    <string name="msg_please_gps_enable">为了获取您当前位置，请在‘设置〉隐私保护’开启位置信息。</string>
+    <string name="msg_please_gps_enable">为了流畅使用，请将位置信息设为‘使用’。为了流畅使用，请将位置信息设为‘使用’。</string>
     <string name="msg_find_station">搜索地铁站</string>
     <string name="term_start">起</string>
     <string name="term_finish">终</string>
     <string name="msg_dont_support_outside_seoul">非首尔地区正在准备中。</string>
     <string name="msg_near_by_station">这是最近的地铁站。</string>
     <!-- 맵 -->
-    <string name="map_notification">알림</string>
-    <string name="map_confirm">확인</string>
+    <string name="map_notification">提醒</string>
+    <string name="map_confirm">确认</string>
     <string name="map_dialog_message01">为了流畅使用，请将位置信息设为‘使用’。</string>
     <string name="map_dialog_message02">定位失败</string>
     <string name="map_subway_start">选择出发地</string>
     <string name="map_subway_end">选择目的地</string>
-
+    <string name="msg_is_download_map">下载地图后可以使用，去下载地图吗?</string>
     <!-- Intro -->
     <string name="msg_map_donwload">正在下载首尔地图，请稍等。</string>
 

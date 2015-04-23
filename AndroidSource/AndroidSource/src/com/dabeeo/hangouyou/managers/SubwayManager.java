@@ -1,6 +1,7 @@
 package com.dabeeo.hangouyou.managers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +13,6 @@ public class SubwayManager
   private static SubwayManager instance = null;
   private Context context;
   public ArrayList<StationBean> stations = new ArrayList<StationBean>();
-  
   
   public static SubwayManager getInstance(Context context)
   {
