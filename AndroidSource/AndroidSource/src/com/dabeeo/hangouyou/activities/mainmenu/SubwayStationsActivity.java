@@ -41,6 +41,8 @@ public class SubwayStationsActivity extends ActionBarActivity
 	private TextView exitInfoText;
 	private LinearLayout exitContainer;
 	
+	private String destName;
+	
 	
 	@SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
 	@Override
@@ -54,6 +56,9 @@ public class SubwayStationsActivity extends ActionBarActivity
 		
 		String infoString = getIntent().getStringExtra("stations_info");
 		String jsonStations = getIntent().getStringExtra("stations_json");
+		
+		if (getIntent().hasExtra("dest_name"))
+			destName = getIntent().getStringExtra("dest_name");
 		
 		nearByLat = getIntent().getDoubleExtra("near_by_lat", -1);
 		if (nearByLat != -1)
@@ -192,7 +197,9 @@ public class SubwayStationsActivity extends ActionBarActivity
 					e.printStackTrace();
 				}
 				
-				String nearString = finalStationBean.nameCn + "과의 가장 가까운 출구는 " + nearByExit + "번 출구입니다.";
+				String nearString = destName + "과 가장 가까운 출구는 " + finalStationBean.nameKo + "역 " + nearByExit + "번 출구입니다.";
+				if (!Locale.getDefault().getLanguage().contains("ko"))
+					nearString = "离" + destName + "最近的出口是" + finalStationBean.nameCn + "站" + nearByExit + "号出口";
 				exitInfoText.setText(nearString);
 			} catch (Exception e)
 			{

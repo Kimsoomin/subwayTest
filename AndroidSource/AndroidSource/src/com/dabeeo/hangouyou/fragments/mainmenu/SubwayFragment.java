@@ -19,6 +19,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,7 @@ public class SubwayFragment extends Fragment
 	
 	private double findNearByStationLat = -1, findNearByStationLon = -1;
 	private double setDestFindNearStation = -1;
+	private String destName;
 	
 	private ProgressBar progressBar;
 	private AlertDialog choiceDialog;
@@ -110,12 +112,13 @@ public class SubwayFragment extends Fragment
 	}
 	
 	
-	public void findNearByStation(double lat, double lon, double type)
+	public void findNearByStation(double lat, double lon, double type, String destName)
 	{
 		Log.w("WARN", "지하철을 찾고 출도착역으로 설정");
 		findNearByStationLat = lat;
 		findNearByStationLon = lon;
 		setDestFindNearStation = type;
+		this.destName = destName;
 	}
 	
 	
@@ -555,6 +558,8 @@ public class SubwayFragment extends Fragment
 							{
 								i.putExtra("near_by_lat", nearByLat);
 								i.putExtra("near_by_lon", nearByLon);
+								if (!TextUtils.isEmpty(destName))
+									i.putExtra("dest_name", destName);
 							}
 							activity.startActivity(i);
 						}
