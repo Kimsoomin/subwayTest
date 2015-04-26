@@ -369,11 +369,23 @@ public class SubwayFragment extends Fragment
 										@Override
 										public void onClick(View arg0)
 										{
-											Intent i = new Intent(activity, BlinkingMap.class);
-											i.putExtra("lineId", stationId);
-											i.putExtra("Latitude", startStationLat);
-											i.putExtra("Longitude", startStationLong);
-											startActivity(i);
+											StationBean stationBean = SubwayManager.getInstance(activity).findStation(stationId);
+											
+											double max_latitude = 37.70453488762476;
+											double max_longitude = 127.17361450195312;
+											double min_latitude = 37.43677099171195;
+											double min_longitude = 126.76300048828125;
+											
+											if (stationBean.lon > max_longitude || stationBean.lon < min_longitude || stationBean.lat > max_latitude || stationBean.lat < min_latitude)
+												showDontSupportOutsideSeoul();
+											else
+											{
+												Intent i = new Intent(activity, BlinkingMap.class);
+												i.putExtra("lineId", stationId);
+												i.putExtra("Latitude", startStationLat);
+												i.putExtra("Longitude", startStationLong);
+												startActivity(i);
+											}
 										}
 									});
 								}
@@ -653,28 +665,22 @@ public class SubwayFragment extends Fragment
 		public void onTouchStation(final String station)
 		{
 			Log.w("WARN", "지하철역 터치 됨 :" + station);
-			if (station == null || station.equals("null"))
-				showDontSupportOutsideSeoul();
-			else
+			handler.post(new Runnable()
 			{
-				StationBean stationBean = SubwayManager.getInstance(activity).findStation(station);
-				handler.post(new Runnable()
+				@Override
+				public void run()
 				{
-					@Override
-					public void run()
+					webview.loadUrl("javascript:subway.setCenterWithStationId('" + station + "')");
+					handler.postDelayed(new Runnable()
 					{
-						webview.loadUrl("javascript:subway.setCenterWithStationId('" + station + "')");
-						handler.postDelayed(new Runnable()
+						@Override
+						public void run()
 						{
-							@Override
-							public void run()
-							{
-								showChoiceStationPopUp(station);
-							}
-						}, 500);
-					}
-				});
-			}
+							showChoiceStationPopUp(station);
+						}
+					}, 500);
+				}
+			});
 		}
 	}
 	

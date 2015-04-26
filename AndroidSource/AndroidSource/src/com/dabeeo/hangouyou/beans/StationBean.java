@@ -10,6 +10,7 @@ public class StationBean
 {
 	public String nameCn;
 	public String nameKo;
+	public String nameEn;
 	public String stationId;
 	public String line;
 	public double lon = -1, lat = -1;
@@ -26,6 +27,7 @@ public class StationBean
 		{
 			this.nameCn = object.getString("name");
 			this.nameKo = object.getString("name_ko");
+			this.nameEn = object.getString("name_en");
 			this.stationId = object.getString("id");
 			this.line = object.getString("line");
 			this.lat = object.getDouble("lat");

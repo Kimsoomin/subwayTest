@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -30,8 +31,8 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
@@ -46,7 +47,7 @@ import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.map.MapPlaceDataManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
-public class IntroActivity extends ActionBarActivity
+public class IntroActivity extends Activity
 {
 	private ProgressBar progressBar;
 	private AlertDialogManager alertManager;
@@ -59,6 +60,7 @@ public class IntroActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_intro);
 		

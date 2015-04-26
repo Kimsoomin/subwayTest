@@ -3,37 +3,31 @@ package com.dabeeo.hangouyou.activities.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.ImageView;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.managers.SubwayManager;
-import com.dabeeo.hangouyou.map.BlinkingMap;
 
-public class SubwayActivity extends ActionBarActivity
+public class SubwayActivity extends Activity
 {
 	private AutoCompleteTextView editSearch;
 	private ArrayList<String> subwayNames = new ArrayList<String>();
+	private ImageView backImage;
 	
 	
 	@SuppressWarnings("static-access")
@@ -41,6 +35,7 @@ public class SubwayActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_subway);
@@ -54,8 +49,8 @@ public class SubwayActivity extends ActionBarActivity
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, subwayNames);
 		editSearch.setAdapter(adapter);
 		
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+//		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//		getSupportActionBar().setHomeButtonEnabled(true);
 		
 		//위경도로 지하철역 찾기
 		double[] latLong = null;
@@ -96,6 +91,16 @@ public class SubwayActivity extends ActionBarActivity
 				Log.w("WARN", "Select Station Name : " + stationName);
 				Log.w("WARN", "Select Station id : " + stationdId);
 				MainActivity.subwayFrament.findStation(stationdId, stationName);
+			}
+		});
+		
+		backImage = (ImageView) findViewById(R.id.image_back_button);
+		backImage.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				finish();
 			}
 		});
 	}

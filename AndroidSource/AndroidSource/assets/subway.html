@@ -207,6 +207,25 @@
               jsonArray.push(jsonObject);
             }
 
+             var previousObject = null;
+             for (var i = 0; i < jsonArray.length; i++){
+               try {
+                 if(jsonArray[i].line == "환승역")
+                 {
+                   if(i == jsonArray.length - 1){
+                     jsonArray.splice(i, 1);
+                     jsonArray.splice(i + 1, 1);
+                   }else{
+                     jsonArray.splice(i - 1, 1);
+                     jsonArray.splice(i, 1);
+                   }
+                 }  
+               }
+               catch(exception){
+               }
+             }
+
+
             for (var i = 0; i < jsonArray.length; i++){
               if(i != 0 && i != jsonArray.length - 1){
                   this.mark_station(jsonArray[i].id);
@@ -225,6 +244,7 @@
               var jsonObject = new Object();
               jsonObject.name = stationInfo.name_cn;
               jsonObject.name_ko = stationInfo.name_ko;
+              jsonObject.name_en = stationInfo.name_en;
               jsonObject.id = station_ids[i];
               jsonObject.line = stationInfo.line;
               jsonObject.lat = stationInfo.location.latitude;
@@ -380,27 +400,7 @@
             var station = Snap.select(".station#" + this.node.id)
             var bound = station.getBBox()
 
-            var isSeoul = true
-            try{
-              console.log(station.node.id);
-              var stationBean = stations[station.node.id]
-
-              var max_latitude = 37.70453488762476
-              var max_longitude = 127.17361450195312
-              var min_latitude = 37.43677099171195
-              var min_longitude = 126.76300048828125
-
-              if(stationBean.location.longitude > max_longitude || stationBean.location.longitude < min_longitude || stationBean.location.latitude > max_latitude || stationBean.location.latitude < min_latitude){
-                isSeoul = false
-              }             
-            }catch(exception){
-              console.log(exception)
-            }
-
-            if(isSeoul)
-              onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
-            else
-              onTouchStation(null)
+            onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
           }
           onDblClick = function(e) {
           }
