@@ -196,6 +196,7 @@ public class SubwayFragment extends Fragment
 					progressBar.bringToFront();
 					
 					locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 				}
 			}
 		});
@@ -531,7 +532,14 @@ public class SubwayFragment extends Fragment
 				e.printStackTrace();
 			}
 			
-			checkTransferStation();
+			try
+			{
+				checkTransferStation();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
 			handler.post(new Runnable()
 			{
 				@Override

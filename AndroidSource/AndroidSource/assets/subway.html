@@ -174,9 +174,13 @@
                 image.animate({opacity: '0'}, 1000, mina.linear, animation_2)  
               }
               animation_2 = function() {
-                image.animate({opacity: '0.5'}, 1000, mina.linear)
+                image.animate({opacity: '0.8'}, 1000, mina.linear, animation_1)
               }
-              animation_1()
+
+              for (var i = 0; i < 10; i++) {
+               animation_1();
+              };
+              
 
               this.marked_stations.push(image);
             }catch(exception){
@@ -201,8 +205,13 @@
 
               jsonObject.name = stationInfo.name_cn;
               jsonObject.name_ko = stationInfo.name_ko;
+              jsonObject.name_en = stationInfo.name_en;
               jsonObject.id = array[i]
               jsonObject.line = stationInfo.line;
+              jsonObject.exit_locations = stationInfo.exits;
+              jsonObject.lat = stationInfo.location.latitude;
+              jsonObject.lon = stationInfo.location.longitude;
+              jsonObject.exit_locations = stationInfo.exits;
 
               jsonArray.push(jsonObject);
             }

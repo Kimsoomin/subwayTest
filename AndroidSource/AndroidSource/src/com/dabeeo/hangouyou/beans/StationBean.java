@@ -31,7 +31,7 @@ public class StationBean
 			this.stationId = object.getString("id");
 			this.line = object.getString("line");
 			this.lat = object.getDouble("lat");
-			this.lon = object.getDouble("lat");
+			this.lon = object.getDouble("lon");
 			
 			if (object.has("exit_locations"))
 			{
@@ -40,7 +40,6 @@ public class StationBean
 				{
 					if (exitObject.has(Integer.toString(i)))
 					{
-						Log.w("WARN", "!!!!:" + i + "번째 출구있음!");
 						StationExitBean bean = new StationExitBean();
 						bean.exitTitle = i;
 						bean.lat = exitObject.getJSONObject(Integer.toString(i)).getDouble("latitude");
