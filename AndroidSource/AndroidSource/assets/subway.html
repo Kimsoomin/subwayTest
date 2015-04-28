@@ -108,8 +108,30 @@
               this.start_station.remove()
             }
             station = Snap.select(".station#"+station_id)
+            // bound = station.getBBox()
+            try{
+              bound = station.getBBox()
+            }catch(exception){
+              console.log("SetCenterWithStationId findByName")
+              
+              for (var i = 0; i < station_ids.length; i++){
+                var station = stations[station_ids[i]]
+                try{         
+                  if(station.name_ko.indexOf(station_name) > -1)
+                  {
+                    console.log(bound.x)
+                    console.log(station.name_ko)
+                    console.log(station_ids[i])
+                    station = Snap.select(".station#" + station_ids[i])
+                    bound = station.getBBox()
+                  }
+                }catch(exception){
 
-            bound = station.getBBox()
+                }
+              }
+            }
+
+            // bound = station.getBBox()
             margin = 1
             // rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
             // rect.attr({"fill":"#FF5555", stroke: "#000", strokeWidth: 1})
@@ -128,7 +150,29 @@
               this.end_station.remove()
             }
             station = Snap.select(".station#"+station_id)
-            bound = station.getBBox()
+            // bound = station.getBBox()
+            try{
+              bound = station.getBBox()
+            }catch(exception){
+              console.log("SetCenterWithStationId findByName")
+              
+              for (var i = 0; i < station_ids.length; i++){
+                var station = stations[station_ids[i]]
+                try{         
+                  if(station.name_ko.indexOf(station_name) > -1)
+                  {
+                    console.log(bound.x)
+                    console.log(station.name_ko)
+                    console.log(station_ids[i])
+                    station = Snap.select(".station#" + station_ids[i])
+                    bound = station.getBBox()
+                  }
+                }catch(exception){
+
+                }
+              }
+            }
+            
             // margin = 1
             // rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
             // rect.attr({"fill":"#55FF55", stroke: "#000", strokeWidth: 1})
@@ -215,18 +259,24 @@
 
               jsonArray.push(jsonObject);
             }
+            // console.log(jsonArray)
+
+            var markArray = new Array();
+            for (var i = 0; i < jsonArray.length; i++) {
+              markArray.push(jsonArray[i]);
+            };
 
              var previousObject = null;
-             for (var i = 0; i < jsonArray.length; i++){
+             for (var i = 0; i < markArray.length; i++){
                try {
-                 if(jsonArray[i].line == "환승역")
+                 if(markArray[i].line == "환승역")
                  {
-                   if(i == jsonArray.length - 1){
-                     jsonArray.splice(i, 1);
-                     jsonArray.splice(i + 1, 1);
+                   if(i == markArray.length - 1){
+                     markArray.splice(i, 1);
+                     markArray.splice(i + 1, 1);
                    }else{
-                     jsonArray.splice(i - 1, 1);
-                     jsonArray.splice(i, 1);
+                     markArray.splice(i - 1, 1);
+                     markArray.splice(i, 1);
                    }
                  }  
                }
@@ -235,12 +285,25 @@
              }
 
 
-            for (var i = 0; i < jsonArray.length; i++){
-              if(i != 0 && i != jsonArray.length - 1){
-                  this.mark_station(jsonArray[i].id);
+            for (var i = 0; i < markArray.length; i++){
+              if(i != 0 && i != markArray.length - 1){
+                  this.mark_station(markArray[i].id);
               }
             }
-            
+
+
+            try{
+              if(jsonArray[jsonArray.length - 1].line == "환승역"){
+                jsonArray.splice(jsonArray.length - 1, 1);
+              }else if(jsonArray[jsonArray.length - 2].line == "환승역"){
+                jsonArray.splice(jsonArray.length - 2, 1);
+              }
+            }catch(exception){
+              console.log(exception);
+            }
+
+            console.log(jsonArray);
+
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           },
@@ -270,10 +333,34 @@
             var jsonInfo = JSON.stringify(jsonArray);
             completeLoadAllStation(jsonInfo); 
           },
-          setCenterWithStationId: function (station_id){
+          setCenterWithStationId: function (station_id, station_name){
             station = Snap.select(".station#"+station_id);
-            bound = station.getBBox();
-            console.log(bound.x);
+            // bound = station.getBBox();
+            console.log("SetCenterWithStationId")
+
+            try{
+              bound = station.getBBox()
+            }catch(exception){
+              console.log("SetCenterWithStationId findByName")
+              
+              for (var i = 0; i < station_ids.length; i++){
+                var station = stations[station_ids[i]]
+                try{         
+                  if(station.name_ko.indexOf(station_name) > -1)
+                  {
+                    console.log(bound.x)
+                    console.log(station.name_ko)
+                    console.log(station_ids[i])
+                    station = Snap.select(".station#" + station_ids[i])
+                    bound = station.getBBox()
+                  }
+                }catch(exception){
+
+                }
+              }
+            }
+
+            // console.log(bound.x);
             window.scrollTo(bound.x  - 200, bound.y - 200);
           },
           findNearByStation: function(find_lat, find_lon){
@@ -407,8 +494,8 @@
           onClick = function(e) {
             console.log("click");
             var station = Snap.select(".station#" + this.node.id)
-            var bound = station.getBBox()
-
+            
+            var bound = station.getBBox();
             onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
           }
           onDblClick = function(e) {

@@ -3,7 +3,9 @@ package com.dabeeo.hangouyou;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SearchResultFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
+import com.dabeeo.hangouyou.managers.CategoryManager;
 
 public class MainActivity extends ActionBarActivity
 {
@@ -45,7 +48,20 @@ public class MainActivity extends ActionBarActivity
     bottomMenuPhotolog.setOnClickListener(bottomMenuClickListener);
     bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
     bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
+    
+//    if (CategoryManager.getInstance(MainActivity.this).categories.size() == 0)
+//      new GetCategoryAsyncTask().execute();
   }
+  
+  private class GetCategoryAsyncTask extends AsyncTask<String, Integer, Boolean>
+  {
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      CategoryManager.getInstance(MainActivity.this).getCategories();
+      return null;
+    }
+  };
   
   
   private void setFragments(int position)

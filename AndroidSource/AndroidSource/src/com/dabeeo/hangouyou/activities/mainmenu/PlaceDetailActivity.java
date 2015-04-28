@@ -135,6 +135,7 @@ public class PlaceDetailActivity extends ActionBarActivity
           e.printStackTrace();
         }
         displayContentData();
+        headerView.setBean(bean);
       }
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);

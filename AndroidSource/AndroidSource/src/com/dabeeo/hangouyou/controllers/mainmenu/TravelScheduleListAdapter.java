@@ -67,8 +67,8 @@ public class TravelScheduleListAdapter extends BaseAdapter
     ScheduleBean bean = (ScheduleBean) beans.get(position);
     int resId = R.layout.list_item_travel_schedule;
     
-    if (position == 0)
-      resId = R.layout.list_item_travel_schedule_first_row;
+//    if (position == 0)
+//      resId = R.layout.list_item_travel_schedule_first_row;
     
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     

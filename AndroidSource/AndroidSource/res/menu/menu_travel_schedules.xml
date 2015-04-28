@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/my_schedule"
-        android:title="@string/term_my_schedule"
+        android:title="@string/term_all"
         app:showAsAction="always|withText"/>
 
 </menu>

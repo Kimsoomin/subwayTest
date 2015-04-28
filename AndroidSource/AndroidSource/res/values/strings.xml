@@ -120,7 +120,6 @@
     <string name="msg_review_success">点评发布成功</string>
     <string name="msg_review_fail">点评发布失败</string>
 
-    <!-- 추가 String -->
     <!-- 회원가입 / 로그인 -->
     <string name="term_login">登录</string>
     <string name="term_join">注册</string>
@@ -159,5 +158,12 @@
     <string name="msg_is_download_map">下载地图后可以使用，去下载地图吗?</string>
     <!-- Intro -->
     <string name="msg_map_donwload">正在下载首尔地图，请稍等。</string>
+
+    <!-- 추가 String -->
+    <!-- 여행일정 -->
+    <string name="term_popular_schedule">인기순</string>
+    <string name="term_registered_schedule">등록한 내일정</string>
+    <string name="term_bookmarked_schedule">북마크한 일정</string>
+    <string name="term_top_brand">"[TOP BRAND]"</string>
 
 </resources>

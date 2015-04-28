@@ -45,7 +45,7 @@ public class PlaceListFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    int resId = R.layout.fragment_list;
+    int resId = R.layout.fragment_travel_strategy_list;
     return inflater.inflate(resId, null);
   }
   
@@ -58,9 +58,9 @@ public class PlaceListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new PlaceListAdapter();
+    adapter = new PlaceListAdapter(getActivity());
     
-    ListView listView = (ListView) getView().findViewById(android.R.id.list);
+    ListView listView = (ListView) getView().findViewById(R.id.listview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()
     {

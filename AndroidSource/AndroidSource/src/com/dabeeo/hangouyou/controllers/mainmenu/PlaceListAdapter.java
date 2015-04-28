@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,18 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.managers.CategoryManager;
 
 public class PlaceListAdapter extends BaseAdapter
 {
   private ArrayList<PlaceBean> beans = new ArrayList<>();
+  private Context context;
+  
+  
+  public PlaceListAdapter(Context context)
+  {
+    this.context = context;
+  }
   
   
   public void add(PlaceBean bean)
@@ -75,6 +84,7 @@ public class PlaceListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
     title.setText(bean.title);
+    category.setText(CategoryManager.getInstance(context).getCategoryName(bean.categoryId));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     return view;

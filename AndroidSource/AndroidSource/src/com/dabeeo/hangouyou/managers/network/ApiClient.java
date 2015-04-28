@@ -30,6 +30,12 @@ public class ApiClient
   }
   
   
+  public NetworkResult getCategories()
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CATEGORY_LIST");
+  }
+  
+  
   public NetworkResult getPlaceList(int page)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page);

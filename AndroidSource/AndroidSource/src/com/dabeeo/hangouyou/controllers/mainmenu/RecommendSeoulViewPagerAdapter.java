@@ -14,6 +14,7 @@ import com.dabeeo.hangouyou.fragments.mainmenu.TravelStrategyListFragment;
 public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
 {
   private ArrayList<TitleCategoryBean> items = new ArrayList<>();
+  public int currentPosition = 0;
   
   
   public RecommendSeoulViewPagerAdapter(Context context, FragmentManager fm)

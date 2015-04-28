@@ -14,9 +14,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.controllers.SearchResultDetailAdapter;
 

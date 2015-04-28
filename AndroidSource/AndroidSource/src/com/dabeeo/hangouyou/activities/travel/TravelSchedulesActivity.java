@@ -1,19 +1,20 @@
-package com.dabeeo.hangouyou.activities.mainmenu;
+package com.dabeeo.hangouyou.activities.travel;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.bases.BaseNavigationTabActivity;
-import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
+import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 
-public class TravelScheduleDetailActivity extends BaseNavigationTabActivity
+public class TravelSchedulesActivity extends BaseNavigationTabActivity
 {
-  private TravelScheduleDetailViewPagerAdapter adapter;
+  private TravelScheduleViewPagerAdapter adapter;
   
   
   @Override
@@ -21,7 +22,7 @@ public class TravelScheduleDetailActivity extends BaseNavigationTabActivity
   {
     super.onCreate(savedInstanceState);
     
-    adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
+    adapter = new TravelScheduleViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);
     
     displayTitles();
@@ -32,18 +33,9 @@ public class TravelScheduleDetailActivity extends BaseNavigationTabActivity
   private void displayTitles()
   {
     ArrayList<String> titles = new ArrayList<>();
-    titles.add("1日");
-    titles.add("2日");
-    titles.add("3日");
-    titles.add("4日");
-    titles.add("5日");
-    titles.add("6日");
-    titles.add("7日");
-    titles.add("8日");
-    titles.add("9日");
-    titles.add("10日");
-    titles.add("11日");
-    titles.add("12日");
+    titles.add(getString(R.string.term_popular_schedule));
+    titles.add(getString(R.string.term_registered_schedule));
+    titles.add(getString(R.string.term_bookmarked_schedule));
     
     adapter.setTitles(titles);
     
@@ -57,7 +49,7 @@ public class TravelScheduleDetailActivity extends BaseNavigationTabActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-    getMenuInflater().inflate(R.menu.menu_map, menu);
+    getMenuInflater().inflate(R.menu.menu_travel_schedules, menu);
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -65,8 +57,6 @@ public class TravelScheduleDetailActivity extends BaseNavigationTabActivity
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
-    if (item.getItemId() == R.id.map)
-      Toast.makeText(this, "준비 중입니다", Toast.LENGTH_LONG).show();
     return super.onOptionsItemSelected(item);
   }
 }

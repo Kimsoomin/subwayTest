@@ -84,6 +84,7 @@ end
 stations = Hash.new
 stations_by_internal_id.each do |k, v|
 	stations[v[:id]] = {
+		id: v[:id],
 		line: v[:line],
 		name_ko: v[:name_ko],
 		name_en: v[:name_en],
@@ -112,6 +113,7 @@ stations_by_internal_id.each do |k, v|
 		t_id = transfer_station.join
 		if stations[t_id] == nil
 			stations[t_id] = {
+				id: t_id,
 				line: "환승역",
 				name_ko: v[:name_ko],
 				name_en: v[:name_en],

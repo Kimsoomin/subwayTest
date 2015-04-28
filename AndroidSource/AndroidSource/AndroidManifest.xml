@@ -13,6 +13,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -63,15 +64,15 @@
             android:label="@string/term_write_review"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyActivity"
+            android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity"
             android:label="@string/term_strategy_seoul"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelSchedulesActivity"
+            android:name="com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity"
             android:label="@string/term_travel_schedule"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelScheduleDetailActivity"
+            android:name="com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity"
             android:label="@string/term_travel_schedule"
             android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
@@ -166,7 +167,7 @@
             android:name="com.dabeeo.hangouyou.activities.sub.SearchResultDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyDetailActivity"
+            android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity"
             android:screenOrientation="portrait" />
 
         <!-- Map -->

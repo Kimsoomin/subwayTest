@@ -20,7 +20,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.TravelStrategyDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PremiumBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulListAdapter;
@@ -47,7 +47,7 @@ public class TravelStrategyListFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    int resId = R.layout.fragment_list;
+    int resId = R.layout.fragment_travel_strategy_list;
     return inflater.inflate(resId, null);
   }
   
@@ -61,7 +61,7 @@ public class TravelStrategyListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     adapter = new RecommendSeoulListAdapter();
-    ListView listView = (ListView) getView().findViewById(android.R.id.list);
+    ListView listView = (ListView) getView().findViewById(R.id.listview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()
     {

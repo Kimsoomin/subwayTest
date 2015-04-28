@@ -1,10 +1,11 @@
-package com.dabeeo.hangouyou.activities.mainmenu;
+package com.dabeeo.hangouyou.activities.travel;
 
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
 {
   private RecommendSeoulViewPagerAdapter adapter;
   private ArrayList<TitleCategoryBean> spheres = new ArrayList<>();
+  private MenuItem areaItem;
   
   
   @SuppressWarnings("deprecation")
@@ -40,6 +42,29 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
     {
       getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
     }
+    
+    viewPager.setOnPageChangeListener(new OnPageChangeListener()
+    {
+      @Override
+      public void onPageSelected(int arg0)
+      {
+        
+      }
+      
+      
+      @Override
+      public void onPageScrolled(int position, float arg1, int arg2)
+      {
+        adapter.currentPosition = position;
+        invalidateOptionsMenu();
+      }
+      
+      
+      @Override
+      public void onPageScrollStateChanged(int arg0)
+      {
+      }
+    });
   }
   
   
@@ -47,6 +72,11 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
   public boolean onCreateOptionsMenu(Menu menu)
   {
     getMenuInflater().inflate(R.menu.menu_recommend_seoul, menu);
+    areaItem = menu.findItem(R.id.all);
+    if (adapter.currentPosition == 0)
+      areaItem.setVisible(true);
+    else
+      areaItem.setVisible(false);
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -56,7 +86,6 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
   {
     if (item.getItemId() == R.id.all)
       showSphereDialog();
-    
     return super.onOptionsItemSelected(item);
   }
   

@@ -9,11 +9,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.squareup.picasso.Picasso;
 
 public class PlaceDetailHeaderView extends RelativeLayout
 {
   private Context context;
+  private TextView imageCount;
+  private ImageView imageView;
   
   
   public PlaceDetailHeaderView(Context context)
@@ -40,21 +43,22 @@ public class PlaceDetailHeaderView extends RelativeLayout
   }
   
   
+  public void setBean(PlaceDetailBean bean)
+  {
+    imageCount.setText("+" + Integer.toString(bean.bookmarkCount));
+  }
+  
+  
   public void init()
   {
     int resId = R.layout.view_place_detail_header;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
-    ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    TextView imageCount = (TextView) view.findViewById(R.id.image_count);
+    imageView = (ImageView) view.findViewById(R.id.imageview);
+    imageCount = (TextView) view.findViewById(R.id.image_count);
     
-    Picasso.with(context)
-           .load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759")
-           .resize(300, 300)
-           .centerCrop()
-           .into(imageView);
-    //가데이터
-    imageCount.setText("10");
+    Picasso.with(context).load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759").fit().centerCrop().into(
+        imageView);
     addView(view);
   }
 }

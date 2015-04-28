@@ -10,13 +10,14 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.TravelScheduleDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
+import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hangouyou.views.ScheduleListHeaderMallView;
 
 public class TravelScheduleListFragment extends Fragment
 {
@@ -40,7 +41,11 @@ public class TravelScheduleListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     adapter = new TravelScheduleListAdapter();
-    ListView listView = (ListView) getView().findViewById(android.R.id.list);
+    GridViewWithHeaderAndFooter listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
+    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
+    view.setBean(null);
+    listView.addHeaderView(view);
+    
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
@@ -54,14 +59,14 @@ public class TravelScheduleListFragment extends Fragment
     progressBar.setVisibility(View.VISIBLE);
     
     //테스트 가데이터 
-    ScheduleBean bean = new ScheduleBean();
-    bean.title = "쇼핑천국 서울";
-    bean.month = 1;
-    bean.likeCount = 7;
-    bean.reviewCount = 11;
-    adapter.add(bean);
+//    ScheduleBean bean = new ScheduleBean();
+//    bean.title = "쇼핑천국 서울";
+//    bean.month = 1;
+//    bean.likeCount = 7;
+//    bean.reviewCount = 11;
+//    adapter.add(bean);
     
-    bean = new ScheduleBean();
+    ScheduleBean bean = new ScheduleBean();
     bean.title = "서울투어1";
     bean.month = 2;
     bean.likeCount = 50;
