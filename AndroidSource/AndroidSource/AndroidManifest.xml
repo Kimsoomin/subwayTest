@@ -75,6 +75,15 @@
             android:name="com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity"
             android:label="@string/term_travel_schedule"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendKoreaActivity"
+            android:label="@string/term_trend_korea"
+            android:screenOrientation="portrait" />
+        <!-- Trend -->
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendListActivity"
+            android:label="@string/term_exhibitions"
+            android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity"

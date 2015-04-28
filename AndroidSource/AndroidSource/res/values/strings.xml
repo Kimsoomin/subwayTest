@@ -165,5 +165,7 @@
     <string name="term_registered_schedule">등록한 내일정</string>
     <string name="term_bookmarked_schedule">북마크한 일정</string>
     <string name="term_top_brand">"[TOP BRAND]"</string>
+    <string name="term_trend_korea">트렌디 한국</string>
+    <string name="term_exhibitions">기획전</string>
 
 </resources>

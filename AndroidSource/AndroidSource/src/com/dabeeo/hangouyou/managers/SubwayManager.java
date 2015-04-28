@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.dabeeo.hangouyou.IntroActivity;
@@ -99,6 +100,7 @@ public class SubwayManager
         if (afterArray.get(j).equals(names.get(i)))
           isContain = true;
       }
+      
       if (!isContain)
         afterArray.add(names.get(i));
     }
@@ -113,19 +115,47 @@ public class SubwayManager
     for (int i = 0; i < stations.size(); i++)
     {
       names.add(stations.get(i).nameCn);
-      
     }
-    return names;
+    
+    ArrayList<String> afterArray = new ArrayList<String>();
+    for (int i = 0; i < names.size(); i++)
+    {
+      boolean isContain = false;
+      for (int j = 0; j < afterArray.size(); j++)
+      {
+        if (afterArray.get(j).equals(names.get(i)))
+          isContain = true;
+      }
+      
+      if (!isContain)
+        afterArray.add(names.get(i));
+    }
+    return afterArray;
   }
   
   
   public String getStationId(String stationName)
   {
+    ArrayList<StationBean> sameNameStations = new ArrayList<StationBean>();
     String stationId = "";
     for (int i = 0; i < stations.size(); i++)
     {
       if (stations.get(i).nameKo.equals(stationName))
-        stationId = stations.get(i).stationId;
+        sameNameStations.add(stations.get(i));
+    }
+    
+    if (sameNameStations.size() == 1)
+      return sameNameStations.get(1).stationId;
+    else
+    {
+      for (int i = 0; i < sameNameStations.size(); i++)
+      {
+        if (TextUtils.isEmpty(sameNameStations.get(i).stationId))
+          stationId = sameNameStations.get(i).stationId;
+        
+        if (stationId.length() < sameNameStations.get(i).stationId.length())
+          stationId = sameNameStations.get(i).stationId;
+      }
     }
     return stationId;
   }

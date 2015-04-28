@@ -628,7 +628,7 @@ public class SubwayFragment extends Fragment
         @Override
         public void run()
         {
-          webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "','" + nearByStation.nameKo + "')");
+          webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
           handler.postDelayed(new Runnable()
           {
             @Override

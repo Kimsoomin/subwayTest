@@ -108,28 +108,8 @@
               this.start_station.remove()
             }
             station = Snap.select(".station#"+station_id)
-            // bound = station.getBBox()
-            try{
-              bound = station.getBBox()
-            }catch(exception){
-              console.log("SetCenterWithStationId findByName")
-              
-              for (var i = 0; i < station_ids.length; i++){
-                var station = stations[station_ids[i]]
-                try{         
-                  if(station.name_ko.indexOf(station_name) > -1)
-                  {
-                    console.log(bound.x)
-                    console.log(station.name_ko)
-                    console.log(station_ids[i])
-                    station = Snap.select(".station#" + station_ids[i])
-                    bound = station.getBBox()
-                  }
-                }catch(exception){
-
-                }
-              }
-            }
+            bound = station.getBBox()
+            
 
             // bound = station.getBBox()
             margin = 1
@@ -150,28 +130,8 @@
               this.end_station.remove()
             }
             station = Snap.select(".station#"+station_id)
-            // bound = station.getBBox()
-            try{
-              bound = station.getBBox()
-            }catch(exception){
-              console.log("SetCenterWithStationId findByName")
-              
-              for (var i = 0; i < station_ids.length; i++){
-                var station = stations[station_ids[i]]
-                try{         
-                  if(station.name_ko.indexOf(station_name) > -1)
-                  {
-                    console.log(bound.x)
-                    console.log(station.name_ko)
-                    console.log(station_ids[i])
-                    station = Snap.select(".station#" + station_ids[i])
-                    bound = station.getBBox()
-                  }
-                }catch(exception){
-
-                }
-              }
-            }
+            bound = station.getBBox()
+         
             
             // margin = 1
             // rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
@@ -333,34 +293,12 @@
             var jsonInfo = JSON.stringify(jsonArray);
             completeLoadAllStation(jsonInfo); 
           },
-          setCenterWithStationId: function (station_id, station_name){
+          setCenterWithStationId: function (station_id){
             station = Snap.select(".station#"+station_id);
             // bound = station.getBBox();
             console.log("SetCenterWithStationId")
-
-            try{
-              bound = station.getBBox()
-            }catch(exception){
-              console.log("SetCenterWithStationId findByName")
-              
-              for (var i = 0; i < station_ids.length; i++){
-                var station = stations[station_ids[i]]
-                try{         
-                  if(station.name_ko.indexOf(station_name) > -1)
-                  {
-                    console.log(bound.x)
-                    console.log(station.name_ko)
-                    console.log(station_ids[i])
-                    station = Snap.select(".station#" + station_ids[i])
-                    bound = station.getBBox()
-                  }
-                }catch(exception){
-
-                }
-              }
-            }
-
-            // console.log(bound.x);
+            bound = station.getBBox()
+   
             window.scrollTo(bound.x  - 200, bound.y - 200);
           },
           findNearByStation: function(find_lat, find_lon){
