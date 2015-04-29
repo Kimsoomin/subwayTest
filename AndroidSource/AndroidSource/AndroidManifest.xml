@@ -86,6 +86,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.dabeeo.hangouyou.activities.schedule.RecommendScheduleCompeletedActivity"
+            android:label="@string/term_recommend_schedule_compeleted"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.schedule.CalendarActivity"
             android:label="@string/term_select_date"
             android:screenOrientation="portrait" />
@@ -142,21 +147,20 @@
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
+        <!-- <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogListActivity"
-            android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
+            android:screenOrientation="portrait" /> -->
+        <!-- <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity"
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
+            android:screenOrientation="portrait" /> -->
+       <!--  <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity"
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" /> -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity"
             android:label="@string/term_my_bookmark"
@@ -178,7 +182,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.MyPageSettingActivity"
+            android:name="com.dabeeo.hangouyou.activities.sub.SettingActivity"
             android:label="@string/term_setting"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

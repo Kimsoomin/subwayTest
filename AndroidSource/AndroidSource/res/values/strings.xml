@@ -24,8 +24,8 @@
     <string name="term_map">地图</string>
     <string name="term_subway">地铁</string>
     <string name="term_photolog">微游记</string>
-    <string name="term_ticket_and_coupon">"团购/优惠券"</string>
-    <string name="term_reservation">预定</string>
+    <string name="term_ticket">"团购"</string>
+    <string name="term_coupon">"优惠券"</string>
     <string name="term_home">首页</string>
     <string name="term_my_page">我的信息</string>
     <string name="term_register_photolog">上传游记</string>
@@ -42,9 +42,9 @@
     <string name="term_my_schedule">我的行程</string>
     <string name="term_my_place">我的地点</string>
     <string name="term_my_ticket_coupon">"已买团购/已收优惠券"</string>
-    <string name="term_my_photolog">我的微游记</string>
     <string name="term_my_bookmark">标记</string>
-    <string name="term_my_order_cart">"以买到的宝贝\n/购物车"</string>
+    <string name="term_my_order">以买到的宝贝</string>
+    <string name="term_my_cart">"购物车"</string>
     <string name="term_profile">个人资料</string>
     <string name="term_save">保存</string>
     <string name="term_logout">退出</string>
@@ -166,9 +166,13 @@
     <string name="term_set_end_station">도착역 설정</string>
     <!-- 내 일정 -->
     <string name="term_recommend_travel_schedule">추천자동일정 만들기</string>
+    <string name="term_recommend_schedule_compeleted">추천자동일정 완성</string>
     <string name="term_select_date">날짜 선택하기</string>
     <string name="msg_warn_empty_start_date">출발일을 선택해주세요</string>
-    <!-- 여행일정 -->
+    <string name="msg_progress_recommend_schedule">추천일정을 생성중입니다.</string>
+    <string name="term_another_recommend_schedule">다른 일정 추천 받기</string>
+    <string name="term_generate_new_schedule">새로 만들기</string>
+    <string name="term_compelete">완료</string>
     <string name="msg_recommend_schedule_help">어디서 어떻게 해야하는지\n일정이 막막하시다면?\n자동추천일정으로 쉽게 여행일정을 완성하세요.</string>
     <string name="msg_recommend_step_1">1. 여행일정이 정해지셨다면?</string>
     <string name="msg_recommend_step_2">2. 이번 여행테마는?</string>
@@ -179,7 +183,11 @@
     <string name="term_popular_schedule">인기순</string>
     <string name="term_registered_schedule">등록한 내일정</string>
     <string name="term_bookmarked_schedule">북마크한 일정</string>
+    <string name="msg_save_my_schedule">내 일정으로 저장하시겠습니까?</string>
+    <string name="msg_init_recommend_schedule">모든 설정을 초기화하시겠습니까?</string>
 
+    <!-- Main -->
+    <string name="msg_dont_connect_network">네트워크 연결 시, 이용가능합니다.</string>
     <!-- Mall -->
     <string name="term_won">"₩"</string>
     <string name="term_top_brand">"[TOP BRAND]"</string>

@@ -2,8 +2,10 @@ package com.dabeeo.hangouyou.activities.schedule;
 
 import java.util.ArrayList;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.views.RecommendScheduleBottomView;
 
 public class RecommendScheduleActivity extends ActionBarActivity
 {
@@ -79,7 +80,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       Log.w("WARN", "Activity Result:  " + year + " " + month + " " + dayOfMonth);
       
       if (year != -1)
-        startDate.setText(Integer.toString(year)+ " "+(Integer.toString(month)+ " "+(Integer.toString(dayOfMonth))));
+        startDate.setText(Integer.toString(year) + " " + Integer.toString(month) + " " + Integer.toString(dayOfMonth));
     }
     super.onActivityResult(arg0, arg1, intent);
   }
@@ -95,30 +96,6 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   private void displayBottomListView()
   {
-//    RecommendScheduleBottomView view = new RecommendScheduleBottomView(this);
-//    view.setBean("한류");
-//    view.setOnClickListener(bottomViewClickListener);
-//    bottomViews.add(view);
-//    containerBottomViews.addView(view);
-//    
-//    view = new RecommendScheduleBottomView(this);
-//    view.setBean("쇼핑");
-//    view.setOnClickListener(bottomViewClickListener);
-//    bottomViews.add(view);
-//    containerBottomViews.addView(view);
-//    
-//    view = new RecommendScheduleBottomView(this);
-//    view.setBean("명소");
-//    view.setOnClickListener(bottomViewClickListener);
-//    bottomViews.add(view);
-//    containerBottomViews.addView(view);
-//    
-//    view = new RecommendScheduleBottomView(this);
-//    view.setBean("맛집");
-//    view.setOnClickListener(bottomViewClickListener);
-//    bottomViews.add(view);
-//    containerBottomViews.addView(view);
-    
     RadioButton radioView = new RadioButton(this);
     radioView.setText("한류");
     containerBottomViews.addView(radioView);
@@ -183,12 +160,10 @@ public class RecommendScheduleActivity extends ActionBarActivity
     {
       if (year == -1)
       {
-        Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_empty_start_date), Toast.LENGTH_LONG);
+        Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_empty_start_date), Toast.LENGTH_LONG).show();
       }
       else
-      {
         findAndShowDialog();
-      }
     }
     return super.onOptionsItemSelected(item);
   }
@@ -196,6 +171,25 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   private void findAndShowDialog()
   {
+    final ProgressDialog dialog = new ProgressDialog(RecommendScheduleActivity.this);
+    dialog.setTitle(getString(R.string.app_name));
+    dialog.setMessage(getString(R.string.msg_progress_recommend_schedule));
+    dialog.setCancelable(false);
     
+    if (!dialog.isShowing())
+      dialog.show();
+    
+    //TODO : 네트워크를 통해 추천일정 받기 
+    
+    new Handler().postDelayed(new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        dialog.dismiss();
+        Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
+        startActivity(i);
+      }
+    }, 1000);
   }
 }

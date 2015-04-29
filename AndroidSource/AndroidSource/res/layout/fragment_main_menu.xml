@@ -186,7 +186,7 @@
                     <!-- 티켓 쿠폰 -->
 
                     <RelativeLayout
-                        android:id="@+id/container_ticket_and_coupon"
+                        android:id="@+id/container_ticket"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginBottom="4dp"
@@ -197,14 +197,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="@string/term_ticket_and_coupon"
+                            android:text="@string/term_ticket"
                             android:textStyle="bold" />
                     </RelativeLayout>
 
                     <!-- 예약 -->
 
                     <RelativeLayout
-                        android:id="@+id/container_reservation"
+                        android:id="@+id/container_coupon"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginBottom="4dp"
@@ -215,7 +215,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="@string/term_reservation"
+                            android:text="@string/term_coupon"
                             android:textStyle="bold" />
                     </RelativeLayout>
                 </LinearLayout>

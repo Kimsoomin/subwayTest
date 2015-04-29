@@ -30,9 +30,11 @@ import com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogListActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
-import com.dabeeo.hangouyou.activities.sub.MyPageSettingActivity;
+import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleCompeletedActivity;
+import com.dabeeo.hangouyou.activities.sub.SettingActivity;
 import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
 import com.dabeeo.hangouyou.external.libraries.RoundedImageView;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class MyPageFragment extends Fragment
 {
@@ -42,7 +44,7 @@ public class MyPageFragment extends Fragment
   private TextView textName;
   
   private Button btnSetting;
-  private Button btnMySchedule, btnMyPlace, btnMyTicket, btnMyPhotoLog, btnMyBookmark, btnMyOrders;
+  private Button btnMySchedule, btnMyPlace, btnMyBookmark, btnMyOrders, btnMyCart;
   
   private boolean isChangeBackground = false;
   
@@ -58,23 +60,20 @@ public class MyPageFragment extends Fragment
     imageProfile.setOnClickListener(clickListener);
     
     textName = (TextView) view.findViewById(R.id.text_name);
-    btnSetting = (Button) view.findViewById(R.id.btn_setting);
-    btnSetting.setOnClickListener(clickListener);
     
+    btnSetting = (Button) view.findViewById(R.id.btn_setting);
     btnMySchedule = (Button) view.findViewById(R.id.btn_my_schedule);
     btnMyPlace = (Button) view.findViewById(R.id.btn_my_place);
-    btnMyTicket = (Button) view.findViewById(R.id.btn_my_ticket_and_coupon);
-    btnMyPhotoLog = (Button) view.findViewById(R.id.btn_my_photolog);
     btnMyBookmark = (Button) view.findViewById(R.id.btn_my_bookmark);
-    btnMyOrders = (Button) view.findViewById(R.id.btn_my_order_and_cart);
+    btnMyOrders = (Button) view.findViewById(R.id.btn_my_order);
+    btnMyCart = (Button) view.findViewById(R.id.btn_my_cart);
     
+    btnSetting.setOnClickListener(clickListener);
     btnMySchedule.setOnClickListener(menuClickListener);
     btnMyPlace.setOnClickListener(menuClickListener);
-    btnMyTicket.setOnClickListener(menuClickListener);
-    btnMyPhotoLog.setOnClickListener(menuClickListener);
-    btnMyPhotoLog.setVisibility(View.GONE);
     btnMyBookmark.setOnClickListener(menuClickListener);
     btnMyOrders.setOnClickListener(menuClickListener);
+    btnMyCart.setOnClickListener(menuClickListener);
     
     return view;
   }
@@ -137,24 +136,39 @@ public class MyPageFragment extends Fragment
       {
         startActivity(new Intent(getActivity(), MyPlaceActivity.class));
       }
-      else if (v.getId() == btnMyTicket.getId())
-      {
-        Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
-      }
-      else if (v.getId() == btnMyPhotoLog.getId())
-      {
-        startActivity(new Intent(getActivity(), MyPhotoLogListActivity.class));
-      }
       else if (v.getId() == btnMyBookmark.getId())
       {
-        startActivity(new Intent(getActivity(), MyBookmarkActivity.class));
+        if (SystemUtil.isConnectNetwork(getActivity()))
+          showDontEnterWhenNotConnectNetworkDialog();
+        else
+          startActivity(new Intent(getActivity(), MyBookmarkActivity.class));
       }
       else if (v.getId() == btnMyOrders.getId())
       {
-        Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+        if (SystemUtil.isConnectNetwork(getActivity()))
+          showDontEnterWhenNotConnectNetworkDialog();
+        else
+          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+      }
+      else if (v.getId() == btnMyCart.getId())
+      {
+        if (SystemUtil.isConnectNetwork(getActivity()))
+          showDontEnterWhenNotConnectNetworkDialog();
+        else
+          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
     }
   };
+  
+  
+  private void showDontEnterWhenNotConnectNetworkDialog()
+  {
+    Builder dialog = new AlertDialog.Builder(getActivity());
+    dialog.setTitle(getString(R.string.app_name));
+    dialog.setMessage(getString(R.string.msg_dont_connect_network));
+    dialog.setPositiveButton(android.R.string.ok, null);
+    dialog.show();
+  }
   
   private OnClickListener clickListener = new OnClickListener()
   {
@@ -194,7 +208,7 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == btnSetting.getId())
       {
-        startActivity(new Intent(getActivity(), MyPageSettingActivity.class));
+        startActivity(new Intent(getActivity(), SettingActivity.class));
       }
     }
   };

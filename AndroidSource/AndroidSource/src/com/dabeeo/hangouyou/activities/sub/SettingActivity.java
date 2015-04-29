@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 
-public class MyPageSettingActivity extends ActionBarActivity
+public class SettingActivity extends ActionBarActivity
 {
   private EditText editName;
   private Button btnNameSave;
@@ -92,15 +92,15 @@ public class MyPageSettingActivity extends ActionBarActivity
     {
       if (v.getId() == containerVersionInfo.getId())
       {
-        startActivity(new Intent(MyPageSettingActivity.this, VersionActivity.class));
+        startActivity(new Intent(SettingActivity.this, VersionActivity.class));
       }
       else if (v.getId() == containerRatingApp.getId())
       {
-        Toast.makeText(MyPageSettingActivity.this, "준비중입니다", Toast.LENGTH_LONG).show();
+        Toast.makeText(SettingActivity.this, "준비중입니다", Toast.LENGTH_LONG).show();
       }
       else if (v.getId() == containerNotice.getId())
       {
-        startActivity(new Intent(MyPageSettingActivity.this, NoticeActivity.class));
+        startActivity(new Intent(SettingActivity.this, NoticeActivity.class));
       }
       
     }

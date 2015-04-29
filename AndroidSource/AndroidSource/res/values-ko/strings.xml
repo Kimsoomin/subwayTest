@@ -24,8 +24,8 @@
     <string name="term_map">지도</string>
     <string name="term_subway">지하철</string>
     <string name="term_photolog">포토로그</string>
-    <string name="term_ticket_and_coupon">"티켓 / 쿠폰"</string>
-    <string name="term_reservation">예약</string>
+    <string name="term_ticket">"티켓"</string>
+    <string name="term_coupon">"쿠폰"</string>
     <string name="term_home">홈</string>
     <string name="term_my_page">마이페이지</string>
     <string name="term_register_photolog">후기등록</string>
@@ -42,9 +42,9 @@
     <string name="term_my_schedule">내 일정</string>
     <string name="term_my_place">내 장소</string>
     <string name="term_my_ticket_coupon">"티켓/쿠폰"</string>
-    <string name="term_my_photolog">내 포토로그</string>
     <string name="term_my_bookmark">북마크</string>
-    <string name="term_my_order_cart">"구매내역\n/장바구니"</string>
+    <string name="term_my_order">구매내역</string>
+    <string name="term_my_cart">"장바구니"</string>
     <string name="term_profile">프로필</string>
     <string name="term_save">저장</string>
     <string name="term_logout">로그아웃</string>
@@ -158,7 +158,7 @@
     <string name="map_dialog_message02">위치를 찾을 수 없습니다.</string>
     <string name="map_subway_start">출발지로 선택</string>
     <string name="map_subway_end">도착지로 선택</string>
-	<string name="msg_is_download_map">지도 다운로드 후, 이용가능합니다. 서울지도를 다운로드하시겠습니까?</string>
+    <string name="msg_is_download_map">지도 다운로드 후, 이용가능합니다. 서울지도를 다운로드하시겠습니까?</string>
     <!-- Intro -->
     <string name="msg_map_donwload">지도 자료를 다운로드 중입니다.</string>
 

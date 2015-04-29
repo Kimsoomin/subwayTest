@@ -51,17 +51,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/app_button"
-                android:padding="8dp"
-                android:text="@string/term_setting" />
         </RelativeLayout>
 
         <!-- 하단 메뉴 -->
@@ -112,12 +101,12 @@
                     android:layout_weight="1" >
 
                     <Button
-                        android:id="@+id/btn_my_ticket_and_coupon"
+                        android:id="@+id/btn_setting"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/circle_button"
-                        android:text="@string/term_my_ticket_coupon" />
+                        android:text="@string/term_setting" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -126,20 +115,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal" >
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" >
-
-                    <Button
-                        android:id="@+id/btn_my_photolog"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/circle_button"
-                        android:text="@string/term_my_photolog" />
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -160,13 +135,27 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
-                    <Button
-                        android:id="@+id/btn_my_order_and_cart"
+                     <Button
+                        android:id="@+id/btn_my_order"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/circle_button"
-                        android:text="@string/term_my_order_cart" />
+                        android:text="@string/term_my_order" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
+
+                    <Button
+                        android:id="@+id/btn_my_cart"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/circle_button"
+                        android:text="@string/term_my_cart" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

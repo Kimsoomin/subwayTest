@@ -64,9 +64,7 @@ public class SubwayActivity extends Activity
     {
       destLatLong = getIntent().getDoubleArrayExtra("set_dest_station_lat_lon");
       if (getIntent().hasExtra("dest_name"))
-      {
         destName = getIntent().getStringExtra("dest_name");
-      }
     }
     
     if (MainActivity.subwayFrament == null)

@@ -12,6 +12,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -26,7 +27,7 @@ import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 public class MySchedulesActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
-  private ListView listView;
+  private GridView listView;
   private MySchedulesListAdapter adapter;
   
   private Button btnDeleteAll, btnDelete;
@@ -64,7 +65,7 @@ public class MySchedulesActivity extends ActionBarActivity
     btnDeleteAll.setOnClickListener(deleteBtnClickListener);
     
     adapter = new MySchedulesListAdapter();
-    listView = (ListView) findViewById(android.R.id.list);
+    listView = (GridView) findViewById(R.id.gridview);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);

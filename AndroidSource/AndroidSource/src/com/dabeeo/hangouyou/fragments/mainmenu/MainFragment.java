@@ -39,7 +39,7 @@ import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class MainFragment extends Fragment
 {
-  private RelativeLayout containerStrategySeoul, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerTicketAndCoupon, containerReservation;
+  private RelativeLayout containerStrategySeoul, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerTicket, containerCoupon;
   private TextView textDownloadMap;
   
   
@@ -54,8 +54,8 @@ public class MainFragment extends Fragment
     containerShoppingMall = (RelativeLayout) view.findViewById(R.id.container_shopping_mall);
     containerMap = (RelativeLayout) view.findViewById(R.id.container_map);
     containerSubway = (RelativeLayout) view.findViewById(R.id.container_subway);
-    containerTicketAndCoupon = (RelativeLayout) view.findViewById(R.id.container_ticket_and_coupon);
-    containerReservation = (RelativeLayout) view.findViewById(R.id.container_reservation);
+    containerTicket = (RelativeLayout) view.findViewById(R.id.container_ticket);
+    containerCoupon = (RelativeLayout) view.findViewById(R.id.container_coupon);
     textDownloadMap = (TextView) view.findViewById(R.id.text_download_map);
     
     containerStrategySeoul.setOnClickListener(menuClickListener);
@@ -63,8 +63,8 @@ public class MainFragment extends Fragment
     containerShoppingMall.setOnClickListener(menuClickListener);
     containerMap.setOnClickListener(menuClickListener);
     containerSubway.setOnClickListener(menuClickListener);
-    containerTicketAndCoupon.setOnClickListener(menuClickListener);
-    containerReservation.setOnClickListener(menuClickListener);
+    containerTicket.setOnClickListener(menuClickListener);
+    containerCoupon.setOnClickListener(menuClickListener);
     return view;
   }
   
@@ -153,7 +153,7 @@ public class MainFragment extends Fragment
         Intent i = new Intent(getActivity(), SubwayActivity.class);
         startActivity(i);
       }
-      else if (v.getId() == containerTicketAndCoupon.getId())
+      else if (v.getId() == containerTicket.getId())
       {
         //네트워크 연결 체크 후 연결했을 때만 실행
         if (!SystemUtil.isConnectNetwork(getActivity()))
@@ -167,7 +167,7 @@ public class MainFragment extends Fragment
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
-      else if (v.getId() == containerReservation.getId())
+      else if (v.getId() == containerCoupon.getId())
       {
         //네트워크 연결 체크 후 연결했을 때만 실행
         if (!SystemUtil.isConnectNetwork(getActivity()))
