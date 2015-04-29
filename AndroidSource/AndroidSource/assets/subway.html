@@ -283,9 +283,6 @@
               jsonObject.lon = stationInfo.location.longitude;
               jsonObject.exit_locations = stationInfo.exits;
 
-              if(i==0){
-                console.log(stationInfo);
-              }
               jsonArray.push(jsonObject);
             }
 
@@ -397,17 +394,44 @@
                 return sortResult;
             });
 
-            console.log(jsonArray);
+            // console.log(jsonArray);
             var firstStation = jsonArray[0];
+            
+            console.log("set_dest")
+            console.log(firstStation.name_ko)
+            console.log(firstStation.id)
+            var teststation = Snap.select(".station#"+firstStation.id)
+            var bound = ""
+            var stationString = firstStation.id
 
-            console.log(firstStation.name);
+            try{
+              bound = teststation.getBBox()
+
+            }catch(exception){
+
+              for (var i = 0; i < station_ids.length; i++){
+                if(station_ids[i].indexOf(firstStation.id) > -1){
+                  if(stationString == ""){
+                    stationString = station_ids[i]
+                  }else{
+                    if(stationString.length < station_ids[i].length){
+                      stationString = station_ids[i]
+                    }
+                  }
+                }
+              }
+
+            }
+
+            console.log("Fine StationID!")
+            console.log(stationString)
 
             if(find_type == 0)
-              this.set_start_station(firstStation.id)
+              this.set_start_station(stationString)
             else
-              this.set_end_station(firstStation.id)
+              this.set_end_station(stationString)
 
-            completedSetDestStation(firstStation.id, find_type);
+            completedSetDestStation(stationString, find_type);
           }
         }
 
@@ -434,7 +458,7 @@
             var station = Snap.select(".station#" + this.node.id)
             
             var bound = station.getBBox();
-            onTouchStation($(this.node).attr("id"), stations[$(this.node).attr("id")]["name_ko"])
+            onTouchStation($(this.node).attr("id"))
           }
           onDblClick = function(e) {
           }

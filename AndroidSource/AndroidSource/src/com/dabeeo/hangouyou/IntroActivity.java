@@ -375,11 +375,16 @@ public class IntroActivity extends Activity
 				if (!isContain)
 				{
 					append += stations.get(i).nameKo + " ";
-					MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(stations.get(i));
+					afterArray.add(stations.get(i));
 				}
-				afterArray.add(stations.get(i));
 			}
+			for (int j = 0; j < afterArray.size(); j++)
+			{
+				MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(afterArray.get(j));
+			}
+			
 			Log.w("WARN", "Stations : " + append);
+			Log.w("WARN", "Station : " + afterArray.size());
 		} catch (JSONException e)
 		{
 			e.printStackTrace();
