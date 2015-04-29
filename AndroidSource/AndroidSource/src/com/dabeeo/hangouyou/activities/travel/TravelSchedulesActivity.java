@@ -2,13 +2,11 @@ package com.dabeeo.hangouyou.activities.travel;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.bases.BaseNavigationTabActivity;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 

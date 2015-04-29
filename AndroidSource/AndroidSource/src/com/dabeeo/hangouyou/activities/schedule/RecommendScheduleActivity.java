@@ -79,7 +79,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       Log.w("WARN", "Activity Result:  " + year + " " + month + " " + dayOfMonth);
       
       if (year != -1)
-        startDate.setText(Integer.toString(year)+ " "+(Integer.toString(month)+ " "+(Integer.toString(dayOfMonth));
+        startDate.setText(Integer.toString(year)+ " "+(Integer.toString(month)+ " "+(Integer.toString(dayOfMonth))));
     }
     super.onActivityResult(arg0, arg1, intent);
   }

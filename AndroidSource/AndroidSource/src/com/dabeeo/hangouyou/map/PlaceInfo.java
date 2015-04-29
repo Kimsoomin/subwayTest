@@ -1,8 +1,5 @@
 package com.dabeeo.hangouyou.map;
 
-import java.math.BigInteger;
-
-import com.dabeeo.hangouyou.R.string;
 
 public class PlaceInfo
 {

@@ -19,7 +19,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.sax.StartElementListener;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
-import android.util.Log;
-
 public class StationBean
 {
 	public String nameCn;

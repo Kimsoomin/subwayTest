@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

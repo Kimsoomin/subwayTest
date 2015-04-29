@@ -12,16 +12,14 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
@@ -33,7 +31,6 @@ import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.views.PlaceDetailHeaderView;
 import com.dabeeo.hangouyou.views.PlaceDetailTitleView;
 import com.dabeeo.hangouyou.views.ProductView;
-import com.squareup.picasso.Picasso;
 
 public class PlaceDetailActivity extends ActionBarActivity
 {

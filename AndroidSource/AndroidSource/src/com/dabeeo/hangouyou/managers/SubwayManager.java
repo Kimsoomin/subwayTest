@@ -1,15 +1,12 @@
 package com.dabeeo.hangouyou.managers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.dabeeo.hangouyou.IntroActivity;
 import com.dabeeo.hangouyou.beans.StationBean;
-import com.dabeeo.hangouyou.map.MapPlaceDataManager;
 
 public class SubwayManager
 {

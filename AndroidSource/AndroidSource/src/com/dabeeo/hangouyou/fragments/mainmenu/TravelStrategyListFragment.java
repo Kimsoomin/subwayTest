@@ -21,7 +21,6 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
-import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PremiumBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
