@@ -188,6 +188,7 @@
 
     <!-- Main -->
     <string name="msg_dont_connect_network">네트워크 연결 시, 이용가능합니다.</string>
+    <string name="msg_logout">로그아웃 하시겠습니까?</string>
     <!-- Mall -->
     <string name="term_won">"₩"</string>
     <string name="term_top_brand">"[TOP BRAND]"</string>

@@ -1,5 +1,8 @@
 package com.dabeeo.hangouyou.activities.sub;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,7 +23,7 @@ public class SettingActivity extends ActionBarActivity
 {
   private EditText editName;
   private Button btnNameSave;
-  
+  private Button btnLogout;
   private Switch switchNotificationOnOff, switchSyncWifiOnly;
   
   private LinearLayout containerVersionInfo, containerRatingApp, containerNotice;
@@ -36,7 +39,27 @@ public class SettingActivity extends ActionBarActivity
     
     editName = (EditText) findViewById(R.id.edit_name);
     btnNameSave = (Button) findViewById(R.id.save_my_name);
-    
+    btnLogout = (Button) findViewById(R.id.btn_logout);
+    btnLogout.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Builder dialog = new AlertDialog.Builder(SettingActivity.this);
+        dialog.setTitle(getString(R.string.app_name));
+        dialog.setMessage(getString(R.string.msg_logout));
+        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+        {
+          @Override
+          public void onClick(DialogInterface dialog, int which)
+          {
+            
+          }
+        });
+        dialog.setPositiveButton(android.R.string.cancel, null);
+        dialog.show();
+      }
+    });
     btnNameSave.setOnClickListener(nameSaveListener);
     
     switchNotificationOnOff = (Switch) findViewById(R.id.switch_notification_on_off);
