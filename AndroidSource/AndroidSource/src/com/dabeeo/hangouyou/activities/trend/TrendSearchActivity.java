@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -20,9 +21,9 @@ import com.dabeeo.hangouyou.controllers.trend.TrendSearchListAdapter;
 public class TrendSearchActivity extends Activity
 {
   private EditText editSearch;
-  private ImageView backImage;
+  private ImageView backImage, cartImage;
   
-  private ListView listView;
+  private GridView listView;
   private TrendSearchListAdapter adapter;
   
   
@@ -36,6 +37,7 @@ public class TrendSearchActivity extends Activity
     
     editSearch = (EditText) findViewById(R.id.edit_search);
     
+    cartImage = (ImageView) findViewById(R.id.btn_cart);
     backImage = (ImageView) findViewById(R.id.image_back_button);
     backImage.setOnClickListener(new OnClickListener()
     {
@@ -46,8 +48,8 @@ public class TrendSearchActivity extends Activity
       }
     });
     
-    listView = (ListView) findViewById(R.id.listview);
-    adapter = new TrendSearchListAdapter();
+    listView = (GridView) findViewById(R.id.listview);
+    adapter = new TrendSearchListAdapter(this);
     listView.setAdapter(adapter);
     
     listView.setOnItemClickListener(new OnItemClickListener()

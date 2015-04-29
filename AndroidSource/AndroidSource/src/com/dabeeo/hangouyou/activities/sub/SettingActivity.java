@@ -12,17 +12,17 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 
 public class SettingActivity extends ActionBarActivity
 {
-  private EditText editName;
-  private Button btnNameSave;
+  private TextView textName;
+  private LinearLayout containerEditProfile;
   private Button btnLogout;
   private Switch switchNotificationOnOff, switchSyncWifiOnly;
   
@@ -37,8 +37,11 @@ public class SettingActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
-    editName = (EditText) findViewById(R.id.edit_name);
-    btnNameSave = (Button) findViewById(R.id.save_my_name);
+    textName = (TextView) findViewById(R.id.text_name);
+    textName.setText("홍길동");
+    
+    containerEditProfile = (LinearLayout) findViewById(R.id.container_edit_profile);
+    containerEditProfile.setOnClickListener(nameSaveListener);
     btnLogout = (Button) findViewById(R.id.btn_logout);
     btnLogout.setOnClickListener(new OnClickListener()
     {
@@ -56,11 +59,10 @@ public class SettingActivity extends ActionBarActivity
             
           }
         });
-        dialog.setPositiveButton(android.R.string.cancel, null);
+        dialog.setNegativeButton(android.R.string.cancel, null);
         dialog.show();
       }
     });
-    btnNameSave.setOnClickListener(nameSaveListener);
     
     switchNotificationOnOff = (Switch) findViewById(R.id.switch_notification_on_off);
     switchSyncWifiOnly = (Switch) findViewById(R.id.switch_sync_only_wifi);
@@ -104,7 +106,7 @@ public class SettingActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      
+//      Intent i = new Intent(SettingActivity.this, )
     }
   };
   

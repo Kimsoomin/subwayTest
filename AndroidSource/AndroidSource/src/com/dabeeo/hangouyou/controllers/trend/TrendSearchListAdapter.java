@@ -3,9 +3,12 @@ package com.dabeeo.hangouyou.controllers.trend;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -15,6 +18,13 @@ import com.dabeeo.hangouyou.beans.TrendSearchListBean;
 public class TrendSearchListAdapter extends BaseAdapter
 {
   private ArrayList<TrendSearchListBean> beans = new ArrayList<TrendSearchListBean>();
+  private Activity context;
+  
+  
+  public TrendSearchListAdapter(Activity context)
+  {
+    this.context = context;
+  }
   
   
   public void add(TrendSearchListBean bean)
@@ -66,6 +76,14 @@ public class TrendSearchListAdapter extends BaseAdapter
     TrendSearchListBean bean = (TrendSearchListBean) beans.get(position);
     int resId = R.layout.list_item_trend_search_list;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
+    
+    Display display = context.getWindowManager().getDefaultDisplay();
+    @SuppressWarnings("deprecation")
+    int width = display.getWidth();
+    int boxHeight = Math.round(width / 3) - 10;
+    
+    AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, boxHeight);
+    view.setLayoutParams(layoutParams);
     
     TextView title = (TextView) view.findViewById(R.id.title);
     title.setText(bean.title);

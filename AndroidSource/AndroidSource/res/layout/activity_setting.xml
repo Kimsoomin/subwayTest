@@ -30,24 +30,22 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/container_edit_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
-                    <EditText
-                        android:id="@+id/edit_name"
+                    <TextView
+                        android:id="@+id/text_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
-                    <Button
-                        android:id="@+id/save_my_name"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/app_button"
-                        android:padding="8dp"
-                        android:text="@string/term_save" />
+                        android:text=">" />
                 </LinearLayout>
             </LinearLayout>
 

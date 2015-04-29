@@ -2,22 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:gravity="center"
+    android:orientation="vertical"
     android:padding="8dp" >
 
     <ImageView
         android:id="@+id/imageview"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@color/darker_gray"
         android:contentDescription="@null"
         android:padding="8dp" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical"
         android:padding="8dp" >
 
@@ -55,11 +54,11 @@
 
             <Button
                 android:id="@+id/btn_wish_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/app_button"
-                android:padding="8dp"
-                android:text="@string/term_wishlist" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/ic_heart"
+                android:padding="8dp" />
         </LinearLayout>
     </LinearLayout>
 

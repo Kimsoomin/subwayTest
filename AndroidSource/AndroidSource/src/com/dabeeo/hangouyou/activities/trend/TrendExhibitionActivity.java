@@ -12,6 +12,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TrendProductBean;
 import com.dabeeo.hangouyou.controllers.trend.TrendExhitionListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hangouyou.views.TrendExhibitionTopView;
 
 public class TrendExhibitionActivity extends ActionBarActivity
 {
@@ -29,6 +30,10 @@ public class TrendExhibitionActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridview);
+    TrendExhibitionTopView view = new TrendExhibitionTopView(this);
+    view.setBean(null);
+    gridView.addHeaderView(view);
+    
     adapter = new TrendExhitionListAdapter(this);
     gridView.setAdapter(adapter);
     
