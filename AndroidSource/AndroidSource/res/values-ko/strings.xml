@@ -162,4 +162,11 @@
     <!-- Intro -->
     <string name="msg_map_donwload">지도 자료를 다운로드 중입니다.</string>
 
+    <!-- 티켓 -->
+    <string name="term_all_tickets">모든 티켓</string>
+    <string name="term_bought_ticket">구매한 티켓</string>
+    <string name="term_expiration_date">사용기한</string>
+    
+    <!-- 쿠폰 -->
+
 </resources>

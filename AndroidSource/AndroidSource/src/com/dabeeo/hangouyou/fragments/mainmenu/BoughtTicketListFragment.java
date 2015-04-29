@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,30 +20,23 @@ import android.widget.ProgressBar;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.PlaceListAdapter;
+import com.dabeeo.hangouyou.beans.TicketBean;
+import com.dabeeo.hangouyou.controllers.mainmenu.BoughtTicketListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
-public class PlaceListFragment extends Fragment
+public class BoughtTicketListFragment extends Fragment
 {
-  private int categoryId = -1;
-  
   private ProgressBar progressBar;
-  private PlaceListAdapter adapter;
+  private BoughtTicketListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
-  
-  
-  public PlaceListFragment(int categoryId)
-  {
-    this.categoryId = categoryId;
-  }
   
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    int resId = R.layout.fragment_travel_strategy_list;
+    int resId = R.layout.fragment_ticket_list;
     return inflater.inflate(resId, null);
   }
   
@@ -58,28 +49,11 @@ public class PlaceListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new PlaceListAdapter(getActivity());
+    adapter = new BoughtTicketListAdapter();
     
-    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-        {
-          page++;
-          load(page);
-        }
-      }
-    });
+    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
     load(page);
@@ -89,58 +63,50 @@ public class PlaceListFragment extends Fragment
   private void load(int offset)
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute();
+    new GetAsyncTask().execute();
   }
   
-  private class GetStoreAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class GetAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
-    
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      if (categoryId == 8)
-        return apiClient.getTravelog(page, "Place");
-      else if (categoryId == 9)
-        return apiClient.getTravelog(page, "Product");
-      else
-        return apiClient.getTravelog(page, "Place");
+      return apiClient.getAllTicket(page, "Place");
     }
     
     
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      if (result.isSuccess)
+      if (!result.isSuccess)
+        return;
+      
+      try
       {
-        ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
-        try
+        JSONObject obj = new JSONObject(result.response);
+        JSONArray arr = obj.getJSONArray("travelog");
+        for (int i = 0; i < arr.length(); i++)
         {
-          JSONObject obj = new JSONObject(result.response);
-          JSONArray arr = obj.getJSONArray("travelog");
-          for (int i = 0; i < arr.length(); i++)
-          {
-            JSONObject objInArr = arr.getJSONObject(i);
-            PlaceBean bean = new PlaceBean();
-            bean.setJSONObject(objInArr);
-            places.add(bean);
-          }
+          JSONObject objInArr = arr.getJSONObject(i);
+          TicketBean bean = new TicketBean();
+          bean.setJSONObject(objInArr);
+          bean.discountRate = "8折";
+          bean.priceWon = 10000;
+          bean.priceYuan = 57;
+          bean.fromUseableDate = "2015.04.11";
+          bean.toUseableDate = "2015.09.11";
+          adapter.add(bean);
         }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        adapter.addAll(places);
+        adapter.notifyDataSetChanged();
       }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
     }
-  }
-  
-  
-  public void setCategoryId(int categoryId)
-  {
-    //전체, 명소, 쇼핑 등 
-    this.categoryId = categoryId;
   }
   
   /**************************************************
@@ -158,4 +124,23 @@ public class PlaceListFragment extends Fragment
     }
   };
   
+  private OnScrollListener scrollListener = new OnScrollListener()
+  {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+      
+    }
+    
+    
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+      if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        page++;
+        load(page);
+      }
+    }
+  };
 }

@@ -205,6 +205,10 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.TicketActivity"
+            android:label="@string/term_ticket"
+            android:screenOrientation="portrait" />
 
         <!-- Map -->
         <activity

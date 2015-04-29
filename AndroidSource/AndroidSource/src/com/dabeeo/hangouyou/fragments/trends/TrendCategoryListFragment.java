@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
-import com.dabeeo.hangouyou.activities.trend.TrendExhibitionActivity;
 import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hangouyou.beans.TrendProductBean;
 import com.dabeeo.hangouyou.controllers.trend.TrendProductListAdapter;

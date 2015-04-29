@@ -5,39 +5,37 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.TicketActivity;
 
 public class LoginActivity extends ActionBarActivity
 {
-  private Button btnJoin;
-  private Button btnFindPassword;
-  
-  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
     
-    btnJoin = (Button) findViewById(R.id.btn_join);
-    btnJoin.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        startActivity(new Intent(LoginActivity.this, JoinActivity.class));
-      }
-    });
-    btnFindPassword = (Button) findViewById(R.id.btn_find_password);
-    btnFindPassword.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        startActivity(new Intent(LoginActivity.this, FindPasswordActivity.class));
-      }
-    });
+    findViewById(R.id.btn_join).setOnClickListener(clickListener);
+    findViewById(R.id.btn_login).setOnClickListener(clickListener);
+    findViewById(R.id.btn_find_password).setOnClickListener(clickListener);
   }
+  
+  private OnClickListener clickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == R.id.btn_login)
+      {
+        startActivity(new Intent(LoginActivity.this, TicketActivity.class)); // TODO 원래꺼로 바꾸기
+        finish();
+      }
+      else if (v.getId() == R.id.btn_find_password)
+        startActivity(new Intent(LoginActivity.this, FindPasswordActivity.class));
+      else if (v.getId() == R.id.btn_join)
+        startActivity(new Intent(LoginActivity.this, JoinActivity.class));
+    }
+  };
 }

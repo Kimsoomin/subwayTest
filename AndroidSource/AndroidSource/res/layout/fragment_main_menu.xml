@@ -183,7 +183,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical" >
 
-                    <!-- 티켓 쿠폰 -->
+                    <!-- 티켓 -->
 
                     <RelativeLayout
                         android:id="@+id/container_ticket"
@@ -201,7 +201,7 @@
                             android:textStyle="bold" />
                     </RelativeLayout>
 
-                    <!-- 예약 -->
+                    <!-- 쿠폰 -->
 
                     <RelativeLayout
                         android:id="@+id/container_coupon"

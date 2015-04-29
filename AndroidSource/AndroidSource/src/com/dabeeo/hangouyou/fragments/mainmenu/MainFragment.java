@@ -163,7 +163,9 @@ public class MainFragment extends Fragment
         }
         
         if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
+        {
           startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }

@@ -60,7 +60,7 @@ public class ApiClient
   }
   
   
-  public NetworkResult getTrablog(int page, String contentType)
+  public NetworkResult getTravelog(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
   }
@@ -84,5 +84,10 @@ public class ApiClient
       e.printStackTrace();
     }
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS", object.toString());
+  }
+  
+  public NetworkResult getAllTicket(int page, String contentType)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
   }
 }

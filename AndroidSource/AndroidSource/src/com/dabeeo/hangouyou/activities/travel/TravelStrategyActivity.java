@@ -46,9 +46,9 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
     viewPager.setOnPageChangeListener(new OnPageChangeListener()
     {
       @Override
-      public void onPageSelected(int arg0)
+      public void onPageSelected(int position)
       {
-        
+        getSupportActionBar().setSelectedNavigationItem(position);
       }
       
       
