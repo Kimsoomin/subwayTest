@@ -31,7 +31,6 @@ public class SubwayActivity extends Activity
   private ImageView backImage;
   
   
-  @SuppressWarnings("static-access")
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
   @Override
   protected void onCreate(Bundle savedInstanceState)

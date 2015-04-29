@@ -1,6 +1,6 @@
 package com.dabeeo.hangouyou.beans;
 
-public class TrendExhibitionBean
+public class TrendProductBean
 {
   public String title;
   public int price;

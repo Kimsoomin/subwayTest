@@ -160,10 +160,28 @@
     <string name="msg_map_donwload">正在下载首尔地图，请稍等。</string>
 
     <!-- 추가 String -->
+    <!-- 지하철 -->
+    <string name="term_exit_info">출구정보</string>
+    <string name="term_set_start_station">출발역 설정</string>
+    <string name="term_set_end_station">도착역 설정</string>
+    <!-- 내 일정 -->
+    <string name="term_recommend_travel_schedule">추천자동일정 만들기</string>
+    <string name="term_select_date">날짜 선택하기</string>
+    <string name="msg_warn_empty_start_date">출발일을 선택해주세요</string>
     <!-- 여행일정 -->
+    <string name="msg_recommend_schedule_help">어디서 어떻게 해야하는지\n일정이 막막하시다면?\n자동추천일정으로 쉽게 여행일정을 완성하세요.</string>
+    <string name="msg_recommend_step_1">1. 여행일정이 정해지셨다면?</string>
+    <string name="msg_recommend_step_2">2. 이번 여행테마는?</string>
+    <string name="term_select_start_date">출발일 선택</string>
+    <string name="term_select_schedule_day">일정선택</string>
+    <string name="term_next">다음</string>
+    <string name="term_warn_limit_7_days">"* 최대 7일까지 선택가능합니다"</string>
     <string name="term_popular_schedule">인기순</string>
     <string name="term_registered_schedule">등록한 내일정</string>
     <string name="term_bookmarked_schedule">북마크한 일정</string>
+
+    <!-- Mall -->
+    <string name="term_won">"₩"</string>
     <string name="term_top_brand">"[TOP BRAND]"</string>
     <string name="term_trend_korea">트렌디 한국</string>
     <string name="term_exhibitions">기획전</string>

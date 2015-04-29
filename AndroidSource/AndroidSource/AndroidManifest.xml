@@ -76,13 +76,36 @@
             android:label="@string/term_travel_schedule"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendKoreaActivity"
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendActivity"
             android:label="@string/term_trend_korea"
+            android:screenOrientation="portrait" />
+        <!-- Recommend Schedule -->
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity"
+            android:label="@string/term_recommend_travel_schedule"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.schedule.CalendarActivity"
+            android:label="@string/term_select_date"
             android:screenOrientation="portrait" />
         <!-- Trend -->
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendListActivity"
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendExhibitionActivity"
             android:label="@string/term_exhibitions"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendSearchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendCategoryListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity

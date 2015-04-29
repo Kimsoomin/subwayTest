@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
@@ -33,6 +34,7 @@ public class MySchedulesActivity extends ActionBarActivity
   
   private MenuItem editMenuItem, closeMenuItem;
   private boolean isEditMode = false;
+  private Button btnRecommendSchedule;
   
   
   @Override
@@ -45,6 +47,16 @@ public class MySchedulesActivity extends ActionBarActivity
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     
+    btnRecommendSchedule = (Button) findViewById(R.id.btn_recommend_travel_schedule);
+    btnRecommendSchedule.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
+        startActivity(i);
+      }
+    });
     deleteContainer = (LinearLayout) findViewById(R.id.container_delete);
     btnDelete = (Button) findViewById(R.id.btn_delete);
     btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);

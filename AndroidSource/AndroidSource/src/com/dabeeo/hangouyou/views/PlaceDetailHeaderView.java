@@ -45,7 +45,8 @@ public class PlaceDetailHeaderView extends RelativeLayout
   
   public void setBean(PlaceDetailBean bean)
   {
-    imageCount.setText("+" + Integer.toString(bean.bookmarkCount));
+    if (bean != null)
+      imageCount.setText("+" + Integer.toString(bean.bookmarkCount));
   }
   
   

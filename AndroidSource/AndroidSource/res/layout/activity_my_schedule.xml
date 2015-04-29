@@ -47,6 +47,15 @@
                 android:padding="8dp"
                 android:text="@string/term_delete" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_recommend_travel_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/app_button"
+            android:padding="8dp"
+            android:text="@string/term_recommend_travel_schedule" />
     </LinearLayout>
 
 </RelativeLayout>

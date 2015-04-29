@@ -8,6 +8,7 @@
     <color name="highlight">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="gray">#969b9c</color>
+    <color name="light_gray">#CECECE</color>
     <color name="darker_gray">#444a4b</color>
 
     <!-- ViewPager Indicator -->

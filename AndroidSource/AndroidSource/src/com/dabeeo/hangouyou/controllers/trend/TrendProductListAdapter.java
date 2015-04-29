@@ -15,13 +15,13 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TrendProductBean;
 
-public class TrendExhitionListAdapter extends BaseAdapter
+public class TrendProductListAdapter extends BaseAdapter
 {
   private ArrayList<TrendProductBean> beans = new ArrayList<>();
   private Context context;
   
   
-  public TrendExhitionListAdapter(Context context)
+  public TrendProductListAdapter(Context context)
   {
     this.context = context;
   }

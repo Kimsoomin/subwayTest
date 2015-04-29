@@ -72,6 +72,7 @@ public class MyPageFragment extends Fragment
     btnMyPlace.setOnClickListener(menuClickListener);
     btnMyTicket.setOnClickListener(menuClickListener);
     btnMyPhotoLog.setOnClickListener(menuClickListener);
+    btnMyPhotoLog.setVisibility(View.GONE);
     btnMyBookmark.setOnClickListener(menuClickListener);
     btnMyOrders.setOnClickListener(menuClickListener);
     

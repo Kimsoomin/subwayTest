@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.activities.mypage.sub;
+package com.dabeeo.hangouyou.activities.trend;
 
 import java.util.ArrayList;
 
@@ -9,67 +9,38 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.controllers.mypage.MyPlaceViewPagerAdapter;
+import com.dabeeo.hangouyou.beans.TrendSubCategoryBean;
+import com.dabeeo.hangouyou.controllers.trend.TrendCategoryViewPagerAdapter;
 
-public class MyPlaceActivity extends ActionBarActivity
+@SuppressWarnings("deprecation")
+public class TrendCategoryListActivity extends ActionBarActivity
 {
+  private TrendCategoryViewPagerAdapter adapter;
   private ViewPager viewPager;
-  private MenuItem editMenuItem, closeMenuItem;
-  private boolean isEditMode = false;
-  private MyPlaceViewPagerAdapter adapter;
   
   
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my_place);
+    setContentView(R.layout.activity_trend_category_list);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    
+    setTitle("패션");
     
     viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setOffscreenPageLimit(100);
     
-    adapter = new MyPlaceViewPagerAdapter(this, getSupportFragmentManager());
+    adapter = new TrendCategoryViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);
     
     displayTitles();
-  }
-  
-  
-  @SuppressWarnings("deprecation")
-  private void displayTitles()
-  {
-    ArrayList<String> titles = new ArrayList<>();
-    titles.add("전체");
-    titles.add("명소");
-    titles.add("쇼핑");
-    titles.add("레스토랑");
-    adapter.setTitles(titles);
-    
-    for (int i = 0; i < adapter.getCount(); i++)
-    {
-      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
-    }
-  }
-  
-  
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu)
-  {
-    getMenuInflater().inflate(R.menu.menu_edit, menu);
-    editMenuItem = menu.findItem(R.id.edit);
-    closeMenuItem = menu.findItem(R.id.close);
-    editMenuItem.setVisible(!isEditMode);
-    closeMenuItem.setVisible(isEditMode);
-    return super.onCreateOptionsMenu(menu);
   }
   
   
@@ -78,17 +49,37 @@ public class MyPlaceActivity extends ActionBarActivity
   {
     if (item.getItemId() == android.R.id.home)
       finish();
-    else if (item.getItemId() == editMenuItem.getItemId())
-    {
-      isEditMode = true;
-      invalidateOptionsMenu();
-    }
-    else if (item.getItemId() == closeMenuItem.getItemId())
-    {
-      isEditMode = false;
-      invalidateOptionsMenu();
-    }
     return super.onOptionsItemSelected(item);
+  }
+  
+  
+  @SuppressWarnings("deprecation")
+  private void displayTitles()
+  {
+    ArrayList<TrendSubCategoryBean> beans = new ArrayList<>();
+    TrendSubCategoryBean bean = new TrendSubCategoryBean();
+    bean.title = "여성";
+    beans.add(bean);
+    
+    bean = new TrendSubCategoryBean();
+    bean.title = "남성";
+    beans.add(bean);
+    bean = new TrendSubCategoryBean();
+    bean.title = "아웃도어";
+    beans.add(bean);
+    bean = new TrendSubCategoryBean();
+    bean.title = "캐주얼";
+    beans.add(bean);
+    bean = new TrendSubCategoryBean();
+    bean.title = "기타";
+    beans.add(bean);
+    
+    adapter.setBeans(beans);
+    
+    for (int i = 0; i < adapter.getCount(); i++)
+    {
+      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
+    }
   }
   
   /**************************************************

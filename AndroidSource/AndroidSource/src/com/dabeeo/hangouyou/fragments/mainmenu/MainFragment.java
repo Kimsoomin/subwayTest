@@ -32,7 +32,7 @@ import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
-import com.dabeeo.hangouyou.activities.trend.TrendKoreaActivity;
+import com.dabeeo.hangouyou.activities.trend.TrendActivity;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.map.Global;
@@ -100,7 +100,7 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerShoppingMall.getId())
       {
-        startActivity(new Intent(getActivity(), TrendKoreaActivity.class));
+        startActivity(new Intent(getActivity(), TrendActivity.class));
       }
       else if (v.getId() == containerMap.getId())
       {
