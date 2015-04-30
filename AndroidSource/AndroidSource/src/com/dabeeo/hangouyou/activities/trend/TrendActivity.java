@@ -8,9 +8,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.dabeeo.hangouyou.R;
@@ -23,6 +29,13 @@ public class TrendActivity extends ActionBarActivity
   private ListView listview;
   private TrendKoreaListAdapter adapter;
   
+  private LinearLayout containerBottomTab;
+  private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuWishList, bottomMenuSearch;
+  private int lastVisibleItem = 0;
+  
+  private boolean isAnimation = false;
+  private float bottomTappx;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -32,6 +45,16 @@ public class TrendActivity extends ActionBarActivity
     
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    
+    containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
+    bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
+    bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
+    bottomMenuWishList = (LinearLayout) findViewById(R.id.container_menu_wishlist);
+    bottomMenuSearch = (LinearLayout) findViewById(R.id.container_menu_search);
+    bottomMenuHome.setOnClickListener(bottomMenuClickListener);
+    bottomMenuMyPage.setOnClickListener(bottomMenuClickListener);
+    bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
+    bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
     
     listview = (ListView) findViewById(R.id.listview);
     adapter = new TrendKoreaListAdapter();
@@ -77,14 +100,85 @@ public class TrendActivity extends ActionBarActivity
     bean.category = "[BEAUTY]";
     adapter.add(bean);
     
-    listview.setOnScrollListener(new AbsListView.OnScrollListener()
+    float density = getResources().getDisplayMetrics().density;
+    bottomTappx = 65 * density;
+    
+    listview.setOnScrollListener(new OnScrollListener()
     {
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (listview.getFirstVisiblePosition() == 0)
-          getSupportActionBar().show();
+        if (isAnimation)
+          return;
+        if (firstVisibleItem > lastVisibleItem)
+        {
+          //Showing
+          if (containerBottomTab.getVisibility() == View.GONE)
+          {
+            TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, bottomTappx);
+            animation.setDuration(1000);
+            animation.setFillAfter(true);
+            animation.setAnimationListener(new AnimationListener()
+            {
+              @Override
+              public void onAnimationStart(Animation animation)
+              {
+                containerBottomTab.setVisibility(View.VISIBLE);
+                isAnimation = true;
+              }
+              
+              
+              @Override
+              public void onAnimationRepeat(Animation animation)
+              {
+                
+              }
+              
+              
+              @Override
+              public void onAnimationEnd(Animation arg0)
+              {
+                isAnimation = false;
+              }
+            });
+            
+            containerBottomTab.startAnimation(animation);
+          }
+        }
         else
-          getSupportActionBar().hide();
+        {
+          //GONE
+          if (containerBottomTab.getVisibility() == View.VISIBLE)
+          {
+            TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, bottomTappx, 0.0f);
+            animation.setDuration(1000);
+            animation.setFillAfter(true);
+            animation.setAnimationListener(new AnimationListener()
+            {
+              @Override
+              public void onAnimationStart(Animation animation)
+              {
+                isAnimation = true;
+              }
+              
+              
+              @Override
+              public void onAnimationRepeat(Animation animation)
+              {
+                
+              }
+              
+              
+              @Override
+              public void onAnimationEnd(Animation arg0)
+              {
+                isAnimation = false;
+                containerBottomTab.setVisibility(View.GONE);
+              }
+            });
+            containerBottomTab.startAnimation(animation);
+          }
+        }
+        
       }
       
       
@@ -112,6 +206,29 @@ public class TrendActivity extends ActionBarActivity
       }
     });
   }
+  
+  private OnClickListener bottomMenuClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == bottomMenuHome.getId())
+      {
+        finish();
+      }
+      else if (v.getId() == bottomMenuMyPage.getId())
+      {
+      }
+      else if (v.getId() == bottomMenuWishList.getId())
+      {
+      }
+      else if (v.getId() == bottomMenuSearch.getId())
+      {
+        Intent i = new Intent(TrendActivity.this, TrendSearchActivity.class);
+        startActivity(i);
+      }
+    }
+  };
   
   
   private void showDontEnterWhenNotConnectNetworkDialog()

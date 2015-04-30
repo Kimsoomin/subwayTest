@@ -13,7 +13,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_trend_korea);
+    setContentView(R.layout.activity_trend_product_detail);
     
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
