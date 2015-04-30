@@ -27,12 +27,10 @@ import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity;
-import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogListActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
-import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleCompeletedActivity;
-import com.dabeeo.hangouyou.activities.sub.SettingActivity;
 import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
+import com.dabeeo.hangouyou.activities.sub.SettingActivity;
 import com.dabeeo.hangouyou.external.libraries.RoundedImageView;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 

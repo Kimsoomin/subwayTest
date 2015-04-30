@@ -12,7 +12,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TrendSearchListBean;
