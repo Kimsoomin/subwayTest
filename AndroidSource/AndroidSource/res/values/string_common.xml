@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="won">₩</string>
-    <string name="yuan">¥</string>
+    <string name="term_won">₩</string>
+    <string name="term_yuan">¥</string>
 
 </resources>

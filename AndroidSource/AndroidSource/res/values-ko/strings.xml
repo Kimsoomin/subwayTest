@@ -127,7 +127,7 @@
     <string name="term_email">E-mail</string>
     <string name="term_password">Password</string>
     <string name="term_name">Name</string>
-    <string name="term_password_join">Password(User 6-16)</string>
+    <string name="term_password_join">Password(User 6&#8211;16)</string>
     <string name="term_re_password_join">Re-Password</string>
     <string name="term_gender">Gender</string>
     <string name="term_gender_male">Male</string>
@@ -165,8 +165,11 @@
     <!-- 티켓 -->
     <string name="term_all_tickets">모든 티켓</string>
     <string name="term_bought_ticket">구매한 티켓</string>
-    <string name="term_expiration_date">사용기한</string>
-    
+    <string name="term_expiration_date">"사용기한 : "</string>
+
     <!-- 쿠폰 -->
+    <string name="term_all_coupons">모든 쿠폰</string>
+    <string name="term_my_coupon">받은 쿠폰</string>
+    <string name="term_used">사용완료</string>
 
 </resources>

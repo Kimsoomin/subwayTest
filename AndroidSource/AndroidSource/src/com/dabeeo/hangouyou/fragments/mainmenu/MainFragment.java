@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.CouponActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
@@ -179,7 +180,7 @@ public class MainFragment extends Fragment
         }
         
         if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
-          startActivity(new Intent(getActivity(), LoginActivity.class));
+          startActivity(new Intent(getActivity(), CouponActivity.class));
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }

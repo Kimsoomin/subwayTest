@@ -11,15 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.TicketBean;
-import com.dabeeo.hangouyou.utils.NumberFormatter;
+import com.dabeeo.hangouyou.beans.CouponBean;
 
-public class TicketListAdapter extends BaseAdapter
+public class CouponListAdapter extends BaseAdapter
 {
-  private ArrayList<TicketBean> items = new ArrayList<>();
+  private ArrayList<CouponBean> items = new ArrayList<>();
   
   
-  public void add(TicketBean bean)
+  public void add(CouponBean bean)
   {
     this.items.add(bean);
   }
@@ -57,20 +56,18 @@ public class TicketListAdapter extends BaseAdapter
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
-    TicketBean bean = (TicketBean) items.get(position);
-    int resId = R.layout.list_item_ticket;
+    CouponBean bean = (CouponBean) items.get(position);
+    int resId = R.layout.list_item_coupon;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
-    TextView discountRate = (TextView) view.findViewById(R.id.text_discount_rate);
-    TextView priceWon = (TextView) view.findViewById(R.id.text_price_won);
-    TextView priceYuan = (TextView) view.findViewById(R.id.text_price_yuan);
+    TextView description = (TextView) view.findViewById(R.id.text_description);
+    TextView useableDate = (TextView) view.findViewById(R.id.text_useable_date);
     
     title.setText(bean.title);
-    discountRate.setText(bean.discountRate);
-    priceWon.setText(parent.getContext().getString(R.string.term_won) + NumberFormatter.addComma(bean.priceWon));
-    priceYuan.setText("(" + parent.getContext().getString(R.string.term_yuan) + NumberFormatter.addComma(bean.priceYuan) + ")");
+    description.setText(bean.description);
+    useableDate.setText(bean.fromUseableDate + "~" + bean.toUseableDate);
     return view;
   }
 }

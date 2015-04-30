@@ -117,10 +117,10 @@ public class BoughtTicketListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
-      i.putExtra("place_idx", bean.idx);
-      startActivity(i);
+//      PlaceBean bean = (PlaceBean) adapter.getItem(position);
+//      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
+//      i.putExtra("place_idx", bean.idx);
+//      startActivity(i);
     }
   };
   

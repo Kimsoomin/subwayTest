@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.fragments.mainmenu;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,17 +17,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.beans.PlaceBean;
-import com.dabeeo.hangouyou.beans.TicketBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.TicketListAdapter;
+import com.dabeeo.hangouyou.beans.CouponBean;
+import com.dabeeo.hangouyou.controllers.mainmenu.MyCouponListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
-public class TicketListFragment extends Fragment
+public class MyCouponListFragment extends Fragment
 {
   private ProgressBar progressBar;
-  private TicketListAdapter adapter;
+  private MyCouponListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
   
@@ -49,7 +46,7 @@ public class TicketListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new TicketListAdapter();
+    adapter = new MyCouponListAdapter();
     
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
@@ -88,11 +85,12 @@ public class TicketListFragment extends Fragment
         for (int i = 0; i < arr.length(); i++)
         {
           JSONObject objInArr = arr.getJSONObject(i);
-          TicketBean bean = new TicketBean();
+          CouponBean bean = new CouponBean();
           bean.setJSONObject(objInArr);
-          bean.discountRate = "8折";
-          bean.priceWon = 10000;
-          bean.priceYuan = 57;
+          bean.description = "100,000이상 구매 시";
+          bean.fromUseableDate = "2015.04.11";
+          bean.toUseableDate = "2015.09.11";
+          bean.isUsed = i % 2 == 1;
           adapter.add(bean);
         }
         adapter.notifyDataSetChanged();

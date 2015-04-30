@@ -147,20 +147,26 @@
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <!-- <activity
+        <!--
+             <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogListActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> -->
-        <!-- <activity
+            android:screenOrientation="portrait" />
+        -->
+        <!--
+             <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity"
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> -->
-       <!--  <activity
+            android:screenOrientation="portrait" />
+        -->
+        <!--
+             <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity"
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> -->
+            android:screenOrientation="portrait" />
+        -->
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity"
             android:label="@string/term_my_bookmark"
@@ -208,6 +214,10 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.TicketActivity"
             android:label="@string/term_ticket"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.mainmenu.CouponActivity"
+            android:label="@string/term_coupon"
             android:screenOrientation="portrait" />
 
         <!-- Map -->
