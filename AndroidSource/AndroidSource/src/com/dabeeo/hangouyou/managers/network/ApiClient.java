@@ -7,13 +7,11 @@ import android.content.Context;
 public class ApiClient
 {
   private String siteUrl = "http://gs.blinking.kr:8900/_libs/api.common.php";
-  private Context context;
   private HttpClient httpClient;
   
   
   public ApiClient(Context context)
   {
-    this.context = context;
     httpClient = new HttpClient(context, siteUrl);
   }
   
@@ -86,8 +84,49 @@ public class ApiClient
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS", object.toString());
   }
   
+  
   public NetworkResult getAllTicket(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
   }
+  
+  
+  public NetworkResult getBoughtTicket(int page, String contentType)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+  }
+  
+  
+  public NetworkResult getTicketDetail(String ticketId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + ticketId);
+    return new NetworkResult(true, null, 1);
+  }
+  
+  
+  public NetworkResult likeTicket(String ticketId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + ticketId);
+    return new NetworkResult(true, null, 1);
+  }
+  
+  
+  public NetworkResult addTicketToCart(String ticketId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + ticketId);
+    return new NetworkResult(true, null, 1);
+  }
+  
+  
+  public NetworkResult getAllCoupon(int page, String contentType)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+  }
+  
+  
+  public NetworkResult getMyCoupon(int page, String contentType)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+  }
+  
 }

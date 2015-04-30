@@ -63,11 +63,11 @@ public class CouponListAdapter extends BaseAdapter
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView description = (TextView) view.findViewById(R.id.text_description);
-    TextView useableDate = (TextView) view.findViewById(R.id.text_useable_date);
+    TextView validityDate = (TextView) view.findViewById(R.id.text_validity_peroid);
     
     title.setText(bean.title);
     description.setText(bean.description);
-    useableDate.setText(bean.fromUseableDate + "~" + bean.toUseableDate);
+    validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);
     return view;
   }
 }

@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.fragments.mainmenu;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,8 +17,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.BoughtTicketListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -71,7 +68,7 @@ public class BoughtTicketListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getAllTicket(page, "Place");
+      return apiClient.getBoughtTicket(page, "Place");
     }
     
     
@@ -90,11 +87,12 @@ public class BoughtTicketListFragment extends Fragment
           JSONObject objInArr = arr.getJSONObject(i);
           TicketBean bean = new TicketBean();
           bean.setJSONObject(objInArr);
+          bean.idx = i;
           bean.discountRate = "8折";
           bean.priceWon = 10000;
           bean.priceYuan = 57;
-          bean.fromUseableDate = "2015.04.11";
-          bean.toUseableDate = "2015.09.11";
+          bean.fromValidityDate = "2015.04.11";
+          bean.toValidityDate = "2015.09.11";
           adapter.add(bean);
         }
         adapter.notifyDataSetChanged();

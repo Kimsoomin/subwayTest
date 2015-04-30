@@ -68,7 +68,7 @@ public class MyCouponListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getAllTicket(page, "Place");
+      return apiClient.getMyCoupon(page, "Place");
     }
     
     
@@ -88,8 +88,8 @@ public class MyCouponListFragment extends Fragment
           CouponBean bean = new CouponBean();
           bean.setJSONObject(objInArr);
           bean.description = "100,000이상 구매 시";
-          bean.fromUseableDate = "2015.04.11";
-          bean.toUseableDate = "2015.09.11";
+          bean.fromValidityDate = "2015.04.11";
+          bean.toValidityDate = "2015.09.11";
           bean.isUsed = i % 2 == 1;
           adapter.add(bean);
         }

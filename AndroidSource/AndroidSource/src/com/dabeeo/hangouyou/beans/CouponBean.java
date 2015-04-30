@@ -8,7 +8,7 @@ public class CouponBean
   public String seqCode;
   public String title;
   public String description;
-  public String fromUseableDate, toUseableDate;
+  public String fromValidityDate, toValidityDate;
   public boolean isUsed;
   
   
@@ -25,11 +25,11 @@ public class CouponBean
       if (obj.has("title"))
         title = obj.getString("title");
       
-      if (obj.has("from_useable_date"))
-        fromUseableDate = obj.getString("from_useable_date");
+      if (obj.has("from_validity_date"))
+        fromValidityDate = obj.getString("from_validity_date");
       
-      if (obj.has("to_useable_date"))
-        toUseableDate = obj.getString("to_useable_date");
+      if (obj.has("to_validity_date"))
+        toValidityDate = obj.getString("to_validity_date");
       
       if (obj.has("description"))
         description = obj.getString("description");

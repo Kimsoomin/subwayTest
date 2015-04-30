@@ -29,10 +29,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/term_expiration_date" />
+            android:text="@string/term_validity_period" />
 
         <TextView
-            android:id="@+id/text_useable_date"
+            android:id="@+id/text_validity_peroid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

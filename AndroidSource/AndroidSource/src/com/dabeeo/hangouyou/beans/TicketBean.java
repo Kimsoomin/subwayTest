@@ -7,9 +7,11 @@ public class TicketBean
   public int idx;
   public String seqCode;
   public String title;
-  public int priceWon, priceYuan;
+  public int displayPriceWon, displayPriceYuan, priceWon, priceYuan;
   public String discountRate;
-  public String fromUseableDate, toUseableDate;
+  public String fromValidityDate, toValidityDate;
+  public String validityCondition, refundCondition;
+  public String whereUseIn;
   
   
   public void setJSONObject(JSONObject obj)
@@ -25,6 +27,12 @@ public class TicketBean
       if (obj.has("title"))
         title = obj.getString("title");
       
+      if (obj.has("display_price_won"))
+        displayPriceWon = obj.getInt("display_price_won");
+      
+      if (obj.has("display_price_yuan"))
+        displayPriceYuan = obj.getInt("display_price_yuan");
+      
       if (obj.has("price_won"))
         priceWon = obj.getInt("price_won");
       
@@ -34,11 +42,20 @@ public class TicketBean
       if (obj.has("discount_rate"))
         discountRate = obj.getString("discount_rate");
       
-      if (obj.has("from_useable_date"))
-        fromUseableDate = obj.getString("from_useable_date");
+      if (obj.has("from_validity_date"))
+        fromValidityDate = obj.getString("from_validity_date");
       
-      if (obj.has("to_useable_date"))
-        toUseableDate = obj.getString("to_useable_date");
+      if (obj.has("to_validity_date"))
+        toValidityDate = obj.getString("to_validity_date");
+      
+      if (obj.has("validity_condition"))
+        validityCondition = obj.getString("validity_condition");
+      
+      if (obj.has("refund_condition"))
+        refundCondition = obj.getString("refund_condition");
+      
+      if (obj.has("where_use_in"))
+        whereUseIn = obj.getString("where_use_in");
     }
     catch (Exception e)
     {

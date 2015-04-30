@@ -18,8 +18,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.activities.ticket.TicketDetailActivity;
 import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TicketListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -90,6 +89,7 @@ public class TicketListFragment extends Fragment
           JSONObject objInArr = arr.getJSONObject(i);
           TicketBean bean = new TicketBean();
           bean.setJSONObject(objInArr);
+          bean.idx = i;
           bean.discountRate = "8折";
           bean.priceWon = 10000;
           bean.priceYuan = 57;
@@ -115,10 +115,10 @@ public class TicketListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-//      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-//      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
-//      i.putExtra("place_idx", bean.idx);
-//      startActivity(i);
+      TicketBean bean = (TicketBean) adapter.getItem(position);
+      Intent i = new Intent(getActivity(), TicketDetailActivity.class);
+      i.putExtra("ticket_idx", Integer.toString(bean.idx));
+      startActivity(i);
     }
   };
   

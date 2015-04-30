@@ -165,7 +165,14 @@
     <!-- 티켓 -->
     <string name="term_all_tickets">모든 티켓</string>
     <string name="term_bought_ticket">구매한 티켓</string>
-    <string name="term_expiration_date">"사용기한 : "</string>
+    <string name="term_validity_period">"사용기간 : "</string>
+    <string name="term_checkout">바로구매</string>
+    <string name="term_validity_condition">사용조건</string>
+    <string name="term_refund_condition">환불조건</string>
+    <string name="term_where_use_in">사용처</string>
+    <string name="term_price">판매가</string>
+    <string name="term_discount_price">할인가</string>
+    <string name="term_show_location">위치보기</string>
 
     <!-- 쿠폰 -->
     <string name="term_all_coupons">모든 쿠폰</string>

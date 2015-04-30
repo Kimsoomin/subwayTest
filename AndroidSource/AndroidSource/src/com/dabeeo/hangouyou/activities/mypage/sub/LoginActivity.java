@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.TicketActivity;
+import com.dabeeo.hangouyou.activities.ticket.TicketActivity;
 
 public class LoginActivity extends ActionBarActivity
 {
