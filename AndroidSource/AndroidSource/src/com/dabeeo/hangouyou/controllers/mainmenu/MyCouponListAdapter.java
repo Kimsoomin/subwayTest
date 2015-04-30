@@ -64,7 +64,7 @@ public class MyCouponListAdapter extends BaseAdapter
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView description = (TextView) view.findViewById(R.id.text_description);
     TextView useableDate = (TextView) view.findViewById(R.id.text_useable_date);
-    ViewGroup isUsed = (ViewGroup) view.findViewById(R.id.layout_used);
+    TextView isUsed = (TextView) view.findViewById(R.id.text_used);
     
     title.setText(bean.title);
     description.setText(bean.description);
