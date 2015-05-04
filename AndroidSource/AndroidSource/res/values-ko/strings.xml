@@ -31,7 +31,8 @@
     <string name="term_register_photolog">후기등록</string>
     <string name="term_wishlist">위시리스트</string>
     <string name="term_search">검색</string>
-    <string name="msg_download_map">Tip! 무료로 지도를 저장하여 사용해보세요</string>
+    <string name="msg_download_map">지도를 저장하여\n오프라인에서도\n사용해보세요!</string>
+    
     <!-- Place activities term -->
     <string name="term_review_best">최고에요</string>
     <string name="term_review_soso">그저그래요</string>

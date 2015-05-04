@@ -10,7 +10,8 @@
     <color name="gray">#969b9c</color>
     <color name="light_gray">#CECECE</color>
     <color name="darker_gray">#444a4b</color>
-
+    <!-- BottomTabs -->
+    <color name="bottom_text_color">#b9c4c4</color>
     <!-- ViewPager Indicator -->
     <color name="vpi__background_holo_dark">#ff000000</color>
     <color name="vpi__background_holo_light">#fff3f3f3</color>

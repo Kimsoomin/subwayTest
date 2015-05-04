@@ -14,6 +14,8 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,8 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
@@ -41,7 +43,7 @@ import com.dabeeo.hangouyou.utils.SystemUtil;
 public class MainFragment extends Fragment
 {
   private RelativeLayout containerStrategySeoul, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerTicket, containerCoupon;
-  private TextView textDownloadMap;
+  private LinearLayout containerMsgDownloadMap;
   
   
   @Override
@@ -57,7 +59,22 @@ public class MainFragment extends Fragment
     containerSubway = (RelativeLayout) view.findViewById(R.id.container_subway);
     containerTicket = (RelativeLayout) view.findViewById(R.id.container_ticket);
     containerCoupon = (RelativeLayout) view.findViewById(R.id.container_coupon);
-    textDownloadMap = (TextView) view.findViewById(R.id.text_download_map);
+    containerMsgDownloadMap = (LinearLayout) view.findViewById(R.id.container_download_map);
+    
+    GradientDrawable drawable = (GradientDrawable) containerStrategySeoul.getBackground();
+    drawable.setColor(Color.parseColor("#ffb55d"));
+    drawable = (GradientDrawable) containerTravelSchedule.getBackground();
+    drawable.setColor(Color.parseColor("#ffcb68"));
+    drawable = (GradientDrawable) containerShoppingMall.getBackground();
+    drawable.setColor(Color.parseColor("#ff6978"));
+    drawable = (GradientDrawable) containerMap.getBackground();
+    drawable.setColor(Color.parseColor("#6a8bf1"));
+    drawable = (GradientDrawable) containerSubway.getBackground();
+    drawable.setColor(Color.parseColor("#69a2f3"));
+    drawable = (GradientDrawable) containerTicket.getBackground();
+    drawable.setColor(Color.parseColor("#9584f8"));
+    drawable = (GradientDrawable) containerCoupon.getBackground();
+    drawable.setColor(Color.parseColor("#ae7ff3"));
     
     containerStrategySeoul.setOnClickListener(menuClickListener);
     containerTravelSchedule.setOnClickListener(menuClickListener);
@@ -79,9 +96,9 @@ public class MainFragment extends Fragment
     
     File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
     if (!file.exists())
-      textDownloadMap.setVisibility(View.VISIBLE);
+      containerMsgDownloadMap.setVisibility(View.VISIBLE);
     else
-      textDownloadMap.setVisibility(View.GONE);
+      containerMsgDownloadMap.setVisibility(View.GONE);
     super.onResume();
   }
   
@@ -272,7 +289,7 @@ public class MainFragment extends Fragment
     @Override
     protected void onPostExecute(Boolean result)
     {
-      textDownloadMap.setVisibility(View.GONE);
+      containerMsgDownloadMap.setVisibility(View.GONE);
       startActivity(new Intent(getActivity(), BlinkingMap.class));
       super.onPostExecute(result);
     }

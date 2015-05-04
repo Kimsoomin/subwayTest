@@ -1,94 +1,83 @@
 package com.dabeeo.hangouyou.activities.sub;
 
-import android.app.DownloadManager;
+import java.util.ArrayList;
+
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.RectF;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Display;
-import android.view.View;
+import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.utils.ImageDownloader;
-import com.imagezoom.ImageAttacher;
-import com.imagezoom.ImageAttacher.OnMatrixChangedListener;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.dabeeo.hangouyou.controllers.ImagePopupViewPagerAdapter;
 
 public class ImagePopUpActivity extends ActionBarActivity
 {
-  private ImageView imageView;
-  private ImageView btnTurnOff;
-  private String couponId;
-  private String imageUrl;
-  private DownloadManager downloadManager;
+  private ViewPager viewPager;
+  private ImagePopupViewPagerAdapter adapter;
+  private ImageView imgX;
+  private TextView textIndicator;
+  private int allCount = 0;
   
   
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
     getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     super.onCreate(savedInstanceState);
     getSupportActionBar().hide();
     setContentView(R.layout.activity_image_popup);
-    imageUrl = getIntent().getStringExtra("imageUrl");
-    imageView = (ImageView) findViewById(R.id.image_view);
     
-    Display display = getWindowManager().getDefaultDisplay();
-    int width = display.getWidth();
-    int height = display.getHeight();
-    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(width, height);
-    imageView.setLayoutParams(layoutParams);
-    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+    ArrayList<String> imageUrls = getIntent().getStringArrayListExtra("imageUrls");
+    Log.w("WARN", "ImageUrls : " + imageUrls);
+    allCount = imageUrls.size();
+    imgX = (ImageView) findViewById(R.id.img_x);
+    textIndicator = (TextView) findViewById(R.id.text_view_pager_indicator);
     
-    ImageDownloader.displayImage(this, imageUrl, imageView, new ImageLoadingListener()
+    int position = getIntent().getIntExtra("position", 0);
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    adapter = new ImagePopupViewPagerAdapter(this);
+    viewPager.setOffscreenPageLimit(0);
+    viewPager.setAdapter(adapter);
+    
+    adapter.addItem(imageUrls);
+    
+    viewPager.setOnPageChangeListener(new OnPageChangeListener()
     {
       @Override
-      public void onLoadingStarted(String arg0, View arg1)
+      public void onPageSelected(int arg0)
       {
+        
       }
       
       
       @Override
-      public void onLoadingFailed(String arg0, View arg1, FailReason arg2)
+      public void onPageScrolled(int position, float arg1, int arg2)
       {
+        textIndicator.setText("(" + Integer.toString(position + 1) + "/" + Integer.toString(allCount) + ")");
       }
       
       
       @Override
-      public void onLoadingComplete(String arg0, View arg1, Bitmap arg2)
+      public void onPageScrollStateChanged(int arg0)
       {
-        usingSimpleImage(imageView);
-      }
-      
-      
-      @Override
-      public void onLoadingCancelled(String arg0, View arg1)
-      {
+        
       }
     });
-  }
-  
-  
-  public void usingSimpleImage(ImageView imageView)
-  {
-    ImageAttacher attacher = new ImageAttacher(imageView);
-    ImageAttacher.MAX_ZOOM = 4.0f;
-    ImageAttacher.MIN_ZOOM = 1.0f;
-    MatrixChangeListener matrixListener = new MatrixChangeListener();
-    attacher.setOnMatrixChangeListener(matrixListener);
-  }
-  
-  private class MatrixChangeListener implements OnMatrixChangedListener
-  {
-    @Override
-    public void onMatrixChanged(RectF rect)
+    try
     {
-      
+      viewPager.setCurrentItem(position);
+      textIndicator.setText("(" + Integer.toString(position + 1) + "/" + Integer.toString(allCount) + ")");
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
     }
   }
   
