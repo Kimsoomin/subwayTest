@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <!--
-         <item
+    <item
         android:id="@+id/map"
         android:icon="@android:drawable/ic_dialog_map"
         android:title="@string/term_map"
         app:showAsAction="always"/>
-    -->
-    <item
+    <!--
+         <item
         android:id="@+id/close"
         android:icon="@drawable/btn_close_white_l"
         android:title="@string/term_map"
         app:showAsAction="always"/>
+    -->
 
 </menu>

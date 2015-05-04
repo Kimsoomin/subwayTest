@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/shape_app_button"
+        android:background="#20000000"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="15dp"
@@ -28,14 +28,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/image_count"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textStyle="bold" />
     </LinearLayout>
 

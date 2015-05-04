@@ -15,25 +15,65 @@
             android:id="@+id/icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_gravity="center"
             android:background="@drawable/circle_button"
             android:contentDescription="@null" />
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#969b9c"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_review_list_more"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/btn_review_list_more" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" />
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/icon_review_list_score" />
+
+        <TextView
+            android:id="@+id/text_review_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/appcolor" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="2dp"
+        android:maxLines="3"
+        android:textColor="#969b9c" />
 
 </LinearLayout>

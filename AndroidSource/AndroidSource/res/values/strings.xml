@@ -204,7 +204,7 @@
     <string name="term_product_detail_delivery_info">상품정보</string>
     <string name="term_product_detail_refund">반품교환</string>
     <string name="term_buy">바로구매</string>
-    
+    <string name="term_all_rate">"/5.0"</string>
     <!-- 티켓 -->
     <string name="term_all_tickets">모든 티켓</string>
     <string name="term_bought_ticket">구매한 티켓</string>
@@ -213,7 +213,6 @@
     <string name="term_validity_condition">사용조건</string>
     <string name="term_refund_condition">환불조건</string>
     <string name="term_where_use_in">사용처</string>
-    <string name="term_price">판매가</string>
     <string name="term_discount_price">할인가</string>
     <string name="term_show_location">위치보기</string>
 
@@ -221,5 +220,7 @@
     <string name="term_all_coupons">모든 쿠폰</string>
     <string name="term_my_coupon">받은 쿠폰</string>
     <string name="term_used">사용완료</string>
-
+    <string name="term_coupon_en">"COUPON "</string>
+    <string name="term_ticket_en">"TICKET "</string>
+<string name="term_ticket_and_coupon_buy">구매하기</string>
 </resources>

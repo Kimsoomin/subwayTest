@@ -35,7 +35,6 @@ public class MainActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		fragmentManager = getFragmentManager();
-		setFragments(POSITION_HOME);
 		
 		bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
 		bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
@@ -48,8 +47,8 @@ public class MainActivity extends ActionBarActivity
 		bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
 		bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
 		
-//    if (CategoryManager.getInstance(MainActivity.this).categories.size() == 0)
-//      new GetCategoryAsyncTask().execute();
+		bottomMenuHome.setSelected(true);
+		setFragments(POSITION_HOME);
 	}
 	
 	
@@ -78,21 +77,29 @@ public class MainActivity extends ActionBarActivity
 	
 	private void setFragments(int position)
 	{
+		bottomMenuHome.setSelected(false);
+		bottomMenuMyPage.setSelected(false);
+		bottomMenuWishList.setSelected(false);
+		bottomMenuSearch.setSelected(false);
+		
 		Fragment fragment = null;
 		
 		switch (position)
 		{
 			case POSITION_HOME:
+				bottomMenuHome.setSelected(true);
 				setTitle(getString(R.string.app_name));
 				fragment = new MainFragment();
 				break;
 			
 			case POSITION_MY_PAGE:
+				bottomMenuMyPage.setSelected(true);
 				setTitle(getString(R.string.term_my_page));
 				fragment = new MyPageFragment();
 				break;
 			
 			case POSITION_SEARCH:
+				bottomMenuSearch.setSelected(true);
 				setTitle(R.string.term_search);
 				fragment = new SearchResultFragment();
 				break;

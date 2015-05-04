@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp" >
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -30,90 +32,84 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/container_coupon_and_ticket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:orientation="vertical"
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal" >
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="8dp" >
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/text_rate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="vertical" >
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/appcolor" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/term_rate"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                            <TextView
-                                android:id="@+id/text_rate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceLarge" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
+                            android:text="@string/term_all_rate"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/gray" />
 
-                            <Button
-                                android:id="@+id/btn_review_best"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="8dp"
-                                android:background="@drawable/circle_button"
-                                android:text="@string/term_review_best"
-                                android:textSize="13sp" />
+                        <Button
+                            android:id="@+id/btn_review_best"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:layout_marginLeft="12dp"
+                            android:background="@drawable/circle_button"
+                            android:padding="4dp"
+                            android:text="@string/term_review_best"
+                            android:textSize="11sp" />
 
-                            <Button
-                                android:id="@+id/btn_review_soso"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="8dp"
-                                android:background="@drawable/circle_button"
-                                android:text="@string/term_review_soso"
-                                android:textSize="13sp" />
+                        <Button
+                            android:id="@+id/btn_review_soso"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:layout_marginLeft="12dp"
+                            android:background="@drawable/circle_button"
+                            android:padding="4dp"
+                            android:text="@string/term_review_soso"
+                            android:textSize="11sp" />
 
-                            <Button
-                                android:id="@+id/btn_review_worst"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="8dp"
-                                android:background="@drawable/circle_button"
-                                android:text="@string/term_review_worst"
-                                android:textSize="13sp" />
-                        </LinearLayout>
+                        <Button
+                            android:id="@+id/btn_review_worst"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:layout_marginLeft="12dp"
+                            android:background="@drawable/circle_button"
+                            android:padding="4dp"
+                            android:text="@string/term_review_worst"
+                            android:textSize="11sp" />
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray" />
 
                     <TextView
                         android:id="@+id/text_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:autoLink="phone|web" />
+                        android:autoLink="phone|web"
+                        android:background="@android:color/white" />
 
                     <LinearLayout
                         android:id="@+id/layout_place_detail_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/white"
                         android:orientation="vertical"
                         android:padding="8dp" >
                     </LinearLayout>
@@ -122,76 +118,75 @@
                         android:id="@+id/btn_recommend_by_expert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/app_button"
-                        android:padding="8dp"
-                        android:text="@string/term_more_pro_guide" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/darker_gray" />
-
-                    <TextView
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/term_recommend_product"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:background="@drawable/round_app_color_stroke_box"
+                        android:padding="12dp"
+                        android:text="@string/term_more_pro_guide"
+                        android:textColor="@color/appcolor" />
 
                     <LinearLayout
-                        android:id="@+id/container_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:orientation="vertical" />
+                        android:background="@android:color/white"
+                        android:orientation="vertical"
+                        android:padding="8dp" >
 
-                    <Button
-                        android:id="@+id/btn_more_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/list_item_background"
-                        android:text="@string/term_product_more"
-                        android:textColor="@color/darker_gray"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/darker_gray" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/term_recommend_product"
+                                android:textStyle="bold" />
 
-                    <TextView
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/term_review"
-                        android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/term_more" />
+
+                            <ImageView
+                                android:id="@+id/btn_more_product"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginLeft="4dp"
+                                android:src="@drawable/btn_list_more_arrow" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical" />
+                    </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/container_review"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:orientation="vertical" />
+                        android:background="@android:color/white"
+                        android:orientation="vertical"
+                        android:padding="8dp" >
 
-                    <Button
-                        android:id="@+id/btn_more_review"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/list_item_background"
-                        android:text="@string/term_review_more"
-                        android:textColor="@color/darker_gray"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/term_review"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/container_review"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical" />
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
 
@@ -214,48 +209,82 @@
             </FrameLayout>
         </FrameLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/bottom_tab_background"
-            android:orientation="horizontal" >
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="8dp" >
 
-            <Button
-                android:id="@+id/btn_like"
-                style="?android:attr/buttonBarButtonStyle"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/term_like" />
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_bookmark"
-                style="?android:attr/buttonBarButtonStyle"
+                <Button
+                    android:id="@+id/btn_like"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_heart"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/term_bookmark" />
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_share"
-                style="?android:attr/buttonBarButtonStyle"
+                <Button
+                    android:id="@+id/btn_bookmark"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/btn_bookmark"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/term_share" />
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_write_review"
-                style="?android:attr/buttonBarButtonStyle"
+                <Button
+                    android:id="@+id/btn_share"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/btn_share"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/term_write_review" />
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_write_review"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/btn_review"
+                    android:gravity="center" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

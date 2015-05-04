@@ -46,14 +46,27 @@
                         android:textColor="@android:color/white"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                    <RelativeLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/icon_main_place" />
+                        android:layout_marginRight="8dp" >
+
+                        <ImageView
+                            android:id="@+id/badge_main_place"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/icon_new_badge" />
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/icon_main_place" />
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -82,14 +95,27 @@
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                        <RelativeLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginRight="8dp"
-                            android:src="@drawable/icon_main_plan" />
+                            android:layout_marginRight="8dp" >
+
+                            <ImageView
+                                android:id="@+id/badge_main_plan"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:src="@drawable/icon_new_badge" />
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/icon_main_plan" />
+                        </RelativeLayout>
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -121,14 +147,27 @@
                         android:textColor="@android:color/white"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                    <RelativeLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/icon_main_trend" />
+                        android:layout_marginRight="8dp" >
+
+                        <ImageView
+                            android:id="@+id/badge_main_trend"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/icon_new_badge" />
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/icon_main_trend" />
+                    </RelativeLayout>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -195,14 +234,27 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                    <RelativeLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/icon_main_map" />
+                        android:layout_marginRight="8dp" >
+
+                        <ImageView
+                            android:id="@+id/badge_main_map"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/icon_new_badge" />
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/icon_main_map" />
+                    </RelativeLayout>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -234,14 +286,27 @@
                         android:textColor="@android:color/white"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                    <RelativeLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/icon_main_subway" />
+                        android:layout_marginRight="8dp" >
+
+                        <ImageView
+                            android:id="@+id/badge_main_subway"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/icon_new_badge" />
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/icon_main_subway" />
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -269,14 +334,27 @@
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                        <RelativeLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginRight="8dp"
-                            android:src="@drawable/icon_main_ticket" />
+                            android:layout_marginRight="8dp" >
+
+                            <ImageView
+                                android:id="@+id/badge_main_ticket"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:src="@drawable/icon_new_badge" />
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/icon_main_ticket" />
+                        </RelativeLayout>
                     </RelativeLayout>
 
                     <!-- 쿠폰 -->
@@ -298,14 +376,27 @@
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                        <RelativeLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginRight="8dp"
-                            android:src="@drawable/icon_main_coupon" />
+                            android:layout_marginRight="8dp" >
+
+                            <ImageView
+                                android:id="@+id/badge_main_coupon"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:src="@drawable/icon_new_badge" />
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/icon_main_coupon" />
+                        </RelativeLayout>
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
