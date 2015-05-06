@@ -36,6 +36,7 @@ public class TicketCheckoutActivity extends ActionBarActivity
   private TicketBean ticket;
   private String ticketId;
   private Button btnCheckout;
+  private int quantity;
   
   
   @Override
@@ -72,10 +73,12 @@ public class TicketCheckoutActivity extends ActionBarActivity
     btnCheckout.setOnClickListener(clickListener);
     
     ticketId = getIntent().getStringExtra("ticket_idx");
-    int quantity = getIntent().getIntExtra("quantity", 1);
+    quantity = getIntent().getIntExtra("quantity", 1);
     int agePosition = getIntent().getIntExtra("age_position", 0);
-    String[] ages = getResources().getStringArray(R.array.age_type);
     textQuantity.setText(getString(R.string.term_quantity) + " : " + quantity + getString(R.string.term_quantity_unit));
+    textTotalQuantity.setText(getString(R.string.term_total_quantity) + " : " + quantity + getString(R.string.term_quantity_unit));
+    
+    String[] ages = getResources().getStringArray(R.array.age_type);
     textAge.setText(getString(R.string.term_age) + " : " + ages[agePosition]);
     
     apiClient = new ApiClient(this);
@@ -111,7 +114,6 @@ public class TicketCheckoutActivity extends ActionBarActivity
     textName.setText("홍길동");
     textEmail.setText("asdf@asdf.com");
     textTotalPrice.setText(getString(R.string.term_total_price) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(30000));
-    textTotalQuantity.setText(getString(R.string.term_total_quantity) + " : " + "2" + getString(R.string.term_quantity_unit));
     textDiscountByCoupon.setText(getString(R.string.term_discount_by_coupon) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(10000));
     textBillPrice.setText(getString(R.string.term_bill_price) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(20000) + "(" + getString(R.string.term_yuan) + ticket.priceYuan + ")");
   }
