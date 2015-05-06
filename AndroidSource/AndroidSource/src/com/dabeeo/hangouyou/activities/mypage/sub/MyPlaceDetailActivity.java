@@ -103,7 +103,7 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     bean.title = "XXX 수분크림";
     bean.originalPrice = 150;
     bean.discountPrice = 93;
-    productView.setBean(bean);
+    productView.setBean(bean, bean);
     containerProduct.addView(productView);
     
     containerReview.removeAllViews();

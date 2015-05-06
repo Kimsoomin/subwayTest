@@ -29,7 +29,7 @@
     <string name="term_home">首页</string>
     <string name="term_my_page">我的信息</string>
     <string name="term_register_photolog">上传游记</string>
-    <string name="term_wishlist">购物车</string>
+    <string name="term_wishlist">收藏夹</string>
     <string name="term_search">搜索</string>
     <string name="msg_download_map">贴士!你可以免费下载离线地图哟！</string>
     <!-- Place activities term -->
@@ -142,12 +142,13 @@
     <string name="term_send">发送</string>
     <!-- 지하철 -->
     <string name="term_find_start_station">搜索出发站位置</string>
-    <string name="msg_please_gps_enable">为了流畅使用，请将位置信息设为‘使用’。为了流畅使用，请将位置信息设为‘使用’。</string>
+    <string name="msg_please_gps_enable">为了流畅使用，请将位置信息设为‘使用’。</string>
     <string name="msg_find_station">搜索地铁站</string>
     <string name="term_start">起</string>
     <string name="term_finish">终</string>
     <string name="msg_dont_support_outside_seoul">非首尔地区正在准备中。</string>
     <string name="msg_near_by_station">这是最近的地铁站。</string>
+    <string name="term_exit_info">出口信息</string>
     <!-- 맵 -->
     <string name="map_notification">提醒</string>
     <string name="map_confirm">确认</string>
@@ -161,7 +162,6 @@
 
     <!-- 추가 String -->
     <!-- 지하철 -->
-    <string name="term_exit_info">출구정보</string>
     <string name="term_set_start_station">출발역 설정</string>
     <string name="term_set_end_station">도착역 설정</string>
     <!-- 내 일정 -->
@@ -185,10 +185,12 @@
     <string name="term_bookmarked_schedule">북마크한 일정</string>
     <string name="msg_save_my_schedule">내 일정으로 저장하시겠습니까?</string>
     <string name="msg_init_recommend_schedule">모든 설정을 초기화하시겠습니까?</string>
-
+    <!-- Place -->
+    <string name="term_place_description">장소 설명</string>
     <!-- Main -->
     <string name="msg_dont_connect_network">네트워크 연결 시, 이용가능합니다.</string>
     <string name="msg_logout">로그아웃 하시겠습니까?</string>
+
     <!-- Mall -->
     <string name="term_top_brand">"[TOP BRAND]"</string>
     <string name="term_trend_korea">트렌디 한국</string>
@@ -254,8 +256,15 @@
     <string name="term_all_coupons">모든 쿠폰</string>
     <string name="term_my_coupon">받은 쿠폰</string>
     <string name="term_used">사용완료</string>
-    <string name="term_coupon_en">"COUPON "</string>
     <string name="term_ticket_en">"TICKET "</string>
     <string name="term_ticket_and_coupon_buy">구매하기</string>
 
+<<<<<<< HEAD
+=======
+    <!-- 추가 String (아직 안보냄) -->
+    <!-- 쿠폰 -->
+    <string name="term_coupon_en">"COUPON "</string>
+    <string name="term_download">다운로드</string>
+
+>>>>>>> 상품상세 페이지 추가
 </resources>

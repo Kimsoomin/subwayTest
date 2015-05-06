@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="5dp"
         android:layout_height="match_parent"
-        android:background="#ffc367" />
+        android:background="#8aacea" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -37,8 +37,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/term_ticket_en"
-                android:textColor="#ffc367"
+                android:text="@string/term_coupon_en"
+                android:textColor="#8aacea"
                 android:textSize="10sp" />
 
             <TextView
@@ -61,10 +61,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@drawable/btn_ticket_retail"
+        android:background="@drawable/btn_coupon_retail"
         android:gravity="center"
         android:paddingRight="4dp"
-        android:text="@string/term_ticket_and_coupon_buy"
+        android:text="@string/term_download"
         android:textColor="@android:color/white" />
 
 </LinearLayout>

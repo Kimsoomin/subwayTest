@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,7 +18,8 @@ public class ProductView extends RelativeLayout
 {
   
   private Context context;
-  private ProductBean bean;
+  private ProductBean firstBean;
+  private ProductBean secondBean;
   
   
   public ProductView(Context context)
@@ -27,9 +29,10 @@ public class ProductView extends RelativeLayout
   }
   
   
-  public void setBean(ProductBean bean)
+  public void setBean(ProductBean firstBean, ProductBean secondBean)
   {
-    this.bean = bean;
+    this.firstBean = firstBean;
+    this.secondBean = secondBean;
     init();
   }
   
@@ -39,34 +42,38 @@ public class ProductView extends RelativeLayout
     int resId = R.layout.view_product;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
-    ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    TextView title = (TextView) view.findViewById(R.id.product_title);
-    TextView originalPrice = (TextView) view.findViewById(R.id.original_price);
-    TextView discountPrice = (TextView) view.findViewById(R.id.discount_price);
-    Button btnWishList = (Button) view.findViewById(R.id.btn_wishlist);
+    LinearLayout firstContainer = (LinearLayout) view.findViewById(R.id.conatiner_first_bean);
+    ImageView firstImageView = (ImageView) view.findViewById(R.id.imageview);
+    TextView firstTitle = (TextView) view.findViewById(R.id.product_title);
+    TextView firstOriginalPrice = (TextView) view.findViewById(R.id.original_price);
+    TextView firstDiscountPrice = (TextView) view.findViewById(R.id.discount_price);
+    
+    LinearLayout secondContainer = (LinearLayout) view.findViewById(R.id.conatiner_second_bean);
+    ImageView secondImageView = (ImageView) view.findViewById(R.id.imageview_second);
+    TextView secondTitle = (TextView) view.findViewById(R.id.product_title_second);
+    TextView secondOriginalPrice = (TextView) view.findViewById(R.id.original_price_second);
+    TextView secondDiscountPrice = (TextView) view.findViewById(R.id.discount_price_second);
     
     //가데이터
-    title.setText("수분크림");
-    originalPrice.setText("¥ 150.00");
-    discountPrice.setText("¥ 93.00");
-    originalPrice.setPaintFlags(originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    firstContainer.setVisibility(View.VISIBLE);
+    firstTitle.setText("수분크림");
+    firstOriginalPrice.setText("¥ 150.00");
+    firstDiscountPrice.setText("¥ 93.00");
+    firstOriginalPrice.setPaintFlags(firstOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     
-    if (bean != null)
-    {
-      title.setText(bean.title);
-      originalPrice.setText("¥ " + bean.originalPrice);
-      discountPrice.setText("¥ " + bean.discountPrice);
-      originalPrice.setPaintFlags(originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-    }
+    secondContainer.setVisibility(View.VISIBLE);
+    secondTitle.setText("수분크림");
+    secondOriginalPrice.setText("¥ 150.00");
+    secondDiscountPrice.setText("¥ 93.00");
+    secondOriginalPrice.setPaintFlags(secondOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     
-    btnWishList.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View v)
-      {
-        Log.i("ProductView.java | init", "|" + "위시리스트에 담기" + "|");
-      }
-    });
+//    if (firstBean != null)
+//    {
+//      firstTitle.setText(firstBean.title);
+//      firstOriginalPrice.setText("¥ " + firstBean.originalPrice);
+//      firstDiscountPrice.setText("¥ " + firstBean.discountPrice);
+//      firstOriginalPrice.setPaintFlags(firstOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//    }
     addView(view);
   }
 }

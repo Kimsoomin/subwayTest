@@ -77,7 +77,7 @@ public class SearchResultFragment extends Fragment
     productBean.title = "상품명1";
     productBean.originalPrice = 100;
     productBean.discountPrice = 40;
-    productView.setBean(productBean);
+    productView.setBean(productBean, productBean);
     layoutRecommedProduct.addView(productView);
   }
   

@@ -7,72 +7,108 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/round_stroke_box"
-        android:orientation="horizontal"
-        android:padding="12dp" >
+        android:orientation="horizontal" >
+
+        <!-- FirstBean -->
 
         <LinearLayout
+            android:id="@+id/conatiner_first_bean"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:background="@drawable/round_stroke_box"
+            android:orientation="vertical"
+            android:padding="12dp" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#D77D00"
-                android:padding="8dp"
-                android:text="@string/term_product_info"
-                android:textColor="@android:color/white" />
+                android:orientation="vertical"
+                android:padding="8dp" >
 
-            <TextView
-                android:id="@+id/product_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@null" />
+                <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/darker_gray"
+                    android:contentDescription="@null" />
 
-            <TextView
-                android:id="@+id/original_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="@null" />
+                <TextView
+                    android:id="@+id/product_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/discount_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="@null"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/original_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/discount_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
+        
+          <!-- SecondBean -->
 
         <LinearLayout
+            android:id="@+id/conatiner_second_bean"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_weight="1"
-            android:gravity="right|center_vertical"
-            android:orientation="horizontal" >
+            android:background="@drawable/round_stroke_box"
+            android:orientation="vertical"
+            android:padding="12dp" >
 
-            <Button
-                android:id="@+id/btn_wishlist"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/app_button"
-                android:padding="8dp"
-                android:text="@string/term_wishlist"
-                android:textSize="15sp" />
+                android:orientation="vertical"
+                android:padding="8dp" >
 
-            <ImageView
-                android:id="@+id/imageview"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:background="@color/darker_gray"
-                android:contentDescription="@null" />
+                <ImageView
+                    android:id="@+id/imageview_second"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/darker_gray"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/product_title_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/original_price_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/discount_price_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

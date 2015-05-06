@@ -70,7 +70,7 @@ public class TravelScheduleDetailFragment extends Fragment
     bean.title = "XXX 수분크림";
     bean.originalPrice = 150;
     bean.discountPrice = 93;
-    productView.setBean(bean);
+    productView.setBean(bean, bean);
     contentContainer.addView(productView);
     
     ScheduleTitleView tView = new ScheduleTitleView(getActivity());

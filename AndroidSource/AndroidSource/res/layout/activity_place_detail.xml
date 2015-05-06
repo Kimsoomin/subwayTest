@@ -23,7 +23,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" >
 
-            <ScrollView
+            <com.dabeeo.hangouyou.views.CustomScrollView
                 android:id="@+id/scrollview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                             android:id="@+id/btn_review_best"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
-                            android:layout_marginLeft="12dp"
+                            android:layout_margin="8dp"
                             android:background="@drawable/circle_button"
                             android:padding="4dp"
                             android:text="@string/term_review_best"
@@ -79,7 +79,7 @@
                             android:id="@+id/btn_review_soso"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
-                            android:layout_marginLeft="12dp"
+                            android:layout_margin="8dp"
                             android:background="@drawable/circle_button"
                             android:padding="4dp"
                             android:text="@string/term_review_soso"
@@ -89,40 +89,86 @@
                             android:id="@+id/btn_review_worst"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
-                            android:layout_marginLeft="12dp"
+                            android:layout_margin="8dp"
                             android:background="@drawable/circle_button"
                             android:padding="4dp"
                             android:text="@string/term_review_worst"
                             android:textSize="11sp" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/text_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:autoLink="phone|web"
-                        android:background="@android:color/white" />
-
                     <LinearLayout
-                        android:id="@+id/layout_place_detail_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:background="@android:color/white"
                         android:orientation="vertical"
                         android:padding="8dp" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:text="@string/term_place_description"
+                            android:textColor="#444a4b"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:textColor="#969b9c" />
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btn_recommend_by_expert"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:orientation="vertical"
+                        android:padding="8dp" >
+
+                        <LinearLayout
+                            android:id="@+id/layout_place_detail_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:orientation="vertical"
+                            android:padding="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_recommend_by_expect"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@drawable/round_app_color_stroke_box"
-                        android:padding="12dp"
-                        android:text="@string/term_more_pro_guide"
-                        android:textColor="@color/appcolor" />
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp" >
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="bottom"
+                            android:src="@drawable/deco_color_dot_l" />
+
+                        <Button
+                            android:id="@+id/btn_recommend_by_expert"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:background="@drawable/round_app_color_stroke_box"
+                            android:padding="12dp"
+                            android:text="@string/term_more_pro_guide"
+                            android:textColor="@color/appcolor" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="bottom"
+                            android:src="@drawable/deco_color_dot_r" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -188,103 +234,103 @@
                             android:orientation="vertical" />
                     </LinearLayout>
                 </LinearLayout>
-            </ScrollView>
-
-            <FrameLayout
-                android:id="@+id/header"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/max_height_header" >
-
-                <com.dabeeo.hangouyou.views.PlaceDetailHeaderView
-                    android:id="@+id/header_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:paddingBottom="70dp" />
-
-                <com.dabeeo.hangouyou.views.PlaceDetailTitleView
-                    android:id="@+id/title_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:layout_gravity="bottom" />
-            </FrameLayout>
+            </com.dabeeo.hangouyou.views.CustomScrollView>
         </FrameLayout>
+    </LinearLayout>
 
-        <View
+    <FrameLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/max_height_header" >
+
+        <com.dabeeo.hangouyou.views.PlaceDetailHeaderView
+            android:id="@+id/header_view"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
+            android:layout_height="300dp"
+            android:paddingBottom="70dp" />
+
+        <com.dabeeo.hangouyou.views.PlaceDetailTitleView
+            android:id="@+id/title_view"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="8dp" >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@android:color/white"
-            android:orientation="horizontal"
-            android:padding="8dp" >
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            <Button
+                android:id="@+id/btn_like"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/ic_heart"
+                android:gravity="center" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_like"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/ic_heart"
-                    android:gravity="center" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            <Button
+                android:id="@+id/btn_bookmark"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/btn_bookmark"
+                android:gravity="center" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_bookmark"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/btn_bookmark"
-                    android:gravity="center" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            <Button
+                android:id="@+id/btn_share"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/btn_share"
+                android:gravity="center" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_share"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/btn_share"
-                    android:gravity="center" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/btn_write_review"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/btn_review"
-                    android:gravity="center" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_write_review"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/btn_review"
+                android:gravity="center" />
         </LinearLayout>
     </LinearLayout>
 
