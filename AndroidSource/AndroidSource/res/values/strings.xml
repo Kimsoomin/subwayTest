@@ -259,12 +259,9 @@
     <string name="term_ticket_en">"TICKET "</string>
     <string name="term_ticket_and_coupon_buy">구매하기</string>
 
-<<<<<<< HEAD
-=======
     <!-- 추가 String (아직 안보냄) -->
     <!-- 쿠폰 -->
     <string name="term_coupon_en">"COUPON "</string>
     <string name="term_download">다운로드</string>
 
->>>>>>> 상품상세 페이지 추가
 </resources>
