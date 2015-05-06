@@ -1,5 +1,7 @@
 package com.dabeeo.hangouyou.activities.ticket;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,9 +10,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -30,6 +34,7 @@ public class TicketDetailActivity extends ActionBarActivity
   private TicketBean ticket;
   private Button btnAddToCart;
   private ImageButton btnLike;
+  private TextView textQuantity;
   
   
   @Override
@@ -121,9 +126,52 @@ public class TicketDetailActivity extends ActionBarActivity
   
   private void checkout()
   {
-    // TODO 팝업창 두 번 띄우는 건 일단 넘어가기
+    selectOption();
+  }
+  
+  
+  private void selectOption()
+  {
+    int resId = R.layout.view_buy_ticket_option;
+    View view = getLayoutInflater().inflate(resId, null);
+    
+    ViewGroup layoutQuantity = (ViewGroup) view.findViewById(R.id.layout_quantity);
+    textQuantity = (TextView) view.findViewById(R.id.text_quantity);
+    final Spinner ageSpinner = (Spinner) view.findViewById(R.id.spinner_age);
+    
+    layoutQuantity.setVisibility(View.VISIBLE);
+    view.findViewById(R.id.btn_decrease).setOnClickListener(clickListener);
+    view.findViewById(R.id.btn_increase).setOnClickListener(clickListener);
+    
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle(ticket.title);
+    builder.setView(view);
+    builder.setNegativeButton(android.R.string.cancel, null);
+    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+    {
+      @Override
+      public void onClick(DialogInterface dialog, int which)
+      {
+        onAfterSelectOption(ageSpinner.getSelectedItemPosition(), Integer.valueOf(textQuantity.getText().toString()));
+      }
+    });
+    builder.create().show();
+  }
+  
+  
+  private void changeQuantity(int add)
+  {
+    int quantity = Integer.valueOf(textQuantity.getText().toString());
+    textQuantity.setText(Integer.toString(quantity + add));
+  }
+  
+  
+  private void onAfterSelectOption(int agePosition, int quantity)
+  {
     Intent intent = new Intent(this, TicketCheckoutActivity.class);
     intent.putExtra("ticket_idx", ticketId);
+    intent.putExtra("age_position", agePosition);
+    intent.putExtra("quantity", quantity);
     startActivityForResult(intent, 1);
   }
   
@@ -157,6 +205,10 @@ public class TicketDetailActivity extends ActionBarActivity
         checkout();
       else if (v.getId() == R.id.btn_show_location)
         displayOnMap();
+      else if (v.getId() == R.id.btn_decrease)
+        changeQuantity(-1);
+      else if (v.getId() == R.id.btn_increase)
+        changeQuantity(1);
     }
   };
   
