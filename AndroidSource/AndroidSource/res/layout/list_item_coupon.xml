@@ -53,7 +53,7 @@
             android:text="@string/term_validity_period" />
 
         <TextView
-            android:id="@+id/text_validity_peroid"
+            android:id="@+id/text_validity_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2015.01.01~2015.12.31" />

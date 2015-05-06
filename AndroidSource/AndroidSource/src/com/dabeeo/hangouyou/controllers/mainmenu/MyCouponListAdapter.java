@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.CouponBean;
+import com.squareup.picasso.Picasso;
 
 public class MyCouponListAdapter extends BaseAdapter
 {
@@ -63,9 +64,10 @@ public class MyCouponListAdapter extends BaseAdapter
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView description = (TextView) view.findViewById(R.id.text_description);
-    TextView validityDate = (TextView) view.findViewById(R.id.text_validity_peroid);
+    TextView validityDate = (TextView) view.findViewById(R.id.text_validity_period);
     TextView isUsed = (TextView) view.findViewById(R.id.text_used);
     
+    Picasso.with(parent.getContext()).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
     title.setText(bean.title);
     description.setText(bean.description);
     validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);

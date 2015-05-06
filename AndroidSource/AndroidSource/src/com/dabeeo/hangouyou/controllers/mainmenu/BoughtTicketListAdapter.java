@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TicketBean;
+import com.squareup.picasso.Picasso;
 
 public class BoughtTicketListAdapter extends BaseAdapter
 {
@@ -62,8 +63,9 @@ public class BoughtTicketListAdapter extends BaseAdapter
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
-    TextView validityDate = (TextView) view.findViewById(R.id.text_validity_peroid);
+    TextView validityDate = (TextView) view.findViewById(R.id.text_validity_period);
     
+    Picasso.with(parent.getContext()).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
     title.setText(bean.title);
     validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);
     return view;

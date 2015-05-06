@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.utils.NumberFormatter;
+import com.squareup.picasso.Picasso;
 
 public class TicketListAdapter extends BaseAdapter
 {
@@ -67,6 +68,7 @@ public class TicketListAdapter extends BaseAdapter
     TextView priceWon = (TextView) view.findViewById(R.id.text_price_won);
     TextView priceYuan = (TextView) view.findViewById(R.id.text_price_yuan);
     
+    Picasso.with(parent.getContext()).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
     title.setText(bean.title);
     discountRate.setText(bean.discountRate);
     priceWon.setText(parent.getContext().getString(R.string.term_won) + NumberFormatter.addComma(bean.priceWon));

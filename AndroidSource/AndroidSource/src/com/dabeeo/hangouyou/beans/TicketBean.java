@@ -12,7 +12,7 @@ public class TicketBean
   public String fromValidityDate, toValidityDate;
   public String validityCondition, refundCondition;
   public String whereUseIn;
-  
+  public String code;
   
   public void setJSONObject(JSONObject obj)
   {
@@ -56,6 +56,9 @@ public class TicketBean
       
       if (obj.has("where_use_in"))
         whereUseIn = obj.getString("where_use_in");
+      
+      if (obj.has("code"))
+        code = obj.getString("code");
     }
     catch (Exception e)
     {

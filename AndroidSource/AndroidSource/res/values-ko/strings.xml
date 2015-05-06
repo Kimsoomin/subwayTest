@@ -32,7 +32,7 @@
     <string name="term_wishlist">위시리스트</string>
     <string name="term_search">검색</string>
     <string name="msg_download_map">지도를 저장하여\n오프라인에서도\n사용해보세요!</string>
-    
+
     <!-- Place activities term -->
     <string name="term_review_best">최고에요</string>
     <string name="term_review_soso">그저그래요</string>
@@ -166,15 +166,39 @@
     <!-- 티켓 -->
     <string name="term_all_tickets">모든 티켓</string>
     <string name="term_bought_ticket">구매한 티켓</string>
-    <string name="term_validity_period">"사용기간 : "</string>
-    <string name="term_checkout">바로구매</string>
+    <string name="term_validity_period">사용기간</string>
+    <string name="term_buy_immediately">바로구매</string>
     <string name="term_validity_condition">사용조건</string>
     <string name="term_refund_condition">환불조건</string>
     <string name="term_where_use_in">사용처</string>
     <string name="term_price">판매가</string>
     <string name="term_discount_price">할인가</string>
     <string name="term_show_location">위치보기</string>
-
+    <string name="term_order_sheet">주문서 작성 결제</string>
+    <string name="term_code">상품 코드</string>
+    <string name="term_customer_info">주문자 정보</string>
+    <string name="term_customer_name">주문자</string>
+    <string name="term_english_name">영문 성명</string>
+    <string name="term_passport_number">여권번호</string>
+    <string name="term_phone_number_optional">전화(선택)</string>
+    <string name="term_order_info">결제 정보</string>
+    <string name="term_total_price">결제 예정금액</string>
+    <string name="term_total_quantity">총 구매 매수</string>
+    <string name="term_total_quantity_unit">매</string>
+    <string name="term_discount_by_coupon">쿠폰할인</string>
+    <string name="term_bill_price">최종 결제 금액</string>
+    <string name="message_order_agree">주문한 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의하시겠습니까?</string>
+    <string name="term_pay_type">결제 수단</string>
+    <string name="term_pay_type_unionpay">유니온페이</string>
+    <string name="term_pay_type_alipay">알리페이</string>
+    <string name="message_order_caution">• 환율로 인한 결제금액의 환차손익은 구매고객님께 부담됩니다.\n
+• 환율변동으로 인해 주문 시점과 결제 시점의 자국통화 환산금액에 차액이 발생할 수 있으며, 실제 자국 통화 결제금액은 카드정보 입력화면에 표시되는 금액으로 확인해 주시기 바랍니다.\n
+• 결제에 대한 문의가 필요하신 경우 SNS공식 QQ번호 : 2889751559 (평일 오전 9시~오후 6시, 한국시각 기준) 로 연락해주시기 바랍니다.</string>
+    <string name="term_checkout">결제하기</string>
+	<string name="error_english_name_is_empty">영문 성명을 입력하세요</string>
+	<string name="error_passport_number_is_empty">여권번호를 입력하세요</string>
+	<string name="error_didnt_agree_order">구매 동의를 해주세요</string>
+    
     <!-- 쿠폰 -->
     <string name="term_all_coupons">모든 쿠폰</string>
     <string name="term_my_coupon">받은 쿠폰</string>
