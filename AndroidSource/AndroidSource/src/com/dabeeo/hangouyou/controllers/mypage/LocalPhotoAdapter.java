@@ -123,8 +123,8 @@ public class LocalPhotoAdapter extends BaseAdapter
     container.setLayoutParams(new ViewGroup.LayoutParams(photoSize, photoSize));
     
     SquareImageView photo = (SquareImageView) convertView.findViewById(R.id.photo);
-    final ImageView imageSelection = (ImageView) convertView.findViewById(R.id.image_selection);
-    final TextView textSelection = (TextView) convertView.findViewById(R.id.text_selection);
+    final View imageSelection = (View) convertView.findViewById(R.id.image_selection);
+    final View textSelection = (View) convertView.findViewById(R.id.text_selection);
     
     if (position == 0)
     {
@@ -146,7 +146,6 @@ public class LocalPhotoAdapter extends BaseAdapter
           {
             imageSelection.setVisibility(View.GONE);
             textSelection.setVisibility(View.GONE);
-            textSelection.setText(null);
             
             if (canSelectMultiple)
             {
@@ -172,7 +171,6 @@ public class LocalPhotoAdapter extends BaseAdapter
             {
               bean.isSelected = true;
               bean.selectIndex = selectIndex;
-              textSelection.setText(selectIndex + "");
               selectIndex++;
             }
             else
@@ -183,7 +181,6 @@ public class LocalPhotoAdapter extends BaseAdapter
               }
               
               bean.isSelected = true;
-              textSelection.setText("V");
             }
           }
           
@@ -199,10 +196,10 @@ public class LocalPhotoAdapter extends BaseAdapter
       imageSelection.setVisibility(View.VISIBLE);
       textSelection.setVisibility(View.VISIBLE);
       
-      if (canSelectMultiple)
-        textSelection.setText(bean.selectIndex + "");
-      else
-        textSelection.setText("V");
+//      if (canSelectMultiple)
+//        textSelection.setText(bean.selectIndex + "");
+//      else
+//        textSelection.setText("V");
     }
     
     return convertView;

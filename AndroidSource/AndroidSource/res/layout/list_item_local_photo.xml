@@ -11,21 +11,20 @@
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
 
-    <com.dabeeo.hangouyou.views.SquareImageView
+    <View
         android:id="@+id/image_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/selected_local_photo"
-        android:visibility="visible" />
+        android:background="@drawable/spinner_check_box"
+        android:visibility="gone" />
 
-    <View
+    <TextView
         android:id="@+id/text_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/spinner_check_box"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="gone" />
 
 </RelativeLayout>
