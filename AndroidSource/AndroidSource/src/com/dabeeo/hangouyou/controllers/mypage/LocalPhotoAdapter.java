@@ -6,12 +6,17 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -24,10 +29,12 @@ public class LocalPhotoAdapter extends BaseAdapter
   private ArrayList<LocalPhotoBean> items = new ArrayList<>();
   private int selectIndex = 1;
   private boolean canSelectMultiple;
+  private Activity context;
   
   
-  public LocalPhotoAdapter(boolean canMultipleSelect)
+  public LocalPhotoAdapter(Activity context, boolean canMultipleSelect)
   {
+    this.context = context;
     this.canSelectMultiple = canMultipleSelect;
   }
   
@@ -108,14 +115,26 @@ public class LocalPhotoAdapter extends BaseAdapter
     int resId = R.layout.list_item_local_photo;
     convertView = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
+    RelativeLayout container = (RelativeLayout) convertView.findViewById(R.id.container);
+    
+    Display display = context.getWindowManager().getDefaultDisplay();
+    int width = display.getWidth();
+    int photoSize = width / 4;
+    container.setLayoutParams(new ViewGroup.LayoutParams(photoSize, photoSize));
+    
     SquareImageView photo = (SquareImageView) convertView.findViewById(R.id.photo);
     final ImageView imageSelection = (ImageView) convertView.findViewById(R.id.image_selection);
     final TextView textSelection = (TextView) convertView.findViewById(R.id.text_selection);
     
     if (position == 0)
-      photo.setImageResource(android.R.drawable.ic_menu_camera);
+    {
+      photo.setImageResource(R.drawable.btn_gallery_camera);
+      photo.setBackgroundColor(Color.parseColor("#969b9c"));
+      photo.setScaleType(ScaleType.CENTER_INSIDE);
+    }
     else
     {
+      photo.setBackgroundColor(Color.parseColor("#00000000"));
       Picasso.with(parent.getContext()).load(Uri.fromFile(new File(bean.path)).toString()).resize(100, 100).centerCrop().into(photo);
       
       convertView.setOnClickListener(new View.OnClickListener()

@@ -6,6 +6,15 @@
         <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
     </style>
 
+    <style name="CustomSpinner" parent="@style/Widget.AppCompat.Spinner">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:showDividers">none</item>
+        <item name="android:dividerHeight">0dp</item>
+        <!-- <item name="android:popupBackground">@drawable/new_bg</item> -->
+        <!-- <item name="android:dropDownHeight">70dp</item> -->
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+        <item name="android:dropDownSelector">@drawable/btn_title_arrow_open</item>
+    </style>
     <!-- ActionBar tabs styles -->
     <style name="MyActionBarTabs" parent="@style/Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/actionbar_tab_indicator</item>

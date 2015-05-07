@@ -1,11 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
     <com.dabeeo.hangouyou.views.SquareImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
@@ -13,20 +14,18 @@
     <com.dabeeo.hangouyou.views.SquareImageView
         android:id="@+id/image_selection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
         android:src="@drawable/selected_local_photo"
         android:visibility="visible" />
 
-    <TextView
+    <View
         android:id="@+id/text_selection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="@drawable/spinner_check_box"
         android:visibility="gone" />
 
 </RelativeLayout>

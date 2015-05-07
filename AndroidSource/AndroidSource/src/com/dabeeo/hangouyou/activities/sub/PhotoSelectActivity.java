@@ -21,11 +21,11 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.controllers.SpinnerAdapter;
 import com.dabeeo.hangouyou.controllers.mypage.LocalPhotoAdapter;
 
 public class PhotoSelectActivity extends Activity
@@ -54,7 +54,7 @@ public class PhotoSelectActivity extends Activity
     if (isCallFromCustomView)
       callbackKeyCallForCustomView = getIntent().getStringExtra("callback_key_for_custom_view");
     
-    photoAdapter = new LocalPhotoAdapter(getIntent().getBooleanExtra("can_select_multiple", false));
+    photoAdapter = new LocalPhotoAdapter(this, getIntent().getBooleanExtra("can_select_multiple", false));
     GridView grid = (GridView) findViewById(R.id.gridView);
     grid.setAdapter(photoAdapter);
     grid.setOnItemClickListener(itemClickListener);
@@ -108,8 +108,8 @@ public class PhotoSelectActivity extends Activity
         directories.add(pathname);
     }
     
-    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, directories);
-    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    SpinnerAdapter spinnerArrayAdapter = new SpinnerAdapter(PhotoSelectActivity.this, android.R.layout.simple_list_item_1, directories);
+//    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     directorySpinner.setAdapter(spinnerArrayAdapter);
     directorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
     {

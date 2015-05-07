@@ -228,6 +228,15 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     titleView.setBean(testBean);
     
+    containerProduct.removeAllViews();
+    ProductView productView = new ProductView(PlaceDetailActivity.this);
+    ProductBean productBean = new ProductBean();
+    productBean.title = "XXX 수분크림";
+    productBean.originalPrice = 150;
+    productBean.discountPrice = 93;
+    productView.setBean(productBean, productBean);
+    containerProduct.addView(productView);
+    
     if (bean == null)
       return;
     
@@ -239,16 +248,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);
     
     titleView.setBean(bean);
-    
-    containerProduct.removeAllViews();
-    ProductView productView = new ProductView(PlaceDetailActivity.this);
-    ProductBean bean = new ProductBean();
-    bean.title = "XXX 수분크림";
-    bean.originalPrice = 150;
-    bean.discountPrice = 93;
-    productView.setBean(bean, bean);
-    containerProduct.addView(productView);
-    
   }
   
   
