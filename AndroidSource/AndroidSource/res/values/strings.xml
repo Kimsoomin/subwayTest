@@ -219,16 +219,6 @@
     <string name="term_show_location">위치보기</string>
     <string name="term_order_sheet">주문서 작성 결제</string>
     <string name="term_code">상품 코드</string>
-    <string name="term_quantity">매수</string>
-    <string name="term_age">연령</string>
-    <string name="term_select_age">연령 선택</string>
-
-    <string-array name="age_type">
-        <item>성인</item>
-        <item>청소년</item>
-        <item>아동</item>
-    </string-array>
-
     <string name="term_customer_info">주문자 정보</string>
     <string name="term_customer_name">주문자</string>
     <string name="term_english_name">영문 성명</string>
@@ -237,7 +227,7 @@
     <string name="term_order_info">결제 정보</string>
     <string name="term_total_price">결제 예정금액</string>
     <string name="term_total_quantity">총 구매 매수</string>
-    <string name="term_quantity_unit">매</string>
+    <string name="term_total_quantity_unit">매</string>
     <string name="term_discount_by_coupon">쿠폰할인</string>
     <string name="term_bill_price">최종 결제 금액</string>
     <string name="message_order_agree">주문한 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의하시겠습니까?</string>
