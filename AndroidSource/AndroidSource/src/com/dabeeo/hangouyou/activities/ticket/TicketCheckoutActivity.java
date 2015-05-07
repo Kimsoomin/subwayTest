@@ -20,7 +20,6 @@ import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.NumberFormatter;
-import com.google.android.gms.drive.execution.internal.GetContentTransferInfoRequest;
 import com.squareup.picasso.Picasso;
 
 public class TicketCheckoutActivity extends ActionBarActivity
