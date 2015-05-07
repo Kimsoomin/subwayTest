@@ -109,7 +109,7 @@ stations_by_internal_id.each do |k, v|
 		transfer_station = []
 		transfer_station.push(v[:id])
 		transfer_station.concat(v[:transfers].map{|s|stations_by_internal_id[s][:id]})
-		transfer_station.sort!
+		# transfer_station.sort!
 		t_id = transfer_station.join
 		if stations[t_id] == nil
 			stations[t_id] = {

@@ -162,64 +162,87 @@
 
     <!-- 추가 String -->
     <!-- 지하철 -->
-    <string name="term_set_start_station">출발역 설정</string>
-    <string name="term_set_end_station">도착역 설정</string>
+    <string name="term_set_start_station">选择出发站</string>
+    <string name="term_set_end_station">选择目的站</string>
     <!-- 내 일정 -->
-    <string name="term_recommend_travel_schedule">추천자동일정 만들기</string>
-    <string name="term_recommend_schedule_compeleted">추천자동일정 완성</string>
-    <string name="term_select_date">날짜 선택하기</string>
-    <string name="msg_warn_empty_start_date">출발일을 선택해주세요</string>
-    <string name="msg_progress_recommend_schedule">추천일정을 생성중입니다.</string>
-    <string name="term_another_recommend_schedule">다른 일정 추천 받기</string>
-    <string name="term_generate_new_schedule">새로 만들기</string>
-    <string name="term_compelete">완료</string>
-    <string name="msg_recommend_schedule_help">어디서 어떻게 해야하는지\n일정이 막막하시다면?\n자동추천일정으로 쉽게 여행일정을 완성하세요.</string>
-    <string name="msg_recommend_step_1">1. 여행일정이 정해지셨다면?</string>
-    <string name="msg_recommend_step_2">2. 이번 여행테마는?</string>
-    <string name="term_select_start_date">출발일 선택</string>
-    <string name="term_select_schedule_day">일정선택</string>
-    <string name="term_next">다음</string>
-    <string name="term_warn_limit_7_days">"* 최대 7일까지 선택가능합니다"</string>
-    <string name="term_popular_schedule">인기순</string>
-    <string name="term_registered_schedule">등록한 내일정</string>
-    <string name="term_bookmarked_schedule">북마크한 일정</string>
-    <string name="msg_save_my_schedule">내 일정으로 저장하시겠습니까?</string>
-    <string name="msg_init_recommend_schedule">모든 설정을 초기화하시겠습니까?</string>
+    <string name="term_recommend_travel_schedule">创建推荐行程</string>
+    <string name="term_recommend_schedule_compeleted">成功创建推荐行程</string>
+    <string name="term_select_date">选择日期</string>
+    <string name="msg_warn_empty_start_date">选择出发日期</string>
+    <string name="msg_progress_recommend_schedule">正在创建推荐行程</string>
+    <string name="term_another_recommend_schedule">接收其它推荐行程</string>
+    <string name="term_generate_new_schedule">重新创建</string>
+    <string name="term_compelete">完成</string>
+    <string name="msg_recommend_schedule_help">出游不知怎么规划？推荐行程帮你安排最佳线路！</string>
+    <string name="msg_recommend_step_1">1. 行程天数和出发日期搞定了吗？</string>
+    <string name="msg_recommend_step_2">2. 本次旅游的主题是什么？</string>
+    <string name="term_select_start_date">选择出发日期</string>
+    <string name="term_select_schedule_day">选择日期</string>
+    <string name="term_next">下一步</string>
+    <string name="term_warn_limit_7_days">"最长能选7日"</string>
+    <string name="term_popular_schedule">按人气排序</string>
+    <string name="term_registered_schedule">我上传的行程</string>
+    <string name="term_bookmarked_schedule">我收藏的行程</string>
+    <string name="msg_save_my_schedule">保存到我的行程？</string>
+    <string name="msg_init_recommend_schedule">确定初始化所有设置？</string>
     <!-- Place -->
-    <string name="term_place_description">장소 설명</string>
+    <string name="term_place_description">概况</string>
     <!-- Main -->
-    <string name="msg_dont_connect_network">네트워크 연결 시, 이용가능합니다.</string>
-    <string name="msg_logout">로그아웃 하시겠습니까?</string>
+    <string name="msg_dont_connect_network">连接网络后，您可以继续使用。</string>
+    <string name="msg_logout">退出吗？</string>
 
     <!-- Mall -->
     <string name="term_top_brand">"[TOP BRAND]"</string>
-    <string name="term_trend_korea">트렌디 한국</string>
-    <string name="term_exhibitions">기획전</string>
-    <string name="term_price">판매가</string>
-    <string name="term_coupon_price">쿠폰적용 할인가</string>
-    <string name="term_product_coupon">할인쿠폰</string>
-    <string name="term_delivery_fee">배송비</string>
-    <string name="msg_product_price_currency">(가격은 환율에 따라 변동될 수 있습니다.)</string>
-    <string name="term_delivery_some_day">지정일 배송</string>
-    <string name="term_product_detail_info">상세정보</string>
-    <string name="term_product_detail_review">상품평</string>
-    <string name="term_product_detail_delivery_info">상품정보</string>
-    <string name="term_product_detail_refund">반품교환</string>
-    <string name="term_buy">바로구매</string>
+    <string name="term_trend_korea">时尚韩国</string>
+    <string name="term_exhibitions">品牌展销</string>
+    <string name="term_price">销售价</string>
+    <string name="term_coupon_price">优惠价</string>
+    <string name="term_product_coupon">优惠券</string>
+    <string name="term_delivery_fee">运费</string>
+    <string name="msg_product_price_currency">(销售价可随着汇率变动)</string>
+    <string name="term_delivery_some_day">指定配送日期</string>
+    <string name="term_product_detail_info">商品详情</string>
+    <string name="term_product_detail_review">累计评价</string>
+    <string name="term_product_detail_delivery_info">商品参数</string>
+    <string name="term_product_detail_refund">退换商品</string>
+    <string name="term_buy">立即购买</string>
     <string name="term_all_rate">"/5.0"</string>
     <!-- 티켓 -->
-    <string name="term_all_tickets">모든 티켓</string>
-    <string name="term_bought_ticket">구매한 티켓</string>
-    <string name="term_validity_period">사용기간</string>
-    <string name="term_buy_immediately">바로구매</string>
-    <string name="term_validity_condition">사용조건</string>
-    <string name="term_refund_condition">환불조건</string>
-    <string name="term_where_use_in">사용처</string>
-    <string name="term_discount_price">할인가</string>
-    <string name="term_show_location">위치보기</string>
+    <string name="term_all_tickets">所有团购</string>
+    <string name="term_bought_ticket">已购团购</string>
+    <string name="term_validity_period">有效期</string>
+    <string name="term_buy_immediately">立即购买</string>
+    <string name="term_validity_condition">使用规则</string>
+    <string name="term_refund_condition">退货规则</string>
+    <string name="term_where_use_in">使用处</string>
+    <string name="term_discount_price">优惠价</string>
+    <string name="term_show_location">商家位置</string>
+
+    <!-- 쿠폰 -->
+    <string name="term_all_coupons">所有优惠券</string>
+    <string name="term_my_coupon">已收优惠券</string>
+    <string name="term_used">已使用</string>
+    <string name="term_ticket_en">"TICKET "</string>
+    <string name="term_ticket_and_coupon_buy">购买</string>
+    <string name="term_coupon_en">"COUPON "</string>
+
+    <!-- 추가 String (아직 안보냄) -->
+    <!-- 쿠폰 -->
+    <string name="term_quantity_unit">매</string>
+    <string name="term_download">다운로드</string>
     <string name="term_order_sheet">주문서 작성 결제</string>
     <string name="term_order_item">구매 상품</string>
     <string name="term_code">상품 코드</string>
+    <string name="term_quantity">매수</string>
+    <string name="term_age">연령</string>
+    <string name="term_select_age">연령 선택</string>
+
+    <string-array name="age_type">
+        <item>성인</item>
+        <item>청소년</item>
+        <item>아동</item>
+    </string-array>
+
     <string name="term_customer_info">주문자 정보</string>
     <string name="term_customer_name">주문자</string>
     <string name="term_english_name">영문 성명</string>
@@ -249,17 +272,5 @@
     <string name="term_paid_by">%1$s로 결제</string>
     <string name="term_go_to_main">메인으로</string>
     <string name="term_go_to_bought_list">티켓내역 확인</string>
-
-    <!-- 쿠폰 -->
-    <string name="term_all_coupons">모든 쿠폰</string>
-    <string name="term_my_coupon">받은 쿠폰</string>
-    <string name="term_used">사용완료</string>
-    <string name="term_ticket_en">"TICKET "</string>
-    <string name="term_ticket_and_coupon_buy">구매하기</string>
-
-    <!-- 추가 String (아직 안보냄) -->
-    <!-- 쿠폰 -->
-    <string name="term_coupon_en">"COUPON "</string>
-    <string name="term_download">다운로드</string>
 
 </resources>
