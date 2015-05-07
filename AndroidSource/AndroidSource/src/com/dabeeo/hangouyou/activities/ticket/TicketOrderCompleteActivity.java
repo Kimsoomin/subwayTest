@@ -4,15 +4,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -22,63 +17,44 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.NumberFormatter;
 import com.squareup.picasso.Picasso;
 
-public class TicketCheckoutActivity extends ActionBarActivity
+public class TicketOrderCompleteActivity extends ActionBarActivity
 {
   private ImageView imageView;
-  private TextView textTitle, textCode, textDisplayPrice, textPrice, textValidityPeriod, textQuantity, textAge, textValidityCondition, textRefundCondition;
-  private TextView textName, textEmail, textTotalPrice, textTotalQuantity, textDiscountByCoupon, textBillPrice, textWhereUseIn;
-  private EditText editEnglishName, editPassportNumber, editPhoneNumber;
-  private CheckBox checkAgree;
-  private RadioGroup radioPayType;
+  private TextView textOrderCode, textTitle, textCode, textValidityPeriod, textValidityCondition;
+  private TextView textTotalPrice, textTotalQuantity, textDiscountByCoupon, textBillPrice, textWhereUseIn, textPaidBy, textPaidPrice, textPaidDate;
   
   private ApiClient apiClient;
   private TicketBean ticket;
-  private String ticketId;
-  private Button btnCheckout;
-  private int quantity;
+  private String orderId;
   
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_ticket_checkout);
+    setContentView(R.layout.activity_ticket_order_complete);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
     imageView = (ImageView) findViewById(R.id.imageview);
+    textOrderCode = (TextView) findViewById(R.id.text_order_code);
     textTitle = (TextView) findViewById(R.id.text_title);
     textCode = (TextView) findViewById(R.id.text_code);
-    textDisplayPrice = (TextView) findViewById(R.id.text_display_price);
-    textPrice = (TextView) findViewById(R.id.text_price);
     textValidityPeriod = (TextView) findViewById(R.id.text_validity_period);
-    textQuantity = (TextView) findViewById(R.id.text_quantity);
-    textAge = (TextView) findViewById(R.id.text_age);
     textValidityCondition = (TextView) findViewById(R.id.text_validity_condition);
-    textRefundCondition = (TextView) findViewById(R.id.text_refund_condition);
-    textName = (TextView) findViewById(R.id.text_name);
-    textEmail = (TextView) findViewById(R.id.text_email);
     textTotalPrice = (TextView) findViewById(R.id.text_total_price);
     textTotalQuantity = (TextView) findViewById(R.id.text_total_quantity);
     textDiscountByCoupon = (TextView) findViewById(R.id.text_discount_by_coupon);
     textBillPrice = (TextView) findViewById(R.id.text_bill_price);
     textWhereUseIn = (TextView) findViewById(R.id.text_where_use_in);
-    editEnglishName = (EditText) findViewById(R.id.edit_english_name);
-    editPassportNumber = (EditText) findViewById(R.id.edit_passport_number);
-    editPhoneNumber = (EditText) findViewById(R.id.edit_phone_number);
-    checkAgree = (CheckBox) findViewById(R.id.check_agree);
-    radioPayType = (RadioGroup) findViewById(R.id.radio_pay_type);
-    btnCheckout = (Button) findViewById(R.id.btn_checkout);
-    btnCheckout.setOnClickListener(clickListener);
+    textPaidBy = (TextView) findViewById(R.id.text_paid_by);
+    textPaidPrice = (TextView) findViewById(R.id.text_paid_price);
+    textPaidDate = (TextView) findViewById(R.id.text_paid_date);
     
-    ticketId = getIntent().getStringExtra("ticket_idx");
-    quantity = getIntent().getIntExtra("quantity", 1);
-    int agePosition = getIntent().getIntExtra("age_position", 0);
-    textQuantity.setText(getString(R.string.term_quantity) + " : " + quantity + getString(R.string.term_quantity_unit));
-    textTotalQuantity.setText(getString(R.string.term_total_quantity) + " : " + quantity + getString(R.string.term_quantity_unit));
+    findViewById(R.id.btn_go_to_main).setOnClickListener(clickListener);
+    findViewById(R.id.btn_go_to_bought_list).setOnClickListener(clickListener);
     
-    String[] ages = getResources().getStringArray(R.array.age_type);
-    textAge.setText(getString(R.string.term_age) + " : " + ages[agePosition]);
+    orderId = getIntent().getStringExtra("order_id");
     
     apiClient = new ApiClient(this);
     
@@ -98,58 +74,36 @@ public class TicketCheckoutActivity extends ActionBarActivity
   private void displayData()
   {
     Picasso.with(this).load("http://lorempixel.com/300/300/cats").fit().centerCrop().into(imageView);
+    
+    textOrderCode.setText(getString(R.string.term_order_code) + " : " + "192370283qwer");
     textTitle.setText(ticket.title);
     textCode.setText(getString(R.string.term_code) + " : " + ticket.code);
-    textDisplayPrice.setText(getString(R.string.term_price) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(ticket.displayPriceWon) + "(" + getString(R.string.term_yuan)
-        + ticket.displayPriceYuan + ")");
-    textPrice.setText(getString(R.string.term_discount_price) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(ticket.priceWon) + "(" + getString(R.string.term_yuan)
-        + ticket.priceYuan + ")");
     textValidityPeriod.setText(getString(R.string.term_validity_period) + " : " + ticket.fromValidityDate + "~" + ticket.toValidityDate);
     
     textValidityCondition.setText(ticket.validityCondition);
-    textRefundCondition.setText(ticket.refundCondition);
     textWhereUseIn.setText(ticket.whereUseIn);
     
-    textName.setText("홍길동");
-    textEmail.setText("asdf@asdf.com");
     textTotalPrice.setText(getString(R.string.term_total_price) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(30000));
     textDiscountByCoupon.setText(getString(R.string.term_discount_by_coupon) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(10000));
     textBillPrice.setText(getString(R.string.term_bill_price) + " : " + getString(R.string.term_won) + NumberFormatter.addComma(20000) + "(" + getString(R.string.term_yuan) + ticket.priceYuan + ")");
+    textTotalQuantity.setText(getString(R.string.term_total_quantity) + " : " + 1 + getString(R.string.term_quantity_unit));
+    textPaidBy.setText(String.format(getString(R.string.term_paid_by), "알리페이"));
+    textPaidPrice.setText(getString(R.string.term_won) + NumberFormatter.addComma(20000) + "(" + getString(R.string.term_yuan) + ticket.priceYuan + ")");
+    textPaidDate.setText("2015.05.04");
   }
   
   
-  private void checkout()
+  private void goToMain()
   {
-    if (TextUtils.isEmpty(editEnglishName.getText().toString()))
-    {
-      editEnglishName.requestFocus();
-      editEnglishName.setError(getString(R.string.error_english_name_is_empty));
-      return;
-    }
-    
-    if (TextUtils.isEmpty(editPassportNumber.getText().toString()))
-    {
-      editPassportNumber.requestFocus();
-      editPassportNumber.setError(getString(R.string.error_passport_number_is_empty));
-      return;
-    }
-    
-    if (!checkAgree.isChecked())
-    {
-      checkAgree.requestFocus();
-      checkAgree.setError(getString(R.string.error_didnt_agree_order));
-      return;
-    }
-    
-    btnCheckout.setEnabled(false);
-    new CheckoutAsyncTask().execute();
+    Intent intent = new Intent(this, TicketActivity.class);
+    startActivity(intent);
   }
   
   
-  private void onAfterCheckout()
+  private void goToBoughtList()
   {
-    Intent intent = new Intent(this, TicketOrderCompleteActivity.class);
-    intent.putExtra("order_id", "1");
+    // TODO 구매내역 화면으로 보내기
+    Intent intent = new Intent(this, TicketActivity.class);
     startActivity(intent);
   }
   
@@ -161,7 +115,10 @@ public class TicketCheckoutActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      checkout();
+      if (v.getId() == R.id.btn_go_to_main)
+        goToMain();
+      else if (v.getId() == R.id.btn_go_to_bought_list)
+        goToBoughtList();
     }
   };
   
@@ -173,7 +130,7 @@ public class TicketCheckoutActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.getTicketDetail(ticketId);
+      return apiClient.getOrderDetail(orderId);
     }
     
     
@@ -206,30 +163,6 @@ public class TicketCheckoutActivity extends ActionBarActivity
       {
         e.printStackTrace();
       }
-    }
-  }
-  
-  private class CheckoutAsyncTask extends AsyncTask<Void, Void, NetworkResult>
-  {
-    @Override
-    protected NetworkResult doInBackground(Void... params)
-    {
-      return apiClient.checkoutTicket(ticketId);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      super.onPostExecute(result);
-      
-      if (!result.isSuccess)
-      {
-        btnCheckout.setEnabled(true);
-        return;
-      }
-      
-      onAfterCheckout();
     }
   }
 }

@@ -214,6 +214,7 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.ticket.TicketActivity"
             android:label="@string/term_ticket"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.ticket.TicketDetailActivity"
@@ -224,6 +225,10 @@
             android:label="@string/term_order_sheet"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.ticket.TicketOrderCompleteActivity"
+            android:label="@string/term_order_completed"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.CouponActivity"
             android:label="@string/term_coupon"

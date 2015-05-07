@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="구매상품"
+            android:text="@string/term_order_item"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
@@ -287,7 +287,7 @@
             android:id="@+id/check_agree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/message_order_agree" />
+            android:text="@string/msg_order_agree" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -319,7 +319,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/message_order_caution" />
+            android:text="@string/msg_order_caution" />
 
         <Button
             android:id="@+id/btn_checkout"

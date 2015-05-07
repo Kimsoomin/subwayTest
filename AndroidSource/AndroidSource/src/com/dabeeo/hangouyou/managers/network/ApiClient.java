@@ -125,6 +125,13 @@ public class ApiClient
   }
   
   
+  public NetworkResult getOrderDetail(String orderId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + ticketId);
+    return new NetworkResult(true, null, 1);
+  }
+  
+  
   public NetworkResult getAllCoupon(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);

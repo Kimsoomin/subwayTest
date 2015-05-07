@@ -32,7 +32,7 @@ public class TicketDetailActivity extends ActionBarActivity
   private ApiClient apiClient;
   private String ticketId;
   private TicketBean ticket;
-  private Button btnAddToCart;
+  private Button btnAddToCart, btnCheckout;
   private ImageButton btnLike;
   private TextView textQuantity;
   
@@ -58,11 +58,12 @@ public class TicketDetailActivity extends ActionBarActivity
     textWhereUseIn = (TextView) findViewById(R.id.text_where_use_in);
     btnAddToCart = (Button) findViewById(R.id.btn_my_cart);
     btnLike = (ImageButton) findViewById(R.id.img_like);
+    btnCheckout = (Button) findViewById(R.id.btn_checkout);
     
     btnLike.setOnClickListener(clickListener);
     findViewById(R.id.img_share).setOnClickListener(clickListener);
     btnAddToCart.setOnClickListener(clickListener);
-    findViewById(R.id.btn_checkout).setOnClickListener(clickListener);
+    btnCheckout.setOnClickListener(clickListener);
     findViewById(R.id.btn_show_location).setOnClickListener(clickListener);
     
     apiClient = new ApiClient(this);
@@ -104,6 +105,9 @@ public class TicketDetailActivity extends ActionBarActivity
     textValidityCondition.setText(ticket.validityCondition);
     textRefundCondition.setText(ticket.refundCondition);
     textWhereUseIn.setText(ticket.whereUseIn);
+    
+    btnAddToCart.setEnabled(true);
+    btnCheckout.setEnabled(true);
   }
   
   
@@ -172,19 +176,7 @@ public class TicketDetailActivity extends ActionBarActivity
     intent.putExtra("ticket_idx", ticketId);
     intent.putExtra("age_position", agePosition);
     intent.putExtra("quantity", quantity);
-    startActivityForResult(intent, 1);
-  }
-  
-  
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data)
-  {
-    super.onActivityResult(requestCode, resultCode, data);
-    
-    if (resultCode != RESULT_OK)
-      return;
-    
-    finish();
+    startActivity(intent);
   }
   
   /**************************************************
