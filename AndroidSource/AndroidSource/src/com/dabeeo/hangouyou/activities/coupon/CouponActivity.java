@@ -33,7 +33,7 @@ public class CouponActivity extends BaseNavigationTabActivity
   {
     ArrayList<String> titles = new ArrayList<>();
     titles.add(getString(R.string.term_all_coupons));
-    titles.add(getString(R.string.term_my_coupon));
+    titles.add(getString(R.string.term_downloaded_coupon));
     
     for (String title : titles)
     {

@@ -11,6 +11,7 @@ public class CouponBean
   public String fromValidityDate, toValidityDate, validityCondition, whereUseIn;
   public boolean isUsed;
   public String howToUse, instruction;
+  public String couponNumber;
   
   
   public void setJSONObject(JSONObject obj)

@@ -30,7 +30,7 @@ public class ScheduleView extends RelativeLayout
     View view = LayoutInflater.from(context).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    TextView title = (TextView) view.findViewById(R.id.text_tile);
+    TextView title = (TextView) view.findViewById(R.id.text_title);
     TextView position = (TextView) view.findViewById(R.id.text_position);
     
     //가데이터

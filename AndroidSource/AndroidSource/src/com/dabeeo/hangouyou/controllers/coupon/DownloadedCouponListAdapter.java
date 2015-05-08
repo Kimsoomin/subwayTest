@@ -14,7 +14,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.CouponBean;
 import com.squareup.picasso.Picasso;
 
-public class MyCouponListAdapter extends BaseAdapter
+public class DownloadedCouponListAdapter extends BaseAdapter
 {
   private ArrayList<CouponBean> items = new ArrayList<>();
   
@@ -58,7 +58,7 @@ public class MyCouponListAdapter extends BaseAdapter
   public View getView(int position, View convertView, ViewGroup parent)
   {
     CouponBean bean = (CouponBean) items.get(position);
-    int resId = R.layout.list_item_my_coupon;
+    int resId = R.layout.list_item_downloaded_coupon;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);

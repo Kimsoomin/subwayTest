@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.activities.coupon;
 
-import java.util.Calendar;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,36 +20,37 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.squareup.picasso.Picasso;
 
-public class CouponDetailActivity extends ActionBarActivity
+public class DownloadedCouponDetailActivity extends ActionBarActivity
 {
   private ImageView imageView;
-  private TextView textValidityPeriod, textValidityCondition, textWhereUseIn, textHowToUse, textInstruction;
+  private TextView textTitle, textCouponNumber, textValidityPeriod, textValidityCondition, textWhereUseIn, textHowToUse, textInstruction;
   private ApiClient apiClient;
   private String couponId;
   private CouponBean coupon;
-  private Button btnDownload;
+  private Button btnUse;
   
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_coupon_detail);
+    setContentView(R.layout.activity_downloaded_coupon_detail);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
     couponId = getIntent().getStringExtra("coupon_idx");
     
     imageView = (ImageView) findViewById(R.id.imageview);
+    textTitle = (TextView) findViewById(R.id.text_title);
+    textCouponNumber = (TextView) findViewById(R.id.text_coupon_number);
     textValidityPeriod = (TextView) findViewById(R.id.text_validity_period);
     textValidityCondition = (TextView) findViewById(R.id.text_validity_condition);
     textWhereUseIn = (TextView) findViewById(R.id.text_where_use_in);
     textHowToUse = (TextView) findViewById(R.id.text_how_to_use);
     textInstruction = (TextView) findViewById(R.id.text_instructions);
     
-    btnDownload = (Button) findViewById(R.id.btn_download);
-    
-    btnDownload.setOnClickListener(clickListener);
+    btnUse = (Button) findViewById(R.id.btn_use);
+    btnUse.setOnClickListener(clickListener);
     findViewById(R.id.btn_show_location).setOnClickListener(clickListener);
     
     apiClient = new ApiClient(this);
@@ -83,12 +82,14 @@ public class CouponDetailActivity extends ActionBarActivity
   private void displayData()
   {
     Picasso.with(this).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
+    textTitle.setText(getString(R.string.term_coupon_title) + " : " + coupon.title);
+    textCouponNumber.setText(getString(R.string.term_coupon_number) + " : " + coupon.couponNumber);
     textValidityPeriod.setText(getString(R.string.term_validity_period) + " : " + coupon.fromValidityDate + "~" + coupon.toValidityDate);
     textValidityCondition.setText(coupon.validityCondition);
     textWhereUseIn.setText(coupon.whereUseIn);
     textHowToUse.setText(coupon.howToUse);
     textInstruction.setText(coupon.instruction);
-    btnDownload.setEnabled(true);
+    btnUse.setEnabled(true);
   }
   
   
@@ -100,36 +101,23 @@ public class CouponDetailActivity extends ActionBarActivity
   }
   
   
-  private void onAfterCheckAlreadyHave(boolean alreadyHave)
+  private void useCoupon()
   {
-    if (!alreadyHave)
-    {
-      new CouponDownloadTask().execute();
-      return;
-    }
-    
-    showAlert(getString(R.string.term_already_have_coupon));
-  }
-  
-  
-  private void showAlert(String msg)
-  {
-    new AlertDialog.Builder(this).setTitle(R.string.term_alert).setMessage(msg).setNegativeButton(android.R.string.cancel, null).setPositiveButton(R.string.term_show_coupon_list,
+    new AlertDialog.Builder(this).setTitle(R.string.term_alert).setMessage(R.string.term_confirm_use_coupon).setNegativeButton(android.R.string.cancel, null).setPositiveButton(android.R.string.ok,
         new DialogInterface.OnClickListener()
         {
           @Override
           public void onClick(DialogInterface dialog, int which)
           {
-            goToDownloadedCouponList();
+            new UseCouponTask().execute();
           }
         }).create().show();
   }
   
   
-  private void goToDownloadedCouponList()
+  private void onAfterUseCoupon()
   {
-    setResult(RESULT_OK);
-    finish();
+    new AlertDialog.Builder(this).setTitle(R.string.term_alert).setMessage(R.string.term_conpun_used).setPositiveButton(android.R.string.ok, null).create().show();
   }
   
   /**************************************************
@@ -140,8 +128,8 @@ public class CouponDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == btnDownload.getId())
-        new CheckAlreadyHaveTask().execute();
+      if (v.getId() == btnUse.getId())
+        useCoupon();
       else if (v.getId() == R.id.btn_show_location)
         displayOnMap();
     }
@@ -173,6 +161,7 @@ public class CouponDetailActivity extends ActionBarActivity
 //        bean.setJSONObject(new JSONObject(result.response));
         
         coupon.title = "아쿠아리움 입장권";
+        coupon.couponNumber = "2897642937492378492";
         coupon.fromValidityDate = "2015.01.01";
         coupon.toValidityDate = "2015.12.31";
         coupon.validityCondition = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -189,12 +178,12 @@ public class CouponDetailActivity extends ActionBarActivity
     }
   }
   
-  private class CheckAlreadyHaveTask extends AsyncTask<Void, Void, NetworkResult>
+  private class UseCouponTask extends AsyncTask<Void, Void, NetworkResult>
   {
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.couponDownload(couponId);
+      return apiClient.useCoupon(couponId);
     }
     
     
@@ -206,30 +195,7 @@ public class CouponDetailActivity extends ActionBarActivity
       if (!result.isSuccess)
         return;
       
-      // TODO 랜덤 true/false를 위해 
-      boolean randomBoolean = Calendar.getInstance().getTimeInMillis() % 2 == 1;
-      onAfterCheckAlreadyHave(randomBoolean);
-    }
-  }
-  
-  private class CouponDownloadTask extends AsyncTask<Void, Void, NetworkResult>
-  {
-    @Override
-    protected NetworkResult doInBackground(Void... params)
-    {
-      return apiClient.couponDownload(couponId);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      super.onPostExecute(result);
-      
-      if (!result.isSuccess)
-        return;
-      
-      showAlert(getString(R.string.term_coupon_download_completed));
+      onAfterUseCoupon();
     }
   }
 }

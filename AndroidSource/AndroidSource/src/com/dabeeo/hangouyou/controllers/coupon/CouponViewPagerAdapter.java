@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.dabeeo.hangouyou.fragments.coupon.CouponListFragment;
-import com.dabeeo.hangouyou.fragments.coupon.MyCouponListFragment;
+import com.dabeeo.hangouyou.fragments.coupon.DownloadedCouponListFragment;
 
 public class CouponViewPagerAdapter extends FragmentPagerAdapter
 {
@@ -33,7 +33,7 @@ public class CouponViewPagerAdapter extends FragmentPagerAdapter
     if (position == 0)
       return new CouponListFragment();
     else
-      return new MyCouponListFragment();
+      return new DownloadedCouponListFragment();
   }
   
   

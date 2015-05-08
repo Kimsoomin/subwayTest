@@ -221,7 +221,7 @@
 
     <!-- 쿠폰 -->
     <string name="term_all_coupons">所有优惠券</string>
-    <string name="term_my_coupon">已收优惠券</string>
+    <string name="term_downloaded_coupon">已收优惠券</string>
     <string name="term_used">已使用</string>
     <string name="term_ticket_en">"TICKET "</string>
     <string name="term_ticket_and_coupon_buy">购买</string>
@@ -280,5 +280,10 @@
     <string name="term_already_have_coupon">이미 다운로드한 쿠폰입니다. 마이페이지>티켓/쿠폰에서 확인하실 수 있습니다. 쿠폰을 확인하시겠습니까?</string>
     <string name="term_coupon_download_completed">쿠폰을 받았습니다. 마이페이지>티켓/쿠폰에서 확인하실 수 있습니다 쿠폰을 확인하겠습니까?</string>
     <string name="term_show_coupon_list">쿠폰내역 확인</string>
+    <string name="term_coupon_title">쿠폰명</string>
+    <string name="term_coupon_number">쿠폰번호</string>
+    <string name="term_use_coupon">사용하기(직원전용)</string>
+    <string name="term_confirm_use_coupon">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다. 쿠폰을 사용하시겠습니까?</string>
+    <string name="term_conpun_used">사용완료 하였습니다.</string>
 
 </resources>

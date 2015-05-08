@@ -138,7 +138,7 @@ public class ApiClient
   }
   
   
-  public NetworkResult getMyCoupon(int page, String contentType)
+  public NetworkResult getDownloadedCoupon(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
   }
@@ -159,6 +159,13 @@ public class ApiClient
   
   
   public NetworkResult couponDownload(String couponId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return new NetworkResult(true, null, 1);
+  }
+  
+  
+  public NetworkResult useCoupon(String couponId)
   {
 //    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
     return new NetworkResult(true, null, 1);
