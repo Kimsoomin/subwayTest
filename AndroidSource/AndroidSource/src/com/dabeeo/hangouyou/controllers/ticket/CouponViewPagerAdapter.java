@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers.mainmenu;
+package com.dabeeo.hangouyou.controllers.ticket;
 
 import java.util.ArrayList;
 
@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.fragments.mainmenu.CouponListFragment;
-import com.dabeeo.hangouyou.fragments.mainmenu.MyCouponListFragment;
+import com.dabeeo.hangouyou.fragments.ticket.CouponListFragment;
+import com.dabeeo.hangouyou.fragments.ticket.MyCouponListFragment;
 
 public class CouponViewPagerAdapter extends FragmentPagerAdapter
 {

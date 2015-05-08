@@ -6,7 +6,6 @@ import java.util.Date;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 public class PlaceBean
 {

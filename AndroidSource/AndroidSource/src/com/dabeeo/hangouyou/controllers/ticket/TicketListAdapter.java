@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers.mainmenu;
+package com.dabeeo.hangouyou.controllers.ticket;
 
 import java.util.ArrayList;
 

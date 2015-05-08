@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.CouponBean;
-import com.dabeeo.hangouyou.beans.ReviewBean;
-import com.dabeeo.hangouyou.beans.TicketBean;
 
 public class DetailCouponView extends RelativeLayout
 {

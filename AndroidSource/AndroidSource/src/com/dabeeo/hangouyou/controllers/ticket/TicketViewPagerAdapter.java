@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers.mainmenu;
+package com.dabeeo.hangouyou.controllers.ticket;
 
 import java.util.ArrayList;
 
@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.fragments.mainmenu.BoughtTicketListFragment;
-import com.dabeeo.hangouyou.fragments.mainmenu.TicketListFragment;
+import com.dabeeo.hangouyou.fragments.ticket.BoughtTicketListFragment;
+import com.dabeeo.hangouyou.fragments.ticket.TicketListFragment;
 
 public class TicketViewPagerAdapter extends FragmentPagerAdapter
 {

@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.fragments.mainmenu;
+package com.dabeeo.hangouyou.fragments.ticket;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,15 +17,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.TicketBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.BoughtTicketListAdapter;
+import com.dabeeo.hangouyou.beans.CouponBean;
+import com.dabeeo.hangouyou.controllers.ticket.MyCouponListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
-public class BoughtTicketListFragment extends Fragment
+public class MyCouponListFragment extends Fragment
 {
   private ProgressBar progressBar;
-  private BoughtTicketListAdapter adapter;
+  private MyCouponListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
   
@@ -46,7 +46,7 @@ public class BoughtTicketListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new BoughtTicketListAdapter();
+    adapter = new MyCouponListAdapter();
     
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
@@ -68,7 +68,7 @@ public class BoughtTicketListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getBoughtTicket(page, "Place");
+      return apiClient.getMyCoupon(page, "Place");
     }
     
     
@@ -85,14 +85,12 @@ public class BoughtTicketListFragment extends Fragment
         for (int i = 0; i < arr.length(); i++)
         {
           JSONObject objInArr = arr.getJSONObject(i);
-          TicketBean bean = new TicketBean();
+          CouponBean bean = new CouponBean();
           bean.setJSONObject(objInArr);
-          bean.idx = i;
-          bean.discountRate = "8折";
-          bean.priceWon = 10000;
-          bean.priceYuan = 57;
+          bean.description = "100,000이상 구매 시";
           bean.fromValidityDate = "2015.04.11";
           bean.toValidityDate = "2015.09.11";
+          bean.isUsed = i % 2 == 1;
           adapter.add(bean);
         }
         adapter.notifyDataSetChanged();

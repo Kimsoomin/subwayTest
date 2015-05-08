@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.bases.BaseNavigationTabActivity;
-import com.dabeeo.hangouyou.controllers.mainmenu.CouponViewPagerAdapter;
+import com.dabeeo.hangouyou.controllers.ticket.CouponViewPagerAdapter;
 
 public class CouponActivity extends BaseNavigationTabActivity
 {

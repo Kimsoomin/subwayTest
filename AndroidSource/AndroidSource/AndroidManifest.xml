@@ -221,6 +221,10 @@
             android:label="@string/term_ticket"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.dabeeo.hangouyou.activities.ticket.BoughtTicketDetailActivity"
+            android:label="@string/term_show_bought_ticket"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.ticket.TicketCheckoutActivity"
             android:label="@string/term_order_sheet"
             android:screenOrientation="portrait"

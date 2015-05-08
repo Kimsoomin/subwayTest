@@ -1,8 +1,9 @@
-package com.dabeeo.hangouyou.fragments.mainmenu;
+package com.dabeeo.hangouyou.fragments.ticket;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,15 +18,16 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.CouponBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.MyCouponListAdapter;
+import com.dabeeo.hangouyou.activities.ticket.BoughtTicketDetailActivity;
+import com.dabeeo.hangouyou.beans.TicketBean;
+import com.dabeeo.hangouyou.controllers.ticket.BoughtTicketListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
-public class MyCouponListFragment extends Fragment
+public class BoughtTicketListFragment extends Fragment
 {
   private ProgressBar progressBar;
-  private MyCouponListAdapter adapter;
+  private BoughtTicketListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
   
@@ -46,7 +48,7 @@ public class MyCouponListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new MyCouponListAdapter();
+    adapter = new BoughtTicketListAdapter();
     
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
@@ -68,7 +70,7 @@ public class MyCouponListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getMyCoupon(page, "Place");
+      return apiClient.getBoughtTicket(page, "Place");
     }
     
     
@@ -85,12 +87,14 @@ public class MyCouponListFragment extends Fragment
         for (int i = 0; i < arr.length(); i++)
         {
           JSONObject objInArr = arr.getJSONObject(i);
-          CouponBean bean = new CouponBean();
+          TicketBean bean = new TicketBean();
           bean.setJSONObject(objInArr);
-          bean.description = "100,000이상 구매 시";
+          bean.idx = i;
+          bean.discountRate = "8折";
+          bean.priceWon = 10000;
+          bean.priceYuan = 57;
           bean.fromValidityDate = "2015.04.11";
           bean.toValidityDate = "2015.09.11";
-          bean.isUsed = i % 2 == 1;
           adapter.add(bean);
         }
         adapter.notifyDataSetChanged();
@@ -113,10 +117,9 @@ public class MyCouponListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-//      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-//      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
-//      i.putExtra("place_idx", bean.idx);
-//      startActivity(i);
+      Intent i = new Intent(getActivity(), BoughtTicketDetailActivity.class);
+      i.putExtra("order_id", position);
+      startActivity(i);
     }
   };
   

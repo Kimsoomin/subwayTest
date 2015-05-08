@@ -149,6 +149,7 @@
     <string name="msg_dont_support_outside_seoul">非首尔地区正在准备中。</string>
     <string name="msg_near_by_station">这是最近的地铁站。</string>
     <string name="term_exit_info">出口信息</string>
+    
     <!-- 맵 -->
     <string name="map_notification">提醒</string>
     <string name="map_confirm">确认</string>
@@ -160,7 +161,6 @@
     <!-- Intro -->
     <string name="msg_map_donwload">正在下载首尔地图，请稍等。</string>
 
-    <!-- 추가 String -->
     <!-- 지하철 -->
     <string name="term_set_start_station">选择出发站</string>
     <string name="term_set_end_station">选择目的站</string>
@@ -272,5 +272,6 @@
     <string name="term_paid_by">%1$s로 결제</string>
     <string name="term_go_to_main">메인으로</string>
     <string name="term_go_to_bought_list">티켓내역 확인</string>
+    <string name="term_show_bought_ticket">티켓보기</string>
 
 </resources>
