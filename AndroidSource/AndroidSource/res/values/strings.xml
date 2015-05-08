@@ -32,6 +32,7 @@
     <string name="term_wishlist">收藏夹</string>
     <string name="term_search">搜索</string>
     <string name="msg_download_map">贴士!你可以免费下载离线地图哟！</string>
+    
     <!-- Place activities term -->
     <string name="term_review_best">好</string>
     <string name="term_review_soso">一般</string>
