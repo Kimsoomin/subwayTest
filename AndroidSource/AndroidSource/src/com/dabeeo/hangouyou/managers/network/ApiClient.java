@@ -125,7 +125,7 @@ public class ApiClient
   }
   
   
-  public NetworkResult getOrderDetail(String orderId)
+  public NetworkResult getTicketOrderDetail(String orderId)
   {
 //    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + ticketId);
     return new NetworkResult(true, null, 1);
@@ -143,4 +143,24 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
   }
   
+  
+  public NetworkResult getCouponDetail(String couponId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return new NetworkResult(true, null, 1);
+  }
+  
+  
+  public NetworkResult checkAlreadyHaveCoupon(String couponId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return new NetworkResult(true, null, 1);
+  }
+  
+  
+  public NetworkResult couponDownload(String couponId)
+  {
+//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return new NetworkResult(true, null, 1);
+  }
 }

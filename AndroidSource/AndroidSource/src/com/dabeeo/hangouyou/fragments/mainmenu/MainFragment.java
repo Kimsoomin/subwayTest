@@ -30,7 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.CouponActivity;
+import com.dabeeo.hangouyou.activities.coupon.CouponActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;

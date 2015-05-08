@@ -130,7 +130,7 @@ public class TicketOrderCompleteActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.getOrderDetail(orderId);
+      return apiClient.getTicketOrderDetail(orderId);
     }
     
     

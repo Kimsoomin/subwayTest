@@ -32,7 +32,7 @@
     <string name="term_wishlist">收藏夹</string>
     <string name="term_search">搜索</string>
     <string name="msg_download_map">贴士!你可以免费下载离线地图哟！</string>
-    
+
     <!-- Place activities term -->
     <string name="term_review_best">好</string>
     <string name="term_review_soso">一般</string>
@@ -150,7 +150,7 @@
     <string name="msg_dont_support_outside_seoul">非首尔地区正在准备中。</string>
     <string name="msg_near_by_station">这是最近的地铁站。</string>
     <string name="term_exit_info">出口信息</string>
-    
+
     <!-- 맵 -->
     <string name="map_notification">提醒</string>
     <string name="map_confirm">确认</string>
@@ -274,5 +274,11 @@
     <string name="term_go_to_main">메인으로</string>
     <string name="term_go_to_bought_list">티켓내역 확인</string>
     <string name="term_show_bought_ticket">티켓보기</string>
+    <string name="term_show_coupon">쿠폰보기</string>
+    <string name="term_how_to_use">사용방법</string>
+    <string name="term_instructions">유의사항</string>
+    <string name="term_already_have_coupon">이미 다운로드한 쿠폰입니다. 마이페이지>티켓/쿠폰에서 확인하실 수 있습니다. 쿠폰을 확인하시겠습니까?</string>
+    <string name="term_coupon_download_completed">쿠폰을 받았습니다. 마이페이지>티켓/쿠폰에서 확인하실 수 있습니다 쿠폰을 확인하겠습니까?</string>
+    <string name="term_show_coupon_list">쿠폰내역 확인</string>
 
 </resources>

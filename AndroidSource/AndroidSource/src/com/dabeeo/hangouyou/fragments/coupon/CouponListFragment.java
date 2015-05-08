@@ -1,11 +1,13 @@
-package com.dabeeo.hangouyou.fragments.ticket;
+package com.dabeeo.hangouyou.fragments.coupon;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +19,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hangouyou.beans.CouponBean;
-import com.dabeeo.hangouyou.controllers.ticket.CouponListAdapter;
+import com.dabeeo.hangouyou.controllers.coupon.CouponListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
@@ -63,6 +66,43 @@ public class CouponListFragment extends Fragment
     new GetAsyncTask().execute();
   }
   
+  /**************************************************
+   * listener
+   ***************************************************/
+  private OnItemClickListener itemClickListener = new OnItemClickListener()
+  {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+//      PlaceBean bean = (PlaceBean) adapter.getItem(position);
+      Intent i = new Intent(getActivity(), CouponDetailActivity.class);
+      i.putExtra("coupon_id", position);
+      getActivity().startActivityForResult(i, 1);
+    }
+  };
+  
+  private OnScrollListener scrollListener = new OnScrollListener()
+  {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+    }
+    
+    
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+      if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        page++;
+        load(page);
+      }
+    }
+  };
+  
+  /**************************************************
+   * async task
+   ***************************************************/
   private class GetAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     @Override
@@ -103,39 +143,4 @@ public class CouponListFragment extends Fragment
       super.onPostExecute(result);
     }
   }
-  
-  /**************************************************
-   * listener
-   ***************************************************/
-  private OnItemClickListener itemClickListener = new OnItemClickListener()
-  {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
-//      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-//      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
-//      i.putExtra("place_idx", bean.idx);
-//      startActivity(i);
-    }
-  };
-  
-  private OnScrollListener scrollListener = new OnScrollListener()
-  {
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState)
-    {
-      
-    }
-    
-    
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-    {
-      if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-      {
-        page++;
-        load(page);
-      }
-    }
-  };
 }

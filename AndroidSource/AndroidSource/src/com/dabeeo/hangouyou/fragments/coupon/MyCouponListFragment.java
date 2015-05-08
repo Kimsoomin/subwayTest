@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.fragments.ticket;
+package com.dabeeo.hangouyou.fragments.coupon;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.CouponBean;
-import com.dabeeo.hangouyou.controllers.ticket.MyCouponListAdapter;
+import com.dabeeo.hangouyou.controllers.coupon.MyCouponListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 

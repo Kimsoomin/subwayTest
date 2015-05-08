@@ -234,8 +234,12 @@
             android:label="@string/term_order_completed"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.CouponActivity"
+            android:name="com.dabeeo.hangouyou.activities.coupon.CouponActivity"
             android:label="@string/term_coupon"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.dabeeo.hangouyou.activities.coupon.CouponDetailActivity"
+            android:label="@string/term_show_coupon"
             android:screenOrientation="portrait" />
 
         <!-- Map -->

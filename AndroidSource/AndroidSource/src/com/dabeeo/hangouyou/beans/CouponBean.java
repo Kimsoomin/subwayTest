@@ -8,8 +8,9 @@ public class CouponBean
   public String seqCode;
   public String title;
   public String description;
-  public String fromValidityDate, toValidityDate;
+  public String fromValidityDate, toValidityDate, validityCondition, whereUseIn;
   public boolean isUsed;
+  public String howToUse, instruction;
   
   
   public void setJSONObject(JSONObject obj)

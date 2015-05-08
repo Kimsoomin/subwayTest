@@ -1,4 +1,4 @@
-package com.dabeeo.hangouyou.controllers.ticket;
+package com.dabeeo.hangouyou.controllers.coupon;
 
 import java.util.ArrayList;
 
