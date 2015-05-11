@@ -180,6 +180,10 @@
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask" />
         <activity
+            android:name="com.dabeeo.hangouyou.activities.sub.ImagePopUpJustOneActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.sub.GuideActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

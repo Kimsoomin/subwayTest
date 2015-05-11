@@ -58,7 +58,8 @@
                             android:id="@+id/badge_main_place"
                             android:layout_width="8dp"
                             android:layout_height="8dp"
-                            android:src="@drawable/icon_new_badge" />
+                            android:src="@drawable/icon_new_badge"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="25dp"
@@ -107,7 +108,8 @@
                                 android:id="@+id/badge_main_plan"
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
-                                android:src="@drawable/icon_new_badge" />
+                                android:src="@drawable/icon_new_badge"
+                                android:visibility="gone" />
 
                             <ImageView
                                 android:layout_width="25dp"
@@ -159,7 +161,8 @@
                             android:id="@+id/badge_main_trend"
                             android:layout_width="8dp"
                             android:layout_height="8dp"
-                            android:src="@drawable/icon_new_badge" />
+                            android:src="@drawable/icon_new_badge"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="25dp"
@@ -246,7 +249,8 @@
                             android:id="@+id/badge_main_map"
                             android:layout_width="8dp"
                             android:layout_height="8dp"
-                            android:src="@drawable/icon_new_badge" />
+                            android:src="@drawable/icon_new_badge"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="25dp"
@@ -298,7 +302,8 @@
                             android:id="@+id/badge_main_subway"
                             android:layout_width="8dp"
                             android:layout_height="8dp"
-                            android:src="@drawable/icon_new_badge" />
+                            android:src="@drawable/icon_new_badge"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="25dp"
@@ -346,7 +351,8 @@
                                 android:id="@+id/badge_main_ticket"
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
-                                android:src="@drawable/icon_new_badge" />
+                                android:src="@drawable/icon_new_badge"
+                                android:visibility="gone" />
 
                             <ImageView
                                 android:layout_width="25dp"
@@ -388,7 +394,8 @@
                                 android:id="@+id/badge_main_coupon"
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
-                                android:src="@drawable/icon_new_badge" />
+                                android:src="@drawable/icon_new_badge"
+                                android:visibility="gone" />
 
                             <ImageView
                                 android:layout_width="25dp"

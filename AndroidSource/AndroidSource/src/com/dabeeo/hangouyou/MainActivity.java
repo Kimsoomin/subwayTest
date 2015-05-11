@@ -1,5 +1,6 @@
 package com.dabeeo.hangouyou;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -7,9 +8,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
@@ -34,6 +37,15 @@ public class MainActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayShowHomeEnabled(false);
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    
     fragmentManager = getFragmentManager();
     
     bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);

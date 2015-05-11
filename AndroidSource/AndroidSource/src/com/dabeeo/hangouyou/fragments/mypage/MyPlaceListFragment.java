@@ -10,13 +10,13 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
+import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 
 public class MyPlaceListFragment extends Fragment
 {
@@ -42,7 +42,7 @@ public class MyPlaceListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     adapter = new MyPlaceListAdapter();
-    ListView listView = (ListView) getView().findViewById(android.R.id.list);
+    GridViewWithHeaderAndFooter listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);

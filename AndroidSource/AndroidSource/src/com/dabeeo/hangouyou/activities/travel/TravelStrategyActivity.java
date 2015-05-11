@@ -2,13 +2,19 @@ package com.dabeeo.hangouyou.activities.travel;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
@@ -28,6 +34,24 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_strategy_seoul));
+    ImageButton btnBack = (ImageButton) customActionBar.findViewById(R.id.backbutton);
+    btnBack.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        finish();
+      }
+    });
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayShowHomeEnabled(false);
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
     
     adapter = new RecommendSeoulViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
     viewPager.setAdapter(adapter);

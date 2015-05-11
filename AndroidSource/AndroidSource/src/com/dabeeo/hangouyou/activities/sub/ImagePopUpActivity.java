@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -38,6 +40,15 @@ public class ImagePopUpActivity extends ActionBarActivity
     Log.w("WARN", "ImageUrls : " + imageUrls);
     allCount = imageUrls.size();
     imgX = (ImageView) findViewById(R.id.img_x);
+    imgX.bringToFront();
+    imgX.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        finish();
+      }
+    });
     textIndicator = (TextView) findViewById(R.id.text_view_pager_indicator);
     
     int position = getIntent().getIntExtra("position", 0);
