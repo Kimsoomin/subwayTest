@@ -119,14 +119,17 @@ public class MainFragment extends Fragment
       if (v.getId() == containerStrategySeoul.getId())
       {
         startActivity(new Intent(getActivity(), TravelStrategyActivity.class));
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
       else if (v.getId() == containerTravelSchedule.getId())
       {
         startActivity(new Intent(getActivity(), TravelSchedulesActivity.class));
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
       else if (v.getId() == containerShoppingMall.getId())
       {
         startActivity(new Intent(getActivity(), TrendActivity.class));
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
       else if (v.getId() == containerMap.getId())
       {
@@ -157,7 +160,10 @@ public class MainFragment extends Fragment
           dialog.show();
         }
         else
+        {
           startActivity(new Intent(getActivity(), BlinkingMap.class));
+          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }
       }
       else if (v.getId() == containerSubway.getId())
       {
@@ -179,6 +185,7 @@ public class MainFragment extends Fragment
 //        startActivity(i);
         Intent i = new Intent(getActivity(), SubwayActivity.class);
         startActivity(i);
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
       else if (v.getId() == containerTicket.getId())
       {
@@ -192,6 +199,7 @@ public class MainFragment extends Fragment
         if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
         {
           startActivity(new Intent(getActivity(), LoginActivity.class));
+          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
         }
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
@@ -206,7 +214,10 @@ public class MainFragment extends Fragment
         }
         
         if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
+        {
           startActivity(new Intent(getActivity(), CouponActivity.class));
+          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
@@ -300,6 +311,7 @@ public class MainFragment extends Fragment
     {
       containerMsgDownloadMap.setVisibility(View.GONE);
       startActivity(new Intent(getActivity(), BlinkingMap.class));
+      getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       super.onPostExecute(result);
     }
   }

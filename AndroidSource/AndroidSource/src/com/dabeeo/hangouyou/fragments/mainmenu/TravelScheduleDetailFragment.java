@@ -128,7 +128,7 @@ public class TravelScheduleDetailFragment extends Fragment
         Calendar c = Calendar.getInstance();
         c.setTime(bean.startDate);
         c.add(Calendar.DATE, i);
-        tView.setData("Day" + Integer.toString(i), new Date(c.getTimeInMillis()));
+        tView.setData("Day" + Integer.toString(i + 1), new Date(c.getTimeInMillis()));
         contentContainer.addView(tView);
         
         for (int j = 0; j < bean.days.get(i).spots.size(); j++)

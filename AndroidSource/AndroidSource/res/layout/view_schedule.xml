@@ -21,8 +21,9 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -58,7 +59,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@color/darker_gray"
                 android:contentDescription="@null"
                 android:padding="8dp" />
         </LinearLayout>
@@ -73,7 +73,7 @@
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:background="#a8bab9" />
 
             <RelativeLayout
@@ -113,7 +113,7 @@
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="wrap_content"
+                android:layout_height="10dp"
                 android:background="#a8bab9" />
         </LinearLayout>
     </LinearLayout>

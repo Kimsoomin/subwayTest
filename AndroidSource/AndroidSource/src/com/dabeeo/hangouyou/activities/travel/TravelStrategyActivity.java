@@ -84,6 +84,14 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
   
   
   @Override
+  public void onBackPressed()
+  {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+  }
+  
+  
+  @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
     getMenuInflater().inflate(R.menu.menu_recommend_seoul, menu);
