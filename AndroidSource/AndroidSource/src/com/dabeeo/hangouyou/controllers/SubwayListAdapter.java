@@ -1,6 +1,7 @@
 package com.dabeeo.hangouyou.controllers;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -116,7 +117,10 @@ public class SubwayListAdapter extends BaseAdapter
 			finishText.setVisibility(View.GONE);
 		}
 		
-		stationName.setText(bean.nameKo);
+		if (Locale.getDefault().getLanguage().contains("ko"))
+			stationName.setText(bean.nameKo);
+		else
+			stationName.setText(bean.nameCn);
 		return convertView;
 	}
 }

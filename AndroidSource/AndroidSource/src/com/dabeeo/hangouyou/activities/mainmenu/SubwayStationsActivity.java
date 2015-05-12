@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -130,12 +131,35 @@ public class SubwayStationsActivity extends ActionBarActivity
 			{
 				try
 				{
-					stations.remove(i - 1);
-					stations.remove(i);
+					if (i == 0)
+						stations.remove(i);
+					else
+					{
+						stations.remove(i - 1);
+						stations.remove(i);
+					}
 				} catch (Exception e)
 				{
 					e.printStackTrace();
 				}
+			}
+		}
+		
+		for (int i = 0; i < stations.size(); i++)
+		{
+			try
+			{
+				if (!TextUtils.isEmpty(stations.get(i).afterLine) && !TextUtils.isEmpty(stations.get(i + 1).beforeLine))
+				{
+					if (stations.get(i).afterLine.equals(stations.get(i + 1).beforeLine))
+					{
+						stations.get(i).line = stations.get(i).afterLine;
+						stations.get(i + 1).line = stations.get(i + 1).beforeLine;
+					}
+				}
+			} catch (Exception e)
+			{
+				e.printStackTrace();
 			}
 		}
 		
@@ -182,11 +206,6 @@ public class SubwayStationsActivity extends ActionBarActivity
 				}
 				
 				Collections.sort(exits, myComparator);
-				
-				for (int i = 0; i < exits.size(); i++)
-				{
-					Log.w("WARN", "exits : " + exits.get(i).exitTitle + "/ " + exits.get(i).distance);
-				}
 				
 				try
 				{
