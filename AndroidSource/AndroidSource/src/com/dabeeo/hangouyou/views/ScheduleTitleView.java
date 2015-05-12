@@ -1,16 +1,19 @@
 package com.dabeeo.hangouyou.views;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.dabeeo.hangouyou.R;
 
 public class ScheduleTitleView extends RelativeLayout
 {
   private Context context;
+  private TextView title, date;
   
   
   public ScheduleTitleView(Context context)
@@ -21,15 +24,23 @@ public class ScheduleTitleView extends RelativeLayout
   }
   
   
+  @SuppressLint("SimpleDateFormat")
+  public void setData(String title, Date date)
+  {
+    this.title.setText(title);
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+    this.date.setText(format.format(date));
+  }
+  
+  
   public void init()
   {
     int resId = R.layout.view_schedule_title;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
-    TextView title = (TextView) view.findViewById(R.id.title);
+    title = (TextView) view.findViewById(R.id.title);
+    date = (TextView) view.findViewById(R.id.date);
     
-    //가데이터
-    title.setText("Day 1 (2015. 1. 1)");
     addView(view);
   }
 }

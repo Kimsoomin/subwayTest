@@ -39,15 +39,6 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
     TextView title = (TextView) customActionBar.findViewById(R.id.title);
     title.setText(getString(R.string.term_strategy_seoul));
-    ImageButton btnBack = (ImageButton) customActionBar.findViewById(R.id.backbutton);
-    btnBack.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        finish();
-      }
-    });
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(false);

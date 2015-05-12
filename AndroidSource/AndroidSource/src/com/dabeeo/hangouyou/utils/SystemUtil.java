@@ -1,7 +1,9 @@
 package com.dabeeo.hangouyou.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.util.DisplayMetrics;
 
 public class SystemUtil
 {
@@ -45,5 +47,14 @@ public class SystemUtil
   public static boolean isConnectNetwork(Context context)
   {
     return isConnectedWiFi(context) || isConnected3G(context);
+  }
+  
+  
+  public static float convertDpToPixel(float dp, Context context)
+  {
+    Resources resources = context.getResources();
+    DisplayMetrics metrics = resources.getDisplayMetrics();
+    float px = dp * (metrics.densityDpi / 160f);
+    return px;
   }
 }

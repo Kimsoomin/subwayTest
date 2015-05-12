@@ -1,28 +1,53 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
-import com.dabeeo.hangouyou.views.ScheduleListHeaderMallView;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
 public class TravelScheduleListFragment extends Fragment
 {
+  public static final int SCHEDULE_TYPE_POPULAR = 0;
+  public static final int SCHEDULE_TYPE_MY = 1;
+  public static final int SCHEDULE_TYPE_BOOKMARK = 2;
+  
   private ProgressBar progressBar;
   private TravelScheduleListAdapter adapter;
+  private ApiClient apiClient;
+  private int page = 1;
+  private int type = SCHEDULE_TYPE_POPULAR;
+  private boolean isLoading = false;
+  
+  private LinearLayout emptyContainer;
+  private TextView emptyText;
+  private LinearLayout recommendContainer;
+  private GridViewWithHeaderAndFooter listView;
   
   
   @Override
@@ -37,14 +62,18 @@ public class TravelScheduleListFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
-    
+    apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new TravelScheduleListAdapter();
-    GridViewWithHeaderAndFooter listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
-    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
-    view.setBean(null);
-    listView.addHeaderView(view);
+    emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
+    emptyText = (TextView) getView().findViewById(R.id.text_empty);
+    recommendContainer = (LinearLayout) getView().findViewById(R.id.recommend_container);
+    
+    adapter = new TravelScheduleListAdapter(getActivity());
+    listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
+//    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
+//    view.setBean(null);
+//    listView.addHeaderView(view);
     
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
@@ -54,47 +83,94 @@ public class TravelScheduleListFragment extends Fragment
   }
   
   
+  public void setType(int type)
+  {
+    this.type = type;
+  }
+  
+  
   private void loadSchedules()
   {
     progressBar.setVisibility(View.VISIBLE);
     
-    //테스트 가데이터 
-//    ScheduleBean bean = new ScheduleBean();
-//    bean.title = "쇼핑천국 서울";
-//    bean.month = 1;
-//    bean.likeCount = 7;
-//    bean.reviewCount = 11;
-//    adapter.add(bean);
+    if (type == SCHEDULE_TYPE_POPULAR)
+      new loadScheduleAsyncTask().execute();
+    else if (type == SCHEDULE_TYPE_MY)
+    {
+      progressBar.setVisibility(View.GONE);
+      listView.setVisibility(View.GONE);
+      emptyContainer.setVisibility(View.VISIBLE);
+      emptyText.setText(getString(R.string.msg_empty_my_schedule));
+      
+      recommendContainer.setVisibility(View.VISIBLE);
+      Button btnRecommendSchedule = (Button) getView().findViewById(R.id.recommend_button);
+      btnRecommendSchedule.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View arg0)
+        {
+          Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
+          startActivity(i);
+        }
+      });
+    }
+    else if (type == SCHEDULE_TYPE_BOOKMARK)
+    {
+      progressBar.setVisibility(View.GONE);
+      listView.setVisibility(View.GONE);
+      emptyContainer.setVisibility(View.VISIBLE);
+      emptyText.setText(getString(R.string.msg_empty_my_bookmark));
+      recommendContainer.setVisibility(View.GONE);
+    }
+  }
+  
+  private class loadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      isLoading = true;
+      progressBar.setVisibility(View.VISIBLE);
+      super.onPreExecute();
+    }
     
-    ScheduleBean bean = new ScheduleBean();
-    bean.title = "서울투어1";
-    bean.month = 2;
-    bean.likeCount = 50;
-    bean.reviewCount = 13;
-    adapter.add(bean);
     
-    bean = new ScheduleBean();
-    bean.title = "서울투어2";
-    bean.month = 2;
-    bean.likeCount = 50;
-    bean.reviewCount = 13;
-    adapter.add(bean);
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.getTravelSchedules(page);
+    }
     
-    bean = new ScheduleBean();
-    bean.title = "서울투어3";
-    bean.month = 2;
-    bean.likeCount = 50;
-    bean.reviewCount = 13;
-    adapter.add(bean);
     
-    bean = new ScheduleBean();
-    bean.title = "서울투어4";
-    bean.month = 2;
-    bean.likeCount = 50;
-    bean.reviewCount = 13;
-    adapter.add(bean);
-    
-    progressBar.setVisibility(View.GONE);
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      if (result.isSuccess)
+      {
+        ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
+        try
+        {
+          JSONObject obj = new JSONObject(result.response);
+          JSONArray array = obj.getJSONArray("plan");
+          for (int i = 0; i < array.length(); i++)
+          {
+            JSONObject beanObj = array.getJSONObject(i);
+            ScheduleBean bean = new ScheduleBean();
+            bean.setJSONObject(beanObj);
+            beans.add(bean);
+          }
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        
+        adapter.addAll(beans);
+      }
+      progressBar.setVisibility(View.GONE);
+      isLoading = false;
+      super.onPostExecute(result);
+    }
   }
   
   /**************************************************
@@ -105,7 +181,10 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-      startActivity(new Intent(getActivity(), TravelScheduleDetailActivity.class));
+      ScheduleBean bean = (ScheduleBean) adapter.getItem(position);
+      Intent i = new Intent(getActivity(), TravelScheduleDetailActivity.class);
+      i.putExtra("idx", bean.idx);
+      startActivity(i);
     }
   };
   
@@ -120,11 +199,11 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-//      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
-//      {
-//        offset += limit;
-//        load(offset);
-//      }
+      if (!isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        page++;
+        loadSchedules();
+      }
     }
   };
 }

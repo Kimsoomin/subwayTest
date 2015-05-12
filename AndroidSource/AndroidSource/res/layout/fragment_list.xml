@@ -9,6 +9,56 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/empty_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/character_list_blank" />
+
+        <TextView
+            android:id="@+id/text_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#444a4b"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/recommend_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msg_recommend_schedule"
+                android:textColor="#969b9c" />
+
+            <Button
+                android:id="@+id/recommend_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/app_button"
+                android:padding="8dp"
+                android:text="@string/term_recommend_travel_schedule"
+                android:textColor="@color/appcolor" />
+        </LinearLayout>
+    </LinearLayout>
+
     <com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter
         android:id="@+id/gridview"
         android:layout_width="match_parent"

@@ -13,6 +13,11 @@ import com.dabeeo.hangouyou.R;
 public class ScheduleDetailTitleView extends RelativeLayout
 {
   private Context context;
+  private ImageView imageView;
+  private TextView name;
+  private TextView time;
+  private TextView likeCount;
+  private TextView reviewCount;
   
   
   public ScheduleDetailTitleView(Context context)
@@ -39,23 +44,32 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
+  public void setData(int likeCount, int reviewCount)
+  {
+    this.name.setText("planb");
+    this.time.setText("2015.01.01 16:53");
+    try
+    {
+      this.likeCount.setText(Integer.toString(likeCount));
+      this.reviewCount.setText(Integer.toString(reviewCount));
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
   public void init()
   {
     int resId = R.layout.view_schedule_detail_title;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
-    @SuppressWarnings("unused")
-    ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    TextView name = (TextView) view.findViewById(R.id.name);
-    TextView time = (TextView) view.findViewById(R.id.time);
-    TextView likeCount = (TextView) view.findViewById(R.id.like_count);
-    TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
-    
-    //가데이터
-    name.setText("planb");
-    time.setText("2015.01.01 16:53");
-    likeCount.setText("970");
-    reviewCount.setText("321");
+    imageView = (ImageView) view.findViewById(R.id.imageview);
+    name = (TextView) view.findViewById(R.id.name);
+    time = (TextView) view.findViewById(R.id.time);
+    likeCount = (TextView) view.findViewById(R.id.like_count);
+    reviewCount = (TextView) view.findViewById(R.id.review_count);
     
     addView(view);
   }

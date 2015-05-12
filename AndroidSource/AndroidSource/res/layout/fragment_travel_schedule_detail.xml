@@ -17,10 +17,69 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <!-- 평점 및 리뷰 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/text_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/term_all_rate"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/gray" />
+
+                <Button
+                    android:id="@+id/btn_review_best"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/circle_button"
+                    android:padding="4dp"
+                    android:text="@string/term_review_best"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/btn_review_soso"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/circle_button"
+                    android:padding="4dp"
+                    android:text="@string/term_review_soso"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/btn_review_worst"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/circle_button"
+                    android:padding="4dp"
+                    android:text="@string/term_review_worst"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- 내용 -->
+
             <LinearLayout
                 android:id="@+id/content_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical" />
 
             <View
@@ -46,17 +105,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical" />
-
-            <Button
-                android:id="@+id/btn_more_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/list_item_background"
-                android:text="@string/term_review_more"
-                android:textColor="@color/darker_gray"
-                android:textSize="16sp"
-                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 

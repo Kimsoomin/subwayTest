@@ -33,6 +33,7 @@ public class TravelScheduleViewPagerAdapter extends FragmentPagerAdapter
   public Fragment getItem(int position)
   {
     Fragment fragment = new TravelScheduleListFragment();
+    ((TravelScheduleListFragment)fragment).setType(position);
     return fragment;
   }
   

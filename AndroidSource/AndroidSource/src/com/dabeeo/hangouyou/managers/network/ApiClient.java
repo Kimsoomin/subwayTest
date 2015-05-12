@@ -34,6 +34,18 @@ public class ApiClient
   }
   
   
+  public NetworkResult getTravelSchedules(int page)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page);
+  }
+  
+  
+  public NetworkResult getTravelScheduleDetail(String idx)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx);
+  }
+  
+  
   public NetworkResult getPlaceList(int page)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page);

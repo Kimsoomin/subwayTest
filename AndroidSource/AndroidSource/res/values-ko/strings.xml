@@ -181,7 +181,7 @@
     <string name="term_select_schedule_day">일정선택</string>
     <string name="term_next">다음</string>
     <string name="term_warn_limit_7_days">"* 최대 7일까지 선택가능합니다"</string>
-    <string name="term_popular_schedule">인기순</string>
+    <string name="term_popular_schedule">인기있는 일정</string>
     <string name="term_registered_schedule">등록한 내일정</string>
     <string name="term_bookmarked_schedule">북마크한 일정</string>
     <string name="msg_save_my_schedule">내 일정으로 저장하시겠습니까?</string>

@@ -5,21 +5,21 @@
         <title>서울지하철</title>
      
         
-       <!-- <script src="snap.svg-min.js"></script>
+        <script src="snap.svg-min.js"></script>
         <script src="jquery-1.11.1.min.js" charset="utf-8"></script>
         <script src="d3.v3.min.js" charset="utf-8"></script>
         <link rel="stylesheet" href="./ui/jquery-ui.min.css" media="all" />
         <script src="./ui/jquery-ui.min.js" charset="utf-8"></script>
         <script src="subway_data.js" charset="utf-8"></script>
-        <script src="subway.js" charset="utf-8"></script>-->
+        <script src="subway.js" charset="utf-8"></script>
 
-         <script src="file:///android_asset/snap.svg-min.js"></script>
+        <!-- <script src="file:///android_asset/snap.svg-min.js"></script>
         <script src="file:///android_asset/jquery-1.11.1.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
         <link rel="stylesheet" href="file:///android_asset/ui/jquery-ui.min.css" media="all" />
         <script src="file:///android_asset/ui/jquery-ui.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
-        <script src="file:///android_asset/subway.js" charset="utf-8"></script>
+        <script src="file:///android_asset/subway.js" charset="utf-8"></script>-->
       <style>
 
         /*html, body { margin:0; padding:0 }
@@ -73,7 +73,7 @@
         function checkReady() {
           if (s != null) {
               window.myClient.onSvgLoadEnded();
-              setCenterInitSubway();
+              subway.setCenterWithStationId("line132line201");
           }
         }
 
@@ -151,6 +151,7 @@
             }
           },
           calcRoute: function() {
+            console.log("calcRoute")
             this.clear_marked_stations()
             var path = path_for_stations(this.start_station_id, this.end_station_id)
             this.mark_stations(path)
@@ -196,6 +197,7 @@
             }
           },
           clear_marked_stations: function() {
+            console.log("clear")
             var length = this.marked_stations.length
             for (var i = 0; i < length; i++) {
               var marked_station = this.marked_stations[i]
@@ -223,7 +225,7 @@
 
               jsonArray.push(jsonObject);
             }
-            // console.log(jsonArray)
+            console.log(jsonArray)
 
             var markArray = new Array();
             for (var i = 0; i < jsonArray.length; i++) {
@@ -296,11 +298,13 @@
           },
           setCenterWithStationId: function (station_id){
             station = Snap.select(".station#"+station_id);
-            // bound = station.getBBox();
-            console.log("SetCenterWithStationId")
-            bound = station.getBBox()
-   
-            window.scrollTo(bound.x  - 200, bound.y - 200);
+            bound = station.getBBox();
+
+            var half_width = window.innerWidth/2
+            var half_height = window.innerHeight/2
+
+            console.log(half_width);
+            window.scrollTo(bound.x - (half_width), bound.y - (half_height));
           },
           findNearByStation: function(find_lat, find_lon){
             var jsonArray = new Array();
@@ -453,7 +457,7 @@
         }
 
         //file:///android_asset/subway.svg
-        Snap.load("file:///android_asset/subway.svg", function(data) {
+        Snap.load("subway.svg", function(data) {
           onStart = function(station) {
 
           }

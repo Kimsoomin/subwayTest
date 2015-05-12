@@ -77,20 +77,20 @@ public class MySchedulesActivity extends ActionBarActivity
   {
     progressBar.setVisibility(View.VISIBLE);
     
-    //테스트 가데이터 
-    ScheduleBean bean = new ScheduleBean();
-    bean.title = "서울 2박 3일 여행";
-    bean.month = 3;
-    bean.likeCount = 70;
-    bean.reviewCount = 11;
-    adapter.add(bean);
-    
-    bean = new ScheduleBean();
-    bean.title = "명동 쇼핑";
-    bean.month = 1;
-    bean.likeCount = 50;
-    bean.reviewCount = 13;
-    adapter.add(bean);
+//    //테스트 가데이터 
+//    ScheduleBean bean = new ScheduleBean();
+//    bean.title = "서울 2박 3일 여행";
+//    bean.month = 3;
+//    bean.likeCount = 70;
+//    bean.reviewCount = 11;
+//    adapter.add(bean);
+//    
+//    bean = new ScheduleBean();
+//    bean.title = "명동 쇼핑";
+//    bean.month = 1;
+//    bean.likeCount = 50;
+//    bean.reviewCount = 13;
+//    adapter.add(bean);
     
     progressBar.setVisibility(View.GONE);
   }

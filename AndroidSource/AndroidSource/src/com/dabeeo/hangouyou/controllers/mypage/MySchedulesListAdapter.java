@@ -125,7 +125,7 @@ public class MySchedulesListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
     title.setText(bean.title);
-    month.setText(Integer.toString(bean.month) + parent.getContext().getString(R.string.term_month));
+    month.setText(Integer.toString(bean.dayCount) + parent.getContext().getString(R.string.term_month));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     return view;

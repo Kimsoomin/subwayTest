@@ -82,7 +82,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     TextView reviewCount = (TextView) findViewById(R.id.review_count);
     
     title.setText(bean.title);
-    month.setText(Integer.toString(bean.month) + getString(R.string.term_month));
+    month.setText(Integer.toString(bean.dayCount) + getString(R.string.term_month));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     

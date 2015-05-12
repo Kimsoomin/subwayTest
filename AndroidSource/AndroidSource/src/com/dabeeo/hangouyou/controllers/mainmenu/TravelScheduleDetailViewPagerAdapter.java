@@ -1,18 +1,17 @@
 package com.dabeeo.hangouyou.controllers.mainmenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
+import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleDetailFragment;
 
 public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
 {
-  private List<String> titles = new ArrayList<String>();
+  private ScheduleDetailBean bean = new ScheduleDetailBean();
   
   
   public TravelScheduleDetailViewPagerAdapter(Context context, FragmentManager fm)
@@ -21,9 +20,10 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
-  public void setTitles(ArrayList<String> titles)
+  public void setBean(ScheduleDetailBean bean)
   {
-    this.titles.addAll(titles);
+    this.bean = bean;
+    Log.w("WARN", "Days : " + bean.days.size());
     notifyDataSetChanged();
   }
   
@@ -32,6 +32,10 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   public Fragment getItem(int position)
   {
     Fragment fragment = new TravelScheduleDetailFragment();
+    if (position == 0)
+      ((TravelScheduleDetailFragment) fragment).setBean(bean, null);
+    else
+      ((TravelScheduleDetailFragment) fragment).setBean(bean, bean.days.get(position - 1));
     return fragment;
   }
   
@@ -39,13 +43,16 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public int getCount()
   {
-    return titles.size();
+    return bean.days.size();
   }
   
   
   @Override
   public CharSequence getPageTitle(int position)
   {
-    return titles.get(position);
+    if (position == 0)
+      return "전체";
+    else
+      return Integer.toString(position) + "일";
   }
 }

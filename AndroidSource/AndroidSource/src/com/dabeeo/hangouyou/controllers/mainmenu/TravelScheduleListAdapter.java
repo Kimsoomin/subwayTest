@@ -3,6 +3,9 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,28 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class TravelScheduleListAdapter extends BaseAdapter
 {
+  Context context;
+  LayoutInflater inflater;
+  int layoutResourceId;
+  float imageWidth;
+  
   private ArrayList<ScheduleBean> beans = new ArrayList<>();
+  
+  
+  public TravelScheduleListAdapter(Context context)
+  {
+    this.context = context;
+    @SuppressWarnings("deprecation")
+    float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
+    float margin = (int) SystemUtil.convertDpToPixel(10f, (Activity) context);
+    // two images, three margins of 10dips
+    imageWidth = ((width - (3 * margin)) / 2);
+  }
   
   
   public void add(ScheduleBean bean)
@@ -67,21 +88,23 @@ public class TravelScheduleListAdapter extends BaseAdapter
     ScheduleBean bean = (ScheduleBean) beans.get(position);
     int resId = R.layout.list_item_travel_schedule;
     
-//    if (position == 0)
-//      resId = R.layout.list_item_travel_schedule_first_row;
-    
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+    TextView startDate = (TextView) view.findViewById(R.id.start_date);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView month = (TextView) view.findViewById(R.id.month);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
+    startDate.setText(bean.startDateString);
     title.setText(bean.title);
-    month.setText(Integer.toString(bean.month) + parent.getContext().getString(R.string.term_month));
+    month.setText(Integer.toString(bean.dayCount) + parent.getContext().getString(R.string.term_month));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
+    
+    ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
     return view;
   }
+  
 }
