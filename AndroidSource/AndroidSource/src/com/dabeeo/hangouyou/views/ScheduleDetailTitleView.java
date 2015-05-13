@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   private TextView time;
   private TextView likeCount;
   private TextView reviewCount;
+  public RelativeLayout container;
   
   
   public ScheduleDetailTitleView(Context context)
@@ -65,6 +67,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     int resId = R.layout.view_schedule_detail_title;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
+    container = (RelativeLayout) view.findViewById(R.id.container);
     imageView = (ImageView) view.findViewById(R.id.imageview);
     name = (TextView) view.findViewById(R.id.name);
     time = (TextView) view.findViewById(R.id.time);

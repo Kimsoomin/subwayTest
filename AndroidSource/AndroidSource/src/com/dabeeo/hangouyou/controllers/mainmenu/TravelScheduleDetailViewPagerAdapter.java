@@ -33,9 +33,9 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   {
     Fragment fragment = new TravelScheduleDetailFragment();
     if (position == 0)
-      ((TravelScheduleDetailFragment) fragment).setBean(bean, null);
+      ((TravelScheduleDetailFragment) fragment).setBean(position, bean, null);
     else
-      ((TravelScheduleDetailFragment) fragment).setBean(bean, bean.days.get(position - 1));
+      ((TravelScheduleDetailFragment) fragment).setBean(position, bean, bean.days.get(position - 1));
     return fragment;
   }
   

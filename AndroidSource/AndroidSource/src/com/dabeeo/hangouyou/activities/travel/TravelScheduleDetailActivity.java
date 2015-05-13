@@ -143,6 +143,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   /**************************************************
    * listener
    ***************************************************/
+  @SuppressWarnings("deprecation")
   protected TabListener tabListener = new TabListener()
   {
     @Override
@@ -165,7 +166,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       
     }
   };
-  
+  @SuppressWarnings("deprecation")
   protected ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {
     @Override

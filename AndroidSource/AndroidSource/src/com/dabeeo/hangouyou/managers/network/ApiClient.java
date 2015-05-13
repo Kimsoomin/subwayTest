@@ -109,6 +109,12 @@ public class ApiClient
   }
   
   
+  public NetworkResult getReviews(int page, String parentType, String parentIdx)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
+  }
+  
+  
   public NetworkResult getTicketDetail(String ticketId)
   {
 //    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + ticketId);

@@ -149,7 +149,7 @@
     <string name="term_finish">终</string>
     <string name="msg_dont_support_outside_seoul">非首尔地区正在准备中。</string>
     <string name="msg_near_by_station">这是最近的地铁站。</string>
-    <string name="term_exit_info">出口信息</string>
+    <string name="term_exit_info_title">出口信息</string>
 
     <!-- 맵 -->
     <string name="map_notification">提醒</string>

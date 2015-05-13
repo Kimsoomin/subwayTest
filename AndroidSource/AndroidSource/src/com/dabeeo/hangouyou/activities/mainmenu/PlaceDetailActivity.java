@@ -214,12 +214,12 @@ public class PlaceDetailActivity extends ActionBarActivity
     couponView.setBean(couponBean);
     containerTicketAndCoupon.addView(couponView);
     
-    ReviewView reviewView = new ReviewView(PlaceDetailActivity.this);
-    ReviewBean reviewBean = new ReviewBean();
-    reviewBean.userName = "planB";
-    reviewBean.content = "좋네요!";
-    reviewView.setBean(reviewBean);
-    containerReview.addView(reviewView);
+//    ReviewView reviewView = new ReviewView(PlaceDetailActivity.this);
+//    ReviewBean reviewBean = new ReviewBean();
+//    reviewBean.userName = "planB";
+//    reviewBean.content = "좋네요!";
+//    reviewView.setBean(reviewBean);
+//    containerReview.addView(reviewView);
     
     textRate.setText("4.0");
     textDetail.setText("Details");

@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -36,6 +39,9 @@ public class TravelScheduleDetailFragment extends Fragment
   private ScheduleDayBean dayBean;
   
   private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
+  private ScrollView scrollView;
+  
+  private int position;
   
   
   @Override
@@ -51,7 +57,7 @@ public class TravelScheduleDetailFragment extends Fragment
   {
     super.onActivityCreated(savedInstanceState);
     
-    ScrollView scrollView = (ScrollView) getView().findViewById(R.id.scrollview);
+    scrollView = (ScrollView) getView().findViewById(R.id.scrollview);
     contentContainer = (LinearLayout) getView().findViewById(R.id.content_container);
     containerReview = (LinearLayout) getView().findViewById(R.id.container_review);
     
@@ -67,6 +73,21 @@ public class TravelScheduleDetailFragment extends Fragment
     headerView.init();
     titleView.init();
     
+    scrollView.getViewTreeObserver().addOnScrollChangedListener(new OnScrollChangedListener()
+    {
+      @Override
+      public void onScrollChanged()
+      {
+        int scrollY = scrollView.getScrollY();
+        
+        if (scrollY > 255)
+          scrollY = 254;
+        scrollY = scrollY / 10;
+        int opacity = 255 - scrollY;
+        titleView.container.setBackground(new ColorDrawable(Color.argb(255, opacity, opacity, opacity)));
+      }
+    });
+    
     FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
     Resources r = getResources();
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
@@ -76,8 +97,9 @@ public class TravelScheduleDetailFragment extends Fragment
   }
   
   
-  public void setBean(ScheduleDetailBean bean, ScheduleDayBean dayBean)
+  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean)
   {
+    this.position = position;
     this.bean = bean;
     this.dayBean = dayBean;
   }
@@ -135,14 +157,29 @@ public class TravelScheduleDetailFragment extends Fragment
         {
           ScheduleView view = new ScheduleView(getActivity());
           view.setData(j, bean.days.get(i).spots.get(j));
+          if (j == bean.days.get(i).spots.size() - 1)
+            view.setFinalView();
           contentContainer.addView(view);
         }
       }
-      
     }
     else
     {
+      ScheduleTitleView tView = new ScheduleTitleView(getActivity());
+      Calendar c = Calendar.getInstance();
+      c.setTime(bean.startDate);
+      tView.setData("Day" + Integer.toString(position), new Date(c.getTimeInMillis()));
+      contentContainer.addView(tView);
+      
       //하루에 대한 내용
+      for (int i = 0; i < dayBean.spots.size(); i++)
+      {
+        ScheduleView view = new ScheduleView(getActivity());
+        view.setData(i, dayBean.spots.get(i));
+        if (i == dayBean.spots.size() - 1)
+          view.setFinalView();
+        contentContainer.addView(view);
+      }
     }
     
   }

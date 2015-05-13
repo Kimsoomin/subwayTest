@@ -6,6 +6,26 @@ import java.text.ParseException;
 
 public class NumberFormatter
 {
+  public static String getTimeString(int time)
+  {
+    String timeString = "";
+    try
+    {
+      int hours = (time / 60);
+      int minutes = (time % 60);
+      
+      timeString = Integer.toString(hours) + "hour ";
+      if (minutes != 0)
+        timeString = timeString + Integer.toString(minutes) + "min";
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return timeString;
+  }
+  
+  
   /**
    * 콤마를 넣는다
    * 

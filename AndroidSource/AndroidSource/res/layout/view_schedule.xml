@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/list_item_background"
-    android:padding="8dp" >
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@android:color/white"
             android:orientation="horizontal"
             android:padding="4dp" >
@@ -40,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
+                    android:singleLine="true"
                     android:textColor="#444a4b"
                     android:textSize="23sp"
                     android:textStyle="bold" />
@@ -49,7 +51,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:paddingTop="4dp"
                     android:textColor="#969b9c"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -68,12 +71,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:orientation="horizontal" >
 
             <View
+                android:id="@+id/line"
                 android:layout_width="2dp"
                 android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
                 android:background="#a8bab9" />
 
             <RelativeLayout
@@ -93,7 +97,6 @@
             android:id="@+id/memo_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:orientation="vertical"
             android:visibility="gone" >
 
@@ -112,8 +115,10 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/memo_line"
                 android:layout_width="2dp"
                 android:layout_height="10dp"
+                android:layout_marginLeft="20dp"
                 android:background="#a8bab9" />
         </LinearLayout>
     </LinearLayout>

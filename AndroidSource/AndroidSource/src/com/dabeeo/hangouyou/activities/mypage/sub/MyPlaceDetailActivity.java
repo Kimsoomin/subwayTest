@@ -105,21 +105,6 @@ public class MyPlaceDetailActivity extends ActionBarActivity
     bean.discountPrice = 93;
     productView.setBean(bean, bean);
     containerProduct.addView(productView);
-    
-    containerReview.removeAllViews();
-    ReviewView reviewView = new ReviewView(MyPlaceDetailActivity.this);
-    ReviewBean reviewBean = new ReviewBean();
-    reviewBean.userName = "planB";
-    reviewBean.content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do";
-    reviewView.setBean(reviewBean);
-    containerReview.addView(reviewView);
-    
-    reviewView = new ReviewView(MyPlaceDetailActivity.this);
-    reviewBean = new ReviewBean();
-    reviewBean.userName = "planB";
-    reviewBean.content = "좋네요!";
-    reviewView.setBean(reviewBean);
-    containerReview.addView(reviewView);
   }
   
   /**************************************************

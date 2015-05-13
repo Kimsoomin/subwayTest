@@ -5,21 +5,21 @@
         <title>서울지하철</title>
      
         
-        <!--<script src="snap.svg-min.js"></script>
+        <script src="snap.svg-min.js"></script>
         <script src="jquery-1.11.1.min.js" charset="utf-8"></script>
         <script src="d3.v3.min.js" charset="utf-8"></script>
         <link rel="stylesheet" href="./ui/jquery-ui.min.css" media="all" />
         <script src="./ui/jquery-ui.min.js" charset="utf-8"></script>
         <script src="subway_data.js" charset="utf-8"></script>
-        <script src="subway.js" charset="utf-8"></script>-->
+        <script src="subway.js" charset="utf-8"></script>
 
-         <script src="file:///android_asset/snap.svg-min.js"></script>
+        <!-- <script src="file:///android_asset/snap.svg-min.js"></script>
         <script src="file:///android_asset/jquery-1.11.1.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
         <link rel="stylesheet" href="file:///android_asset/ui/jquery-ui.min.css" media="all" />
         <script src="file:///android_asset/ui/jquery-ui.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/subway_data.js" charset="utf-8"></script>
-        <script src="file:///android_asset/subway.js" charset="utf-8"></script>
+        <script src="file:///android_asset/subway.js" charset="utf-8"></script>-->
       <style>
 
         /*html, body { margin:0; padding:0 }
@@ -112,8 +112,29 @@
               this.start_station.remove()
             }
             station = Snap.select(".station#"+station_id)
-            bound = station.getBBox()
             
+            try{
+              bound = station.getBBox()            
+            }catch(exception){
+
+              for (var i = 0; i < station_ids.length; i++){
+                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                  var temp_station = Snap.select(".station#"+station_ids[i])
+                  console.log(station_ids[i])
+
+                  try{
+                    if(temp_station.getBBox() != null){
+                      console.log(temp_station.getBBox())
+                      bound = temp_station.getBBox()
+                    }
+                  }catch(exception){
+
+                  }
+                }
+              }
+
+            }
+
 
             // bound = station.getBBox()
             margin = 1
@@ -134,7 +155,31 @@
               this.end_station.remove()
             }
             station = Snap.select(".station#"+station_id)
-            bound = station.getBBox()
+
+            try{
+              bound = station.getBBox()            
+            }catch(exception){
+
+              for (var i = 0; i < station_ids.length; i++){
+                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                  var temp_station = Snap.select(".station#"+station_ids[i])
+                  console.log(station_ids[i])
+
+                  try{
+                    if(temp_station.getBBox() != null){
+                      console.log(temp_station.getBBox())
+                      bound = temp_station.getBBox()
+                    }
+                    break;
+                  }catch(exception){
+
+                  }
+                }
+              }
+
+            }
+
+            // bound = station.getBBox()
          
             
             // margin = 1
@@ -456,7 +501,7 @@
         }
 
         //file:///android_asset/subway.svg
-        Snap.load("file:///android_asset/subway.svg", function(data) {
+        Snap.load("subway.svg", function(data) {
           onStart = function(station) {
 
           }
@@ -465,6 +510,7 @@
             var station = Snap.select(".station#" + this.node.id)
             
             var bound = station.getBBox();
+            console.log(this.node.id);
             onTouchStation($(this.node).attr("id"))
           }
           onDblClick = function(e) {

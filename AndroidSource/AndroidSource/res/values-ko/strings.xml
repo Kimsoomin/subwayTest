@@ -149,7 +149,7 @@
     <string name="term_finish">FINISH</string>
     <string name="msg_dont_support_outside_seoul">서울 외 지역은 서비스 준비중입니다.</string>
     <string name="msg_near_by_station">가장 가까운 역입니다.</string>
-    <string name="term_exit_info">출구정보</string>
+    <string name="term_exit_info_title">출구정보</string>
 
     <!-- 맵 -->
     <string name="map_notification">알림</string>

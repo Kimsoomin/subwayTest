@@ -14,6 +14,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.SpotBean;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
+import com.dabeeo.hangouyou.utils.NumberFormatter;
 
 public class ScheduleView extends RelativeLayout
 {
@@ -23,6 +24,7 @@ public class ScheduleView extends RelativeLayout
   private TextView position, hours;
   private TextView nextKmAndMin, memo;
   private LinearLayout memoContainer;
+  private View line, memoLine;
   
   
   public ScheduleView(Context context)
@@ -45,7 +47,7 @@ public class ScheduleView extends RelativeLayout
     }
     
     this.position.setText(Integer.toString(position));
-    hours.setText(bean.time + "min");
+    hours.setText(NumberFormatter.getTimeString(bean.time));
     
     if (TextUtils.isEmpty(bean.memo))
       memoContainer.setVisibility(View.GONE);
@@ -58,11 +60,20 @@ public class ScheduleView extends RelativeLayout
   }
   
   
+  public void setFinalView()
+  {
+    line.setVisibility(View.GONE);
+    memoLine.setVisibility(View.GONE);
+  }
+  
+  
   public void init()
   {
     int resId = R.layout.view_schedule;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
+    line = (View) view.findViewById(R.id.line);
+    memoLine = (View) view.findViewById(R.id.memo_line);
     imageView = (ImageView) view.findViewById(R.id.imageview);
     title = (TextView) view.findViewById(R.id.text_title);
     position = (TextView) view.findViewById(R.id.position);
