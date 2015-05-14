@@ -50,8 +50,8 @@ public class ReviewBean
       if (obj.has("userName"))
         userName = obj.getString("userName");
       
-      if (obj.has("content"))
-        content = obj.getString("content");
+      if (obj.has("contents"))
+        content = obj.getString("contents");
       if (obj.has("gender"))
         gender = obj.getString("gender");
       if (obj.has("mfidx"))

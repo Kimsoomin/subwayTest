@@ -501,6 +501,57 @@ public class SubwayFragment extends Fragment
       {
         e.printStackTrace();
       }
+      
+      Log.w("WARN", "원래 역의 갯수 : " + stations.size());
+      String tranfserStationString = "";
+      ArrayList<StationBean> transferBeans = new ArrayList<StationBean>();
+      for (int i = 0; i < stations.size(); i++)
+      {
+        //TODO 기존역 배열에서 환승역 제거하고 환승역만 따로 빼냄
+        if (stations.get(i).line.contains("환승"))
+        {
+          transferBeans.add(stations.get(i));
+          stations.remove(i);
+        }
+      }
+      
+      //환승역만 돌림
+      //겹치지 않는 환승역 배열 
+      ArrayList<StationBean> filterTransferBeans = new ArrayList<StationBean>();
+      for (int i = 0; i < transferBeans.size(); i++)
+      {
+        if (transferBeans.get(i).nameKo.contains("서울"))
+        {
+          if (transferBeans.get(i).nameKo.equals("서울역"))
+            filterTransferBeans.add(transferBeans.get(i));
+        }
+        else if (transferBeans.get(i).nameKo.contains("충정로"))
+        {
+          if (transferBeans.get(i).nameKo.equals("충정로"))
+            filterTransferBeans.add(transferBeans.get(i));
+        }
+        else
+        {
+          boolean isContain = false;
+          for (int j = 0; j < filterTransferBeans.size(); j++)
+          {
+            if (filterTransferBeans.get(j).nameKo.equals(transferBeans.get(i).nameKo))
+              isContain = true;
+          }
+          
+          if (!isContain)
+            filterTransferBeans.add(transferBeans.get(i));
+        }
+      }
+      
+      stations.addAll(filterTransferBeans);
+      
+      for (int i = 0; i < filterTransferBeans.size(); i++)
+      {
+        tranfserStationString += filterTransferBeans.get(i).nameKo + " ";
+      }
+      Log.w("WARN", "환승역 거름 " + tranfserStationString);
+      
       SubwayManager.getInstance(activity).stations.clear();
       SubwayManager.getInstance(activity).stations.addAll(stations);
       afterLoadSubwaysRunnable.run();

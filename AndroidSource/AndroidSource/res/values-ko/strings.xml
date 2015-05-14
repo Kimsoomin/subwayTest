@@ -286,4 +286,5 @@
     <string name="term_confirm_use_coupon">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다. 쿠폰을 사용하시겠습니까?</string>
     <string name="term_conpun_used">사용완료 하였습니다.</string>
 
+    <string name="msg_empty_search_result">검색 결과가 없습니다</string>
 </resources>

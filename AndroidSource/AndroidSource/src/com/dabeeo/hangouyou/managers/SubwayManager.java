@@ -80,6 +80,34 @@ public class SubwayManager
   }
   
   
+  public ArrayList<StationBean> getSubwayStationsWithTitle(String title)
+  {
+    ArrayList<StationBean> tempStations = new ArrayList<StationBean>();
+    for (int i = 0; i < stations.size(); i++)
+    {
+      if (stations.get(i).nameKo.contains(title) || stations.get(i).nameCn.contains(title))
+      {
+        boolean isConatin = false;
+        for (int j = 0; j < tempStations.size(); j++)
+        {
+          if (tempStations.get(j).nameKo.equals(stations.get(i).nameKo))
+            isConatin = true;
+        }
+        
+        if (!isConatin)
+          tempStations.add(stations.get(i));
+      }
+    }
+    return tempStations;
+  }
+  
+  
+  public ArrayList<StationBean> getAllSubwayStations()
+  {
+    return stations;
+  }
+  
+  
   public ArrayList<String> getAllSubwayNames()
   {
     ArrayList<String> names = new ArrayList<String>();

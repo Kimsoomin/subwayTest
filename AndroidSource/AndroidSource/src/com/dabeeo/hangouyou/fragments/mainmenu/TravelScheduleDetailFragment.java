@@ -169,6 +169,7 @@ public class TravelScheduleDetailFragment extends Fragment
         for (int j = 0; j < bean.days.get(i).spots.size(); j++)
         {
           ScheduleView view = new ScheduleView(getActivity());
+          bean.days.get(i).spots.get(j).memo = "memo" + j;
           view.setData(j, bean.days.get(i).spots.get(j));
           if (j == bean.days.get(i).spots.size() - 1)
             view.setFinalView();

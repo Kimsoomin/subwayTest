@@ -70,6 +70,15 @@ public class ReviewView extends RelativeLayout
     reviewScore = (TextView) view.findViewById(R.id.text_review_score);
     btnMore = (ImageView) view.findViewById(R.id.btn_review_list_more);
     
+    btnMore.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        
+        
+      }
+    });
     addView(view);
   }
 }

@@ -206,6 +206,7 @@
             this.clear_marked_stations()
             var path = path_for_stations(this.start_station_id, this.end_station_id)
             this.mark_stations(path)
+            
             var path_infos = new Array()
             for (var i = 0; i < path.length; i++) {
               path_infos.push(stations[path[i]])
@@ -214,14 +215,37 @@
 
             onRouteCalculated(path_infos, time)
           },
-          mark_station: function(station_id) {
+          mark_station: function(stationbean) {
             try{
-              var station = Snap.select(".station[id*="+station_id+"]")
-              var bound = station.getBBox()
-              var image = null;
+              var station = Snap.select(".station[id*="+stationbean.id+"]")
+              var bound;
               try{
-                var station = stations[station_id];
-                if(station.line.indexOf("환승역") > -1){
+                bound = station.getBBox()            
+              }catch(exception){
+                
+                for (var i = 0; i < station_ids.length; i++){
+                  if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                    var temp_station = Snap.select(".station#"+station_ids[i])
+                    console.log(station_ids[i])
+
+                    try{
+                      if(temp_station.getBBox() != null){
+                        console.log(temp_station.getBBox())
+                        bound = temp_station.getBBox()
+                      }
+                      break;
+                    }catch(exception){
+
+                    }
+                  }
+                }
+
+              }
+
+              var image = null;
+              
+              try{
+                if(stationbean.isTransfer){
                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 13, bound.y - 2, 20, 20);
                 }else{
                   image = s.image('./ui/images/icon_subway_route.png', bound.x + 5, bound.y - 2, 20, 20);
@@ -230,16 +254,16 @@
 
               }
 
-              animation_1 = function() {
-                image.animate({opacity: '0'}, 1000, mina.linear, animation_2)  
-              }
-              animation_2 = function() {
-                image.animate({opacity: '1.0'}, 1000, mina.linear, animation_1)
-              }
+              // animation_1 = function() {
+              //   image.animate({opacity: '0'}, 1000, mina.linear, animation_2)  
+              // }
+              // animation_2 = function() {
+              //   image.animate({opacity: '1.0'}, 1000, mina.linear, animation_1)
+              // }
 
-              for (var i = 0; i < 10; i++) {
-               animation_1();
-              };
+              // for (var i = 0; i < 10; i++) {
+              //  animation_1();
+              // };
               
 
               this.marked_stations.push(image);
@@ -273,10 +297,12 @@
               jsonObject.lat = stationInfo.location.latitude;
               jsonObject.lon = stationInfo.location.longitude;
               jsonObject.exit_locations = stationInfo.exits;
+              jsonObject.isTransfer = false;
+              if(jsonObject.line.indexOf("환승") > -1)
+                jsonObject.isTransfer = true;
 
               jsonArray.push(jsonObject);
             }
-            console.log(jsonArray)
 
             var markArray = new Array();
             for (var i = 0; i < jsonArray.length; i++) {
@@ -284,27 +310,46 @@
             };
 
              var previousObject = null;
+             // for (var i = 0; i < markArray.length; i++){
+             //   try {
+             //     if(markArray[i].line == "환승역")
+             //     {
+             //       if(i == markArray.length - 1){
+             //         markArray.splice(i, 1);
+             //         markArray.splice(i + 1, 1);
+             //       }else{
+             //         markArray.splice(i - 1, 1);
+             //         markArray.splice(i, 1);
+             //       }
+             //     }  
+             //   }
+             //   catch(exception){
+             //   }
+             // }
+
              for (var i = 0; i < markArray.length; i++){
                try {
                  if(markArray[i].line == "환승역")
                  {
-                   if(i == markArray.length - 1){
-                     markArray.splice(i, 1);
-                     markArray.splice(i + 1, 1);
-                   }else{
-                     markArray.splice(i - 1, 1);
-                     markArray.splice(i, 1);
-                   }
+                   // if(i == markArray.length - 1){
+                   //   markArray.splice(i, 1);
+                   //   markArray.splice(i + 1, 1);
+                   // }else{
+                   //   markArray.splice(i - 1, 1);
+                   //   markArray.splice(i, 1);
+                   // }
+                   // markArray.splice(i, 1);
+                   // markArray.splice(i, 1);
                  }  
                }
                catch(exception){
                }
              }
 
-
+            console.log(markArray);
             for (var i = 0; i < markArray.length; i++){
               if(i != 0 && i != markArray.length - 1){
-                  this.mark_station(markArray[i].id);
+                  this.mark_station(markArray[i]);
               }
             }
 
@@ -319,7 +364,7 @@
               console.log(exception);
             }
 
-            console.log(jsonArray);
+            // console.log(jsonArray);
 
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 

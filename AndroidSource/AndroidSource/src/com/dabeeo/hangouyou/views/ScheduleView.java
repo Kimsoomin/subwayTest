@@ -56,7 +56,6 @@ public class ScheduleView extends RelativeLayout
       memoContainer.setVisibility(View.VISIBLE);
       this.memo.setText(bean.memo);
     }
-    
   }
   
   

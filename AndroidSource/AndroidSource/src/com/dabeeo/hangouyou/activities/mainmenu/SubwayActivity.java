@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,20 +17,28 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.StationBean;
+import com.dabeeo.hangouyou.controllers.mypage.SubwaySearchListAdapter;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.managers.SubwayManager;
 
 public class SubwayActivity extends Activity
 {
-  private AutoCompleteTextView editSearch;
+  private EditText editSearch;
   private ArrayList<String> subwayNames = new ArrayList<String>();
   private ImageView backImage;
+  private ImageView typingCancel;
+  private ListView searchListView;
+  private SubwaySearchListAdapter adapter;
+  private RelativeLayout searchContainer;
+  private RelativeLayout emptySearchContainer;
   
   
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
@@ -41,14 +51,28 @@ public class SubwayActivity extends Activity
     setContentView(R.layout.activity_subway);
     setTitle(getString(R.string.term_subway));
     
+    editSearch = (EditText) findViewById(R.id.edit_search);
+    searchContainer = (RelativeLayout) findViewById(R.id.search_container);
+    emptySearchContainer = (RelativeLayout) findViewById(R.id.empty_search_container);
+    typingCancel = (ImageView) findViewById(R.id.search_cancel);
+    typingCancel.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        editSearch.setText("");
+      }
+    });
+    
+    searchListView = (ListView) findViewById(R.id.search_listview);
+    adapter = new SubwaySearchListAdapter(SubwayActivity.this);
+    searchListView.setAdapter(adapter);
+    
     Log.w("WARN", "GetIntent data : " + getIntent().getDoubleExtra("Latitude", -1));
     subwayNames.clear();
     
-    subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayNames());
-    subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayCnNames());
-    editSearch = (AutoCompleteTextView) findViewById(R.id.edit_search);
-    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, subwayNames);
-    editSearch.setAdapter(adapter);
+//    subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayNames());
+//    subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayCnNames());
     
 //		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //		getSupportActionBar().setHomeButtonEnabled(true);
@@ -83,16 +107,60 @@ public class SubwayActivity extends Activity
     ft.replace(R.id.content, MainActivity.subwayFrament);
     ft.commit();
     
-    editSearch.setOnItemClickListener(new OnItemClickListener()
+    TextWatcher watcher = new TextWatcher()
+    {
+      @Override
+      public void afterTextChanged(Editable s)
+      {
+      }
+      
+      
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after)
+      {
+      }
+      
+      
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count)
+      {
+        Log.w("WARN", "length: " + editSearch.getText().toString().length());
+        if (editSearch.getText().toString().length() > 1)
+        {
+          searchContainer.setVisibility(View.VISIBLE);
+          if (SubwayManager.getInstance(SubwayActivity.this).getSubwayStationsWithTitle(editSearch.getText().toString()).size() > 0)
+          {
+            searchListView.setVisibility(View.VISIBLE);
+            searchListView.bringToFront();
+            emptySearchContainer.setVisibility(View.GONE);
+          }
+          else
+          {
+            searchListView.setVisibility(View.GONE);
+            emptySearchContainer.setVisibility(View.VISIBLE);
+          }
+        }
+        else
+        {
+          searchContainer.setVisibility(View.GONE);
+          searchListView.setVisibility(View.GONE);
+        }
+        
+        adapter.clear();
+        adapter.addAll(SubwayManager.getInstance(SubwayActivity.this).getSubwayStationsWithTitle(editSearch.getText().toString()));
+      }
+    };
+    editSearch.addTextChangedListener(watcher);
+    
+    searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
     {
       @Override
       public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
       {
-        String stationName = arg0.getItemAtPosition(position).toString();
-        String stationdId = SubwayManager.getInstance(SubwayActivity.this).getStationId(stationName);
-        Log.w("WARN", "Select Station Name : " + stationName);
-        Log.w("WARN", "Select Station id : " + stationdId);
-        MainActivity.subwayFrament.findStation(stationdId, stationName);
+        searchContainer.setVisibility(View.GONE);
+        searchListView.setVisibility(View.GONE);
+        StationBean bean = (StationBean) adapter.getItem(position);
+        MainActivity.subwayFrament.findStation(bean.stationId, bean.nameKo);
       }
     });
     
