@@ -21,7 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +37,11 @@ import com.dabeeo.hangouyou.utils.SystemUtil;
 public class MyPageFragment extends Fragment
 {
   private final static int REQUEST_CODE = 120;
-  private ImageView imageCover;
+//  private ImageView imageCover;
   private RoundedImageView imageProfile;
   private TextView textName;
   
-  private Button btnSetting;
-  private Button btnMySchedule, btnMyPlace, btnMyBookmark, btnMyOrders, btnMyCart;
+  private LinearLayout conatinerMySchedule, conatinerMyPlace, conatinerMySetting, conatinerMyBookmark, conatinerMyOrders, conatinerMyCart;
   
   private boolean isChangeBackground = false;
   
@@ -53,25 +52,25 @@ public class MyPageFragment extends Fragment
     int resId = R.layout.fragment_my_page;
     View view = inflater.inflate(resId, null);
     
-    imageCover = (ImageView) view.findViewById(R.id.image_cover);
+//    imageCover = (ImageView) view.findViewById(R.id.image_cover);
     imageProfile = (RoundedImageView) view.findViewById(R.id.image_profile);
     imageProfile.setOnClickListener(clickListener);
     
     textName = (TextView) view.findViewById(R.id.text_name);
     
-    btnSetting = (Button) view.findViewById(R.id.btn_setting);
-    btnMySchedule = (Button) view.findViewById(R.id.btn_my_schedule);
-    btnMyPlace = (Button) view.findViewById(R.id.btn_my_place);
-    btnMyBookmark = (Button) view.findViewById(R.id.btn_my_bookmark);
-    btnMyOrders = (Button) view.findViewById(R.id.btn_my_order);
-    btnMyCart = (Button) view.findViewById(R.id.btn_my_cart);
+    conatinerMySchedule = (LinearLayout) view.findViewById(R.id.container_my_schedule);
+    conatinerMyPlace = (LinearLayout) view.findViewById(R.id.container_my_place);
+    conatinerMySetting = (LinearLayout) view.findViewById(R.id.container_my_setting);
+    conatinerMyBookmark = (LinearLayout) view.findViewById(R.id.container_my_bookmark);
+    conatinerMyOrders = (LinearLayout) view.findViewById(R.id.container_my_order);
+    conatinerMyCart = (LinearLayout) view.findViewById(R.id.container_my_cart);
     
-    btnSetting.setOnClickListener(clickListener);
-    btnMySchedule.setOnClickListener(menuClickListener);
-    btnMyPlace.setOnClickListener(menuClickListener);
-    btnMyBookmark.setOnClickListener(menuClickListener);
-    btnMyOrders.setOnClickListener(menuClickListener);
-    btnMyCart.setOnClickListener(menuClickListener);
+    conatinerMySetting.setOnClickListener(clickListener);
+    conatinerMySchedule.setOnClickListener(menuClickListener);
+    conatinerMyPlace.setOnClickListener(menuClickListener);
+    conatinerMyBookmark.setOnClickListener(menuClickListener);
+    conatinerMyOrders.setOnClickListener(menuClickListener);
+    conatinerMyCart.setOnClickListener(menuClickListener);
     
     return view;
   }
@@ -100,9 +99,10 @@ public class MyPageFragment extends Fragment
         is = new FileInputStream(new File(photos[0]));
         options.inSampleSize = 2;
         Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
-        if (isChangeBackground)
-          imageCover.setImageBitmap(bitmap);
-        else
+//        if (isChangeBackground)
+//          imageCover.setImageBitmap(bitmap);
+//        else
+        if (!isChangeBackground)
           imageProfile.setImageBitmap(bitmap);
       }
       catch (FileNotFoundException e)
@@ -126,29 +126,34 @@ public class MyPageFragment extends Fragment
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == btnMySchedule.getId())
+      if (v.getId() == conatinerMySchedule.getId())
       {
         startActivity(new Intent(getActivity(), MySchedulesActivity.class));
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
-      else if (v.getId() == btnMyPlace.getId())
+      else if (v.getId() == conatinerMyPlace.getId())
       {
         startActivity(new Intent(getActivity(), MyPlaceActivity.class));
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
-      else if (v.getId() == btnMyBookmark.getId())
+      else if (v.getId() == conatinerMyBookmark.getId())
       {
         if (SystemUtil.isConnectNetwork(getActivity()))
           showDontEnterWhenNotConnectNetworkDialog();
         else
+        {
           startActivity(new Intent(getActivity(), MyBookmarkActivity.class));
+          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }
       }
-      else if (v.getId() == btnMyOrders.getId())
+      else if (v.getId() == conatinerMyOrders.getId())
       {
         if (SystemUtil.isConnectNetwork(getActivity()))
           showDontEnterWhenNotConnectNetworkDialog();
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
-      else if (v.getId() == btnMyCart.getId())
+      else if (v.getId() == conatinerMyCart.getId())
       {
         if (SystemUtil.isConnectNetwork(getActivity()))
           showDontEnterWhenNotConnectNetworkDialog();
@@ -204,9 +209,10 @@ public class MyPageFragment extends Fragment
         });
         builder.create().show();
       }
-      else if (v.getId() == btnSetting.getId())
+      else if (v.getId() == conatinerMySetting.getId())
       {
         startActivity(new Intent(getActivity(), SettingActivity.class));
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
     }
   };
