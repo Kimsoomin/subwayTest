@@ -222,7 +222,7 @@
               try{
                 bound = station.getBBox()            
               }catch(exception){
-                
+
                 for (var i = 0; i < station_ids.length; i++){
                   if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
                     var temp_station = Snap.select(".station#"+station_ids[i])
@@ -246,12 +246,22 @@
               
               try{
                 if(stationbean.isTransfer){
-                   image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 13, bound.y - 2, 20, 20);
+                  console.log(stationbean.id.split("line").length)
+                  if(stationbean.id.split("line").length == 5){
+                    //환승역4개  
+                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 21, bound.y - 2, 20, 20);
+                  }
+                  else if(stationbean.id.split("line").length == 4){
+                    //환승역3개
+                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 19, bound.y - 2, 20, 20);
+                  }
+                  else
+                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 13, bound.y - 2, 20, 20);
                 }else{
                   image = s.image('./ui/images/icon_subway_route.png', bound.x + 5, bound.y - 2, 20, 20);
                 }
               }catch(exception){
-
+                console.log(exception);
               }
 
               // animation_1 = function() {
@@ -276,7 +286,11 @@
             var length = this.marked_stations.length
             for (var i = 0; i < length; i++) {
               var marked_station = this.marked_stations[i]
-              marked_station.remove()
+              try{
+                marked_station.remove()
+              }catch(exception){
+
+              }
             }
             this.marked_stations = []
           },
@@ -291,7 +305,7 @@
               jsonObject.name = stationInfo.name_cn;
               jsonObject.name_ko = stationInfo.name_ko;
               jsonObject.name_en = stationInfo.name_en;
-              jsonObject.id = array[i]
+              jsonObject.id = stationInfo.id;
               jsonObject.line = stationInfo.line;
               jsonObject.exit_locations = stationInfo.exits;
               jsonObject.lat = stationInfo.location.latitude;
@@ -331,15 +345,14 @@
                try {
                  if(markArray[i].line == "환승역")
                  {
-                   // if(i == markArray.length - 1){
-                   //   markArray.splice(i, 1);
-                   //   markArray.splice(i + 1, 1);
-                   // }else{
-                   //   markArray.splice(i - 1, 1);
-                   //   markArray.splice(i, 1);
-                   // }
-                   // markArray.splice(i, 1);
-                   // markArray.splice(i, 1);
+                   if(i == markArray.length - 1){
+                     markArray.splice(i, 1);
+                     markArray.splice(i + 1, 1);
+                   }else{
+                        markArray.splice(i - 1, 1);
+                       markArray.splice(i, 1);
+                      
+                   }
                  }  
                }
                catch(exception){

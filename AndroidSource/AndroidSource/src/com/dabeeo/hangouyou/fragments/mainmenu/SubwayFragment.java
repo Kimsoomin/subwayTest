@@ -122,7 +122,7 @@ public class SubwayFragment extends Fragment
   
   public void findNearByStation(double lat, double lon, double type, String destName)
   {
-    Log.w("WARN", "지하철을 찾고 출도착역으로 설정 " + lat + " / " + lon);
+    Log.w("WARN", "지하철을 찾고 출도착역으로 설정 " + lat + " / " + lon + " / " + type);
     findNearByStationLat = lat;
     findNearByStationLon = lon;
     setDestFindNearStation = type;
@@ -218,6 +218,7 @@ public class SubwayFragment extends Fragment
   
   public void checkSVGLoaded()
   {
+    handler.removeCallbacks(checkSubwayNativeLoadRunnable);
     handler.postDelayed(checkSubwayNativeLoadRunnable, 1000);
   }
   
@@ -281,7 +282,7 @@ public class SubwayFragment extends Fragment
     {
       Log.w("WARN", "call checkReady");
       webview.loadUrl("javascript:checkReady()");
-      handler.postDelayed(checkSubwayNativeLoadRunnable, 800);
+      handler.postDelayed(checkSubwayNativeLoadRunnable, 1000);
     }
   };
   
@@ -790,7 +791,6 @@ public class SubwayFragment extends Fragment
                   containerNearByStationInfo.setVisibility(View.GONE);
                   startStationLat = -1;
                   startStationLong = -1;
-                  setDestFindNearStation = -1;
                   
                   webview.loadUrl("javascript:subway.clear_start_station()");
                 }
