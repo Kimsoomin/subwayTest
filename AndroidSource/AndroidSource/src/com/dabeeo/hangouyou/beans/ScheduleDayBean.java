@@ -8,6 +8,8 @@ import org.json.JSONObject;
 public class ScheduleDayBean
 {
   public int type;
+  public String dayDist;
+  public String dayTime;
   public ArrayList<SpotBean> spots = new ArrayList<SpotBean>();
   
   
@@ -17,6 +19,12 @@ public class ScheduleDayBean
     {
       if (obj.has("type"))
         type = obj.getInt("type");
+      
+      if (obj.has("dayDist"))
+        dayDist = obj.getString("dayDist");
+      
+      if (obj.has("dayTime"))
+        dayTime = obj.getString("dayTime");
       
       if (obj.has("spot"))
       {

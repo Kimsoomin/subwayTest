@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,19 +19,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.ProductBean;
-import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -42,7 +45,7 @@ import com.dabeeo.hangouyou.views.DetailTicketView;
 import com.dabeeo.hangouyou.views.PlaceDetailHeaderView;
 import com.dabeeo.hangouyou.views.PlaceDetailTitleView;
 import com.dabeeo.hangouyou.views.ProductView;
-import com.dabeeo.hangouyou.views.ReviewView;
+import com.dabeeo.hangouyou.views.ReviewContainerView;
 
 public class PlaceDetailActivity extends ActionBarActivity
 {
@@ -53,7 +56,11 @@ public class PlaceDetailActivity extends ActionBarActivity
   private TextView textDetail;
   private TextView textRate;
   
-  private LinearLayout containerProduct, containerReview;
+  private LinearLayout containerProduct;
+  
+  private RelativeLayout reviewLayout;
+  private ReviewContainerView reviewContainerView;
+  
   private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
   private ProgressBar progressBar;
   
@@ -86,21 +93,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     containerTicketAndCoupon = (LinearLayout) findViewById(R.id.container_coupon_and_ticket);
     
-    scrollView = (CustomScrollView) findViewById(R.id.scrollview);
-    scrollView.setScrollViewListener(new ScrollViewListener()
-    {
-      @Override
-      public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
-      {
-        View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
-        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
-        
-        if (diff == 0)
-        {
-          Log.w("WARN", "TODO 리뷰로딩해서 addView 하기");
-        }
-      }
-    });
     textDetail = (TextView) findViewById(R.id.text_detail);
     textRate = (TextView) findViewById(R.id.text_rate);
     
@@ -112,12 +104,31 @@ public class PlaceDetailActivity extends ActionBarActivity
     btnReviewWorst.setOnClickListener(rateClickListener);
     
     containerProduct = (LinearLayout) findViewById(R.id.container_product);
-    containerReview = (LinearLayout) findViewById(R.id.container_review);
+    reviewLayout = (RelativeLayout) findViewById(R.id.review_layout);
     
     headerView = (PlaceDetailHeaderView) findViewById(R.id.header_view);
     titleView = (PlaceDetailTitleView) findViewById(R.id.title_view);
     headerView.init();
     titleView.init();
+    
+    scrollView = (CustomScrollView) findViewById(R.id.scrollview);
+    scrollView.getViewTreeObserver().addOnScrollChangedListener(new OnScrollChangedListener()
+    {
+      @SuppressLint("NewApi")
+      @Override
+      public void onScrollChanged()
+      {
+        int scrollY = scrollView.getScrollY();
+        
+        if (scrollY > 255)
+          scrollY = 254;
+        scrollY = scrollY / 10;
+        int opacity = 255 - scrollY;
+        if (opacity > 255)
+          opacity = 255;
+        titleView.container.setBackground(new ColorDrawable(Color.argb(255, opacity, opacity, opacity)));
+      }
+    });
     
     FrameLayout header = (FrameLayout) findViewById(R.id.header);
     Resources r = getResources();
@@ -129,6 +140,22 @@ public class PlaceDetailActivity extends ActionBarActivity
     findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
     
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
+    
+    scrollView.setScrollViewListener(new ScrollViewListener()
+    {
+      @Override
+      public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
+      {
+        View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+        
+        if (diff == 0)
+        {
+          if (reviewContainerView != null)
+            reviewContainerView.loadMore();
+        }
+      }
+    });
     
     loadPlaceDetail();
   }
@@ -214,13 +241,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     couponView.setBean(couponBean);
     containerTicketAndCoupon.addView(couponView);
     
-//    ReviewView reviewView = new ReviewView(PlaceDetailActivity.this);
-//    ReviewBean reviewBean = new ReviewBean();
-//    reviewBean.userName = "planB";
-//    reviewBean.content = "좋네요!";
-//    reviewView.setBean(reviewBean);
-//    containerReview.addView(reviewView);
-    
     textRate.setText("4.0");
     textDetail.setText("Details");
     
@@ -247,6 +267,9 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     if (bean == null)
       return;
+    
+    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", Integer.toString(bean.idx));
+    reviewLayout.addView(reviewContainerView);
     
     textRate.setText(Integer.toString(bean.rate));
     textDetail.setText(bean.contents);

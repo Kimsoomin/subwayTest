@@ -138,7 +138,7 @@ public class ScheduleDetailBean
         try
         {
           insertDateString = obj.getString("insertDate");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
           insertDate = format.parse(insertDateString);
         }
         catch (Exception e)
@@ -152,7 +152,7 @@ public class ScheduleDetailBean
         try
         {
           updateDateString = obj.getString("updateDate");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
           updateDate = format.parse(updateDateString);
         }
         catch (Exception e)

@@ -11,12 +11,10 @@ public class SpotBean
   public int slotNum;
   public int time;
   public String cityIdx;
-  public String contentIdx;
+  public String contentsIdx;
   
-  public String startDateString;
-  public Date startDate;
-  public String endDateString;
-  public Date endDate;
+  public String startTime;
+  public String endTime;
   
   public int budget;
   public String currency;
@@ -52,8 +50,8 @@ public class SpotBean
       
       if (obj.has("cityIdx"))
         cityIdx = obj.getString("cityIdx");
-      if (obj.has("contentIdx"))
-        contentIdx = obj.getString("contentIdx");
+      if (obj.has("contentsIdx"))
+        contentsIdx = obj.getString("contentsIdx");
       if (obj.has("budget"))
         budget = obj.getInt("budget");
       if (obj.has("currency"))
@@ -111,33 +109,8 @@ public class SpotBean
         e.printStackTrace();
       }
       
-      if (obj.has("startDate"))
-      {
-        try
-        {
-          startDateString = obj.getString("startDate");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-          startDate = format.parse(startDateString);
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-      }
-      
-      if (obj.has("endDate"))
-      {
-        try
-        {
-          endDateString = obj.getString("endDate");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-          endDate = format.parse(endDateString);
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-      }
+      startTime = obj.getString("startTime");
+      endTime = obj.getString("endTime");
     }
     catch (Exception e)
     {

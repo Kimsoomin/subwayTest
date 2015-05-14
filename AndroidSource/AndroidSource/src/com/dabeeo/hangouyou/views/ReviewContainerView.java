@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ReviewBean;
@@ -26,6 +27,8 @@ public class ReviewContainerView extends LinearLayout
   private String parentType, parentIdx;
   private int page = 0;
   private boolean isLoading = false;
+  
+  private RelativeLayout progressLayout;
   
   
   public ReviewContainerView(Activity context, String parentType, String parentIdx)
@@ -62,7 +65,7 @@ public class ReviewContainerView extends LinearLayout
     View view = inflater.inflate(resId, null);
     
     container = (LinearLayout) view.findViewById(R.id.content);
-    
+    progressLayout = (RelativeLayout) view.findViewById(R.id.progress_layout);
     addView(view);
   }
   
@@ -82,6 +85,7 @@ public class ReviewContainerView extends LinearLayout
     protected void onPreExecute()
     {
       isLoading = true;
+      progressLayout.setVisibility(View.VISIBLE);
       super.onPreExecute();
     }
     
@@ -120,6 +124,7 @@ public class ReviewContainerView extends LinearLayout
       {
         e.printStackTrace();
       }
+      progressLayout.setVisibility(View.GONE);
       isLoading = false;
       super.onPostExecute(result);
     }

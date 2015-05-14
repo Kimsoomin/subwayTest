@@ -6,17 +6,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
+import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleDetailFragment;
 
 public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
 {
   private ScheduleDetailBean bean = new ScheduleDetailBean();
+  private Context context;
   
   
   public TravelScheduleDetailViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
+    this.context = context;
   }
   
   
@@ -51,8 +54,8 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   public CharSequence getPageTitle(int position)
   {
     if (position == 0)
-      return "전체";
+      return context.getString(R.string.term_all);
     else
-      return Integer.toString(position) + "일";
+      return Integer.toString(position) + context.getString(R.string.term_after_day);
   }
 }

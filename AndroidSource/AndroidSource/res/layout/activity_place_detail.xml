@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
                         android:orientation="vertical"
-                        android:padding="8dp" >
+                        android:padding="16dp" >
 
                         <TextView
                             android:layout_width="match_parent"
@@ -213,27 +213,12 @@
                             android:orientation="vertical" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
+                        android:id="@+id/review_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@android:color/white"
-                        android:orientation="vertical"
-                        android:padding="8dp" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/term_review"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:id="@+id/container_review"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical" />
-                    </LinearLayout>
+                        android:orientation="vertical" />
                 </LinearLayout>
             </com.dabeeo.hangouyou.views.CustomScrollView>
         </FrameLayout>

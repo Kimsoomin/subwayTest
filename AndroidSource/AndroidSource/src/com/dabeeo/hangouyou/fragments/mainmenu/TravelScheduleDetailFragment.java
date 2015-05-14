@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.fragments.mainmenu;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,19 +20,18 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.views.CustomScrollView;
+import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
 import com.dabeeo.hangouyou.views.ReviewContainerView;
 import com.dabeeo.hangouyou.views.ScheduleDetailHeaderView;
 import com.dabeeo.hangouyou.views.ScheduleDetailTitleView;
 import com.dabeeo.hangouyou.views.ScheduleTitleView;
 import com.dabeeo.hangouyou.views.ScheduleView;
-import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
 
 public class TravelScheduleDetailFragment extends Fragment
 {
@@ -83,6 +83,7 @@ public class TravelScheduleDetailFragment extends Fragment
     
     scrollView.getViewTreeObserver().addOnScrollChangedListener(new OnScrollChangedListener()
     {
+      @SuppressLint("NewApi")
       @Override
       public void onScrollChanged()
       {
@@ -92,6 +93,8 @@ public class TravelScheduleDetailFragment extends Fragment
           scrollY = 254;
         scrollY = scrollY / 10;
         int opacity = 255 - scrollY;
+        if (opacity > 255)
+          opacity = 255;
         titleView.container.setBackground(new ColorDrawable(Color.argb(255, opacity, opacity, opacity)));
       }
     });
@@ -111,7 +114,7 @@ public class TravelScheduleDetailFragment extends Fragment
         
         if (diff == 0)
         {
-//          reviewContainerView.loadMore();
+          reviewContainerView.loadMore();
         }
       }
     });
@@ -169,10 +172,12 @@ public class TravelScheduleDetailFragment extends Fragment
         for (int j = 0; j < bean.days.get(i).spots.size(); j++)
         {
           ScheduleView view = new ScheduleView(getActivity());
-          bean.days.get(i).spots.get(j).memo = "memo" + j;
           view.setData(j, bean.days.get(i).spots.get(j));
+          
+          String planMemo = "";
+          planMemo += bean.days.get(i).dayDist + "\n" + bean.days.get(i).dayTime;
           if (j == bean.days.get(i).spots.size() - 1)
-            view.setFinalView();
+            view.setFinalView(planMemo);
           contentContainer.addView(view);
         }
       }
@@ -190,8 +195,11 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         ScheduleView view = new ScheduleView(getActivity());
         view.setData(i, dayBean.spots.get(i));
+        
+        String planMemo = "";
+        planMemo += dayBean.dayDist + "\n" + dayBean.dayTime;
         if (i == dayBean.spots.size() - 1)
-          view.setFinalView();
+          view.setFinalView(planMemo);
         contentContainer.addView(view);
       }
     }
