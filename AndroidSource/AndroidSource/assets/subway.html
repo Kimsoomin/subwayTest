@@ -107,16 +107,23 @@
           end_station: undefined,
           end_station_id: undefined,
           marked_stations: [],
+          clear_start_station: function(){
+            if (this.start_station) {
+              this.start_station.remove()
+            }
+            this.start_station_id = undefined;
+          },
           set_start_station: function(station_id) {
             if (this.start_station) {
               this.start_station.remove()
             }
+
             station = Snap.select(".station#"+station_id)
             
             try{
               bound = station.getBBox()            
             }catch(exception){
-
+              console.log("Re-find")
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
@@ -128,14 +135,13 @@
                       bound = temp_station.getBBox()
                     }
                     break;
-                  }catch(exception){
-
+                  }catch(exception2){
                   }
                 }
               }
 
             }
-
+            console.log(bound.x)
 
             // bound = station.getBBox()
             margin = 1
@@ -396,11 +402,18 @@
                 return sortResult;
             });
 
-            console.log(jsonArray);
+            // console.log(jsonArray);
             var firstStation = jsonArray[0];
+            var tempStationId = firstStation.id;
+            try{
+              if(jsonArray[0].line.indexOf("환승") > -1)
+                firstStation = jsonArray[1];
+              console.log(firstStation.name_ko)
+            }catch(exception)
+            {
 
-            // setCenterWithStationId(firstStation.id);
-            console.log(firstStation.name);
+            }
+
             completedFindNearByStation(firstStation.id);
           },
           setDestStation: function(find_lat, find_lon, find_type){

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,20 +18,27 @@ import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
+import com.dabeeo.hangouyou.views.CustomScrollView;
+import com.dabeeo.hangouyou.views.ReviewContainerView;
 import com.dabeeo.hangouyou.views.ScheduleDetailHeaderView;
 import com.dabeeo.hangouyou.views.ScheduleDetailTitleView;
 import com.dabeeo.hangouyou.views.ScheduleTitleView;
 import com.dabeeo.hangouyou.views.ScheduleView;
+import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
 
 public class TravelScheduleDetailFragment extends Fragment
 {
-  private LinearLayout contentContainer, containerReview;
+  private LinearLayout contentContainer;
+  
+  private RelativeLayout reviewLayout;
+  private ReviewContainerView reviewContainerView;
   
   private ScheduleDetailHeaderView headerView;
   private ScheduleDetailTitleView titleView;
@@ -39,7 +47,7 @@ public class TravelScheduleDetailFragment extends Fragment
   private ScheduleDayBean dayBean;
   
   private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
-  private ScrollView scrollView;
+  private CustomScrollView scrollView;
   
   private int position;
   
@@ -57,9 +65,9 @@ public class TravelScheduleDetailFragment extends Fragment
   {
     super.onActivityCreated(savedInstanceState);
     
-    scrollView = (ScrollView) getView().findViewById(R.id.scrollview);
+    scrollView = (CustomScrollView) getView().findViewById(R.id.scrollview);
     contentContainer = (LinearLayout) getView().findViewById(R.id.content_container);
-    containerReview = (LinearLayout) getView().findViewById(R.id.container_review);
+    reviewLayout = (RelativeLayout) getView().findViewById(R.id.review_layout);
     
     btnReviewBest = (Button) getView().findViewById(R.id.btn_review_best);
     btnReviewSoso = (Button) getView().findViewById(R.id.btn_review_soso);
@@ -93,6 +101,21 @@ public class TravelScheduleDetailFragment extends Fragment
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
     
+    scrollView.setScrollViewListener(new ScrollViewListener()
+    {
+      @Override
+      public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
+      {
+        View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+        
+        if (diff == 0)
+        {
+//          reviewContainerView.loadMore();
+        }
+      }
+    });
+    
     displayContentData();
   }
   
@@ -122,20 +145,10 @@ public class TravelScheduleDetailFragment extends Fragment
     
     displayDayView();
     
-//    containerReview.removeAllViews();
-//    ReviewView reviewView = new ReviewView(getActivity());
-//    ReviewBean reviewBean = new ReviewBean();
-//    reviewBean.userName = "planB";
-//    reviewBean.content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do";
-//    reviewView.setBean(reviewBean);
-//    containerReview.addView(reviewView);
-//    
-//    reviewView = new ReviewView(getActivity());
-//    reviewBean = new ReviewBean();
-//    reviewBean.userName = "planB";
-//    reviewBean.content = "좋네요!";
-//    reviewView.setBean(reviewBean);
-//    containerReview.addView(reviewView);
+    reviewContainerView = new ReviewContainerView(getActivity(), "place", bean.idx);
+    reviewLayout.addView(reviewContainerView);
+    
+    reviewContainerView.loadMore();
   }
   
   

@@ -146,14 +146,6 @@ public class SubwayActivity extends Activity
   
   
   @Override
-  public void onBackPressed()
-  {
-    MainActivity.subwayFrament.viewClear();
-    super.onBackPressed();
-  }
-  
-  
-  @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
     int id = item.getItemId();

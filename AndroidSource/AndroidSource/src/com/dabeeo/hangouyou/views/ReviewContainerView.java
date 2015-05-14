@@ -45,6 +45,15 @@ public class ReviewContainerView extends LinearLayout
   }
   
   
+  public void setData(Activity context, String parentType, String parentIdx)
+  {
+    this.context = context;
+    this.parentType = parentType;
+    this.parentIdx = parentIdx;
+    init();
+  }
+  
+  
   private void init()
   {
     apiClient = new ApiClient(context);
@@ -80,6 +89,8 @@ public class ReviewContainerView extends LinearLayout
     @Override
     protected NetworkResult doInBackground(String... params)
     {
+      if (apiClient == null)
+        apiClient = new ApiClient(context);
       return apiClient.getReviews(page, parentType, parentIdx);
     }
     
