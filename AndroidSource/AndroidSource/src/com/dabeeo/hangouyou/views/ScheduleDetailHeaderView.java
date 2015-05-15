@@ -58,6 +58,8 @@ public class ScheduleDetailHeaderView extends RelativeLayout
       budgetIcon.setImageResource(R.drawable.icon_budget_kr);
     else
       budgetIcon.setImageResource(R.drawable.icon_budget_cn);
+    
+    ImageDownloader.displayImage(context, imageUrl, imageView, null);
   }
   
   

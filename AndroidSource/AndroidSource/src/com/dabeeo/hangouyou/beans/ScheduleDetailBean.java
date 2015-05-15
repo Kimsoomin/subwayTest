@@ -40,6 +40,7 @@ public class ScheduleDetailBean
   public String budget1;
   public String budget2;
   public String budget3;
+  public String imageUrl;
   
   public ArrayList<ScheduleDayBean> days = new ArrayList<ScheduleDayBean>();
   
@@ -105,6 +106,11 @@ public class ScheduleDetailBean
       if (obj.has("budget3"))
         budget3 = obj.getString("budget3");
       
+      if (obj.has("image"))
+      {
+        JSONObject imgObject = obj.getJSONObject("image");
+        imageUrl = imgObject.getString("url");
+      }
       if (obj.has("startDate"))
       {
         try

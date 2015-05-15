@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.NoticeBean;
@@ -29,19 +32,27 @@ public class NoticeActivity extends ActionBarActivity
   private int limit = 20, offset = 0;
   
   
+  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_notice);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_notice));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     
     listView = (ExpandableListView) findViewById(android.R.id.list);
-    adapter = new NoticeAdapter(titles, contents);
+    adapter = new NoticeAdapter(this, titles, contents);
     listView.setAdapter(adapter);
+    listView.setGroupIndicator(getResources().getDrawable(R.drawable.transparent));
     
     listView.setOnScrollListener(scrollListener);
     

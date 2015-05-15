@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -26,7 +27,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
 {
   private RoundedImageView profileImage;
   private TextView textCompelete;
-  private LinearLayout containerRecommendSchedule;
+  private RelativeLayout containerRecommendSchedule;
   private Button btnAnotherSchedule, btnNewSchedule;
   
   
@@ -41,7 +42,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     
     profileImage = (RoundedImageView) findViewById(R.id.profile_image);
     textCompelete = (TextView) findViewById(R.id.text_compelete);
-    containerRecommendSchedule = (LinearLayout) findViewById(R.id.container_recommend_schedule);
+    containerRecommendSchedule = (RelativeLayout) findViewById(R.id.container_recommend_schedule);
     
     btnAnotherSchedule = (Button) findViewById(R.id.btn_another_schedule_recommend);
     btnNewSchedule = (Button) findViewById(R.id.btn_new_schedule);
@@ -75,16 +76,12 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     ScheduleBean bean = new ScheduleBean();
     bean.title = "서울 쇼핑 투어";
     
-    ImageView imageView = (ImageView) findViewById(R.id.imageview);
+//    ImageView imageView = (ImageView) findViewById(R.id.imageview);
     TextView title = (TextView) findViewById(R.id.title);
     TextView month = (TextView) findViewById(R.id.month);
-    TextView likeCount = (TextView) findViewById(R.id.like_count);
-    TextView reviewCount = (TextView) findViewById(R.id.review_count);
     
     title.setText(bean.title);
     month.setText(Integer.toString(bean.dayCount) + getString(R.string.term_month));
-    likeCount.setText(Integer.toString(bean.likeCount));
-    reviewCount.setText(Integer.toString(bean.reviewCount));
     
     containerRecommendSchedule.setOnClickListener(new OnClickListener()
     {

@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
     TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.app_name));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(false);

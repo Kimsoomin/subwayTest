@@ -7,8 +7,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp" >
+        android:layout_weight="1" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +24,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:padding="8dp"
                     android:text="@string/term_profile"
                     android:textStyle="bold" />
 
@@ -33,8 +32,12 @@
                     android:id="@+id/container_edit_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/white"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal" >
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:orientation="horizontal"
+                    android:padding="8dp" >
 
                     <TextView
                         android:id="@+id/text_name"
@@ -42,33 +45,33 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=">" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_arrow_g_next" />
                 </LinearLayout>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/darker_gray" />
 
             <!-- 동기화 -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
                 android:text="@string/term_sync"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -85,16 +88,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/darker_gray" />
-
+                android:background="@color/light_gray" />
             <!-- 알림설정 -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -108,15 +112,11 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/darker_gray" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
                 android:text="@string/term_about"
                 android:textStyle="bold" />
 
@@ -126,10 +126,12 @@
                 android:id="@+id/container_version_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/list_item_background"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -138,16 +140,16 @@
                     android:text="@string/term_version_info" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_small_arrow" />
+                    android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/darker_gray" />
+                android:background="@color/light_gray" />
 
             <!-- 앱 평가하기 -->
 
@@ -155,10 +157,11 @@
                 android:id="@+id/container_rating_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/list_item_background"
+                android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -167,16 +170,16 @@
                     android:text="@string/term_rating_app" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_small_arrow" />
+                    android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/darker_gray" />
+                android:background="@color/light_gray" />
 
             <!-- 공지사항 -->
 
@@ -184,10 +187,11 @@
                 android:id="@+id/container_notice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/list_item_background"
+                android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:padding="8dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -196,21 +200,32 @@
                     android:text="@string/term_notice" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_small_arrow" />
+                    android:src="@drawable/icon_arrow_g_next" />
+            </LinearLayout>
+
+            <!-- 공지사항 -->
+
+            <LinearLayout
+                android:id="@+id/container_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/list_item_white_background"
+                android:gravity="center_vertical"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:orientation="horizontal"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/term_logout" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/app_button"
-        android:padding="8dp"
-        android:text="@string/term_logout" />
 
 </LinearLayout>

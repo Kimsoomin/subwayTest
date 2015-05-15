@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.sub.FindPasswordActivity;
 import com.dabeeo.hangouyou.activities.ticket.TicketActivity;
 
 public class LoginActivity extends ActionBarActivity

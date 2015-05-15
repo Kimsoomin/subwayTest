@@ -1,8 +1,11 @@
 package com.dabeeo.hangouyou.activities.sub;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -21,20 +24,27 @@ public class AgreementActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_agreement);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setHomeButtonEnabled(true);
-    
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
     type = getIntent().getStringExtra("type");
     
     if (type.equals(TYPE_AGREEMENT))
-      setTitle(getString(R.string.term_agreement));
+      title.setText(getString(R.string.term_agreement));
     else if (type.equals(TYPE_AGREEMENT_PRIVATE))
-      setTitle(getString(R.string.term_private_agreement));
+      title.setText(getString(R.string.term_private_agreement));
     else if (type.equals(TYPE_AGREEMENT_GPS))
-      setTitle(getString(R.string.term_gps_info_agreement));
+      title.setText(getString(R.string.term_gps_info_agreement));
+    
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     content = (TextView) findViewById(R.id.content);
+    content.setText("가상의 이용약관입니다");
   }
+  
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item)

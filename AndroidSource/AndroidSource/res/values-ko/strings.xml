@@ -46,7 +46,7 @@
     <string name="term_my_bookmark">북마크</string>
     <string name="term_my_order">구매내역</string>
     <string name="term_my_cart">"장바구니"</string>
-    <string name="term_profile">프로필</string>
+    <string name="term_profile">계정</string>
     <string name="term_save">저장</string>
     <string name="term_logout">로그아웃</string>
     <string name="term_sync">동기화</string>
@@ -174,9 +174,10 @@
     <string name="term_another_recommend_schedule">다른 일정 추천 받기</string>
     <string name="term_generate_new_schedule">새로 만들기</string>
     <string name="term_compelete">완료</string>
-    <string name="msg_recommend_schedule_help">어디서 어떻게 해야하는지\n일정이 막막하시다면?\n자동추천일정으로 쉽게 여행일정을 완성하세요.</string>
-    <string name="msg_recommend_step_1">1. 여행일정이 정해지셨다면?</string>
-    <string name="msg_recommend_step_2">2. 이번 여행테마는?</string>
+    <string name="msg_recommend_schedule_help">어디서 어떻게 해야하는지\n일정이 막막하시다면?</string>
+    <string name="msg_recommend_schedule_help_1">자동추천일정으로 쉽게 여행일정을 완성하세요.</string>
+    <string name="msg_recommend_step_1">여행일정이 정해지셨다면?</string>
+    <string name="msg_recommend_step_2">이번 여행테마는?</string>
     <string name="term_select_start_date">출발일 선택</string>
     <string name="term_select_schedule_day">일정선택</string>
     <string name="term_next">다음</string>

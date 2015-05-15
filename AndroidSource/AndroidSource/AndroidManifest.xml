@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dabeeo.hangouyou"
-    android:versionCode="10"
-    android:versionName="1.0.9" >
+    android:versionCode="11"
+    android:versionName="1.1.0" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -115,12 +115,17 @@
             android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity
+            android:name="com.dabeeo.hangouyou.activities.sub.AccountSettingActivity"
+            android:label="@string/term_profile"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity"
             android:label="@string/term_login"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.FindPasswordActivity"
+            android:name="com.dabeeo.hangouyou.activities.sub.FindPasswordActivity"
             android:label="@string/term_find_password"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

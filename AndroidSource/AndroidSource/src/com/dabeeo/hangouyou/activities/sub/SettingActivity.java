@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
@@ -25,10 +25,9 @@ public class SettingActivity extends ActionBarActivity
 {
   private TextView textName;
   private LinearLayout containerEditProfile;
-  private Button btnLogout;
   private Switch switchNotificationOnOff, switchSyncWifiOnly;
   
-  private LinearLayout containerVersionInfo, containerRatingApp, containerNotice;
+  private LinearLayout containerVersionInfo, containerRatingApp, containerNotice, containerLogout;
   
   
   @Override
@@ -40,19 +39,19 @@ public class SettingActivity extends ActionBarActivity
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
     TextView title = (TextView) customActionBar.findViewById(R.id.title);
-    title.setText(getString(R.string.term_strategy_seoul));
+    title.setText(getString(R.string.term_setting));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
-    getSupportActionBar().setDisplayShowHomeEnabled(false);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     textName = (TextView) findViewById(R.id.text_name);
     textName.setText("홍길동");
     
+    containerLogout = (LinearLayout) findViewById(R.id.container_logout);
     containerEditProfile = (LinearLayout) findViewById(R.id.container_edit_profile);
     containerEditProfile.setOnClickListener(nameSaveListener);
-    btnLogout = (Button) findViewById(R.id.btn_logout);
-    btnLogout.setOnClickListener(new OnClickListener()
+    containerLogout.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View arg0)
@@ -103,6 +102,13 @@ public class SettingActivity extends ActionBarActivity
   
   
   @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    return super.onCreateOptionsMenu(menu);
+  }
+  
+  
+  @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
     if (item.getItemId() == android.R.id.home)
@@ -115,7 +121,8 @@ public class SettingActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-//      Intent i = new Intent(SettingActivity.this, )
+      Intent i = new Intent(SettingActivity.this, AccountSettingActivity.class);
+      startActivity(i);
     }
   };
   

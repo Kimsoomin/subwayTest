@@ -109,7 +109,7 @@
     <string name="term_address">地址</string>
     <string name="term_phone">联系电话</string>
     <string name="term_homepage">网址</string>
-    <string name="term_working_time">营业时间</string>
+    <string name="term_working_time">营业时间 (开放时间)</string>
     <string name="term_price_info">价格详情</string>
     <string name="term_traffic">交通情报</string>
     <string name="term_description">详情</string>
@@ -163,8 +163,8 @@
     <string name="msg_map_donwload">正在下载首尔地图，请稍等。</string>
 
     <!-- 지하철 -->
-    <string name="term_set_start_station">选择出发站</string>
-    <string name="term_set_end_station">选择目的站</string>
+    <string name="term_set_start_station">选为起点</string>
+    <string name="term_set_end_station">选为终点</string>
     <!-- 내 일정 -->
     <string name="term_recommend_travel_schedule">创建推荐行程</string>
     <string name="term_recommend_schedule_compeleted">成功创建推荐行程</string>
@@ -174,9 +174,10 @@
     <string name="term_another_recommend_schedule">接收其它推荐行程</string>
     <string name="term_generate_new_schedule">重新创建</string>
     <string name="term_compelete">完成</string>
-    <string name="msg_recommend_schedule_help">出游不知怎么规划？推荐行程帮你安排最佳线路！</string>
-    <string name="msg_recommend_step_1">1. 行程天数和出发日期搞定了吗？</string>
-    <string name="msg_recommend_step_2">2. 本次旅游的主题是什么？</string>
+    <string name="msg_recommend_schedule_help">出游不知怎么规划?</string>
+    <string name="msg_recommend_schedule_help_1">推荐行程帮你安排最佳线路！</string>
+    <string name="msg_recommend_step_1">行程天数和出发日期搞定了吗？</string>
+    <string name="msg_recommend_step_2">本次旅游的主题是什么？</string>
     <string name="term_select_start_date">选择出发日期</string>
     <string name="term_select_schedule_day">选择日期</string>
     <string name="term_next">下一步</string>
@@ -227,7 +228,7 @@
     <string name="term_ticket_and_coupon_buy">购买</string>
     <string name="term_coupon_en">"COUPON "</string>
 
-    <!-- 추가 String (아직 안보냄) -->
+    <!-- 추가 String (보냄 받아야 함) -->
     <!-- 쿠폰 -->
     <string name="term_quantity_unit">매</string>
     <string name="term_download">다운로드</string>
@@ -298,5 +299,23 @@
     <string name="msg_review_declare_reason_2">음란성 또는 부적합한 내용</string>
     <string name="msg_review_declare_reason_3">기타</string>
     <string name="term_after_day">일</string>
+    <!-- 마이페이지 -->
+    <string name="term_change_password">비밀번호 변경</string>
+    <string name="term_withdraw">회원탈퇴</string>
+    <string name="msg_withdraw">회원 탈퇴하기</string>
+    <string name="term_current_password">현재 비밀번호</string>
+    <string name="msg_hint_current_password">현재 비밀번호 (6-16자)</string>
+    <string name="term_new_password">새 비밀번호</string>
+    <string name="msg_hint_new_password">새 비밀번호 (6-16자)</string>
+    <string name="msg_hint_new_password_confirm">새 비밀번호 확인</string>
+    <string name="term_see_agreement">약관보기</string>
+    <!-- 추천일정 -->
+    <string name="term_culture">한류</string>
+    <string name="term_tour">관광</string>
+    <string name="term_food">미식</string>
+    <string name="term_rest">휴양</string>
+    <string name="term_random">랜덤</string>
+    <string name="msg_warn_select_theme">테마를 골라주세요</string>
 
+    <!-- 추가 String (아직 안보냄) -->
 </resources>

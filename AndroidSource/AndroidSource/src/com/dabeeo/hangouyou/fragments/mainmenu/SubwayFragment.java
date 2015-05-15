@@ -415,6 +415,7 @@ public class SubwayFragment extends Fragment
                 @Override
                 public void run()
                 {
+                  destName = "";
                   if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
                   {
                     double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
@@ -853,33 +854,6 @@ public class SubwayFragment extends Fragment
               containerNearByStationInfo.setVisibility(View.GONE);
             }
           });
-          
-//          if (type == 0)
-//          {
-//            if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
-//            {
-//              double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
-//              double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
-//              Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
-//              startStationLat = lat;
-//              startStationLong = lon;
-//              
-//              btnFindFirstStation.setVisibility(View.VISIBLE);
-//              btnFindFirstStation.bringToFront();
-//              btnFindFirstStation.setOnClickListener(new OnClickListener()
-//              {
-//                @Override
-//                public void onClick(View arg0)
-//                {
-//                  Intent i = new Intent(activity, BlinkingMap.class);
-//                  i.putExtra("lineId", stationId);
-//                  i.putExtra("Latitude", startStationLat);
-//                  i.putExtra("Longitude", startStationLong);
-//                  startActivity(i);
-//                }
-//              });
-//            }
-//          }
         }
       });
     }

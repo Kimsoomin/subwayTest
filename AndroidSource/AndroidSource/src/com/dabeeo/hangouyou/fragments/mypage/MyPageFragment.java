@@ -180,34 +180,38 @@ public class MyPageFragment extends Fragment
     {
       if (v.getId() == imageProfile.getId())
       {
-        CharSequence[] menus = new CharSequence[2];
-        menus[0] = getString(R.string.term_change_background);
-        menus[1] = getString(R.string.term_change_profile);
-        
-        Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setItems(menus, new DialogInterface.OnClickListener()
-        {
-          public void onClick(DialogInterface dialog, int whichButton)
-          {
-            if (whichButton == 0)
-            {
-              //배경화면 변경
-              isChangeBackground = true;
-              Intent intent = new Intent(getActivity(), PhotoSelectActivity.class);
-              intent.putExtra("can_select_multiple", false);
-              startActivityForResult(intent, REQUEST_CODE);
-            }
-            else if (whichButton == 1)
-            {
-              //프로필사진 변경
-              isChangeBackground = false;
-              Intent intent = new Intent(getActivity(), PhotoSelectActivity.class);
-              intent.putExtra("can_select_multiple", false);
-              startActivityForResult(intent, REQUEST_CODE);
-            }
-          }
-        });
-        builder.create().show();
+//        CharSequence[] menus = new CharSequence[2];
+//        menus[0] = getString(R.string.term_change_background);
+//        menus[1] = getString(R.string.term_change_profile);
+//        
+//        Builder builder = new AlertDialog.Builder(getActivity());
+//        builder.setItems(menus, new DialogInterface.OnClickListener()
+//        {
+//          public void onClick(DialogInterface dialog, int whichButton)
+//          {
+//            if (whichButton == 0)
+//            {
+//              //배경화면 변경
+//              isChangeBackground = true;
+//              Intent intent = new Intent(getActivity(), PhotoSelectActivity.class);
+//              intent.putExtra("can_select_multiple", false);
+//              startActivityForResult(intent, REQUEST_CODE);
+//            }
+//            else if (whichButton == 1)
+//            {
+//              //프로필사진 변경
+//              isChangeBackground = false;
+//              Intent intent = new Intent(getActivity(), PhotoSelectActivity.class);
+//              intent.putExtra("can_select_multiple", false);
+//              startActivityForResult(intent, REQUEST_CODE);
+//            }
+//          }
+//        });
+//        builder.create().show();
+        isChangeBackground = false;
+        Intent intent = new Intent(getActivity(), PhotoSelectActivity.class);
+        intent.putExtra("can_select_multiple", false);
+        startActivityForResult(intent, REQUEST_CODE);
       }
       else if (v.getId() == conatinerMySetting.getId())
       {

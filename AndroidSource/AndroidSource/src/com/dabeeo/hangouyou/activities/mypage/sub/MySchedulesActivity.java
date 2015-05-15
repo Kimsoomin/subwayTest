@@ -1,8 +1,10 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +17,10 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
-import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
@@ -34,7 +36,9 @@ public class MySchedulesActivity extends ActionBarActivity
   
   private MenuItem editMenuItem, closeMenuItem;
   private boolean isEditMode = false;
-  private Button btnRecommendSchedule;
+  private Button btnRecommendSchedule, btnRecommendScheduleInEmpty;
+  
+  private LinearLayout emptyContainer, gridViewContainer;
   
   
   @Override
@@ -42,11 +46,29 @@ public class MySchedulesActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_schedule);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_my_schedule));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+    emptyContainer = (LinearLayout) findViewById(R.id.empty_container);
+    gridViewContainer = (LinearLayout) findViewById(R.id.gridview_container);
     
+    btnRecommendScheduleInEmpty = (Button) findViewById(R.id.recommend_button);
+    btnRecommendScheduleInEmpty.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
+        startActivity(i);
+      }
+    });
     btnRecommendSchedule = (Button) findViewById(R.id.btn_recommend_travel_schedule);
     btnRecommendSchedule.setOnClickListener(new OnClickListener()
     {
@@ -76,6 +98,8 @@ public class MySchedulesActivity extends ActionBarActivity
   private void loadSchedules()
   {
     progressBar.setVisibility(View.VISIBLE);
+    emptyContainer.setVisibility(View.VISIBLE);
+    gridViewContainer.setVisibility(View.GONE);
     
 //    //테스트 가데이터 
 //    ScheduleBean bean = new ScheduleBean();

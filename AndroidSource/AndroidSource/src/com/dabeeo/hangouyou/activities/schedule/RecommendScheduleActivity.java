@@ -1,30 +1,32 @@
 package com.dabeeo.hangouyou.activities.schedule;
 
-import java.util.ArrayList;
-
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.views.CharacterProgressView;
 
 public class RecommendScheduleActivity extends ActionBarActivity
 {
   private LinearLayout containerChoiceStartDate;
-  private RadioGroup containerBottomViews;
   
   private Button btnDayUp, btnDayDown;
   private TextView textDay;
@@ -32,9 +34,10 @@ public class RecommendScheduleActivity extends ActionBarActivity
   private int day = 1;
   private String selectTheme = "";
   
-  private ArrayList<View> bottomViews = new ArrayList<View>();
-  
   private int year = -1, month = -1, dayOfMonth = -1;
+  
+  private String type = "";
+  private LinearLayout containerShopping, containerCulture, containerTour, containerFood, containerRest, containerRandom;
   
   
   @Override
@@ -42,9 +45,28 @@ public class RecommendScheduleActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recommend_travel_schedule);
-    
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_recommend_travel_schedule));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    
+    containerShopping = (LinearLayout) findViewById(R.id.container_shopping);
+    containerCulture = (LinearLayout) findViewById(R.id.container_culture);
+    containerTour = (LinearLayout) findViewById(R.id.container_tour);
+    containerFood = (LinearLayout) findViewById(R.id.container_food);
+    containerRest = (LinearLayout) findViewById(R.id.container_rest);
+    containerRandom = (LinearLayout) findViewById(R.id.container_random);
+    
+    containerShopping.setOnClickListener(typeClickListener);
+    containerCulture.setOnClickListener(typeClickListener);
+    containerTour.setOnClickListener(typeClickListener);
+    containerFood.setOnClickListener(typeClickListener);
+    containerRest.setOnClickListener(typeClickListener);
+    containerRandom.setOnClickListener(typeClickListener);
     
     containerChoiceStartDate = (LinearLayout) findViewById(R.id.container_choice_start_date);
     containerChoiceStartDate.setOnClickListener(new OnClickListener()
@@ -57,15 +79,12 @@ public class RecommendScheduleActivity extends ActionBarActivity
       }
     });
     startDate = (TextView) findViewById(R.id.text_start_date);
-    containerBottomViews = (RadioGroup) findViewById(R.id.container_travel_theme);
     btnDayUp = (Button) findViewById(R.id.date_up);
     btnDayDown = (Button) findViewById(R.id.date_down);
     textDay = (TextView) findViewById(R.id.text_day);
     
     btnDayUp.setOnClickListener(dayClickListener);
     btnDayDown.setOnClickListener(dayClickListener);
-    
-    displayBottomListView();
   }
   
   
@@ -80,7 +99,10 @@ public class RecommendScheduleActivity extends ActionBarActivity
       Log.w("WARN", "Activity Result:  " + year + " " + month + " " + dayOfMonth);
       
       if (year != -1)
-        startDate.setText(Integer.toString(year) + " " + Integer.toString(month) + " " + Integer.toString(dayOfMonth));
+      {
+        startDate.setText(Integer.toString(year) + "." + Integer.toString(month) + "." + Integer.toString(dayOfMonth));
+        startDate.setTextColor(Color.parseColor("#ff6262"));
+      }
     }
     super.onActivityResult(arg0, arg1, intent);
   }
@@ -93,38 +115,6 @@ public class RecommendScheduleActivity extends ActionBarActivity
     return super.onCreateOptionsMenu(menu);
   }
   
-  
-  private void displayBottomListView()
-  {
-    RadioButton radioView = new RadioButton(this);
-    radioView.setText("한류");
-    containerBottomViews.addView(radioView);
-    
-    radioView = new RadioButton(this);
-    radioView.setText("쇼핑");
-    containerBottomViews.addView(radioView);
-    
-    radioView = new RadioButton(this);
-    radioView.setText("명소");
-    containerBottomViews.addView(radioView);
-  }
-  
-  private OnClickListener bottomViewClickListener = new OnClickListener()
-  {
-    @Override
-    public void onClick(View v)
-    {
-      Log.w("WARN", "Clicked View id : " + v.getId());
-      for (int i = 0; i < bottomViews.size(); i++)
-      {
-        Log.w("WARN", "bottomViews View id : " + bottomViews.get(i).getId());
-        if (v.getId() == bottomViews.get(i).getId())
-          bottomViews.get(i).setActivated(true);
-        else
-          bottomViews.get(i).setActivated(false);
-      }
-    }
-  };
   private OnClickListener dayClickListener = new OnClickListener()
   {
     @Override
@@ -149,6 +139,46 @@ public class RecommendScheduleActivity extends ActionBarActivity
     }
   };
   
+  private OnClickListener typeClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      type = "test";
+      containerShopping.setSelected(false);
+      containerCulture.setSelected(false);
+      containerTour.setSelected(false);
+      containerFood.setSelected(false);
+      containerRest.setSelected(false);
+      containerRandom.setSelected(false);
+      
+      if (v.getId() == containerShopping.getId())
+      {
+        containerShopping.setSelected(true);
+      }
+      else if (v.getId() == containerCulture.getId())
+      {
+        containerCulture.setSelected(true);
+      }
+      else if (v.getId() == containerTour.getId())
+      {
+        containerTour.setSelected(true);
+      }
+      else if (v.getId() == containerFood.getId())
+      {
+        containerFood.setSelected(true);
+      }
+      else if (v.getId() == containerRest.getId())
+      {
+        containerRest.setSelected(true);
+      }
+      else if (v.getId() == containerRandom.getId())
+      {
+        containerRandom.setSelected(true);
+      }
+    }
+  };
+  
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
@@ -162,6 +192,10 @@ public class RecommendScheduleActivity extends ActionBarActivity
       {
         Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_empty_start_date), Toast.LENGTH_LONG).show();
       }
+      else if (TextUtils.isEmpty(type))
+      {
+        Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_select_theme), Toast.LENGTH_LONG).show();
+      }
       else
         findAndShowDialog();
     }
@@ -171,10 +205,12 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   private void findAndShowDialog()
   {
-    final ProgressDialog dialog = new ProgressDialog(RecommendScheduleActivity.this);
-    dialog.setTitle(getString(R.string.app_name));
-    dialog.setMessage(getString(R.string.msg_progress_recommend_schedule));
-    dialog.setCancelable(false);
+    Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
+    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
+    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
+    builder.setView(pView);
+    builder.setCancelable(false);
+    final AlertDialog dialog = builder.create();
     
     if (!dialog.isShowing())
       dialog.show();
@@ -190,6 +226,6 @@ public class RecommendScheduleActivity extends ActionBarActivity
         Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
         startActivity(i);
       }
-    }, 1000);
+    }, 4000);
   }
 }

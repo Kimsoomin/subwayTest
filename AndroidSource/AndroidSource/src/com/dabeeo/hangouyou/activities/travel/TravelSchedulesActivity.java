@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -41,12 +39,14 @@ public class TravelSchedulesActivity extends BaseNavigationTabActivity
     displayTitles();
   }
   
+  
   @Override
   public void onBackPressed()
   {
     super.onBackPressed();
     overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
   }
+  
   
   @SuppressWarnings("deprecation")
   private void displayTitles()

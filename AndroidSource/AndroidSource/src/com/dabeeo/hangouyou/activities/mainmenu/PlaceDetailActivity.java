@@ -82,8 +82,8 @@ public class PlaceDetailActivity extends ActionBarActivity
     title.setText(getString(R.string.term_place));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
-    getSupportActionBar().setDisplayShowHomeEnabled(false);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getIntExtra("place_idx", -1);

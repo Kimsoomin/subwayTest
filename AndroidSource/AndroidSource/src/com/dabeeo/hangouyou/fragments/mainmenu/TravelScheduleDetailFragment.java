@@ -143,7 +143,7 @@ public class TravelScheduleDetailFragment extends Fragment
 //    productView.setBean(bean, bean);
 //    contentContainer.addView(productView);
     
-    headerView.setData("", bean.title, bean.days.size(), bean.budgetTotal);
+    headerView.setData(bean.imageUrl, bean.title, bean.days.size(), bean.budgetTotal);
     titleView.setData(bean.likeCount, bean.reviewCount);
     
     displayDayView();

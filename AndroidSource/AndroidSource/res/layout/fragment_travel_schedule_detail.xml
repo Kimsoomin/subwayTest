@@ -101,7 +101,7 @@
         <com.dabeeo.hangouyou.views.ScheduleDetailHeaderView
             android:id="@+id/header_view"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="400dp"
             android:paddingBottom="70dp" />
 
         <!-- 중간 유저에 대한 내용 박스 -->
