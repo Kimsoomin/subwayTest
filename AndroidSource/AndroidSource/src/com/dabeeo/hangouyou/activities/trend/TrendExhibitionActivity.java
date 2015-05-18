@@ -1,11 +1,15 @@
 package com.dabeeo.hangouyou.activities.trend;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.dabeeo.hangouyou.R;
@@ -26,6 +30,12 @@ public class TrendExhibitionActivity extends ActionBarActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_trend_exhition);
     
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_exhibitions));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
@@ -62,11 +72,28 @@ public class TrendExhibitionActivity extends ActionBarActivity
   
   
   @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_search, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+  
+  
+  @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
     int id = item.getItemId();
     if (id == android.R.id.home)
       finish();
+    else if (id == R.id.search)
+    {
+      Intent i = new Intent(TrendExhibitionActivity.this, TrendSearchActivity.class);
+      startActivity(i);
+    }
+    else if (id == R.id.cart)
+    {
+      
+    }
     return super.onOptionsItemSelected(item);
   }
 }

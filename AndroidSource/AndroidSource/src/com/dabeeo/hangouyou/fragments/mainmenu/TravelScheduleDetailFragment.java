@@ -50,6 +50,7 @@ public class TravelScheduleDetailFragment extends Fragment
   private CustomScrollView scrollView;
   
   private int position;
+  private boolean isMySchedule = false;
   
   
   @Override
@@ -123,11 +124,12 @@ public class TravelScheduleDetailFragment extends Fragment
   }
   
   
-  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean)
+  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule)
   {
     this.position = position;
     this.bean = bean;
     this.dayBean = dayBean;
+    this.isMySchedule = isMySchedule;
   }
   
   
@@ -152,6 +154,13 @@ public class TravelScheduleDetailFragment extends Fragment
     reviewLayout.addView(reviewContainerView);
     
     reviewContainerView.loadMore();
+    
+    if (isMySchedule)
+    {
+      btnReviewBest.setVisibility(View.GONE);
+      btnReviewSoso.setVisibility(View.GONE);
+      btnReviewWorst.setVisibility(View.GONE);
+    }
   }
   
   

@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.activities.travel;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -15,11 +16,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -28,12 +33,15 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 public class TravelScheduleDetailActivity extends ActionBarActivity
 {
   private ViewPager viewPager;
-  private TravelScheduleDetailViewPagerAdapter adapter;
+  public TravelScheduleDetailViewPagerAdapter adapter;
   private ProgressBar progressBar;
   private ApiClient apiClient;
   
   private String idx;
   private ScheduleDetailBean bean;
+  
+  public LinearLayout containerWriteReview, containerLike, containerIsPublic;
+  public Button btnIsPublic;
   
   
   @SuppressWarnings("deprecation")
@@ -48,8 +56,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     title.setText(getString(R.string.term_travel_schedule));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
-    getSupportActionBar().setDisplayShowHomeEnabled(false);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
+    
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
     idx = getIntent().getStringExtra("idx");
@@ -59,11 +68,53 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setOffscreenPageLimit(100);
     
+    containerLike = (LinearLayout) findViewById(R.id.container_like);
+    containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);
+    containerIsPublic = (LinearLayout) findViewById(R.id.container_is_public);
+    btnIsPublic = (Button) findViewById(R.id.btn_is_public);
+    
     adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);
     
+    findViewById(R.id.btn_bookmark).setOnClickListener(clickListener);
+    findViewById(R.id.btn_share).setOnClickListener(clickListener);
+    findViewById(R.id.btn_like).setOnClickListener(clickListener);
+    findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
+    
     loadScheduleDetail();
   }
+  
+  private OnClickListener clickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == R.id.btn_bookmark)
+      {
+        // 북마크 토글
+      }
+      else if (v.getId() == R.id.btn_share)
+      {
+        // 공유하기
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "공유테스트");
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, null));
+      }
+      else if (v.getId() == R.id.btn_like)
+      {
+        //좋아요 
+      }
+      else if (v.getId() == R.id.btn_write_review)
+      {
+        //리뷰쓰기
+        Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
+        i.putExtra("idx", bean.idx);
+        i.putExtra("type", "place");
+        startActivity(i);
+      }
+    }
+  };
   
   
   private void loadScheduleDetail()
@@ -115,6 +166,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   @SuppressWarnings("deprecation")
   private void displayContent()
   {
+    //TODO 만약 내 일정이라면 btnIsPublic 의 상태를 바꿔주어야 함
     adapter.setBean(bean);
     
     for (int i = 0; i < adapter.getCount(); i++)

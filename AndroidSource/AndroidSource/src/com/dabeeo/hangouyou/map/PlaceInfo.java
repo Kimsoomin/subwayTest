@@ -27,10 +27,10 @@ public class PlaceInfo
 	public int m_nExpectedTime;		// 예상 시간 (분?)
 	public int m_nMinAcceptablePrice; // 최저 수용 금액
 	public int m_nMaxAcceptablePrice; // 최고 수용 금액 
-	public String m_strSubwayStationCode; 	// 지하철 코드?..
+	public String m_strtag; 	// 태그
 	public int m_nAverageScore;		// 평균 점수
 	public int m_nRanking;				// 순위
 	public int m_nReviewCount;
-	public int m_nBookmarkCount;
+	public int m_nLikeCount;
 	public String m_strImageFilePath;	// App의 Place List를 보여줄 때 나타나는 썸네일 이미지입니다. 해당 Place에 등록된 사진 중에서 PlacePicsAppPicType이 1인 사진을 썸네일 이미지로 사용합니다.
 }

@@ -10,8 +10,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,7 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.dabeeo.hangouyou.IntroActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.coupon.CouponActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
@@ -101,11 +100,12 @@ public class MainFragment extends Fragment
   @Override
   public void onResume()
   {
-    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+//    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+    File directory = new File(Global.GetPathWithSDCard());
     if (!directory.exists())
       directory.mkdirs();
     
-    File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+    File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
     if (!file.exists())
       containerMsgDownloadMap.setVisibility(View.VISIBLE);
     else
@@ -135,11 +135,14 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerMap.getId())
       {
-        File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+//        File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+        File directory = new File(Global.GetPathWithSDCard());
         if (!directory.exists())
           directory.mkdirs();
         
-        File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+//        File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+//        File file = new File(Global.GetPathWithSDCard(Global.g_strMapDBFileName));
+        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
         if (!file.exists())
         {
           AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -228,18 +231,18 @@ public class MainFragment extends Fragment
   
   private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
-    private ProgressDialog dialog;
+    private AlertDialog dialog;
     
     
     @Override
     protected void onPreExecute()
     {
-      dialog = new ProgressDialog(getActivity());
+      Builder builder = new AlertDialog.Builder(getActivity());
       CharacterProgressView pView = new CharacterProgressView(getActivity());
       pView.title.setText(getString(R.string.msg_map_donwload));
       pView.setCircleProgressVisible(true);
-      dialog.setView(pView);
-      dialog.setCancelable(false);
+      builder.setView(pView);
+      dialog = builder.create();
       dialog.show();
       
       super.onPreExecute();
@@ -306,7 +309,7 @@ public class MainFragment extends Fragment
     @Override
     protected void onProgressUpdate(Integer... progress)
     {
-      dialog.setProgress(progress[0]);
+//      dialog.setProgress(progress[0]);
       super.onProgressUpdate(progress);
     }
     
@@ -314,6 +317,8 @@ public class MainFragment extends Fragment
     @Override
     protected void onPostExecute(Boolean result)
     {
+      if (dialog.isShowing())
+        dialog.dismiss();
       containerMsgDownloadMap.setVisibility(View.GONE);
       startActivity(new Intent(getActivity(), BlinkingMap.class));
       getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);

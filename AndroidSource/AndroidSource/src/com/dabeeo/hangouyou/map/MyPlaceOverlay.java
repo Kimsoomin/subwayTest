@@ -31,7 +31,7 @@ public class MyPlaceOverlay extends ItemizedIconOverlay<OverlayItem>
 	
 	public MyPlaceOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener, ResourceProxy pResourceProxy, Context ct)
     {
-        super(pList, Global.GetDrawable(ct, R.drawable.marker_default), pOnItemGestureListener, pResourceProxy);
+        super(pList, Global.GetDrawable(ct, R.drawable.transparent), pOnItemGestureListener, pResourceProxy);
         m_context = ct;
     }
 
@@ -68,7 +68,7 @@ public class MyPlaceOverlay extends ItemizedIconOverlay<OverlayItem>
 		double fLatitude = gp.getLatitudeE6() / 1e6;
 		double fLongitude = gp.getLongitudeE6() / 1e6;
 		
-		parentActivity.ShowMyPlacePopup(fLatitude, fLongitude);
+//		parentActivity.ShowMyPlacePopup(fLatitude, fLongitude);
 		//dialogcreate(fLatitude, fLongitude);
 		
 		return super.onLongPress(event, mapView);
@@ -100,7 +100,7 @@ public class MyPlaceOverlay extends ItemizedIconOverlay<OverlayItem>
 		{
 			public void onClick(DialogInterface dialog, int whichButton) 
 			{
-				blinkingMap.RemoveMyPlacePopup(lat, lng);
+//				blinkingMap.RemoveMyPlacePopup(lat, lng);
 			}
 		});
 		ab.show();

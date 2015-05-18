@@ -22,11 +22,10 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -55,6 +54,9 @@ public class IntroActivity extends Activity
   private ProgressBar progressBar;
   private AlertDialogManager alertManager;
   private Handler handler = new Handler();
+  private AlertDialog tempdialog;
+  
+  private boolean mapdownloading = false;
   
   
   @SuppressWarnings("static-access")
@@ -98,6 +100,20 @@ public class IntroActivity extends Activity
     handler.postDelayed(checkSubwayNativeLoadRunnable, 100);
   }
   
+  
+  @Override
+  public void onBackPressed()
+  {
+    if (mapdownloading == true)
+    {
+      File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+      if (file.exists())
+        file.delete();
+    }
+    android.os.Process.killProcess(android.os.Process.myPid());
+    super.onBackPressed();
+  }
+  
   private Runnable checkSubwayNativeLoadRunnable = new Runnable()
   {
     @Override
@@ -106,7 +122,8 @@ public class IntroActivity extends Activity
 //      Log.w("WARN", "call checkReady");
       if (MainActivity.subwayFrament.isLoadEnded())
       {
-        checkMap();
+//        checkMap();
+        checkMapTemp();
       }
       else
         handler.postDelayed(checkSubwayNativeLoadRunnable, 100);
@@ -114,40 +131,104 @@ public class IntroActivity extends Activity
   };
   
   
-  private void checkMap()
+  private void checkMapTemp()
   {
-    Log.w("WARN", "CheckMap");
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setMessage(R.string.msg_is_download_map);
+    builder.setCancelable(false);
     
-    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+    File directory = new File(Global.GetPathWithSDCard());
     if (!directory.exists())
       directory.mkdirs();
     
-    File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+    File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
     if (!file.exists())
     {
-      AlertDialog.Builder builder = new AlertDialog.Builder(this);
-      builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+      builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
       {
-        public void onClick(DialogInterface dialog, int whichButton)
+        @Override
+        public void onClick(DialogInterface dialog, int which)
         {
-          dialog.cancel();
-          new GetMapAsyncTask().execute();
-        }
-      }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
-      {
-        public void onClick(DialogInterface dialog, int whichButton)
-        {
-          dialog.cancel();
-          getAllStations();
+          temp3G();
         }
       });
-      
-      AlertDialog dialog = builder.create();
-      dialog.show();
+      tempdialog = builder.create();
+      tempdialog.setCanceledOnTouchOutside(false);
+      tempdialog.show();
     }
     else
       getAllStations();
   }
+  
+  
+  private void temp3G()
+  {
+    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+    {
+      //3G or LTE Mode
+      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+      {
+        @Override
+        public void onPositiveButtonClickListener()
+        {
+          mapdownloading = true;
+          new GetMapAsyncTask().execute();
+        }
+        
+        
+        @Override
+        public void onNegativeButtonClickListener()
+        {
+          alertManager.dismiss();
+          if (!tempdialog.isShowing())
+            tempdialog.show();
+        }
+      });
+    }
+    
+    if (SystemUtil.isConnectedWiFi(IntroActivity.this))
+    {
+      if (tempdialog.isShowing())
+        tempdialog.cancel();
+      mapdownloading = true;
+      new GetMapAsyncTask().execute();
+    }
+  }
+  
+//  private void checkMap()
+//  {
+//    Log.w("WARN", "CheckMap");
+//    
+//    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+//    if (!directory.exists())
+//      directory.mkdirs();
+//    
+//    File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+//    if (!file.exists())
+//    {
+//      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//      builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+//      {
+//        public void onClick(DialogInterface dialog, int whichButton)
+//        {
+//          dialog.cancel();
+//          new GetMapAsyncTask().execute();
+//        }
+//      }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+//      {
+//        public void onClick(DialogInterface dialog, int whichButton)
+//        {
+//          dialog.cancel();
+//          getAllStations();
+//        }
+//      });
+//      
+//      AlertDialog dialog = builder.create();
+//      dialog.show();
+//    }
+//    else
+//      getAllStations();
+//  }
   
   private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
@@ -157,6 +238,9 @@ public class IntroActivity extends Activity
     @Override
     protected void onPreExecute()
     {
+      if (tempdialog.isShowing())
+        tempdialog.cancel();
+      
       Builder builder = new AlertDialog.Builder(IntroActivity.this);
       CharacterProgressView pView = new CharacterProgressView(IntroActivity.this);
       pView.title.setText(getString(R.string.msg_map_donwload));
@@ -185,7 +269,8 @@ public class IntroActivity extends Activity
         Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
         
         InputStream input = new BufferedInputStream(url.openStream());
-        File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+//        File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
         try
         {
           if (!file.exists())

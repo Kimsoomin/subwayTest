@@ -244,7 +244,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical" >
 
@@ -255,7 +255,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:background="@android:color/white"
             android:orientation="horizontal"
@@ -263,7 +263,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
@@ -271,15 +271,15 @@
                 <Button
                     android:id="@+id/btn_like"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/ic_heart"
                     android:gravity="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
@@ -287,15 +287,15 @@
                 <Button
                     android:id="@+id/btn_bookmark"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/btn_bookmark"
                     android:gravity="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
@@ -303,15 +303,16 @@
                 <Button
                     android:id="@+id/btn_share"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/btn_share"
                     android:gravity="center" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/write_review_container"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
@@ -319,8 +320,8 @@
                 <Button
                     android:id="@+id/btn_write_review"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/btn_review"
                     android:gravity="center" />
             </LinearLayout>

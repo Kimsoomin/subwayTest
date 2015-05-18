@@ -16,40 +16,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
+        <CheckBox
+            android:id="@+id/all_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/term_all_check"
+            android:visibility="gone" />
+
         <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:numColumns="2" />
-
-        <LinearLayout
-            android:id="@+id/container_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone" >
-
-            <Button
-                android:id="@+id/btn_delete_all"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/app_button"
-                android:padding="8dp"
-                android:text="@string/term_delete_all" />
-
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/app_button"
-                android:padding="8dp"
-                android:text="@string/term_delete" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -110,6 +90,19 @@
         android:padding="8dp"
         android:text="@string/term_recommend_travel_schedule"
         android:textColor="#ffffff"
-        android:textSize="21sp" />
+        android:textSize="21sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_background_blue"
+        android:padding="8dp"
+        android:text="@string/term_select_delete"
+        android:textColor="#ffffff"
+        android:textSize="21sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

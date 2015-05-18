@@ -15,6 +15,8 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.Scroller;
 
 /**
@@ -92,7 +94,7 @@ public class BoundedMapView extends MapView
    *          any scrolling limitations
    */
   /** Map 에 대한 zoom 제한.- PS.형철. */
-  public void setScrollableAreaLimit(BoundingBoxE6 box, final int nLastZoomLevel)
+  public void setScrollableAreaLimit(BoundingBoxE6 box, final int nLastZoomLevel, Context context)
   {
     //pixel로 계산 256 의 값을 shift연산으로 ZoomLevel 만큼 곱한 값을 world Map size로 지정.
     final int worldSize_2 = TileSystem.MapSize(nLastZoomLevel) / 2;
@@ -108,14 +110,20 @@ public class BoundedMapView extends MapView
     
     m_nLastZoomLevel = nLastZoomLevel;
     
-    int nScreenWidth = 720;
-    int nScreenHeight = 1280;
+    WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    Display display = wm.getDefaultDisplay();
+    
+    int nScreenWidth = display.getWidth();
+    int nScreenHeight = display.getHeight();
     
     // 좌표가 중간값으로 처리되는 것으로 보임. 
     // zoom level 12에 맞춘 위도/경도 중간값으로, 범위 계산에 Offset을 줌. 
     // 
-    GeoPoint gp1 = TileSystem.PixelXYToLatLong(0, 0, 12, null);
-    GeoPoint gp2 = TileSystem.PixelXYToLatLong(nScreenWidth / 2, nScreenHeight / 2, 12, null);
+    
+    Log.i("Bound", "nScreenWidth : " + nScreenWidth);
+    Log.i("Bound", "nScreenHeight : " + nScreenHeight);
+    GeoPoint gp1 = TileSystem.PixelXYToLatLong(0, 0, m_nLastZoomLevel, null);
+    GeoPoint gp2 = TileSystem.PixelXYToLatLong(nScreenWidth / 2, nScreenHeight / 2, m_nLastZoomLevel, null);
     
     int nLatitudeOffset = (gp2.getLatitudeE6() - gp1.getLatitudeE6());
     int nLongitudeOffset = (gp2.getLongitudeE6() - gp1.getLongitudeE6());

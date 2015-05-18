@@ -12,33 +12,37 @@ import org.osmdroid.views.overlay.OverlayItem;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 
 import com.dabeeo.hangouyou.R;
 
 public class CurrentPositionOverlay extends ItemizedIconOverlay<OverlayItem>
 {
 	Bitmap m_marker;
-
-	public CurrentPositionOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener, ResourceProxy pResourceProxy, Context ct, int mylocationstate)
+	Paint paint;
+	int nOffset = 20;
+	
+	public CurrentPositionOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener, ResourceProxy pResourceProxy, Context ct, int mylocationstate,float fRotate)
     {
-		super(pList, Global.GetDrawable(ct, R.drawable.marker_default), pOnItemGestureListener, pResourceProxy);
+		super(pList, Global.GetDrawable(ct, R.drawable.transparent), pOnItemGestureListener, pResourceProxy);
 		
-		BitmapDrawable marker = null;
 		
 		if(mylocationstate == 1)
 		{
-			marker = (BitmapDrawable) Global.GetDrawable(ct, R.drawable.icon_map_mylocation);
-			 m_marker = Bitmap.createScaledBitmap(marker.getBitmap(), 50, 50, false);
+			int size = Global.DpToPixel(ct, 20);
+			m_marker = Global.fitImageSize(ct, R.drawable.icon_map_mylocation, size, size);
 		}
 		else
 		{
-			marker = (BitmapDrawable) Global.GetDrawable(ct, R.drawable.icon_map_mylocation_navi);
-			 m_marker = Bitmap.createScaledBitmap(marker.getBitmap(), 50, 50, false);
+			int size = Global.DpToPixel(ct, 27);
+			m_marker = Global.fitImageSize(ct, R.drawable.icon_map_mylocation_navi, size, size);
+			m_marker = Global.rotate(m_marker, -fRotate);
 		}
-        
-       
+		
     }
 
 	public boolean onSnapToItem(int arg0, int arg1, Point arg2, IMapView arg3)
@@ -49,14 +53,13 @@ public class CurrentPositionOverlay extends ItemizedIconOverlay<OverlayItem>
 	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow)
 	{
-//		super.draw(canvas, mapView, shadow);
-
+		//super.draw(canvas, mapView, shadow);
+		
 		int nSize = size();
 
 		if(nSize == 0)
 			return;
 		
-		int nOffset = 20;
 
 		OverlayItem item = getItem(0);
 		
@@ -65,7 +68,10 @@ public class CurrentPositionOverlay extends ItemizedIconOverlay<OverlayItem>
 
 		// 지리좌표를 화면상의 픽셀좌표로 변환
 		mapView.getProjection().toPixels(geoPoint, pt1);
+
+		canvas.drawBitmap(m_marker, pt1.x - m_marker.getWidth()/2, pt1.y - m_marker.getHeight()/2 - nOffset, null);
 		
-		canvas.drawBitmap(m_marker, pt1.x - 25, pt1.y - 25 - nOffset, null);
 	}
+	
+	
 }

@@ -3,7 +3,7 @@ package com.dabeeo.hangouyou.controllers.mypage;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +16,29 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 
 public class MySchedulesListAdapter extends BaseAdapter
 {
   private ArrayList<ScheduleBean> beans = new ArrayList<>();
   private boolean isEditMode = false;
+  private Context context;
+  
+  
+  public MySchedulesListAdapter(Context context)
+  {
+    this.context = context;
+  }
+  
+  
+  public void setAllCheck(boolean isCheck)
+  {
+    for (int i = 0; i < beans.size(); i++)
+    {
+      beans.get(i).isChecked = isCheck;
+    }
+    notifyDataSetChanged();
+  }
   
   
   public void setEditMode(boolean isEditMode)
@@ -107,7 +125,10 @@ public class MySchedulesListAdapter extends BaseAdapter
     
     CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
     if (isEditMode)
+    {
       checkBox.setVisibility(View.VISIBLE);
+      checkBox.bringToFront();
+    }
     else
       checkBox.setVisibility(View.GONE);
     
@@ -129,6 +150,8 @@ public class MySchedulesListAdapter extends BaseAdapter
     month.setText(Integer.toString(bean.dayCount) + parent.getContext().getString(R.string.term_month));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
+    
+    ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
     return view;
   }
 }

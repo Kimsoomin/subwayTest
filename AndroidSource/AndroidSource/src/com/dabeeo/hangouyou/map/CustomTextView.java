@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.map;
 
-
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;

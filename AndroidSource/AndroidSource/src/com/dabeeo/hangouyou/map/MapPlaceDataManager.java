@@ -1,6 +1,7 @@
 package com.dabeeo.hangouyou.map;
 
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 
@@ -59,9 +60,28 @@ public class MapPlaceDataManager
   }
   
   
-  public List<PlaceInfo> getAllPlaces()
+  public Map<String,PlaceInfo> getAllPlaces()
   {
     return db.getAllPlaces();
   }
   
+  public Map<String,PlaceInfo> getBoundaryPlace(double botomLat, double topLat, double bottomLng, double topLng)
+  {
+    return db.getBoundaryPlace(botomLat, topLat, bottomLng, topLng);
+  }
+  
+  public List<PlaceInfo> getPlacefromIdx(String Idx)
+  {
+	  return db.getPlacefromIDX(Idx);
+  }
+  
+  public Map<String, PremiumInfo> getallPremium()
+  {
+	  return db.getallPremiumInfo();
+  }
+  
+  public List<PremiumInfo> getPremiumfromIdx(String Idx)
+  {
+	  return db.getPremiumfromIDX(Idx);
+  }
 }

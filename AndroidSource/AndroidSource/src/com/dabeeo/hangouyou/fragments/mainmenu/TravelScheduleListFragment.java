@@ -78,7 +78,24 @@ public class TravelScheduleListFragment extends Fragment
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
-    
+    listView.setOnScrollListener(new OnScrollListener()
+    {
+      @Override
+      public void onScrollStateChanged(AbsListView view, int scrollState)
+      {
+      }
+      
+      
+      @Override
+      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+      {
+        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        {
+          page++;
+          loadSchedules();
+        }
+      }
+    });
     loadSchedules();
   }
   
@@ -94,7 +111,7 @@ public class TravelScheduleListFragment extends Fragment
     progressBar.setVisibility(View.VISIBLE);
     
     if (type == SCHEDULE_TYPE_POPULAR)
-      new loadScheduleAsyncTask().execute();
+      new LoadScheduleAsyncTask().execute();
     else if (type == SCHEDULE_TYPE_MY)
     {
       progressBar.setVisibility(View.GONE);
@@ -124,7 +141,7 @@ public class TravelScheduleListFragment extends Fragment
     }
   }
   
-  private class loadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     @Override
     protected void onPreExecute()
@@ -138,6 +155,7 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
+      //TODO 추후 "내"일정으로 바꿔야 함
       return apiClient.getTravelSchedules(page);
     }
     

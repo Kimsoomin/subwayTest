@@ -1,7 +1,10 @@
 package com.dabeeo.hangouyou.map;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -38,6 +41,7 @@ public class DatabaseManager
     DatabaseHelper(Context context)
     {
       super(context, DATABASE_NAME, null, DATABASE_VERSION);
+      
     }
     
     
@@ -63,21 +67,38 @@ public class DatabaseManager
   public DatabaseManager(Context ctx)
   {
     this.context = ctx;
+    mDb = OpenDatabase();
   }
+  
+	public SQLiteDatabase OpenDatabase() {
+		Global.strMapDBFilePath2 = Global.GetPathWithSDCard()+ Global.HangouyouDBFileName;
+
+		if (new File(Global.strMapDBFilePath2).exists() == false) {
+			BlinkingCommon.smlLibPrintException("ERROR",
+					"Can't open the MapDB: " + Global.strMapDBFilePath);
+			return null;
+		}else
+			BlinkingCommon.smlLibPrintException("Success",
+					"Can't open the MapDB: " + Global.strMapDBFilePath);
+
+		return SQLiteDatabase.openDatabase(Global.strMapDBFilePath2, null,
+				SQLiteDatabase.OPEN_READWRITE
+						| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+	}
   
   
   public DatabaseManager open() throws SQLException
   {
     mDbHelper = new DatabaseHelper(context);
-    mDb = mDbHelper.getWritableDatabase();
-    try
-    {
-      mDb.execSQL(DATABASE_CREATE);
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
+//    mDb = mDbHelper.getWritableDatabase();
+//    try
+//    {
+//      mDb.execSQL(DATABASE_CREATE);
+//    }
+//    catch (Exception e)
+//    {
+//      e.printStackTrace();
+//    }
     return this;
   }
   
@@ -130,10 +151,10 @@ public class DatabaseManager
   }
   
   
-  public List<PlaceInfo> getAllPlaces()
+  public Map<String,PlaceInfo> getAllPlaces()
   {
-    List<PlaceInfo> placeList = new ArrayList<PlaceInfo>();
-    String selectQuery = "SELECT  * FROM " + "place_info";
+	  Map<String,PlaceInfo> placeList = new HashMap<>();
+    String selectQuery = "SELECT  * FROM " + "place_info WHERE category != '8'";
     
     //SQLiteDatabase db = this.getWritableDatabase();
     Cursor cursor = mDb.rawQuery(selectQuery, null);
@@ -150,9 +171,9 @@ public class DatabaseManager
           placeInfo.m_fLatitude = cursor.getFloat(16);
           placeInfo.m_fLongitude = cursor.getFloat(17);
           placeInfo.m_strName = cursor.getString(8);
-          placeInfo.m_strIntro = cursor.getString(8);
+          placeInfo.m_strAddress = cursor.getString(9);
           
-          placeList.add(placeInfo);
+          placeList.put(placeInfo.m_nID,placeInfo);
         } while (cursor.moveToNext());
       }
     }
@@ -169,5 +190,171 @@ public class DatabaseManager
     }
     
     return placeList;
+  }
+  
+  public Map<String,PlaceInfo> getBoundaryPlace(double botomLat, double topLat, double bottomLng, double topLng)
+  {
+	  Map<String,PlaceInfo> placeList = new HashMap<>();
+    String selectQuery = "SELECT  * FROM " + "place_info WHERE (lat BETWEEN '"+botomLat+"' AND '"+topLat+"') "
+    					 +" AND (lng BETWEEN '"+bottomLng+"' AND '" + topLng +"')";
+    
+    //SQLiteDatabase db = this.getWritableDatabase();
+    Cursor cursor = mDb.rawQuery(selectQuery, null);
+    
+    try
+    {
+      if (cursor.moveToFirst())
+      {
+        do
+        {
+          PlaceInfo placeInfo = new PlaceInfo();
+          placeInfo.m_nID = cursor.getString(0);
+          placeInfo.m_nCategoryID = cursor.getInt(7);
+          placeInfo.m_fLatitude = cursor.getFloat(16);
+          placeInfo.m_fLongitude = cursor.getFloat(17);
+          placeInfo.m_strName = cursor.getString(8);
+          placeInfo.m_strAddress = cursor.getString(9);
+          
+          placeList.put(placeInfo.m_nID,placeInfo);
+        } while (cursor.moveToNext());
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      if (cursor != null)
+      {
+        cursor.close();
+      }
+    }
+    
+    return placeList;
+  }
+  
+  public List<PlaceInfo> getPlacefromIDX(String Idx)
+  {
+	  List<PlaceInfo> placeList = new ArrayList<PlaceInfo>();
+	  String selectQuery = "SELECT  * FROM " + "place_info"+ " where idx like '%"+Idx+"%'";
+	  
+	  //SQLiteDatabase db = this.getWritableDatabase();
+	  Cursor cursor = mDb.rawQuery(selectQuery, null);
+	    
+	    try
+	    {
+	      if (cursor.moveToFirst())
+	      {
+	        do
+	        {
+	        	PlaceInfo placeInfo = new PlaceInfo();
+	        
+	        	placeInfo.m_nID = cursor.getString(0);
+	        	placeInfo.m_nCategoryID = cursor.getInt(7);
+	        	placeInfo.m_fLatitude = cursor.getFloat(16);
+	        	placeInfo.m_fLongitude = cursor.getFloat(17);
+	        	placeInfo.m_strName = cursor.getString(8);
+	        	placeInfo.m_strAddress = cursor.getString(9);
+	          
+	        	placeList.add(placeInfo);
+	        } while (cursor.moveToNext());
+	      }
+	    }
+	    catch (Exception e)
+	    {
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      if (cursor != null)
+	      {
+	        cursor.close();
+	      }
+	    }
+	    return placeList;
+  }
+  
+  public Map<String,PremiumInfo> getallPremiumInfo()
+  {
+	  Map<String,PremiumInfo> premiumList = new HashMap<>();
+	  String selectQuery = "SELECT  * FROM " + "premium_info";
+	    
+	    Cursor cursor = mDb.rawQuery(selectQuery, null);
+	    
+	    try
+	    {
+	      if (cursor.moveToFirst())
+	      {
+	        do
+	        {
+	          PremiumInfo premiumInfo = new PremiumInfo();
+	          premiumInfo.m_nID = cursor.getString(0);
+	          premiumInfo.m_strName = cursor.getString(2);
+	          premiumInfo.m_fLatitude = cursor.getFloat(3);
+	          premiumInfo.m_fLongitude = cursor.getFloat(4);
+	          premiumInfo.m_strImageFilePath = cursor.getString(5);
+	          premiumInfo.m_strIntro = cursor.getString(6);
+	          premiumInfo.m_strAddress = cursor.getString(10);
+	          premiumInfo.m_nLikeCount = cursor.getInt(11);
+	          premiumInfo.m_nCategoryID = cursor.getInt(12);
+	          
+	          premiumList.put(premiumInfo.m_nID, premiumInfo);
+	        } while (cursor.moveToNext());
+	      }
+	    }
+	    catch (Exception e)
+	    {
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      if (cursor != null)
+	      {
+	        cursor.close();
+	      }
+	    }
+	  return premiumList;
+  }
+  
+  public List<PremiumInfo> getPremiumfromIDX(String Idx)
+  {
+	  List<PremiumInfo> premiumList = new ArrayList<PremiumInfo>();
+	  String selectQuery = "SELECT  * FROM " + "premium_info"+ " where idx = '"+Idx+"'";
+	  Cursor cursor = mDb.rawQuery(selectQuery, null);
+	  
+	  try
+	    {
+	      if (cursor.moveToFirst())
+	      {
+	        do
+	        {
+	          PremiumInfo premiumInfo = new PremiumInfo();
+	          premiumInfo.m_nID = cursor.getString(0);
+	          premiumInfo.m_strName = cursor.getString(2);
+	          premiumInfo.m_fLatitude = cursor.getFloat(3);
+	          premiumInfo.m_fLongitude = cursor.getFloat(4);
+	          premiumInfo.m_strImageFilePath = cursor.getString(5);
+	          premiumInfo.m_strIntro = cursor.getString(6);
+	          premiumInfo.m_strAddress = cursor.getString(10);
+	          premiumInfo.m_nLikeCount = cursor.getInt(11);
+	          premiumInfo.m_nCategoryID = cursor.getInt(12);
+	          
+	          premiumList.add(premiumInfo);
+	        } while (cursor.moveToNext());
+	      }
+	    }
+	    catch (Exception e)
+	    {
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      if (cursor != null)
+	      {
+	        cursor.close();
+	      }
+	    }
+	  return premiumList;
   }
 }

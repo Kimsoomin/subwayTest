@@ -1,7 +1,13 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -14,6 +20,9 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -21,24 +30,31 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
+@SuppressWarnings("deprecation")
 public class MySchedulesActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
   private GridView listView;
   private MySchedulesListAdapter adapter;
   
-  private Button btnDeleteAll, btnDelete;
-  private LinearLayout deleteContainer;
+  private Button btnDelete;
   
   private MenuItem editMenuItem, closeMenuItem;
   private boolean isEditMode = false;
   private Button btnRecommendSchedule, btnRecommendScheduleInEmpty;
   
+  private CheckBox deleteAllCheckbox;
   private LinearLayout emptyContainer, gridViewContainer;
+  private boolean isLoading = false;
+  private ApiClient apiClient;
+  private int page = 0;
   
   
   @Override
@@ -46,6 +62,7 @@ public class MySchedulesActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_schedule);
+    
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
     TextView title = (TextView) customActionBar.findViewById(R.id.title);
@@ -55,10 +72,20 @@ public class MySchedulesActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    apiClient = new ApiClient(this);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     emptyContainer = (LinearLayout) findViewById(R.id.empty_container);
     gridViewContainer = (LinearLayout) findViewById(R.id.gridview_container);
     
+    deleteAllCheckbox = (CheckBox) findViewById(R.id.all_check_box);
+    deleteAllCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener()
+    {
+      @Override
+      public void onCheckedChanged(CompoundButton arg0, boolean arg1)
+      {
+        adapter.setAllCheck(arg1);
+      }
+    });
     btnRecommendScheduleInEmpty = (Button) findViewById(R.id.recommend_button);
     btnRecommendScheduleInEmpty.setOnClickListener(new OnClickListener()
     {
@@ -79,17 +106,32 @@ public class MySchedulesActivity extends ActionBarActivity
         startActivity(i);
       }
     });
-    deleteContainer = (LinearLayout) findViewById(R.id.container_delete);
     btnDelete = (Button) findViewById(R.id.btn_delete);
-    btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
     btnDelete.setOnClickListener(deleteBtnClickListener);
-    btnDeleteAll.setOnClickListener(deleteBtnClickListener);
     
-    adapter = new MySchedulesListAdapter();
+    adapter = new MySchedulesListAdapter(this);
     listView = (GridView) findViewById(R.id.gridview);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
+    listView.setOnScrollListener(new OnScrollListener()
+    {
+      @Override
+      public void onScrollStateChanged(AbsListView view, int scrollState)
+      {
+      }
+      
+      
+      @Override
+      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+      {
+        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        {
+          page++;
+          loadSchedules();
+        }
+      }
+    });
     
     loadSchedules();
   }
@@ -97,26 +139,71 @@ public class MySchedulesActivity extends ActionBarActivity
   
   private void loadSchedules()
   {
-    progressBar.setVisibility(View.VISIBLE);
-    emptyContainer.setVisibility(View.VISIBLE);
-    gridViewContainer.setVisibility(View.GONE);
+    if (!isLoading)
+      new LoadScheduleAsyncTask().execute();
+  }
+  
+  private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      isLoading = true;
+      progressBar.setVisibility(View.VISIBLE);
+      progressBar.bringToFront();
+      super.onPreExecute();
+    }
     
-//    //테스트 가데이터 
-//    ScheduleBean bean = new ScheduleBean();
-//    bean.title = "서울 2박 3일 여행";
-//    bean.month = 3;
-//    bean.likeCount = 70;
-//    bean.reviewCount = 11;
-//    adapter.add(bean);
-//    
-//    bean = new ScheduleBean();
-//    bean.title = "명동 쇼핑";
-//    bean.month = 1;
-//    bean.likeCount = 50;
-//    bean.reviewCount = 13;
-//    adapter.add(bean);
     
-    progressBar.setVisibility(View.GONE);
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.getTravelSchedules(page);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      if (result.isSuccess)
+      {
+        ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
+        try
+        {
+          JSONObject obj = new JSONObject(result.response);
+          JSONArray array = obj.getJSONArray("plan");
+          for (int i = 0; i < array.length(); i++)
+          {
+            JSONObject beanObj = array.getJSONObject(i);
+            ScheduleBean bean = new ScheduleBean();
+            bean.setJSONObject(beanObj);
+            beans.add(bean);
+          }
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        
+        adapter.addAll(beans);
+        
+        if (adapter.getCount() == 0 && beans.size() == 0)
+        {
+          emptyContainer.setVisibility(View.VISIBLE);
+          gridViewContainer.setVisibility(View.GONE);
+          btnRecommendSchedule.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+          emptyContainer.setVisibility(View.GONE);
+          gridViewContainer.setVisibility(View.VISIBLE);
+          btnRecommendSchedule.setVisibility(View.GONE);
+        }
+      }
+      progressBar.setVisibility(View.GONE);
+      isLoading = false;
+      super.onPostExecute(result);
+    }
   }
   
   
@@ -162,9 +249,18 @@ public class MySchedulesActivity extends ActionBarActivity
   private void displayEditMode()
   {
     if (isEditMode)
-      deleteContainer.setVisibility(View.VISIBLE);
+    {
+      btnDelete.setVisibility(View.VISIBLE);
+      btnRecommendSchedule.setVisibility(View.GONE);
+      deleteAllCheckbox.setVisibility(View.VISIBLE);
+    }
     else
-      deleteContainer.setVisibility(View.GONE);
+    {
+      btnDelete.setVisibility(View.GONE);
+      if (adapter.getCount() == 0)
+        btnRecommendSchedule.setVisibility(View.VISIBLE);
+      deleteAllCheckbox.setVisibility(View.GONE);
+    }
     
     adapter.setEditMode(isEditMode);
     invalidateOptionsMenu();
@@ -229,7 +325,10 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-      startActivity(new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class));
+      ScheduleBean bean = (ScheduleBean) adapter.getItem(position);
+      Intent i = new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class);
+      i.putExtra("idx", bean.idx);
+      startActivity(i);
     }
   };
   

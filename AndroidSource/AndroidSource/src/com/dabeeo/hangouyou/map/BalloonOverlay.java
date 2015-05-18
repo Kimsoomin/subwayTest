@@ -29,7 +29,7 @@ public class BalloonOverlay extends ItemizedIconOverlayEx<OverlayItem>
   
   public BalloonOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener, ResourceProxy pResourceProxy, Context ct, int nColor, int nHOffset)
   {
-    super(pList, Global.GetDrawable(ct, R.drawable.marker_default), pOnItemGestureListener, pResourceProxy);
+    super(pList, Global.GetDrawable(ct, R.drawable.transparent), pOnItemGestureListener, pResourceProxy);
     
     // 터치 영역을 옮김.
     SetTouchOffset(50);

@@ -1,15 +1,15 @@
 package com.dabeeo.hangouyou.map;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import microsoft.mappoint.TileSystem;
 
@@ -30,9 +30,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -41,52 +42,63 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.map.SensorUpdater.SensorUpdaterCallback;
+import com.squareup.picasso.Picasso;
 
-public class BlinkingMap extends Activity implements OnClickListener, SensorUpdaterCallback
+public class BlinkingMap extends Activity implements OnClickListener, SensorUpdaterCallback, OnEditorActionListener
 {
-  
   static public boolean g_bNeedToReloadActivity = false;
   
+  public Context mContext;
+  
   // - Location
-  private double m_fLatitude = 37.5716550;//37.5664700;
-  private double m_fLongitude = 126.9862330;//126.9779630;
-  private int zoomLevel = 15;
+  private double m_fLatitude = 37.5716550;
+  private double m_fLongitude = 126.9862330;
+  public double place_fLatitude = 0;
+  public double place_fLongitute = 0;
+  private int zoomLevel = 16;
   final int nMinZoomLevel = 14;
-  final int nMaxZoomLevel = 17;
+  final int nMaxZoomLevel = 18;
   private BoundedMapView m_mapView;
-  private Location m_locTarget;
-  private Location loc;
-  private boolean isShowMarker = false;
-  private FrameLayout m_frNavigation;
   
-  private int m_nIndexNearbyPlaceOverlay = 0;
-  private boolean m_bPlaceInfoMap = true;
-  
-  private ToggleButton m_btnCurrent;
-  
+  private Location m_myLocation;
   private Location m_locMarkTarget;
   
   // 위치 정보 사용 여부
@@ -96,82 +108,125 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   private LinearLayout m_mapLayout;
   private RotateViewGroup m_rotateView;
   
-  private boolean m_bTarget = false; // - 임의 위치 외에 다른 Target이 있을 때
-  
-  private int m_nPlaceID = -1; // - Nearby에서 중복으로 표시되는 부분 구별 (Nearby에서만 사용)
-  
   private int m_nBalloonHeight = -1;
   
   private Drawable noTile = null;
   
   BoundingBoxE6 m_boundingBox = new BoundingBoxE6(37.70453488762476, 127.17361450195312, 37.43677099171195, 126.76300048828125);
   
-  private final int m_iLimitDistance = 100;// 하단 네비게이션 목적지의 대표 이미지가 보이는 거리.
-  private int m_iMeter = 0;
-  private String m_strToastItem[] = { "현 위치와 거리오차가 발생 할 수 있습니다", "GPS point  will have some tolerance with your current location." };
-  private boolean m_bImageCheck = false; // 하단 대표 이미지의 Visible/InVisible을 결정.
-  private boolean m_bImageLock = true; // 하단 대표 이미지 선택시 이미지 변경 안되게 잠금 결정.
-  private String m_strPlaceImage;
-  private ImageButton ib_nearImage;
-  
-  String[] strMessage = { "“Blinking Tour Seoul” would like to use\nYour current location.", "“블링킹 투어 서울”에서\n현재 위치정보를 사용하고자 합니다." };
-  String[] strToastMessage = { "You arrived at your destination.", "목적지에 도착하였습니다." };
-  String[] strTopInfoMessage = { "You can get detailed transportation info on blinking website.", "현재 코스에 대한 자세한 교통 정보는 Blinking Web Site 에서 참고 할 수 있습니다." };
-  
-  private final int LANGUAGE_DEFUALT = 0;
-  private final int LANGUAGE_KOREA = 1;
-  private final int LANGUAGE_ENGLISH = 2;
-  
-  private boolean m_bComplete = false;
-  // private boolean m_bCousrseInfoMap = false;
-  // private boolean m_bMyCousrseInfoMap = false;
-  
-  int nCount = 100;
-  
   // - Marker 관련.
-  private MyPlaceOverlay m_myplaceOverlay;
   private BalloonOverlay m_balloonOverlay;
-  private PlaceOverlay m_placeOverlay;
+  private NavigationOverlay navigationOverlay;
   private CurrentPositionOverlay m_curPosOverlay;
+  private PlaceOverlay allplaceOverlay;
+  private PlaceOverlay premiumOverlay;
+  private OnePlaceOverlay onePlaceOverlay;
   
-  //- Place 임시 정보 
+  private ArrayList<OverlayItem> allPlaceInfoItems;
+  private ArrayList<OverlayItem> oneItems;
+  private ArrayList<OverlayItem> premiumitem;
+  
+  private Map<String, PlaceInfo> allplaceinfo;
+  private List<PlaceInfo> onePlaceInfo;
+  private Map<String, PremiumInfo> premiumInfo;
+  
+  // - Place 임시 정보
   PlaceInfo m_cache;
   
-  //- map button
+  // - map button
+  public FrameLayout btnlayout;
   public ImageButton myLocationBtn;
   public ImageButton nearByBtn;
   public ImageButton subwayBtn;
   public ImageButton zoomInBtn;
   public ImageButton zoomOutBtn;
-  int myLocationState = 0;
   
-  //- summary view
-  public FrameLayout summaryview;
-  public ImageButton summaryCloseBtn;
-  public ImageView summaryImage;
-  public TextView summaryTitle;
-  public TextView summarysubTitle;
-  public TextView summarylikeCount;
-  public Button subwayStartBtn;
-  public Button subwayEndBtn;
-  public ImageButton naviBtn;
+  // - search 관련
+  private ImageButton searchCancel;
+  private LinearLayout searchView;
+  private RelativeLayout emptysearchList;
+  private EditText searchEditText;
+  private TextWatcher placewatcher;
   
-  private float subway_m_fLatitude;
-  private float subway_m_fLongitude;
+  // - summary view
+  private LinearLayout summaryView;
+  private ImageButton summaryCloseBtn;
+  private ImageButton summaryCloseBtn2;
+  private ImageView summaryImage;
+  private LinearLayout summaryTextView;
+  private TextView summaryTitle;
+  private TextView summarysubTitle;
+  private LinearLayout summaryLikeLayout;
+  private TextView summarylikeCount;
+  private RelativeLayout subwayLayout;
+  private LinearLayout subwayStartBtn;
+  private LinearLayout subwayEndBtn;
+  private ImageButton naviBtn;
+  
+  public ImageView lineNumImage1;
+  public ImageView lineNumImage2;
+  public ImageView lineNumImage3;
+  public ImageView lineNumImage4;
+  public TextView lineNumText1;
+  public TextView lineNumText2;
+  public TextView lineNumText3;
+  public TextView lineNumText4;
+  
+  boolean summaryDetail = false;
+  
+  public String DestinationTitle;
+  
+  // - navigation view
+  public RelativeLayout navigationView;
+  public TextView naviInfo01;
+  public TextView naviInfo02;
+  public TextView naviSubInfo;
+  public ImageView naviStopBtn;
+  private String[] naviTexts;
   
   // - Class 간 전달할 데이터
-  public BigInteger idx;
-  public String lineId;
+  public String idx;
+  public String lineId = "";
   public int placeType = 0;
   public int planType = 1;
   
-  ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+  // - Location Type
+  int myLocationState = 0;
+  private int DefaltLocation = 0;
+  private int UseLocation = 1;
+  private int UseLocationNavi = 2;
   
-//  public testDB testDB;
-  List<PlaceInfo> placeinfo = new ArrayList<PlaceInfo>();
+  // - Gps Type
+  private int NoUseGPS = 0;
+  private int LocationFail = 1;
+  private int OutOfSeoul = 2;
+  
+  private int summaryViewVisible = 0;
+  private int summaryViewInVisible = 1;
+  
+  // 현재 보고 있는 맵의 바운더리 정보
+  private GeoPoint topLeftGpt;
+  private GeoPoint bottomRightGpt;
+  
+  public static Activity blinkingactivity = null;
+  
+  private Timer m_timer = null;
+  
+  private ListView m_ListView;
+  private ArrayAdapter<String> m_Adapter;
+  
+  private boolean summaryviewclose = false;
+  
+  private NearByDialog nearbydialog;
+  
+  private Intent destSubwayIntent;
+  private long backKeyPressedTime = 0;
+  private Toast appFininshToast;
+  
+  public static int categroyType = -1;
   
   /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== 단말기의 방향을 감지. - 네비게이션에 필요.
    * ======================================
    * ===============================================
@@ -187,7 +242,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   private final SensorEventListener m_sensorListener = new SensorEventListener()
   {
-    private int iRotation = -1;
     static private final int RING_BUFFER_SIZE = 10;
     private float[][][] mAnglesRingBuffer = new float[RING_BUFFER_SIZE][3][2];
     private int mNumAngles;
@@ -250,12 +304,12 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         float roll = (float) Math.toDegrees(Math.atan2((double) mAngles[2][1], (double) mAngles[2][0]));
         // mCompassRenderer.setOrientation(azimuth, pitch, roll);
         
-        if (azimuth < 0)
-          azimuth = (360 + azimuth) % 360;
+//				if (azimuth < 0)
+        azimuth = (360 - azimuth) % 360;
         
         // mHeadingView.setText(getString(R.string.heading)+": "+(int)azimuth+"°");
         
-        float fAngle = -azimuth;
+        float fAngle = azimuth;
         
         fAngle += 360;
         
@@ -265,7 +319,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
           return;
         
         g_fLastAngle = fAngle;
-        m_mapView.startAnimation(Global.GetViewRotation(g_fLastAngle, 500));
         
         try
         {
@@ -306,7 +359,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     public void onLocationChanged(Location loc)
     {
       // 바뀐 위치를 수신
-      if (loc != null)
+      if (loc != null && m_bTrackingCurrentPosition)
       {
         g_locationHere = loc;
         try
@@ -324,7 +377,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== GPS init
    * ========================================================
    * =============================
@@ -335,11 +388,11 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     m_locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     
     // 마지막으로 기억하는 위치를 설정한다.
-    loc = m_locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    m_myLocation = m_locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     g_locationHere = new Location("Here");
     
-    if (loc == null)
-      loc = m_locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+    if (m_myLocation == null)
+      m_myLocation = m_locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
     
     // 둘다 GPS를 수신하는 리스너 변수들이다.
     m_locListenerGPS = new LocationListenerEx();
@@ -356,27 +409,65 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     {
       e.printStackTrace();
     }
-    
-//		// - 센서 매니저 등록 (gSensorEventListner,gSensorType,gDelay)
-//		m_sensorManager.registerListener(m_sensorListener,
-//				m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-//				SensorManager.SENSOR_DELAY_UI);
   }
   
   
-//	public void removeLocationUpdate()
-//	{
-//		try {
-//			// 위치 정보 갱신.
-//			m_locManager.removeUpdates(m_locListenerGPS);
-//			m_locManager.removeUpdates(m_locListenerNetwork);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+  public boolean myLocation()
+  {
+    userLocationInit();
+    if (m_locManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || m_locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+    {
+      
+      if (m_myLocation != null)
+      {
+        m_fLatitude = m_myLocation.getLatitude();
+        m_fLongitude = m_myLocation.getLongitude();
+        g_locationHere = m_myLocation;
+        if (m_myLocation.getLatitude() > 37.70453488762476 || m_myLocation.getLongitude() > 127.17361450195312 || m_myLocation.getLatitude() < 37.43677099171195
+            || m_myLocation.getLongitude() < 126.76300048828125)
+        {
+          Log.i("INFO", "outOfseoul");
+          createGPSDialog(OutOfSeoul);
+        }
+        Log.i("INFO", "Latitude:" + m_myLocation.getLatitude() + "Longitude :" + m_myLocation.getLongitude());
+      }
+      else
+      {
+        Log.e("ERROR", "locManager.getLastKnownLocation return null");
+        
+        m_fLatitude = 37.5664700;
+        m_fLongitude = 126.9779630;
+        
+        g_locationHere.setLatitude(m_fLatitude);
+        g_locationHere.setLongitude(m_fLongitude);
+        
+        createGPSDialog(LocationFail);
+        return false;
+      }
+      
+      // g_sensorcallback에 값이 있으면 설정이지만 처음엔 해당사항이 없는듯하다.
+      try
+      {
+        if (g_sensorcallback != null)
+          g_sensorcallback.UpdateLocation(g_locationHere);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
+      return true;
+    }
+    else
+    {
+      createGPSDialog(NoUseGPS);
+      return false;
+    }
+  }
+  
   
   /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== Called when the activity is first created.
    * ======================
    * ===============================================================
@@ -386,32 +477,32 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_mapview);
+    mContext = this;
     
+    createCategoryBitmap();
     MapButtonSetting();
     summaryViewSetting();
+    navigationViewSetting();
     userLocationInit();
+    databaseRead();
+    SearchSetting();
     
-    items = new ArrayList<OverlayItem>();
+    blinkingactivity = BlinkingMap.this;
+    
     /*
-     * ======================================================================
-     * ==== =========== 맵 타일 다운로드 구문.
+     * ==========================================================================
+     * =========== 맵 타일 다운로드 구문.
      * ================================================
      * =====================================
      */
     noTile = getResources().getDrawable(R.drawable.no_tile);
-    Global.strMapDBFilePath = Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName);
-    Global.strMapDBFilePath2 = Global.GetPathWithSDCard("/Hangouyou/" + Global.testDB);
-    
-//    testDB = new testDB(this);
-    placeinfo = MapPlaceDataManager.getInstance(BlinkingMap.this).getAllPlaces();
-//		placeinfo = testDB.getAllPlace();
-    Log.w("WARN", "PlaceInfo size : " + placeinfo.size());
+    Global.strMapDBFilePath = Global.GetPathWithSDCard() + Global.g_strMapDBFileName;
     
     /*
-     * ======================================================================
-     * ==== =========== 오픈 스트리트 맵 API 참고
-     * http://wiki.openstreetmap.org/wiki/API_v0.6 osmdroid의 class 타일 생성을 위한 정보의
-     * 초기화 상속 범위 : XYTileSource > OnlineTileSourceBase >BitmapTileSourceBase
+     * ==========================================================================
+     * =========== 오픈 스트리트 맵 API 참고 http://wiki.openstreetmap.org/wiki/API_v0.6
+     * osmdroid의 class 타일 생성을 위한 정보의 초기화 상속 범위 : XYTileSource >
+     * OnlineTileSourceBase >BitmapTileSourceBase
      * ("이름","네트워크 모드","맵 이미지 최소 범위",맵 이미지 최대 범위,"타일 사이즈","이미지 파일 종류","생략된듯.")
      * String aName, string aResourceId, int aZoomMinLevel, int aZoomMaxLevel,
      * int aTileSizePixels, String aImageFilenameEnding, String aBaseUrl
@@ -420,20 +511,22 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
      * ===========
      */
     
-    //final float scale = getBaseContext().getResources().getDisplayMetrics().density;
-    final int nTileSize = (int) 512;//(256*1.5);
+    // final float scale =
+    // getBaseContext().getResources().getDisplayMetrics().density;
+    final int nTileSize = (int) (256 * 1.5);
     
     final XYTileSource tileSource = new XYTileSource("My Tile Source", ResourceProxy.string.offline_mode, nMinZoomLevel, nMaxZoomLevel, nTileSize, ".png");
     
-    // MapView를 초기 설정하기 위한 함수 Context , TileSize , , Tile 이미지를 추출해 내기 위한 전반적인 설정.-by 형철.
+    // MapView를 초기 설정하기 위한 함수 Context , TileSize , , Tile 이미지를 추출해 내기 위한
+    // 전반적인 설정.-by 형철.
     m_mapView = new BoundedMapView(this, nTileSize, new DefaultResourceProxyImpl(this), new MapTileProvderEx(tileSource, noTile, getApplicationContext()));
     
     // 나도 처음엔 이해 안갔는데 OSM Droid 의 tile을 MS에서 만든 Mappoint를 사용한다.
     TileSystem.setTileSize(nTileSize);
     
     /*
-     * ======================================================================
-     * ==== =========== 지도 회전을 위해서..
+     * ==========================================================================
+     * =========== 지도 회전을 위해서..
      * ==================================================
      * ===================================
      */
@@ -448,21 +541,21 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     m_rotateView.addView(m_mapLayout);
     parentLayout.addView(m_rotateView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     
-    /*
-     * ======================================================================
-     * ==== ===========
-     * ==============================================================
-     * =======================
-     */
-    
     m_mapView.setUseDataConnection(false);
     m_mapView.setBuiltInZoomControls(false); // 줌 컨트롤 버튼 hidden
     m_mapView.setMultiTouchControls(true); // 핀치줌 가능.
     m_mapView.setClickable(true);
     m_mapView.setBackgroundColor(Color.WHITE);
     
-    // zoom level 14 ~ 17
-    m_mapView.getController().setZoom(15); // 처음 화면에 보이는 Zoom level
+    // zoom level 14 ~ 18 
+    m_mapView.setMaxZoomLevel(nMaxZoomLevel);
+    m_mapView.setMinZoomLevel(nMinZoomLevel);
+    
+    m_mapView.getController().setZoom(zoomLevel); // 처음 화면에 보이는 Zoom level 16
+    m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
+    
+    topLeftGpt = new GeoPoint(37604270, 126932172);
+    bottomRightGpt = new GeoPoint(37522082, 127035856);
     
     // MapView 리스너 (줌 확인 체크, 상태 체크하여 업데이트 관여.)
     m_mapView.setMapListener(new MapListener()
@@ -482,7 +575,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         m_mapView.getController().setZoom(zoomLevel);
         
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
-        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel);
+        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
+        
+        markerRefresh();
         
         return false;
       }
@@ -490,51 +585,157 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       
       public boolean onScroll(ScrollEvent arg0)
       {
+        summaryviewclose = true;
         return false;
       }
     });
     
-//		m_mapView.setOnTouchListener(new OnTouchListener() 
-//		{			
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				// TODO Auto-generated method stub
-//				int action = event.getAction();
-//								
-//				switch (action) 
-//				{
-//					case MotionEvent.ACTION_UP:
-//						if(summaryview.getVisibility() == View.VISIBLE)
-//						{
-//							summaryViewInvisible();
-//						}
-//					break;
-//				}
-//				
-//				Log.i("INFO","action " + action);
-//				return false;
-//			}
-//		});
-    
-    // osmdroid 의 api 를 이용하여 사용자의 현재 위치의 맵을 보여줌.
-    m_mapView.getController().setCenter(new GeoPoint(m_fLatitude, m_fLongitude));
-    m_mapView.setScrollableAreaLimit(m_boundingBox, 15);
-    
-    final int nHeight = DpToPixel(65);
+    m_mapView.setOnTouchListener(new OnTouchListener()
+    {
+      @Override
+      public boolean onTouch(View v, MotionEvent event)
+      {
+        // TODO Auto-generated method stub
+        if (event.getAction() == MotionEvent.ACTION_UP)
+        {
+          if (!summaryviewclose)
+          {
+            if (summaryView.getVisibility() == View.VISIBLE)
+              summaryViewVisibleSet(summaryViewInVisible, 0);
+            
+            if (onePlaceOverlay != null)
+            {
+              m_mapView.getOverlays().clear();
+              lineId = null;
+              onePlaceOverlay = null;
+              onePlaceInfo.clear();
+              categroyType = -1;
+              markerRefresh();
+            }
+            
+            idx = null;
+            markerSel(0);
+          }
+          else
+          {
+            markerRefresh();
+          }
+          
+          if (place_fLatitude == 0)
+          {
+            place_fLatitude = m_mapView.getMapCenter().getLatitudeE6() / 1e6;
+            place_fLongitute = m_mapView.getMapCenter().getLongitudeE6() / 1e6;
+          }
+        }
+        HideKeyboard(m_mapView);
+        summaryviewclose = false;
+        return false;
+      }
+    });
     
     g_sensorcallback = this;
-    g_bNeedToReloadActivity = true; //초기 터치를 위해서	
+    g_bNeedToReloadActivity = true; // 초기 터치를 위해서
   } // - onCreate end..
+  
+  private OnItemClickListener onClickListItem = new OnItemClickListener()
+  {
+    @Override
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+    {
+      ListViewVisibleSetting(1);
+      Log.i("INFO", "m_listview Visible : " + m_ListView.getVisibility());
+      for (Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
+      {
+        PlaceInfo info = itemInfo.getValue();
+        if (info.m_strName.equals(m_Adapter.getItem(arg2)))
+        {
+          idx = info.m_nID;
+          place_fLatitude = info.m_fLatitude;
+          place_fLongitute = info.m_fLongitude;
+          m_locMarkTarget = new Location("MarkTaget");
+          m_locMarkTarget.setLatitude(place_fLatitude);
+          m_locMarkTarget.setLongitude(place_fLongitute);
+          DestinationTitle = info.m_strName;
+          summaryTitle.setText(DestinationTitle);
+          if (info.m_nCategoryID == 99)
+          {
+            summarysubTitle.setVisibility(View.INVISIBLE);
+            subwaylineNumSet(idx);
+          }
+          else
+          {
+            summaryAddressInit();
+            summarysubTitle.setVisibility(View.VISIBLE);
+            summarysubTitle.setText(info.m_strAddress);
+          }
+          summaryViewVisibleSet(summaryViewVisible, 2);
+          categroyType = -1;
+          mapCenterset(0);
+          markerSel(1);
+        }
+      }
+      searchEditText.setText("");
+      searchEditText.setHint(R.string.message_search_word_here);
+      HideKeyboard(m_ListView);
+      m_Adapter.clear();
+    }
+  };
+  
+  
+//  @Override
+//  public void onBackPressed()
+//  {
+//    if (m_ListView.getVisibility() == View.VISIBLE)
+//    {
+//      searchEditText.setText("");
+//      searchEditText.setHint(R.string.message_search_word_here);
+//      ListViewVisibleSetting(1);
+//    }
+//    else
+//    {
+//      if (System.currentTimeMillis() > backKeyPressedTime + 2000)
+//      {
+//        backKeyPressedTime = System.currentTimeMillis();
+//        showGuide();
+//        return;
+//      }
+//      
+//      if (System.currentTimeMillis() <= backKeyPressedTime + 2000)
+//      {
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//        appFininshToast.cancel();
+//      }
+//    }
+//  }
+  
+  
+  public void showGuide()
+  {
+    appFininshToast = Toast.makeText(this, R.string.app_finish, Toast.LENGTH_SHORT);
+    appFininshToast.show();
+  }
   
   
   /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== 버튼 세팅
    * ==========================================================
    * ===========================
    */
+  
+  public void databaseRead()
+  {
+    allPlaceInfoItems = new ArrayList<OverlayItem>();
+    premiumitem = new ArrayList<OverlayItem>();
+    MapPlaceDataManager.getInstance(this).initDatabase();
+    allplaceinfo = MapPlaceDataManager.getInstance(this).getAllPlaces();
+    premiumInfo = MapPlaceDataManager.getInstance(this).getallPremium();
+  }
+  
+  
   public void MapButtonSetting()
   {
+    btnlayout = (FrameLayout) findViewById(R.id.btn_layout);
     myLocationBtn = (ImageButton) findViewById(R.id.myLocationBtn);
     nearByBtn = (ImageButton) findViewById(R.id.nearbyBtn);
     subwayBtn = (ImageButton) findViewById(R.id.subwayBtn);
@@ -549,46 +750,254 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   }
   
   
+  public void SearchSetting()
+  {
+    m_ListView = (ListView) findViewById(R.id.search_list);
+    emptysearchList = (RelativeLayout) findViewById(R.id.empty_search_container);
+    m_Adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1);
+    m_ListView.setAdapter(m_Adapter);
+    m_ListView.setOnItemClickListener(onClickListItem);
+    
+    searchView = (LinearLayout) findViewById(R.id.search_layout);
+    searchEditText = (EditText) findViewById(R.id.SearchEditText);
+    searchCancel = (ImageButton) findViewById(R.id.search_cancel);
+    
+    searchEditText.setOnEditorActionListener(this);
+    searchCancel.setOnClickListener(this);
+    placewatcher = new TextWatcher()
+    {
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count)
+      {
+        // TODO Auto-generated method stub
+        if (searchEditText.getText().toString().length() > 1)
+        {
+          if (summaryView.getVisibility() == View.VISIBLE)
+            summaryViewVisibleSet(summaryViewInVisible, 0);
+          if (m_Adapter != null)
+          {
+            m_Adapter.clear();
+          }
+          
+          for (Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
+          {
+            PlaceInfo info = itemInfo.getValue();
+            if (info.m_strName.contains(searchEditText.getText().toString()))
+            {
+              m_Adapter.add(info.m_strName);
+            }
+          }
+          
+          if (m_Adapter.getCount() > 0)
+          {
+            if (m_ListView.getVisibility() == View.INVISIBLE)
+              ListViewVisibleSetting(0);
+          }
+          else
+          {
+            Toast search = Toast.makeText(mContext, R.string.msg_no_search_result, Toast.LENGTH_SHORT);
+            search.show();
+          }
+        }
+      }
+      
+      
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after)
+      {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      
+      @Override
+      public void afterTextChanged(Editable s)
+      {
+        // TODO Auto-generated method stub
+        
+      }
+    };
+    searchEditText.addTextChangedListener(placewatcher);
+  }
+  
+  
   public void summaryViewSetting()
   {
-    summaryview = (FrameLayout) findViewById(R.id.summaryView);
+    summaryView = (LinearLayout) findViewById(R.id.summaryView);
     summaryCloseBtn = (ImageButton) findViewById(R.id.summaryCloseBtn);
+    summaryCloseBtn2 = (ImageButton) findViewById(R.id.summaryCloseBtn2);
     summaryImage = (ImageView) findViewById(R.id.summaryImage);
+    summaryTextView = (LinearLayout) findViewById(R.id.summaryTextView);
     summaryTitle = (TextView) findViewById(R.id.summaryTitle);
     summarysubTitle = (TextView) findViewById(R.id.summarySubTitle);
+    summaryLikeLayout = (LinearLayout) findViewById(R.id.summarylikeLayout);
     summarylikeCount = (TextView) findViewById(R.id.summarylikecount);
-    subwayStartBtn = (Button) findViewById(R.id.subwaystartBtn);
-    subwayEndBtn = (Button) findViewById(R.id.subwayendBtn);
+    subwayLayout = (RelativeLayout) findViewById(R.id.subwayLayout);
+    subwayStartBtn = (LinearLayout) findViewById(R.id.subwayStartBtn);
+    subwayEndBtn = (LinearLayout) findViewById(R.id.subwayEndBtn);
     naviBtn = (ImageButton) findViewById(R.id.naviBtn);
     
-    summaryview.setClickable(true);
-    summaryview.setOnClickListener(this);
+    summaryView.setClickable(true);
+    subwayStartBtn.setClickable(true);
+    subwayEndBtn.setClickable(true);
+    summaryView.setOnClickListener(this);
     summaryCloseBtn.setOnClickListener(this);
+    summaryCloseBtn2.setOnClickListener(this);
     subwayStartBtn.setOnClickListener(this);
     subwayEndBtn.setOnClickListener(this);
     naviBtn.setOnClickListener(this);
+    
+    lineNumImage1 = (ImageView) findViewById(R.id.lineNumImage1);
+    lineNumImage2 = (ImageView) findViewById(R.id.lineNumImage2);
+    lineNumImage3 = (ImageView) findViewById(R.id.lineNumImage3);
+    lineNumImage4 = (ImageView) findViewById(R.id.lineNumImage4);
+    
+    lineNumText1 = (TextView) findViewById(R.id.lineNumText1);
+    lineNumText2 = (TextView) findViewById(R.id.lineNumText2);
+    lineNumText3 = (TextView) findViewById(R.id.lineNumText3);
+    lineNumText4 = (TextView) findViewById(R.id.lineNumText4);
+    
+    text[0] = lineNumText1;
+    text[1] = lineNumText2;
+    text[2] = lineNumText3;
+    text[3] = lineNumText4;
+    linenum[0] = lineNumImage1;
+    linenum[1] = lineNumImage2;
+    linenum[2] = lineNumImage3;
+    linenum[3] = lineNumImage4;
   }
   
   
-  public void summaryViewVisible()
+  public void summaryViewVisibleSet(int type, int summaryViewID)
   {
-    summaryview.setVisibility(View.VISIBLE);
-    FrameLayout btnlayout = (FrameLayout) findViewById(R.id.btn_layout);
+    Log.i("summary Info", "type : " + type + " summaryViewID : " + summaryViewID);
     FrameLayout.LayoutParams btnLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    btnLayoutParams.bottomMargin = 364;
     btnLayoutParams.gravity = Gravity.BOTTOM;
+    Animation summaryIn = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom);
+    Animation summaryOut = AnimationUtils.loadAnimation(this, R.anim.abc_slide_out_bottom);
+    if (type == summaryViewVisible)
+    {
+      if (summaryViewID == 1)
+      {
+        summaryImage.setVisibility(View.VISIBLE);
+        summaryLikeLayout.setVisibility(View.VISIBLE);
+        subwayLayout.setVisibility(View.VISIBLE);
+      }
+      else if (summaryViewID == 2)
+      {
+        summaryImage.setVisibility(View.GONE);
+        summaryLikeLayout.setVisibility(View.INVISIBLE);
+        subwayLayout.setVisibility(View.VISIBLE);
+      }
+      else if (summaryViewID == 3)
+      {
+        summaryImage.setVisibility(View.GONE);
+        summaryLikeLayout.setVisibility(View.INVISIBLE);
+        subwayLayout.setVisibility(View.GONE);
+      }
+      
+//			if(summaryView.getVisibility() == View.INVISIBLE)
+//			{
+//				summaryView.startAnimation(summaryIn);
+//				btnlayout.startAnimation(summaryIn);
+//			}
+      summaryView.setVisibility(View.VISIBLE);
+      summaryView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
+      btnLayoutParams.bottomMargin = summaryView.getMeasuredHeight() + 5;
+    }
+    else
+    {
+//			if(summaryView.getVisibility() == View.VISIBLE)
+//			{
+//				summaryView.startAnimation(summaryOut);
+//			}
+      summaryView.setVisibility(View.INVISIBLE);
+      btnLayoutParams.bottomMargin = 0;
+    }
+    
     btnlayout.setLayoutParams(btnLayoutParams);
   }
   
   
-  public void summaryViewInvisible()
+  public void navigationViewSetting()
   {
-    summaryview.setVisibility(View.INVISIBLE);
-    FrameLayout btnlayout = (FrameLayout) findViewById(R.id.btn_layout);
-    FrameLayout.LayoutParams btnLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    btnLayoutParams.bottomMargin = 0;
-    btnLayoutParams.gravity = Gravity.BOTTOM;
-    btnlayout.setLayoutParams(btnLayoutParams);
+    navigationView = (RelativeLayout) findViewById(R.id.navigationView);
+    naviInfo01 = (TextView) findViewById(R.id.naviInfo01);
+    naviInfo02 = (TextView) findViewById(R.id.naviInfo02);
+    naviSubInfo = (TextView) findViewById(R.id.naviSubInfo);
+    naviStopBtn = (ImageButton) findViewById(R.id.naviStopBtn);
+    
+    naviStopBtn.setOnClickListener(this);
+  }
+  
+  
+  public void ListViewVisibleSetting(int visible)
+  {
+    if (visible == 0)
+    {
+      m_ListView.setVisibility(View.VISIBLE);
+      searchCancel.setVisibility(View.VISIBLE);
+      m_ListView.bringToFront();
+    }
+    else
+    {
+      m_ListView.setVisibility(View.GONE);
+      searchCancel.setVisibility(View.INVISIBLE);
+    }
+  }
+  
+  
+  public void HideKeyboard(View view)
+  {
+    InputMethodManager manager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+    manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+  }
+  
+  
+  @Override
+  public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+  {
+    if (searchEditText.getText().toString().length() > 0)
+    {
+      Toast search;
+      switch (actionId)
+      {
+        case EditorInfo.IME_ACTION_SEARCH:
+          if (summaryView.getVisibility() == View.VISIBLE)
+            summaryViewVisibleSet(summaryViewInVisible, 0);
+          if (m_Adapter != null)
+          {
+            m_Adapter.clear();
+          }
+          
+          for (Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
+          {
+            PlaceInfo info = itemInfo.getValue();
+            if (info.m_strName.contains(searchEditText.getText().toString()))
+            {
+              m_Adapter.add(info.m_strName);
+//						Log.i("SEARCH","size : "+m_Adapter.getCount());
+            }
+          }
+          
+          if (m_Adapter.getCount() > 0)
+          {
+            if (m_ListView.getVisibility() == View.INVISIBLE)
+              ListViewVisibleSetting(0);
+          }
+          else
+          {
+            search = Toast.makeText(mContext, R.string.msg_no_search_result, Toast.LENGTH_SHORT);
+            search.show();
+          }
+          break;
+        
+        default:
+          break;
+      }
+    }
+    HideKeyboard(m_mapView);
+    return false;
   }
   
   
@@ -598,46 +1007,27 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     switch (v.getId())
     {
       case R.id.myLocationBtn:
-        if (m_locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) // GPS 활성화 체크, 활성화 - return true
+        if (myLocation() == true)
         {
           if (myLocationState == 0)
           {
             myLocationState = 1;
-            myLocation();
+            
             RotateMap(0, 100);
             MoveToCurrentPosition();
-            ShowCurrentPosition(myLocationState);
+            ShowCurrentPosition(myLocationState, 0);
             myLocationBtn.setBackgroundResource(R.drawable.btn_my_location_on);
           }
           else if (myLocationState == 1)
           {
             myLocationState = 2;
-            myLocation();
-            
-            float fAngle = g_fLastAngle;
-//						RotateMap(fAngle, 100);
-            
-            Location locHere = g_locationHere;
-            if (locHere != null && m_locMarkTarget != null)
-            {
-              float fBearingTo = locHere.bearingTo(m_locMarkTarget);
-              
-              Log.d("SENSSOR", "[Angle] " + fAngle + " [BearingTo] " + fBearingTo);
-              
-              float fRotate = fAngle + fBearingTo;
-              
-              if (fRotate < 0)
-                fRotate += 360;
-              
-              fRotate %= 360;
-              m_mapView.startAnimation(Global.GetViewRotation(fRotate, 0));
-            }
+            ShowCurrentPosition(myLocationState, 0);
             
             // - 센서 매니저 등록 (gSensorEventListner,gSensorType,gDelay)
             m_sensorManager.registerListener(m_sensorListener, m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
             
             MoveToCurrentPosition();
-            ShowCurrentPosition(myLocationState);
+            
             myLocationBtn.setBackgroundResource(R.drawable.btn_my_location_direction);
           }
           else
@@ -654,368 +1044,287 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
           }
           m_mapView.invalidate();
         }
-        else
-        {
-          AlertDialog.Builder ab = new AlertDialog.Builder(this);
-          ab.setTitle(R.string.map_notification);
-          ab.setMessage(R.string.map_dialog_message01);
-          ab.setPositiveButton(R.string.map_confirm, new DialogInterface.OnClickListener()
-          {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-              // TODO Auto-generated method stub
-              dialog.dismiss();
-            }
-          });
-          ab.show();
-        }
         break;
       
       case R.id.nearbyBtn:
-        BlinkingCommon.smlLibDebug("BUTTON ACTION", "nearbyBtn Action");
-        //가까운 지하철 역 찾기
-//        Intent i = new Intent(BlinkingMap.this, SubwayActivity.class);
-//        double[] latLon = new double[2];
-//        latLon[0] = ;
-//        latLon[1] = ;
-//        i.putExtra("near_by_station_lat_lon", latLon);
-//        startActivity(i);
+        nearbydialog = new NearByDialog(mContext, categroyType);
+        nearbydialog.show();
+        summaryViewVisibleSet(summaryViewInVisible, 0);
+        idx = null;
+        markerSel(0);
+        nearbydialog.setOnDismissListener(new OnDismissListener()
+        {
+          @Override
+          public void onDismiss(DialogInterface dialog)
+          {
+            Log.i("DIALOG", "categoryType : " + categroyType);
+            markerRefresh();
+          }
+        });
         break;
       
       case R.id.subwayBtn:
-        startActivity(new Intent(this, SubwayActivity.class));
+        destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
+        startActivity(destSubwayIntent);
         break;
       
       case R.id.zoomInbtn:
         if (zoomLevel < nMaxZoomLevel)
           zoomLevel = zoomLevel + 1;
+        else
+          zoomLevel = nMaxZoomLevel;
         m_mapView.getController().setZoom(zoomLevel);
         
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
-        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel);
-        
+        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
         break;
       
       case R.id.zoomOutbtn:
         if (zoomLevel > nMinZoomLevel)
           zoomLevel = zoomLevel - 1;
+        else
+          zoomLevel = nMinZoomLevel;
         m_mapView.getController().setZoom(zoomLevel);
         
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
-        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel);
+        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
         break;
       
       case R.id.summaryView:
-        Intent detailPlaceIntent = new Intent();
-        detailPlaceIntent.putExtra("idx", idx);
-        Log.i("INFO", "idx : " + idx);
+        if (summaryDetail == true)
+        {
+          int i = 0;
+          Intent detailPlaceIntent = new Intent(this, PremiumdetailTemp.class);
+          i = Integer.parseInt(idx);
+          detailPlaceIntent.putExtra("place_idx", i);
+          startActivity(detailPlaceIntent);
+          Log.i("INFO", "place_idx : " + idx);
+        }
         break;
       
       case R.id.summaryCloseBtn:
-        summaryViewInvisible();
+      case R.id.summaryCloseBtn2:
+        summaryViewVisibleSet(summaryViewInVisible, 0);
+        if (onePlaceOverlay != null)
+          m_mapView.getOverlays().clear();
+        
+        lineId = "";
+        idx = null;
+        
+        markerRefresh();
+        
+        m_mapView.invalidate();
         break;
       
-      case R.id.subwaystartBtn:
-        Log.w("WARN","start");
-        Intent i = new Intent(BlinkingMap.this, SubwayActivity.class);
+      case R.id.subwayStartBtn:
+        destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
         double[] latLon = new double[3];
-        latLon[0] = subway_m_fLatitude;
-        latLon[1] = subway_m_fLongitude;
+        latLon[0] = place_fLatitude;
+        latLon[1] = place_fLongitute;
         latLon[2] = 0;
-        i.putExtra("set_dest_station_lat_lon", latLon);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
+        destSubwayIntent.putExtra("set_dest_station_lat_lon", latLon);
+        startActivity(destSubwayIntent);
         break;
-        
-      case R.id.subwayendBtn:
-        Log.w("WARN","end");
-        Intent destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
+      
+      case R.id.subwayEndBtn:
+        destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
         double[] destLatLong = new double[3];
-        destLatLong[0] = subway_m_fLatitude;
-        destLatLong[1] = subway_m_fLongitude;
+        destLatLong[0] = place_fLatitude;
+        destLatLong[1] = place_fLongitute;
         destLatLong[2] = 1;
         destSubwayIntent.putExtra("set_dest_station_lat_lon", destLatLong);
         destSubwayIntent.putExtra("dest_name", summaryTitle.getText().toString());
-        destSubwayIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(destSubwayIntent);
         break;
       
       case R.id.naviBtn:
+        if (myLocation() == true)
+        {
+          navigationStart();
+        }
+        break;
+      
+      case R.id.naviStopBtn:
+        navigationStop();
+        break;
+      
+      case R.id.search_cancel:
+        ListViewVisibleSetting(1);
+        searchEditText.setText("");
+        searchEditText.setHint(R.string.message_search_word_here);
         break;
     }
   }
   
   
-  public void myLocation()
+  /**
+   * ==========================================================================
+   * ============= navigation btn 관련
+   * ============================================
+   * ===========================================
+   */
+  public void viewSetForNavigation()
   {
-    if (loc != null)
-    {
-      m_fLatitude = loc.getLatitude();
-      m_fLongitude = loc.getLongitude();
-      g_locationHere = loc;
-    }
-    else
-    {
-      Log.e("ERROR", "locManager.getLastKnownLocation return null");
-      
-      m_fLatitude = 37.5664700;
-      m_fLongitude = 126.9779630;
-      
-      g_locationHere.setLatitude(m_fLatitude);
-      g_locationHere.setLongitude(m_fLongitude);
-      
-      // g_sensorcallback에 값이 있으면 설정이지만 처음엔 해당사항이 없는듯하다.
-      try
-      {
-        if (g_sensorcallback != null)
-          g_sensorcallback.UpdateLocation(g_locationHere);
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-      
-      AlertDialog.Builder ab = new AlertDialog.Builder(this);
-      ab.setTitle(R.string.map_notification);
-      ab.setMessage(R.string.map_dialog_message02);
-      ab.setPositiveButton(R.string.map_confirm, new DialogInterface.OnClickListener()
-      {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-          // TODO Auto-generated method stub
-          dialog.dismiss();
-        }
-      });
-      ab.show();
-    }
+    summaryViewVisibleSet(summaryViewInVisible, 0);
+    searchView.setVisibility(View.GONE);
+    zoomInBtn.setVisibility(View.INVISIBLE);
+    zoomOutBtn.setVisibility(View.INVISIBLE);
+    btnlayout.setVisibility(View.INVISIBLE);
+    navigationView.setVisibility(View.VISIBLE);
   }
   
   
-  /**
-   * ======================================================================== ==
-   * =========== 네비게이션 관련 로직.
-   * ====================================================
-   * =================================
-   */
-  protected void ToggleNavigationState()
+  public void navigationStart()
   {
-    m_bUseLocationInfo = !m_bUseLocationInfo;
+    m_bTrackingCurrentPosition = true;
+    m_mapView.getOverlays().clear();
+    viewSetForNavigation();
     MoveToCurrentPosition();
+    //ShowCurrentPosition(UseLocationNavi,g_fLastAngle);
     
-    if (m_bUseLocationInfo == true)
+    navigationCal(m_locMarkTarget);
+    
+    m_sensorManager.registerListener(m_sensorListener, m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
+  }
+  
+  
+  public void navigationStop()
+  {
+    m_bTrackingCurrentPosition = false;
+    myLocationState = 0;
+    myLocationBtn.setBackgroundResource(R.drawable.btn_my_location);
+    searchView.setVisibility(View.VISIBLE);
+    zoomInBtn.setVisibility(View.VISIBLE);
+    zoomOutBtn.setVisibility(View.VISIBLE);
+    btnlayout.setVisibility(View.VISIBLE);
+    navigationView.setVisibility(View.INVISIBLE);
+    
+    RotateMap(0, 100);
+    
+    m_sensorManager.unregisterListener(m_sensorListener);
+    m_mapView.getOverlays().clear();
+    m_mapView.getOverlays().remove(navigationOverlay);
+    
+    lineId = null;
+    idx = null;
+    markerRefresh();
+    
+    summaryViewVisibleSet(summaryViewInVisible, 0);
+  }
+  
+  
+  public void navigationCal(Location MarkTaget)
+  {
+    naviTexts = new String[2];
+    int clock = 0;
+    
+    Location locHere = g_locationHere;
+    
+    String pattern = "##.##";
+    DecimalFormat dformat = new DecimalFormat(pattern);
+    double distance = locHere.distanceTo(MarkTaget) * 0.001;
+    double temp;
+    String kmeter = dformat.format(distance);
+    
+    Log.i("INFO", "distanceto " + locHere.distanceTo(MarkTaget));
+    
+    if (distance < 1)
     {
-      m_bComplete = false; // -v1.5 Toast 팝업 한번만 노출 시켜주기 위한. 신호값.
-      HideBalloon();
+      String pMeter = "###";
+      DecimalFormat dMeterformat = new DecimalFormat(pMeter);
       
-      float fAngle = g_fLastAngle;
-      
-      RotateMap(fAngle, 100);
-      
-      Location locHere = g_locationHere;
-      if (locHere != null && m_locMarkTarget != null)
+      Double dMeter = Double.parseDouble(kmeter);
+      String meter = dMeterformat.format(dMeter * 1000);
+      int distan = (int) (distance * 1000);
+      if (distan <= 20)
       {
-        float fBearingTo = locHere.bearingTo(m_locMarkTarget);
-        
-        Log.d("SENSSOR", "[Angle] " + fAngle + " [BearingTo] " + fBearingTo);
-        
-        float fRotate = fAngle + fBearingTo;
-        
-        if (fRotate < 0)
-          fRotate += 360;
-        
-        fRotate %= 360;
-        
-        // --------- 방향 ------------------------
-//				m_frNavigation.startAnimation(Global
-//						.GetViewRotation(fRotate, 0));
-        
-        String pattern = "##.##";
-        DecimalFormat dformat = new DecimalFormat(pattern);
-        double distance = locHere.distanceTo(m_locMarkTarget) * 0.001;
-        String kmeter = dformat.format(distance);
-        
-        if (distance < 1)
-        {
-          String pMeter = "###";
-          DecimalFormat dMeterformat = new DecimalFormat(pMeter);
-          
-          Double dMeter = Double.parseDouble(kmeter);
-          String meter = dMeterformat.format(dMeter * 1000);
-//					m_tvNavigation.setText(meter + "m");
-        }
-        else
-        {
-//					m_tvNavigation.setText(kmeter + "km");
-        }
+        m_sensorManager.unregisterListener(m_sensorListener);
+        navigationStop();
+        Toast toast = Toast.makeText(mContext, R.string.msg_dest_arrived, Toast.LENGTH_SHORT);
+        toast.show();
+        return;
       }
-      
-    }
-    else
-    {
-      // - 아이콘 켜짐 -> 아이콘 끔
-//			m_frNavigation.setVisibility(View.GONE);
-//			m_tvNavigation.setVisibility(View.GONE);
-//			m_frNavigation.setBackgroundDrawable(null);
-      
-      // naviImageThread.setState(NaviImageThread.STATE_DONE);
-      
-      RotateMap(0, 0);
-      
-      if (m_myplaceOverlay.GetMarkerShow() == true)
-        m_myplaceOverlay.ShowMarker(true);
+      clock = (int) (distance * 1000) / 60;
+      naviTexts[0] = meter + "m";
+      if (clock <= 1)
+      {
+        naviTexts[1] = "1min";
+      }
       else
       {
-        m_myplaceOverlay.ShowMarker(false);
-        // onResume();
-        g_bNeedToReloadActivity = true;
-        ReloadActivity();
-      }
-      
-      // - 호출한 말풍선을 다시 호출...
-      if (m_cache != null)
-      {
-//				ShowBalloon(m_cache, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
-//				{
-//					public boolean onItemSingleTapUp(final int index, final OverlayItem item)
-//					{
-//						setonClickBalloon("내용");
-//						return true; // We 'handled' this event.
-//					}
-//					
-//					
-//					public boolean onItemLongPress(final int index, final OverlayItem item)
-//					{
-//						return true;
-//					}
-//				});
+        naviTexts[1] = "" + clock + "min";
       }
     }
-  }
-  
-  
-  private void ShowNavCurrentPosition(final double latitude, final double longitude, boolean bFind)
-  {
-    // 일단 지워놓음 
-//		if(m_nearbyPlaceNodeOverlay != null)
-//			m_mapView.getOverlays().remove(m_nearbyPlaceNodeOverlay);
-//		m_nearbyPlaceNodeOverlay = null;
-    
-    RotateMap(0, 0);
-    
-    m_locMarkTarget = new Location("MarkTarget");
-    m_locMarkTarget.setLatitude(latitude);
-    m_locMarkTarget.setLongitude(longitude);
-    
-//		mBtnRotation.setVisibility(View.VISIBLE);		
-//
-//		mBtnRotation.setChecked(false);
-//		mBtnRotation.setBackgroundDrawable(Global.GetDrawable(this, R.drawable.navi_btn));
-    
-    HideBalloon();
-  }
-  
-  
-  private void HideNavCurrentPosition()
-  {
-    RotateMap(0, 0);
-    
-//		m_frNavigation.setVisibility(View.GONE);
-//		m_frNavigation.setBackgroundDrawable(null);
-//		m_tvNavigation.setVisibility(View.GONE);
-    
-    m_bUseLocationInfo = false;
-    
-//		mBtnRotation.setChecked(false);
-//		mBtnRotation.setBackgroundDrawable(Global.GetDrawable(this, R.drawable.navi_btn));
-    
-    //onResume();
-  }
-  
-  
-  /**
-   * ======================================================================== ==
-   * =========== 마커 표시 관련 로직.
-   * ====================================================
-   * =================================
-   */
-  
-  private void ShowMyPlaceOverlay(double fLatitude, double fLongitude)
-  {
-    ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-    
-    OverlayItem item = new OverlayItem("", "", new GeoPoint(fLatitude, fLongitude));
-    
-    item.setMarker(Global.GetDrawable(this, R.drawable.transparent));
-    
-    items.add(item);
-    
-    if (m_myplaceOverlay != null)
-      m_mapView.getOverlays().remove(m_myplaceOverlay);
-    
-    m_myplaceOverlay = new MyPlaceOverlay(items, null, new DefaultResourceProxyImpl(this), this);
-    
-    m_myplaceOverlay.SetMarkerID(this, R.drawable.user_place_icon);
-    
-    if (fLatitude <= 0 || fLongitude <= 0)
-      m_myplaceOverlay.ShowMarker(false);
     else
-      m_myplaceOverlay.ShowMarker(true);
-    
-    m_mapView.getOverlays().add(m_myplaceOverlay);
-    
-    m_mapView.invalidate();//화면 갱신.
-  }
-  
-  
-  // 마커 표시 이동 시키는 로직.
-  public void ShowMyPlacePopup(final double fLatitude, final double fLongitude)
-  {
-//		if(mBtnRotation.isChecked() == true) return;
-//
-//		ShowMyPlaceOverlay(fLatitude, fLongitude);
-//
-//		mBtnRotation.setVisibility(View.INVISIBLE);
-    
-    // 위치 찾기..
-    Log.e("temp", "find location : " + fLatitude + " , " + fLongitude);
-    
-    ShowNavCurrentPosition(fLatitude, fLongitude, false);
-    
-    if (m_bTarget == true)
     {
-      m_mapView.getOverlays().remove(m_placeOverlay);
-      //m_placeOverlay = null;
+      if (distance < 3.6)
+      {
+        temp = distance / 3.6;
+        temp = temp * 100;
+        clock = (int) temp;
+        naviTexts[1] = "" + clock + "min";
+      }
+      else
+      {
+        clock = (int) ((int) distance / 3.6);
+        naviTexts[1] = "" + clock + "hour";
+      }
+      naviTexts[0] = kmeter + "km";
+      
     }
+    addNavigationOverlay(locHere, MarkTaget);
+    naviInfo01.setText(naviTexts[0]);
+    naviInfo02.setText(naviTexts[1]);
+    String naviSubText = "到" + DestinationTitle;
+    naviSubInfo.setText(naviSubText);
   }
   
   
-  public void RemoveMyPlacePopup(final double fLatitude, final double fLongitude)
+  public void addNavigationOverlay(Location locHere, Location MarkTaget)
   {
-    ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+    m_mapView.getOverlays().remove(navigationOverlay);
+    ArrayList<OverlayItem> naviList = new ArrayList<OverlayItem>();
+    OverlayItem item = new OverlayItem("", "", new GeoPoint(locHere.getLatitude(), locHere.getLongitude()));
+    OverlayItem item2 = new OverlayItem("", "", new GeoPoint(MarkTaget.getLatitude(), MarkTaget.getLongitude()));
+    naviList.add(item);
+    naviList.add(item2);
+    navigationOverlay = new NavigationOverlay(naviList, null, new DefaultResourceProxyImpl(this), this, g_fLastAngle);
     
-    OverlayItem item = new OverlayItem("", "", new GeoPoint(fLatitude, fLongitude));
+    m_mapView.getOverlays().add(navigationOverlay);
+    m_mapView.invalidate();
+  }
+  
+  
+  public void createGPSDialog(int type)
+  {
+    AlertDialog.Builder ab = new AlertDialog.Builder(this);
+    ab.setTitle(R.string.map_notification);
+    ab.setPositiveButton(R.string.map_confirm, new DialogInterface.OnClickListener()
+    {
+      @Override
+      public void onClick(DialogInterface dialog, int which)
+      {
+        dialog.dismiss();
+      }
+    });
     
-    item.setMarker(Global.GetDrawable(this, R.drawable.transparent));
-    
-    items.add(item);
-    
-    BlinkingCommon.smlLibDebug("Remove", "RemovePlacePopup");
-    m_mapView.getOverlays().remove(m_placeOverlay);
-    m_myplaceOverlay.ShowMarker(false);
-//		mBtnRotation.setVisibility(View.GONE);
-    m_mapView.invalidate();//화면 갱신.
+    if (type == NoUseGPS)
+      ab.setMessage(R.string.map_gps_noUse);
+    else if (type == LocationFail)
+      ab.setMessage(R.string.map_gps_Location_fail);
+    else if (type == OutOfSeoul)
+      ab.setMessage(R.string.map_gps_out_of_Seoul);
+    ab.show();
   }
   
   
   /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== 현재 위치 관련 로직.(마커 x, 원 표시)
    * ========================================
    * =============================================
    */
-  private void ShowCurrentPosition(int mylocationstate)
+  private void ShowCurrentPosition(int mylocationstate, float fAngle)
   {
     if (m_curPosOverlay != null)
     {
@@ -1028,7 +1337,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       ArrayList<OverlayItem> pList = new ArrayList<OverlayItem>();
       OverlayItem item = new OverlayItem("", "", new GeoPoint(m_fLatitude, m_fLongitude));
       pList.add(item);
-      m_curPosOverlay = new CurrentPositionOverlay(pList, null, new DefaultResourceProxyImpl(this), this, myLocationState);
+      m_curPosOverlay = new CurrentPositionOverlay(pList, null, new DefaultResourceProxyImpl(this), this, myLocationState, g_fLastAngle);
       
       m_mapView.getOverlays().add(m_curPosOverlay);
     }
@@ -1041,7 +1350,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   {
     if (m_fLatitude > 0 && m_fLongitude > 0)
     {
-      m_mapView.getController().animateTo(new GeoPoint(m_fLatitude, m_fLongitude));
+      mapCenterset(1);
     }
     else
     {
@@ -1051,63 +1360,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ======================================================================== ==
-   * =========== 터치나 여러가지 사항을 세팅해주기 위한 메소드 : Place 관련 컨트롤
-   * ========================
-   * =============================================================
-   */
-  
-  //TODO 터치나 여러가지 사항을 세팅해주기 위한 메소드 : Place 관련 컨트롤
-  public void ReloadActivity()
-  {
-    if (g_bNeedToReloadActivity == false)
-    {
-      Log.d("DEBUG", "업데이트 필요없음");
-      return;
-    }
-    
-    g_bNeedToReloadActivity = false;
-    
-    m_mapView.getOverlays().clear();
-    
-    // TODO 터치하고 추가할 수 있게 하기 위해서..
-    ShowMyPlaceOverlay(0, 0);
-    
-//		ShowNearbyPlaceOverlay(m_nIndexNearbyPlaceOverlay);
-    
-//		// 회전 버튼 초기화 (장소/코스 정보가 없는 경우에 안보이게 함)
-//		mBtnRotation.setVisibility(View.INVISIBLE);
-//
-//		if(mBtnRotation.getVisibility() == View.INVISIBLE) HideNavCurrentPosition();
-    
-    // 코스 정보 레이아웃 초기화
-    {
-      if (m_bPlaceInfoMap == true)
-      {
-        Global.GC();
-        return;
-      }
-      
-      ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-      
-      // 장소/코스 정보 없는 경우.
-//			mBtnRotation.setVisibility(View.INVISIBLE);
-      
-      if (m_fLatitude == 0 || m_fLongitude == 0)
-        m_mapView.getController().setCenter(new GeoPoint(37.5664700, 126.9779630));
-      else
-        m_mapView.getController().setCenter(new GeoPoint(m_fLatitude, m_fLongitude));
-    }
-    
-    // 현 위치 아이콘 추가
-//		ShowCurrentPosition();
-    
-    Global.GC();
-  }
-  
-  
-  /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== Interface Callback Part!
    * ========================================
    * =============================================
@@ -1116,305 +1369,164 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   @Override
   public void UpdateDirection(float fAngle)
   {
-    if (m_bUseLocationInfo == false)
-    {
-      return;
-    }
     
-    Location locHere = g_locationHere;
+    g_fLastAngle = fAngle;
     
-    if (m_myplaceOverlay.GetMarkerShow() == true)
-    {
-      //TODO 사용자 임의 선택일때 
-      if (m_locMarkTarget == null)
-      {
-        Log.e("ERROR", "m_locTarget == null");
-        return;
-      }
-      
-      //			m_lastTime = currentTime;
-      RotateMap(fAngle, 100);
-      
-      float fBearingTo = locHere.bearingTo(m_locMarkTarget);
-      
-//			Log.d("SENSSOR", "[Angle1] " + fAngle + " [BearingTo] " + fBearingTo);
-      
-      //--------- 방향 ------------------------		
-      float fRotate = fAngle + fBearingTo + 45;
-      
-      if (fRotate < 0)
-        fRotate += 360;
-      
-      fRotate %= 360;
-      
-//			m_frNavigation.startAnimation(Global.GetViewRotation(fRotate, 0));
-      
-      String pattern = "##.##";
-      DecimalFormat dformat = new DecimalFormat(pattern);
-      double distance = locHere.distanceTo(m_locMarkTarget) * 0.001;
-      String kmeter = dformat.format(distance);
-      
-      Double dMeter = Double.parseDouble(kmeter);
-      m_iMeter = (int) (dMeter * 1000);
-//			Log.i("INFO","meter : "+m_iMeter);
-      
-      //- v1.5 오차 알림 문구 Toast : 10미터 이하로 진입했을 경우 목적지에 도착했다는 팝업 보였다 사라짐.
-      if (m_iMeter <= 10 && m_bComplete == false)
-      {
-        int nLangState = LANGUAGE_DEFUALT;
-        
-        if (Global.strSetLanguage.equals("kor"))
-          nLangState = LANGUAGE_KOREA;
-        else
-          nLangState = LANGUAGE_DEFUALT;
-        
-        Toast.makeText(getApplicationContext(), strToastMessage[nLangState], Toast.LENGTH_LONG).show();
-        m_bComplete = true; // 한번만 Toast 실행을 위해.
-      }
-      
-      if (distance < 1)
-      {
-        String pMeter = "###";
-        DecimalFormat dMeterformat = new DecimalFormat(pMeter);
-        
-//				Double dMeter = Double.parseDouble(kmeter);
-        String meter = dMeterformat.format(dMeter * 1000);
-//				m_tvNavigation.setText(meter+"m");
-      }
-      else
-      {
-//				m_tvNavigation.setText(kmeter+"km");
-      }
-      //-------------- ------------------------
-    }
+    RotateMap(fAngle, 100);
+    
+    if (!m_bTrackingCurrentPosition)
+      ShowCurrentPosition(UseLocationNavi, fAngle);
     else
-    {
-      //TODO 사용자 임의 선택이 아닐때 
-      if (m_locTarget == null)
-      {
-        Log.e("ERROR", "m_locTarget == null");
-        return;
-      }
-      
-//			Log.d("SENSSOR", "[Angle] " + fAngle);
-      
-      RotateMap(fAngle, 100);
-      
-      float fBearingTo = locHere.bearingTo(m_locTarget);
-      
-      float fRotate = fAngle + fBearingTo + 45;
-      
-      if (fRotate < 0)
-        fRotate += 360;
-      
-      fRotate %= 360;
-      
-      //--------- 방향 ------------------------		
-//			m_frNavigation.startAnimation(Global.GetViewRotation(fRotate, 0));
-      
-      String pattern = "##.##";
-      DecimalFormat dformat = new DecimalFormat(pattern);
-      double distance = locHere.distanceTo(m_locTarget) * 0.001;
-      String kmeter = dformat.format(distance);
-      
-      Double dMeter = Double.parseDouble(kmeter);
-      m_iMeter = (int) (dMeter * 1000);
-//			Log.i("INFO","meter : "+m_iMeter);
-      
-      //- v1.5 오차 알림 문구 Toast : 10미터 이하로 진입했을 경우 목적지에 도착했다는 팝업 보였다 사라짐.
-      if (m_iMeter <= 10 && m_bComplete == false)
-      {
-        int nLangState = LANGUAGE_DEFUALT;
-        
-        if (Global.strSetLanguage.equals("kor"))
-          nLangState = LANGUAGE_KOREA;
-        else
-          nLangState = LANGUAGE_DEFUALT;
-        
-        Toast.makeText(getApplicationContext(), strToastMessage[nLangState], Toast.LENGTH_LONG).show();
-        m_bComplete = true; // 한번만 Toast 실행을 위해.
-      }
-      
-      if (distance < 1)
-      {
-        String pMeter = "###";
-        DecimalFormat dMeterformat = new DecimalFormat(pMeter);
-        
-//				Double dMeter = Double.parseDouble(kmeter);
-        String meter = dMeterformat.format(dMeter * 1000);
-//				m_tvNavigation.setText(meter+"m");
-      }
-      else
-      {
-//				m_tvNavigation.setText(kmeter+"km");
-      }
-      //-------------- ------------------------
-    }
-    
-    // 이걸 하면.. 계속 화면을 못벗어날듯.
-    //			if(m_bTrackingCurrentPosition == true)
-    //			{
-    //				MoveToCurrentPosition();
-    //			}
-    
-//		ShowCurrentPosition();
+      navigationCal(m_locMarkTarget);
   }
   
   
   @Override
   public void UpdateLocation(Location locCur)
   {
-    // TODO Auto-generated method stub		
+    m_fLatitude = locCur.getLatitude();
+    m_fLongitude = locCur.getLongitude();
+    MoveToCurrentPosition();
+    
+    if (!m_bTrackingCurrentPosition)
+      ShowCurrentPosition(UseLocationNavi, g_fLastAngle);
+    else
+      navigationCal(m_locMarkTarget);
   }
   
   
-  /**
-   * ======================================================================== ==
-   * =========== DB File asset에서 SD카드로 복사
-   * ========================================
-   * =============================================
-   */
-  public void CopyPlaceInfoDBfile() throws IOException
+  @Override
+  protected void onNewIntent(Intent intent)
   {
-    
-  }
-  
-  
-  // Map file 복사.
-  public void CopyMapDBFile() throws IOException
-  {
-    //			  ver 1.7까지의 방식 MapFile Download 형식으로 변경함. 
-    String strMapDBDir = Global.GetPathWithSDCard("BlinkingMap");
-    
-    File file = new File(strMapDBDir);
-    
-    // 폴더 안에 싹~ 지우고..
-    Global.deleteFolder(file);
-    
-    // BlinkingMap 폴더 생성하고.. 
-    file.mkdirs();
-    
-    Log.e("testLog", "strMapDBDir : " + strMapDBDir);
-    
-    //Map data DB Name 으로 경로 설정. 
-    Global.strMapDBFilePath = Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName);
-    
-    Log.e("testLog", "strMapDBFilePath : " + Global.strMapDBFilePath);
-    //파일 복사 로직. Assets에서 내부 폴더 경로로 복사. 
-    AssetManager am = getResources().getAssets();
-    
-    try
+    super.onNewIntent(intent);
+    if (intent != null)
     {
-      InputStream is = am.open(Global.g_strMapDBFileName);
-      OutputStream out = new FileOutputStream(new File(Global.strMapDBFilePath));
+      if (intent.hasExtra("lineId"))
+        lineId = intent.getStringExtra("lineId");
+      if (intent.hasExtra("Latitude"))
+        place_fLatitude = intent.getDoubleExtra("Latitude", 0);
+      if (intent.hasExtra("Longitude"))
+        place_fLongitute = intent.getDoubleExtra("Longitude", 0);
       
-      int size = is.available();
-      
-      Log.i("INFO", "맵 파일 복사.. : size = " + size);
-      
-      byte[] buffer = new byte[1024];
-      
-      int nRead = 0;
-      while ((nRead = is.read(buffer)) != -1)
-        out.write(buffer, 0, nRead);
-      out.flush();
-      out.close();
-      
-      Log.i("INFO", "맵 파일 복사됨 : " + Global.g_strMapDBFileName);
-      
-      is.close();
+      mapCenterset(0);
     }
-    catch (FileNotFoundException e)
-    {
-      e.printStackTrace();
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
+    else
+      lineId = "";
     
+    Log.i("INTENT", "" + lineId);
   }
   
   
   @Override
   protected void onResume()
   {
-    // TODO Auto-ge                                                                                                                                                                                                                                                                                                                          nerated method stub
     super.onResume();
     
-    ReloadActivity();
+    Intent i = getIntent();
+    if (i.hasExtra("lineId"))
+      lineId = i.getStringExtra("lineId");
+    if (i.hasExtra("Latitude"))
+      place_fLatitude = i.getDoubleExtra("Latitude", 0);
+    if (i.hasExtra("Longitude"))
+      place_fLongitute = i.getDoubleExtra("Longitude", 0);
     
-    //getNaviFlag(37.55655375544381,126.86307907104492,"test");
+    if (allplaceOverlay != null)
+      m_mapView.getOverlays().remove(allplaceOverlay);
     
-    //int nId, int nType,double lat, double lng, String name
-//		setBalloonMarker(0, 0, 37.55655375544381,126.86307907104492,"test");
-    Markertest();
+    mapCenterset(0);
+    
   }
   
   
-  public void Markertest()
+  public void mapCenterset(int type)
   {
-    if (isShowMarker)
-      return;
-    
-    isShowMarker = true;
-    if (placeinfo.size() > items.size())
+    Log.i("INFO", "place_fLatitude : " + place_fLatitude + "place_fLongitute : " + place_fLongitute);
+    if (type == 0)
     {
-      OverlayItem item = new OverlayItem(placeinfo.get(0).m_strName, placeinfo.get(0).m_strIntro, new GeoPoint(placeinfo.get(0).m_fLatitude, placeinfo.get(0).m_fLongitude));
-      OverlayItem item2 = new OverlayItem(placeinfo.get(1).m_strName, placeinfo.get(1).m_strIntro, new GeoPoint(placeinfo.get(1).m_fLatitude, placeinfo.get(1).m_fLongitude));
-      OverlayItem item3 = new OverlayItem(placeinfo.get(2).m_strName, placeinfo.get(2).m_strIntro, new GeoPoint(placeinfo.get(2).m_fLatitude, placeinfo.get(2).m_fLongitude));
-      
-      // 아이템 클릭때문에 추가함.
-      item3.setMarker(Global.GetDrawable(this, R.drawable.marker_default));
-      item2.setMarker(Global.GetDrawable(this, R.drawable.marker_default));
-      item.setMarker(Global.GetDrawable(this, R.drawable.marker_default));
-      
-      items.add(item);
-      items.add(item2);
-      items.add(item3);
-      
-      Log.w("WARN", "item: " + item.mTitle);
-      PlaceOverlay placeOverlay = new PlaceOverlay(items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
+      if (place_fLatitude == 0 || place_fLongitute == 0)
+      {
+        m_mapView.getController().setCenter(new GeoPoint(37.5664700, 126.9779630));
+      }
+      else
+      {
+        m_mapView.getController().setCenter(new GeoPoint(place_fLatitude, place_fLongitute));
+      }
+    }
+    else
+    {
+      if (m_fLatitude == 0 || m_fLongitude == 0)
+      {
+        m_mapView.getController().setCenter(new GeoPoint(37.5664700, 126.9779630));
+      }
+      else
+      {
+        m_mapView.getController().setCenter(new GeoPoint(m_fLatitude, m_fLongitude));
+      }
+    }
+    markerRefresh();
+  }
+  
+  
+  public void markerSel(int select)
+  {
+    if (idx != null)
+    {
+      if (allplaceOverlay != null && select == 0)
+      {
+        allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), idx);
+        premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), null);
+      }
+      if (premiumOverlay != null && select == 1)
+      {
+        premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), idx);
+        allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), null);
+      }
+    }
+    else
+    {
+      if (allplaceOverlay != null)
+        allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), null);
+      if (premiumOverlay != null)
+        premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), null);
+    }
+    
+    m_mapView.invalidate();
+  }
+  
+  
+  public void markerRefresh()
+  {
+    if (m_timer != null)
+    {
+      m_timer.cancel();
+    }
+    
+    if (!m_bTrackingCurrentPosition)
+    {
+      TimerTask onTimer = new TimerTask()
       {
         @Override
-        public boolean onItemLongPress(int arg0, OverlayItem arg1)
+        public void run()
         {
-          return true;
+          if (allplaceOverlay != null)
+            m_mapView.getOverlays().remove(allplaceOverlay);
+          if (premiumOverlay != null)
+            m_mapView.getOverlays().remove(premiumOverlay);
+          topLeftGpt = (GeoPoint) m_mapView.getProjection().fromPixels(0, 0);
+          bottomRightGpt = (GeoPoint) m_mapView.getProjection().fromPixels(m_mapView.getWidth(), m_mapView.getHeight());
+          
+          new MarkerSetAsyncTask().execute();
         }
-        
-        
-        @Override
-        public boolean onItemSingleTapUp(int arg0, OverlayItem arg1)
-        {
-          // TODO Auto-generated method stub
-          Log.i("INFO", "Singletapup");
-          try
-          {
-            m_mapView.getController().setCenter(arg1.mGeoPoint);
-            idx = new BigInteger("" + placeinfo.get(arg0).m_nID);
-            subway_m_fLatitude = placeinfo.get(arg0).m_fLatitude;
-            subway_m_fLongitude = placeinfo.get(arg0).m_fLongitude;
-            summaryTitle.setText(arg1.mTitle);
-            summarysubTitle.setText(arg1.mDescription);
-            Log.i("INFO", "Lat : " + subway_m_fLatitude + " Long : " + subway_m_fLongitude);
-            summaryViewVisible();
-            m_mapView.invalidate();
-          }
-          catch (Exception e)
-          {
-            e.printStackTrace();
-          }
-          return false;
-        }
-      }, new DefaultResourceProxyImpl(this), this);
-      MyPlaceOverlay myPlaceOverlay = new MyPlaceOverlay(items, null, new DefaultResourceProxyImpl(this), this);
-      m_mapView.getOverlays().add(placeOverlay);
+      };
+      
+      m_timer = new Timer();
+      m_timer.schedule(onTimer, 1000);
     }
   }
   
   
   /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== 단순 계산...
    * ========================================================
    * =============================
@@ -1456,7 +1568,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ======================================================================== ==
+   * ==========================================================================
    * =========== 말풍선 로직. - 실제 말풍선 로직 - 말풍선 숨김.. PlaceInfo 객체 형식 중에
    * 위,경도,m_nID,m_nType 값이 존재 해야한다.
    * ==============================================
@@ -1505,58 +1617,553 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     }
   }
   
-  
-  /**
-   * ======================================================================== ==
-   * =========== ShowNavCurrentPosition 을 외부에서 호출했을때 용도에 맞게 타겟에 대한 위치를 설정해주기 위한
-   * 로직. (final double latitude, final double longitude, boolean bFind)
-   * ========== ========================================================
-   * ===================
-   */
-  
-  public void getNaviFlag(double lat, double lng, String name)
+  public class MarkerSetAsyncTask extends AsyncTask<Void, Integer, Void>
   {
-    ShowMyPlacePopup(lat, lng);
-    m_bTrackingCurrentPosition = true;
-    m_btnCurrent.setChecked(true);
-//		ShowCurrentPosition();
+    ArrayList<OverlayItem> localItems = new ArrayList<OverlayItem>();
+    
+    
+    @Override
+    protected Void doInBackground(Void... params)
+    {
+      if (lineId != null && !lineId.equals(""))
+      {
+        onePlaceInfo = new ArrayList<PlaceInfo>();
+        MapPlaceDataManager.getInstance(mContext).initDatabase();
+        onePlaceInfo = MapPlaceDataManager.getInstance(mContext).getPlacefromIdx(lineId);
+        Log.i("INFO", "onePlaceInfo size :" + onePlaceInfo.size());
+        oneItems = new ArrayList<OverlayItem>();
+        OverlayItem oneItem = new OverlayItem("" + onePlaceInfo.get(0).m_nCategoryID, onePlaceInfo.get(0).m_strName, onePlaceInfo.get(0).m_nID, new GeoPoint(onePlaceInfo.get(0).m_fLatitude,
+            onePlaceInfo.get(0).m_fLongitude));
+        
+        oneItems.add(oneItem);
+      }
+      else
+      {
+        double bottomLat = bottomRightGpt.getLatitudeE6() / 1e6;
+        double topLat = topLeftGpt.getLatitudeE6() / 1e6;
+        double bottomLng = topLeftGpt.getLongitudeE6() / 1e6;
+        double topLng = bottomRightGpt.getLongitudeE6() / 1e6;
+        
+        localItems.clear();
+        
+        for (Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
+        {
+          PlaceInfo info = itemInfo.getValue();
+          
+          if (topLat > info.m_fLatitude && bottomLng < info.m_fLongitude && bottomLat < info.m_fLatitude && topLng > info.m_fLongitude)
+          {
+            if (categroyType == 1)
+            {
+              if (info.m_nCategoryID == 1 || info.m_nCategoryID == 3 || info.m_nCategoryID == 4 || info.m_nCategoryID == 5 || info.m_nCategoryID == 6)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+            }
+            else if (categroyType == 2)
+            {
+              if (info.m_nCategoryID == 2)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else if (categroyType == 7)
+            {
+              if (info.m_nCategoryID == 7)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else if (categroyType == 40)
+            {
+              if (info.m_nCategoryID == 40)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else if (categroyType == 99)
+            {
+              if (info.m_nCategoryID == 99)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else if (categroyType == 50)
+            {
+              if (info.m_nCategoryID == 50)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else if (categroyType == 60)
+            {
+              if (info.m_nCategoryID == 60)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else if (categroyType == 70)
+            {
+              if (info.m_nCategoryID == 70)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else if (categroyType == 80)
+            {
+              if (info.m_nCategoryID == 80)
+              {
+                OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+                localItems.add(item);
+              }
+              
+            }
+            else
+            {
+              OverlayItem item = new OverlayItem("" + info.m_nCategoryID, info.m_strName, info.m_nID, new GeoPoint(info.m_fLatitude, info.m_fLongitude));
+              localItems.add(item);
+            }
+          }
+        }
+        
+        premiumitem.clear();
+        
+        for (Entry<String, PremiumInfo> premiumItemInfo : premiumInfo.entrySet())
+        {
+          PremiumInfo premiumInfo = premiumItemInfo.getValue();
+          if (topLat > premiumInfo.m_fLatitude && bottomLng < premiumInfo.m_fLongitude && bottomLat < premiumInfo.m_fLatitude && topLng > premiumInfo.m_fLongitude)
+          {
+            if (categroyType == 1)
+            {
+              if (premiumInfo.m_nCategoryID == 1 || premiumInfo.m_nCategoryID == 3 || premiumInfo.m_nCategoryID == 4 || premiumInfo.m_nCategoryID == 5 || premiumInfo.m_nCategoryID == 6)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+            }
+            else if (categroyType == 2)
+            {
+              if (premiumInfo.m_nCategoryID == 2)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+            }
+            else if (categroyType == 7)
+            {
+              if (premiumInfo.m_nCategoryID == 7)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+              
+            }
+            else if (categroyType == 40)
+            {
+              if (premiumInfo.m_nCategoryID == 40)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+              
+            }
+            else if (categroyType == 99)
+            {
+              if (premiumInfo.m_nCategoryID == 99)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+              
+            }
+            else if (categroyType == 50)
+            {
+              if (premiumInfo.m_nCategoryID == 50)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+              
+            }
+            else if (categroyType == 60)
+            {
+              if (premiumInfo.m_nCategoryID == 60)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+              
+            }
+            else if (categroyType == 70)
+            {
+              if (premiumInfo.m_nCategoryID == 70)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+              
+            }
+            else if (categroyType == 80)
+            {
+              if (premiumInfo.m_nCategoryID == 80)
+              {
+                OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+                premiumitem.add(item);
+              }
+              
+            }
+            else
+            {
+              OverlayItem item = new OverlayItem("" + premiumInfo.m_nCategoryID, premiumInfo.m_strName, premiumInfo.m_nID, new GeoPoint(premiumInfo.m_fLatitude, premiumInfo.m_fLongitude));
+              premiumitem.add(item);
+            }
+          }
+        }
+      }
+      return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Void result)
+    {
+      super.onPostExecute(result);
+      allPlaceInfoItems = localItems;
+      refreshState();
+    }
   }
   
   
-//	public void setBalloonMarker(int nId, int nType, float lat, float lng, String name)
-//	{		
-//		PlaceInfo _info = new PlaceInfo();
-//		
-//		_info.m_strName = name;
-//		_info.m_fLatitude = lat;
-//		_info.m_fLongitude = lng;
-//		_info.m_nID = nId;
-//		_info.m_nType = nType;
-//		
-//		m_cache = _info;		
-//		
-//		getNaviFlag(lat,lng,name);
-//		
-//		m_mapView.getController().animateTo(new GeoPoint(lat, lng));
-//		
-//		ShowBalloon(_info, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
-//		{
-//			public boolean onItemSingleTapUp(final int index, final OverlayItem item)
-//			{
-//				setonClickBalloon("내용");
-//				return true; // We 'handled' this event.
-//			}
-//
-//			public boolean onItemLongPress(final int index, final OverlayItem item)
-//			{
-//				BlinkingCommon.smlLibDebug("LongPress", "LongPress");
-//				return true;
-//			}
-//		 });
-//	}
-  
-  public void setonClickBalloon(String strTemp)
+  // - ui
+  public void refreshState()
   {
-    Log.d("testLog", strTemp);
+    if (lineId != null && !lineId.equals(""))
+    {
+      Log.i("INFO", "refresh :" + lineId);
+      onePlaceOverlay = new OnePlaceOverlay(oneItems, null, new DefaultResourceProxyImpl(mContext), mContext);
+      m_mapView.getOverlays().add(onePlaceOverlay);
+      summaryTitle.setText(onePlaceInfo.get(0).m_strName);
+      
+      summaryAddressInit();
+      subwaylineNumSet(onePlaceInfo.get(0).m_nID);
+      m_locMarkTarget = new Location("MarkTaget");
+      m_locMarkTarget.setLatitude(onePlaceInfo.get(0).m_fLatitude);
+      m_locMarkTarget.setLongitude(onePlaceInfo.get(0).m_fLongitude);
+      DestinationTitle = onePlaceInfo.get(0).m_strName;
+      summaryViewVisibleSet(summaryViewVisible, 3);
+    }
+    else
+    {
+      if (premiumitem != null)
+      {
+        premiumOverlay = new PlaceOverlay(premiumitem, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
+        {
+          @Override
+          public boolean onItemLongPress(int arg0, OverlayItem arg1)
+          {
+            return false;
+          }
+          
+          
+          @Override
+          public boolean onItemSingleTapUp(int arg0, OverlayItem arg1)
+          {
+            PremiumInfo premiuminfo = premiumInfo.get(arg1.mDescription);
+            idx = arg1.mDescription;
+            String summaryImageName = Global.MD5Encoding(premiuminfo.m_strImageFilePath);
+            place_fLatitude = premiuminfo.m_fLatitude;
+            place_fLongitute = premiuminfo.m_fLongitude;
+            m_locMarkTarget = new Location("MarkTaget");
+            m_locMarkTarget.setLatitude(place_fLatitude);
+            m_locMarkTarget.setLongitude(place_fLongitute);
+            DestinationTitle = arg1.mTitle;
+            File imagefile = new File(Global.GetPathWithSDCard() + ".temp/" + summaryImageName);
+            
+            if (imagefile.exists())
+              Picasso.with(mContext).load(imagefile).fit().into(summaryImage);
+            else
+              new summaryImageDownload().execute(premiuminfo.m_strImageFilePath, summaryImageName);
+            summaryTitle.setText(DestinationTitle);
+            summaryAddressInit();
+            summarysubTitle.setVisibility(View.VISIBLE);
+            summarysubTitle.setText(premiuminfo.m_strAddress);
+            summarylikeCount.setText("" + premiuminfo.m_nLikeCount);
+            summaryViewVisibleSet(summaryViewVisible, 1);
+            
+            summaryDetail = true;
+            summaryviewclose = true;
+            
+            mapCenterset(0);
+            
+            markerSel(1);
+            return false;
+          }
+        }, new DefaultResourceProxyImpl(mContext), mContext, categorys, true);
+        
+        m_mapView.getOverlays().add(premiumOverlay);
+      }
+      
+      if (allPlaceInfoItems != null)
+      {
+        allplaceOverlay = new PlaceOverlay(allPlaceInfoItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
+        {
+          @Override
+          public boolean onItemLongPress(int arg0, OverlayItem arg1)
+          {
+            return false;
+          }
+          
+          
+          @Override
+          public boolean onItemSingleTapUp(int arg0, OverlayItem arg1)
+          {
+            PlaceInfo info = allplaceinfo.get(arg1.mDescription);
+            idx = arg1.mDescription;
+            place_fLatitude = info.m_fLatitude;
+            place_fLongitute = info.m_fLongitude;
+            m_locMarkTarget = new Location("MarkTaget");
+            m_locMarkTarget.setLatitude(place_fLatitude);
+            m_locMarkTarget.setLongitude(place_fLongitute);
+            DestinationTitle = arg1.mTitle;
+            summaryTitle.setText(DestinationTitle);
+            summaryAddressInit();
+            if (info.m_nCategoryID == 99)
+            {
+              subwaylineNumSet(idx);
+            }
+            else
+            {
+              summarysubTitle.setVisibility(View.VISIBLE);
+              summarysubTitle.setText(info.m_strAddress);
+            }
+            summaryViewVisibleSet(summaryViewVisible, 2);
+            summaryDetail = false;
+            summaryviewclose = true;
+            mapCenterset(0);
+            markerSel(0);
+            return false;
+          }
+        }, new DefaultResourceProxyImpl(mContext), mContext, categorys, false);
+        m_mapView.getOverlays().add(allplaceOverlay);
+      }
+    }
+    
+    runOnUiThread(new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        if (summaryDetail == false && allplaceOverlay != null)
+          allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), idx);
+        else if (premiumOverlay != null)
+          premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext, R.drawable.pin_map_place), idx);
+        m_mapView.invalidate();
+      }
+    });
+  }
+  
+  // - ui
+  TextView[] text = new TextView[4];
+  ImageView[] linenum = new ImageView[4];
+  
+  
+  public void summaryAddressInit()
+  {
+    text[0].setVisibility(View.INVISIBLE);
+    text[1].setVisibility(View.INVISIBLE);
+    text[2].setVisibility(View.INVISIBLE);
+    text[3].setVisibility(View.INVISIBLE);
+    linenum[0].setVisibility(View.INVISIBLE);
+    linenum[1].setVisibility(View.INVISIBLE);
+    linenum[2].setVisibility(View.INVISIBLE);
+    linenum[3].setVisibility(View.INVISIBLE);
+  }
+  
+  
+  public void subwaylineNumSet(String lineid)
+  {
+    summarysubTitle.setVisibility(View.INVISIBLE);
+    String[] line = lineid.split("line");
+    
+    summaryAddressInit();
+    int lineLength = line.length - 1;
+    
+    for (int i = 0; lineLength > i; i++)
+    {
+      char a = line[i + 1].charAt(0);
+      
+      if (a == '1')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line1);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("1号线");
+      }
+      else if (a == '2')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line2);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("2号线");
+      }
+      else if (a == '3')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line3);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("3号线");
+      }
+      else if (a == '4')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line4);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("4号线");
+      }
+      else if (a == '5')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line5);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("5号线");
+      }
+      else if (a == '6')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line6);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("6号线");
+      }
+      else if (a == '7')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line7);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("7号线");
+      }
+      else if (a == '8')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line8);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("8号线");
+      }
+      else if (a == '9')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_line9);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("9号线");
+      }
+      else if (a == 'd')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_linesb);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("新盆唐线");
+      }
+      else if (a == 'p')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_linegc);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("京春线");
+      }
+      else if (a == 'a')
+      {
+        linenum[i].setVisibility(View.VISIBLE);
+        linenum[i].setImageResource(R.drawable.icon_subway_linea);
+        text[i].setVisibility(View.VISIBLE);
+        text[i].setText("机场线");
+      }
+      else if (a == 'k')
+      {
+        char b = line[i + 1].charAt(1);
+        if (b == '2')
+        {
+          linenum[i].setImageResource(R.drawable.icon_subway_lineb);
+          text[i].setText("盆唐线");
+        }
+        else
+        {
+          linenum[i].setImageResource(R.drawable.icon_subway_linegj);
+          text[i].setText("京义中央线");
+        }
+        text[i].setVisibility(View.VISIBLE);
+        linenum[i].setVisibility(View.VISIBLE);
+      }
+    }
+  }
+  
+  List<Drawable> categorys;
+  Integer[] categoryResource = { R.drawable.icon_map_attraction, R.drawable.icon_map_shopping, R.drawable.icon_map_culture, R.drawable.icon_map_history, R.drawable.icon_map_rest,
+      R.drawable.icon_map_experience, R.drawable.icon_map_restaurant, R.drawable.icon_map_cosmetic, R.drawable.icon_map_drugstore, R.drawable.icon_map_infocenter, R.drawable.icon_map_starbucks,
+      R.drawable.icon_map_mcdonald, R.drawable.icon_map_subway };
+  
+  
+  public void createCategoryBitmap()
+  {
+    if (categorys == null)
+    {
+      categorys = new LinkedList<>();
+    }
+    
+    int reSize = DpToPixel(20);
+    
+    for (int resourceId : categoryResource)
+    {
+      categorys.add(Global.ResizeDrawable(mContext.getResources(), resourceId, reSize, reSize));
+    }
+  }
+  
+  private class summaryImageDownload extends AsyncTask<String, Integer, Boolean>
+  {
+    String testurl;
+    String testname;
+    
+    
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      testurl = params[0];
+      testname = params[1];
+      try
+      {
+        Global.DownloadImage(testurl, testname);
+      }
+      catch (IOException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Boolean result)
+    {
+      // TODO Auto-generated method stub
+      super.onPostExecute(result);
+      File file = new File(Global.GetPathWithSDCard() + ".temp/" + testname);
+      if (file.exists())
+      {
+        Picasso.with(mContext).load(file).fit().centerCrop().into(summaryImage);
+      }
+    }
   }
 }

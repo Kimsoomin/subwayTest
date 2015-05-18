@@ -70,10 +70,10 @@ public class TrendKoreaListAdapter extends BaseAdapter
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
-    TextView category = (TextView) view.findViewById(R.id.category);
+//    TextView category = (TextView) view.findViewById(R.id.category);
     
     title.setText(bean.title);
-    category.setText(bean.category);
+//    category.setText(bean.category);
     return view;
   }
 }

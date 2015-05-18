@@ -39,8 +39,8 @@ public class TravelStrategyActivity extends BaseNavigationTabActivity
     title.setText(getString(R.string.term_strategy_seoul));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
-    getSupportActionBar().setDisplayShowHomeEnabled(false);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     adapter = new RecommendSeoulViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
     viewPager.setAdapter(adapter);

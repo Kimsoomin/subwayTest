@@ -154,11 +154,15 @@
     <!-- 맵 -->
     <string name="map_notification">알림</string>
     <string name="map_confirm">확인</string>
-    <string name="map_dialog_message01">원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요.</string>
-    <string name="map_dialog_message02">위치를 찾을 수 없습니다.</string>
+    <string name="map_gps_noUse">원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요.</string>
+    <string name="map_gps_Location_fail">위치를 찾을 수 없습니다.</string>
+    <string name="map_gps_out_of_Seoul">서울외 지역은 서비스 준비중입니다.</string>
     <string name="map_subway_start">출발지로 선택</string>
     <string name="map_subway_end">도착지로 선택</string>
     <string name="msg_is_download_map">지도 다운로드 후, 이용가능합니다. 서울지도를 다운로드하시겠습니까?</string>
+    <string name="msg_dest_arrived">목적지에 도착하였습니다.</string>
+    <string name="app_finish">\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.</string>
+    <string name="msg_no_search_result">검색 결과가 없습니다.</string>
     <!-- Intro -->
     <string name="msg_map_donwload">지도 자료를 다운로드 중입니다.</string>
 
@@ -196,7 +200,7 @@
     <!-- Mall -->
     <string name="term_top_brand">"[TOP BRAND]"</string>
     <string name="term_trend_korea">트렌디 한국</string>
-    <string name="term_exhibitions">기획전</string>
+    <string name="term_exhibitions">테마 기획전</string>
     <string name="term_price">판매가</string>
     <string name="term_coupon_price">쿠폰적용 할인가</string>
     <string name="term_product_coupon">할인쿠폰</string>
@@ -286,6 +290,6 @@
     <string name="term_use_coupon">사용하기(직원전용)</string>
     <string name="term_confirm_use_coupon">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다. 쿠폰을 사용하시겠습니까?</string>
     <string name="term_conpun_used">사용완료 하였습니다.</string>
-
     <string name="msg_empty_search_result">검색 결과가 없습니다</string>
+
 </resources>

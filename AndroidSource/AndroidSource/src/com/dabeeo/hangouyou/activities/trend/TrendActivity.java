@@ -1,10 +1,12 @@
 package com.dabeeo.hangouyou.activities.trend;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TrendKoreaBean;
@@ -43,6 +46,12 @@ public class TrendActivity extends ActionBarActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_trend_korea);
     
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_trend_korea));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
@@ -115,7 +124,7 @@ public class TrendActivity extends ActionBarActivity
           if (containerBottomTab.getVisibility() == View.GONE)
           {
             TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, bottomTappx);
-            animation.setDuration(1000);
+            animation.setDuration(500);
             animation.setFillAfter(true);
             animation.setAnimationListener(new AnimationListener()
             {
@@ -150,7 +159,7 @@ public class TrendActivity extends ActionBarActivity
           if (containerBottomTab.getVisibility() == View.VISIBLE)
           {
             TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, bottomTappx, 0.0f);
-            animation.setDuration(1000);
+            animation.setDuration(500);
             animation.setFillAfter(true);
             animation.setAnimationListener(new AnimationListener()
             {

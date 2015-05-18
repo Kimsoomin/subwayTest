@@ -154,11 +154,15 @@
     <!-- 맵 -->
     <string name="map_notification">提醒</string>
     <string name="map_confirm">确认</string>
-    <string name="map_dialog_message01">为了流畅使用，请将位置信息设为‘使用’。</string>
-    <string name="map_dialog_message02">定位失败</string>
+    <string name="map_gps_noUse">为了流畅使用，请将位置信息设为‘使用’。</string>
+    <string name="map_gps_Location_fail">定位失败</string>
+    <string name="map_gps_out_of_Seoul">非首尔地区正在准备中。</string>
     <string name="map_subway_start">选择出发地</string>
     <string name="map_subway_end">选择目的地</string>
     <string name="msg_is_download_map">下载地图后可以使用，去下载地图吗?</string>
+    <string name="msg_dest_arrived">已到达目的地</string>
+    <string name="app_finish">再按一次后退键退出应用。</string>
+    <string name="msg_no_search_result">无搜索结果</string>
     <!-- Intro -->
     <string name="msg_map_donwload">正在下载首尔地图，请稍等。</string>
 
@@ -322,5 +326,7 @@
     <string name="msg_empty_my_place">등록 된 장소가 없습니다</string>
     <string name="term_all_check">전체 선택</string>
     <string name="term_select_delete">선택 삭제</string>
+    <string name="term_public">전체공개</string>
+    <string name="term_private">비공개</string>
 
 </resources>

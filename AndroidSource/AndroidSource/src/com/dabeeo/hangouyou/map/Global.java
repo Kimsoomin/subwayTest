@@ -14,6 +14,8 @@ import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -56,6 +58,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.Bitmap.Config;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
@@ -64,6 +67,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Debug;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -79,7 +83,7 @@ public class Global
   static boolean g_bLoggedIn = false;
   static String g_strUserSeq = null; // 유저 시퀀스 키...
   public static String g_strMapDBFileName = "gs_seoul.mbtiles";
-  static String testDB = "hangouyou.sqlite";
+  public static String HangouyouDBFileName = "hangouyou.sqlite";
   static final String strURLPath = "http://blinkingtour.com/map_data/dabeeo_map_seoul.mbtiles";
   static String strSetLanguage = null;
   static String strMapDBFilePath;
@@ -363,16 +367,16 @@ public class Global
   
   // strPath는 DB에 들어있는 경로값 : Ex) /Pics/Attraction_Pics/656_1.jpg
   // 이미지를 로컬에 저장 -> MainThread에서 실행하면 안됨..
-  static boolean DownloadImage(String strPath) throws MalformedURLException, IOException
+  static boolean DownloadImage(String url, String fileName) throws MalformedURLException, IOException
   {
     try
     {
-      String strURL = "http://www.blinkingtour.com" + strPath;
+      String strURL = url;
       // String strLocalFilePath = strDir + "/" + strPath.replace("/",
       // "+");
-      String strLocalFilePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/.BlinkingSeoul2" + strPath;
+      String strLocalFilePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/.temp/" + fileName;
       
-      String strDir = strLocalFilePath.substring(0, strLocalFilePath.lastIndexOf("/"));
+      String strDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/.temp";
       // 폴더 생성
       new File(strDir).mkdirs();
       
@@ -381,7 +385,7 @@ public class Global
       File file = new File(strLocalFilePath);
       
       // 파일 삭제
-      file.delete();
+//      file.delete();
       
       OutputStream out = new FileOutputStream(file);
       
@@ -405,18 +409,36 @@ public class Global
   
   
   // 경로 생성 -> "sdcard/폴더명"
-  public static String GetPathWithSDCard(String subPath)
+  public static String GetPathWithSDCard()
   {
     String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
     
-    String strPath = sdCardPath;
+    String strPath = sdCardPath + "/Hangouyou/";
     
-    if (subPath.substring(0, 1).compareTo("/") != 0)
-    {
-      strPath += "/";
-    }
+//    if (subPath.substring(0, 1).compareTo("/") != 0)
+//    {
+//      strPath += "/";
+//    }
     
-    strPath += subPath;
+//    strPath += 
+    
+    return strPath;
+  }
+  
+  
+//경로 생성 -> "sdcard/폴더명"
+  public static String GetPathWithSDCard(String path)
+  {
+    String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+    
+    String strPath = sdCardPath + path + "/Hangouyou/";
+    
+//   if (subPath.substring(0, 1).compareTo("/") != 0)
+//   {
+//     strPath += "/";
+//   }
+    
+//   strPath += 
     
     return strPath;
   }
@@ -473,6 +495,31 @@ public class Global
     
     nd.setBounds(0, 0, width * 2, height * 2);
     
+    Bitmap bmp = Bitmap.createBitmap(width * 2, height * 2, Bitmap.Config.ARGB_4444);
+    Canvas canvas = new Canvas(bmp);
+    nd.draw(canvas);
+    
+    bmp = Bitmap.createScaledBitmap(bmp, width, height, true);
+    
+    return new BitmapDrawable(bmp);
+  }
+  
+  
+  public static Drawable ResizeDrawable(Context context, int nID, int width, int height)
+  {
+    Drawable d = GetDrawable(context, nID);
+    
+    if (d instanceof BitmapDrawable)
+    {
+      Bitmap bm = ((BitmapDrawable) d).getBitmap();
+      
+      return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bm, width, height, true));
+    }
+    
+    NinePatchDrawable nd = (NinePatchDrawable) d;
+    
+    nd.setBounds(0, 0, width * 2, height * 2);
+    
     Bitmap bmp = Bitmap.createBitmap(width * 2, height * 2, Bitmap.Config.ARGB_8888);
     Canvas canvas = new Canvas(bmp);
     nd.draw(canvas);
@@ -483,51 +530,90 @@ public class Global
   }
   
   
-  // 사진을 임시 폴더에 저장함.
-  public static String SaveTempPicture(Bitmap bmp)
+  public static Bitmap fitImageSize(Context _context, int _res, int maxWidth, int maxHeight)
   {
-    String strTempDir = GetPathWithSDCard(".BlinkingSeoul/temp");
     
-    if (new File(strTempDir).exists() == false)
+    Bitmap bm = null;
+    
+    final BitmapFactory.Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = true;
+    options.inPreferredConfig = Config.RGB_565;
+    BitmapFactory.decodeResource(_context.getResources(), _res, options);
+    
+    int width = options.outWidth;
+    int height = options.outHeight;
+    
+    double scalex = ((double) maxWidth / (double) width);
+    double scaley = ((double) maxHeight / (double) height);
+    
+    double scale = (scalex < scaley) ? scalex : scaley;
+    if (scale > 1)
+      scale = 1;
+    
+    //		// Decode bitmap with inSampleSize set
+    options.inJustDecodeBounds = false;
+    bm = new SoftReference<Bitmap>(BitmapFactory.decodeResource(_context.getResources(), _res, options)).get();
+    
+    if (width > maxWidth || height > maxHeight)
     {
-      new File(strTempDir).mkdirs();
+      Bitmap resizebm = Bitmap.createScaledBitmap(bm, ((int) (scale * width)), ((int) (scale * height)), true);
+      
+      SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(resizebm);
+      
+      return myBitmap.get();
     }
-    
-    String strTempPath = strTempDir + "/" + UUID.randomUUID().toString() + ".jpg";
-    
-    File file = new File(strTempPath);
-    try
+    else
     {
-      file.createNewFile();
-      
-      FileOutputStream os = new FileOutputStream(file);
-      bmp.compress(Bitmap.CompressFormat.JPEG, 100, os);
-      
-      try
-      {
-        // 이미지를 상황에 맞게 회전시킨다
-        ExifInterface exif = new ExifInterface(strTempPath);
-        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        int exifDegree = exifOrientationToDegrees(exifOrientation);
-        bmp = rotate(bmp, exifDegree);
-        
-      }
-      catch (Exception e)
-      {
-      }
-      
-      os.flush();
-      os.close();
+      SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(bm);
+      return myBitmap.get();
     }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-      return null;
-    }
-    
-    return strTempPath;
   }
   
+  
+  // 사진을 임시 폴더에 저장함.
+//  public static String SaveTempPicture(Bitmap bmp)
+//  {
+//    String strTempDir = GetPathWithSDCard(".BlinkingSeoul/temp");
+//    
+//    if (new File(strTempDir).exists() == false)
+//    {
+//      new File(strTempDir).mkdirs();
+//    }
+//    
+//    String strTempPath = strTempDir + "/" + UUID.randomUUID().toString() + ".jpg";
+//    
+//    File file = new File(strTempPath);
+//    try
+//    {
+//      file.createNewFile();
+//      
+//      FileOutputStream os = new FileOutputStream(file);
+//      bmp.compress(Bitmap.CompressFormat.JPEG, 100, os);
+//      
+//      try
+//      {
+//        // 이미지를 상황에 맞게 회전시킨다
+//        ExifInterface exif = new ExifInterface(strTempPath);
+//        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//        int exifDegree = exifOrientationToDegrees(exifOrientation);
+//        bmp = rotate(bmp, exifDegree);
+//        
+//      }
+//      catch (Exception e)
+//      {
+//      }
+//      
+//      os.flush();
+//      os.close();
+//    }
+//    catch (Exception e)
+//    {
+//      e.printStackTrace();
+//      return null;
+//    }
+//    
+//    return strTempPath;
+//  }
   
   // ver 1.5 추가
   
@@ -565,24 +651,25 @@ public class Global
    *          회전 각도
    * @return 회전된 이미지
    */
-  public static Bitmap rotate(Bitmap bitmap, int degrees)
+  public static Bitmap rotate(Bitmap bitmap, float degrees)
   {
     if (degrees != 0 && bitmap != null)
     {
       Matrix m = new Matrix();
-      m.setRotate(degrees, (float) bitmap.getWidth() * 2, (float) bitmap.getHeight() * 2);
+      m.setRotate(degrees, (float) bitmap.getWidth(), (float) bitmap.getHeight());
       
       try
       {
         Bitmap converted = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
-        if (bitmap != converted)
-        {
-          bitmap.recycle();
-          bitmap = converted;
-        }
+        WeakReference<Bitmap> weak = new WeakReference<Bitmap>(converted);
+        converted = weak.get();
+        
+        bitmap.recycle();
+        bitmap = converted;
       }
       catch (OutOfMemoryError ex)
       {
+        ex.printStackTrace();
         // 메모리가 부족하여 회전을 시키지 못할 경우 그냥 원본을 반환합니다.
       }
     }
@@ -947,6 +1034,39 @@ public class Global
     
     ad.show();
     
+  }
+  
+  
+  public static String MD5Encoding(String str)
+  {
+    String MD5 = "";
+    try
+    {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      md.update(str.getBytes());
+      byte byteData[] = md.digest();
+      StringBuffer sb = new StringBuffer();
+      for (int i = 0; i < byteData.length; i++)
+      {
+        sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+      }
+      MD5 = sb.toString();
+      
+    }
+    catch (NoSuchAlgorithmException e)
+    {
+      e.printStackTrace();
+      MD5 = null;
+    }
+    return MD5;
+  }
+  
+  
+  public static int DpToPixel(Context context, int DP)
+  {
+    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DP, context.getResources().getDisplayMetrics());
+    
+    return (int) px;
   }
   
 }

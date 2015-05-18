@@ -12,15 +12,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -61,7 +60,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private RelativeLayout reviewLayout;
   private ReviewContainerView reviewContainerView;
   
-  private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
+  public Button btnReviewBest, btnReviewSoso, btnReviewWorst;
   private ProgressBar progressBar;
   
   private ApiClient apiClient;
@@ -69,6 +68,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private PlaceDetailBean bean;
   private ViewGroup layoutDetailPlaceInfo;
   private LinearLayout containerTicketAndCoupon;
+  public LinearLayout containerWriteReview;
   
   
   @Override
@@ -88,6 +88,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getIntExtra("place_idx", -1);
     
+    containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     layoutDetailPlaceInfo = (ViewGroup) findViewById(R.id.layout_place_detail_info);
     

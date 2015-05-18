@@ -14,6 +14,7 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
 {
   private ScheduleDetailBean bean = new ScheduleDetailBean();
   private Context context;
+  private boolean isMySchedule = false;
   
   
   public TravelScheduleDetailViewPagerAdapter(Context context, FragmentManager fm)
@@ -23,10 +24,15 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
+  public void setIsMySchedule(boolean isMySchedule)
+  {
+    this.isMySchedule = isMySchedule;
+  }
+  
+  
   public void setBean(ScheduleDetailBean bean)
   {
     this.bean = bean;
-    Log.w("WARN", "Days : " + bean.days.size());
     notifyDataSetChanged();
   }
   
@@ -36,9 +42,9 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   {
     Fragment fragment = new TravelScheduleDetailFragment();
     if (position == 0)
-      ((TravelScheduleDetailFragment) fragment).setBean(position, bean, null);
+      ((TravelScheduleDetailFragment) fragment).setBean(position, bean, null, isMySchedule);
     else
-      ((TravelScheduleDetailFragment) fragment).setBean(position, bean, bean.days.get(position - 1));
+      ((TravelScheduleDetailFragment) fragment).setBean(position, bean, bean.days.get(position - 1), isMySchedule);
     return fragment;
   }
   

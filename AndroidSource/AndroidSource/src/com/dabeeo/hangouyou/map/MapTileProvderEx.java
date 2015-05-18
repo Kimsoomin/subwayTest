@@ -93,13 +93,13 @@ public class MapTileProvderEx extends MapTileProviderBase
 	@Override
 	public int getMaximumZoomLevel() 
 	{
-		return 17;
+		return 18;
 	}
 
 	@Override
 	public int getMinimumZoomLevel() 
 	{
-		return 12;
+		return 14;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class testDB extends SQLiteOpenHelper
   
   public testDB(Context context)
   {
-    super(context, Global.testDB, null, 1);
+    super(context, "testDB", null, 1);
     
 //    testdb = OpenDatabase();
   }
@@ -26,7 +26,7 @@ public class testDB extends SQLiteOpenHelper
 //  {
 //		String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
 //		String strDBFilePath = sdCardPath + "/.BlinkingSeoul/" + Global.g_strMapDBFileName;
-    
+  
 //    if (new File(Global.strMapDBFilePath2).exists() == false)
 //    {
 //      BlinkingCommon.smlLibPrintException("ERROR", "Can't open the MapDB: " + Global.strMapDBFilePath2);
@@ -35,7 +35,6 @@ public class testDB extends SQLiteOpenHelper
 //    
 //    return SQLiteDatabase.openDatabase(Global.strMapDBFilePath2, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 //  }
-  
   
   @Override
   public void onCreate(SQLiteDatabase db)

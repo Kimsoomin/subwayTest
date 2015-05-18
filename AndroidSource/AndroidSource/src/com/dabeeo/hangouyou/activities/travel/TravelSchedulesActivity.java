@@ -30,8 +30,8 @@ public class TravelSchedulesActivity extends BaseNavigationTabActivity
     title.setText(getString(R.string.term_travel_schedule));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
-    getSupportActionBar().setDisplayShowHomeEnabled(false);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     adapter = new TravelScheduleViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);

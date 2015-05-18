@@ -20,6 +20,12 @@ public class AlertDialogManager
   }
   
   
+  public void dismiss()
+  {
+    dialog.dismiss();
+  }
+  
+  
   public void showAlertDialog(String title, String message, String okString, String cancelString, final AlertListener listener)
   {
     if (dialog != null)
