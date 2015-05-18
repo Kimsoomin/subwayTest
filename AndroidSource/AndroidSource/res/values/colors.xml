@@ -15,6 +15,8 @@
     <color name="darker_gray">#444a4b</color>
     <color name="light_pink">#70ff6262</color>
     <color name="dark_pink">#ff6262</color>
+    <color name="light_blue">#70697577</color>
+    <color name="dark_blue">#697577</color>
     <!-- BottomTabs -->
     <color name="bottom_text_color">#b9c4c4</color>
     <!-- ViewPager Indicator -->

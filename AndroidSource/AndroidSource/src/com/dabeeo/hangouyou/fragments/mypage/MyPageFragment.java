@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +39,7 @@ public class MyPageFragment extends Fragment
 //  private ImageView imageCover;
   private RoundedImageView imageProfile;
   private TextView textName;
-  
+  private ImageView imageBookmark, imageOrder, imageCart;
   private LinearLayout conatinerMySchedule, conatinerMyPlace, conatinerMySetting, conatinerMyBookmark, conatinerMyOrders, conatinerMyCart;
   
   private boolean isChangeBackground = false;
@@ -65,6 +64,10 @@ public class MyPageFragment extends Fragment
     conatinerMyOrders = (LinearLayout) view.findViewById(R.id.container_my_order);
     conatinerMyCart = (LinearLayout) view.findViewById(R.id.container_my_cart);
     
+    imageBookmark = (ImageView) view.findViewById(R.id.image_my_bookmark);
+    imageOrder = (ImageView) view.findViewById(R.id.image_my_order);
+    imageCart = (ImageView) view.findViewById(R.id.image_my_cart);
+    
     conatinerMySetting.setOnClickListener(clickListener);
     conatinerMySchedule.setOnClickListener(menuClickListener);
     conatinerMyPlace.setOnClickListener(menuClickListener);
@@ -73,6 +76,25 @@ public class MyPageFragment extends Fragment
     conatinerMyCart.setOnClickListener(menuClickListener);
     
     return view;
+  }
+  
+  
+  @Override
+  public void onResume()
+  {
+    if (!SystemUtil.isConnectNetwork(getActivity()))
+    {
+      imageBookmark.setImageResource(R.drawable.btn_mypage_bookmark_offline);
+      imageOrder.setImageResource(R.drawable.btn_mypage_buylist_offline);
+      imageCart.setImageResource(R.drawable.btn_mypage_cart_offline);
+    }
+    else
+    {
+      imageBookmark.setImageResource(R.drawable.btn_mypage_bookmark);
+      imageOrder.setImageResource(R.drawable.btn_mypage_buylist);
+      imageCart.setImageResource(R.drawable.btn_mypage_cart);
+    }
+    super.onResume();
   }
   
   

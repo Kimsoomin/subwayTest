@@ -22,9 +22,11 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -46,13 +48,13 @@ import com.dabeeo.hangouyou.managers.SubwayManager;
 import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.map.MapPlaceDataManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
+import com.dabeeo.hangouyou.views.CharacterProgressView;
 
 public class IntroActivity extends Activity
 {
   private ProgressBar progressBar;
   private AlertDialogManager alertManager;
   private Handler handler = new Handler();
-  private ProgressDialog mapDialog;
   
   
   @SuppressWarnings("static-access")
@@ -114,61 +116,53 @@ public class IntroActivity extends Activity
   
   private void checkMap()
   {
-    if (mapDialog == null)
-    {
-      mapDialog = new ProgressDialog(IntroActivity.this);
-      mapDialog.setTitle(getString(R.string.app_name));
-      mapDialog.setMessage(getString(R.string.msg_map_donwload));
-    }
+    Log.w("WARN", "CheckMap");
     
-    if (!mapDialog.isShowing())
+    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
+    if (!directory.exists())
+      directory.mkdirs();
+    
+    File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+    if (!file.exists())
     {
-      mapDialog.show();
-      Log.w("WARN", "CheckMap");
-      
-      File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
-      if (!directory.exists())
-        directory.mkdirs();
-      
-      File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
-      if (!file.exists())
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
       {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+        public void onClick(DialogInterface dialog, int whichButton)
         {
-          public void onClick(DialogInterface dialog, int whichButton)
-          {
-            dialog.cancel();
-            new GetMapAsyncTask().execute();
-          }
-        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+          dialog.cancel();
+          new GetMapAsyncTask().execute();
+        }
+      }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+      {
+        public void onClick(DialogInterface dialog, int whichButton)
         {
-          public void onClick(DialogInterface dialog, int whichButton)
-          {
-            dialog.cancel();
-            getAllStations();
-          }
-        });
-        
-        AlertDialog dialog = builder.create();
-        dialog.show();
-      }
-      else
-        getAllStations();
+          dialog.cancel();
+          getAllStations();
+        }
+      });
+      
+      AlertDialog dialog = builder.create();
+      dialog.show();
     }
+    else
+      getAllStations();
   }
   
   private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
-    private ProgressDialog dialog;
+    private Dialog dialog;
     
     
     @Override
     protected void onPreExecute()
     {
-      dialog = new ProgressDialog(IntroActivity.this);
-      dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-      dialog.setMessage(getString(R.string.msg_map_donwload));
+      Builder builder = new AlertDialog.Builder(IntroActivity.this);
+      CharacterProgressView pView = new CharacterProgressView(IntroActivity.this);
+      pView.title.setText(getString(R.string.msg_map_donwload));
+      pView.setCircleProgressVisible(true);
+      builder.setView(pView);
+      dialog = builder.create();
       dialog.show();
       
       super.onPreExecute();
@@ -235,7 +229,7 @@ public class IntroActivity extends Activity
     @Override
     protected void onProgressUpdate(Integer... progress)
     {
-      dialog.setProgress(progress[0]);
+//      dialog.setProgress(progress[0]);
       super.onProgressUpdate(progress);
     }
     
@@ -243,9 +237,6 @@ public class IntroActivity extends Activity
     @Override
     protected void onPostExecute(Boolean result)
     {
-      if (mapDialog.isShowing())
-        mapDialog.dismiss();
-      
       if (dialog.isShowing())
         dialog.dismiss();
       
@@ -257,9 +248,6 @@ public class IntroActivity extends Activity
   
   private void getAllStations()
   {
-    if (mapDialog.isShowing())
-      mapDialog.dismiss();
-    
     MainActivity.subwayFrament.loadAllStations(new Runnable()
     {
       @Override

@@ -1,6 +1,7 @@
 package com.dabeeo.hangouyou.controllers.mypage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -13,11 +14,18 @@ import com.dabeeo.hangouyou.fragments.mypage.MyPlaceListFragment;
 public class MyPlaceViewPagerAdapter extends FragmentPagerAdapter
 {
   private List<String> titles = new ArrayList<String>();
+  private HashMap<Integer, MyPlaceListFragment> pageReferenceMap = new HashMap<Integer, MyPlaceListFragment>();
   
   
   public MyPlaceViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
+  }
+  
+  
+  public MyPlaceListFragment getFragment(int key)
+  {
+    return pageReferenceMap.get(key);
   }
   
   
@@ -33,6 +41,7 @@ public class MyPlaceViewPagerAdapter extends FragmentPagerAdapter
   {
     Fragment fragment = new MyPlaceListFragment();
     ((MyPlaceListFragment) fragment).setCategoryId(-1);
+    pageReferenceMap.put(position, ((MyPlaceListFragment) fragment));
     return fragment;
   }
   

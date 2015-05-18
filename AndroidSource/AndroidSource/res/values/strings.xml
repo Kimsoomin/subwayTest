@@ -318,4 +318,9 @@
     <string name="msg_warn_select_theme">테마를 골라주세요</string>
 
     <!-- 추가 String (아직 안보냄) -->
+    <!-- 내 장소 -->
+    <string name="msg_empty_my_place">등록 된 장소가 없습니다</string>
+    <string name="term_all_check">전체 선택</string>
+    <string name="term_select_delete">선택 삭제</string>
+
 </resources>

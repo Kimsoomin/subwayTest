@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class CharacterProgressView extends RelativeLayout
   public ImageView imageView;
   public TextView title;
   private Handler handler;
+  private ProgressBar circleProgressBar;
   
   private int animatingFlag = 0;
   
@@ -40,9 +42,18 @@ public class CharacterProgressView extends RelativeLayout
     
     imageView = (ImageView) view.findViewById(R.id.character_image);
     title = (TextView) view.findViewById(R.id.title);
-    
+    circleProgressBar = (ProgressBar) view.findViewById(R.id.circle_progress);
     handler.post(characterAnimate);
     addView(view);
+  }
+  
+  
+  public void setCircleProgressVisible(boolean isVisible)
+  {
+//    if (isVisible)
+//      circleProgressBar.setVisibility(View.VISIBLE);
+//    else
+//      circleProgressBar.setVisibility(View.GONE);
   }
   
   Runnable characterAnimate = new Runnable()

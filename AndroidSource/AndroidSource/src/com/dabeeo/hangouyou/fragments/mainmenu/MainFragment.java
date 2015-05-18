@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.dabeeo.hangouyou.IntroActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.coupon.CouponActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
@@ -40,6 +41,7 @@ import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.utils.SystemUtil;
+import com.dabeeo.hangouyou.views.CharacterProgressView;
 
 public class MainFragment extends Fragment
 {
@@ -233,8 +235,11 @@ public class MainFragment extends Fragment
     protected void onPreExecute()
     {
       dialog = new ProgressDialog(getActivity());
-      dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-      dialog.setMessage(getString(R.string.msg_map_donwload));
+      CharacterProgressView pView = new CharacterProgressView(getActivity());
+      pView.title.setText(getString(R.string.msg_map_donwload));
+      pView.setCircleProgressVisible(true);
+      dialog.setView(pView);
+      dialog.setCancelable(false);
       dialog.show();
       
       super.onPreExecute();

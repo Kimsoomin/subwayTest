@@ -72,7 +72,7 @@ public class ApiClient
   
   public NetworkResult getTravelog(int page, String contentType)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType + "&pn=10");
   }
   
   
@@ -83,7 +83,6 @@ public class ApiClient
     {
       object.put("userSeq", 1);
       object.put("rate", rate);
-      
       object.put("contents", content);
       object.put("parentIdx", placeIdx);
       object.put("parentType", placeType);
