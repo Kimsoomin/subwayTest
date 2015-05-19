@@ -76,12 +76,6 @@ public class SubwayActivity extends Activity
     Log.w("WARN", "GetIntent data : " + getIntent().getDoubleExtra("Latitude", -1));
     subwayNames.clear();
     
-//    subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayNames());
-//    subwayNames.addAll(SubwayManager.getInstance(this).getAllSubwayCnNames());
-    
-//		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//		getSupportActionBar().setHomeButtonEnabled(true);
-    
     //위경도로 지하철역 찾기
     double[] latLong = null;
     if (getIntent().hasExtra("near_by_station_lat_lon"))

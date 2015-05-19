@@ -141,6 +141,12 @@ public class SubwayStationsActivity extends ActionBarActivity
         {
           if (i == 0)
             stations.remove(i);
+          else if (i == stations.size() - 2)
+          {
+            //마지막이 환승역인 경우
+            stations.remove(i);
+            stations.remove(i);
+          }
           else
           {
             stations.remove(i - 1);
@@ -154,24 +160,8 @@ public class SubwayStationsActivity extends ActionBarActivity
       }
     }
     
-    for (int i = 0; i < stations.size(); i++)
-    {
-      try
-      {
-        if (!TextUtils.isEmpty(stations.get(i).afterLine) && !TextUtils.isEmpty(stations.get(i + 1).beforeLine))
-        {
-          if (stations.get(i).afterLine.equals(stations.get(i + 1).beforeLine))
-          {
-            stations.get(i).line = stations.get(i).afterLine;
-            stations.get(i + 1).line = stations.get(i + 1).beforeLine;
-          }
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-    }
+    if (stations.get(stations.size() - 1).nameKo.equals(stations.get(stations.size() - 2).nameKo))
+      stations.remove(stations.size() - 1);
     
     try
     {
