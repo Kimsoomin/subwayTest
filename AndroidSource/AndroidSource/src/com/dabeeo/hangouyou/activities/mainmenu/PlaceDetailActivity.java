@@ -64,7 +64,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private ProgressBar progressBar;
   
   private ApiClient apiClient;
-  private int placeIdx = -1;
+  private String placeIdx;
   private PlaceDetailBean bean;
   private ViewGroup layoutDetailPlaceInfo;
   private LinearLayout containerTicketAndCoupon;
@@ -86,7 +86,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     apiClient = new ApiClient(this);
-    placeIdx = getIntent().getIntExtra("place_idx", -1);
+    placeIdx = getIntent().getStringExtra("place_idx");
     
     containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -254,7 +254,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     if (bean == null)
       return;
     
-    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", Integer.toString(bean.idx));
+    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.idx);
     reviewLayout.addView(reviewContainerView);
     
     textRate.setText(Integer.toString(bean.rate));
@@ -364,7 +364,8 @@ public class PlaceDetailActivity extends ActionBarActivity
       {
         //리뷰쓰기
         Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
-        i.putExtra("idx", bean.idx);
+        if (bean != null)
+          i.putExtra("idx", bean.idx);
         i.putExtra("type", "place");
         startActivity(i);
       }

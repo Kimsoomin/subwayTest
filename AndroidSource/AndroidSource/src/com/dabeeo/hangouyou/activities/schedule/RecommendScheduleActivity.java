@@ -215,7 +215,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
     pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
     builder.setView(pView);
     builder.setCancelable(false);
-    AlertDialog dialog = builder.create();
+    final AlertDialog dialog = builder.create();
     
     if (!dialog.isShowing())
       dialog.show();
@@ -231,6 +231,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       @Override
       public void run()
       {
+        dialog.dismiss();
         Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
         startActivity(i);
       }

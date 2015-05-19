@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.beans.TitleCategoryBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceViewPagerAdapter;
 import com.dabeeo.hangouyou.fragments.mypage.MyPlaceListFragment;
 
@@ -60,12 +59,10 @@ public class MyPlaceActivity extends ActionBarActivity
   @SuppressWarnings("deprecation")
   private void displayTitles()
   {
-    ArrayList<String> titles = new ArrayList<>();
-    titles.add(getString(R.string.term_all));
-    titles.add(getString(R.string.term_popular_place));
-    titles.add(getString(R.string.term_shopping));
-    titles.add(getString(R.string.term_restaurant));
-    adapter.setTitles(titles);
+    adapter.add(new TitleCategoryBean(getString(R.string.term_all), -1));
+    adapter.add(new TitleCategoryBean(getString(R.string.term_popular_place), 9));
+    adapter.add(new TitleCategoryBean(getString(R.string.term_shopping), 2));
+    adapter.add(new TitleCategoryBean(getString(R.string.term_restaurant), 7));
     
     for (int i = 0; i < adapter.getCount(); i++)
     {

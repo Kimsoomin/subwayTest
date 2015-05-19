@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
@@ -140,12 +141,10 @@ public class MyPlaceListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      if (categoryId == 8)
-        return apiClient.getTravelog(page, "Place");
-      else if (categoryId == 9)
-        return apiClient.getTravelog(page, "Product");
+      if (categoryId == -1)
+        return apiClient.getPlaceList(page);
       else
-        return apiClient.getTravelog(page, "Place");
+        return apiClient.getPlaceList(page, categoryId);
     }
     
     
@@ -158,7 +157,7 @@ public class MyPlaceListFragment extends Fragment
         try
         {
           JSONObject obj = new JSONObject(result.response);
-          JSONArray arr = obj.getJSONArray("travelog");
+          JSONArray arr = obj.getJSONArray("place");
           for (int i = 0; i < arr.length(); i++)
           {
             JSONObject objInArr = arr.getJSONObject(i);
@@ -193,7 +192,10 @@ public class MyPlaceListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-      startActivity(new Intent(getActivity(), MyPlaceDetailActivity.class));
+      PlaceBean bean = (PlaceBean) adapter.getItem(position);
+      Intent i = new Intent(getActivity(), MyPlaceDetailActivity.class);
+      i.putExtra("place_idx", bean.idx);
+      startActivity(i);
     }
   };
   

@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 public class PlaceDetailBean
 {
-  public int idx;
+  public String idx;
   public String seqCode;
   public int cityIdx;
   
@@ -45,7 +45,7 @@ public class PlaceDetailBean
     try
     {
       if (obj.has("idx"))
-        idx = obj.getInt("idx");
+        idx = obj.getString("idx");
       
       if (obj.has("ownerUserSeq"))
         ownerUserSeq = obj.getInt("ownerUserSeq");

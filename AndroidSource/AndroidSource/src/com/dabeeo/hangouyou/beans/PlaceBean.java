@@ -9,7 +9,7 @@ import android.annotation.SuppressLint;
 
 public class PlaceBean
 {
-  public int idx;
+  public String idx;
   public String seqCode;
   public int cityIdx;
   public String title;
@@ -42,7 +42,7 @@ public class PlaceBean
         seqCode = obj.getString("seqCode");
       
       if (obj.has("idx"))
-        idx = obj.getInt("idx");
+        idx = obj.getString("idx");
       
       if (obj.has("title"))
         title = obj.getString("title");

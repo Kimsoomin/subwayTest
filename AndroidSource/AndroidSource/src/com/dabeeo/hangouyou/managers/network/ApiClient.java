@@ -58,7 +58,7 @@ public class ApiClient
   }
   
   
-  public NetworkResult getPlaceDetail(int placeIdx)
+  public NetworkResult getPlaceDetail(String placeIdx)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_VIEW&idx=" + placeIdx);
   }
