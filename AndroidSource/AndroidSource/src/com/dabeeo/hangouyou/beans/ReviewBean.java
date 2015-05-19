@@ -1,9 +1,13 @@
 package com.dabeeo.hangouyou.beans;
 
-import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 
 public class ReviewBean
 {
@@ -25,6 +29,8 @@ public class ReviewBean
   public Date insertDate;
   public String updateDateString;
   public Date updateDate;
+  
+  public ArrayList<String> imageUrls = new ArrayList<String>();
   
   
   @SuppressLint("SimpleDateFormat")
@@ -70,6 +76,16 @@ public class ReviewBean
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         updateDate = format.parse(updateDateString);
       }
+      
+      if (obj.has("image"))
+      {
+        JSONArray imageArray = obj.getJSONArray("image");
+        for (int i = 0; i < imageArray.length(); i++)
+        {
+          imageUrls.add(imageArray.getJSONObject(i).getString("url"));
+        }
+      }
+      
     }
     catch (Exception e)
     {

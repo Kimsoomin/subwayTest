@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +19,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ScheduleDayBean;
@@ -42,6 +42,8 @@ public class TravelScheduleDetailFragment extends Fragment
   
   private ScheduleDetailHeaderView headerView;
   private ScheduleDetailTitleView titleView;
+  
+  private TextView textRate;
   
   private ScheduleDetailBean bean;
   private ScheduleDayBean dayBean;
@@ -69,6 +71,7 @@ public class TravelScheduleDetailFragment extends Fragment
     scrollView = (CustomScrollView) getView().findViewById(R.id.scrollview);
     contentContainer = (LinearLayout) getView().findViewById(R.id.content_container);
     reviewLayout = (RelativeLayout) getView().findViewById(R.id.review_layout);
+    textRate = (TextView) getView().findViewById(R.id.text_rate);
     
     btnReviewBest = (Button) getView().findViewById(R.id.btn_review_best);
     btnReviewSoso = (Button) getView().findViewById(R.id.btn_review_soso);
@@ -137,22 +140,15 @@ public class TravelScheduleDetailFragment extends Fragment
   {
     contentContainer.removeAllViews();
     
-//    ProductView productView = new ProductView(getActivity());
-//    ProductBean bean = new ProductBean();
-//    bean.title = "XXX 수분크림";
-//    bean.originalPrice = 150;
-//    bean.discountPrice = 93;
-//    productView.setBean(bean, bean);
-//    contentContainer.addView(productView);
-    
     headerView.setData(bean.imageUrl, bean.title, bean.days.size(), bean.budgetTotal);
     titleView.setData(bean.likeCount, bean.reviewCount);
     
     displayDayView();
     
-    reviewContainerView = new ReviewContainerView(getActivity(), "place", bean.idx);
+    reviewContainerView = new ReviewContainerView(getActivity(), "plan", bean.idx);
     reviewLayout.addView(reviewContainerView);
     
+    textRate.setText(Integer.toString(bean.rate));
     reviewContainerView.loadMore();
     
     if (isMySchedule)

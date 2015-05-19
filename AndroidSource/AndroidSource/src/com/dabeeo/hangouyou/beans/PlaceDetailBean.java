@@ -44,6 +44,9 @@ public class PlaceDetailBean
   {
     try
     {
+      if (obj.has("idx"))
+        idx = obj.getInt("idx");
+      
       if (obj.has("ownerUserSeq"))
         ownerUserSeq = obj.getInt("ownerUserSeq");
       if (obj.has("seqCode"))

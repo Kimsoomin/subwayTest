@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.views;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +13,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.ReviewBean;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 
 public class ReviewView extends RelativeLayout
 {
@@ -32,6 +37,7 @@ public class ReviewView extends RelativeLayout
   private ImageView btnMore;
   
   private ListPopupWindow listPopupWindow;
+  private LinearLayout imageContainer;
   
   
   public ReviewView(Context context)
@@ -55,7 +61,7 @@ public class ReviewView extends RelativeLayout
   }
   
   
-  public void setBean(ReviewBean bean)
+  public void setBean(final ReviewBean bean)
   {
     this.bean = bean;
     init();
@@ -64,6 +70,28 @@ public class ReviewView extends RelativeLayout
     time.setText(bean.insertDateString);
     reviewScore.setText(Integer.toString(bean.rate));
     content.setText(bean.content);
+    
+    for (int i = 0; i < bean.imageUrls.size(); i++)
+    {
+      ImageView imageView = new ImageView(context);
+      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(80, 80);
+      params.setMargins(8, 8, 8, 8);
+      imageView.setLayoutParams(params);
+      final String imageUrl = bean.imageUrls.get(i);
+      imageView.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View arg0)
+        {
+          Intent i = new Intent(context, ImagePopUpActivity.class);
+          i.putExtra("imageUrls", bean.imageUrls);
+          i.putExtra("imageUrl", imageUrl);
+          context.startActivity(i);
+        }
+      });
+      ImageDownloader.displayImage(context, bean.imageUrls.get(i), imageView, null);
+      imageContainer.addView(imageView);
+    }
   }
   
   
@@ -72,6 +100,8 @@ public class ReviewView extends RelativeLayout
     int resId = R.layout.view_place_review;
     View view = LayoutInflater.from(context).inflate(resId, null);
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+    
+    imageContainer = (LinearLayout) view.findViewById(R.id.image_container);
     
     icon = (ImageView) view.findViewById(R.id.icon);
     name = (TextView) view.findViewById(R.id.name);

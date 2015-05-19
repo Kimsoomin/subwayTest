@@ -52,6 +52,12 @@ public class ApiClient
   }
   
   
+  public NetworkResult getPlaceList(int page, int categoryId)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId);
+  }
+  
+  
   public NetworkResult getPlaceDetail(int placeIdx)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_VIEW&idx=" + placeIdx);
@@ -105,6 +111,12 @@ public class ApiClient
   public NetworkResult getBoughtTicket(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+  }
+  
+  
+  public NetworkResult getReviewDetail(int reviewIdx)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_VIEW&idx=" + reviewIdx);
   }
   
   

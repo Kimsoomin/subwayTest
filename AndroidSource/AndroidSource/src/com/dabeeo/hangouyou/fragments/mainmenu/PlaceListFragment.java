@@ -98,12 +98,7 @@ public class PlaceListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      if (categoryId == 8)
-        return apiClient.getTravelog(page, "Place");
-      else if (categoryId == 9)
-        return apiClient.getTravelog(page, "Product");
-      else
-        return apiClient.getTravelog(page, "Place");
+      return apiClient.getPlaceList(page, categoryId);
     }
     
     
@@ -116,7 +111,7 @@ public class PlaceListFragment extends Fragment
         try
         {
           JSONObject obj = new JSONObject(result.response);
-          JSONArray arr = obj.getJSONArray("travelog");
+          JSONArray arr = obj.getJSONArray("place");
           for (int i = 0; i < arr.length(); i++)
           {
             JSONObject objInArr = arr.getJSONObject(i);

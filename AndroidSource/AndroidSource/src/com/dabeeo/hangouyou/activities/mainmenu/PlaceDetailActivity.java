@@ -242,21 +242,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     couponView.setBean(couponBean);
     containerTicketAndCoupon.addView(couponView);
     
-    textRate.setText("4.0");
-    textDetail.setText("Details");
-    
-    addDetailInfo(getString(R.string.term_address), "서울시 서초구 잠원동");
-    addDetailInfo(getString(R.string.term_phone), "010-4184-8376");
-    addDetailInfo(getString(R.string.term_homepage), "http://mnworld.co.kr");
-    
-    PlaceDetailBean testBean = new PlaceDetailBean();
-    testBean.title = "TITLE";
-    testBean.userName = "tourplanB";
-    testBean.reviewCount = 4;
-    testBean.likeCount = 12;
-    
-    titleView.setBean(testBean);
-    
     containerProduct.removeAllViews();
     ProductView productView = new ProductView(PlaceDetailActivity.this);
     ProductBean productBean = new ProductBean();
