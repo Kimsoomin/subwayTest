@@ -102,7 +102,7 @@
     <string name="term_product">商品</string>
     <string name="term_popular_recommend_product">热门推荐商品</string>
     <string name="message_search_word_here">请输入搜索词</string>
-    <string name="term_more">更多</string>
+    <string name="term_more">"更多"</string>
 
     <!-- 여행공략 -->
     <string name="term_place_detail_info">地点详情</string>

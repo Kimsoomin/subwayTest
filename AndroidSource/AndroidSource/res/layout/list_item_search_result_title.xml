@@ -5,26 +5,33 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight" >
+    android:padding="8dp" >
 
     <TextView
         android:id="@android:id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:textColor="@color/appcolor"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/text_more_count"
-        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/appcolor"
+        android:textStyle="bold"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/text_more"
+        android:textColor="#969b9c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:drawableRight="@drawable/btn_list_more_arrow"
         android:text="@string/term_more"
         android:visibility="gone" />
 

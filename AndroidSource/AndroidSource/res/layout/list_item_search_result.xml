@@ -10,9 +10,10 @@
         android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp" />
 
-    <TextView
+    <View
         android:id="@+id/seperater"
         android:layout_width="match_parent"
         android:layout_height="1dp"
