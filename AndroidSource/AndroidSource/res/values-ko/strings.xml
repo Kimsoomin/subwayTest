@@ -232,12 +232,10 @@
     <string name="term_ticket_and_coupon_buy">구매하기</string>
     <string name="term_coupon_en">"COUPON "</string>
 
-    <!-- 추가 String (아직 안보냄) -->
     <!-- 쿠폰 -->
     <string name="term_quantity_unit">매</string>
     <string name="term_download">다운로드</string>
     <string name="term_order_sheet">주문서 작성 결제</string>
-    <string name="term_order_item">구매 상품</string>
     <string name="term_code">상품 코드</string>
     <string name="term_quantity">매수</string>
     <string name="term_age">연령</string>
@@ -290,6 +288,35 @@
     <string name="term_use_coupon">사용하기(직원전용)</string>
     <string name="term_confirm_use_coupon">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다. 쿠폰을 사용하시겠습니까?</string>
     <string name="term_conpun_used">사용완료 하였습니다.</string>
-    <string name="msg_empty_search_result">검색 결과가 없습니다</string>
+    <!-- 여행일정 -->
+    <string name="msg_empty_my_schedule">등록된 일정이 없습니다.</string>
+    <string name="term_declare">신고하기</string>
+    <string name="msg_empty_my_bookmark">북마크한 일정이 없습니다.</string>
+    <string name="msg_recommend_schedule">한고우요우 자동추천일정으로\n여행일정을 만들어보세요!</string>
+    <string name="msg_empty_search_result">未找到结果</string>
+    <string name="msg_confirm_delete">정말 삭제하시겠습니까?</string>
+    <string name="term_declare_review">리뷰 신고하기</string>
+    <string name="msg_declare_hint">신고 내용은 운영자에게 전달됩니다. (300자 이내)</string>
+    <string name="msg_review_declare_reason_1">부적절한 홍보 게시물</string>
+    <string name="msg_review_declare_reason_2">음란성 또는 부적합한 내용</string>
+    <string name="msg_review_declare_reason_3">기타</string>
+    <string name="term_after_day">일</string>
+    <!-- 마이페이지 -->
+    <string name="term_change_password">비밀번호 변경</string>
+    <string name="term_withdraw">회원탈퇴</string>
+    <string name="msg_withdraw">회원 탈퇴하기</string>
+    <string name="term_current_password">현재 비밀번호</string>
+    <string name="msg_hint_current_password">현재 비밀번호 (6-16자)</string>
+    <string name="term_new_password">새 비밀번호</string>
+    <string name="msg_hint_new_password">새 비밀번호 (6-16자)</string>
+    <string name="msg_hint_new_password_confirm">새 비밀번호 확인</string>
+    <string name="term_see_agreement">약관보기</string>
+    <!-- 추천일정 -->
+    <string name="term_culture">한류</string>
+    <string name="term_tour">관광</string>
+    <string name="term_food">미식</string>
+    <string name="term_rest">휴양</string>
+    <string name="term_random">랜덤</string>
+    <string name="msg_warn_select_theme">테마를 골라주세요</string>
 
 </resources>

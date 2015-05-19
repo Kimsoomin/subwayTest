@@ -234,14 +234,14 @@
 
     <!-- 추가 String (보냄 받아야 함) -->
     <!-- 쿠폰 -->
-    <string name="term_quantity_unit">매</string>
-    <string name="term_download">다운로드</string>
-    <string name="term_order_sheet">주문서 작성 결제</string>
-    <string name="term_order_item">구매 상품</string>
-    <string name="term_code">상품 코드</string>
-    <string name="term_quantity">매수</string>
-    <string name="term_age">연령</string>
-    <string name="term_select_age">연령 선택</string>
+    <string name="term_quantity_unit">张</string>
+    <string name="term_download">下载</string>
+    <string name="term_order_sheet">填写订单并结算</string>
+    
+    <string name="term_code">商品编码</string>
+    <string name="term_quantity">张数</string>
+    <string name="term_age">年龄</string>
+    <string name="term_select_age">选择年龄</string>
 
     <string-array name="age_type">
         <item>성인</item>
@@ -249,79 +249,78 @@
         <item>아동</item>
     </string-array>
 
-    <string name="term_customer_info">주문자 정보</string>
-    <string name="term_customer_name">주문자</string>
-    <string name="term_english_name">영문 성명</string>
-    <string name="term_passport_number">여권번호</string>
-    <string name="term_phone_number_optional">전화(선택)</string>
-    <string name="term_order_info">결제 정보</string>
-    <string name="term_total_price">결제 예정금액</string>
-    <string name="term_total_quantity">총 구매 매수</string>
-    <string name="term_total_quantity_unit">매</string>
-    <string name="term_discount_by_coupon">쿠폰할인</string>
-    <string name="term_bill_price">최종 결제 금액</string>
-    <string name="msg_order_agree">주문한 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의하시겠습니까?</string>
-    <string name="term_pay_type">결제 수단</string>
-    <string name="term_pay_type_unionpay">유니온페이</string>
-    <string name="term_pay_type_alipay">알리페이</string>
-    <string name="msg_order_caution">• 환율로 인한 결제금액의 환차손익은 구매고객님께 부담됩니다.\n
-• 환율변동으로 인해 주문 시점과 결제 시점의 자국통화 환산금액에 차액이 발생할 수 있으며, 실제 자국 통화 결제금액은 카드정보 입력화면에 표시되는 금액으로 확인해 주시기 바랍니다.\n
-• 결제에 대한 문의가 필요하신 경우 SNS공식 QQ번호 : 2889751559 (평일 오전 9시~오후 6시, 한국시각 기준) 로 연락해주시기 바랍니다.</string>
-    <string name="term_checkout">결제하기</string>
-    <string name="error_english_name_is_empty">영문 성명을 입력하세요</string>
-    <string name="error_passport_number_is_empty">여권번호를 입력하세요</string>
-    <string name="error_didnt_agree_order">구매 동의를 해주세요</string>
-    <string name="term_order_completed">구매 완료</string>
-    <string name="msg_order_completed">주문/결제가 정상적으로 완료되었습니다.</string>
-    <string name="msg_order_completed_description">구매 내역은 e-mail 또는 마이페이지의 티켓에서 확인 가능합니다.</string>
-    <string name="term_order_code">주문번호</string>
-    <string name="term_paid_by">%1$s로 결제</string>
-    <string name="term_go_to_main">메인으로</string>
-    <string name="term_go_to_bought_list">티켓내역 확인</string>
-    <string name="term_show_bought_ticket">티켓보기</string>
-    <string name="term_show_coupon">쿠폰보기</string>
-    <string name="term_how_to_use">사용방법</string>
-    <string name="term_instructions">유의사항</string>
-    <string name="term_already_have_coupon">이미 다운로드한 쿠폰입니다. 마이페이지>티켓/쿠폰에서 확인하실 수 있습니다. 쿠폰을 확인하시겠습니까?</string>
-    <string name="term_coupon_download_completed">쿠폰을 받았습니다. 마이페이지>티켓/쿠폰에서 확인하실 수 있습니다 쿠폰을 확인하겠습니까?</string>
-    <string name="term_show_coupon_list">쿠폰내역 확인</string>
-    <string name="term_coupon_title">쿠폰명</string>
-    <string name="term_coupon_number">쿠폰번호</string>
-    <string name="term_use_coupon">사용하기(직원전용)</string>
-    <string name="term_confirm_use_coupon">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다. 쿠폰을 사용하시겠습니까?</string>
-    <string name="term_conpun_used">사용완료 하였습니다.</string>
+    <string name="term_customer_info">订单人信息</string>
+    <string name="term_customer_name">订单人</string>
+    <string name="term_english_name">英文姓名</string>
+    <string name="term_passport_number">护照号码</string>
+    <string name="term_phone_number_optional">联系电话（选项）</string>
+    <string name="term_order_info">结算信息</string>
+    <string name="term_total_price">预定结算金额</string>
+    <string name="term_total_quantity">总购买张数</string>
+    <string name="term_total_quantity_unit">张</string>
+    <string name="term_discount_by_coupon">优惠金额</string>
+    <string name="term_bill_price">最终结算金额</string>
+    <string name="msg_order_agree">确认商品信息，金额，配送信息并同意购买吗？</string>
+    <string name="term_pay_type">付款方式</string>
+    <string name="term_pay_type_unionpay">银联卡支付</string>
+    <string name="term_pay_type_alipay">支付宝支付</string>
+    <string name="msg_order_caution">• 因汇率变动发生的差额损失由顾客承担。\n• 因汇率变动订单时报的金额可能与结算时金额相异发生差额，实际结算总额能在输入信用卡信息时看到。\n• 有关付款结算的咨询请联系官方QQ：2889751559（联系时间：平日上午9点~下午6点，韩国时间为标准）。</string>
+    <string name="term_checkout">付款</string>
+    <string name="error_english_name_is_empty">填写英文姓名</string>
+    <string name="error_passport_number_is_empty">填写护照号码</string>
+    <string name="error_didnt_agree_order">同意购买</string>
+    <string name="term_order_completed">购买成功</string>
+    <string name="msg_order_completed">订单/支付成功。</string>
+    <string name="msg_order_completed_description">可以在个人信息的团购单或邮箱查看已买到的团购。</string>
+    <string name="term_order_code">订单编号</string>
+    <string name="term_paid_by">用%1$s支付</string>
+    <string name="term_go_to_main">回到首页</string>
+    <string name="term_go_to_bought_list">确认团购信息</string>
+    <string name="term_show_bought_ticket">查看团购</string>
+    <string name="term_show_coupon">查看优惠券</string>
+    <string name="term_how_to_use">使用规则</string>
+    <string name="term_instructions">购买须知</string>
+    <string name="term_already_have_coupon">已经下载的优惠券。在个人信息的团购/优惠券可以看到。去看优惠券吗？</string>
+    <string name="term_coupon_download_completed">收到了优惠券。在个人信息的团购/优惠券可以看到。去看优惠券吗？</string>
+    <string name="term_show_coupon_list">确认优惠券信息</string>
+    <string name="term_coupon_title">优惠券名</string>
+    <string name="term_coupon_number">优惠券编码</string>
+    <string name="term_use_coupon">使用（工作人员专用）</string>
+    <string name="term_confirm_use_coupon">仅限商店工作人员使用的按键。使用后不能取消或退钱。确认使用吗？</string>
+    <string name="term_conpun_used">成功使用</string>
     <!-- 여행일정 -->
-    <string name="msg_empty_my_schedule">등록된 일정이 없습니다.</string>
-    <string name="term_declare">신고하기</string>
-    <string name="msg_empty_my_bookmark">북마크한 일정이 없습니다.</string>
-    <string name="msg_recommend_schedule">한고우요우 자동추천일정으로\n여행일정을 만들어보세요!</string>
+    <string name="msg_empty_my_schedule">没有上传的行程</string>
+    <string name="term_declare">举报</string>
+    <string name="msg_empty_my_bookmark">没有标记的行程</string>
+    <string name="msg_recommend_schedule">用韩购游的行程助手\n创建旅游行程吧！</string>
     <string name="msg_empty_search_result">未找到结果</string>
-    <string name="msg_confirm_delete">정말 삭제하시겠습니까?</string>
-    <string name="term_declare_review">리뷰 신고하기</string>
-    <string name="msg_declare_hint">신고 내용은 운영자에게 전달됩니다. (300자 이내)</string>
-    <string name="msg_review_declare_reason_1">부적절한 홍보 게시물</string>
-    <string name="msg_review_declare_reason_2">음란성 또는 부적합한 내용</string>
-    <string name="msg_review_declare_reason_3">기타</string>
-    <string name="term_after_day">일</string>
+    <string name="msg_confirm_delete">确定删除吗？</string>
+    <string name="term_declare_review">举报评论</string>
+    <string name="msg_declare_hint">详细说明会帮助我们更快地处理举报（300字以内）</string>
+    <string name="msg_review_declare_reason_1">广告</string>
+    <string name="msg_review_declare_reason_2">色情污秽</string>
+    <string name="msg_review_declare_reason_3">其它</string>
+    <string name="term_after_day">第n日</string>
     <!-- 마이페이지 -->
-    <string name="term_change_password">비밀번호 변경</string>
-    <string name="term_withdraw">회원탈퇴</string>
-    <string name="msg_withdraw">회원 탈퇴하기</string>
-    <string name="term_current_password">현재 비밀번호</string>
-    <string name="msg_hint_current_password">현재 비밀번호 (6-16자)</string>
-    <string name="term_new_password">새 비밀번호</string>
-    <string name="msg_hint_new_password">새 비밀번호 (6-16자)</string>
-    <string name="msg_hint_new_password_confirm">새 비밀번호 확인</string>
-    <string name="term_see_agreement">약관보기</string>
+    <string name="term_change_password">修改密码</string>
+    <string name="term_withdraw">注销帐号</string>
+    <string name="msg_withdraw">注销帐号</string>
+    <string name="term_current_password">现在的密码</string>
+    <string name="msg_hint_current_password">现在的密码（密码长度6~16位）</string>
+    <string name="term_new_password">新密码</string>
+    <string name="msg_hint_new_password">新密码（密码长度6~16位）</string>
+    <string name="msg_hint_new_password_confirm">确认新密码</string>
+    <string name="term_see_agreement">查看使用条款</string>
     <!-- 추천일정 -->
-    <string name="term_culture">한류</string>
-    <string name="term_tour">관광</string>
-    <string name="term_food">미식</string>
-    <string name="term_rest">휴양</string>
-    <string name="term_random">랜덤</string>
-    <string name="msg_warn_select_theme">테마를 골라주세요</string>
+    <string name="term_culture">韩潮</string>
+    <string name="term_tour">观光</string>
+    <string name="term_food">美食</string>
+    <string name="term_rest">休闲</string>
+    <string name="term_random">随机</string>
+    <string name="msg_warn_select_theme">请选择旅游主题</string>
 
     <!-- 추가 String (아직 안보냄) -->
+    <string name="term_order_item">구매 상품</string>
     <!-- 내 장소 -->
     <string name="msg_empty_my_place">등록 된 장소가 없습니다</string>
     <string name="term_all_check">전체 선택</string>
