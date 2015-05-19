@@ -22,10 +22,14 @@ public class WishListFragment extends Fragment
 		View view = inflater.inflate(resId, null);
 		
 		popularWishListContainer = (LinearLayout) view.findViewById(R.id.wish_list_container);
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			PopularWishListParticleView pView = new PopularWishListParticleView(getActivity());
-			pView.setBean("wishlist " + i, "wishlist " + i);
+			if (i == 1)
+				pView.setBean(i, "TEST! WISHLIST!", "WISHER");
+			else
+				pView.setBean(i, "wishlist " + i, "wishlist " + i);
+			
 			popularWishListContainer.addView(pView);
 		}
 		return view;

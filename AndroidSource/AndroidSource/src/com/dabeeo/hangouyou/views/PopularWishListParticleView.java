@@ -20,6 +20,7 @@ public class PopularWishListParticleView extends RelativeLayout
 	private Context context;
 	private String firstBean;
 	private String secondBean;
+	private int position;
 	
 	
 	public PopularWishListParticleView(Context context)
@@ -29,8 +30,9 @@ public class PopularWishListParticleView extends RelativeLayout
 	}
 	
 	
-	public void setBean(String firstBean, String secondBean)
+	public void setBean(int position, String firstBean, String secondBean)
 	{
+		this.position = position;
 		this.firstBean = firstBean;
 		this.secondBean = secondBean;
 		init();
@@ -48,9 +50,7 @@ public class PopularWishListParticleView extends RelativeLayout
 		leftText.setText(firstBean);
 		rightText.setText(secondBean);
 		
-		Random r = new Random(2);
-		int random = r.nextInt();
-		if (random == 1)
+		if (position % 2 == 0)
 		{
 			leftText.setBackgroundResource(R.drawable.yellow_rectangle);
 			rightText.setBackgroundResource(R.drawable.blue_rectangle);
