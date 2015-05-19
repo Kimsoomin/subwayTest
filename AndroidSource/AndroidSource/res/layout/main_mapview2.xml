@@ -85,7 +85,8 @@
                                 android:layout_width="14dp"
                                 android:layout_height="14dp"
                                 android:layout_gravity="center_vertical"
-                                android:src="@drawable/ic_heart" />
+                                android:src="@drawable/ic_heart"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/like_count_temp"
@@ -93,7 +94,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="8dp"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/white"
+                                android:visibility="invisible" />
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>

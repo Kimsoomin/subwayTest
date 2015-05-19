@@ -376,7 +376,7 @@ public class Global
       // "+");
       String strLocalFilePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/.temp/" + fileName;
       
-      String strDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/.temp";
+      String strDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() +"/Hangouyou/.temp";
       // 폴더 생성
       new File(strDir).mkdirs();
       
@@ -413,7 +413,7 @@ public class Global
   {
     String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
     
-    String strPath = sdCardPath + "/Hangouyou/";
+    String strPath = sdCardPath+ "/Hangouyou/";
     
 //    if (subPath.substring(0, 1).compareTo("/") != 0)
 //    {
@@ -421,24 +421,6 @@ public class Global
 //    }
     
 //    strPath += 
-    
-    return strPath;
-  }
-  
-  
-//경로 생성 -> "sdcard/폴더명"
-  public static String GetPathWithSDCard(String path)
-  {
-    String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-    
-    String strPath = sdCardPath + path + "/Hangouyou/";
-    
-//   if (subPath.substring(0, 1).compareTo("/") != 0)
-//   {
-//     strPath += "/";
-//   }
-    
-//   strPath += 
     
     return strPath;
   }
@@ -504,70 +486,72 @@ public class Global
     return new BitmapDrawable(bmp);
   }
   
-  
   public static Drawable ResizeDrawable(Context context, int nID, int width, int height)
   {
-    Drawable d = GetDrawable(context, nID);
-    
-    if (d instanceof BitmapDrawable)
-    {
-      Bitmap bm = ((BitmapDrawable) d).getBitmap();
-      
-      return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bm, width, height, true));
-    }
-    
-    NinePatchDrawable nd = (NinePatchDrawable) d;
-    
-    nd.setBounds(0, 0, width * 2, height * 2);
-    
-    Bitmap bmp = Bitmap.createBitmap(width * 2, height * 2, Bitmap.Config.ARGB_8888);
-    Canvas canvas = new Canvas(bmp);
-    nd.draw(canvas);
-    
-    bmp = Bitmap.createScaledBitmap(bmp, width, height, true);
-    
-    return new BitmapDrawable(bmp);
+	  Drawable d = GetDrawable(context, nID);
+	  
+	  if (d instanceof BitmapDrawable)
+	  {
+		  Bitmap bm = ((BitmapDrawable) d).getBitmap();
+		  
+		  return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bm, width, height, true));
+	  }
+	  
+	  NinePatchDrawable nd = (NinePatchDrawable) d;
+	  
+	  nd.setBounds(0, 0, width * 2, height * 2);
+	  
+	  Bitmap bmp = Bitmap.createBitmap(width * 2, height * 2, Bitmap.Config.ARGB_8888);
+	  Canvas canvas = new Canvas(bmp);
+	  nd.draw(canvas);
+	  
+	  bmp = Bitmap.createScaledBitmap(bmp, width, height, true);
+	  
+	  return new BitmapDrawable(bmp);
+  }
+  
+  public static Bitmap fitImageSize(Context _context,int _res, int maxWidth, int maxHeight) {
+		
+		Bitmap bm = null;
+		
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		options.inPreferredConfig = Config.RGB_565;
+		BitmapFactory.decodeResource(_context.getResources(), _res, options);
+		
+		int width 		= options.outWidth;
+		int height 		= options.outHeight;
+		
+		
+		double scalex 	= ((double) maxWidth / (double) width);
+		double scaley 	= ((double) maxHeight / (double) height);
+		
+		double scale 	= (scalex < scaley) ? scalex : scaley;
+		if (scale > 1) 
+			scale = 1;
+		
+		//		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		bm = new SoftReference<Bitmap>(BitmapFactory.decodeResource(_context.getResources(), _res, options)).get();
+		
+		
+		if(width > maxWidth || height > maxHeight)
+		{
+			Bitmap resizebm = Bitmap.createScaledBitmap(bm,((int) (scale * width)), ((int) (scale * height)), true);
+			
+			SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(resizebm);
+			
+			return myBitmap.get();
+		}
+		else
+		{
+			SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(bm);
+			return myBitmap.get();
+		}
   }
   
   
-  public static Bitmap fitImageSize(Context _context, int _res, int maxWidth, int maxHeight)
-  {
-    
-    Bitmap bm = null;
-    
-    final BitmapFactory.Options options = new BitmapFactory.Options();
-    options.inJustDecodeBounds = true;
-    options.inPreferredConfig = Config.RGB_565;
-    BitmapFactory.decodeResource(_context.getResources(), _res, options);
-    
-    int width = options.outWidth;
-    int height = options.outHeight;
-    
-    double scalex = ((double) maxWidth / (double) width);
-    double scaley = ((double) maxHeight / (double) height);
-    
-    double scale = (scalex < scaley) ? scalex : scaley;
-    if (scale > 1)
-      scale = 1;
-    
-    //		// Decode bitmap with inSampleSize set
-    options.inJustDecodeBounds = false;
-    bm = new SoftReference<Bitmap>(BitmapFactory.decodeResource(_context.getResources(), _res, options)).get();
-    
-    if (width > maxWidth || height > maxHeight)
-    {
-      Bitmap resizebm = Bitmap.createScaledBitmap(bm, ((int) (scale * width)), ((int) (scale * height)), true);
-      
-      SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(resizebm);
-      
-      return myBitmap.get();
-    }
-    else
-    {
-      SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(bm);
-      return myBitmap.get();
-    }
-  }
+  
   
   
   // 사진을 임시 폴더에 저장함.
@@ -614,6 +598,7 @@ public class Global
 //    
 //    return strTempPath;
 //  }
+  
   
   // ver 1.5 추가
   
@@ -663,13 +648,13 @@ public class Global
         Bitmap converted = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
         WeakReference<Bitmap> weak = new WeakReference<Bitmap>(converted);
         converted = weak.get();
-        
+
         bitmap.recycle();
         bitmap = converted;
       }
       catch (OutOfMemoryError ex)
       {
-        ex.printStackTrace();
+    	  ex.printStackTrace();
         // 메모리가 부족하여 회전을 시키지 못할 경우 그냥 원본을 반환합니다.
       }
     }
@@ -1036,37 +1021,31 @@ public class Global
     
   }
   
-  
   public static String MD5Encoding(String str)
-  {
-    String MD5 = "";
-    try
-    {
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(str.getBytes());
-      byte byteData[] = md.digest();
-      StringBuffer sb = new StringBuffer();
-      for (int i = 0; i < byteData.length; i++)
-      {
-        sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-      }
-      MD5 = sb.toString();
-      
-    }
-    catch (NoSuchAlgorithmException e)
-    {
-      e.printStackTrace();
-      MD5 = null;
-    }
-    return MD5;
-  }
+	{
+		String MD5 = ""; 
+		try{
+			MessageDigest md = MessageDigest.getInstance("MD5"); 
+			md.update(str.getBytes()); 
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer(); 
+			for(int i = 0 ; i < byteData.length ; i++){
+				sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
+			}
+			MD5 = sb.toString();
+			
+		}catch(NoSuchAlgorithmException e){
+			e.printStackTrace(); 
+			MD5 = null; 
+		}
+		return MD5;
+	}
   
-  
-  public static int DpToPixel(Context context, int DP)
-  {
-    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DP, context.getResources().getDisplayMetrics());
-    
-    return (int) px;
-  }
+  public static int DpToPixel(Context context,int DP) {
+		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DP,
+				context.getResources().getDisplayMetrics());
+
+		return (int) px;
+	}
   
 }

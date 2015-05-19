@@ -390,84 +390,112 @@ public class IntroActivity extends Activity
   
   private void checkMapPlaceData()
   {
-    AssetManager assetManager = getAssets();
-    InputStream inputStream = null;
-    String placeJsonString = "";
-    try
-    {
-      inputStream = assetManager.open("place_json.txt");
-      if (inputStream != null)
-      {
-        Writer writer = new StringWriter();
-        
-        char[] buffer = new char[1024];
-        try
-        {
-          Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-          int n;
-          while ((n = reader.read(buffer)) != -1)
-          {
-            writer.write(buffer, 0, n);
-          }
-        }
-        finally
-        {
-          inputStream.close();
-        }
-        placeJsonString = writer.toString();
-      }
-    }
-    catch (IOException e)
-    {
-      Log.e("message: ", e.getMessage());
-    }
-    
-    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
-    MapPlaceDataManager.getInstance(IntroActivity.this).deleteDatabase();
-    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
-    
-    JSONArray array;
-    try
-    {
-      JSONObject obj = new JSONObject(placeJsonString);
-      array = obj.getJSONArray("place");
-      for (int i = 0; i < array.length(); i++)
-      {
-        PlaceBean bean = new PlaceBean();
-        bean.setJSONObject(array.getJSONObject(i));
-        MapPlaceDataManager.getInstance(IntroActivity.this).addPlace(bean);
-      }
-      
-      ArrayList<StationBean> stations = SubwayManager.getInstance(IntroActivity.this).stations;
-      ArrayList<StationBean> afterArray = new ArrayList<StationBean>();
-      String append = "";
-      for (int i = 0; i < stations.size(); i++)
-      {
-        boolean isContain = false;
-        for (int j = 0; j < afterArray.size(); j++)
-        {
-          if (afterArray.get(j).nameKo.equals(stations.get(i).nameKo))
-            isContain = true;
-        }
-        
-        if (!isContain)
-        {
-          append += stations.get(i).nameKo + " ";
-          afterArray.add(stations.get(i));
-        }
-      }
-      for (int j = 0; j < afterArray.size(); j++)
-      {
-        MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(afterArray.get(j));
-      }
-      
-      Log.w("WARN", "Stations : " + append);
-      Log.w("WARN", "Station : " + afterArray.size());
-    }
-    catch (JSONException e)
-    {
-      e.printStackTrace();
-    }
+	  
+	  AssetManager assetManager = getAssets();
+		
+		File file = new File(Global.GetPathWithSDCard()+Global.HangouyouDBFileName);
+		
+		if(!file.exists())
+		{
+			try {
+				InputStream is = assetManager.open("hangouyou.sqlite");
+				OutputStream out = new FileOutputStream(file);
+			      
+			      int size = is.available();
+			      
+			      if (size > 0)
+			      {
+			        byte[] data = new byte[size];
+			        is.read(data);
+			        
+			        out.write(data);
+			      }
+			      out.flush();
+			      out.close();
+			      
+			      is.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+//    AssetManager assetManager = getAssets();
+//    InputStream inputStream = null;
+//    String placeJsonString = "";
+//    try
+//    {
+//      inputStream = assetManager.open("place_json.txt");
+//      if (inputStream != null)
+//      {
+//        Writer writer = new StringWriter();
+//        
+//        char[] buffer = new char[1024];
+//        try
+//        {
+//          Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+//          int n;
+//          while ((n = reader.read(buffer)) != -1)
+//          {
+//            writer.write(buffer, 0, n);
+//          }
+//        }
+//        finally
+//        {
+//          inputStream.close();
+//        }
+//        placeJsonString = writer.toString();
+//      }
+//    }
+//    catch (IOException e)
+//    {
+//      Log.e("message: ", e.getMessage());
+//    }
+//    
+//    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
+//    MapPlaceDataManager.getInstance(IntroActivity.this).deleteDatabase();
+//    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
+//    
+//    JSONArray array;
+//    try
+//    {
+//      JSONObject obj = new JSONObject(placeJsonString);
+//      array = obj.getJSONArray("place");
+//      for (int i = 0; i < array.length(); i++)
+//      {
+//        PlaceBean bean = new PlaceBean();
+//        bean.setJSONObject(array.getJSONObject(i));
+//        MapPlaceDataManager.getInstance(IntroActivity.this).addPlace(bean);
+//      }
+//      
+//      ArrayList<StationBean> stations = SubwayManager.getInstance(IntroActivity.this).stations;
+//      ArrayList<StationBean> afterArray = new ArrayList<StationBean>();
+//      String append = "";
+//      for (int i = 0; i < stations.size(); i++)
+//      {
+//        boolean isContain = false;
+//        for (int j = 0; j < afterArray.size(); j++)
+//        {
+//          if (afterArray.get(j).nameKo.equals(stations.get(i).nameKo))
+//            isContain = true;
+//        }
+//        
+//        if (!isContain)
+//        {
+//          append += stations.get(i).nameKo + " ";
+//          afterArray.add(stations.get(i));
+//        }
+//      }
+//      for (int j = 0; j < afterArray.size(); j++)
+//      {
+//        MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(afterArray.get(j));
+//      }
+//      
+//      Log.w("WARN", "Stations : " + append);
+//      Log.w("WARN", "Station : " + afterArray.size());
+//    }
+//    catch (JSONException e)
+//    {
+//      e.printStackTrace();
+//    }
     
     checkAllowAlarm();
   }

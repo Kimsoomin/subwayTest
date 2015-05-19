@@ -265,7 +265,7 @@ public class MainFragment extends Fragment
         Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
         
         InputStream input = new BufferedInputStream(url.openStream());
-        File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
+        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
         try
         {
           if (!file.exists())
