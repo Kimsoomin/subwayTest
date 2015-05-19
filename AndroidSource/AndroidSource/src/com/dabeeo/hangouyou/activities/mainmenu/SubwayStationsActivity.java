@@ -141,6 +141,12 @@ public class SubwayStationsActivity extends ActionBarActivity
         {
           if (i == 0)
             stations.remove(i);
+          else if (i == stations.size() - 2)
+          {
+            //마지막이 환승역인 경우
+            stations.remove(i);
+            stations.remove(i);
+          }
           else
           {
             stations.remove(i - 1);
@@ -154,6 +160,8 @@ public class SubwayStationsActivity extends ActionBarActivity
       }
     }
     
+    if (stations.get(stations.size() - 1).nameKo.equals(stations.get(stations.size() - 2).nameKo))
+      stations.remove(stations.size() - 1);
     
     try
     {

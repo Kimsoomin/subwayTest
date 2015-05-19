@@ -810,6 +810,9 @@ public class SubwayFragment extends Fragment
               }
             }
             
+            if (stations.get(stations.size() - 1).nameKo.equals(stations.get(stations.size() - 2).nameKo))
+              stations.remove(stations.size() - 1);
+            
             StationBean firstStationBean = stations.get(0);
             StationBean lastStationBean = stations.get(stations.size() - 1);
             
