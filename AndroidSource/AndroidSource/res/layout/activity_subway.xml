@@ -28,9 +28,9 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="8dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
+                android:layout_marginLeft="8dp"
                 android:src="@drawable/icon_search" />
 
             <EditText
@@ -40,6 +40,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="24dp"
                 android:hint="@string/msg_find_station"
+                android:imeOptions="actionSearch"
                 android:paddingLeft="8dp"
                 android:singleLine="true" />
 

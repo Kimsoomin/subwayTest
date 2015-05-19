@@ -92,7 +92,7 @@ public class SubwayListAdapter extends BaseAdapter
         transferStation.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.afterLine));
         transferStation.setVisibility(View.VISIBLE);
         transferArrow.setVisibility(View.VISIBLE);
-        container.setBackgroundColor(Color.parseColor("#f0f0f0"));
+        container.setBackgroundColor(Color.parseColor("#dce1e1"));
       }
       catch (Exception e)
       {
@@ -101,7 +101,7 @@ public class SubwayListAdapter extends BaseAdapter
     }
     else
     {
-      container.setBackgroundColor(Color.parseColor("#00000000"));
+      container.setBackgroundColor(Color.parseColor("#f4f4f4"));
       line.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.line));
       transferStation.setVisibility(View.GONE);
       transferArrow.setVisibility(View.GONE);

@@ -11,17 +11,21 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
@@ -152,6 +156,32 @@ public class SubwayActivity extends Activity
       }
     };
     editSearch.addTextChangedListener(watcher);
+    editSearch.setOnEditorActionListener(new OnEditorActionListener()
+    {
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+      {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editSearch.getWindowToken(), 0);
+        if (actionId == EditorInfo.IME_ACTION_SEARCH)
+        {
+          if (SubwayManager.getInstance(SubwayActivity.this).getSubwayStationsWithTitle(editSearch.getText().toString()).size() > 0)
+          {
+            searchListView.setVisibility(View.VISIBLE);
+            searchListView.bringToFront();
+            emptySearchContainer.setVisibility(View.GONE);
+          }
+          else
+          {
+            searchListView.setVisibility(View.GONE);
+            emptySearchContainer.setVisibility(View.VISIBLE);
+          }
+          adapter.clear();
+          adapter.addAll(SubwayManager.getInstance(SubwayActivity.this).getSubwayStationsWithTitle(editSearch.getText().toString()));
+        }
+        return true;
+      }
+    });
     
     searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
     {
