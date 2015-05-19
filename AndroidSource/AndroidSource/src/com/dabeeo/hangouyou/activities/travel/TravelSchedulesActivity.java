@@ -30,7 +30,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
 	private TravelScheduleViewPagerAdapter adapter;
 	private ViewPager viewPager;
 	private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
-	
+	private LinearLayout containerBottomTab;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +50,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
+		containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
 		bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
 		bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
 		bottomMenuPhotolog = (LinearLayout) findViewById(R.id.container_menu_photolog);
