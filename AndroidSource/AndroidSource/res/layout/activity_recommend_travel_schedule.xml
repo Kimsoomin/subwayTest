@@ -140,7 +140,7 @@
                                 android:layout_marginTop="8dp"
                                 android:text="@string/term_warn_limit_7_days"
                                 android:textColor="@color/light_gray"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout

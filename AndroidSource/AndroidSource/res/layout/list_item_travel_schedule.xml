@@ -18,6 +18,7 @@
             android:id="@+id/imageview"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:src="@drawable/default_thumbnail_s"
             android:layout_margin="8dp"
             android:contentDescription="@null" />
 

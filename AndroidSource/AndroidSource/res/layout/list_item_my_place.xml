@@ -29,7 +29,7 @@
                 android:id="@+id/imageview"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@color/darker_gray"
+                android:src="@drawable/default_thumbnail_s"
                 android:contentDescription="@null" />
         </RelativeLayout>
 

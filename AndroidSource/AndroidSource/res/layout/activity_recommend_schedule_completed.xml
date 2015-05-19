@@ -31,6 +31,7 @@
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:src="@drawable/default_profile_l"
                 android:background="@drawable/shape_circle_button_pressed"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
@@ -51,7 +52,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:textColor="#444a4b"
-        android:textSize="21sp"
+        android:textSize="17sp"
         android:textStyle="bold" />
 
     <!-- 일정 뷰 -->

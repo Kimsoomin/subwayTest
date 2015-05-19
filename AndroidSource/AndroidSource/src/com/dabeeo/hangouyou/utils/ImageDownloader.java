@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.dabeeo.hangouyou.R;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -42,8 +43,8 @@ public class ImageDownloader
     
     DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(null)
                                                                    .bitmapConfig(Bitmap.Config.ARGB_8888)
-                                                                   .showImageForEmptyUri(null)
-                                                                   .showImageOnFail(null)
+                                                                   .showImageForEmptyUri(R.drawable.default_thumbnail_s)
+                                                                   .showImageOnFail(R.drawable.default_thumbnail_s)
                                                                    .cacheInMemory(false)
                                                                    .cacheOnDisc(true)
                                                                    .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)

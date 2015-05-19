@@ -18,6 +18,7 @@ import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SearchResultFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.WishListFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hangouyou.managers.CategoryManager;
 
@@ -130,9 +131,9 @@ public class MainActivity extends ActionBarActivity
 				break;
 			
 			case POSITION_WISHLIST:
-				bottomMenuHome.setSelected(true);
-				title.setText(getString(R.string.app_name));
-				fragment = new MainFragment();
+				bottomMenuWishList.setSelected(true);
+				title.setText(getString(R.string.term_wishlist));
+				fragment = new WishListFragment();
 				break;
 		}
 		
@@ -166,6 +167,7 @@ public class MainActivity extends ActionBarActivity
 			else if (v.getId() == bottomMenuWishList.getId())
 			{
 				//로그인 체크 후 실행
+				setFragments(POSITION_WISHLIST);
 			}
 			else if (v.getId() == bottomMenuSearch.getId())
 			{
