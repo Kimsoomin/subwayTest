@@ -252,6 +252,7 @@ public class SubwayFragment extends Fragment
     {
       Log.w("WARN", "LocationChanged! " + loc.getLatitude() + " / " + loc.getLongitude());
       locationManager.removeUpdates(locationListener);
+      setDestFindNearStation = -1;
       webview.loadUrl("javascript:subway.findNearByStation('" + loc.getLatitude() + "', '" + loc.getLongitude() + "')");
       
       progressBar.setVisibility(View.GONE);
