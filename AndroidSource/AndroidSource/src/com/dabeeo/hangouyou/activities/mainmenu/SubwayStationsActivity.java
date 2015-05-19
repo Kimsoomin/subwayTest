@@ -117,6 +117,7 @@ public class SubwayStationsActivity extends ActionBarActivity
       e.printStackTrace();
     }
     
+    // 환승이면 a / 환승 / b : 환승( a, b ) 
     for (int i = 0; i < stations.size(); i++)
     {
       if (stations.get(i).line.contains("환승"))
@@ -133,6 +134,8 @@ public class SubwayStationsActivity extends ActionBarActivity
       }
     }
     
+    //환승역정보를 다 빼냈으므로 지움
+    //첫번째 역이 환승역이, 마지막의 전일 때 
     for (int i = 0; i < stations.size(); i++)
     {
       if (stations.get(i).line.contains("환승"))

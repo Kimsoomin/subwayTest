@@ -206,8 +206,9 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
           @Override
           public void onClick(View arg0)
           {
-            Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpJustOneActivity.class);
-            i.putExtra("image_url", imageUrl);
+            Intent i = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
+            i.putExtra("imageUrls", bean.allImages);
+            i.putExtra("imageUrl", imageUrl);
             startActivity(i);
           }
         });
@@ -234,6 +235,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
       Picasso.with(this).load(imageUrl).resize(300, 300).centerCrop().into(view);
       final int position = i;
+      final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {
         @Override
@@ -241,8 +243,8 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         {
           Log.w("WARN", "onClick!");
           Intent intent = new Intent(TravelStrategyDetailActivity.this, ImagePopUpActivity.class);
-          intent.putExtra("imageUrls", bean.smallImages);
-          intent.putExtra("position", position);
+          intent.putExtra("imageUrls", bean.allImages);
+          intent.putExtra("imageUrl", finalImageUrl);
           startActivity(intent);
         }
       });

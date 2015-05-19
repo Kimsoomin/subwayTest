@@ -51,7 +51,14 @@ public class ImagePopUpActivity extends ActionBarActivity
     });
     textIndicator = (TextView) findViewById(R.id.text_view_pager_indicator);
     
-    int position = getIntent().getIntExtra("position", 0);
+//    int position = getIntent().getIntExtra("position", 0);
+    String currentImageUrl = getIntent().getStringExtra("imageUrl");
+    int position = 0;
+    for (int i = 0; i < imageUrls.size(); i++)
+    {
+      if (imageUrls.get(i).equals(currentImageUrl))
+        position = i;
+    }
     viewPager = (ViewPager) findViewById(R.id.viewpager);
     adapter = new ImagePopupViewPagerAdapter(this);
     viewPager.setOffscreenPageLimit(0);
@@ -81,6 +88,7 @@ public class ImagePopUpActivity extends ActionBarActivity
         
       }
     });
+    
     try
     {
       viewPager.setCurrentItem(position);

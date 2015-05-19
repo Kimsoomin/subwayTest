@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.text.TextUtils;
+
 public class PremiumDetailBean
 {
   public int idx;
@@ -43,6 +45,7 @@ public class PremiumDetailBean
   public String mainImageUrl;
   public ArrayList<ContentBean> contents = new ArrayList<ContentBean>();
   public ArrayList<String> smallImages = new ArrayList<String>();
+  public ArrayList<String> allImages = new ArrayList<String>();
   
   
   public void setJSONObject(JSONObject obj)
@@ -111,6 +114,8 @@ public class PremiumDetailBean
           JSONObject contentObj = arr.getJSONObject(i);
           ContentBean bean = new ContentBean();
           bean.setJSONObject(contentObj);
+          if (!TextUtils.isEmpty(bean.imageUrl))
+            allImages.add(bean.imageUrl);
           contents.add(bean);
         }
       }
@@ -119,6 +124,7 @@ public class PremiumDetailBean
       {
         JSONObject imageObj = obj.getJSONObject("mainImage");
         mainImageUrl = imageObj.getString("url");
+        allImages.add(mainImageUrl);
       }
       
       if (obj.has("images"))
@@ -128,6 +134,7 @@ public class PremiumDetailBean
         {
           JSONObject contentObj = arr.getJSONObject(i);
           smallImages.add(contentObj.getString("url"));
+          allImages.add(contentObj.getString("url"));
         }
       }
     }

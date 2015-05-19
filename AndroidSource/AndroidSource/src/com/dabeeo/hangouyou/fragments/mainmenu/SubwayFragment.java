@@ -443,6 +443,7 @@ public class SubwayFragment extends Fragment
   
   private void showFindStartStation(final String stationId)
   {
+    Log.w("WARN", "show find start station : " + stationId);
     btnFindFirstStation.setVisibility(View.VISIBLE);
     btnFindFirstStation.bringToFront();
     btnFindFirstStation.setOnClickListener(new OnClickListener()
@@ -452,20 +453,23 @@ public class SubwayFragment extends Fragment
       {
         StationBean stationBean = SubwayManager.getInstance(activity).findStation(stationId);
         
-        double max_latitude = 37.70453488762476;
-        double max_longitude = 127.17361450195312;
-        double min_latitude = 37.43677099171195;
-        double min_longitude = 126.76300048828125;
-        
-        if (stationBean.lon > max_longitude || stationBean.lon < min_longitude || stationBean.lat > max_latitude || stationBean.lat < min_latitude)
-          showDontSupportOutsideSeoul();
-        else
+        if (stationBean != null)
         {
-          Intent i = new Intent(activity, BlinkingMap.class);
-          i.putExtra("lineId", stationId);
-          i.putExtra("Latitude", startStationLat);
-          i.putExtra("Longitude", startStationLong);
-          startActivity(i);
+          double max_latitude = 37.70453488762476;
+          double max_longitude = 127.17361450195312;
+          double min_latitude = 37.43677099171195;
+          double min_longitude = 126.76300048828125;
+          
+          if (stationBean.lon > max_longitude || stationBean.lon < min_longitude || stationBean.lat > max_latitude || stationBean.lat < min_latitude)
+            showDontSupportOutsideSeoul();
+          else
+          {
+            Intent i = new Intent(activity, BlinkingMap.class);
+            i.putExtra("lineId", stationId);
+            i.putExtra("Latitude", startStationLat);
+            i.putExtra("Longitude", startStationLong);
+            startActivity(i);
+          }
         }
       }
     });
@@ -504,18 +508,18 @@ public class SubwayFragment extends Fragment
         e.printStackTrace();
       }
       
-      Log.w("WARN", "원래 역의 갯수 : " + stations.size());
-      String tranfserStationString = "";
-      ArrayList<StationBean> transferBeans = new ArrayList<StationBean>();
-      for (int i = 0; i < stations.size(); i++)
-      {
-        //TODO 기존역 배열에서 환승역 제거하고 환승역만 따로 빼냄
-        if (stations.get(i).line.contains("환승"))
-        {
-          transferBeans.add(stations.get(i));
-          stations.remove(i);
-        }
-      }
+//      Log.w("WARN", "원래 역의 갯수 : " + stations.size());
+//      String tranfserStationString = "";
+//      ArrayList<StationBean> transferBeans = new ArrayList<StationBean>();
+//      for (int i = 0; i < stations.size(); i++)
+//      {
+//        //TODO 기존역 배열에서 환승역 제거하고 환승역만 따로 빼냄
+//        if (stations.get(i).line.contains("환승"))
+//        {
+//          transferBeans.add(stations.get(i));
+//          stations.remove(i);
+//        }
+//      }
       
       //환승역만 돌림
       //겹치지 않는 환승역 배열 
