@@ -2,18 +2,21 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+
 import com.dabeeo.hangouyou.R;
 
-public class JoinActivity extends ActionBarActivity
+public class JoinActivity extends Activity
 {
   private Button btnDateOfbirth;
   private Calendar calendar;
@@ -25,9 +28,6 @@ public class JoinActivity extends ActionBarActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_join);
     
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setHomeButtonEnabled(true);
-    
     calendar = Calendar.getInstance();
     btnDateOfbirth = (Button) findViewById(R.id.btn_date);
     btnDateOfbirth.setOnClickListener(new OnClickListener()
@@ -36,6 +36,15 @@ public class JoinActivity extends ActionBarActivity
       public void onClick(View v)
       {
         new DatePickerDialog(JoinActivity.this, dateListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+      }
+    });
+    
+    ((Button) findViewById(R.id.btn_join)).setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        startActivity(new Intent(JoinActivity.this, AuthEmailActivity.class));
       }
     });
   }

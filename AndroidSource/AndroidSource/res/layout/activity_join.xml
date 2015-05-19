@@ -19,19 +19,61 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <EditText
-                    android:id="@+id/edit_email"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/term_email"
-                    android:singleLine="true" />
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/term_join"
+                    android:textColor="@color/appcolor"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edit_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/term_name"
-                    android:singleLine="true" />
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/edit_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/term_email"
+                        android:singleLine="true" >
+
+                        <requestFocus />
+                    </EditText>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/app_button"
+                        android:text="@string/term_check_duplicate"
+                        android:textColor="@color/appcolor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/edit_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/term_name"
+                        android:singleLine="true" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/app_button"
+                        android:text="@string/term_check_duplicate"
+                        android:textColor="@color/appcolor" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edit_password"
@@ -52,40 +94,49 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal" >
+                    android:orientation="vertical" >
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="@string/term_gender" />
 
-                    <RadioGroup
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal" >
 
-                        <RadioButton
+                        <Button
                             android:id="@+id/radio_gender_male"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/term_gender_male" />
+                            android:layout_weight="1"
+                            android:background="@drawable/check_background"
+                            android:text="@string/term_gender_male"
+                            android:textColor="@color/appcolor" />
 
-                        <RadioButton
+                        <Button
                             android:id="@+id/radio_gender_female"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/term_gender_female" />
-                    </RadioGroup>
+                            android:layout_weight="1"
+                            android:background="@drawable/check_background"
+                            android:text="@string/term_gender_female"
+                            android:textColor="@color/appcolor" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/term_date_of_birth" />
 
@@ -94,12 +145,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:background="@drawable/round_gray_box"
+                    android:gravity="left|center_vertical"
                     android:text="@string/msg_date_of_birth" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
+                    android:background="#CECECE"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
@@ -107,7 +163,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/msg_agreement" />
+                        android:text="@string/msg_agreement"
+                        android:textColor="@color/darker_gray" />
 
                     <CheckBox
                         android:id="@+id/chk_agreement"
@@ -118,7 +175,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="1dp"
+                    android:background="#CECECE"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
@@ -126,7 +186,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/msg_private_agreement" />
+                        android:text="@string/msg_private_agreement"
+                        android:textColor="@color/darker_gray" />
 
                     <CheckBox
                         android:id="@+id/chk_private_agreement"
@@ -137,7 +198,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="1dp"
+                    android:background="#CECECE"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
@@ -145,7 +209,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/msg_gps_agreement" />
+                        android:text="@string/msg_gps_agreement"
+                        android:textColor="@color/darker_gray" />
 
                     <CheckBox
                         android:id="@+id/chk_gps_agreement"
@@ -160,7 +225,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/app_button"
+            android:background="@drawable/app_fill_button"
             android:text="@string/term_join"
             android:textColor="@android:color/white" />
     </LinearLayout>

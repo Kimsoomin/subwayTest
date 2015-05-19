@@ -4,10 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp" >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bi_app_info" />
+    </RelativeLayout>
+
     <EditText
         android:id="@+id/edit_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:hint="@string/term_email"
         android:singleLine="true" />
 
@@ -15,6 +28,7 @@
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:hint="@string/term_password"
         android:inputType="textPassword"
         android:singleLine="true" />
@@ -22,7 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_margin="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -48,7 +62,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/app_button"
+        android:background="@drawable/app_fill_button"
         android:text="@string/term_login"
         android:textColor="@android:color/white" />
 
@@ -58,9 +72,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/app_button"
         android:text="@string/term_join"
-        android:textColor="@android:color/white" />
+        android:textColor="@color/appcolor" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_gray_box"
+        android:text="@string/term_cancel"
+        android:textColor="#c3c3c3" />
 
 </LinearLayout>

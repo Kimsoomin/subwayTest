@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.FindPasswordActivity;
@@ -12,6 +13,9 @@ import com.dabeeo.hangouyou.activities.ticket.TicketActivity;
 
 public class LoginActivity extends ActionBarActivity
 {
+  private Button btnCancel;
+  
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -21,6 +25,7 @@ public class LoginActivity extends ActionBarActivity
     findViewById(R.id.btn_join).setOnClickListener(clickListener);
     findViewById(R.id.btn_login).setOnClickListener(clickListener);
     findViewById(R.id.btn_find_password).setOnClickListener(clickListener);
+    findViewById(R.id.btn_cancel).setOnClickListener(clickListener);
   }
   
   private OnClickListener clickListener = new OnClickListener()
@@ -37,6 +42,8 @@ public class LoginActivity extends ActionBarActivity
         startActivity(new Intent(LoginActivity.this, FindPasswordActivity.class));
       else if (v.getId() == R.id.btn_join)
         startActivity(new Intent(LoginActivity.this, JoinActivity.class));
+      else if (v.getId() == R.id.btn_cancel)
+        finish();
     }
   };
 }

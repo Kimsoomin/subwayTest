@@ -332,5 +332,13 @@
     <!-- 지하철 -->
     <string name="msg_same_start_end_station">이미 해당역을 출발역으로 지정했습니다. 도착역으로 변경하시겠습니까?</string>
     <string name="msg_same_end_start_station">이미 해당역을 도착역으로 지정했습니다. 출발역으로 변경하시겠습니까?</string>
+    <!-- 로그인/회원가입 -->
+    <string name="term_check_duplicate">중복체크</string>
+    <string name="term_get_temp_password">임시 비밀번호 발급 받기</string>
+    <string name="term_auth_email">E-mail 계정 인증</string>
+    <string name="term_re_send">재전송</string>
+    <string name="term_auth">인증하기</string>
+    <string name="term_input_auth_number">인증번호 입력</string>
+    <string name="msg_complete_join">회원가입 완료!\n가입하신 이메일로 인증번호를 발송하였습니다.\n인증번호를 확인한 후,\n입력창에 인증번호를 입력해주세요</string>
 
 </resources>

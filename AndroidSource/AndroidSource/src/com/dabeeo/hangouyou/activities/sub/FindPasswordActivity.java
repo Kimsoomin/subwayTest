@@ -1,6 +1,7 @@
 package com.dabeeo.hangouyou.activities.sub;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 
-public class FindPasswordActivity extends ActionBarActivity
+public class FindPasswordActivity extends Activity
 {
   private EditText currentPassword, newPassword, newPasswordConfirm;
   
@@ -23,18 +24,9 @@ public class FindPasswordActivity extends ActionBarActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_find_password);
     
-    @SuppressLint("InflateParams")
-    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
-    TextView title = (TextView) customActionBar.findViewById(R.id.title);
-    title.setText(getString(R.string.term_change_password));
-    getSupportActionBar().setCustomView(customActionBar);
-    getSupportActionBar().setDisplayShowCustomEnabled(true);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setHomeButtonEnabled(true);
-    
-    currentPassword = (EditText) findViewById(R.id.edit_current_password);
-    newPassword = (EditText) findViewById(R.id.edit_new_password);
-    newPasswordConfirm = (EditText) findViewById(R.id.edit_new_password_confirm);
+//    currentPassword = (EditText) findViewById(R.id.edit_current_password);
+//    newPassword = (EditText) findViewById(R.id.edit_new_password);
+//    newPasswordConfirm = (EditText) findViewById(R.id.edit_new_password_confirm);
     
   }
   
