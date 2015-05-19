@@ -144,6 +144,7 @@ public class ReviewDetailActivity extends ActionBarActivity
           startActivity(i);
         }
       });
+      imageView.setImageResource(R.drawable.default_thumbnail_s);
       ImageDownloader.displayImage(ReviewDetailActivity.this, bean.imageUrls.get(i), imageView, null);
       imageContainer.addView(imageView);
     }
