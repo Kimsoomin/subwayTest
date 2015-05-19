@@ -591,6 +591,8 @@ public class SubwayFragment extends Fragment
                   webview.loadUrl("javascript:subway.clear_end_station()");
                   stationsInfoLayout.setVisibility(View.GONE);
                   
+                  findNearByStationLat = -1;
+                  findNearByStationLon = -1;
                   if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
                   {
                     double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
@@ -609,6 +611,8 @@ public class SubwayFragment extends Fragment
             }
           }
           
+          findNearByStationLat = -1;
+          findNearByStationLon = -1;
           startStationId = stationId;
           if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
           {
@@ -648,6 +652,9 @@ public class SubwayFragment extends Fragment
                 @Override
                 public void onClick(DialogInterface dialog, int which)
                 {
+                  findNearByStationLat = -1;
+                  findNearByStationLon = -1;
+                  
                   startStationId = null;
                   webview.loadUrl("javascript:subway.clear_start_station()");
                   stationsInfoLayout.setVisibility(View.GONE);
@@ -664,6 +671,8 @@ public class SubwayFragment extends Fragment
             }
           }
           
+          findNearByStationLat = -1;
+          findNearByStationLon = -1;
           endStationId = stationId;
           destName = "";
           Log.w("WARN", "StationId: " + stationId);
