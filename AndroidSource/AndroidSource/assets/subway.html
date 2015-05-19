@@ -69,10 +69,15 @@
         var sbox = $('#svgWrapper');
         var s = Snap("#svg");
         var svg = $('#svg');
+        var background = undefined;
+        var startButton = undefined;
+        var endButton = undefined;
+        var tit = undefined;
 
         function checkReady() {
           if (s != null) {
               window.myClient.onSvgLoadEnded();
+              // subway.setCenterWithStationId("line132line201");
           }
         }
 
@@ -96,6 +101,14 @@
           window.myClient.completedSetDestStation(station_id, type);
         };
 
+        function setStartStation (station_id){
+          window.myClient.setStartStation(station_id);
+        };
+
+        function setEndStation (station_id){
+          window.myClient.setEndStation(station_id);
+        };
+
         function setCenterInitSubway(){
           window.scrollTo(1307, 995);
         };
@@ -111,6 +124,14 @@
               this.start_station.remove()
             }
             this.start_station_id = undefined;
+            this.clear_marked_stations();
+          },
+          clear_end_station: function(){
+            if (this.start_station) {
+              this.end_station.remove()
+            }
+            this.end_station_id = undefined;
+            this.clear_marked_stations();
           },
           set_start_station: function(station_id) {
             if (this.start_station) {
@@ -406,7 +427,29 @@
           },
           setCenterWithStationId: function (station_id){
             station = Snap.select(".station#"+station_id);
-            bound = station.getBBox();
+            // bound = station.getBBox();
+            try{
+              bound = station.getBBox()            
+            }catch(exception){
+              console.log(exception);
+              for (var i = 0; i < station_ids.length; i++){
+                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                  var temp_station = Snap.select(".station#"+station_ids[i])
+                  console.log(station_ids[i])
+
+                  try{
+                    if(temp_station.getBBox() != undefined){
+                      console.log("getBBox not undefined")
+                      console.log(temp_station.getBBox())
+                      bound = temp_station.getBBox()
+                    }
+                    break;
+                  }catch(exception){
+                    console.log(exception);
+                  }
+                }
+              }
+            }
 
             var half_width = window.innerWidth/2
             var half_height = window.innerHeight/2
@@ -571,6 +614,82 @@
           });
         }
 
+        function showDestinationPopUp(station_id){
+          console.log("showDestinationPopUp")
+          console.log(station_id);
+          var station = Snap.select(".station#" + station_id)
+            
+          var bound;
+          try{
+            bound = station.getBBox()            
+          }catch(exception){
+            console.log(exception);
+            for (var i = 0; i < station_ids.length; i++){
+              if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                var temp_station = Snap.select(".station#"+station_ids[i])
+                console.log(station_ids[i])
+
+                try{
+                  if(temp_station.getBBox() != undefined){
+                    console.log("getBBox not undefined")
+                    console.log(temp_station.getBBox())
+                    bound = temp_station.getBBox()
+                  }
+                  break;
+                }catch(exception){
+                  console.log(exception);
+                }
+              }
+            }
+
+          }
+
+          console.log(station_id);
+
+          if(background != undefined){
+            background.remove();
+            startButton.remove();
+            endButton.remove();
+            tit.remove();
+          }
+
+         // onTouchStation($(this.node).attr("id"))
+          subway.setCenterWithStationId(station_id);
+
+
+          var stationBean = stations[station_id];
+          background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 100, 200, 100);
+          startButton = s.image('./ui/images/icon_start.png', bound.x - 70, bound.y - 60, 80, 35);
+      
+          endButton = s.image('./ui/images/icon_finish.png', bound.x + 20, bound.y - 60, 80, 35);
+
+          tit = s.text(bound.x + 14, bound.y - 75, stationBean.name_cn);
+           tit.attr({
+             fill: "#fff",
+             textAnchor: "middle",
+             fontSize: "15px"
+           });
+             
+           startButton.click(function(event) { 
+            setStartStation(station_id);
+            if(background != undefined){
+              background.remove();
+              startButton.remove();
+              endButton.remove();
+              tit.remove();
+            }
+           });
+
+           endButton.click(function(event) {
+            setEndStation(station_id);
+            if(background != undefined){
+              background.remove();
+              startButton.remove();
+              endButton.remove();
+              tit.remove();
+            }
+           });
+        }
         //file:///android_asset/subway.svg
         Snap.load("subway.svg", function(data) {
           onStart = function(station) {
@@ -578,11 +697,7 @@
           }
           onClick = function(e) {
             console.log("click");
-            var station = Snap.select(".station#" + this.node.id)
-            
-            var bound = station.getBBox();
-            console.log(this.node.id);
-            onTouchStation($(this.node).attr("id"))
+            showDestinationPopUp(this.node.id);
           }
           onDblClick = function(e) {
           }
@@ -610,5 +725,15 @@
         }
 
       </script>
+
+		<!-- <div class="layer_pop"><a href="#none">출발</a><a href="#none">도착</a></div>
+		
+		<style type="text/css">
+			
+			.layer_pop{display:none;position:fixed;top:50%;left:50%;overflow:hidden;margin:-100px 0 0 -100px;width:200px;height:100px;border-radius:5px;background:url("ui/images/dim.png") repeat 0 0}
+			.layer_pop a{display:block;overflow:hidden;float:left;width:50%;height:100px;text-indent:-9999px}
+			.layer_pop a:first-child{background:url("ui/images/btn_01.png") no-repeat 12px center;background-size:80px 80px}
+			.layer_pop a:last-child{background:url("ui/images/btn_02.png") no-repeat 8px  center;background-size:80px 80px}
+		</style> -->
     </body>
 </html>

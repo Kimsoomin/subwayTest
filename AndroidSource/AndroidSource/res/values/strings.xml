@@ -329,5 +329,8 @@
     <string name="term_public">전체공개</string>
     <string name="term_private">비공개</string>
     <string name="msg_dont_choice_before_day">과거의 시간으로 선택할 수 없습니다</string>
+    <!-- 지하철 -->
+    <string name="msg_same_start_end_station">이미 해당역을 출발역으로 지정했습니다. 도착역으로 변경하시겠습니까?</string>
+    <string name="msg_same_end_start_station">이미 해당역을 도착역으로 지정했습니다. 출발역으로 변경하시겠습니까?</string>
 
 </resources>

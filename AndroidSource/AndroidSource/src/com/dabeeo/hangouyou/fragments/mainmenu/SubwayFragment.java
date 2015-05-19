@@ -308,15 +308,7 @@ public class SubwayFragment extends Fragment
       @Override
       public void run()
       {
-        webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
-        handler.postDelayed(new Runnable()
-        {
-          @Override
-          public void run()
-          {
-            showChoiceStationPopUp(stationId);
-          }
-        }, 500);
+        webview.loadUrl("javascript:showDestinationPopUp('" + stationId + "')");
       }
     });
     
@@ -351,90 +343,103 @@ public class SubwayFragment extends Fragment
   };
   
   
-  private void showChoiceStationPopUp(final String stationId)
-  {
-    try
-    {
-      if (SubwayManager.getInstance(activity).stations.size() == 0)
-      {
-        loadAllStations(new Runnable()
-        {
-          @Override
-          public void run()
-          {
-            showChoiceStationPopUp(stationId);
-          }
-        });
-      }
-      else
-      {
-        CharSequence[] menus = new CharSequence[2];
-        menus[0] = getString(R.string.term_set_start_station);
-        menus[1] = getString(R.string.term_set_end_station);
-        
-        StationBean bean = SubwayManager.getInstance(activity).findStation(stationId);
-        try
-        {
-          Log.w("WARN", "Find Station : " + bean.nameKo);
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        final CharSequence[] menuTitles = menus;
-        
-        Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(bean.nameCn);
-        builder.setItems(menus, new DialogInterface.OnClickListener()
-        {
-          public void onClick(DialogInterface dialog, int whichButton)
-          {
-            if (menuTitles[whichButton].equals(getString(R.string.term_set_start_station)))
-            {
-              handler.post(new Runnable()
-              {
-                @Override
-                public void run()
-                {
-                  startStationId = startStationId;
-                  if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
-                  {
-                    double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
-                    double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
-                    Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
-                    startStationLat = lat;
-                    startStationLong = lon;
-                  }
-                  
-                  webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
-                }
-              });
-            }
-            else if (menuTitles[whichButton].equals(getString(R.string.term_set_end_station)))
-            {
-              handler.post(new Runnable()
-              {
-                @Override
-                public void run()
-                {
-                  endStationId = stationId;
-                  destName = "";
-                  Log.w("WARN", "StationId: " + stationId);
-                  webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
-                }
-              });
-            }
-          }
-        });
-        builder.create().show();
-      }
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-  }
-  
+//  private void showChoiceStationPopUp(final String stationId)
+//  {
+//    try
+//    {
+//      if (SubwayManager.getInstance(activity).stations.size() == 0)
+//      {
+//        loadAllStations(new Runnable()
+//        {
+//          @Override
+//          public void run()
+//          {
+//            showChoiceStationPopUp(stationId);
+//          }
+//        });
+//      }
+//      else
+//      {
+//        CharSequence[] menus = new CharSequence[2];
+//        menus[0] = getString(R.string.term_set_start_station);
+//        menus[1] = getString(R.string.term_set_end_station);
+//        
+//        StationBean bean = SubwayManager.getInstance(activity).findStation(stationId);
+//        try
+//        {
+//          Log.w("WARN", "Find Station : " + bean.nameKo);
+//        }
+//        catch (Exception e)
+//        {
+//          e.printStackTrace();
+//        }
+//        final CharSequence[] menuTitles = menus;
+//        
+//        Builder builder = new AlertDialog.Builder(getActivity());
+//        builder.setTitle(bean.nameCn);
+//        builder.setItems(menus, new DialogInterface.OnClickListener()
+//        {
+//          public void onClick(DialogInterface dialog, int whichButton)
+//          {
+//            if (menuTitles[whichButton].equals(getString(R.string.term_set_start_station)))
+//            {
+//              handler.post(new Runnable()
+//              {
+//                @Override
+//                public void run()
+//                {
+//                  if (!TextUtils.isEmpty(startStationId))
+//                  {
+//                    if (startStationId.equals(stationId))
+//                    {
+//                      //시작역이 이미 같은역으로 지정된 경우 
+//                      Builder builder = new AlertDialog.Builder(getActivity());
+//                      builder.setTitle(getString(R.string.app_name));
+//                      builder.setMessage(getString(R.string.msg_dont_support_outside_seoul));
+//                      builder.setPositiveButton(android.R.string.ok, null);
+//                      builder.create().show();
+//                      return;
+//                    }
+//                  }
+//                  
+//                  startStationId = stationId;
+//                  if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
+//                  {
+//                    double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
+//                    double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
+//                    Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
+//                    startStationLat = lat;
+//                    startStationLong = lon;
+//                  }
+//                  
+//                  webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+//                }
+//              });
+//            }
+//            else if (menuTitles[whichButton].equals(getString(R.string.term_set_end_station)))
+//            {
+//              handler.post(new Runnable()
+//              {
+//                @Override
+//                public void run()
+//                {
+//                  endStationId = stationId;
+//                  destName = "";
+//                  Log.w("WARN", "StationId: " + stationId);
+//                  webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+//                }
+//              });
+//            }
+//          }
+//        });
+//        builder.create().show();
+//      }
+//    }
+//    catch (Exception e)
+//    {
+//      e.printStackTrace();
+//    }
+//  }
   
   private void showFindStartStation(final String stationId)
   {
@@ -552,6 +557,114 @@ public class SubwayFragment extends Fragment
       SubwayManager.getInstance(activity).stations.clear();
       SubwayManager.getInstance(activity).stations.addAll(stations);
       afterLoadSubwaysRunnable.run();
+    }
+    
+    
+    @JavascriptInterface
+    public void setStartStation(final String stationId)
+    {
+      handler.post(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          if (!TextUtils.isEmpty(endStationId))
+          {
+            if (endStationId.equals(stationId))
+            {
+              //시작역이 이미 도착역으로 지정된 경우 
+              Builder builder = new AlertDialog.Builder(getActivity());
+              builder.setTitle(getString(R.string.app_name));
+              builder.setMessage(getString(R.string.msg_same_end_start_station));
+              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                  startStationId = stationId;
+                  endStationId = null;
+                  webview.loadUrl("javascript:subway.clear_end_station()");
+                  stationsInfoLayout.setVisibility(View.GONE);
+                  
+                  if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
+                  {
+                    double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
+                    double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
+                    Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
+                    startStationLat = lat;
+                    startStationLong = lon;
+                  }
+                  
+                  webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+                }
+              });
+              builder.setNegativeButton(android.R.string.cancel, null);
+              builder.create().show();
+              return;
+            }
+          }
+          
+          startStationId = stationId;
+          if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
+          {
+            double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
+            double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
+            Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
+            startStationLat = lat;
+            startStationLong = lon;
+          }
+          
+          webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+        }
+      });
+    }
+    
+    
+    @JavascriptInterface
+    public void setEndStation(final String stationId)
+    {
+      handler.post(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          if (!TextUtils.isEmpty(startStationId))
+          {
+            Log.w("WARN", "Current startStationId : " + startStationId);
+            Log.w("WARN", "Change stationId : " + stationId);
+            if (startStationId.equals(stationId))
+            {
+              //도착역이 이미 시작역으로 지정된 경우 
+              Builder builder = new AlertDialog.Builder(getActivity());
+              builder.setTitle(getString(R.string.app_name));
+              builder.setMessage(getString(R.string.msg_same_start_end_station));
+              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                  startStationId = null;
+                  webview.loadUrl("javascript:subway.clear_start_station()");
+                  stationsInfoLayout.setVisibility(View.GONE);
+                  
+                  endStationId = stationId;
+                  destName = "";
+                  Log.w("WARN", "StationId: " + stationId);
+                  webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+                }
+              });
+              builder.setNegativeButton(android.R.string.cancel, null);
+              builder.create().show();
+              return;
+            }
+          }
+          
+          endStationId = stationId;
+          destName = "";
+          Log.w("WARN", "StationId: " + stationId);
+          webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+        }
+      });
     }
     
     
@@ -765,7 +878,6 @@ public class SubwayFragment extends Fragment
         @Override
         public void run()
         {
-          webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
           if (setDestFindNearStation == -1)
           {
             handler.postDelayed(new Runnable()
@@ -773,7 +885,7 @@ public class SubwayFragment extends Fragment
               @Override
               public void run()
               {
-                showChoiceStationPopUp(stationId);
+                webview.loadUrl("javascript:showDestinationPopUp('" + stationId + "')");
               }
             }, 500);
           }
@@ -781,21 +893,63 @@ public class SubwayFragment extends Fragment
           {
             if (setDestFindNearStation == 0)
             {
-              containerNearByStationInfo.setVisibility(View.VISIBLE);
-              nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
-              nearStationName.setText(nearByStation.nameCn);
-              nearStationX.setOnClickListener(new OnClickListener()
+              if (!TextUtils.isEmpty(endStationId))
               {
-                @Override
-                public void onClick(View v)
+                if (endStationId.equals(stationId))
                 {
-                  containerNearByStationInfo.setVisibility(View.GONE);
-                  startStationLat = -1;
-                  startStationLong = -1;
-                  
-                  webview.loadUrl("javascript:subway.clear_start_station()");
+                  //시작역이 이미 도착역으로 지정된 경우 
+                  Builder builder = new AlertDialog.Builder(getActivity());
+                  builder.setTitle(getString(R.string.app_name));
+                  builder.setMessage(getString(R.string.msg_same_end_start_station));
+                  builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                  {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                      startStationId = stationId;
+                      endStationId = null;
+                      webview.loadUrl("javascript:subway.clear_end_station()");
+                      stationsInfoLayout.setVisibility(View.GONE);
+                      
+                      if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
+                      {
+                        double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
+                        double lon = SubwayManager.getInstance(activity).getLongitudeWithSubwayId(stationId);
+                        Log.w("WARN", "출발역 경위도 : " + lat + " / " + lon);
+                        startStationLat = lat;
+                        startStationLong = lon;
+                      }
+                      
+                      webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
+                    }
+                  });
+                  builder.setNegativeButton(android.R.string.cancel, null);
+                  builder.create().show();
+                  return;
                 }
-              });
+              }
+              
+              startStationId = stationId;
+              if (TextUtils.isEmpty(endStationId))
+              {
+                containerNearByStationInfo.setVisibility(View.VISIBLE);
+                nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+                nearStationName.setText(nearByStation.nameCn);
+                nearStationX.setOnClickListener(new OnClickListener()
+                {
+                  @Override
+                  public void onClick(View v)
+                  {
+                    containerNearByStationInfo.setVisibility(View.GONE);
+                    startStationLat = -1;
+                    startStationLong = -1;
+                    
+                    webview.loadUrl("javascript:subway.clear_start_station()");
+                  }
+                });
+              }
+              
+              webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
               if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
               {
                 double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
@@ -804,7 +958,14 @@ public class SubwayFragment extends Fragment
                 startStationLong = lon;
               }
               Log.w("WARN", "가까운 지하철 역 출발지로 선택 :" + nearByStation.stationId);
-              webview.loadUrl("javascript:subway.set_start_station('" + nearByStation.stationId + "')");
+              handler.postDelayed(new Runnable()
+              {
+                @Override
+                public void run()
+                {
+                  webview.loadUrl("javascript:subway.set_start_station('" + nearByStation.stationId + "')");
+                }
+              }, 500);
             }
             else if (setDestFindNearStation == 1)
             {
@@ -813,7 +974,80 @@ public class SubwayFragment extends Fragment
                 @Override
                 public void run()
                 {
-                  webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+                  if (!TextUtils.isEmpty(startStationId))
+                  {
+                    Log.w("WARN", "Current startStationId : " + startStationId);
+                    Log.w("WARN", "Change stationId : " + stationId);
+                    if (startStationId.equals(stationId))
+                    {
+                      //도착역이 이미 시작역으로 지정된 경우 
+                      Builder builder = new AlertDialog.Builder(getActivity());
+                      builder.setTitle(getString(R.string.app_name));
+                      builder.setMessage(getString(R.string.msg_same_start_end_station));
+                      builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                      {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                          startStationId = null;
+                          webview.loadUrl("javascript:subway.clear_start_station()");
+                          
+                          endStationId = stationId;
+                          destName = "";
+                          
+                          Log.w("WARN", "StationId: " + stationId);
+                          webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+                          stationsInfoLayout.setVisibility(View.GONE);
+                          
+                          if (TextUtils.isEmpty(startStationId))
+                          {
+                            containerNearByStationInfo.setVisibility(View.VISIBLE);
+                            nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+                            nearStationName.setText(nearByStation.nameCn);
+                            nearStationX.setOnClickListener(new OnClickListener()
+                            {
+                              @Override
+                              public void onClick(View v)
+                              {
+                                containerNearByStationInfo.setVisibility(View.GONE);
+                                webview.loadUrl("javascript:subway.clear_end_station()");
+                              }
+                            });
+                          }
+                        }
+                      });
+                      builder.setNegativeButton(android.R.string.cancel, null);
+                      builder.create().show();
+                      return;
+                    }
+                  }
+                  
+                  endStationId = stationId;
+                  webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+                  handler.postDelayed(new Runnable()
+                  {
+                    @Override
+                    public void run()
+                    {
+                      webview.loadUrl("javascript:subway.set_end_station('" + stationId + "')");
+                      if (TextUtils.isEmpty(startStationId))
+                      {
+                        containerNearByStationInfo.setVisibility(View.VISIBLE);
+                        nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+                        nearStationName.setText(nearByStation.nameCn);
+                        nearStationX.setOnClickListener(new OnClickListener()
+                        {
+                          @Override
+                          public void onClick(View v)
+                          {
+                            containerNearByStationInfo.setVisibility(View.GONE);
+                            webview.loadUrl("javascript:subway.clear_end_station()");
+                          }
+                        });
+                      }
+                    }
+                  }, 500);
+                  
                 }
               });
             }
@@ -827,7 +1061,6 @@ public class SubwayFragment extends Fragment
     public void completedSetDestStation(final String stationId, final int type)
     {
       final StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);
-      Log.w("WARN", "출도착 역 설정 완료:" + nearByStation.nameKo);
       handler.post(new Runnable()
       {
         @Override
@@ -867,7 +1100,7 @@ public class SubwayFragment extends Fragment
             @Override
             public void run()
             {
-              showChoiceStationPopUp(station);
+              webview.loadUrl("javascript:showDestinationPopUp('" + station + "')");
             }
           }, 500);
         }
