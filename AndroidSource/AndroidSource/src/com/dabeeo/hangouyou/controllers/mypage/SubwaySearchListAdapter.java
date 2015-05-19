@@ -5,11 +5,13 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
@@ -79,7 +81,8 @@ public class SubwaySearchListAdapter extends BaseAdapter
     int resId = R.layout.list_item_subway_search;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
-    ImageView imageView = (ImageView) view.findViewById(R.id.subway_line);
+    LinearLayout imageContainer = (LinearLayout) view.findViewById(R.id.line_images);
+    
     TextView title = (TextView) view.findViewById(R.id.title);
     
     if (Locale.getDefault().getLanguage().contains("ko"))
@@ -87,7 +90,20 @@ public class SubwaySearchListAdapter extends BaseAdapter
     else
       title.setText(bean.nameCn);
     
+    imageContainer.removeAllViews();
+    
+    ImageView imageView = new ImageView(context);
+    imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
     imageView.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.line));
+    imageContainer.addView(imageView);
+    
+    for (int i = 0; i < bean.lines.size(); i++)
+    {
+      imageView = new ImageView(context);
+      imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+      imageView.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.lines.get(i)));
+      imageContainer.addView(imageView);
+    }
     return view;
   }
 }

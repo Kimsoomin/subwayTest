@@ -154,24 +154,6 @@ public class SubwayStationsActivity extends ActionBarActivity
       }
     }
     
-    for (int i = 0; i < stations.size(); i++)
-    {
-      try
-      {
-        if (!TextUtils.isEmpty(stations.get(i).afterLine) && !TextUtils.isEmpty(stations.get(i + 1).beforeLine))
-        {
-          if (stations.get(i).afterLine.equals(stations.get(i + 1).beforeLine))
-          {
-            stations.get(i).line = stations.get(i).afterLine;
-            stations.get(i + 1).line = stations.get(i + 1).beforeLine;
-          }
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-    }
     
     try
     {
