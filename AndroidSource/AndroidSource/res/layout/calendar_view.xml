@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/caldroid_white"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/calendar_title_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" >
+
+            <Button
+                android:id="@+id/calendar_left_arrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/icon_arrow_b_before" />
+
+            <TextView
+                android:id="@+id/calendar_month_year_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_toLeftOf="@+id/calendar_right_arrow"
+                android:layout_toRightOf="@+id/calendar_left_arrow"
+                android:gravity="center_horizontal"
+                android:textColor="@color/appcolor"
+                android:textIsSelectable="true"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/calendar_right_arrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/icon_arrow_b_next" />
+        </RelativeLayout>
+
+        <GridView
+            android:id="@+id/weekday_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:numColumns="7"
+            android:stretchMode="columnWidth" />
+
+        <com.dabeeo.hangouyou.external.library.calendar.InfiniteViewPager
+            android:id="@+id/months_infinite_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

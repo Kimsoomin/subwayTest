@@ -187,4 +187,10 @@ public class ApiClient
 //    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
     return new NetworkResult(true, null, 1);
   }
+  
+  
+  public NetworkResult getRecommendSchedule(String type, int days, int year, int month, int dayOfMonth)
+  {
+    return httpClient.requestGet(getSiteUrl() + "v=m1&mode=PLAN_LIST&isRec=1");
+  }
 }

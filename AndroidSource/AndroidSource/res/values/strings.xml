@@ -328,5 +328,6 @@
     <string name="term_select_delete">선택 삭제</string>
     <string name="term_public">전체공개</string>
     <string name="term_private">비공개</string>
+    <string name="msg_dont_choice_before_day">과거의 시간으로 선택할 수 없습니다</string>
 
 </resources>

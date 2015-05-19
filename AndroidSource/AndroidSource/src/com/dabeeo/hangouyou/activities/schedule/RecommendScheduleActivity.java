@@ -2,10 +2,10 @@ package com.dabeeo.hangouyou.activities.schedule;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.views.CharacterProgressView;
 
 public class RecommendScheduleActivity extends ActionBarActivity
@@ -38,6 +40,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   private String type = "";
   private LinearLayout containerShopping, containerCulture, containerTour, containerFood, containerRest, containerRandom;
+  private ApiClient apiClient;
   
   
   @Override
@@ -54,6 +57,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    apiClient = new ApiClient(this);
     containerShopping = (LinearLayout) findViewById(R.id.container_shopping);
     containerCulture = (LinearLayout) findViewById(R.id.container_culture);
     containerTour = (LinearLayout) findViewById(R.id.container_tour);
@@ -205,27 +209,76 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   private void findAndShowDialog()
   {
+//    new FindAsyncTask().execute();
     Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
     CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
     pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
     builder.setView(pView);
     builder.setCancelable(false);
-    final AlertDialog dialog = builder.create();
+    AlertDialog dialog = builder.create();
     
     if (!dialog.isShowing())
       dialog.show();
     
-    //TODO : 네트워크를 통해 추천일정 받기 
+    Log.w("WARN", "Days : " + day);
+    Log.w("WARN", "Year : " + year);
+    Log.w("WARN", "month : " + month);
+    Log.w("WARN", "dayOfMonth : " + dayOfMonth);
+    Log.w("WARN", "type : " + type);
     
     new Handler().postDelayed(new Runnable()
     {
       @Override
       public void run()
       {
-        dialog.dismiss();
         Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
         startActivity(i);
       }
-    }, 4000);
+    }, 5000);
+  }
+  
+  private class FindAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    AlertDialog dialog;
+    
+    
+    @Override
+    protected void onPreExecute()
+    {
+      Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
+      CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
+      pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
+      builder.setView(pView);
+      builder.setCancelable(false);
+      dialog = builder.create();
+      
+      if (!dialog.isShowing())
+        dialog.show();
+      
+      Log.w("WARN", "Days : " + day);
+      Log.w("WARN", "Year : " + year);
+      Log.w("WARN", "month : " + month);
+      Log.w("WARN", "dayOfMonth : " + dayOfMonth);
+      Log.w("WARN", "type : " + type);
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.getRecommendSchedule(type, day, year, month, dayOfMonth);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      
+      dialog.dismiss();
+      Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
+      startActivity(i);
+      super.onPostExecute(result);
+    }
   }
 }

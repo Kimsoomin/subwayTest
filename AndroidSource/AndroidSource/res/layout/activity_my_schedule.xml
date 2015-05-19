@@ -90,8 +90,7 @@
         android:padding="8dp"
         android:text="@string/term_recommend_travel_schedule"
         android:textColor="#ffffff"
-        android:textSize="21sp"
-        android:visibility="gone" />
+        android:textSize="21sp" />
 
     <Button
         android:id="@+id/btn_delete"

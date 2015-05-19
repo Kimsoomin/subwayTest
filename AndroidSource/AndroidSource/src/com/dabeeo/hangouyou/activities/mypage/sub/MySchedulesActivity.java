@@ -197,7 +197,7 @@ public class MySchedulesActivity extends ActionBarActivity
         {
           emptyContainer.setVisibility(View.GONE);
           gridViewContainer.setVisibility(View.VISIBLE);
-          btnRecommendSchedule.setVisibility(View.GONE);
+          btnRecommendSchedule.setVisibility(View.VISIBLE);
         }
       }
       progressBar.setVisibility(View.GONE);
@@ -257,8 +257,7 @@ public class MySchedulesActivity extends ActionBarActivity
     else
     {
       btnDelete.setVisibility(View.GONE);
-      if (adapter.getCount() == 0)
-        btnRecommendSchedule.setVisibility(View.VISIBLE);
+      btnRecommendSchedule.setVisibility(View.VISIBLE);
       deleteAllCheckbox.setVisibility(View.GONE);
     }
     
