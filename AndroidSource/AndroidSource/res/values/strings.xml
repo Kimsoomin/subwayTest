@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">韩购游</string>
+    <string name="app_name">韩哈游</string>
 
     <!-- 서버 -->
     <string name="server_address">http://aimper.mintshop.com/api/v1/</string>

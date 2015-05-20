@@ -22,8 +22,8 @@
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/btn_title_back"
-                android:visibility="gone" />
+                android:background="@drawable/ic_back_arrow"
+                android:visibility="visible" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

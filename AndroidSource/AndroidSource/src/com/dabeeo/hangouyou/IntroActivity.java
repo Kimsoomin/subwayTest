@@ -1,23 +1,13 @@
 package com.dabeeo.hangouyou;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,17 +27,14 @@ import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
-import com.dabeeo.hangouyou.beans.PlaceBean;
-import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
-import com.dabeeo.hangouyou.managers.SubwayManager;
 import com.dabeeo.hangouyou.map.Global;
-import com.dabeeo.hangouyou.map.MapPlaceDataManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.CharacterProgressView;
+import com.dabeeo.hangouyou.R;
 
 public class IntroActivity extends Activity
 {
@@ -81,6 +68,9 @@ public class IntroActivity extends Activity
       ft.replace(R.id.content, MainActivity.subwayFrament);
       ft.commit();
     }
+    
+    progressBar.bringToFront();
+    handler.postDelayed(checkSubwayNativeLoadRunnable, 100);
   }
   
   
@@ -96,8 +86,6 @@ public class IntroActivity extends Activity
   protected void onResume()
   {
     super.onResume();
-    progressBar.bringToFront();
-    handler.postDelayed(checkSubwayNativeLoadRunnable, 100);
   }
   
   

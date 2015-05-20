@@ -59,6 +59,7 @@ public class SubwayStationsActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    getSupportActionBar().hide();
     
     String infoString = getIntent().getStringExtra("stations_info");
     String jsonStations = getIntent().getStringExtra("stations_json");
