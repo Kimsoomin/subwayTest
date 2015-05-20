@@ -344,4 +344,7 @@
 	<string name="msg_help_wish_list">한국의 인기 상품들을 둘러보고\n위시리스트를 채워보세요!</string>
 	<string name="term_go_to_popular_product">인기상품 둘러보기</string>
 	<string name="term_popular_wish_list">인기 위시리스트</string>
+	<!-- 여행공략 -->
+	<string name="msg_rate_this_place">이 장소를\n평가해주세요!</string>
+	<string name="msg_how_about_this_place">이 장소 어떠셨나요?</string>
 </resources>

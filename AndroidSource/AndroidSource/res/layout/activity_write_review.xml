@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -12,65 +13,116 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="12dp" >
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/msg_rate_this_place" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_review_best"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/circle_button"
+                    android:text="@string/term_review_best"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/btn_review_soso"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/circle_button"
+                    android:text="@string/term_review_soso"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/btn_review_worst"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/circle_button"
+                    android:text="@string/term_review_worst"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="#f0f0f0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/white"
             android:gravity="center"
             android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_review_best"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/circle_button"
-                android:text="@string/term_review_best"
-                android:textSize="13sp" />
+            <ImageView
+                android:id="@+id/add_pic"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/btn_review_add_pic" />
 
-            <Button
-                android:id="@+id/btn_review_soso"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/circle_button"
-                android:text="@string/term_review_soso"
-                android:textSize="13sp" />
+            <HorizontalScrollView
+                android:id="@+id/image_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" >
 
-            <Button
-                android:id="@+id/btn_review_worst"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/circle_button"
-                android:text="@string/term_review_worst"
-                android:textSize="13sp" />
+                <LinearLayout
+                    android:id="@+id/image_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="gone" />
+            </HorizontalScrollView>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageview"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/darker_gray"
-            android:contentDescription="@null" />
+            android:layout_height="8dp"
+            android:background="#f0f0f0" />
 
-        <EditText
-            android:id="@+id/edit_review"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="@string/message_write_review" />
+            android:padding="8dp" >
 
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/app_button"
-            android:text="@string/term_save" />
+            <EditText
+                android:id="@+id/edit_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_gray_box"
+                android:gravity="top"
+                android:hint="@string/msg_how_about_this_place"
+                android:minHeight="150dp"
+                android:padding="8dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
