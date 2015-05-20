@@ -2,7 +2,11 @@ package com.dabeeo.hangouyou.activities.ticket;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.bases.BaseNavigationTabActivity;
@@ -17,6 +21,14 @@ public class TicketActivity extends BaseNavigationTabActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_ticket));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     adapter = new TicketViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setOnPageChangeListener(pageChangeListener);

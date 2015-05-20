@@ -48,7 +48,7 @@ public class TicketListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new TicketListAdapter();
+    adapter = new TicketListAdapter(getActivity());
     
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
