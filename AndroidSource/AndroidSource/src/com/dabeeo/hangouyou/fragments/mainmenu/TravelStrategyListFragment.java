@@ -20,6 +20,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.PremiumBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulListAdapter;
@@ -35,7 +37,7 @@ public class TravelStrategyListFragment extends Fragment
   private RecommendSeoulListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
-  
+  private int lastVisibleItem = 0;
   
   public TravelStrategyListFragment(int categoryId)
   {
@@ -73,6 +75,11 @@ public class TravelStrategyListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
+        if (firstVisibleItem > lastVisibleItem)
+          ((TravelStrategyActivity) getActivity()).showBottomTab(true);
+        else
+          ((TravelStrategyActivity) getActivity()).showBottomTab(false);
+        
         if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;

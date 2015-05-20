@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.PlaceListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -34,6 +35,7 @@ public class PlaceListFragment extends Fragment
   private PlaceListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
+  private int lastVisibleItem = 0;
   
   
   public PlaceListFragment(int categoryId)
@@ -73,6 +75,11 @@ public class PlaceListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
+        if (firstVisibleItem > lastVisibleItem)
+          ((TravelStrategyActivity) getActivity()).showBottomTab(true);
+        else
+          ((TravelStrategyActivity) getActivity()).showBottomTab(false);
+        
         if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;

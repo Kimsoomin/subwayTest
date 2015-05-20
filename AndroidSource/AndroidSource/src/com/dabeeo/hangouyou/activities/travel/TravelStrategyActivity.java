@@ -19,6 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,8 +44,10 @@ public class TravelStrategyActivity extends ActionBarActivity
 	private MenuItem areaItem;
 	private ViewPager viewPager;
 	
+  private LinearLayout containerBottomTab;
+  private boolean isAnimation = false;
+  private float bottomTappx;
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -59,6 +64,8 @@ public class TravelStrategyActivity extends ActionBarActivity
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
+		containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
+		containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
 		bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
 		bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
 		bottomMenuPhotolog = (LinearLayout) findViewById(R.id.container_menu_photolog);
@@ -241,4 +248,86 @@ public class TravelStrategyActivity extends ActionBarActivity
 		builderSingle.show();
 	}
 	
+	 /**
+   * Animation Float
+   */
+  public void showBottomTab(boolean isShow)
+  {
+    if (isAnimation)
+      return;
+    
+    float density = getResources().getDisplayMetrics().density;
+    bottomTappx = 65 * density;
+    
+    if (isShow)
+    {
+      //Showing
+      if (containerBottomTab.getVisibility() == View.GONE)
+      {
+        TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, bottomTappx);
+        animation.setDuration(500);
+        animation.setFillAfter(true);
+        animation.setAnimationListener(new AnimationListener()
+        {
+          @Override
+          public void onAnimationStart(Animation animation)
+          {
+            containerBottomTab.setVisibility(View.VISIBLE);
+            isAnimation = true;
+          }
+          
+          
+          @Override
+          public void onAnimationRepeat(Animation animation)
+          {
+            
+          }
+          
+          
+          @Override
+          public void onAnimationEnd(Animation arg0)
+          {
+            isAnimation = false;
+          }
+        });
+        
+        containerBottomTab.startAnimation(animation);
+      }
+    }
+    else
+    {
+      //GONE
+      if (containerBottomTab.getVisibility() == View.VISIBLE)
+      {
+        TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, bottomTappx, 0.0f);
+        animation.setDuration(500);
+        animation.setFillAfter(true);
+        animation.setAnimationListener(new AnimationListener()
+        {
+          @Override
+          public void onAnimationStart(Animation animation)
+          {
+            isAnimation = true;
+          }
+          
+          
+          @Override
+          public void onAnimationRepeat(Animation animation)
+          {
+            
+          }
+          
+          
+          @Override
+          public void onAnimationEnd(Animation arg0)
+          {
+            isAnimation = false;
+            containerBottomTab.setVisibility(View.GONE);
+          }
+        });
+        containerBottomTab.startAnimation(animation);
+      }
+    }
+  }
+
 }

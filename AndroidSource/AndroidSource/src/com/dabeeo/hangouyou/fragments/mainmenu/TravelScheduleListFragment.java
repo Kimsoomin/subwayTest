@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
@@ -43,6 +44,7 @@ public class TravelScheduleListFragment extends Fragment
   private int page = 1;
   private int type = SCHEDULE_TYPE_POPULAR;
   private boolean isLoading = false;
+  private int lastVisibleItem = 0;
   
   private LinearLayout emptyContainer;
   private TextView emptyText;
@@ -89,6 +91,11 @@ public class TravelScheduleListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
+        if (firstVisibleItem > lastVisibleItem)
+          ((TravelSchedulesActivity) getActivity()).showBottomTab(true);
+        else
+          ((TravelSchedulesActivity) getActivity()).showBottomTab(false);
+        
         if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;

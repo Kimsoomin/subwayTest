@@ -117,76 +117,76 @@ public class TrendActivity extends ActionBarActivity
 		{
 			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
 			{
-				if (isAnimation)
-					return;
-				if (firstVisibleItem > lastVisibleItem)
-				{
-					//Showing
-					if (containerBottomTab.getVisibility() == View.GONE)
-					{
-						TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, bottomTappx);
-						animation.setDuration(500);
-						animation.setFillAfter(true);
-						animation.setAnimationListener(new AnimationListener()
-						{
-							@Override
-							public void onAnimationStart(Animation animation)
-							{
-								containerBottomTab.setVisibility(View.VISIBLE);
-								isAnimation = true;
-							}
-							
-							
-							@Override
-							public void onAnimationRepeat(Animation animation)
-							{
-								
-							}
-							
-							
-							@Override
-							public void onAnimationEnd(Animation arg0)
-							{
-								isAnimation = false;
-							}
-						});
-						
-						containerBottomTab.startAnimation(animation);
-					}
-				}
-				else
-				{
-					//GONE
-					if (containerBottomTab.getVisibility() == View.VISIBLE)
-					{
-						TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, bottomTappx, 0.0f);
-						animation.setDuration(500);
-						animation.setFillAfter(true);
-						animation.setAnimationListener(new AnimationListener()
-						{
-							@Override
-							public void onAnimationStart(Animation animation)
-							{
-								isAnimation = true;
-							}
-							
-							
-							@Override
-							public void onAnimationRepeat(Animation animation)
-							{
-								
-							}
-							
-							
-							@Override
-							public void onAnimationEnd(Animation arg0)
-							{
-								isAnimation = false;
-								containerBottomTab.setVisibility(View.GONE);
-							}
-						});
-						containerBottomTab.startAnimation(animation);
-					}
+        if (isAnimation)
+          return;
+        if (firstVisibleItem > lastVisibleItem)
+        {
+          //Showing
+          if (containerBottomTab.getVisibility() == View.GONE)
+          {
+            TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, bottomTappx);
+            animation.setDuration(500);
+            animation.setFillAfter(true);
+            animation.setAnimationListener(new AnimationListener()
+            {
+              @Override
+              public void onAnimationStart(Animation animation)
+              {
+                containerBottomTab.setVisibility(View.VISIBLE);
+                isAnimation = true;
+              }
+              
+              
+              @Override
+              public void onAnimationRepeat(Animation animation)
+              {
+                
+              }
+              
+              
+              @Override
+              public void onAnimationEnd(Animation arg0)
+              {
+                isAnimation = false;
+              }
+            });
+            
+            containerBottomTab.startAnimation(animation);
+          }
+        }
+        else
+        {
+          //GONE
+          if (containerBottomTab.getVisibility() == View.VISIBLE)
+          {
+            TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, bottomTappx, 0.0f);
+            animation.setDuration(500);
+            animation.setFillAfter(true);
+            animation.setAnimationListener(new AnimationListener()
+            {
+              @Override
+              public void onAnimationStart(Animation animation)
+              {
+                isAnimation = true;
+              }
+              
+              
+              @Override
+              public void onAnimationRepeat(Animation animation)
+              {
+                
+              }
+              
+              
+              @Override
+              public void onAnimationEnd(Animation arg0)
+              {
+                isAnimation = false;
+                containerBottomTab.setVisibility(View.GONE);
+              }
+            });
+            containerBottomTab.startAnimation(animation);
+          }
 				}
 				
 			}
