@@ -9,19 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.TrendProductBean;
-import com.dabeeo.hangouyou.controllers.trend.TrendExhitionListAdapter;
+import com.dabeeo.hangouyou.beans.ProductBean;
+import com.dabeeo.hangouyou.controllers.trend.TrendProductListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hangouyou.views.TrendExhibitionTopView;
 
 public class TrendExhibitionActivity extends ActionBarActivity
 {
   private GridViewWithHeaderAndFooter gridView;
-  private TrendExhitionListAdapter adapter;
+  private TrendProductListAdapter adapter;
   
   
   @Override
@@ -44,18 +44,18 @@ public class TrendExhibitionActivity extends ActionBarActivity
     view.setBean(null);
     gridView.addHeaderView(view);
     
-    adapter = new TrendExhitionListAdapter(this);
+    adapter = new TrendProductListAdapter(this);
     gridView.setAdapter(adapter);
     
-    TrendProductBean bean = new TrendProductBean();
+    ProductBean bean = new ProductBean();
     bean.title = "[숨]워터풀 타임리스 워터젤 크림";
-    bean.price = 80000;
+    bean.originalPrice = 80000;
     bean.discountPrice = 452000;
     adapter.add(bean);
     
-    bean = new TrendProductBean();
+    bean = new ProductBean();
     bean.title = "[네이처리퍼블릭]수딩 맨 모이스처 알로엘 수딩젤";
-    bean.price = 80000;
+    bean.originalPrice = 80000;
     bean.discountPrice = 452000;
     adapter.add(bean);
     

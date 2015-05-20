@@ -158,27 +158,27 @@ public class TrendSearchActivity extends Activity
       Intent i = new Intent(TrendSearchActivity.this, TrendProductWithCategoryActivity.class);
       if (v.getId() == conatinerAll.getId())
       {
-        
+        i.putExtra("category_title", getString(R.string.term_shopping_all));
       }
       else if (v.getId() == conatinerCosmetic.getId())
       {
-        
+        i.putExtra("category_title", getString(R.string.term_shopping_cosmetic));
       }
       else if (v.getId() == conatinerFood.getId())
       {
-        
+        i.putExtra("category_title", getString(R.string.term_shopping_food));
       }
       else if (v.getId() == conatinerBaby.getId())
       {
-        
+        i.putExtra("category_title", getString(R.string.term_shopping_baby));
       }
       else if (v.getId() == conatinerLiving.getId())
       {
-        
+        i.putExtra("category_title", getString(R.string.term_shopping_living));
       }
       else if (v.getId() == conatinerEtc.getId())
       {
-        
+        i.putExtra("category_title", getString(R.string.term_shopping_etc));
       }
       startActivity(i);
     }
