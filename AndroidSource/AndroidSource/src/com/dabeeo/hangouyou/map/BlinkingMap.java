@@ -77,9 +77,9 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.map.SensorUpdater.SensorUpdaterCallback;
-import com.dabeeo.hangouyou.R;
 import com.squareup.picasso.Picasso;
 
 public class BlinkingMap extends Activity implements OnClickListener,SensorUpdaterCallback, OnEditorActionListener 
@@ -665,9 +665,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 
 			if(!allplace)
 			{
-				for(Entry<String, PremiumInfo> premiumInfo : premiumInfo.entrySet())
+				//premiumInfo의 이름이 같아 에러가 나서 수정했습니다.
+				for(Entry<String, PremiumInfo> premiumInfoBean : premiumInfo.entrySet())
 				{
-					PremiumInfo preInfo = premiumInfo.getValue();
+					PremiumInfo preInfo = premiumInfoBean.getValue();
 					if(preInfo.m_strName.equals(m_Adapter.getItem(arg2)))
 					{
 						idx = preInfo.m_nID;

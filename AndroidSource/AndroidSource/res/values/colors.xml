@@ -47,4 +47,6 @@
 
     <drawable name="transparent_actionbar">#00000000</drawable>
 
+    <drawable name="dark_gray">#444a4b</drawable>
+    <drawable name="app_color">#2dbdb6</drawable>
 </resources>

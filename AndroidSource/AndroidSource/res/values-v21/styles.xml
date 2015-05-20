@@ -3,7 +3,7 @@
     <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/appcolor</item>
         <item name="colorPrimaryDark">@color/appcolor</item>
-        <item name="colorAccent">@color/highlight</item>
+        <item name="colorAccent">@color/appcolor</item>
     </style>
 
 </resources>
