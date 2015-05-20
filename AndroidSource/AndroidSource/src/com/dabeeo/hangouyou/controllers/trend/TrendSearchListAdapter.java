@@ -13,11 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.TrendSearchListBean;
+import com.dabeeo.hangouyou.beans.ProductBean;
 
 public class TrendSearchListAdapter extends BaseAdapter
 {
-  private ArrayList<TrendSearchListBean> beans = new ArrayList<TrendSearchListBean>();
+  private ArrayList<ProductBean> beans = new ArrayList<ProductBean>();
   private Activity context;
   
   
@@ -27,14 +27,14 @@ public class TrendSearchListAdapter extends BaseAdapter
   }
   
   
-  public void add(TrendSearchListBean bean)
+  public void add(ProductBean bean)
   {
     this.beans.add(bean);
     notifyDataSetChanged();
   }
   
   
-  public void addAll(ArrayList<TrendSearchListBean> beans)
+  public void addAll(ArrayList<ProductBean> beans)
   {
     this.beans.addAll(beans);
     notifyDataSetChanged();
@@ -73,17 +73,9 @@ public class TrendSearchListAdapter extends BaseAdapter
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
-    TrendSearchListBean bean = (TrendSearchListBean) beans.get(position);
+    ProductBean bean = (ProductBean) beans.get(position);
     int resId = R.layout.list_item_trend_search_list;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
-    
-    Display display = context.getWindowManager().getDefaultDisplay();
-    @SuppressWarnings("deprecation")
-    int width = display.getWidth();
-    int boxHeight = Math.round(width / 3) - 10;
-    
-    AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, boxHeight);
-    view.setLayoutParams(layoutParams);
     
     TextView title = (TextView) view.findViewById(R.id.title);
     title.setText(bean.title);

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -16,37 +17,266 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:src="@drawable/ic_back_arrow" />
 
-        <EditText
-            android:id="@+id/edit_search"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:background="@drawable/input_search"
-            android:hint="@string/term_search"
-            android:paddingLeft="8dp"
-            android:singleLine="true" />
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/icon_search" />
+
+            <EditText
+                android:id="@+id/edit_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="@string/term_search"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="8dp"
+                android:singleLine="true" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/btn_cart"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="4dp"
             android:src="@drawable/btn_title_cart" />
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/listview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:numColumns="3" />
+        android:layout_height="match_parent" >
+
+        <!-- 하단 메뉴 -->
+
+        <LinearLayout
+            android:id="@+id/container_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="#c3c3c3"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/container_all"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/btn_shopping_all" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/term_shopping_all" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_cosmetic"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/btn_shopping_cosmetic" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/term_shopping_cosmetic" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_food"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/btn_shopping_food" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/term_shopping_food" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="#c3c3c3"
+                android:orientation="horizontal"
+                android:paddingTop="1dp" >
+
+                <LinearLayout
+                    android:id="@+id/container_baby"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/btn_shopping_baby" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/term_shopping_baby" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_living"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/btn_shopping_living" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/term_shopping_living" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_etc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/btn_shopping_etc" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/term_shopping_etc" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 검색화면 -->
+
+        <LinearLayout
+            android:id="@+id/search_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/search_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:textColor="@color/appcolor"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <RelativeLayout
+                    android:id="@+id/search_not_exist_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone" >
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/character_list_blank" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/msg_empty_search_result"
+                            android:textColor="#444a4b"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

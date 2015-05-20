@@ -97,6 +97,10 @@
             android:screenOrientation="portrait" />
         <!-- Trend -->
         <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductWithCategoryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.trend.TrendExhibitionActivity"
             android:label="@string/term_exhibitions"
             android:launchMode="singleTask"

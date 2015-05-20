@@ -237,7 +237,6 @@
     <string name="term_quantity_unit">张</string>
     <string name="term_download">下载</string>
     <string name="term_order_sheet">填写订单并结算</string>
-    
     <string name="term_code">商品编码</string>
     <string name="term_quantity">张数</string>
     <string name="term_age">年龄</string>
@@ -339,12 +338,20 @@
     <string name="term_auth">인증하기</string>
     <string name="term_input_auth_number">인증번호 입력</string>
     <string name="msg_complete_join">회원가입 완료!\n가입하신 이메일로 인증번호를 발송하였습니다.\n인증번호를 확인한 후,\n입력창에 인증번호를 입력해주세요</string>
-	<!-- WishList -->
-	<string name="msg_empty_wish_list">위시 리스트가 없습니다</string>
-	<string name="msg_help_wish_list">한국의 인기 상품들을 둘러보고\n위시리스트를 채워보세요!</string>
-	<string name="term_go_to_popular_product">인기상품 둘러보기</string>
-	<string name="term_popular_wish_list">인기 위시리스트</string>
-	<!-- 여행공략 -->
-	<string name="msg_rate_this_place">이 장소를\n평가해주세요!</string>
-	<string name="msg_how_about_this_place">이 장소 어떠셨나요?</string>
+    <!-- WishList -->
+    <string name="msg_empty_wish_list">위시 리스트가 없습니다</string>
+    <string name="msg_help_wish_list">한국의 인기 상품들을 둘러보고\n위시리스트를 채워보세요!</string>
+    <string name="term_go_to_popular_product">인기상품 둘러보기</string>
+    <string name="term_popular_wish_list">인기 위시리스트</string>
+    <!-- 여행공략 -->
+    <string name="msg_rate_this_place">이 장소를\n평가해주세요!</string>
+    <string name="msg_how_about_this_place">이 장소 어떠셨나요?</string>
+    <!-- 트렌드한국 -->
+    <string name="term_shopping_all">ALL</string>
+    <string name="term_shopping_cosmetic">화장품/미용</string>
+    <string name="term_shopping_food">식품</string>
+    <string name="term_shopping_baby">육아용품</string>
+    <string name="term_shopping_living">주방/생활</string>
+    <string name="term_shopping_etc">기타</string>
+
 </resources>
