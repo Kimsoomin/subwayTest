@@ -142,11 +142,9 @@
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
-                  console.log(station_ids[i])
-
+                
                   try{
                     if(temp_station.getBBox() != null){
-                      console.log(temp_station.getBBox())
                       bound = temp_station.getBBox()
                     }
                     break;
@@ -155,7 +153,6 @@
                 }
               }
             }
-            console.log(bound.x)
 
             this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3, bound.y - 42, 35, 50);
             this.start_station_id = station_id
@@ -177,11 +174,9 @@
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
-                  console.log(station_ids[i])
 
                   try{
                     if(temp_station.getBBox() != null){
-                      console.log(temp_station.getBBox())
                       bound = temp_station.getBBox()
                     }
                     break;
@@ -218,7 +213,6 @@
               var station = Snap.select(".station[id*="+stationbean.id+"]")
 
               this.marked_stations.push(station);
-              console.log(stationbean.id)
               if(stationbean.id != "line211" && stationbean.id != "line234"){
                 var animation = function(){
                     if(station.hasClass("on")){
@@ -244,13 +238,12 @@
                 this.marked_stations_interval_ids.push(refreshIntervalId);
               }
             }catch(exception){
-              console.log(exception);
+              
             }
 
           },
           clear_marked_stations: function() {
             console.log("clear")
-            console.log(this.marked_stations.length)
 
             for (var i = 0; i < this.marked_stations_interval_ids.length; i++) {
               clearInterval(this.marked_stations_interval_ids[i]);
@@ -336,7 +329,6 @@
 
              if(jsonArray[0].line.indexOf("환승") > -1){
               if(jsonArray[0].before_station_line == undefined && jsonArray[jsonArray.length-1].after_station_line != ""){
-                console.log("!!!")
                 jsonArray[0].line = jsonArray[0].after_station_line;
               }
               if(jsonArray[0].after_station_line == undefined && jsonArray[jsonArray.length-1].before_station_line != ""){
@@ -386,11 +378,9 @@
           },
           setCenterWithStationId: function (station_id){
             station = Snap.select(".station#"+station_id);
-            // bound = station.getBBox();
             try{
               bound = station.getBBox()            
             }catch(exception){
-              console.log(exception);
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
@@ -398,7 +388,6 @@
 
                   try{
                     if(temp_station.getBBox() != undefined){
-                      console.log("getBBox not undefined")
                       console.log(temp_station.getBBox())
                       bound = temp_station.getBBox()
                     }
@@ -467,7 +456,6 @@
             try{
               if(jsonArray[0].line.indexOf("환승") > -1)
                 firstStation = jsonArray[1];
-              console.log(firstStation.name_ko)
             }catch(exception)
             {
 
@@ -519,12 +507,8 @@
                 return sortResult;
             });
 
-            // console.log(jsonArray);
+
             var firstStation = jsonArray[0];
-            
-            console.log("set_dest")
-            console.log(firstStation.name_ko)
-            console.log(firstStation.id)
             var teststation = Snap.select(".station#"+firstStation.id)
             var bound = ""
             var stationString = firstStation.id
@@ -548,8 +532,6 @@
 
             }
 
-            console.log("Fine StationID!")
-            console.log(stationString)
 
             if(find_type == 0)
               this.set_start_station(stationString)
@@ -574,8 +556,6 @@
         }
 
         function showDestinationPopUp(station_id){
-          console.log("showDestinationPopUp")
-          console.log(station_id);
           var station = Snap.select(".station#" + station_id)
             
           var bound;
@@ -586,11 +566,9 @@
             for (var i = 0; i < station_ids.length; i++){
               if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
                 var temp_station = Snap.select(".station#"+station_ids[i])
-                console.log(station_ids[i])
 
                 try{
                   if(temp_station.getBBox() != undefined){
-                    console.log("getBBox not undefined")
                     console.log(temp_station.getBBox())
                     bound = temp_station.getBBox()
                   }
@@ -612,7 +590,6 @@
             tit.remove();
           }
 
-         // onTouchStation($(this.node).attr("id"))
           subway.setCenterWithStationId(station_id);
 
 
@@ -676,7 +653,7 @@
           })
 
           onSvgLoadEnded();
-          if(subway.start_station_id == undefined && subway.end_station_id == undefined && !isCleared) 
+          if(subway.start_station_id == undefined && subway.end_station_id == undefined && !isCleared)
             subway.setCenterWithStationId("line132line201");
         });
       
