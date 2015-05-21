@@ -118,54 +118,6 @@ public class SubwayStationsActivity extends ActionBarActivity
       e.printStackTrace();
     }
     
-    // 환승이면 a / 환승 / b : 환승( a, b ) 
-    for (int i = 0; i < stations.size(); i++)
-    {
-      if (stations.get(i).line.contains("환승"))
-      {
-        try
-        {
-          stations.get(i).beforeLine = stations.get(i - 1).line;
-          stations.get(i).afterLine = stations.get(i + 1).line;
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-      }
-    }
-    
-    //환승역정보를 다 빼냈으므로 지움
-    //첫번째 역이 환승역이, 마지막의 전일 때 
-    for (int i = 0; i < stations.size(); i++)
-    {
-      if (stations.get(i).line.contains("환승"))
-      {
-        try
-        {
-          if (i == 0)
-            stations.remove(i);
-          else if (i == stations.size() - 2)
-          {
-            //마지막이 환승역인 경우
-            stations.remove(i);
-            stations.remove(i);
-          }
-          else
-          {
-            stations.remove(i - 1);
-            stations.remove(i);
-          }
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-      }
-    }
-    
-    if (stations.get(stations.size() - 1).nameKo.equals(stations.get(stations.size() - 2).nameKo))
-      stations.remove(stations.size() - 1);
     
     try
     {

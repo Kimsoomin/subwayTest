@@ -235,8 +235,6 @@ public class SubwayActivity extends Activity
     
     if (destLatLong != null)
       MainActivity.subwayFrament.findNearByStation(destLatLong[0], destLatLong[1], destLatLong[2], destName);
-    
-    MainActivity.subwayFrament.checkSVGLoaded();
     super.onNewIntent(intent);
   }
   

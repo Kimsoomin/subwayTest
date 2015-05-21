@@ -31,6 +31,10 @@ public class StationBean
       this.line = object.getString("line");
       this.lat = object.getDouble("lat");
       this.lon = object.getDouble("lon");
+      if(object.has("before_station_line"))
+        this.beforeLine = object.getString("before_station_line");
+      if(object.has("after_station_line"))
+        this.afterLine = object.getString("after_station_line");
       
       if (object.has("exit_locations"))
       {

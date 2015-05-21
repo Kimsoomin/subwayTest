@@ -212,15 +212,7 @@ public class SubwayFragment extends Fragment
         }
       });
     }
-    checkSVGLoaded();
     super.onAttach(activity);
-  }
-  
-  
-  public void checkSVGLoaded()
-  {
-    handler.removeCallbacks(checkSubwayNativeLoadRunnable);
-    handler.postDelayed(checkSubwayNativeLoadRunnable, 1000);
   }
   
   
@@ -276,17 +268,6 @@ public class SubwayFragment extends Fragment
     {
     }
   }
-  
-  private Runnable checkSubwayNativeLoadRunnable = new Runnable()
-  {
-    @Override
-    public void run()
-    {
-      Log.w("WARN", "call checkReady");
-      webview.loadUrl("javascript:checkReady()");
-      handler.postDelayed(checkSubwayNativeLoadRunnable, 1000);
-    }
-  };
   
   
   public void loadAllStations(Runnable run)
@@ -547,7 +528,6 @@ public class SubwayFragment extends Fragment
     public void onSvgLoadEnded()
     {
       Log.w("WARN", "SVG 로드 완료");
-      handler.removeCallbacks(checkSubwayNativeLoadRunnable);
       isLoadEnded = true;
       
       handler.post(new Runnable()
@@ -574,11 +554,6 @@ public class SubwayFragment extends Fragment
               }
               webview.loadUrl("javascript:subway.findNearByStation('" + findNearByStationLat + "', '" + findNearByStationLon + "')");
             }
-          }
-          else
-          {
-            if (TextUtils.isEmpty(startStationId) && TextUtils.isEmpty(endStationId))
-              webview.loadUrl("javascript:subway.setCenterWithStationId('line132line201')");
           }
         }
       });
@@ -620,46 +595,6 @@ public class SubwayFragment extends Fragment
             containerNearByStationInfo.setVisibility(View.GONE);
             
             StationBean firstFindStationBean = stations.get(0);
-            
-            for (int i = 0; i < stations.size(); i++)
-            {
-              if (stations.get(i).line.contains("환승"))
-              {
-                try
-                {
-                  stations.get(i).beforeLine = stations.get(i - 1).line;
-                  stations.get(i).afterLine = stations.get(i + 1).line;
-                }
-                catch (Exception e)
-                {
-                  e.printStackTrace();
-                }
-              }
-            }
-            
-            for (int i = 0; i < stations.size(); i++)
-            {
-              if (stations.get(i).line.contains("환승"))
-              {
-                try
-                {
-                  if (i == 0)
-                    stations.remove(i);
-                  else
-                  {
-                    stations.remove(i - 1);
-                    stations.remove(i);
-                  }
-                }
-                catch (Exception e)
-                {
-                  e.printStackTrace();
-                }
-              }
-            }
-            
-            if (stations.get(stations.size() - 1).nameKo.equals(stations.get(stations.size() - 2).nameKo))
-              stations.remove(stations.size() - 1);
             
             StationBean firstStationBean = stations.get(0);
             StationBean lastStationBean = stations.get(stations.size() - 1);
@@ -769,6 +704,9 @@ public class SubwayFragment extends Fragment
                     startStationLat = -1;
                     startStationLong = -1;
                     
+                    findNearByStationLat = -1;
+                    findNearByStationLon = -1;
+                    setDestFindNearStation = -1;
                     webview.loadUrl("javascript:subway.clear_start_station()");
                   }
                 });
@@ -829,6 +767,10 @@ public class SubwayFragment extends Fragment
                           @Override
                           public void onClick(View v)
                           {
+                            findNearByStationLat = -1;
+                            findNearByStationLon = -1;
+                            setDestFindNearStation = -1;
+                            
                             containerNearByStationInfo.setVisibility(View.GONE);
                             webview.loadUrl("javascript:subway.clear_end_station()");
                           }
@@ -866,6 +808,10 @@ public class SubwayFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+              findNearByStationLat = -1;
+              findNearByStationLon = -1;
+              setDestFindNearStation = -1;
+              
               containerNearByStationInfo.setVisibility(View.GONE);
             }
           });

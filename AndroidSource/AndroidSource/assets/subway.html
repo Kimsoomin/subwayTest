@@ -23,20 +23,11 @@
         <script src="file:///android_asset/subway.js" charset="utf-8"></script>-->
       <style>
 
-        /*html, body { margin:0; padding:0 }
-        embed { width: 100%; height: 100% }*/
-
-        /*html, body { margin:0; padding:0; overflow:hidden }
-        svg { position:fixed; top:0; bottom:0; left:0; right:0 }*/
-            /*#svg {
-                width: 100%;
-                height: 1024px;
-            }*/
       </style>
       <style type="text/css">
       * {
           -webkit-touch-callout: none;
-          -webkit-user-select: none; /* Disable selection/copy in UIWebView */
+          -webkit-user-select: none; 
       }
       
       html, body {
@@ -74,16 +65,20 @@
         var startButton = undefined;
         var endButton = undefined;
         var tit = undefined;
+        var isCleared = false;
 
         function checkReady() {
           if (s != null) {
-              window.myClient.onSvgLoadEnded();
-              // subway.setCenterWithStationId("line132line201");
+             
           }
         }
 
         function onTouchStation (param){
           window.myClient.onTouchStation(param);
+        };
+
+        function onSvgLoadEnded(){
+          window.myClient.onSvgLoadEnded();
         };
 
         function completeMarkStation (station_json_array_string, time){
@@ -110,10 +105,6 @@
           window.myClient.setEndStation(station_id);
         };
 
-        function setCenterInitSubway(){
-          window.scrollTo(1307, 995);
-        };
-
         var subway = {
           start_station: undefined,
           start_station_id: undefined,
@@ -127,6 +118,7 @@
             }
             this.start_station_id = undefined;
             this.clear_marked_stations();
+            isCleared = true;
           },
           clear_end_station: function(){
             if (this.start_station) {
@@ -134,6 +126,7 @@
             }
             this.end_station_id = undefined;
             this.clear_marked_stations();
+            isCleared = true;
           },
           set_start_station: function(station_id) {
             if (this.start_station) {
@@ -161,17 +154,9 @@
                   }
                 }
               }
-
             }
             console.log(bound.x)
 
-            // bound = station.getBBox()
-            margin = 1
-            // rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
-            // rect.attr({"fill":"#FF5555", stroke: "#000", strokeWidth: 1})
-            // text = s.text(bound.cx, bound.cy, "출발")
-            // text.attr({"font-size":6, "text-anchor":"middle", "alignment-baseline":"central"})
-            // this.start_station = s.g(rect, text)
             this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3, bound.y - 42, 35, 50);
             this.start_station_id = station_id
 
@@ -208,15 +193,6 @@
 
             }
 
-            // bound = station.getBBox()
-         
-            
-            // margin = 1
-            // rect = s.rect(bound.x - margin, bound.y - margin, bound.width + margin * 2, bound.height + margin * 2, (bound.height + margin * 2)/ 2.0, (bound.height + margin * 2) / 2.0)
-            // rect.attr({"fill":"#55FF55", stroke: "#000", strokeWidth: 1})
-            // text = s.text(bound.cx, bound.cy, "도착")
-            // text.attr({"font-size":6, "text-anchor":"middle", "alignment-baseline":"central"})
-            // this.end_station = s.g(rect, text)
             this.end_station = s.image('./ui/images/pin_subway_finish.png', bound.x - 3, bound.y - 42, 35, 50);
             this.end_station_id = station_id
 
@@ -241,102 +217,62 @@
             try{
               var station = Snap.select(".station[id*="+stationbean.id+"]")
 
-              var animation = function(){
-                  if(station.hasClass("on")){
-                      station.removeClass("on")
-                      station.animate({ fill: "#fc4150",
-                                        stroke: "#fc4150",
-                                        strokeWidth: 2, 
-                                        "fill-opacity": 0.1}, 400)
-                  }else{
-                      station.addClass("on")
-                      station.animate({ fill: "#fc4150",
-                                        stroke: "#fc4150",
-                                        strokeWidth: 2, 
-                                        "fill-opacity": 0.92}, 400)
+              var bound;
+              try{
+                bound = station.getBBox()            
+              }catch(exception){
+                console.log("Re-find")
+                
+                for (var i = 0; i < station_ids.length; i++){
+                  if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                    var temp_station = Snap.select(".station#"+station_ids[i])
+                    console.log(station_ids[i])
+
+                    try{
+                      if(temp_station.getBBox() != undefined){
+                        console.log(temp_station.getBBox())
+                        bound = temp_station.getBBox()
+                        station = temp_station;
+                      }
+                      break;
+                    }catch(exception2){
+                    }
                   }
+                }
               }
 
-              var refreshIntervalId = setInterval(function() {
-                  animation();
-              }, 800);
-              console.log("start");
+              if(stationbean.id != "line211" && stationbean.id != "line234"){
+                var animation = function(){
+                    if(station.hasClass("on")){
+                        station.removeClass("on")
+                        station.animate({ fill: "#fc4150",
+                                          stroke: "#fc4150",
+                                          strokeWidth: 2, 
+                                          "fill-opacity": 0.1}, 400)
+                    }else{
+                        station.addClass("on")
+                        station.animate({ fill: "#fc4150",
+                                          stroke: "#fc4150",
+                                          strokeWidth: 2, 
+                                          "fill-opacity": 0.92}, 400)
+                    }
+                }
 
-              this.marked_stations.push(station);
-              this.marked_stations_interval_ids.push(refreshIntervalId);
-              // var bound;
-              // try{
-              //   bound = station.getBBox()            
-              // }catch(exception){
+                var refreshIntervalId = setInterval(function() {
+                    animation();
+                }, 800);
 
-              //   for (var i = 0; i < station_ids.length; i++){
-              //     if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
-              //       var temp_station = Snap.select(".station#"+station_ids[i])
-              //       console.log(station_ids[i])
-
-              //       try{
-              //         if(temp_station.getBBox() != null){
-              //           console.log(temp_station.getBBox())
-              //           bound = temp_station.getBBox()
-              //         }
-              //         break;
-              //       }catch(exception){
-
-              //       }
-              //     }
-              //   }
-
-              // }
-
-              // var image = null;
-              
-              // try{
-              //   if(stationbean.isTransfer){
-              //     console.log(stationbean.id.split("line").length)
-              //     if(stationbean.id.split("line").length == 5){
-              //       //환승역4개  
-              //       image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 21, bound.y - 2, 20, 20);
-              //     }
-              //     else if(stationbean.id.split("line").length == 4){
-              //       //환승역3개
-              //       image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 19, bound.y - 2, 20, 20);
-              //     }
-              //     else
-              //       image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 13, bound.y - 2, 20, 20);
-              //   }else{
-              //     image = s.image('./ui/images/icon_subway_route.png', bound.x + 5, bound.y - 2, 20, 20);
-              //   }
-              // }catch(exception){
-              //   console.log(exception);
-              // }
-
-              //  var animation = function(){
-              //     if(image.hasClass("on")){
-              //         image.removeClass("on")
-              //         image.animate({opacity: '0'}, 200)
-              //     }else{
-              //         image.addClass("on")
-              //         image.animate({opacity: '1'}, 200)
-              //     }
-              // }
-
-              // setInterval(function() {
-              //     animation()
-              // }, 400);
-
-              // this.marked_stations.push(image);
+                this.marked_stations.push(station);
+                this.marked_stations_interval_ids.push(refreshIntervalId);
+              }
             }catch(exception){
               console.log(exception);
             }
-
-
 
           },
           clear_marked_stations: function() {
             console.log("clear")
        
-            
-
             var length = this.marked_stations.length
             for (var i = 0; i < length; i++) {
               var marked_station = this.marked_stations[i]
@@ -371,6 +307,8 @@
               jsonObject.lat = stationInfo.location.latitude;
               jsonObject.lon = stationInfo.location.longitude;
               jsonObject.exit_locations = stationInfo.exits;
+              jsonObject.before_station_line = undefined;
+              jsonObject.after_station_line = undefined;
               jsonObject.isTransfer = false;
               if(jsonObject.line.indexOf("환승") > -1)
                 jsonObject.isTransfer = true;
@@ -378,71 +316,74 @@
               jsonArray.push(jsonObject);
             }
 
-            var markArray = new Array();
-            for (var i = 0; i < jsonArray.length; i++) {
-              markArray.push(jsonArray[i]);
-            };
+            for (var i = 0; i < jsonArray.length; i++){
+                  this.mark_station(jsonArray[i]);
+            }
 
-             var previousObject = null;
-             // for (var i = 0; i < markArray.length; i++){
-             //   try {
-             //     if(markArray[i].line == "환승역")
-             //     {
-             //       if(i == markArray.length - 1){
-             //         markArray.splice(i, 1);
-             //         markArray.splice(i + 1, 1);
-             //       }else{
-             //         markArray.splice(i - 1, 1);
-             //         markArray.splice(i, 1);
-             //       }
-             //     }  
-             //   }
-             //   catch(exception){
-             //   }
-             // }
+            for (var i = 0; i < jsonArray.length; i++){
+              try{
+                if(jsonArray[i].line.indexOf("환승")>-1){
+                  if(i == 0){
+                    jsonArray[i].after_station_line = jsonArray[i+1].line;
+                  }else{
+                    jsonArray[i].before_station_line = jsonArray[i-1].line;
+                    jsonArray[i].after_station_line = jsonArray[i+1].line;
+                  }
+                }
+              }catch(exception){
 
-             for (var i = 0; i < markArray.length; i++){
-               try {
-                 if(markArray[i].line == "환승역")
-                 {
-                   if(i == markArray.length - 1){
-                     markArray.splice(i, 1);
-                     markArray.splice(i + 1, 1);
-                   }else{
-                        markArray.splice(i - 1, 1);
-                       markArray.splice(i, 1);
-                      
-                   }
-                 }  
-               }
-               catch(exception){
-               }
-             }
+              }
+            }
 
-            console.log(markArray);
-            // for (var i = 0; i < markArray.length; i++){
-            //   if(i != 0 && i != markArray.length - 1){
-            //       this.mark_station(markArray[i]);
-            //   }
-            // }
-            for (var i = 0; i < markArray.length; i++){
-                  this.mark_station(markArray[i]);
+            for (var i = 0; i < jsonArray.length; i++){
+              try{
+                if(jsonArray[i].line.indexOf("환승")>-1){
+                  if(i==0){
+                    jsonArray.splice(i + 1, 1);
+                  }
+                  else{
+                    jsonArray.splice(i - 1, 1);
+                    jsonArray.splice(i, 1);
+                  }
+                }
+              }catch(exception){
+
+              }
+            }
+
+            if(jsonArray[jsonArray.length -1].id == jsonArray[jsonArray.length-2].id){
+              jsonArray.splice(jsonArray.length -1, 1);
+            }
+
+             if(jsonArray[0].line.indexOf("환승") > -1){
+              if(jsonArray[0].before_station_line == undefined && jsonArray[jsonArray.length-1].after_station_line != ""){
+                console.log("!!!")
+                jsonArray[0].line = jsonArray[0].after_station_line;
+              }
+              if(jsonArray[0].after_station_line == undefined && jsonArray[jsonArray.length-1].before_station_line != ""){
+                jsonArray[0].line = jsonArray[0].before_station_line;
+              }
+            }
+
+            if(jsonArray[jsonArray.length-1].line.indexOf("환승") > -1){
+              if(jsonArray[jsonArray.length-1].before_station_line != undefined && jsonArray[jsonArray.length-1].after_station_line != undefined){
+                jsonArray[jsonArray.length-1].line = jsonArray[jsonArray.length-1].before_station_line;
+              }
+              if(jsonArray[jsonArray.length-1].before_station_line != undefined && jsonArray[jsonArray.length-1].after_station_line == undefined){
+                jsonArray[jsonArray.length-1].line = jsonArray[jsonArray.length-1].before_station_line;
+              }
             }
             
 
-
-            try{
-              if(jsonArray[jsonArray.length - 1].line == "환승역"){
-                jsonArray.splice(jsonArray.length - 1, 1);
-              }else if(jsonArray[jsonArray.length - 2].line == "환승역"){
-                jsonArray.splice(jsonArray.length - 2, 1);
-              }
-            }catch(exception){
-              console.log(exception);
+            console.log("Final!");
+            console.log(jsonArray.length);
+            for (var i = 0; i < jsonArray.length; i++){
+                console.log(jsonArray[i].id);
             }
+            console.log(jsonArray);
 
-            // console.log(jsonArray);
-
+            console.log("ready tempArray!");
+           
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           },
@@ -465,7 +406,6 @@
               jsonArray.push(jsonObject);
             }
 
-            // console.log(jsonArray);
             var jsonInfo = JSON.stringify(jsonArray);
             completeLoadAllStation(jsonInfo); 
           },
@@ -759,8 +699,13 @@
             rect.click(onClick)
             rect.dblclick(onDblClick)
           })
+
+          onSvgLoadEnded();
+          if(subway.start_station_id == undefined && subway.end_station_id == undefined && !isCleared) 
+            subway.setCenterWithStationId("line132line201");
         });
-    
+      
+
         function sortByKey(array, key) {
           return array.sort(function(a, b) {
               var x = a[key]; var y = b[key];
@@ -769,15 +714,5 @@
         }
 
       </script>
-
-		<!-- <div class="layer_pop"><a href="#none">출발</a><a href="#none">도착</a></div>
-		
-		<style type="text/css">
-			
-			.layer_pop{display:none;position:fixed;top:50%;left:50%;overflow:hidden;margin:-100px 0 0 -100px;width:200px;height:100px;border-radius:5px;background:url("ui/images/dim.png") repeat 0 0}
-			.layer_pop a{display:block;overflow:hidden;float:left;width:50%;height:100px;text-indent:-9999px}
-			.layer_pop a:first-child{background:url("ui/images/btn_01.png") no-repeat 12px center;background-size:80px 80px}
-			.layer_pop a:last-child{background:url("ui/images/btn_02.png") no-repeat 8px  center;background-size:80px 80px}
-		</style> -->
     </body>
 </html>
