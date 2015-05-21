@@ -217,45 +217,21 @@
             try{
               var station = Snap.select(".station[id*="+stationbean.id+"]")
 
-              // var bound;
-              // try{
-              //   bound = station.getBBox()            
-              // }catch(exception){
-              //   console.log("Re-find")
-                
-              //   for (var i = 0; i < station_ids.length; i++){
-              //     if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
-              //       var temp_station = Snap.select(".station#"+station_ids[i])
-              //       console.log(station_ids[i])
-
-              //       try{
-              //         if(temp_station.getBBox() != undefined){
-              //           console.log(temp_station.getBBox())
-              //           bound = temp_station.getBBox()
-              //           station = temp_station;
-              //         }
-              //         break;
-              //       }catch(exception2){
-              //       }
-              //     }
-              //   }
-              // }
-
               this.marked_stations.push(station);
-
+              console.log(stationbean.id)
               if(stationbean.id != "line211" && stationbean.id != "line234"){
                 var animation = function(){
                     if(station.hasClass("on")){
                         station.removeClass("on")
                         station.animate({ fill: "#fc4150",
                                           stroke: "#fc4150",
-                                          strokeWidth: 2, 
+                                          strokeWidth: 1, 
                                           "fill-opacity": 0.0}, 400)
                     }else{
                         station.addClass("on")
                         station.animate({ fill: "#fc4150",
                                           stroke: "#fc4150",
-                                          strokeWidth: 2, 
+                                          strokeWidth: 1, 
                                           "fill-opacity": 0.92}, 400)
                     }
                 }
@@ -282,13 +258,14 @@
             this.marked_stations_interval_ids = []
 
             var length = this.marked_stations.length
-            for (var i = 0; i < length; i++) {
+            for (var i = 0; i < length; i++) {  
               var marked_station = this.marked_stations[i]
               try{
-                  marked_station.animate({ fill: "#00000000",
+                  marked_station.stop();
+                  marked_station.attr({ fill: "#00000000",
                                           stroke: "#00000000",
                                           strokeWidth: 0, 
-                                          "fill-opacity": 0.0}, 100)
+                                          "fill-opacity": 0});
                   marked_station.removeClass("on");
               }catch(exception){
                 console.log(exception)
@@ -320,10 +297,6 @@
                 jsonObject.isTransfer = true;
 
               jsonArray.push(jsonObject);
-            }
-
-            for (var i = 0; i < jsonArray.length; i++){
-                  this.mark_station(jsonArray[i]);
             }
 
             for (var i = 0; i < jsonArray.length; i++){
@@ -379,16 +352,12 @@
                 jsonArray[jsonArray.length-1].line = jsonArray[jsonArray.length-1].before_station_line;
               }
             }
-            
 
-            console.log("Final!");
-            console.log(jsonArray.length);
             for (var i = 0; i < jsonArray.length; i++){
-                console.log(jsonArray[i].id);
+              if(i != 0 && i != jsonArray.length - 1){
+                  this.mark_station(jsonArray[i]);
+              }
             }
-            console.log(jsonArray);
-
-            console.log("ready tempArray!");
            
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
