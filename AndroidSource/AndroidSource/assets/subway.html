@@ -217,29 +217,31 @@
             try{
               var station = Snap.select(".station[id*="+stationbean.id+"]")
 
-              var bound;
-              try{
-                bound = station.getBBox()            
-              }catch(exception){
-                console.log("Re-find")
+              // var bound;
+              // try{
+              //   bound = station.getBBox()            
+              // }catch(exception){
+              //   console.log("Re-find")
                 
-                for (var i = 0; i < station_ids.length; i++){
-                  if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
-                    var temp_station = Snap.select(".station#"+station_ids[i])
-                    console.log(station_ids[i])
+              //   for (var i = 0; i < station_ids.length; i++){
+              //     if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+              //       var temp_station = Snap.select(".station#"+station_ids[i])
+              //       console.log(station_ids[i])
 
-                    try{
-                      if(temp_station.getBBox() != undefined){
-                        console.log(temp_station.getBBox())
-                        bound = temp_station.getBBox()
-                        station = temp_station;
-                      }
-                      break;
-                    }catch(exception2){
-                    }
-                  }
-                }
-              }
+              //       try{
+              //         if(temp_station.getBBox() != undefined){
+              //           console.log(temp_station.getBBox())
+              //           bound = temp_station.getBBox()
+              //           station = temp_station;
+              //         }
+              //         break;
+              //       }catch(exception2){
+              //       }
+              //     }
+              //   }
+              // }
+
+              this.marked_stations.push(station);
 
               if(stationbean.id != "line211" && stationbean.id != "line234"){
                 var animation = function(){
@@ -248,7 +250,7 @@
                         station.animate({ fill: "#fc4150",
                                           stroke: "#fc4150",
                                           strokeWidth: 2, 
-                                          "fill-opacity": 0.1}, 400)
+                                          "fill-opacity": 0.0}, 400)
                     }else{
                         station.addClass("on")
                         station.animate({ fill: "#fc4150",
@@ -262,7 +264,7 @@
                     animation();
                 }, 800);
 
-                this.marked_stations.push(station);
+                
                 this.marked_stations_interval_ids.push(refreshIntervalId);
               }
             }catch(exception){
@@ -272,23 +274,27 @@
           },
           clear_marked_stations: function() {
             console.log("clear")
-       
-            var length = this.marked_stations.length
-            for (var i = 0; i < length; i++) {
-              var marked_station = this.marked_stations[i]
-              try{
-                marked_station.removeClass("on");
-                marked_station.attr({ fill: "#00000000", strokeWidth: 0, "fill-opacity": 0});
-              }catch(exception){
-                console.log(exception)
-              }
-            }
-            this.marked_stations = []
+            console.log(this.marked_stations.length)
 
             for (var i = 0; i < this.marked_stations_interval_ids.length; i++) {
               clearInterval(this.marked_stations_interval_ids[i]);
             }
             this.marked_stations_interval_ids = []
+
+            var length = this.marked_stations.length
+            for (var i = 0; i < length; i++) {
+              var marked_station = this.marked_stations[i]
+              try{
+                  marked_station.animate({ fill: "#00000000",
+                                          stroke: "#00000000",
+                                          strokeWidth: 0, 
+                                          "fill-opacity": 0.0}, 100)
+                  marked_station.removeClass("on");
+              }catch(exception){
+                console.log(exception)
+              }
+            }
+            this.marked_stations = []
           },
           mark_stations: function(array) {
             var length = array.length

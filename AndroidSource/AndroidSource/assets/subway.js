@@ -4,7 +4,6 @@ floyd_path = function(i, j) {
 	if (trace_table[i][j] == null)
 		return [i, j]
 	var c = trace_table[i][j]
-	// console.log(c)
 	var a = floyd_path(i, c)
 	a.pop()
 	var b = floyd_path(c, j)
@@ -29,8 +28,6 @@ path_for_stations = function(station_a, station_b) {
             remove_duplicates_array.push(path[i]);
         }
     }
-	console.log("floyd_path")
-	console.log(remove_duplicates_array)
 	return remove_duplicates_array
 }
 
