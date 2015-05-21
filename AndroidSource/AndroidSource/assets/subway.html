@@ -335,21 +335,24 @@
           clear_marked_stations: function() {
             console.log("clear")
        
-            for (var i = 0; i < this.marked_stations_interval_ids.length; i++) {
-              clearInterval(this.marked_stations_interval_ids[i]);
-            }
+            
+
             var length = this.marked_stations.length
             for (var i = 0; i < length; i++) {
               var marked_station = this.marked_stations[i]
               try{
-                // marked_station.remove()
                 marked_station.removeClass("on");
-                marked_station.attr({ strokeWidth: 0, "fill-opacity": 0});
+                marked_station.attr({ fill: "#00000000", strokeWidth: 0, "fill-opacity": 0});
               }catch(exception){
-
+                console.log(exception)
               }
             }
             this.marked_stations = []
+
+            for (var i = 0; i < this.marked_stations_interval_ids.length; i++) {
+              clearInterval(this.marked_stations_interval_ids[i]);
+            }
+            this.marked_stations_interval_ids = []
           },
           mark_stations: function(array) {
             var length = array.length
