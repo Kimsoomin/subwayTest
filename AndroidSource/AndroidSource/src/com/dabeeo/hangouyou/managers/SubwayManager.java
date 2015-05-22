@@ -89,6 +89,9 @@ public class SubwayManager
     {
       if ((!TextUtils.isEmpty(stations.get(i).nameKo) && stations.get(i).nameKo.contains(title)) || (!TextUtils.isEmpty(stations.get(i).nameCn) && stations.get(i).nameCn.contains(title)))
       {
+        if (stations.get(i).isDuplicate)
+          continue;
+        
         boolean isConatin = false;
         for (int j = 0; j < tempStations.size(); j++)
         {
@@ -97,18 +100,14 @@ public class SubwayManager
         }
         
         if (!isConatin)
-        {
           tempStations.add(stations.get(i));
-        }
         else
         {
           if (stations.get(i).line.contains("환승"))
           {
-            Log.w("WARN", "환승역 찾음 ! " + stations.get(i).nameKo);
-            Log.w("WARN", "환승역 찾음 ! " + stations.get(i).lines);
             for (int j = 0; j < tempStations.size(); j++)
             {
-              if (tempStations.get(j).nameKo.equals(stations.get(i).nameKo))
+              if (stations.get(i).nameKo.equals(tempStations.get(j).nameKo))
                 tempStations.remove(j);
             }
             tempStations.add(stations.get(i));

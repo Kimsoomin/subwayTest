@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=1"/>  -->
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=1"/> 
         <title>서울지하철</title>
      
         
@@ -68,11 +68,15 @@
         var isCleared = false;
         var isElementClick = false;
 
-        function checkReady() {
-          if (s != null) {
-             
+        window.onscroll = function (e) { 
+          if(!isElementClick && background != undefined){
+            background.remove();
+            startButton.remove();
+            endButton.remove();
+            tit.remove();
           }
-        }
+           isElementClick = false;
+        } 
 
         function onTouchStation (param){
           window.myClient.onTouchStation(param);
@@ -292,6 +296,7 @@
 
               jsonArray.push(jsonObject);
             }
+            console.log("TEST!")
 
             for (var i = 0; i < jsonArray.length; i++){
               try{
@@ -311,13 +316,16 @@
             for (var i = 0; i < jsonArray.length; i++){
               try{
                 if(jsonArray[i].line.indexOf("환승")>-1){
-                  if(i==0){
-                    jsonArray.splice(i + 1, 1);
-                  }
-                  else{
-                    jsonArray.splice(i - 1, 1);
-                    jsonArray.splice(i, 1);
-                  }
+                    if(i==0){
+                      jsonArray.splice(i + 1, 1);
+                    }
+                    else if(i==jsonArray.length-1){
+                      jsonArray.splice(i - 1, 1);
+                    }
+                    else{
+                      jsonArray.splice(i - 1, 1);
+                      jsonArray.splice(i, 1);
+                    }
                 }
               }catch(exception){
 
@@ -357,6 +365,7 @@
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           },
           setCenterWithStationId: function (station_id){
+            // $('body').css('zoom', ' ' + 1.3 + '');
             station = Snap.select(".station#"+station_id);
             try{
               bound = station.getBBox()            
@@ -379,7 +388,7 @@
               }
             }
 
-            var half_width = window.innerWidth/2
+            var half_width = window.innerWidth/2.4
             var half_height = window.innerHeight/2
 
             console.log(half_width);
@@ -536,6 +545,7 @@
         }
 
         function showDestinationPopUp(station_id){
+          
           var station = Snap.select(".station#" + station_id)
             
           var bound;
@@ -569,10 +579,8 @@
             endButton.remove();
             tit.remove();
           }
-
-          subway.setCenterWithStationId(station_id);
-
-
+          
+        
           var stationBean = stations[station_id];
           background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 100, 200, 100);
           startButton = s.image('./ui/images/icon_start.png', bound.x - 70, bound.y - 60, 80, 35);
@@ -588,10 +596,10 @@
              
            startButton.click(function(event) { 
             // ## Native
-            setStartStation(station_id);
+            // setStartStation(station_id);
             
             // ## Web test
-            // subway.set_start_station(station_id);
+            subway.set_start_station(station_id);
 
             if(background != undefined){
               background.remove();
@@ -603,10 +611,10 @@
 
            endButton.click(function(event) {
             // ## Native
-            setEndStation(station_id);
+            // setEndStation(station_id);
             
             // ## Web test
-            // subway.set_end_station(station_id);
+            subway.set_end_station(station_id);
 
             if(background != undefined){
               background.remove();
@@ -615,6 +623,9 @@
               tit.remove();
             }
            });
+
+            
+          subway.setCenterWithStationId(station_id);
         }
         //file:///android_asset/subway.svg
         Snap.load("subway.svg", function(data) {
@@ -636,7 +647,6 @@
               endButton.remove();
               tit.remove();
             }
-            isElementClick = false;
           })
 
           s.append(data);

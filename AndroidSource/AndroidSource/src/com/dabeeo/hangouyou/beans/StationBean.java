@@ -20,12 +20,15 @@ public class StationBean
   
   public ArrayList<StationExitBean> exits = new ArrayList<>();
   public ArrayList<String> lines = new ArrayList<String>();
+  public boolean isDuplicate = false;
   
   
   public void setJSONObject(JSONObject object)
   {
     try
     {
+      if (object.has("isDuplicate"))
+        this.isDuplicate = object.getBoolean("isDuplicate");
       if (object.has("name_cn"))
         this.nameCn = object.getString("name_cn");
       if (object.has("name_ko"))

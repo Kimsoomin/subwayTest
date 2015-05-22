@@ -104,6 +104,7 @@ stations_by_internal_id.each do |k, v|
 			}
 		],
 		lines: Array.new,
+		isDuplicate: false, 
 		# transfers: v[:transfers].map{|s|stations_by_internal_id[s][:id]},
 		# 환승은 5분으로 통일한다.
 		connections: Hash.new
@@ -138,6 +139,7 @@ stations_by_internal_id.each do |k, v|
 					id: t_id,
 					lines: transfer_station_lines.flatten.each {|s|s}, 
 					line: "환승역",
+					isDuplicate: false,
 					name_ko: v[:name_ko],
 					name_en: v[:name_en],
 					name_cn: v[:name_cn],
@@ -150,6 +152,10 @@ stations_by_internal_id.each do |k, v|
 					id: transfer_id,
 					lines: transfer_station_lines.flatten.each {|s|s}, 
 					line: "환승역",
+					isDuplicate: true,
+					name_ko: v[:name_ko],
+					name_en: v[:name_en],
+					name_cn: v[:name_cn],
 					location: v[:location],
 					exits: stations[v[:id]][:exits],
 					connections: Hash[transfer_station.map{|s|[s, 0]}]
