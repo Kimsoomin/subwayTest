@@ -55,7 +55,8 @@ public class IntroActivity extends Activity
     alertManager = new AlertDialogManager(this);
     
     progressBar.bringToFront();
-    checkMapTemp();
+    
+    checkNetworkStatus();
   }
   
   
@@ -88,6 +89,56 @@ public class IntroActivity extends Activity
   }
   
   
+  private void checkNetworkStatus()
+  {
+    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+    {
+      //3G or LTE Mode
+      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+      {
+        @Override
+        public void onPositiveButtonClickListener()
+        {
+          checkDownloadInfo();
+        }
+        
+        
+        @Override
+        public void onNegativeButtonClickListener()
+        {
+          finish();
+        }
+      });
+    }
+    else
+      checkDownloadInfo();
+  }
+  
+  
+  private void checkDownloadInfo()
+  {
+    //지도정보, 상품정보, 지하철정보 다운로드
+    Log.w("WARN", "다운로드 정보 체크");
+    
+    //만약 다운로드 된 정보가 없거나, 혹은 업데이트가 있는 경우 
+    alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.message_alert_download_seoul_info));
+    
+    //추후 아랫부분 삭제 후 네트워크 연결
+    // memory leak warning 제거 
+    Runnable runn = new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        alertManager.hideProgressDialog();
+        checkMapTemp();
+      }
+    };
+    Handler handler = new Handler();
+    handler.postDelayed(runn, 1000);
+  }
+  
+  
   private void checkMapTemp()
   {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -109,12 +160,20 @@ public class IntroActivity extends Activity
           temp3G();
         }
       });
+      builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+      {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          checkMapPlaceData();
+        }
+      });
       tempdialog = builder.create();
       tempdialog.setCanceledOnTouchOutside(false);
       tempdialog.show();
     }
     else
-      getAllStations();
+      checkMapPlaceData();
   }
   
   
@@ -244,65 +303,14 @@ public class IntroActivity extends Activity
       if (dialog.isShowing())
         dialog.dismiss();
       
-      getAllStations();
+      checkMapPlaceData();
       super.onPostExecute(result);
     }
   }
   
   
-  private void getAllStations()
-  {
-    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
-    {
-      //3G or LTE Mode
-      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-      {
-        @Override
-        public void onPositiveButtonClickListener()
-        {
-          checkDownloadInfo();
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-          finish();
-        }
-      });
-    }
-    else
-      checkDownloadInfo();
-  }
-  
-  
-  private void checkDownloadInfo()
-  {
-    //지도정보, 상품정보, 지하철정보 다운로드
-    Log.w("WARN", "다운로드 정보 체크");
-    
-    //만약 다운로드 된 정보가 없거나, 혹은 업데이트가 있는 경우 
-    alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.message_alert_download_seoul_info));
-    
-    //추후 아랫부분 삭제 후 네트워크 연결
-    // memory leak warning 제거 
-    Runnable runn = new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        alertManager.hideProgressDialog();
-        checkMapPlaceData();
-      }
-    };
-    Handler handler = new Handler();
-    handler.postDelayed(runn, 1000);
-  }
-  
-  
   private void checkMapPlaceData()
   {
-    
     AssetManager assetManager = getAssets();
     
     File file = new File(Global.GetPathWithSDCard() + Global.HangouyouDBFileName);

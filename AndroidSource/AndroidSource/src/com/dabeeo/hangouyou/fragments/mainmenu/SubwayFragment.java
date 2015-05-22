@@ -1,5 +1,7 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -155,6 +157,7 @@ public class SubwayFragment extends Fragment
   }
   
   
+  @SuppressLint("NewApi")
   private void loadMapView()
   {
     int resId = R.layout.fragment_subway;
@@ -178,22 +181,29 @@ public class SubwayFragment extends Fragment
     webview = (WebView) view.findViewById(R.id.webview);
     
     webview.getSettings().setJavaScriptEnabled(true);
-    webview.getSettings().setAllowFileAccessFromFileURLs(true);
-    webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
+    if (Build.VERSION.SDK_INT >= 16)
+    {
+      webview.getSettings().setAllowFileAccessFromFileURLs(true);
+      webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
+    }
+    
     webview.getSettings().setUseWideViewPort(true);
     webview.getSettings().setBuiltInZoomControls(true);
     webview.getSettings().setDisplayZoomControls(false);
     webview.getSettings().setAppCacheEnabled(true);
-    webview.getSettings().setDomStorageEnabled(true);
-    webview.getSettings().setRenderPriority(RenderPriority.HIGH);
-    webview.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
-    webview.getSettings().setAppCachePath(activity.getApplicationContext().getCacheDir().getAbsolutePath());
-    webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-    webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-    
+    if (Build.VERSION.SDK_INT > 18)
+    {
+      webview.getSettings().setDomStorageEnabled(true);
+      webview.getSettings().setRenderPriority(RenderPriority.HIGH);
+      webview.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
+      webview.getSettings().setAppCachePath(activity.getApplicationContext().getCacheDir().getAbsolutePath());
+      webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+      webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+    }
     webview.addJavascriptInterface(new JavaScriptInterface(), "myClient");
     webview.setWebViewClient(webViewClient);
     webview.setWebChromeClient(webChromeClient);
+    
     webview.loadUrl("file:///android_asset/subway.html");
     
     btnMap = (Button) view.findViewById(R.id.btn_map);
@@ -232,6 +242,51 @@ public class SubwayFragment extends Fragment
     
     if (SubwayManager.getInstance(getActivity()).stations.size() == 0)
       loadAllStations(null);
+  }
+  
+  
+  public String readFileAsString(String filePath)
+  {
+    
+    String result = "";
+    File file = new File(filePath);
+    if (file.exists())
+    {
+      //byte[] buffer = new byte[(int) new File(filePath).length()];
+      FileInputStream fis = null;
+      try
+      {
+        //f = new BufferedInputStream(new FileInputStream(filePath));
+        //f.read(buffer);
+        
+        fis = new FileInputStream(file);
+        char current;
+        while (fis.available() > 0)
+        {
+          current = (char) fis.read();
+          result = result + String.valueOf(current);
+          
+        }
+        
+      }
+      catch (Exception e)
+      {
+        Log.d("WARN", e.toString());
+      }
+      finally
+      {
+        if (fis != null)
+          try
+          {
+            fis.close();
+          }
+          catch (IOException ignored)
+          {
+          }
+      }
+      //result = new String(buffer);
+    }
+    return result;
   }
   
   
