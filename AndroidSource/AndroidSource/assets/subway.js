@@ -8,8 +8,8 @@ floyd_path = function(i, j) {
 	var a = floyd_path(i, c)
 	a.pop()
 	var b = floyd_path(c, j)
-	// return a.concat(b);
-	return floyd_path(i, j)
+
+	return a.concat(b);
 }
 
 path_for_stations = function(station_a, station_b) {

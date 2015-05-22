@@ -288,8 +288,7 @@ public class SubwayFragment extends Fragment
     }
   }
   
-  //TODO : get_all_station Native로 바꾸기 
-  //TODO : 환승구간 표시 시 환승 역 표시하기 
+  
   public void loadAllStations(Runnable run)
   {
     this.afterLoadSubwaysRunnable = run;
@@ -301,7 +300,7 @@ public class SubwayFragment extends Fragment
       String jsString = null;
       try
       {
-        InputStream is = getActivity().getAssets().open("subway_data_origin.js");
+        InputStream is = getActivity().getAssets().open("subway_data.js");
         int size = is.available();
         byte[] buffer = new byte[size];
         is.read(buffer);
@@ -326,7 +325,7 @@ public class SubwayFragment extends Fragment
           {
             JSONObject obj = stationInfoJSONObject.getJSONObject(stations.getString(i));
             StationBean bean = new StationBean();
-            bean.setJSONObject(obj.getJSONObject(stations.getString(i)));
+            bean.setJSONObject(obj);
             tempArray.add(bean);
           }
           catch (Exception e)
@@ -348,9 +347,7 @@ public class SubwayFragment extends Fragment
       {
         e.printStackTrace();
       }
-//      webview.loadUrl("javascript:subway.get_all_station()");
     }
-//      
     
   }
   

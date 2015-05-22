@@ -122,9 +122,10 @@ stations_by_internal_id.each do |k, v|
 		
 		
 		isContain = false
-		isContainStationId = ""
+		transfer_id = "";
 		for i in 0..(transfer_stations.count - 1)
 			if transfer_stations[i].include? v[:id]
+				transfer_id = transfer_stations[i]
 				isContain = true
 			end
 		end
@@ -132,6 +133,7 @@ stations_by_internal_id.each do |k, v|
 		
 		if stations[t_id] == nil
 			if !isContain
+				transfer_stations.push(t_id)
 				stations[t_id] = {
 					id: t_id,
 					lines: transfer_station_lines.flatten.each {|s|s}, 
@@ -143,9 +145,19 @@ stations_by_internal_id.each do |k, v|
 					exits: stations[v[:id]][:exits],
 					connections: Hash[transfer_station.map{|s|[s, 0]}]
 				}
+			else
+				stations[t_id] = {
+					id: transfer_id,
+					lines: transfer_station_lines.flatten.each {|s|s}, 
+					line: "환승역",
+					location: v[:location],
+					exits: stations[v[:id]][:exits],
+					connections: Hash[transfer_station.map{|s|[s, 0]}]
+				}
 			end
+			stations[v[:id]][:connections][t_id] = 0
 		end
-		stations[v[:id]][:connections][t_id] = 0
+		
 
 	end
 end

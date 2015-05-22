@@ -199,8 +199,6 @@
           calcRoute: function() {
             this.clear_marked_stations()
             var path = path_for_stations(this.start_station_id, this.end_station_id)
-            console.log("path")
-            console.log(path)
             this.mark_stations(path)
             
             var path_infos = new Array()
@@ -294,7 +292,6 @@
 
               jsonArray.push(jsonObject);
             }
-            console.log(jsonArray);
 
             for (var i = 0; i < jsonArray.length; i++){
               try{
@@ -355,30 +352,9 @@
               }
             }
            
+            console.log(jsonArray);
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
-          },
-          get_all_station: function() {
-            var jsonArray = new Array();
-            for (var i = 0; i < station_ids.length; i++){
-              var station = stations[station_ids[i]];
-              var stationInfo = station;
-
-              var jsonObject = new Object();
-              jsonObject.name = stationInfo.name_cn;
-              jsonObject.name_ko = stationInfo.name_ko;
-              jsonObject.name_en = stationInfo.name_en;
-              jsonObject.id = station_ids[i];
-              jsonObject.line = stationInfo.line;
-              jsonObject.lat = stationInfo.location.latitude;
-              jsonObject.lon = stationInfo.location.longitude;
-              jsonObject.exit_locations = stationInfo.exits;
-
-              jsonArray.push(jsonObject);
-            }
-
-            var jsonInfo = JSON.stringify(jsonArray);
-            completeLoadAllStation(jsonInfo); 
           },
           setCenterWithStationId: function (station_id){
             station = Snap.select(".station#"+station_id);
@@ -611,7 +587,12 @@
            });
              
            startButton.click(function(event) { 
+            // ## Native
             setStartStation(station_id);
+            
+            // ## Web test
+            // subway.set_start_station(station_id);
+
             if(background != undefined){
               background.remove();
               startButton.remove();
@@ -621,7 +602,12 @@
            });
 
            endButton.click(function(event) {
+            // ## Native
             setEndStation(station_id);
+            
+            // ## Web test
+            // subway.set_end_station(station_id);
+
             if(background != undefined){
               background.remove();
               startButton.remove();

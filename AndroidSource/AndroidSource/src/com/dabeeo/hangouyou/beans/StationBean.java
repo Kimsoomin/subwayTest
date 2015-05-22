@@ -2,7 +2,10 @@ package com.dabeeo.hangouyou.beans;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 public class StationBean
 {
@@ -19,26 +22,46 @@ public class StationBean
   public ArrayList<String> lines = new ArrayList<String>();
   
   
-  //	"exit_locations":{"1":{"latitude":"37.6757282","longitude":"126.7477441"},"2":{"latitude":"37.6757239","longitude":"126.7472398"},"3":{"latitude":"37.6760127","longitude":"126.7471969"},"4":{"latitude":"37.6763523","longitude":"126.7475241"},"5":{"latitude":"37.6764118","longitude":"126.7477870"},"6":{"latitude":"37.6761613","longitude":"126.7479157"}}},
   public void setJSONObject(JSONObject object)
   {
     try
     {
-      this.nameCn = object.getString("name");
-      this.nameKo = object.getString("name_ko");
-      this.nameEn = object.getString("name_en");
-      this.stationId = object.getString("id");
-      this.line = object.getString("line");
-      this.lat = object.getDouble("lat");
-      this.lon = object.getDouble("lon");
-      if(object.has("before_station_line"))
+      if (object.has("name_cn"))
+        this.nameCn = object.getString("name_cn");
+      if (object.has("name_ko"))
+        this.nameKo = object.getString("name_ko");
+      if (object.has("name_en"))
+        this.nameEn = object.getString("name_en");
+      if (object.has("id"))
+        this.stationId = object.getString("id");
+      if (object.has("line"))
+        this.line = object.getString("line");
+      if (object.has("location"))
+      {
+        JSONObject locationObj = object.getJSONObject("location");
+        if (object.has("latitude"))
+          this.lat = locationObj.getDouble("latitude");
+        if (object.has("longitude"))
+          this.lon = locationObj.getDouble("longitude");
+      }
+      
+      if (object.has("before_station_line"))
         this.beforeLine = object.getString("before_station_line");
-      if(object.has("after_station_line"))
+      if (object.has("after_station_line"))
         this.afterLine = object.getString("after_station_line");
       
-      if (object.has("exit_locations"))
+      if (object.has("lines"))
       {
-        JSONObject exitObject = object.getJSONObject("exit_locations");
+        JSONArray lineArray = object.getJSONArray("lines");
+        for (int i = 0; i < lineArray.length(); i++)
+        {
+          lines.add(lineArray.getString(i));
+        }
+      }
+      
+      if (object.has("exits"))
+      {
+        JSONObject exitObject = object.getJSONObject("exits");
         for (int i = 1; i < 12; i++)
         {
           if (exitObject.has(Integer.toString(i)))
@@ -54,6 +77,7 @@ public class StationBean
     }
     catch (Exception e)
     {
+      e.printStackTrace();
     }
   }
   

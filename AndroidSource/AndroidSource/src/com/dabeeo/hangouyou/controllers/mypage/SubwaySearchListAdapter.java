@@ -91,17 +91,19 @@ public class SubwaySearchListAdapter extends BaseAdapter
     
     imageContainer.removeAllViews();
     
-    ImageView imageView = new ImageView(context);
-    imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
-    imageView.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.line));
-    imageContainer.addView(imageView);
-    
-    for (int i = 0; i < bean.lines.size(); i++)
+    if (bean.lines.size() == 0)
     {
-      if (!bean.lines.get(i).equals("환승역"))
+      ImageView imageView = new ImageView(context);
+      imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+      imageView.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.line));
+      imageContainer.addView(imageView);
+    }
+    else
+    {
+      for (int i = 0; i < bean.lines.size(); i++)
       {
-        imageView = new ImageView(context);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+        ImageView imageView = new ImageView(context);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
         imageView.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.lines.get(i)));
         imageContainer.addView(imageView);
       }

@@ -14,8 +14,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -27,14 +25,12 @@ import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
-import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.CharacterProgressView;
-import com.dabeeo.hangouyou.R;
 
 public class IntroActivity extends Activity
 {
@@ -58,19 +54,8 @@ public class IntroActivity extends Activity
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     alertManager = new AlertDialogManager(this);
     
-    if (MainActivity.subwayFrament != null)
-      MainActivity.subwayFrament.viewClear();
-    MainActivity.subwayFrament = new SubwayFragment();
-    FragmentManager fragmentManager = getFragmentManager();
-    if (MainActivity.subwayFrament != null)
-    {
-      FragmentTransaction ft = fragmentManager.beginTransaction();
-      ft.replace(R.id.content, MainActivity.subwayFrament);
-      ft.commit();
-    }
-    
     progressBar.bringToFront();
-    handler.postDelayed(checkSubwayNativeLoadRunnable, 100);
+    checkMapTemp();
   }
   
   
@@ -101,21 +86,6 @@ public class IntroActivity extends Activity
     android.os.Process.killProcess(android.os.Process.myPid());
     super.onBackPressed();
   }
-  
-  private Runnable checkSubwayNativeLoadRunnable = new Runnable()
-  {
-    @Override
-    public void run()
-    {
-      if (MainActivity.subwayFrament.isLoadEnded())
-      {
-//        checkMap();
-        checkMapTemp();
-      }
-      else
-        handler.postDelayed(checkSubwayNativeLoadRunnable, 100);
-    }
-  };
   
   
   private void checkMapTemp()
@@ -182,41 +152,6 @@ public class IntroActivity extends Activity
     }
   }
   
-//  private void checkMap()
-//  {
-//    Log.w("WARN", "CheckMap");
-//    
-//    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
-//    if (!directory.exists())
-//      directory.mkdirs();
-//    
-//    File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
-//    if (!file.exists())
-//    {
-//      AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//      builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-//      {
-//        public void onClick(DialogInterface dialog, int whichButton)
-//        {
-//          dialog.cancel();
-//          new GetMapAsyncTask().execute();
-//        }
-//      }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
-//      {
-//        public void onClick(DialogInterface dialog, int whichButton)
-//        {
-//          dialog.cancel();
-//          getAllStations();
-//        }
-//      });
-//      
-//      AlertDialog dialog = builder.create();
-//      dialog.show();
-//    }
-//    else
-//      getAllStations();
-//  }
-  
   private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
     private Dialog dialog;
@@ -256,7 +191,6 @@ public class IntroActivity extends Activity
         Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
         
         InputStream input = new BufferedInputStream(url.openStream());
-//        File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
         File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
         try
         {
@@ -284,7 +218,6 @@ public class IntroActivity extends Activity
         output.flush();
         output.close();
         input.close();
-        
       }
       catch (InterruptedException e)
       {
@@ -301,7 +234,6 @@ public class IntroActivity extends Activity
     @Override
     protected void onProgressUpdate(Integer... progress)
     {
-//      dialog.setProgress(progress[0]);
       super.onProgressUpdate(progress);
     }
     
@@ -320,34 +252,27 @@ public class IntroActivity extends Activity
   
   private void getAllStations()
   {
-    MainActivity.subwayFrament.loadAllStations(new Runnable()
+    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
     {
-      @Override
-      public void run()
+      //3G or LTE Mode
+      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
       {
-        if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+        @Override
+        public void onPositiveButtonClickListener()
         {
-          //3G or LTE Mode
-          alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-          {
-            @Override
-            public void onPositiveButtonClickListener()
-            {
-              checkDownloadInfo();
-            }
-            
-            
-            @Override
-            public void onNegativeButtonClickListener()
-            {
-              finish();
-            }
-          });
-        }
-        else
           checkDownloadInfo();
-      }
-    });
+        }
+        
+        
+        @Override
+        public void onNegativeButtonClickListener()
+        {
+          finish();
+        }
+      });
+    }
+    else
+      checkDownloadInfo();
   }
   
   
@@ -377,34 +302,37 @@ public class IntroActivity extends Activity
   
   private void checkMapPlaceData()
   {
-	  
-	  AssetManager assetManager = getAssets();
-		
-		File file = new File(Global.GetPathWithSDCard()+Global.HangouyouDBFileName);
-		
-		if(!file.exists())
-		{
-			try {
-				InputStream is = assetManager.open("hangouyou.sqlite");
-				OutputStream out = new FileOutputStream(file);
-			      
-			      int size = is.available();
-			      
-			      if (size > 0)
-			      {
-			        byte[] data = new byte[size];
-			        is.read(data);
-			        
-			        out.write(data);
-			      }
-			      out.flush();
-			      out.close();
-			      
-			      is.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+    
+    AssetManager assetManager = getAssets();
+    
+    File file = new File(Global.GetPathWithSDCard() + Global.HangouyouDBFileName);
+    
+    if (!file.exists())
+    {
+      try
+      {
+        InputStream is = assetManager.open("hangouyou.sqlite");
+        OutputStream out = new FileOutputStream(file);
+        
+        int size = is.available();
+        
+        if (size > 0)
+        {
+          byte[] data = new byte[size];
+          is.read(data);
+          
+          out.write(data);
+        }
+        out.flush();
+        out.close();
+        
+        is.close();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
 //    AssetManager assetManager = getAssets();
 //    InputStream inputStream = null;
 //    String placeJsonString = "";

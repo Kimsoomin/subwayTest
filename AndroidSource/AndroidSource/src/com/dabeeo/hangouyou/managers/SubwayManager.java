@@ -87,7 +87,7 @@ public class SubwayManager
     //이름이 포함된 역을 모두 가져옴
     for (int i = 0; i < stations.size(); i++)
     {
-      if (stations.get(i).nameKo.contains(title) || stations.get(i).nameCn.contains(title))
+      if ((!TextUtils.isEmpty(stations.get(i).nameKo) && stations.get(i).nameKo.contains(title)) || (!TextUtils.isEmpty(stations.get(i).nameCn) && stations.get(i).nameCn.contains(title)))
       {
         boolean isConatin = false;
         for (int j = 0; j < tempStations.size(); j++)
@@ -100,25 +100,23 @@ public class SubwayManager
         {
           tempStations.add(stations.get(i));
         }
-      }
-    }
-    
-    for (int i = 0; i < tempStations.size(); i++)
-    {
-      for (int j = 0; j < stations.size(); j++)
-      {
-        if (stations.get(j).nameKo.equals(tempStations.get(i).nameKo))
+        else
         {
-          if (!tempStations.get(i).line.equals(stations.get(j).line) && !tempStations.get(i).lines.contains(stations.get(j).line))
-            tempStations.get(i).lines.add(stations.get(j).line);
+          if (stations.get(i).line.contains("환승"))
+          {
+            Log.w("WARN", "환승역 찾음 ! " + stations.get(i).nameKo);
+            Log.w("WARN", "환승역 찾음 ! " + stations.get(i).lines);
+            for (int j = 0; j < tempStations.size(); j++)
+            {
+              if (tempStations.get(j).nameKo.equals(stations.get(i).nameKo))
+                tempStations.remove(j);
+            }
+            tempStations.add(stations.get(i));
+          }
         }
       }
     }
     
-    for (int i = 0; i < tempStations.size(); i++)
-    {
-      Log.w("WARN", "Lines : " + tempStations.get(i).lines);
-    }
     return tempStations;
   }
   
@@ -126,57 +124,6 @@ public class SubwayManager
   public ArrayList<StationBean> getAllSubwayStations()
   {
     return stations;
-  }
-  
-  
-  public ArrayList<String> getAllSubwayNames()
-  {
-    ArrayList<String> names = new ArrayList<String>();
-    for (int i = 0; i < stations.size(); i++)
-    {
-      names.add(stations.get(i).nameKo);
-    }
-    
-    ArrayList<String> afterArray = new ArrayList<String>();
-    for (int i = 0; i < names.size(); i++)
-    {
-      boolean isContain = false;
-      for (int j = 0; j < afterArray.size(); j++)
-      {
-        if (afterArray.get(j).equals(names.get(i)))
-          isContain = true;
-      }
-      
-      if (!isContain)
-        afterArray.add(names.get(i));
-    }
-    
-    return afterArray;
-  }
-  
-  
-  public ArrayList<String> getAllSubwayCnNames()
-  {
-    ArrayList<String> names = new ArrayList<String>();
-    for (int i = 0; i < stations.size(); i++)
-    {
-      names.add(stations.get(i).nameCn);
-    }
-    
-    ArrayList<String> afterArray = new ArrayList<String>();
-    for (int i = 0; i < names.size(); i++)
-    {
-      boolean isContain = false;
-      for (int j = 0; j < afterArray.size(); j++)
-      {
-        if (afterArray.get(j).equals(names.get(i)))
-          isContain = true;
-      }
-      
-      if (!isContain)
-        afterArray.add(names.get(i));
-    }
-    return afterArray;
   }
   
   
