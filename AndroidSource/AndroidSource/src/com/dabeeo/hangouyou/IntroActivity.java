@@ -107,7 +107,6 @@ public class IntroActivity extends Activity
     @Override
     public void run()
     {
-//      Log.w("WARN", "call checkReady");
       if (MainActivity.subwayFrament.isLoadEnded())
       {
 //        checkMap();

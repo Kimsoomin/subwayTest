@@ -81,7 +81,7 @@ public class SubwayManager
   
   
   //검색 시 사용 
-  public ArrayList<StationBean> getSubwayStationsWithTitle(String title)
+  public ArrayList<StationBean> getSubwayStationsWithTitle(final String title)
   {
     ArrayList<StationBean> tempStations = new ArrayList<StationBean>();
     //이름이 포함된 역을 모두 가져옴

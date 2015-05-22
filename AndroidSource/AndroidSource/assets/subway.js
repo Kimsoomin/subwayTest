@@ -3,12 +3,13 @@ floyd_path = function(i, j) {
 		return [i]
 	if (trace_table[i][j] == null)
 		return [i, j]
+
 	var c = trace_table[i][j]
 	var a = floyd_path(i, c)
 	a.pop()
 	var b = floyd_path(c, j)
-
-	return a.concat(b);
+	// return a.concat(b);
+	return floyd_path(i, j)
 }
 
 path_for_stations = function(station_a, station_b) {
@@ -22,13 +23,13 @@ path_for_stations = function(station_a, station_b) {
 		path.push(station_ids[path_indexes[i]])
 	}
 
-	var remove_duplicates_array = []
-	for ( i = 0; i < path.length; i++ ) {
-        if (remove_duplicates_array.indexOf(path[i]) < 0) {
-            remove_duplicates_array.push(path[i]);
-        }
-    }
-	return remove_duplicates_array
+	// var remove_duplicates_array = []
+	// for ( i = 0; i < path.length; i++ ) {
+ //        if (remove_duplicates_array.indexOf(path[i]) < 0) {
+ //            remove_duplicates_array.push(path[i]);
+ //        }
+ //    }
+	return path
 }
 
 all_stations = function(){

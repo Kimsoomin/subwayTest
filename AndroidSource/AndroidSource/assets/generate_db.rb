@@ -82,10 +82,12 @@ end
 
 # internal_id 기준이 아닌 id 기준으로 데이터를 구성한다.
 stations = Hash.new
+transfer_stations = Array.new
 stations_by_internal_id.each do |k, v|
 	stations[v[:id]] = {
 		id: v[:id],
 		line: v[:line],
+
 		name_ko: v[:name_ko],
 		name_en: v[:name_en],
 		name_cn: v[:name_cn],
@@ -101,29 +103,50 @@ stations_by_internal_id.each do |k, v|
 				]
 			}
 		],
+		lines: Array.new,
 		# transfers: v[:transfers].map{|s|stations_by_internal_id[s][:id]},
 		# 환승은 5분으로 통일한다.
 		connections: Hash.new
 	}
+
 	if v[:transfers].count > 0
 		transfer_station = []
 		transfer_station.push(v[:id])
 		transfer_station.concat(v[:transfers].map{|s|stations_by_internal_id[s][:id]})
-		# transfer_station.sort!
+
 		t_id = transfer_station.join
+
+		transfer_station_lines = []
+		transfer_station_lines.push(v[:line])
+		transfer_station_lines.push(v[:transfers].map{|s|stations_by_internal_id[s][:line]})
+		
+		
+		isContain = false
+		isContainStationId = ""
+		for i in 0..(transfer_stations.count - 1)
+			if transfer_stations[i].include? v[:id]
+				isContain = true
+			end
+		end
+
+		
 		if stations[t_id] == nil
-			stations[t_id] = {
-				id: t_id,
-				line: "환승역",
-				name_ko: v[:name_ko],
-				name_en: v[:name_en],
-				name_cn: v[:name_cn],
-				location: v[:location],
-				exits: stations[v[:id]][:exits],
-				connections: Hash[transfer_station.map{|s|[s, 0]}]
-			}
+			if !isContain
+				stations[t_id] = {
+					id: t_id,
+					lines: transfer_station_lines.flatten.each {|s|s}, 
+					line: "환승역",
+					name_ko: v[:name_ko],
+					name_en: v[:name_en],
+					name_cn: v[:name_cn],
+					location: v[:location],
+					exits: stations[v[:id]][:exits],
+					connections: Hash[transfer_station.map{|s|[s, 0]}]
+				}
+			end
 		end
 		stations[v[:id]][:connections][t_id] = 0
+
 	end
 end
 

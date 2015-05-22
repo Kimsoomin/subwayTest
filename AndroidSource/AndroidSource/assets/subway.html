@@ -66,6 +66,7 @@
         var endButton = undefined;
         var tit = undefined;
         var isCleared = false;
+        var isElementClick = false;
 
         function checkReady() {
           if (s != null) {
@@ -198,6 +199,8 @@
           calcRoute: function() {
             this.clear_marked_stations()
             var path = path_for_stations(this.start_station_id, this.end_station_id)
+            console.log("path")
+            console.log(path)
             this.mark_stations(path)
             
             var path_infos = new Array()
@@ -291,6 +294,7 @@
 
               jsonArray.push(jsonObject);
             }
+            console.log(jsonArray);
 
             for (var i = 0; i < jsonArray.length; i++){
               try{
@@ -633,10 +637,22 @@
           }
           onClick = function(e) {
             console.log("click");
+            isElementClick = true;
             showDestinationPopUp(this.node.id);
           }
           onDblClick = function(e) {
           }
+
+          s.click(function(e) {
+            if(!isElementClick && background != undefined){
+              background.remove();
+              startButton.remove();
+              endButton.remove();
+              tit.remove();
+            }
+            isElementClick = false;
+          })
+
           s.append(data);
           $('path').filter(function() {
             return this.id.match(/(n\w{0,1}[\d-]+)+/);
