@@ -22,8 +22,37 @@ var zoom = (function(){
 
 	// Timeout for callback function
 	var callbackTimeout = -1;
-	var supportsTransforms;
-	
+
+	// Check for transform support so that we can fallback otherwise
+	var supportsTransforms = 	'WebkitTransform' in document.body.style ||
+								'MozTransform' in document.body.style ||
+								'msTransform' in document.body.style ||
+								'OTransform' in document.body.style ||
+								'transform' in document.body.style;
+
+	if( supportsTransforms ) {
+		// The easing that will be applied when we zoom in/out
+		document.body.style.transition = 'transform '+ TRANSITION_DURATION +'ms ease';
+		document.body.style.OTransition = '-o-transform '+ TRANSITION_DURATION +'ms ease';
+		document.body.style.msTransition = '-ms-transform '+ TRANSITION_DURATION +'ms ease';
+		document.body.style.MozTransition = '-moz-transform '+ TRANSITION_DURATION +'ms ease';
+		document.body.style.WebkitTransition = '-webkit-transform '+ TRANSITION_DURATION +'ms ease';
+	}
+
+	// Zoom out if the user hits escape
+	document.addEventListener( 'keyup', function( event ) {
+		if( level !== 1 && event.keyCode === 27 ) {
+			zoom.out();
+		}
+	} );
+
+	// Monitor mouse movement for panning
+	// document.addEventListener( 'mousemove', function( event ) {
+		// if( level !== 1 ) {
+		// 	mouseX = event.clientX;
+		// 	mouseY = event.clientY;
+		// }
+	// } );
 
 	/**
 	 * Applies the CSS required to zoom in, prefers the use of CSS3
@@ -34,7 +63,7 @@ var zoom = (function(){
 	 */
 	function magnify( rect, scale ) {
 
-		var scrollOffset = getScrollOffset();
+		// var scrollOffset = getScrollOffset();
 
 		// Ensure a width/height is set
 		rect.width = rect.width || 1;
@@ -55,11 +84,11 @@ var zoom = (function(){
 			}
 			// Scale
 			else {
-				console.log("supportsTransforms scale");
-				var origin = scrollOffset.x +'px '+ scrollOffset.y +'px',
-					// transform = 'translate('+ -rect.x +'px,'+ -rect.y +'px) scale('+ scale +')';
-					transform = 'translate('+ -rect.x +'px,'+ -rect.y +'px) scale('+ scale +')';
-
+				var origin = '0px '+ '0px',
+					transform = 'translate('+ -800 +'px,'+ -1200 +'px) scale('+ scale +')';
+					console.log('translate');
+					console.log(-rect.x);
+					console.log(-rect.y);
 				document.body.style.transformOrigin = origin;
 				document.body.style.OTransformOrigin = origin;
 				document.body.style.msTransformOrigin = origin;
@@ -85,10 +114,14 @@ var zoom = (function(){
 			}
 			// Scale
 			else {
-				console.log("Not supportsTransforms scale");
 				document.body.style.position = 'relative';
-				document.body.style.left = ( - ( scrollOffset.x + rect.x ) / scale ) + 'px';
-				document.body.style.top = ( - ( scrollOffset.y + rect.y ) / scale ) + 'px';
+				console.log("O")
+				console.log(rect.x)
+				console.log(rect.y)
+				// document.body.style.left = ( - ( scrollOffset.x + rect.x ) / scale ) + 'px';
+				// document.body.style.top = ( - ( scrollOffset.y + rect.y ) / scale ) + 'px';
+				document.body.style.left = rect.x + 'px';
+				document.body.style.top = rect.y + 'px';
 				document.body.style.width = ( scale * 100 ) + '%';
 				document.body.style.height = ( scale * 100 ) + '%';
 				document.body.style.zoom = scale;
@@ -103,36 +136,36 @@ var zoom = (function(){
 	 * of the window.
 	 */
 	function pan() {
-		var range = 0.12,
-			rangeX = window.innerWidth * range,
-			rangeY = window.innerHeight * range,
-			scrollOffset = getScrollOffset();
+		// var range = 0.12,
+		// 	rangeX = window.innerWidth * range,
+		// 	rangeY = window.innerHeight * range,
+		// 	scrollOffset = getScrollOffset();
 
 		// Up
-		if( mouseY < rangeY ) {
-			window.scroll( scrollOffset.x, scrollOffset.y - ( 1 - ( mouseY / rangeY ) ) * ( 14 / level ) );
-		}
-		// Down
-		else if( mouseY > window.innerHeight - rangeY ) {
-			window.scroll( scrollOffset.x, scrollOffset.y + ( 1 - ( window.innerHeight - mouseY ) / rangeY ) * ( 14 / level ) );
-		}
+		// if( mouseY < rangeY ) {
+		// 	window.scroll( scrollOffset.x, scrollOffset.y - ( 1 - ( mouseY / rangeY ) ) * ( 14 / level ) );
+		// }
+		// // Down
+		// else if( mouseY > window.innerHeight - rangeY ) {
+		// 	window.scroll( scrollOffset.x, scrollOffset.y + ( 1 - ( window.innerHeight - mouseY ) / rangeY ) * ( 14 / level ) );
+		// }
 
-		// Left
-		if( mouseX < rangeX ) {
-			window.scroll( scrollOffset.x - ( 1 - ( mouseX / rangeX ) ) * ( 14 / level ), scrollOffset.y );
-		}
-		// Right
-		else if( mouseX > window.innerWidth - rangeX ) {
-			window.scroll( scrollOffset.x + ( 1 - ( window.innerWidth - mouseX ) / rangeX ) * ( 14 / level ), scrollOffset.y );
-		}
+		// // Left
+		// if( mouseX < rangeX ) {
+		// 	window.scroll( scrollOffset.x - ( 1 - ( mouseX / rangeX ) ) * ( 14 / level ), scrollOffset.y );
+		// }
+		// // Right
+		// else if( mouseX > window.innerWidth - rangeX ) {
+		// 	window.scroll( scrollOffset.x + ( 1 - ( window.innerWidth - mouseX ) / rangeX ) * ( 14 / level ), scrollOffset.y );
+		// }
 	}
 
-	function getScrollOffset() {
-		return {
-			x: window.scrollX !== undefined ? window.scrollX : window.pageXOffset,
-			y: window.scrollY !== undefined ? window.scrollY : window.pageYOffset
-		}
-	}
+	// function getScrollOffset() {
+	// 	return {
+	// 		x: window.scrollX !== undefined ? window.scrollX : window.pageXOffset,
+	// 		y: window.scrollY !== undefined ? window.scrollY : window.pageYOffset
+	// 	}
+	// }
 
 	return {
 		/**
@@ -159,8 +192,8 @@ var zoom = (function(){
 				zoom.out();
 			}
 			else {
-				options.x = options.x || 0;
-				options.y = options.y || 0;
+				// options.x = options.x || 0;
+				// options.y = options.y || 0;
 
 				// If an element is set, that takes precedence
 				if( !!options.element ) {
@@ -168,8 +201,8 @@ var zoom = (function(){
 					var padding = typeof options.padding === 'number' ? options.padding : 20;
 					var bounds = options.element.getBoundingClientRect();
 
-					options.x = bounds.left - padding;
-					options.y = bounds.top - padding;
+					// options.x = bounds.left - padding;
+					// options.y = bounds.top - padding;
 					options.width = bounds.width + ( padding * 2 );
 					options.height = bounds.height + ( padding * 2 );
 				}
@@ -180,12 +213,14 @@ var zoom = (function(){
 				}
 
 				if( options.scale > 1 ) {
-					options.x *= options.scale;
-					options.y *= options.scale;
+					// options.x *= options.scale;
+					// options.y *= options.scale;
 
-					options.x = Math.max( options.x, 0 );
-					options.y = Math.max( options.y, 0 );
-
+					// options.x = Math.max( options.x, 0 );
+					// options.y = Math.max( options.y, 0 );
+					console.log("Options")
+					console.log(options.x)
+					console.log(options.y)
 					magnify( options, options.scale );
 
 					if( options.pan !== false ) {
@@ -211,39 +246,6 @@ var zoom = (function(){
 		 * @param {Object} options
 		 *   - callback: call back when zooming out ends
 		 */
-		 init: function( options ) {
-			// Check for transform support so that we can fallback otherwise
-			supportsTransforms = 	'WebkitTransform' in document.body.style ||
-										'MozTransform' in document.body.style ||
-										'msTransform' in document.body.style ||
-										'OTransform' in document.body.style ||
-										'transform' in document.body.style;
-
-			if( supportsTransforms ) {
-				// The easing that will be applied when we zoom in/out
-				document.body.style.transition = 'transform '+ TRANSITION_DURATION +'ms ease';
-				document.body.style.OTransition = '-o-transform '+ TRANSITION_DURATION +'ms ease';
-				document.body.style.msTransition = '-ms-transform '+ TRANSITION_DURATION +'ms ease';
-				document.body.style.MozTransition = '-moz-transform '+ TRANSITION_DURATION +'ms ease';
-				document.body.style.WebkitTransition = '-webkit-transform '+ TRANSITION_DURATION +'ms ease';
-			}
-
-			// Zoom out if the user hits escape
-			document.addEventListener( 'keyup', function( event ) {
-				if( level !== 1 && event.keyCode === 27 ) {
-					zoom.out();
-				}
-			} );
-
-			// Monitor mouse movement for panning
-			document.addEventListener( 'mousemove', function( event ) {
-				// if( level !== 1 ) {
-				// 	mouseX = event.clientX;
-				// 	mouseY = event.clientY;
-				// }
-			} );
-		},
-
 		out: function( options ) {
 			clearTimeout( panEngageTimeout );
 			clearInterval( panUpdateInterval );

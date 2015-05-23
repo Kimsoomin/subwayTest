@@ -7,14 +7,14 @@
      
         
         <script src="snap.svg-min.js"></script>
-        <script src="jquery-1.11.1.min.js" charset="utf-8"></script>
+        <script src="jquery.min.js" charset="utf-8"></script>
         <script src="d3.v3.min.js" charset="utf-8"></script>
         <link rel="stylesheet" href="./ui/jquery-ui.min.css" media="all" />
         <script src="./ui/jquery-ui.min.js" charset="utf-8"></script>
         <script src="subway_data.js" charset="utf-8"></script>
-        <script src="subway.js" charset="utf-8"></script>
+        <script src="subway.js" charset="utf-8"></script>    
         
-
+        
         <!-- <script src="file:///android_asset/snap.svg-min.js"></script>
         <script src="file:///android_asset/jquery-1.11.1.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
@@ -53,13 +53,13 @@
       </style>
     </head>
 
-   <body>
-       <div id="svgWrapper"> 
+   <body onscroll="scrolling()">
+       <div id="svgWrapper" > 
           <svg id="svg" width="100" height="100"></svg>
        </div> 
 
-      <script src="zoom.js" charset="utf-8"></script>
-
+      
+      <script src="./js/zoom.js" charset="utf-8"></script>    
       <script type="text/javascript">
         var sbox = $('#svgWrapper');
         var s = Snap("#svg");
@@ -70,8 +70,11 @@
         var tit = undefined;
         var isCleared = false;
         var isElementClick = false;
+        var svgPan = undefined;
+        
 
         window.onscroll = function (e) { 
+          console.log("Scrolling")
           if(!isElementClick && background != undefined){
             background.remove();
             startButton.remove();
@@ -79,7 +82,6 @@
             tit.remove();
           }
 
-          // zoom.out();
            isElementClick = false;
         } 
 
@@ -434,24 +436,15 @@
                 }
               }
             }
-            // window.parent.document.body.style.zoom = 1.5;
-            // $('body').css({ zoom: 1.3, '-moz-transform': 'scale(' + 2 + ')' });
-
             var half_width = window.innerWidth/2
             var half_height = window.innerHeight/2
+            // window.parent.document.body.style.zoom = 1.5;
+            window.scrollTo(bound.x - half_width, bound.y - half_height);
+            // console.log("before zoom.to x,y")
+            // console.log(bound.x)
+            // console.log(bound.y)
+            // zoom.to({ x: bound.x , y: bound.y , width: 300, height: 300 });
 
-            // zoom.to({
-            //     x: bound.x - 150,
-            //     y: bound.y - 150,
-            //     width: 300,
-            //     height: 300 
-            // });
-
-            
-            // window.zoom(5)
-            // window.scrollTo(bound.x - half_width, bound.y - half_height);
-
-           
           },
           findNearByStation: function(find_lat, find_lon){
             var jsonArray = new Array();
@@ -730,7 +723,6 @@
               return ((x < y) ? -1 : ((x > y) ? 1 : 0));
           });
         }
-
       </script>
     </body>
 </html>
