@@ -53,13 +53,11 @@
       </style>
     </head>
 
-   <body onscroll="scrolling()">
-       <div id="svgWrapper" > 
+   <body>
+       <div id="svgWrapper"  > 
           <svg id="svg" width="100" height="100"></svg>
        </div> 
 
-      
-      <script src="./js/zoom.js" charset="utf-8"></script>    
       <script type="text/javascript">
         var sbox = $('#svgWrapper');
         var s = Snap("#svg");
@@ -74,7 +72,6 @@
         
 
         window.onscroll = function (e) { 
-          console.log("Scrolling")
           if(!isElementClick && background != undefined){
             background.remove();
             startButton.remove();
@@ -436,6 +433,8 @@
                 }
               }
             }
+              
+            // window.resizeTo(250, 250);
             var half_width = window.innerWidth/2
             var half_height = window.innerHeight/2
             // window.parent.document.body.style.zoom = 1.5;
@@ -620,7 +619,7 @@
             }
 
           }
-
+          
           console.log(station_id);
 
           if(background != undefined){
@@ -672,7 +671,7 @@
             subway.set_end_station(station_id);
            });
 
-          subway.setCenterWithStationId(station_id);
+          // subway.setCenterWithStationId(station_id);
         }
         //file:///android_asset/subway.svg
         Snap.load("subway.svg", function(data) {
