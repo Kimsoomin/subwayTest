@@ -114,6 +114,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
+         <activity
+            android:name="com.dabeeo.hangouyou.activities.sub.PromotionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.sub.ReviewDetailActivity"
             android:launchMode="singleTask"

@@ -1,5 +1,9 @@
 package com.dabeeo.hangouyou;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -8,6 +12,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,12 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
+import com.dabeeo.hangouyou.activities.sub.PromotionActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SearchResultFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.WishListFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hangouyou.managers.CategoryManager;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 
 public class MainActivity extends ActionBarActivity
 {
@@ -66,6 +74,30 @@ public class MainActivity extends ActionBarActivity
 		
 		bottomMenuHome.setSelected(true);
 		setFragments(POSITION_HOME);
+		
+		checkPromotion();
+	}
+	
+	
+	private void checkPromotion()
+	{
+		if (TextUtils.isEmpty(PreferenceManager.getInstance(this).getDontShowPopupDate()))
+			startActivity(new Intent(MainActivity.this, PromotionActivity.class));
+		else
+		{
+			String dateString = PreferenceManager.getInstance(this).getDontShowPopupDate();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date date;
+			try
+			{
+				date = format.parse(dateString);
+				if (!DateUtils.isToday(date.getTime()))
+					startActivity(new Intent(MainActivity.this, PromotionActivity.class));
+			} catch (ParseException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

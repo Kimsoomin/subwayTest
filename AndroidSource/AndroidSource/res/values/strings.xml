@@ -353,5 +353,8 @@
     <string name="term_shopping_baby">육아용품</string>
     <string name="term_shopping_living">주방/생활</string>
     <string name="term_shopping_etc">기타</string>
+    <!-- 프로모션 -->
+    <string name="term_show_detail">자세히보기</string>
+    <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
 
 </resources>
