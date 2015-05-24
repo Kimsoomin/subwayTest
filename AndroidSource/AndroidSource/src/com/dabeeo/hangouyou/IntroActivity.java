@@ -228,6 +228,7 @@ public class IntroActivity extends Activity
 			pView.setCircleProgressVisible(true);
 			pView.setCircleProgressVisible(true);
 			builder.setView(pView);
+			builder.setCancelable(false);
 			dialog = builder.create();
 			dialog.show();
 			
@@ -292,7 +293,6 @@ public class IntroActivity extends Activity
 		protected void onProgressUpdate(Integer... progress)
 		{
 			pView.setProgress(progress[0]);
-			
 			super.onProgressUpdate(progress);
 		}
 		

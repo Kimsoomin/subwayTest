@@ -27,7 +27,7 @@
             android:background="@drawable/circle_progress_shape"
             android:indeterminate="false"
             android:max="100"
-            android:progress="65"
+            android:progress="0"
             android:progressDrawable="@drawable/circle_progress_download_shape"
             android:visibility="gone" />
 

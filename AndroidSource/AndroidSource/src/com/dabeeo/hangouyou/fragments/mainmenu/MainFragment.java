@@ -243,6 +243,7 @@ public class MainFragment extends Fragment
 			pView.title.setText(getString(R.string.msg_map_donwload));
 			pView.setCircleProgressVisible(true);
 			builder.setView(pView);
+			builder.setCancelable(false);
 			dialog = builder.create();
 			dialog.show();
 			
