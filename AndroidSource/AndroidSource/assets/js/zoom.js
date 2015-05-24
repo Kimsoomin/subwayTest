@@ -70,8 +70,8 @@ var zoom = (function(){
 		rect.height = rect.height || 1;
 
 		// Center the rect within the zoomed viewport
-		rect.x -= ( window.innerWidth - ( rect.width * scale ) ) / 2;
-		rect.y -= ( window.innerHeight - ( rect.height * scale ) ) / 2;
+		// rect.x -= ( 2614 - ( rect.width * scale ) ) / 2;
+		// rect.y -= ( 1991 - ( rect.height * scale ) ) / 2;
 
 		if( supportsTransforms ) {
 			// Reset
@@ -84,11 +84,10 @@ var zoom = (function(){
 			}
 			// Scale
 			else {
-				var origin = '0px '+ '0px',
-					transform = 'translate('+ -800 +'px,'+ -1200 +'px) scale('+ scale +')';
-					console.log('translate');
-					console.log(-rect.x);
-					console.log(-rect.y);
+				var origin = 1331+'px '+ 900+ 'px',
+				transform = 'translate('+ -rect.x +'px,'+ -rect.y +'px) scale('+ 1 +')';
+					
+
 				document.body.style.transformOrigin = origin;
 				document.body.style.OTransformOrigin = origin;
 				document.body.style.msTransformOrigin = origin;
@@ -222,16 +221,6 @@ var zoom = (function(){
 					console.log(options.x)
 					console.log(options.y)
 					magnify( options, options.scale );
-
-					if( options.pan !== false ) {
-
-						// Wait with engaging panning as it may conflict with the
-						// zoom transition
-						panEngageTimeout = setTimeout( function() {
-							panUpdateInterval = setInterval( pan, 1000 / 60 );
-						}, TRANSITION_DURATION );
-
-					}
 
 					if( typeof options.callback === 'function' ) {
 						callbackTimeout = setTimeout( options.callback, TRANSITION_DURATION );

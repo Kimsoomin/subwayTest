@@ -995,6 +995,43 @@ public class SubwayFragment extends Fragment
 		
 		
 		@JavascriptInterface
+		public void setNativeZoom(final String stationId)
+		{
+			handler.post(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					Log.w("WARN", "Scale : " + webview.getScale());
+					int zoomLevel = 0;
+					if (webview.getScale() >= 3.0)
+						zoomLevel = (int) (100 * webview.getScale());
+					else if (3.0 > webview.getScale() && webview.getScale() >= 2.0)
+						zoomLevel = (int) (150 * webview.getScale());
+					else if (2.0 > webview.getScale() && webview.getScale() >= 1.7)
+						zoomLevel = (int) (180 * webview.getScale());
+					else if (1.7 > webview.getScale() && webview.getScale() >= 1.4)
+						zoomLevel = (int) (200 * webview.getScale());
+					else if (1.4 > webview.getScale() && webview.getScale() >= 1.0)
+						zoomLevel = (int) (300 * webview.getScale());
+					else if (1 > webview.getScale() && webview.getScale() >= 0.8)
+						zoomLevel = (int) (400 * webview.getScale());
+					Log.w("WARN", "Scale Zoomlevel : " + zoomLevel);
+					webview.setInitialScale(zoomLevel);
+					handler.postDelayed(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+						}
+					}, 100);
+				}
+			});
+		}
+		
+		
+		@JavascriptInterface
 		public void completedSetDestStation(final String stationId, final int type)
 		{
 			final StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);

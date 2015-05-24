@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=2.0 user-scalable=1"/> 
+        <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=3.0 user-scalable=1"/> 
         <title>서울지하철</title>
      
         
@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="./ui/jquery-ui.min.css" media="all" />
         <script src="./ui/jquery-ui.min.js" charset="utf-8"></script>
         <script src="subway_data.js" charset="utf-8"></script>
-        <script src="subway.js" charset="utf-8"></script>    
-        
+        <script src="subway.js" charset="utf-8"></script> 
+        <script src="snap.svg.zpd.js" charset="utf-8"></script> 
         
         <!-- <script src="file:///android_asset/snap.svg-min.js"></script>
         <script src="file:///android_asset/jquery-1.11.1.min.js" charset="utf-8"></script>
@@ -58,6 +58,7 @@
           <svg id="svg" width="100" height="100"></svg>
        </div> 
 
+      <script src="./js/zoom.js" charset="utf-8"></script>    
       <script type="text/javascript">
         var sbox = $('#svgWrapper');
         var s = Snap("#svg");
@@ -89,6 +90,10 @@
         function onSvgLoadEnded(){
           window.myClient.onSvgLoadEnded();
         };
+
+        function setNativeZoom(station_id){
+          window.myClient.setNativeZoom(station_id);
+        }
 
         function completeMarkStation (station_json_array_string, time){
           window.myClient.completeMarkStation(station_json_array_string, time);
@@ -268,7 +273,6 @@
 
               image.click(function(event) { 
                  console.log("image click");
-                 isElementClick = true;
                  showDestinationPopUp(stationbean.id);
                });
 
@@ -412,6 +416,7 @@
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           },
           setCenterWithStationId: function (station_id){
+            
             station = Snap.select(".station#"+station_id);
             try{
               bound = station.getBBox()            
@@ -433,17 +438,11 @@
                 }
               }
             }
-              
-            // window.resizeTo(250, 250);
+      
             var half_width = window.innerWidth/2
             var half_height = window.innerHeight/2
-            // window.parent.document.body.style.zoom = 1.5;
             window.scrollTo(bound.x - half_width, bound.y - half_height);
-            // console.log("before zoom.to x,y")
-            // console.log(bound.x)
-            // console.log(bound.y)
-            // zoom.to({ x: bound.x , y: bound.y , width: 300, height: 300 });
-
+            isElementClick = false;
           },
           findNearByStation: function(find_lat, find_lon){
             var jsonArray = new Array();
@@ -596,6 +595,7 @@
         }
 
         function showDestinationPopUp(station_id){
+          isElementClick = true;
           var station = Snap.select(".station#" + station_id)
           var bound;
           try{
@@ -617,10 +617,7 @@
                 }
               }
             }
-
           }
-          
-          console.log(station_id);
 
           if(background != undefined){
             background.remove();
@@ -628,8 +625,7 @@
             endButton.remove();
             tit.remove();
           }
-          
-        
+
           var stationBean = stations[station_id];
           background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 100, 200, 100);
           startButton = s.image('./ui/images/icon_start.png', bound.x - 70, bound.y - 60, 80, 35);
@@ -671,6 +667,8 @@
             subway.set_end_station(station_id);
            });
 
+           console.log("call NativeZoom!");
+           setNativeZoom(station_id);
           // subway.setCenterWithStationId(station_id);
         }
         //file:///android_asset/subway.svg
@@ -680,7 +678,6 @@
           }
           onClick = function(e) {
             console.log("click");
-            isElementClick = true;
             showDestinationPopUp(this.node.id);
           }
           onDblClick = function(e) {
