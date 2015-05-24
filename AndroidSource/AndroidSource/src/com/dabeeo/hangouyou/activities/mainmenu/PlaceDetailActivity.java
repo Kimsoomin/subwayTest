@@ -52,6 +52,7 @@ import com.dabeeo.hangouyou.views.PlaceDetailTitleView;
 import com.dabeeo.hangouyou.views.ProductView;
 import com.dabeeo.hangouyou.views.ReviewContainerView;
 
+@SuppressWarnings("deprecation")
 public class PlaceDetailActivity extends ActionBarActivity
 {
 	private CustomScrollView scrollView;
@@ -147,22 +148,6 @@ public class PlaceDetailActivity extends ActionBarActivity
 		findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
 		
 		StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
-		
-		scrollView.setScrollViewListener(new ScrollViewListener()
-		{
-			@Override
-			public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
-			{
-				View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
-				int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
-				
-				if (diff == 0)
-				{
-					if (reviewContainerView != null)
-						reviewContainerView.loadMore();
-				}
-			}
-		});
 		
 		loadPlaceDetail();
 	}
@@ -329,18 +314,26 @@ public class PlaceDetailActivity extends ActionBarActivity
 			btnReviewSoso.setSelected(false);
 			btnReviewWorst.setSelected(false);
 			
+			int rate = 3;
 			if (v.getId() == btnReviewBest.getId())
 			{
 				btnReviewBest.setSelected(true);
+				rate = 5;
 			}
 			else if (v.getId() == btnReviewSoso.getId())
 			{
 				btnReviewSoso.setSelected(true);
+				rate = 3;
 			}
 			else if (v.getId() == btnReviewWorst.getId())
 			{
 				btnReviewWorst.setSelected(true);
+				rate = 1;
 			}
+			
+			Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
+			i.putExtra("rate", rate);
+			startActivity(i);
 		}
 	};
 	

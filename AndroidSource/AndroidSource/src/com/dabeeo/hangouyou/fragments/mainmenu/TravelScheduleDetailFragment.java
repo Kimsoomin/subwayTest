@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
 import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
@@ -50,6 +52,7 @@ public class TravelScheduleDetailFragment extends Fragment
 	
 	private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
 	private CustomScrollView scrollView;
+	private FrameLayout headerContainer;
 	
 	private int position;
 	private boolean isMySchedule = false;
@@ -80,28 +83,11 @@ public class TravelScheduleDetailFragment extends Fragment
 		btnReviewSoso.setOnClickListener(rateClickListener);
 		btnReviewWorst.setOnClickListener(rateClickListener);
 		
+		headerContainer = (FrameLayout) getView().findViewById(R.id.header);
 		headerView = (ScheduleDetailHeaderView) getView().findViewById(R.id.header_view);
 		titleView = (ScheduleDetailTitleView) getView().findViewById(R.id.title_view);
 		headerView.init();
 		titleView.init();
-		
-		scrollView.getViewTreeObserver().addOnScrollChangedListener(new OnScrollChangedListener()
-		{
-			@SuppressLint("NewApi")
-			@Override
-			public void onScrollChanged()
-			{
-				int scrollY = scrollView.getScrollY();
-				
-				if (scrollY > 255)
-					scrollY = 254;
-				scrollY = scrollY / 10;
-				int opacity = 255 - scrollY;
-				if (opacity > 255)
-					opacity = 255;
-				titleView.container.setBackground(new ColorDrawable(Color.argb(255, opacity, opacity, opacity)));
-			}
-		});
 		
 		FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
 		Resources r = getResources();
@@ -133,6 +119,7 @@ public class TravelScheduleDetailFragment extends Fragment
 		this.bean = bean;
 		this.dayBean = dayBean;
 		this.isMySchedule = isMySchedule;
+		
 	}
 	
 	
@@ -156,6 +143,23 @@ public class TravelScheduleDetailFragment extends Fragment
 			btnReviewBest.setVisibility(View.GONE);
 			btnReviewSoso.setVisibility(View.GONE);
 			btnReviewWorst.setVisibility(View.GONE);
+		}
+		
+		if (headerView != null)
+		{
+			float density = getResources().getDisplayMetrics().density;
+			if (dayBean == null)
+			{
+				headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (400 * density)));
+				headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+				scrollView.setPadding(0, 0, 0, 0);
+			}
+			else
+			{
+				headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
+				headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (70 * density)));
+				scrollView.setPadding(0, 0, 0, 0);
+			}
 		}
 	}
 	
@@ -220,18 +224,26 @@ public class TravelScheduleDetailFragment extends Fragment
 			btnReviewSoso.setSelected(false);
 			btnReviewWorst.setSelected(false);
 			
+			int rate = 3;
 			if (v.getId() == btnReviewBest.getId())
 			{
 				btnReviewBest.setSelected(true);
+				rate = 5;
 			}
 			else if (v.getId() == btnReviewSoso.getId())
 			{
 				btnReviewSoso.setSelected(true);
+				rate = 3;
 			}
 			else if (v.getId() == btnReviewWorst.getId())
 			{
 				btnReviewWorst.setSelected(true);
+				rate = 1;
 			}
+			
+			Intent i = new Intent(getActivity(), WriteReviewActivity.class);
+			i.putExtra("rate", rate);
+			startActivity(i);
 		}
 	};
 	
