@@ -1061,29 +1061,6 @@ public class SubwayFragment extends Fragment
 				}
 			});
 		}
-		
-		
-		@JavascriptInterface
-		public void onTouchStation(final String station)
-		{
-			Log.w("WARN", "지하철역 터치 됨 :" + station);
-			handler.post(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					webview.loadUrl("javascript:subway.setCenterWithStationId('" + station + "')");
-					handler.postDelayed(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							webview.loadUrl("javascript:showDestinationPopUp('" + station + "')");
-						}
-					}, 500);
-				}
-			});
-		}
 	}
 	
 }

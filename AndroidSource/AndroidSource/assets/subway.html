@@ -70,22 +70,18 @@
         var isCleared = false;
         var isElementClick = false;
         var svgPan = undefined;
-        
 
         window.onscroll = function (e) { 
           if(!isElementClick && background != undefined){
+            console.log("Remove popup");
             background.remove();
             startButton.remove();
             endButton.remove();
             tit.remove();
           }
 
-           isElementClick = false;
+          isElementClick = false;
         } 
-
-        function onTouchStation (param){
-          window.myClient.onTouchStation(param);
-        };
 
         function onSvgLoadEnded(){
           window.myClient.onSvgLoadEnded();
@@ -442,7 +438,7 @@
             var half_width = window.innerWidth/2
             var half_height = window.innerHeight/2
             window.scrollTo(bound.x - half_width, bound.y - half_height);
-            isElementClick = false;
+            // isElementClick = false;
           },
           findNearByStation: function(find_lat, find_lon){
             var jsonArray = new Array();
@@ -647,10 +643,10 @@
               tit.remove();
             }
             // ## Native
-            // setStartStation(station_id);
+            setStartStation(station_id);
             
             // ## Web test
-            subway.set_start_station(station_id);
+            // subway.set_start_station(station_id);
            });
 
            endButton.click(function(event) {
@@ -661,10 +657,10 @@
               tit.remove();
             }
             // ## Native
-            // setEndStation(station_id);
+            setEndStation(station_id);
             
             // ## Web test
-            subway.set_end_station(station_id);
+            // subway.set_end_station(station_id);
            });
 
            console.log("call NativeZoom!");
