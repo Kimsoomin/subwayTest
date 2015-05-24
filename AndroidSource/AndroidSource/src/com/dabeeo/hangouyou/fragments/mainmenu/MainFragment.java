@@ -44,143 +44,143 @@ import com.dabeeo.hangouyou.views.CharacterProgressView;
 
 public class MainFragment extends Fragment
 {
-  private RelativeLayout containerStrategySeoul, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerTicket, containerCoupon;
-  private LinearLayout containerMsgDownloadMap;
-  private ImageView badgeStrategySeoul, badgeTravelSchedule, badgeTrend, badgeSubway, badgeTicket, badgeCoupon;
-  
-  
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-  {
-    int resId = R.layout.fragment_main_menu;
-    View view = inflater.inflate(resId, null);
-    
-    containerStrategySeoul = (RelativeLayout) view.findViewById(R.id.container_strategy_seoul);
-    containerTravelSchedule = (RelativeLayout) view.findViewById(R.id.container_travel_schedule);
-    containerShoppingMall = (RelativeLayout) view.findViewById(R.id.container_shopping_mall);
-    containerMap = (RelativeLayout) view.findViewById(R.id.container_map);
-    containerSubway = (RelativeLayout) view.findViewById(R.id.container_subway);
-    containerTicket = (RelativeLayout) view.findViewById(R.id.container_ticket);
-    containerCoupon = (RelativeLayout) view.findViewById(R.id.container_coupon);
-    containerMsgDownloadMap = (LinearLayout) view.findViewById(R.id.container_download_map);
-    
-    badgeStrategySeoul = (ImageView) view.findViewById(R.id.badge_main_place);
-    badgeTravelSchedule = (ImageView) view.findViewById(R.id.badge_main_plan);
-    badgeTrend = (ImageView) view.findViewById(R.id.badge_main_trend);
-    badgeSubway = (ImageView) view.findViewById(R.id.badge_main_subway);
-    badgeTicket = (ImageView) view.findViewById(R.id.badge_main_ticket);
-    badgeCoupon = (ImageView) view.findViewById(R.id.badge_main_coupon);
-    
-    GradientDrawable drawable = (GradientDrawable) containerStrategySeoul.getBackground();
-    drawable.setColor(Color.parseColor("#ffb55d"));
-    drawable = (GradientDrawable) containerTravelSchedule.getBackground();
-    drawable.setColor(Color.parseColor("#ffcb68"));
-    drawable = (GradientDrawable) containerShoppingMall.getBackground();
-    drawable.setColor(Color.parseColor("#ff6978"));
-    drawable = (GradientDrawable) containerMap.getBackground();
-    drawable.setColor(Color.parseColor("#6a8bf1"));
-    drawable = (GradientDrawable) containerSubway.getBackground();
-    drawable.setColor(Color.parseColor("#69a2f3"));
-    drawable = (GradientDrawable) containerTicket.getBackground();
-    drawable.setColor(Color.parseColor("#9584f8"));
-    drawable = (GradientDrawable) containerCoupon.getBackground();
-    drawable.setColor(Color.parseColor("#ae7ff3"));
-    
-    containerStrategySeoul.setOnClickListener(menuClickListener);
-    containerTravelSchedule.setOnClickListener(menuClickListener);
-    containerShoppingMall.setOnClickListener(menuClickListener);
-    containerMap.setOnClickListener(menuClickListener);
-    containerSubway.setOnClickListener(menuClickListener);
-    containerTicket.setOnClickListener(menuClickListener);
-    containerCoupon.setOnClickListener(menuClickListener);
-    return view;
-  }
-  
-  
-  @Override
-  public void onResume()
-  {
+	private RelativeLayout containerStrategySeoul, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerTicket, containerCoupon;
+	private LinearLayout containerMsgDownloadMap;
+	private ImageView badgeStrategySeoul, badgeTravelSchedule, badgeTrend, badgeSubway, badgeTicket, badgeCoupon;
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		int resId = R.layout.fragment_main_menu;
+		View view = inflater.inflate(resId, null);
+		
+		containerStrategySeoul = (RelativeLayout) view.findViewById(R.id.container_strategy_seoul);
+		containerTravelSchedule = (RelativeLayout) view.findViewById(R.id.container_travel_schedule);
+		containerShoppingMall = (RelativeLayout) view.findViewById(R.id.container_shopping_mall);
+		containerMap = (RelativeLayout) view.findViewById(R.id.container_map);
+		containerSubway = (RelativeLayout) view.findViewById(R.id.container_subway);
+		containerTicket = (RelativeLayout) view.findViewById(R.id.container_ticket);
+		containerCoupon = (RelativeLayout) view.findViewById(R.id.container_coupon);
+		containerMsgDownloadMap = (LinearLayout) view.findViewById(R.id.container_download_map);
+		
+		badgeStrategySeoul = (ImageView) view.findViewById(R.id.badge_main_place);
+		badgeTravelSchedule = (ImageView) view.findViewById(R.id.badge_main_plan);
+		badgeTrend = (ImageView) view.findViewById(R.id.badge_main_trend);
+		badgeSubway = (ImageView) view.findViewById(R.id.badge_main_subway);
+		badgeTicket = (ImageView) view.findViewById(R.id.badge_main_ticket);
+		badgeCoupon = (ImageView) view.findViewById(R.id.badge_main_coupon);
+		
+		GradientDrawable drawable = (GradientDrawable) containerStrategySeoul.getBackground();
+		drawable.setColor(Color.parseColor("#ffb55d"));
+		drawable = (GradientDrawable) containerTravelSchedule.getBackground();
+		drawable.setColor(Color.parseColor("#ffcb68"));
+		drawable = (GradientDrawable) containerShoppingMall.getBackground();
+		drawable.setColor(Color.parseColor("#ff6978"));
+		drawable = (GradientDrawable) containerMap.getBackground();
+		drawable.setColor(Color.parseColor("#6a8bf1"));
+		drawable = (GradientDrawable) containerSubway.getBackground();
+		drawable.setColor(Color.parseColor("#69a2f3"));
+		drawable = (GradientDrawable) containerTicket.getBackground();
+		drawable.setColor(Color.parseColor("#9584f8"));
+		drawable = (GradientDrawable) containerCoupon.getBackground();
+		drawable.setColor(Color.parseColor("#ae7ff3"));
+		
+		containerStrategySeoul.setOnClickListener(menuClickListener);
+		containerTravelSchedule.setOnClickListener(menuClickListener);
+		containerShoppingMall.setOnClickListener(menuClickListener);
+		containerMap.setOnClickListener(menuClickListener);
+		containerSubway.setOnClickListener(menuClickListener);
+		containerTicket.setOnClickListener(menuClickListener);
+		containerCoupon.setOnClickListener(menuClickListener);
+		return view;
+	}
+	
+	
+	@Override
+	public void onResume()
+	{
 //    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
-    File directory = new File(Global.GetPathWithSDCard());
-    if (!directory.exists())
-      directory.mkdirs();
-    
-    File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
-    if (!file.exists())
-      containerMsgDownloadMap.setVisibility(View.VISIBLE);
-    else
-      containerMsgDownloadMap.setVisibility(View.GONE);
-    super.onResume();
-  }
-  
-  private OnClickListener menuClickListener = new OnClickListener()
-  {
-    @Override
-    public void onClick(View v)
-    {
-      if (v.getId() == containerStrategySeoul.getId())
-      {
-        startActivity(new Intent(getActivity(), TravelStrategyActivity.class));
-        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-      }
-      else if (v.getId() == containerTravelSchedule.getId())
-      {
-        startActivity(new Intent(getActivity(), TravelSchedulesActivity.class));
-        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-      }
-      else if (v.getId() == containerShoppingMall.getId())
-      {
-        startActivity(new Intent(getActivity(), TrendActivity.class));
-        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-      }
-      else if (v.getId() == containerMap.getId())
-      {
+		File directory = new File(Global.GetPathWithSDCard());
+		if (!directory.exists())
+			directory.mkdirs();
+		
+		File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+		if (!file.exists())
+			containerMsgDownloadMap.setVisibility(View.VISIBLE);
+		else
+			containerMsgDownloadMap.setVisibility(View.GONE);
+		super.onResume();
+	}
+	
+	private OnClickListener menuClickListener = new OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			if (v.getId() == containerStrategySeoul.getId())
+			{
+				startActivity(new Intent(getActivity(), TravelStrategyActivity.class));
+				getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+			}
+			else if (v.getId() == containerTravelSchedule.getId())
+			{
+				startActivity(new Intent(getActivity(), TravelSchedulesActivity.class));
+				getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+			}
+			else if (v.getId() == containerShoppingMall.getId())
+			{
+				startActivity(new Intent(getActivity(), TrendActivity.class));
+				getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+			}
+			else if (v.getId() == containerMap.getId())
+			{
 //        File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
-        File directory = new File(Global.GetPathWithSDCard());
-        if (!directory.exists())
-          directory.mkdirs();
-        
+				File directory = new File(Global.GetPathWithSDCard());
+				if (!directory.exists())
+					directory.mkdirs();
+				
 //        File file = new File(Global.GetPathWithSDCard("/BlinkingMap/" + Global.g_strMapDBFileName));
 //        File file = new File(Global.GetPathWithSDCard(Global.g_strMapDBFileName));
-        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
-        if (!file.exists())
-        {
-          AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-          builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-          {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
-              dialog.cancel();
-              new GetMapAsyncTask().execute();
-            }
-          }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
-          {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
-              dialog.cancel();
-            }
-          });
-          
-          AlertDialog dialog = builder.create();
-          dialog.show();
-        }
-        else
-        {
-          startActivity(new Intent(getActivity(), BlinkingMap.class));
-          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        }
-      }
-      else if (v.getId() == containerSubway.getId())
-      {
-        //가까운 지하철 역 찾기
+				File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+				if (!file.exists())
+				{
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+					builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int whichButton)
+						{
+							dialog.cancel();
+							new GetMapAsyncTask().execute();
+						}
+					}).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int whichButton)
+						{
+							dialog.cancel();
+						}
+					});
+					
+					AlertDialog dialog = builder.create();
+					dialog.show();
+				}
+				else
+				{
+					startActivity(new Intent(getActivity(), BlinkingMap.class));
+					getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+				}
+			}
+			else if (v.getId() == containerSubway.getId())
+			{
+				//가까운 지하철 역 찾기
 //        Intent i = new Intent(getActivity(), SubwayActivity.class);
 //        double[] latLon = new double[2];
 //        latLon[0] = 38;
 //        latLon[1] = 128;
 //        i.putExtra("near_by_station_lat_lon", latLon);
 //        startActivity(i);
-        
-        //해당 지하철역 출발역으로 지정
+				
+				//해당 지하철역 출발역으로 지정
 //        Intent i = new Intent(getActivity(), SubwayActivity.class);
 //        double[] latLon = new double[3];
 //        latLon[0] = 38;
@@ -188,142 +188,140 @@ public class MainFragment extends Fragment
 //        latLon[2] = 1;
 //        i.putExtra("set_dest_station_lat_lon", latLon);
 //        startActivity(i);
-        Intent i = new Intent(getActivity(), SubwayActivity.class);
-        startActivity(i);
-        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-      }
-      else if (v.getId() == containerTicket.getId())
-      {
-        //네트워크 연결 체크 후 연결했을 때만 실행
-        if (!SystemUtil.isConnectNetwork(getActivity()))
-        {
-          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
-          return;
-        }
-        
-        if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
-        {
-          startActivity(new Intent(getActivity(), LoginActivity.class));
-          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        }
-        else
-          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
-      }
-      else if (v.getId() == containerCoupon.getId())
-      {
-        //네트워크 연결 체크 후 연결했을 때만 실행
-        if (!SystemUtil.isConnectNetwork(getActivity()))
-        {
-          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
-          return;
-        }
-        
-        if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
-        {
-          startActivity(new Intent(getActivity(), CouponActivity.class));
-          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        }
-        else
-          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
-      }
-    }
-  };
-  
-  private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
-  {
-    private AlertDialog dialog;
-    
-    
-    @Override
-    protected void onPreExecute()
-    {
-      Builder builder = new AlertDialog.Builder(getActivity());
-      CharacterProgressView pView = new CharacterProgressView(getActivity());
-      pView.title.setText(getString(R.string.msg_map_donwload));
-      pView.setCircleProgressVisible(true);
-      builder.setView(pView);
-      dialog = builder.create();
-      dialog.show();
-      
-      super.onPreExecute();
-    }
-    
-    
-    @Override
-    protected Boolean doInBackground(String... params)
-    {
-      int count = 0;
-      
-      try
-      {
-        Thread.sleep(100);
-        URL url = new URL("http://tourplanb.com/_map/gs_seoul.mbtiles");
-        URLConnection conexion = url.openConnection();
-        conexion.connect();
-        
-        int lenghtOfFile = conexion.getContentLength();
-        Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
-        
-        InputStream input = new BufferedInputStream(url.openStream());
-        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
-        try
-        {
-          if (!file.exists())
-            file.createNewFile();
-        }
-        catch (IOException e)
-        {
-          e.printStackTrace();
-        }
-        
-        OutputStream output = new FileOutputStream(file);
-        
-        byte data[] = new byte[1024];
-        
-        long total = 0;
-        
-        while ((count = input.read(data)) != -1)
-        {
-          total += count;
-          publishProgress((int) ((total * 100) / lenghtOfFile));
-          output.write(data, 0, count);
-        }
-        
-        output.flush();
-        output.close();
-        input.close();
-        
-      }
-      catch (InterruptedException e)
-      {
-        e.printStackTrace();
-      }
-      catch (IOException e)
-      {
-        e.printStackTrace();
-      }
-      return null;
-    }
-    
-    
-    @Override
-    protected void onProgressUpdate(Integer... progress)
-    {
-//      dialog.setProgress(progress[0]);
-      super.onProgressUpdate(progress);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(Boolean result)
-    {
-      if (dialog.isShowing())
-        dialog.dismiss();
-      containerMsgDownloadMap.setVisibility(View.GONE);
-      startActivity(new Intent(getActivity(), BlinkingMap.class));
-      getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-      super.onPostExecute(result);
-    }
-  }
-  
+				Intent i = new Intent(getActivity(), SubwayActivity.class);
+				startActivity(i);
+				getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+			}
+			else if (v.getId() == containerTicket.getId())
+			{
+				//네트워크 연결 체크 후 연결했을 때만 실행
+				if (!SystemUtil.isConnectNetwork(getActivity()))
+				{
+					Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
+					return;
+				}
+				
+				if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
+				{
+					startActivity(new Intent(getActivity(), LoginActivity.class));
+					getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+				}
+				else
+					Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+			}
+			else if (v.getId() == containerCoupon.getId())
+			{
+				//네트워크 연결 체크 후 연결했을 때만 실행
+				if (!SystemUtil.isConnectNetwork(getActivity()))
+				{
+					Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
+					return;
+				}
+				
+				if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
+				{
+					startActivity(new Intent(getActivity(), CouponActivity.class));
+					getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+				}
+				else
+					Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+			}
+		}
+	};
+	
+	private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
+	{
+		private AlertDialog dialog;
+		private CharacterProgressView pView;
+		
+		
+		@Override
+		protected void onPreExecute()
+		{
+			Builder builder = new AlertDialog.Builder(getActivity());
+			pView = new CharacterProgressView(getActivity());
+			pView.title.setText(getString(R.string.msg_map_donwload));
+			pView.setCircleProgressVisible(true);
+			builder.setView(pView);
+			dialog = builder.create();
+			dialog.show();
+			
+			super.onPreExecute();
+		}
+		
+		
+		@Override
+		protected Boolean doInBackground(String... params)
+		{
+			int count = 0;
+			
+			try
+			{
+				Thread.sleep(100);
+				URL url = new URL("http://tourplanb.com/_map/gs_seoul.mbtiles");
+				URLConnection conexion = url.openConnection();
+				conexion.connect();
+				
+				int lenghtOfFile = conexion.getContentLength();
+				Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
+				
+				InputStream input = new BufferedInputStream(url.openStream());
+				File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+				try
+				{
+					if (!file.exists())
+						file.createNewFile();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				
+				OutputStream output = new FileOutputStream(file);
+				
+				byte data[] = new byte[1024];
+				
+				long total = 0;
+				
+				while ((count = input.read(data)) != -1)
+				{
+					total += count;
+					publishProgress((int) ((total * 100) / lenghtOfFile));
+					output.write(data, 0, count);
+				}
+				
+				output.flush();
+				output.close();
+				input.close();
+				
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		
+		@Override
+		protected void onProgressUpdate(Integer... progress)
+		{
+			pView.setProgress(progress[0]);
+			super.onProgressUpdate(progress);
+		}
+		
+		
+		@Override
+		protected void onPostExecute(Boolean result)
+		{
+			if (dialog.isShowing())
+				dialog.dismiss();
+			containerMsgDownloadMap.setVisibility(View.GONE);
+			startActivity(new Intent(getActivity(), BlinkingMap.class));
+			getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+			super.onPostExecute(result);
+		}
+	}
+	
 }

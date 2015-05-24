@@ -34,312 +34,312 @@ import com.dabeeo.hangouyou.views.CharacterProgressView;
 
 public class IntroActivity extends Activity
 {
-  private ProgressBar progressBar;
-  private AlertDialogManager alertManager;
-  private Handler handler = new Handler();
-  private AlertDialog tempdialog;
-  
-  private boolean mapdownloading = false;
-  
-  
-  @SuppressLint("SetJavaScriptEnabled")
-  @Override
-  protected void onCreate(Bundle savedInstanceState)
-  {
-    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_intro);
-    
-    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-    alertManager = new AlertDialogManager(this);
-    
-    progressBar.bringToFront();
-    
-    checkNetworkStatus();
-  }
-  
-  
-  @Override
-  protected void onDestroy()
-  {
-    handler.removeCallbacksAndMessages(null);
-    super.onDestroy();
-  }
-  
-  
-  @Override
-  protected void onResume()
-  {
-    super.onResume();
-  }
-  
-  
-  @Override
-  public void onBackPressed()
-  {
-    if (mapdownloading == true)
-    {
-      File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
-      if (file.exists())
-        file.delete();
-    }
-    android.os.Process.killProcess(android.os.Process.myPid());
-    super.onBackPressed();
-  }
-  
-  
-  private void checkNetworkStatus()
-  {
-    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
-    {
-      //3G or LTE Mode
-      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-      {
-        @Override
-        public void onPositiveButtonClickListener()
-        {
-          checkDownloadInfo();
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-          finish();
-        }
-      });
-    }
-    else
-      checkDownloadInfo();
-  }
-  
-  
-  private void checkDownloadInfo()
-  {
-    //지도정보, 상품정보, 지하철정보 다운로드
-    Log.w("WARN", "다운로드 정보 체크");
-    
-    //만약 다운로드 된 정보가 없거나, 혹은 업데이트가 있는 경우 
-    alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.message_alert_download_seoul_info));
-    
-    //추후 아랫부분 삭제 후 네트워크 연결
-    // memory leak warning 제거 
-    Runnable runn = new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        alertManager.hideProgressDialog();
-        checkMapTemp();
-      }
-    };
-    Handler handler = new Handler();
-    handler.postDelayed(runn, 1000);
-  }
-  
-  
-  private void checkMapTemp()
-  {
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(R.string.msg_is_download_map);
-    builder.setCancelable(false);
-    
-    File directory = new File(Global.GetPathWithSDCard());
-    if (!directory.exists())
-      directory.mkdirs();
-    
-    File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
-    if (!file.exists())
-    {
-      builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-      {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-          temp3G();
-        }
-      });
-      builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
-      {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-          checkMapPlaceData();
-        }
-      });
-      tempdialog = builder.create();
-      tempdialog.setCanceledOnTouchOutside(false);
-      tempdialog.show();
-    }
-    else
-      checkMapPlaceData();
-  }
-  
-  
-  private void temp3G()
-  {
-    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
-    {
-      //3G or LTE Mode
-      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-      {
-        @Override
-        public void onPositiveButtonClickListener()
-        {
-          mapdownloading = true;
-          new GetMapAsyncTask().execute();
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-          alertManager.dismiss();
-          if (!tempdialog.isShowing())
-            tempdialog.show();
-        }
-      });
-    }
-    
-    if (SystemUtil.isConnectedWiFi(IntroActivity.this))
-    {
-      if (tempdialog.isShowing())
-        tempdialog.cancel();
-      mapdownloading = true;
-      new GetMapAsyncTask().execute();
-    }
-  }
-  
-  private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
-  {
-    private Dialog dialog;
-    
-    
-    @Override
-    protected void onPreExecute()
-    {
-      if (tempdialog.isShowing())
-        tempdialog.cancel();
-      
-      Builder builder = new AlertDialog.Builder(IntroActivity.this);
-      CharacterProgressView pView = new CharacterProgressView(IntroActivity.this);
-      pView.title.setText(getString(R.string.msg_map_donwload));
-      pView.setCircleProgressVisible(true);
-      builder.setView(pView);
-      dialog = builder.create();
-      dialog.show();
-      
-      super.onPreExecute();
-    }
-    
-    
-    @Override
-    protected Boolean doInBackground(String... params)
-    {
-      int count = 0;
-      
-      try
-      {
-        Thread.sleep(100);
-        URL url = new URL("http://tourplanb.com/_map/gs_seoul.mbtiles");
-        URLConnection conexion = url.openConnection();
-        conexion.connect();
-        
-        int lenghtOfFile = conexion.getContentLength();
-        Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
-        
-        InputStream input = new BufferedInputStream(url.openStream());
-        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
-        try
-        {
-          if (!file.exists())
-            file.createNewFile();
-        }
-        catch (IOException e)
-        {
-          e.printStackTrace();
-        }
-        
-        OutputStream output = new FileOutputStream(file);
-        
-        byte data[] = new byte[1024];
-        
-        long total = 0;
-        
-        while ((count = input.read(data)) != -1)
-        {
-          total += count;
-          publishProgress((int) ((total * 100) / lenghtOfFile));
-          output.write(data, 0, count);
-        }
-        
-        output.flush();
-        output.close();
-        input.close();
-      }
-      catch (InterruptedException e)
-      {
-        e.printStackTrace();
-      }
-      catch (IOException e)
-      {
-        e.printStackTrace();
-      }
-      return null;
-    }
-    
-    
-    @Override
-    protected void onProgressUpdate(Integer... progress)
-    {
-      super.onProgressUpdate(progress);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(Boolean result)
-    {
-      if (dialog.isShowing())
-        dialog.dismiss();
-      
-      checkMapPlaceData();
-      super.onPostExecute(result);
-    }
-  }
-  
-  
-  private void checkMapPlaceData()
-  {
-    AssetManager assetManager = getAssets();
-    
-    File file = new File(Global.GetPathWithSDCard() + Global.HangouyouDBFileName);
-    
-    if (!file.exists())
-    {
-      try
-      {
-        InputStream is = assetManager.open("hangouyou.sqlite");
-        OutputStream out = new FileOutputStream(file);
-        
-        int size = is.available();
-        
-        if (size > 0)
-        {
-          byte[] data = new byte[size];
-          is.read(data);
-          
-          out.write(data);
-        }
-        out.flush();
-        out.close();
-        
-        is.close();
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-    }
+	private ProgressBar progressBar;
+	private AlertDialogManager alertManager;
+	private Handler handler = new Handler();
+	private AlertDialog tempdialog;
+	
+	private boolean mapdownloading = false;
+	
+	
+	@SuppressLint("SetJavaScriptEnabled")
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_intro);
+		
+		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+		alertManager = new AlertDialogManager(this);
+		
+		progressBar.bringToFront();
+		
+		checkNetworkStatus();
+	}
+	
+	
+	@Override
+	protected void onDestroy()
+	{
+		handler.removeCallbacksAndMessages(null);
+		super.onDestroy();
+	}
+	
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+	}
+	
+	
+	@Override
+	public void onBackPressed()
+	{
+		if (mapdownloading == true)
+		{
+			File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+			if (file.exists())
+				file.delete();
+		}
+		android.os.Process.killProcess(android.os.Process.myPid());
+		super.onBackPressed();
+	}
+	
+	
+	private void checkNetworkStatus()
+	{
+		if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+		{
+			//3G or LTE Mode
+			alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+			{
+				@Override
+				public void onPositiveButtonClickListener()
+				{
+					checkDownloadInfo();
+				}
+				
+				
+				@Override
+				public void onNegativeButtonClickListener()
+				{
+					finish();
+				}
+			});
+		}
+		else
+			checkDownloadInfo();
+	}
+	
+	
+	private void checkDownloadInfo()
+	{
+		//지도정보, 상품정보, 지하철정보 다운로드
+		Log.w("WARN", "다운로드 정보 체크");
+		
+		//만약 다운로드 된 정보가 없거나, 혹은 업데이트가 있는 경우 
+		alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.message_alert_download_seoul_info));
+		
+		//추후 아랫부분 삭제 후 네트워크 연결
+		// memory leak warning 제거 
+		Runnable runn = new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				alertManager.hideProgressDialog();
+				checkMapTemp();
+			}
+		};
+		Handler handler = new Handler();
+		handler.postDelayed(runn, 1000);
+	}
+	
+	
+	private void checkMapTemp()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.msg_is_download_map);
+		builder.setCancelable(false);
+		
+		File directory = new File(Global.GetPathWithSDCard());
+		if (!directory.exists())
+			directory.mkdirs();
+		
+		File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+		if (!file.exists())
+		{
+			builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					temp3G();
+				}
+			});
+			builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					checkMapPlaceData();
+				}
+			});
+			tempdialog = builder.create();
+			tempdialog.setCanceledOnTouchOutside(false);
+			tempdialog.show();
+		}
+		else
+			checkMapPlaceData();
+	}
+	
+	
+	private void temp3G()
+	{
+		if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+		{
+			//3G or LTE Mode
+			alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+			{
+				@Override
+				public void onPositiveButtonClickListener()
+				{
+					mapdownloading = true;
+					new GetMapAsyncTask().execute();
+				}
+				
+				
+				@Override
+				public void onNegativeButtonClickListener()
+				{
+					alertManager.dismiss();
+					if (!tempdialog.isShowing())
+						tempdialog.show();
+				}
+			});
+		}
+		
+		if (SystemUtil.isConnectedWiFi(IntroActivity.this))
+		{
+			if (tempdialog.isShowing())
+				tempdialog.cancel();
+			mapdownloading = true;
+			new GetMapAsyncTask().execute();
+		}
+	}
+	
+	private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
+	{
+		private Dialog dialog;
+		private CharacterProgressView pView;
+		
+		
+		@Override
+		protected void onPreExecute()
+		{
+			if (tempdialog.isShowing())
+				tempdialog.cancel();
+			
+			Builder builder = new AlertDialog.Builder(IntroActivity.this);
+			pView = new CharacterProgressView(IntroActivity.this);
+			pView.title.setText(getString(R.string.msg_map_donwload));
+			pView.setCircleProgressVisible(true);
+			pView.setCircleProgressVisible(true);
+			builder.setView(pView);
+			dialog = builder.create();
+			dialog.show();
+			
+			super.onPreExecute();
+		}
+		
+		
+		@Override
+		protected Boolean doInBackground(String... params)
+		{
+			int count = 0;
+			
+			try
+			{
+				Thread.sleep(100);
+				URL url = new URL("http://tourplanb.com/_map/gs_seoul.mbtiles");
+				URLConnection conexion = url.openConnection();
+				conexion.connect();
+				
+				int lenghtOfFile = conexion.getContentLength();
+				Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
+				
+				InputStream input = new BufferedInputStream(url.openStream());
+				File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+				try
+				{
+					if (!file.exists())
+						file.createNewFile();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				
+				OutputStream output = new FileOutputStream(file);
+				
+				byte data[] = new byte[1024];
+				
+				long total = 0;
+				
+				while ((count = input.read(data)) != -1)
+				{
+					total += count;
+					publishProgress((int) ((total * 100) / lenghtOfFile));
+					output.write(data, 0, count);
+				}
+				
+				output.flush();
+				output.close();
+				input.close();
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		
+		@Override
+		protected void onProgressUpdate(Integer... progress)
+		{
+			pView.setProgress(progress[0]);
+			
+			super.onProgressUpdate(progress);
+		}
+		
+		
+		@Override
+		protected void onPostExecute(Boolean result)
+		{
+			if (dialog.isShowing())
+				dialog.dismiss();
+			
+			checkMapPlaceData();
+			super.onPostExecute(result);
+		}
+	}
+	
+	
+	private void checkMapPlaceData()
+	{
+		AssetManager assetManager = getAssets();
+		
+		File file = new File(Global.GetPathWithSDCard() + Global.HangouyouDBFileName);
+		
+		if (!file.exists())
+		{
+			try
+			{
+				InputStream is = assetManager.open("hangouyou.sqlite");
+				OutputStream out = new FileOutputStream(file);
+				
+				int size = is.available();
+				
+				if (size > 0)
+				{
+					byte[] data = new byte[size];
+					is.read(data);
+					
+					out.write(data);
+				}
+				out.flush();
+				out.close();
+				
+				is.close();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 //    AssetManager assetManager = getAssets();
 //    InputStream inputStream = null;
 //    String placeJsonString = "";
@@ -418,50 +418,50 @@ public class IntroActivity extends Activity
 //    {
 //      e.printStackTrace();
 //    }
-    
-    checkAllowAlarm();
-  }
-  
-  
-  private void checkAllowAlarm()
-  {
-    if (PreferenceManager.getInstance(this).getIsFirst())
-    {
-      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_allow_notification), getString(R.string.term_ok), getString(R.string.term_cancel),
-          new AlertListener()
-          {
-            @Override
-            public void onPositiveButtonClickListener()
-            {
-              PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
-              startGuideActivity();
-            }
-            
-            
-            @Override
-            public void onNegativeButtonClickListener()
-            {
-              PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(false);
-              startGuideActivity();
-            }
-          });
-    }
-    else
-      startMainActivity();
-  }
-  
-  
-  private void startGuideActivity()
-  {
-    PreferenceManager.getInstance(this).setIsFirst(false);
-    startActivity(new Intent(IntroActivity.this, GuideActivity.class));
-  }
-  
-  
-  private void startMainActivity()
-  {
-    startActivity(new Intent(IntroActivity.this, MainActivity.class));
-    finish();
-  }
-  
+		
+		checkAllowAlarm();
+	}
+	
+	
+	private void checkAllowAlarm()
+	{
+		if (PreferenceManager.getInstance(this).getIsFirst())
+		{
+			alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_allow_notification), getString(R.string.term_ok), getString(R.string.term_cancel),
+					new AlertListener()
+					{
+						@Override
+						public void onPositiveButtonClickListener()
+						{
+							PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
+							startGuideActivity();
+						}
+						
+						
+						@Override
+						public void onNegativeButtonClickListener()
+						{
+							PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(false);
+							startGuideActivity();
+						}
+					});
+		}
+		else
+			startMainActivity();
+	}
+	
+	
+	private void startGuideActivity()
+	{
+		PreferenceManager.getInstance(this).setIsFirst(false);
+		startActivity(new Intent(IntroActivity.this, GuideActivity.class));
+	}
+	
+	
+	private void startMainActivity()
+	{
+		startActivity(new Intent(IntroActivity.this, MainActivity.class));
+		finish();
+	}
+	
 }
