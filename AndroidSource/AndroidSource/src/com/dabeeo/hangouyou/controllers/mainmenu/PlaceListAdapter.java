@@ -8,6 +8,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +22,8 @@ public class PlaceListAdapter extends BaseAdapter
 {
 	private ArrayList<PlaceBean> beans = new ArrayList<>();
 	private Context context;
-	
+	private int lastPosition;
+
 	
 	public PlaceListAdapter(Context context)
 	{
@@ -100,6 +103,10 @@ public class PlaceListAdapter extends BaseAdapter
 		category.setText(CategoryManager.getInstance(context).getCategoryName(bean.categoryId));
 		likeCount.setText(Integer.toString(bean.likeCount));
 		reviewCount.setText(Integer.toString(bean.reviewCount));
+		
+		Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+		view.startAnimation(animation);
+		lastPosition = position;		
 		return view;
 	}
 }

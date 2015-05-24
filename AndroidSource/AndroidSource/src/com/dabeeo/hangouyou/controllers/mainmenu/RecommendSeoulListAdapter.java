@@ -3,9 +3,12 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +20,14 @@ import com.squareup.picasso.Picasso;
 public class RecommendSeoulListAdapter extends BaseAdapter
 {
 	private ArrayList<PremiumBean> beans = new ArrayList<>();
+	private int lastPosition;
+	private Context context;
+	
+	
+	public RecommendSeoulListAdapter(Context context)
+	{
+		this.context = context;
+	}
 	
 	
 	public void add(PremiumBean bean)
@@ -79,6 +90,9 @@ public class RecommendSeoulListAdapter extends BaseAdapter
 		likeCount.setText(Integer.toString(bean.likeCount));
 		
 		Picasso.with(parent.getContext()).load(bean.imageUrl).fit().centerCrop().into(imageView);
+		Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+		view.startAnimation(animation);
+		lastPosition = position;
 		return view;
 	}
 }

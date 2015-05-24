@@ -379,6 +379,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 				
 				builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener()
 				{
+					@SuppressLint("DefaultLocale")
 					@Override
 					public void onClick(DialogInterface dialog, int which)
 					{

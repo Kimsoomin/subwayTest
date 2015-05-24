@@ -61,7 +61,7 @@ public class TravelStrategyListFragment extends Fragment
     
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new RecommendSeoulListAdapter();
+    adapter = new RecommendSeoulListAdapter(getActivity());
     ListView listView = (ListView) getView().findViewById(R.id.listview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()

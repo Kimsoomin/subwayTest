@@ -67,7 +67,7 @@ public class TrendActivity extends ActionBarActivity
 		bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
 		
 		listview = (ListView) findViewById(R.id.listview);
-		adapter = new TrendKoreaListAdapter();
+		adapter = new TrendKoreaListAdapter(this);
 		listview.setAdapter(adapter);
 		
 		TrendKoreaBean bean = new TrendKoreaBean();
