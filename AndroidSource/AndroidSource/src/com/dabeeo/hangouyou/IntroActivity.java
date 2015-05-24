@@ -42,7 +42,6 @@ public class IntroActivity extends Activity
   private boolean mapdownloading = false;
   
   
-  @SuppressWarnings("static-access")
   @SuppressLint("SetJavaScriptEnabled")
   @Override
   protected void onCreate(Bundle savedInstanceState)

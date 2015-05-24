@@ -35,18 +35,18 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp" >
+                    android:layout_height="100dp" >
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="50dp"
                         android:background="@color/appcolor" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="100dp"
+                        android:layout_height="70dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="35dp"
                         android:orientation="horizontal" >
 
                         <ImageView
@@ -57,8 +57,8 @@
 
                         <com.dabeeo.hangouyou.external.libraries.RoundedImageView
                             android:id="@+id/image_profile"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:src="@drawable/default_profile_l"
                             android:background="@drawable/shape_circle_button_pressed"
                             android:contentDescription="@null"
@@ -96,7 +96,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="125dp"
                 android:background="#c3c3c3"
                 android:orientation="horizontal" >
 
@@ -112,8 +112,8 @@
 
                     <ImageView
                         android:id="@+id/image_my_schedule"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/btn_mypage_plan" />
 
                     <TextView
@@ -135,8 +135,8 @@
 
                     <ImageView
                         android:id="@+id/image_my_place"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/btn_mypage_place" />
 
                     <TextView
@@ -157,8 +157,8 @@
 
                     <ImageView
                         android:id="@+id/image_my_setting"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/btn_mypage_setting" />
 
                     <TextView
@@ -171,7 +171,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="125dp"
                 android:background="#c3c3c3"
                 android:paddingTop="1dp"
                 android:orientation="horizontal" >
@@ -188,8 +188,8 @@
 
                     <ImageView
                         android:id="@+id/image_my_bookmark"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/btn_mypage_bookmark" />
 
                     <TextView
@@ -211,8 +211,8 @@
 
                     <ImageView
                         android:id="@+id/image_my_order"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/btn_mypage_buylist" />
 
                     <TextView
@@ -233,8 +233,8 @@
 
                     <ImageView
                         android:id="@+id/image_my_cart"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/btn_mypage_cart" />
 
                     <TextView
