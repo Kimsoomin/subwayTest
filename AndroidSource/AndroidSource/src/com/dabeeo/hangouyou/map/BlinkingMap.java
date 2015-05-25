@@ -798,6 +798,15 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 							m_Adapter.add(info.m_strName);
 						}
 					}
+					
+					for(Entry<String, PremiumInfo> preInfo : premiumInfo.entrySet())
+					{
+						PremiumInfo info2 = preInfo.getValue();
+						if(info2.m_strName.contains(searchEditText.getText().toString()))
+						{
+							m_Adapter.add(info2.m_strName);
+						}
+					}
 
 					if(m_Adapter.getCount() > 0)
 					{
@@ -973,6 +982,15 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 					if(info.m_strName.contains(searchEditText.getText().toString()))
 					{
 						m_Adapter.add(info.m_strName);
+					}
+				}
+				
+				for(Entry<String, PremiumInfo> preInfo : premiumInfo.entrySet())
+				{
+					PremiumInfo info2 = preInfo.getValue();
+					if(info2.m_strName.contains(searchEditText.getText().toString()))
+					{
+						m_Adapter.add(info2.m_strName);
 					}
 				}
 
