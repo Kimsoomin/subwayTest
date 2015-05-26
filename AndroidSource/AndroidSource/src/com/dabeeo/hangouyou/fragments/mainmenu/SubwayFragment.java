@@ -95,6 +95,7 @@ public class SubwayFragment extends Fragment
   private ImageView nearStationX;
   
   private double nearByLat = -1, nearByLon = -1;
+  private boolean isZoomed = false;
   
   
   @Override
@@ -994,24 +995,19 @@ public class SubwayFragment extends Fragment
         {
           Log.w("WARN", "Scale : " + webview.getScale());
           int zoomLevel = 0;
-          if (webview.getScale() >= 5)
-            zoomLevel = (int) (60 * webview.getScale());
-          else if (5 > webview.getScale() && webview.getScale() >= 3.5)
-            zoomLevel = (int) (90 * webview.getScale());
-          else if (3.5 > webview.getScale() && webview.getScale() >= 3.0)
-            zoomLevel = (int) (100 * webview.getScale());
-          else if (3.0 > webview.getScale() && webview.getScale() >= 2.0)
-            zoomLevel = (int) (130 * webview.getScale());
-          else if (2.0 > webview.getScale() && webview.getScale() >= 1.7)
-            zoomLevel = (int) (180 * webview.getScale());
-          else if (1.7 > webview.getScale() && webview.getScale() >= 1.4)
-            zoomLevel = (int) (200 * webview.getScale());
-          else if (1.4 > webview.getScale() && webview.getScale() >= 1.0)
-            zoomLevel = (int) (300 * webview.getScale());
-          else
-            zoomLevel = (int) (400 * webview.getScale());
           Log.w("WARN", "Scale Zoomlevel : " + zoomLevel);
-          webview.setInitialScale(zoomLevel);
+          if (isZoomed)
+          {
+            zoomLevel = 300;
+            isZoomed = false;
+            webview.setInitialScale(zoomLevel);
+          }
+          else
+          {
+            zoomLevel = 301;
+            isZoomed = true;
+            webview.setInitialScale(zoomLevel);
+          }
           handler.postDelayed(new Runnable()
           {
             @Override

@@ -73,6 +73,7 @@
         var svgPan = undefined;
 
         window.onscroll = function (e) { 
+          console.log("onScroll");
           if(!isElementClick && background != undefined){
             console.log("Remove popup");
             background.remove();
@@ -414,7 +415,7 @@
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           },
           setCenterWithStationId: function (station_id){
-            
+            isElementClick = true;  
             station = Snap.select(".station#"+station_id);
             try{
               bound = station.getBBox()            
@@ -626,16 +627,16 @@
           }
 
           var stationBean = stations[station_id];
-          background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 80, 200, 80);
-          startButton = s.image('./ui/images/icon_start.png', bound.x - 65, bound.y - 45, 60, 25);
-          endButton = s.image('./ui/images/icon_finish.png', bound.x + 35, bound.y - 45, 60, 25);
-          line = s.image('./ui/images/ic_line.png', bound.x + 15, bound.y - 45, 1, 25);
+          background  = s.image('./ui/images/popup_station.png', bound.x - 108, bound.y - 98, 250, 100);
+          startButton = s.image('./ui/images/icon_start.png', bound.x - 85, bound.y - 60, 80, 35);
+          endButton = s.image('./ui/images/icon_finish.png', bound.x + 35, bound.y - 60, 80, 35);
+          line = s.image('./ui/images/ic_line.png', bound.x + 16, bound.y - 60, 1, 35);
 
-          tit = s.text(bound.x + 14, bound.y - 57, stationBean.name_cn);
+          tit = s.text(bound.x + 16, bound.y - 70, stationBean.name_cn);
            tit.attr({
              fill: "#fff",
              textAnchor: "middle",
-             fontSize: "15px"
+             fontSize: "20px"
            });
 
 
