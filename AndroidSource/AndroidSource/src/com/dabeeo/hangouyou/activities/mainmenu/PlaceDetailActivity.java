@@ -1,27 +1,22 @@
 package com.dabeeo.hangouyou.activities.mainmenu;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -163,7 +158,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
+//		getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
 		return true;
 	}
 	
@@ -174,12 +169,12 @@ public class PlaceDetailActivity extends ActionBarActivity
 		int id = item.getItemId();
 		if (id == android.R.id.home)
 			finish();
-		else if (id == R.id.map)
-		{
-			Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
-			i.putExtra("idx", bean.idx);
-			startActivity(i);
-		}
+//		else if (id == R.id.map)
+//		{
+//			Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
+//			i.putExtra("idx", bean.idx);
+//			startActivity(i);
+//		}
 		return super.onOptionsItemSelected(item);
 	}
 	

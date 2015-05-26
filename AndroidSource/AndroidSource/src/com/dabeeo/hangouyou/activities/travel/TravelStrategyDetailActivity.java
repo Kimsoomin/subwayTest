@@ -100,7 +100,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-    getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
+//    getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
     return true;
   }
   
@@ -111,16 +111,16 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     int id = item.getItemId();
     if (id == android.R.id.home)
       finish();
-    else if (id == R.id.map)
-    {
-      Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-      i.putExtra("idx", bean.idx);
-      startActivity(i);
-    }
-    else if (id == R.id.close)
-    {
-      finish();
-    }
+//    else if (id == R.id.map)
+//    {
+//      Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
+//      i.putExtra("idx", bean.idx);
+//      startActivity(i);
+//    }
+//    else if (id == R.id.close)
+//    {
+//      finish();
+//    }
     return super.onOptionsItemSelected(item);
   }
   
