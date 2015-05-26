@@ -356,5 +356,6 @@
     <!-- 프로모션 -->
     <string name="term_show_detail">자세히보기</string>
     <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
-
+	<!-- 지도 -->
+	<string name="msg_dont_find_gps_retry">위치를 찾지 못했습니다. 다시 시도해주세요.</string>
 </resources>
