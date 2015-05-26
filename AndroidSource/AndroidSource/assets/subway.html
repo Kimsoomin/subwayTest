@@ -263,7 +263,7 @@
                   else
                     image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 2, bound.y - 15, 50, 50);
                 }else{
-                  image = s.image('./ui/images/icon_subway_route.png', bound.x , bound.y - 7, 32, 32);
+                  image = s.image('./ui/images/icon_subway_route.png', bound.x - 1, bound.y - 8, 32, 32);
                 }
               }catch(exception){
                 console.log(exception);
@@ -437,7 +437,7 @@
               }
             }
       
-            var half_width = window.innerWidth/2
+            var half_width = window.innerWidth/2.1
             var half_height = window.innerHeight/2
             window.scrollTo(bound.x - half_width, bound.y - half_height);
             // isElementClick = false;
@@ -626,12 +626,12 @@
           }
 
           var stationBean = stations[station_id];
-          background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 96, 200, 80);
-          startButton = s.image('./ui/images/icon_start.png', bound.x - 65, bound.y - 62, 60, 25);
-          endButton = s.image('./ui/images/icon_finish.png', bound.x + 35, bound.y - 62, 60, 25);
-          line = s.image('./ui/images/ic_line.png', bound.x + 15, bound.y - 62, 1, 25);
+          background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 80, 200, 80);
+          startButton = s.image('./ui/images/icon_start.png', bound.x - 65, bound.y - 45, 60, 25);
+          endButton = s.image('./ui/images/icon_finish.png', bound.x + 35, bound.y - 45, 60, 25);
+          line = s.image('./ui/images/ic_line.png', bound.x + 15, bound.y - 45, 1, 25);
 
-          tit = s.text(bound.x + 14, bound.y - 75, stationBean.name_cn);
+          tit = s.text(bound.x + 14, bound.y - 57, stationBean.name_cn);
            tit.attr({
              fill: "#fff",
              textAnchor: "middle",
@@ -649,10 +649,10 @@
               tit.remove();
             }
             // ## Native
-            // setStartStation(station_id);
+            setStartStation(station_id);
             
             // ## Web test
-            subway.set_start_station(station_id);
+            // subway.set_start_station(station_id);
            });
 
            endButton.click(function(event) {
@@ -664,10 +664,10 @@
               tit.remove();
             }
             // ## Native
-            // setEndStation(station_id);
+            setEndStation(station_id);
             
             // ## Web test
-            subway.set_end_station(station_id);
+            // subway.set_end_station(station_id);
            });
 
            console.log("call NativeZoom!");
