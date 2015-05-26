@@ -911,6 +911,7 @@ public class SubwayFragment extends Fragment
                 startStationId = stationId;
                 if (TextUtils.isEmpty(endStationId))
                 {
+                  Log.w("WARN", "가까운 역 정보 표시");
                   containerNearByStationInfo.setVisibility(View.VISIBLE);
                   nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
                   nearStationName.setText(nearByStation.nameCn);
