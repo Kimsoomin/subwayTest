@@ -292,8 +292,18 @@ public class SubwayFragment extends Fragment
       handler.removeCallbacks(timeOutFindStationCallBack);
       Log.w("WARN", "LocationChanged! " + loc.getLatitude() + " / " + loc.getLongitude());
       locationManager.removeUpdates(locationListener);
-      setDestFindNearStation = -1;
-      webview.loadUrl("javascript:subway.findNearByStation('" + loc.getLatitude() + "', '" + loc.getLongitude() + "')");
+      double max_latitude = 37.70453488762476;
+      double max_longitude = 127.17361450195312;
+      double min_latitude = 37.43677099171195;
+      double min_longitude = 126.76300048828125;
+      
+      if (loc.getLongitude() > max_longitude || loc.getLongitude() < min_longitude || loc.getLatitude() > max_latitude || loc.getLatitude() < min_latitude)
+        showDontSupportOutsideSeoul();
+      else
+      {
+        setDestFindNearStation = -1;
+        webview.loadUrl("javascript:subway.findNearByStation('" + loc.getLatitude() + "', '" + loc.getLongitude() + "')");
+      }
       btnNearByStation.setEnabled(true);
       progressBar.setVisibility(View.GONE);
     }
@@ -984,10 +994,14 @@ public class SubwayFragment extends Fragment
         {
           Log.w("WARN", "Scale : " + webview.getScale());
           int zoomLevel = 0;
-          if (webview.getScale() >= 3.0)
+          if (webview.getScale() >= 5)
+            zoomLevel = (int) (60 * webview.getScale());
+          else if (5 > webview.getScale() && webview.getScale() >= 3.5)
+            zoomLevel = (int) (90 * webview.getScale());
+          else if (3.5 > webview.getScale() && webview.getScale() >= 3.0)
             zoomLevel = (int) (100 * webview.getScale());
           else if (3.0 > webview.getScale() && webview.getScale() >= 2.0)
-            zoomLevel = (int) (150 * webview.getScale());
+            zoomLevel = (int) (130 * webview.getScale());
           else if (2.0 > webview.getScale() && webview.getScale() >= 1.7)
             zoomLevel = (int) (180 * webview.getScale());
           else if (1.7 > webview.getScale() && webview.getScale() >= 1.4)
@@ -1005,7 +1019,7 @@ public class SubwayFragment extends Fragment
             {
               webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
             }
-          }, 100);
+          }, 300);
         }
       });
     }

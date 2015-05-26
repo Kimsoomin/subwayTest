@@ -66,6 +66,7 @@
         var background = undefined;
         var startButton = undefined;
         var endButton = undefined;
+        var line = undefined;
         var tit = undefined;
         var isCleared = false;
         var isElementClick = false;
@@ -75,6 +76,7 @@
           if(!isElementClick && background != undefined){
             console.log("Remove popup");
             background.remove();
+            line.remove();
             startButton.remove();
             endButton.remove();
             tit.remove();
@@ -252,16 +254,16 @@
                   console.log(stationbean.id.split("line").length)
                   if(stationbean.id.split("line").length == 5){
                     //환승역4개  
-                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 24, bound.y - 2, 20, 20);
+                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 10, bound.y - 15, 50, 50);
                   }
                   else if(stationbean.id.split("line").length == 4){
                     //환승역3개
-                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 23, bound.y - 0, 20, 20);
+                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 10, bound.y - 15, 50, 50);
                   }
                   else
-                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 16, bound.y - 2, 20, 20);
+                    image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 2, bound.y - 15, 50, 50);
                 }else{
-                  image = s.image('./ui/images/icon_subway_route.png', bound.x + 5, bound.y - 2, 20, 20);
+                  image = s.image('./ui/images/icon_subway_route.png', bound.x , bound.y - 7, 32, 32);
                 }
               }catch(exception){
                 console.log(exception);
@@ -617,16 +619,17 @@
 
           if(background != undefined){
             background.remove();
+            line.remove();
             startButton.remove();
             endButton.remove();
             tit.remove();
           }
 
           var stationBean = stations[station_id];
-          background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 100, 200, 100);
-          startButton = s.image('./ui/images/icon_start.png', bound.x - 70, bound.y - 60, 80, 35);
-      
-          endButton = s.image('./ui/images/icon_finish.png', bound.x + 20, bound.y - 60, 80, 35);
+          background  = s.image('./ui/images/popup_station.png', bound.x - 85, bound.y - 96, 200, 80);
+          startButton = s.image('./ui/images/icon_start.png', bound.x - 65, bound.y - 62, 60, 25);
+          endButton = s.image('./ui/images/icon_finish.png', bound.x + 35, bound.y - 62, 60, 25);
+          line = s.image('./ui/images/ic_line.png', bound.x + 15, bound.y - 62, 1, 25);
 
           tit = s.text(bound.x + 14, bound.y - 75, stationBean.name_cn);
            tit.attr({
@@ -634,33 +637,37 @@
              textAnchor: "middle",
              fontSize: "15px"
            });
+
+
              
            startButton.click(function(event) { 
             if(background != undefined){
               background.remove();
+              line.remove();
               startButton.remove();
               endButton.remove();
               tit.remove();
             }
             // ## Native
-            setStartStation(station_id);
+            // setStartStation(station_id);
             
             // ## Web test
-            // subway.set_start_station(station_id);
+            subway.set_start_station(station_id);
            });
 
            endButton.click(function(event) {
             if(background != undefined){
               background.remove();
+              line.remove();
               startButton.remove();
               endButton.remove();
               tit.remove();
             }
             // ## Native
-            setEndStation(station_id);
+            // setEndStation(station_id);
             
             // ## Web test
-            // subway.set_end_station(station_id);
+            subway.set_end_station(station_id);
            });
 
            console.log("call NativeZoom!");
@@ -682,6 +689,7 @@
           s.click(function(e) {
             if(!isElementClick && background != undefined){
               background.remove();
+              line.remove();
               startButton.remove();
               endButton.remove();
               tit.remove();
