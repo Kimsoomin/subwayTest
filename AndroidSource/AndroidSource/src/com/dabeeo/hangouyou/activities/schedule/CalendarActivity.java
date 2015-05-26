@@ -77,8 +77,6 @@ public class CalendarActivity extends ActionBarActivity
           setResult(RESULT_OK, i);
           finish();
         }
-        else
-          Toast.makeText(CalendarActivity.this, getString(R.string.msg_dont_choice_before_day), Toast.LENGTH_LONG).show();
       }
       
       

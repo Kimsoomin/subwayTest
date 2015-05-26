@@ -326,7 +326,6 @@
     <string name="term_select_delete">선택 삭제</string>
     <string name="term_public">전체공개</string>
     <string name="term_private">비공개</string>
-    <string name="msg_dont_choice_before_day">과거의 시간으로 선택할 수 없습니다</string>
     <!-- 지하철 -->
     <string name="msg_same_start_end_station">이미 해당역을 출발역으로 지정했습니다. 도착역으로 변경하시겠습니까?</string>
     <string name="msg_same_end_start_station">이미 해당역을 도착역으로 지정했습니다. 출발역으로 변경하시겠습니까?</string>
@@ -356,6 +355,4 @@
     <!-- 프로모션 -->
     <string name="term_show_detail">자세히보기</string>
     <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
-	<!-- 지도 -->
-	<string name="msg_dont_find_gps_retry">위치를 찾지 못했습니다. 다시 시도해주세요.</string>
 </resources>

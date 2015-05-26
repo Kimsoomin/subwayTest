@@ -31,6 +31,8 @@ public class StationBean
         this.isDuplicate = object.getBoolean("isDuplicate");
       if (object.has("name_cn"))
         this.nameCn = object.getString("name_cn");
+      if (object.has("name"))
+        this.nameCn = object.getString("name");
       if (object.has("name_ko"))
         this.nameKo = object.getString("name_ko");
       if (object.has("name_en"))

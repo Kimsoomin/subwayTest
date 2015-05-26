@@ -218,6 +218,7 @@ public class SubwayFragment extends Fragment
     webview.getSettings().setBuiltInZoomControls(true);
     webview.getSettings().setDisplayZoomControls(false);
     webview.getSettings().setAppCacheEnabled(true);
+    webview.getSettings().setSupportZoom(true);
     if (Build.VERSION.SDK_INT > 18)
     {
       webview.getSettings().setDomStorageEnabled(true);
@@ -226,6 +227,7 @@ public class SubwayFragment extends Fragment
       webview.getSettings().setAppCachePath(activity.getApplicationContext().getCacheDir().getAbsolutePath());
       webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
       webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+      
     }
     webview.addJavascriptInterface(new JavaScriptInterface(), "myClient");
     webview.setWebViewClient(webViewClient);
@@ -282,7 +284,7 @@ public class SubwayFragment extends Fragment
       progressBar.setVisibility(View.GONE);
       Builder builder = new AlertDialog.Builder(getActivity());
       builder.setTitle(getString(R.string.app_name));
-      builder.setMessage(getString(R.string.msg_dont_find_gps_retry));
+      builder.setMessage(getString(R.string.map_gps_Location_fail));
       builder.setPositiveButton(android.R.string.ok, null);
       builder.create().show();
     }
@@ -599,27 +601,6 @@ public class SubwayFragment extends Fragment
     public void completeLoadAllStation(String stationsJSONString)
     {
       Log.w("WARN", "모든 지하철역 가져와서 메모리에 저장함 : " + stationsJSONString);
-//      JSONArray stationsJsonArray;
-//      ArrayList<StationBean> stations = new ArrayList<StationBean>();
-//      try
-//      {
-//        stationsJsonArray = new JSONArray(stationsJSONString);
-//        for (int i = 0; i < stationsJsonArray.length(); i++)
-//        {
-//          StationBean bean = new StationBean();
-//          bean.setJSONObject(stationsJsonArray.getJSONObject(i));
-//          stations.add(bean);
-//        }
-//      }
-//      catch (Exception e)
-//      {
-//        e.printStackTrace();
-//      }
-//      
-//      SubwayManager.getInstance(activity).stations.clear();
-//      SubwayManager.getInstance(activity).stations.addAll(stations);
-//      if (afterLoadSubwaysRunnable != null)
-//        afterLoadSubwaysRunnable.run();
     }
     
     
@@ -683,8 +664,6 @@ public class SubwayFragment extends Fragment
         {
           if (!TextUtils.isEmpty(startStationId))
           {
-            Log.w("WARN", "Current startStationId : " + startStationId);
-            Log.w("WARN", "Change stationId : " + stationId);
             if (startStationId.equals(stationId))
             {
               //도착역이 이미 시작역으로 지정된 경우
@@ -876,7 +855,8 @@ public class SubwayFragment extends Fragment
       }
       else
       {
-        final StationBean nearByStation = SubwayManager.getInstance(activity).findStationWithTransfer(stationId);
+        final StationBean nearByStationWithTransfer = SubwayManager.getInstance(activity).findStationWithTransfer(stationId);
+        final StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);
         Log.w("WARN", "가까운 지하철 역 찾음:" + stationId);
         Log.w("WARN", "가까운 지하철 역 찾음:" + nearByStation.stationId);
         Log.w("WARN", "가까운 지하철 역 찾음:" + nearByStation.nameKo);
@@ -916,20 +896,20 @@ public class SubwayFragment extends Fragment
                   Log.w("WARN", "가까운 역 정보 표시");
                   containerNearByStationInfo.setVisibility(View.VISIBLE);
                   nearStationImage.removeAllViews();
-                  if (nearByStation.lines.size() == 0)
+                  if (nearByStationWithTransfer.lines.size() == 0)
                   {
                     ImageView imageView = new ImageView(getActivity());
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
-                    imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.line));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                    imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.line));
                     nearStationImage.addView(imageView);
                   }
                   else
                   {
-                    for (int i = 0; i < nearByStation.lines.size(); i++)
+                    for (int i = 0; i < nearByStationWithTransfer.lines.size(); i++)
                     {
                       ImageView imageView = new ImageView(getActivity());
-                      imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
-                      imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.lines.get(i)));
+                      imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                      imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.lines.get(i)));
                       nearStationImage.addView(imageView);
                     }
                   }
@@ -966,7 +946,7 @@ public class SubwayFragment extends Fragment
                   @Override
                   public void run()
                   {
-                    webview.loadUrl("javascript:subway.set_start_station('" + nearByStation.stationId + "')");
+                    webview.loadUrl("javascript:subway.set_start_station('" + stationId + "')");
                   }
                 }, 500);
               }
@@ -1000,22 +980,21 @@ public class SubwayFragment extends Fragment
                         if (TextUtils.isEmpty(startStationId))
                         {
                           containerNearByStationInfo.setVisibility(View.VISIBLE);
-//                          nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
                           nearStationImage.removeAllViews();
-                          if (nearByStation.lines.size() == 0)
+                          if (nearByStationWithTransfer.lines.size() == 0)
                           {
                             ImageView imageView = new ImageView(getActivity());
-                            imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
-                            imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.line));
+                            imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                            imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.line));
                             nearStationImage.addView(imageView);
                           }
                           else
                           {
-                            for (int i = 0; i < nearByStation.lines.size(); i++)
+                            for (int i = 0; i < nearByStationWithTransfer.lines.size(); i++)
                             {
                               ImageView imageView = new ImageView(getActivity());
-                              imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
-                              imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.lines.get(i)));
+                              imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                              imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.lines.get(i)));
                               nearStationImage.addView(imageView);
                             }
                           }
@@ -1058,19 +1037,19 @@ public class SubwayFragment extends Fragment
         {
           Log.w("WARN", "Scale : " + webview.getScale());
           int zoomLevel = 0;
-          Log.w("WARN", "Scale Zoomlevel : " + zoomLevel);
           if (isZoomed)
           {
-            zoomLevel = 300;
+            zoomLevel = 270;
             isZoomed = false;
             webview.setInitialScale(zoomLevel);
           }
           else
           {
-            zoomLevel = 301;
+            zoomLevel = 271;
             isZoomed = true;
             webview.setInitialScale(zoomLevel);
           }
+          
           handler.postDelayed(new Runnable()
           {
             @Override
@@ -1087,7 +1066,8 @@ public class SubwayFragment extends Fragment
     @JavascriptInterface
     public void completedSetDestStation(final String stationId, final int type)
     {
-      final StationBean nearByStation = SubwayManager.getInstance(activity).findStationWithTransfer(stationId);
+      final StationBean nearByStationWithTransfer = SubwayManager.getInstance(activity).findStationWithTransfer(stationId);
+      final StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);
       handler.post(new Runnable()
       {
         @Override
@@ -1099,20 +1079,20 @@ public class SubwayFragment extends Fragment
           containerNearByStationInfo.setVisibility(View.VISIBLE);
 //          nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
           nearStationImage.removeAllViews();
-          if (nearByStation.lines.size() == 0)
+          if (nearByStationWithTransfer.lines.size() == 0)
           {
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
-            imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.line));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+            imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.line));
             nearStationImage.addView(imageView);
           }
           else
           {
-            for (int i = 0; i < nearByStation.lines.size(); i++)
+            for (int i = 0; i < nearByStationWithTransfer.lines.size(); i++)
             {
               ImageView imageView = new ImageView(getActivity());
-              imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
-              imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.lines.get(i)));
+              imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+              imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.lines.get(i)));
               nearStationImage.addView(imageView);
             }
           }
@@ -1122,14 +1102,14 @@ public class SubwayFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-              if(type == 0)
+              if (type == 0)
                 webview.loadUrl("javascript:subway.clear_start_station()");
               else
                 webview.loadUrl("javascript:subway.clear_end_station()");
+              
               findNearByStationLat = -1;
               findNearByStationLon = -1;
               setDestFindNearStation = -1;
-              
               
               containerNearByStationInfo.setVisibility(View.GONE);
             }

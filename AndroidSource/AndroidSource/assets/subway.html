@@ -73,7 +73,6 @@
         var svgPan = undefined;
 
         window.onscroll = function (e) { 
-          console.log("onScroll");
           if(!isElementClick && background != undefined){
             console.log("Remove popup");
             background.remove();
@@ -264,7 +263,6 @@
                   else
                     image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 2, bound.y - 15, 50, 50);
                 }else{
-                  console.log(bound.width);
                   if(80 >bound.width  && bound.width > 58){
                     //환승역3/4개  
                     image = s.image('./ui/images/icon_subway_route.png', bound.x + 17, bound.y - 7, 32, 32);
@@ -278,7 +276,6 @@
                   }
                   else
                     image = s.image('./ui/images/icon_subway_route.png', bound.x - 1, bound.y - 8, 32, 32);
-                  
                 }
               }catch(exception){
                 console.log(exception);
@@ -440,7 +437,7 @@
             }catch(exception){
               console.log("Re-find")
               for (var i = 0; i < station_ids.length; i++){
-                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                if(station_ids[i].indexOf(this.start_station_id) > -1 && station_ids[i] != this.start_station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
                 
                   try{
@@ -462,7 +459,7 @@
             }catch(exception){
               console.log("Re-find")
               for (var i = 0; i < station_ids.length; i++){
-                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                if(station_ids[i].indexOf(this.end_station_id) > -1 && station_ids[i] != this.end_station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
                 
                   try{
