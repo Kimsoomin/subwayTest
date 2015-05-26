@@ -134,7 +134,7 @@
             isCleared = true;
           },
           clear_end_station: function(){
-            if (this.start_station) {
+            if (this.end_station) {
               this.end_station.remove()
             }
             this.end_station_id = undefined;
@@ -264,7 +264,21 @@
                   else
                     image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 2, bound.y - 15, 50, 50);
                 }else{
-                  image = s.image('./ui/images/icon_subway_route.png', bound.x - 1, bound.y - 8, 32, 32);
+                  console.log(bound.width);
+                  if(80 >bound.width  && bound.width > 58){
+                    //환승역3/4개  
+                    image = s.image('./ui/images/icon_subway_route.png', bound.x + 17, bound.y - 7, 32, 32);
+                  }
+                  else if(57 >bound.width  && bound.width > 32){
+                    //환승역2개
+                    image = s.image('./ui/images/icon_subway_route.png', bound.x + 8, bound.y - 7, 32, 32);
+                  }
+                  else if(31 >bound.width  && bound.width > 29){
+                     image = s.image('./ui/images/icon_subway_route.png', bound.x - 1, bound.y - 8, 32, 32);
+                  }
+                  else
+                    image = s.image('./ui/images/icon_subway_route.png', bound.x - 1, bound.y - 8, 32, 32);
+                  
                 }
               }catch(exception){
                 console.log(exception);
@@ -404,13 +418,69 @@
               }
             }
 
+             
+           
             for (var i = 0; i < jsonArray.length; i++){
               if(i != 0 && i != jsonArray.length - 1){
                   this.mark_station(jsonArray[i]);
               }
             }
+
+            if (this.start_station) {
+              this.start_station.remove()
+            }
+            if (this.end_station) {
+              this.end_station.remove()
+            }
+            
+            station = Snap.select(".station#"+this.start_station_id)
+      
+            try{
+              bound = station.getBBox()            
+            }catch(exception){
+              console.log("Re-find")
+              for (var i = 0; i < station_ids.length; i++){
+                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                  var temp_station = Snap.select(".station#"+station_ids[i])
+                
+                  try{
+                    if(temp_station.getBBox() != null){
+                      bound = temp_station.getBBox()
+                    }
+                    break;
+                  }catch(exception2){
+                  }
+                }
+              }
+            }
+            this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3, bound.y - 42, 35, 50);
+         
+            station = Snap.select(".station#"+this.end_station_id)
+      
+            try{
+              bound = station.getBBox()            
+            }catch(exception){
+              console.log("Re-find")
+              for (var i = 0; i < station_ids.length; i++){
+                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                  var temp_station = Snap.select(".station#"+station_ids[i])
+                
+                  try{
+                    if(temp_station.getBBox() != null){
+                      bound = temp_station.getBBox()
+                    }
+                    break;
+                  }catch(exception2){
+                  }
+                }
+              }
+            }
+
+            this.end_station = s.image('./ui/images/pin_subway_finish.png', bound.x - 3, bound.y - 42, 35, 50);
+         
            
             console.log(jsonArray);
+
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
           },

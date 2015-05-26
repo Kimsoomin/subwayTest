@@ -90,7 +90,7 @@ public class SubwayFragment extends Fragment
   private Activity activity;
   
   private LinearLayout containerNearByStationInfo;
-  private ImageView nearStationImage;
+  private LinearLayout nearStationImage;
   private TextView nearStationName;
   private ImageView nearStationX;
   
@@ -201,7 +201,7 @@ public class SubwayFragment extends Fragment
     endStationImage = (ImageView) view.findViewById(R.id.end_station_image);
     
     containerNearByStationInfo = (LinearLayout) view.findViewById(R.id.container_near_station_info);
-    nearStationImage = (ImageView) view.findViewById(R.id.near_station_line);
+    nearStationImage = (LinearLayout) view.findViewById(R.id.near_station_line);
     nearStationName = (TextView) view.findViewById(R.id.near_station_name);
     nearStationX = (ImageView) view.findViewById(R.id.image_x);
     
@@ -876,7 +876,7 @@ public class SubwayFragment extends Fragment
       }
       else
       {
-        final StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);
+        final StationBean nearByStation = SubwayManager.getInstance(activity).findStationWithTransfer(stationId);
         Log.w("WARN", "가까운 지하철 역 찾음:" + stationId);
         Log.w("WARN", "가까운 지하철 역 찾음:" + nearByStation.stationId);
         Log.w("WARN", "가까운 지하철 역 찾음:" + nearByStation.nameKo);
@@ -915,7 +915,24 @@ public class SubwayFragment extends Fragment
                 {
                   Log.w("WARN", "가까운 역 정보 표시");
                   containerNearByStationInfo.setVisibility(View.VISIBLE);
-                  nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+                  nearStationImage.removeAllViews();
+                  if (nearByStation.lines.size() == 0)
+                  {
+                    ImageView imageView = new ImageView(getActivity());
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                    imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.line));
+                    nearStationImage.addView(imageView);
+                  }
+                  else
+                  {
+                    for (int i = 0; i < nearByStation.lines.size(); i++)
+                    {
+                      ImageView imageView = new ImageView(getActivity());
+                      imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                      imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.lines.get(i)));
+                      nearStationImage.addView(imageView);
+                    }
+                  }
                   nearStationName.setText(nearByStation.nameCn);
                   nearStationX.setOnClickListener(new OnClickListener()
                   {
@@ -925,6 +942,7 @@ public class SubwayFragment extends Fragment
                       containerNearByStationInfo.setVisibility(View.GONE);
                       startStationLat = -1;
                       startStationLong = -1;
+                      startStationId = "";
                       
                       findNearByStationLat = -1;
                       findNearByStationLon = -1;
@@ -982,7 +1000,25 @@ public class SubwayFragment extends Fragment
                         if (TextUtils.isEmpty(startStationId))
                         {
                           containerNearByStationInfo.setVisibility(View.VISIBLE);
-                          nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+//                          nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+                          nearStationImage.removeAllViews();
+                          if (nearByStation.lines.size() == 0)
+                          {
+                            ImageView imageView = new ImageView(getActivity());
+                            imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                            imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.line));
+                            nearStationImage.addView(imageView);
+                          }
+                          else
+                          {
+                            for (int i = 0; i < nearByStation.lines.size(); i++)
+                            {
+                              ImageView imageView = new ImageView(getActivity());
+                              imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                              imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.lines.get(i)));
+                              nearStationImage.addView(imageView);
+                            }
+                          }
                           nearStationName.setText(nearByStation.nameCn);
                           nearStationX.setOnClickListener(new OnClickListener()
                           {
@@ -992,6 +1028,7 @@ public class SubwayFragment extends Fragment
                               findNearByStationLat = -1;
                               findNearByStationLon = -1;
                               setDestFindNearStation = -1;
+                              endStationId = "";
                               
                               containerNearByStationInfo.setVisibility(View.GONE);
                               webview.loadUrl("javascript:subway.clear_end_station()");
@@ -1050,7 +1087,7 @@ public class SubwayFragment extends Fragment
     @JavascriptInterface
     public void completedSetDestStation(final String stationId, final int type)
     {
-      final StationBean nearByStation = SubwayManager.getInstance(activity).findStation(stationId);
+      final StationBean nearByStation = SubwayManager.getInstance(activity).findStationWithTransfer(stationId);
       handler.post(new Runnable()
       {
         @Override
@@ -1060,16 +1097,39 @@ public class SubwayFragment extends Fragment
           progressBar.setVisibility(View.GONE);
           
           containerNearByStationInfo.setVisibility(View.VISIBLE);
-          nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+//          nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
+          nearStationImage.removeAllViews();
+          if (nearByStation.lines.size() == 0)
+          {
+            ImageView imageView = new ImageView(getActivity());
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+            imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.line));
+            nearStationImage.addView(imageView);
+          }
+          else
+          {
+            for (int i = 0; i < nearByStation.lines.size(); i++)
+            {
+              ImageView imageView = new ImageView(getActivity());
+              imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+              imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStation.lines.get(i)));
+              nearStationImage.addView(imageView);
+            }
+          }
           nearStationName.setText(nearByStation.nameCn);
           nearStationX.setOnClickListener(new OnClickListener()
           {
             @Override
             public void onClick(View v)
             {
+              if(type == 0)
+                webview.loadUrl("javascript:subway.clear_start_station()");
+              else
+                webview.loadUrl("javascript:subway.clear_end_station()");
               findNearByStationLat = -1;
               findNearByStationLon = -1;
               setDestFindNearStation = -1;
+              
               
               containerNearByStationInfo.setVisibility(View.GONE);
             }

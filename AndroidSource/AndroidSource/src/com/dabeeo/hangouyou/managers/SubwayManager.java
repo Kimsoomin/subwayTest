@@ -80,6 +80,26 @@ public class SubwayManager
   }
   
   
+  public StationBean findStationWithTransfer(String stationId)
+  {
+    StationBean bean = null;
+    for (int i = 0; i < stations.size(); i++)
+    {
+      if (stations.get(i).stationId.equals(stationId))
+        bean = stations.get(i);
+    }
+    
+    for (int i = 0; i < stations.size(); i++)
+    {
+      if (stations.get(i).nameKo.equals(bean.nameKo))
+        if (stations.get(i).line.contains("환승"))
+          bean = stations.get(i);
+    }
+    
+    return bean;
+  }
+  
+  
   //검색 시 사용 
   public ArrayList<StationBean> getSubwayStationsWithTitle(final String title)
   {

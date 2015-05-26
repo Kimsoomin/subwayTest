@@ -60,6 +60,7 @@ public class SubwayActivity extends Activity
     searchContainer = (RelativeLayout) findViewById(R.id.search_container);
     emptySearchContainer = (RelativeLayout) findViewById(R.id.empty_search_container);
     typingCancel = (ImageView) findViewById(R.id.search_cancel);
+    typingCancel.setVisibility(View.GONE);
     typingCancel.setOnClickListener(new OnClickListener()
     {
       @Override
@@ -126,6 +127,7 @@ public class SubwayActivity extends Activity
         Log.w("WARN", "length: " + editSearch.getText().toString().length());
         if (editSearch.getText().toString().length() > 1)
         {
+          typingCancel.setVisibility(View.VISIBLE);
           searchContainer.setVisibility(View.VISIBLE);
           if (SubwayManager.getInstance(SubwayActivity.this).getSubwayStationsWithTitle(editSearch.getText().toString()).size() > 0)
           {
@@ -141,6 +143,7 @@ public class SubwayActivity extends Activity
         }
         else
         {
+          typingCancel.setVisibility(View.GONE);
           searchContainer.setVisibility(View.GONE);
           searchListView.setVisibility(View.GONE);
         }

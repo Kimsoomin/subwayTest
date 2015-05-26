@@ -136,10 +136,12 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal" >
 
-                        <ImageView
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:id="@+id/near_station_line"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical" />
 
                         <TextView
                             android:id="@+id/near_station_name"
@@ -215,15 +217,15 @@
                 android:text="@string/term_find_start_station" />
         </LinearLayout>
     </LinearLayout>
-    
-   <RelativeLayout
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:orientation="vertical" >
-        
+
         <Button
             android:id="@+id/btn_map"
             android:layout_width="60dp"
@@ -238,6 +240,6 @@
             android:layout_below="@+id/btn_map"
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_my_location" />
-      </RelativeLayout>
-      
+    </RelativeLayout>
+
 </RelativeLayout>
