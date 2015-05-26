@@ -185,6 +185,8 @@ public class SubwayFragment extends Fragment
   @SuppressLint("NewApi")
   private void loadMapView()
   {
+    startStationId = "";
+    endStationId = "";
     int resId = R.layout.fragment_subway;
     view = LayoutInflater.from(activity).inflate(resId, null);
     stationsInfoLayout = (LinearLayout) view.findViewById(R.id.stations_info);
