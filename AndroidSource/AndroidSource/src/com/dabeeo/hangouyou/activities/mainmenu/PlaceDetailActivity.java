@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -82,6 +82,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 	private ViewGroup layoutDetailPlaceInfo;
 	private LinearLayout containerTicketAndCoupon;
 	public LinearLayout containerWriteReview;
+	private Dialog sharedialog;
 	
 	
 	@Override
@@ -355,15 +356,17 @@ public class PlaceDetailActivity extends ActionBarActivity
 			else if (v.getId() == R.id.btn_share)
 			{
 				// 공유하기
-				Builder dialog = new AlertDialog.Builder(PlaceDetailActivity.this);
+				Builder builder = new AlertDialog.Builder(PlaceDetailActivity.this);
 				View view = new SharePickView(PlaceDetailActivity.this);
-				dialog.setView(view);
+				builder.setView(view);
 				
 				((SharePickView) view).btnQQ.setOnClickListener(shareClickListener);
 				((SharePickView) view).btnWechat.setOnClickListener(shareClickListener);
 				((SharePickView) view).btnWeibo.setOnClickListener(shareClickListener);
 				
-				dialog.create().show();
+				sharedialog = builder.create();
+				if (!sharedialog.isShowing())
+					sharedialog.show();
 			}
 			else if (v.getId() == R.id.btn_like)
 			{
@@ -422,6 +425,9 @@ public class PlaceDetailActivity extends ActionBarActivity
 			Intent i = new Intent(Intent.ACTION_VIEW);
 			i.setData(Uri.parse(url));
 			startActivity(i);
+			
+			if (sharedialog.isShowing())
+				sharedialog.dismiss();
 		}
 	};
 	
@@ -457,7 +463,9 @@ public class PlaceDetailActivity extends ActionBarActivity
 //		}
 //		
 //		intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getPath()));
-		intent.setType("text/plain");
+////		intent.setType("text/plain");
+//		intent.setType("image/jpeg");
+		//Weibo는 Image+Text가능, WeChat/QQ는 Text만 가능 
 		intent.putExtra(Intent.EXTRA_TEXT, "[Hanhayou] Download Hanhayou! http://dabeeo.com");
 		
 		List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(intent, 0);
