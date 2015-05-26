@@ -1008,7 +1008,7 @@ public class SubwayFragment extends Fragment
             zoomLevel = (int) (200 * webview.getScale());
           else if (1.4 > webview.getScale() && webview.getScale() >= 1.0)
             zoomLevel = (int) (300 * webview.getScale());
-          else if (1 > webview.getScale() && webview.getScale() >= 0.8)
+          else 
             zoomLevel = (int) (400 * webview.getScale());
           Log.w("WARN", "Scale Zoomlevel : " + zoomLevel);
           webview.setInitialScale(zoomLevel);
