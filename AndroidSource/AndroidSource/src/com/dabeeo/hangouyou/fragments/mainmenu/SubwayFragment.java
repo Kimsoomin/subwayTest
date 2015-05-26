@@ -450,7 +450,7 @@ public class SubwayFragment extends Fragment
       @Override
       public void onClick(View arg0)
       {
-        StationBean stationBean = SubwayManager.getInstance(activity).findStation(stationId);
+        StationBean stationBean = SubwayManager.getInstance(activity).findStation(startStationId);
         
         if (stationBean != null)
         {
@@ -459,6 +459,8 @@ public class SubwayFragment extends Fragment
           double min_latitude = 37.43677099171195;
           double min_longitude = 126.76300048828125;
           
+          Log.w("WARN", "FirstStation name : " + stationBean.nameKo);
+          Log.w("WARN", "FirstStation name : " + stationBean.lon);
           if (stationBean.lon > max_longitude || stationBean.lon < min_longitude || stationBean.lat > max_latitude || stationBean.lat < min_latitude)
             showDontSupportOutsideSeoul();
           else
@@ -477,7 +479,7 @@ public class SubwayFragment extends Fragment
             @Override
             public void run()
             {
-              showFindStartStation(stationId);
+              showFindStartStation(startStationId);
             }
           });
         }

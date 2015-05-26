@@ -42,10 +42,17 @@ public class StationBean
       if (object.has("location"))
       {
         JSONObject locationObj = object.getJSONObject("location");
-        if (object.has("latitude"))
-          this.lat = locationObj.getDouble("latitude");
-        if (object.has("longitude"))
-          this.lon = locationObj.getDouble("longitude");
+        try
+        {
+          if (locationObj.has("latitude"))
+            this.lat = locationObj.getDouble("latitude");
+          if (locationObj.has("longitude"))
+            this.lon = locationObj.getDouble("longitude");
+        }
+        catch (Exception e)
+        {
+          
+        }
       }
       
       if (object.has("before_station_line"))
