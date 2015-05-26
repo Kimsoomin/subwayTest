@@ -173,7 +173,7 @@ public class SubwayStationsActivity extends ActionBarActivity
           e.printStackTrace();
         }
         
-        String nearString = destName + "과 가장 가까운 출구는 " + finalStationBean.nameKo + "역 " + nearByExit + "번 출구입니다.";
+        String nearString = destName + "과 가장 가까운 출구는 " + finalStationBean.nameKo + " " + nearByExit + "번 출구입니다.";
         if (!Locale.getDefault().getLanguage().contains("ko"))
           nearString = "离" + destName + "最近的出口是" + finalStationBean.nameCn + "站" + nearByExit + "号出口";
         exitInfoText.setText(nearString);

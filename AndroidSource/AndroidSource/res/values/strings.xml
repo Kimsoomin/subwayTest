@@ -92,7 +92,7 @@
     <!-- Message - Intro -->
     <string name="message_alert_lte_mode">在3G/LTE网络下会消耗流量。确认使用吗？</string>
     <string name="message_alert_download_seoul_info">正在查询首尔信息。请稍等。</string>
-    <string name="message_alert_allow_notification">"接收韩购游的推送信息吗？"</string>
+    <string name="message_alert_allow_notification">"接收韩哈游的推送信息吗？"</string>
     <string name="message_write_review">请留下点评。</string>
     <string name="msg_empty_value">请填写所有空间。</string>
     <!-- 검색결과 -->
