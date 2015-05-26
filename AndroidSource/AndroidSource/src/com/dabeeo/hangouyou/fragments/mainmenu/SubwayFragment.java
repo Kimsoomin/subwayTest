@@ -136,6 +136,29 @@ public class SubwayFragment extends Fragment
     findNearByStationLon = lon;
     setDestFindNearStation = type;
     this.destName = destName;
+    
+    try
+    {
+      if (findNearByStationLat != -1)
+      {
+        //가까운 지하철역을 찾아야 함
+        if (setDestFindNearStation == 0)
+          webview.loadUrl("javascript:subway.findNearByStation('" + findNearByStationLat + "', '" + findNearByStationLon + "')");
+        else
+        {
+          if (setDestFindNearStation == 1)
+          {
+            nearByLat = findNearByStationLat;
+            nearByLon = findNearByStationLon;
+          }
+          webview.loadUrl("javascript:subway.findNearByStation('" + findNearByStationLat + "', '" + findNearByStationLon + "')");
+        }
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
   
   
@@ -459,8 +482,6 @@ public class SubwayFragment extends Fragment
           double min_latitude = 37.43677099171195;
           double min_longitude = 126.76300048828125;
           
-          Log.w("WARN", "FirstStation name : " + stationBean.nameKo);
-          Log.w("WARN", "FirstStation name : " + stationBean.lon);
           if (stationBean.lon > max_longitude || stationBean.lon < min_longitude || stationBean.lat > max_latitude || stationBean.lat < min_latitude)
             showDontSupportOutsideSeoul();
           else
