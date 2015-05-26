@@ -861,14 +861,14 @@ public class SubwayFragment extends Fragment
           {
             if (setDestFindNearStation == -1)
             {
-              handler.postDelayed(new Runnable()
+              handler.post(new Runnable()
               {
                 @Override
                 public void run()
                 {
                   webview.loadUrl("javascript:showDestinationPopUp('" + stationId + "')");
                 }
-              }, 500);
+              });
             }
             else
             {
@@ -1008,7 +1008,7 @@ public class SubwayFragment extends Fragment
             zoomLevel = (int) (200 * webview.getScale());
           else if (1.4 > webview.getScale() && webview.getScale() >= 1.0)
             zoomLevel = (int) (300 * webview.getScale());
-          else 
+          else
             zoomLevel = (int) (400 * webview.getScale());
           Log.w("WARN", "Scale Zoomlevel : " + zoomLevel);
           webview.setInitialScale(zoomLevel);
