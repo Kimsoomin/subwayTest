@@ -91,9 +91,35 @@ public class SettingActivity extends ActionBarActivity
     switchSyncWifiOnly.setOnCheckedChangeListener(new OnCheckedChangeListener()
     {
       @Override
-      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+      public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked)
       {
-        
+        if (isChecked)
+          PreferenceManager.getInstance(SettingActivity.this).setSyncOnlyWifi(isChecked);
+        else
+        {
+          Builder builder = new AlertDialog.Builder(SettingActivity.this);
+          builder.setTitle(getString(R.string.term_alert));
+          builder.setMessage(getString(R.string.msg_only_wifi_is_disable));
+          builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1)
+            {
+              PreferenceManager.getInstance(SettingActivity.this).setSyncOnlyWifi(false);
+              switchSyncWifiOnly.setChecked(PreferenceManager.getInstance(SettingActivity.this).getSyncOnlyWifi());
+            }
+          });
+          builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1)
+            {
+              PreferenceManager.getInstance(SettingActivity.this).setSyncOnlyWifi(true);
+              switchSyncWifiOnly.setChecked(PreferenceManager.getInstance(SettingActivity.this).getSyncOnlyWifi());
+            }
+          });
+          builder.create().show();
+        }
       }
     });
     containerNotice = (LinearLayout) findViewById(R.id.container_notice);
@@ -110,6 +136,7 @@ public class SettingActivity extends ActionBarActivity
   protected void onResume()
   {
     switchNotificationOnOff.setChecked(PreferenceManager.getInstance(SettingActivity.this).getAllowPopup());
+    switchSyncWifiOnly.setChecked(PreferenceManager.getInstance(SettingActivity.this).getSyncOnlyWifi());
     super.onResume();
   }
   

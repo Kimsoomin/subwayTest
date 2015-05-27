@@ -359,4 +359,5 @@
     <!-- 추가 String (아직 안보냄) -->
     <!-- 마이페이지 -->
     <string name="msg_require_login">로그인이 필요합니다</string>
+    <string name="msg_only_wifi_is_disable">Only WiFi 설정을 해제 하실 경우 My plan 및 콘텐츠 정보 업데이트를 위해 데이터를 사 용하여 동기화가 진행 됩니다.\nOnly Wifi 설정을 해제하시겠습니까?</string>
 </resources>
