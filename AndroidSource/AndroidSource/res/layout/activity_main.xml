@@ -70,8 +70,8 @@
             android:orientation="vertical" >
 
             <RelativeLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center" >
 
                 <ImageView
@@ -87,7 +87,6 @@
                     android:layout_height="8dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="4dp"
                     android:contentDescription="@null"
                     android:src="@drawable/icon_new_badge" />
             </RelativeLayout>
