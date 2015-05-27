@@ -33,6 +33,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.coupon.CouponActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
+import com.dabeeo.hangouyou.activities.ticket.TicketActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.trend.TrendActivity;
@@ -194,22 +195,6 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerSubway.getId())
       {
-        //가까운 지하철 역 찾기
-//        Intent i = new Intent(getActivity(), SubwayActivity.class);
-//        double[] latLon = new double[2];
-//        latLon[0] = 38;
-//        latLon[1] = 128;
-//        i.putExtra("near_by_station_lat_lon", latLon);
-//        startActivity(i);
-        
-        //해당 지하철역 출발역으로 지정
-//        Intent i = new Intent(getActivity(), SubwayActivity.class);
-//        double[] latLon = new double[3];
-//        latLon[0] = 38;
-//        latLon[1] = 128;
-//        latLon[2] = 1;
-//        i.putExtra("set_dest_station_lat_lon", latLon);
-//        startActivity(i);
         Intent i = new Intent(getActivity(), SubwayActivity.class);
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
@@ -225,11 +210,23 @@ public class MainFragment extends Fragment
         
         if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
         {
-          startActivity(new Intent(getActivity(), LoginActivity.class));
-          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+          Builder builder = new AlertDialog.Builder(getActivity());
+          builder.setTitle(getString(R.string.term_alert));
+          builder.setMessage(getString(R.string.msg_require_login));
+          builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1)
+            {
+              startActivity(new Intent(getActivity(), LoginActivity.class));
+              getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+            }
+          });
+          builder.setNegativeButton(getString(android.R.string.cancel), null);
+          builder.create().show();
         }
         else
-          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+          startActivity(new Intent(getActivity(), TicketActivity.class));
       }
       else if (v.getId() == containerCoupon.getId())
       {
@@ -239,14 +236,7 @@ public class MainFragment extends Fragment
           Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
           return;
         }
-        
-        if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
-        {
-          startActivity(new Intent(getActivity(), CouponActivity.class));
-          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        }
-        else
-          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getActivity(), CouponActivity.class));
       }
     }
   };

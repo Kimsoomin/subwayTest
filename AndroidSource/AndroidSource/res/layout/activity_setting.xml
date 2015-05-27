@@ -28,11 +28,16 @@
                     android:text="@string/term_profile"
                     android:textStyle="bold" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#c8c7cc" />
+
                 <LinearLayout
                     android:id="@+id/container_edit_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:background="@android:color/white"
                     android:gravity="center_vertical"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
@@ -51,6 +56,11 @@
                         android:layout_gravity="center"
                         android:src="@drawable/icon_arrow_g_next" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#c8c7cc" />
             </LinearLayout>
 
             <!-- 동기화 -->
@@ -63,10 +73,15 @@
                 android:text="@string/term_sync"
                 android:textStyle="bold" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#c8c7cc" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
@@ -88,7 +103,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_gray" />
+                android:background="#c8c7cc" />
             <!-- 알림설정 -->
 
             <LinearLayout
@@ -112,32 +127,56 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#c8c7cc" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:text="@string/term_about"
                 android:textStyle="bold" />
 
             <!-- 버전 정보 -->
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#c8c7cc" />
+
             <LinearLayout
                 android:id="@+id/container_version_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:orientation="horizontal"
                 android:padding="8dp" >
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_version_info" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/term_version_info" />
+
+                    <ImageView
+                        android:id="@+id/badge_version_info"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/icon_new_badge" />
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -149,7 +188,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_gray" />
+                android:background="#c8c7cc" />
 
             <!-- 앱 평가하기 -->
 
@@ -179,7 +218,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_gray" />
+                android:background="#c8c7cc" />
 
             <!-- 공지사항 -->
 
@@ -193,11 +232,25 @@
                 android:orientation="horizontal"
                 android:padding="8dp" >
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_notice" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/term_notice" />
+
+                    <ImageView
+                        android:id="@+id/badge_notice"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/icon_new_badge" />
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -206,13 +259,22 @@
                     android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
 
-            <!-- 공지사항 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#c8c7cc" />
+            <!-- 로그아웃 -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#c8c7cc" />
 
             <LinearLayout
                 android:id="@+id/container_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:background="@drawable/list_item_white_background"
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
@@ -225,6 +287,12 @@
                     android:layout_weight="1"
                     android:text="@string/term_logout" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="16dp"
+                android:background="#c8c7cc" />
         </LinearLayout>
     </ScrollView>
 
