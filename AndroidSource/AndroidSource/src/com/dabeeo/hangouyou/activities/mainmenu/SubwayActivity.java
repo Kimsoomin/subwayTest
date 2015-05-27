@@ -247,7 +247,10 @@ public class SubwayActivity extends Activity
   {
     int id = item.getItemId();
     if (id == android.R.id.home)
+    {
       finish();
+      overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+    }
     
     return super.onOptionsItemSelected(item);
   }
