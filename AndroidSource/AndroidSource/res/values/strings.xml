@@ -317,8 +317,6 @@
     <string name="term_rest">休闲</string>
     <string name="term_random">随机</string>
     <string name="msg_warn_select_theme">请选择旅游主题</string>
-
-    
     <string name="term_order_item">已购商品</string>
     <!-- 내 장소 -->
     <string name="msg_empty_my_place">没有添加的地点</string>
@@ -355,7 +353,7 @@
     <!-- 프로모션 -->
     <string name="term_show_detail">查看详情</string>
     <string name="term_dont_show_a_day">今天不再显示</string>
-    
+
     <!-- 추가 String (아직 안보냄) -->
     <!-- 마이페이지 -->
     <string name="msg_require_login">로그인이 필요합니다</string>
@@ -363,4 +361,10 @@
     <string name="msg_help_withdraw">원활한 회원탈퇴 처리를 위해\n상담원 연결이 필요합니다.\n\n아래 고객센터로 문의 바랍니다.</string>
     <string name="msg_help_withdraw_qq">QQ번호 : 889751559</string>
     <string name="msg_help_withdraw_email">이메일 문의 CS@GSSHOP.COM</string>
+    <!-- 비밀번호 찾기 -->
+    <string name="msg_please_write_password">비밀번호를 입력해주세요</string>
+    <string name="msg_please_write_new_password">새로운 비밀번호를 입력해주세요</string>
+    <string name="msg_warn_password_length">비밀번호는 6-16글자 사이로 가능합니다</string>
+    <string name="msg_warn_password_not_same">비밀번호가 일치하지 않습니다. 다시 입력해해주세요</string>
+
 </resources>

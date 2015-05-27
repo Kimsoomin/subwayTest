@@ -1,12 +1,12 @@
 package com.dabeeo.hangouyou.activities.sub;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,8 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.ChangePasswordActivity;
 
-public class AccountSettingActivity extends Activity
+public class AccountSettingActivity extends ActionBarActivity
 {
   private TextView textEmail;
   private EditText editName;
@@ -31,6 +32,15 @@ public class AccountSettingActivity extends Activity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_account_setting);
+    
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_profile));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     textEmail = (TextView) findViewById(R.id.text_email);
     editName = (EditText) findViewById(R.id.edit_name);
@@ -49,18 +59,15 @@ public class AccountSettingActivity extends Activity
     {
       if (v.getId() == changePasswordContainer.getId())
       {
-        Intent i = new Intent(AccountSettingActivity.this, FindPasswordActivity.class);
+        Intent i = new Intent(AccountSettingActivity.this, ChangePasswordActivity.class);
         startActivity(i);
       }
       else
       {
         Builder dialog = new AlertDialog.Builder(AccountSettingActivity.this);
-        dialog.setTitle(getString(R.string.app_name));
+        dialog.setTitle(getString(R.string.term_alert));
         View view = LayoutInflater.from(AccountSettingActivity.this).inflate(R.layout.view_withdraw_popup, null);
         TextView textQQ = (TextView) view.findViewById(R.id.text_withdraw_qq);
-        textQQ.setText(Html.fromHtml("<strike>" + getString(R.string.msg_help_withdraw_qq) + "</strike>"));
-        TextView textEmail = (TextView) view.findViewById(R.id.text_withdraw_eamil);
-        textEmail.setText(Html.fromHtml("<strike>" + getString(R.string.msg_help_withdraw_email) + "</strike>"));
         textQQ.setOnClickListener(new OnClickListener()
         {
           @Override
