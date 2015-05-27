@@ -56,7 +56,7 @@
                 android:background="@drawable/app_button"
                 android:padding="8dp"
                 android:text="@string/term_recommend_travel_schedule"
-                android:textColor="@color/appcolor" />
+                android:textColor="@color/color_normal_appcolor_select_white" />
         </LinearLayout>
     </LinearLayout>
 
