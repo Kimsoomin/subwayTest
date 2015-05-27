@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.external.libraries.RoundedImageView;
@@ -128,6 +129,8 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
 				@Override
 				public void onClick(DialogInterface dialog, int which)
 				{
+					startActivity(new Intent(RecommendScheduleCompeletedActivity.this, MySchedulesActivity.class));
+					finish();
 				}
 			});
 			dialog.setNegativeButton(android.R.string.cancel, null);

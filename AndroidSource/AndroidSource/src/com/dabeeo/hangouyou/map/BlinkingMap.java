@@ -78,6 +78,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hangouyou.map.SensorUpdater.SensorUpdaterCallback;
 import com.squareup.picasso.Picasso;
@@ -1102,9 +1103,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 			if(summaryDetail == true)
 			{
 				int i = 0;
-				Intent detailPlaceIntent = new Intent(this, PremiumdetailTemp.class);
+				Intent detailPlaceIntent = new Intent(this, PlaceDetailActivity.class);
 				i = Integer.parseInt(idx);
 				detailPlaceIntent.putExtra("place_idx", i);
+				detailPlaceIntent.putExtra("is_map", true);
 				startActivity(detailPlaceIntent);
 				Log.i("INFO", "place_idx : " + idx);
 			}
