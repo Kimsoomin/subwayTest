@@ -319,4 +319,40 @@
     <string name="term_random">랜덤</string>
     <string name="msg_warn_select_theme">테마를 골라주세요</string>
 
+     <string name="term_order_item">구매 상품</string>
+    <!-- 내 장소 -->
+    <string name="msg_empty_my_place">등록 된 장소가 없습니다</string>
+    <string name="term_all_check">전체 선택</string>
+    <string name="term_select_delete">선택 삭제</string>
+    <string name="term_public">전체공개</string>
+    <string name="term_private">비공개</string>
+    <!-- 지하철 -->
+    <string name="msg_same_start_end_station">이미 해당역을 출발역으로 지정했습니다. 도착역으로 변경하시겠습니까?</string>
+    <string name="msg_same_end_start_station">이미 해당역을 도착역으로 지정했습니다. 출발역으로 변경하시겠습니까?</string>
+    <!-- 로그인/회원가입 -->
+    <string name="term_check_duplicate">중복체크</string>
+    <string name="term_get_temp_password">임시 비밀번호 발급 받기</string>
+    <string name="term_auth_email">E-mail 계정 인증</string>
+    <string name="term_re_send">재전송</string>
+    <string name="term_auth">인증하기</string>
+    <string name="term_input_auth_number">인증번호 입력</string>
+    <string name="msg_complete_join">회원가입 완료!\n가입하신 이메일로 인증번호를 발송하였습니다.\n인증번호를 확인한 후,\n입력창에 인증번호를 입력해주세요</string>
+    <!-- WishList -->
+    <string name="msg_empty_wish_list">위시 리스트가 없습니다</string>
+    <string name="msg_help_wish_list">한국의 인기 상품들을 둘러보고\n위시리스트를 채워보세요!</string>
+    <string name="term_go_to_popular_product">인기상품 둘러보기</string>
+    <string name="term_popular_wish_list">인기 위시리스트</string>
+    <!-- 여행공략 -->
+    <string name="msg_rate_this_place">이 장소를\n평가해주세요!</string>
+    <string name="msg_how_about_this_place">이 장소 어떠셨나요?</string>
+    <!-- 트렌드한국 -->
+    <string name="term_shopping_all">ALL</string>
+    <string name="term_shopping_cosmetic">화장품/미용</string>
+    <string name="term_shopping_food">식품</string>
+    <string name="term_shopping_baby">육아용품</string>
+    <string name="term_shopping_living">주방/생활</string>
+    <string name="term_shopping_etc">기타</string>
+    <!-- 프로모션 -->
+    <string name="term_show_detail">자세히보기</string>
+    <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
 </resources>

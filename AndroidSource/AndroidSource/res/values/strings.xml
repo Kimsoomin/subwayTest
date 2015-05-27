@@ -318,41 +318,43 @@
     <string name="term_random">随机</string>
     <string name="msg_warn_select_theme">请选择旅游主题</string>
 
-    <!-- 추가 String (아직 안보냄) -->
-    <string name="term_order_item">구매 상품</string>
+    
+    <string name="term_order_item">已购商品</string>
     <!-- 내 장소 -->
-    <string name="msg_empty_my_place">등록 된 장소가 없습니다</string>
-    <string name="term_all_check">전체 선택</string>
-    <string name="term_select_delete">선택 삭제</string>
-    <string name="term_public">전체공개</string>
-    <string name="term_private">비공개</string>
+    <string name="msg_empty_my_place">没有添加的地点</string>
+    <string name="term_all_check">全部删除</string>
+    <string name="term_select_delete">选中删除</string>
+    <string name="term_public">全部公开</string>
+    <string name="term_private">非公开</string>
     <!-- 지하철 -->
-    <string name="msg_same_start_end_station">이미 해당역을 출발역으로 지정했습니다. 도착역으로 변경하시겠습니까?</string>
-    <string name="msg_same_end_start_station">이미 해당역을 도착역으로 지정했습니다. 출발역으로 변경하시겠습니까?</string>
+    <string name="msg_same_start_end_station">此站已被选为起点，切换成终点吗？</string>
+    <string name="msg_same_end_start_station">此站已被选为终点，切换成起点吗？</string>
     <!-- 로그인/회원가입 -->
-    <string name="term_check_duplicate">중복체크</string>
-    <string name="term_get_temp_password">임시 비밀번호 발급 받기</string>
-    <string name="term_auth_email">E-mail 계정 인증</string>
-    <string name="term_re_send">재전송</string>
-    <string name="term_auth">인증하기</string>
-    <string name="term_input_auth_number">인증번호 입력</string>
-    <string name="msg_complete_join">회원가입 완료!\n가입하신 이메일로 인증번호를 발송하였습니다.\n인증번호를 확인한 후,\n입력창에 인증번호를 입력해주세요</string>
+    <string name="term_check_duplicate">确认是否重复</string>
+    <string name="term_get_temp_password">发临时密码</string>
+    <string name="term_auth_email">邮箱认证</string>
+    <string name="term_re_send">重新发送</string>
+    <string name="term_auth">重新发送</string>
+    <string name="term_input_auth_number">输入验证码</string>
+    <string name="msg_complete_join">注册成功！\n验证邮件已发到邮箱\n确认验证码后，\n请在页面输入验证码</string>
     <!-- WishList -->
-    <string name="msg_empty_wish_list">위시 리스트가 없습니다</string>
-    <string name="msg_help_wish_list">한국의 인기 상품들을 둘러보고\n위시리스트를 채워보세요!</string>
-    <string name="term_go_to_popular_product">인기상품 둘러보기</string>
-    <string name="term_popular_wish_list">인기 위시리스트</string>
+    <string name="msg_empty_wish_list">没有装在收藏夹的商品。</string>
+    <string name="msg_help_wish_list">浏览韩国的热门商品\n添加到收藏夹吧！</string>
+    <string name="term_go_to_popular_product">浏览热门商品</string>
+    <string name="term_popular_wish_list">热门收藏夹</string>
     <!-- 여행공략 -->
-    <string name="msg_rate_this_place">이 장소를\n평가해주세요!</string>
-    <string name="msg_how_about_this_place">이 장소 어떠셨나요?</string>
+    <string name="msg_rate_this_place">请在这里留下评价</string>
+    <string name="msg_how_about_this_place">这个地点怎么样？</string>
     <!-- 트렌드한국 -->
-    <string name="term_shopping_all">ALL</string>
-    <string name="term_shopping_cosmetic">화장품/미용</string>
-    <string name="term_shopping_food">식품</string>
-    <string name="term_shopping_baby">육아용품</string>
-    <string name="term_shopping_living">주방/생활</string>
-    <string name="term_shopping_etc">기타</string>
+    <string name="term_shopping_all">全部</string>
+    <string name="term_shopping_cosmetic">化妆品/美容</string>
+    <string name="term_shopping_food">食品</string>
+    <string name="term_shopping_baby">母婴用品</string>
+    <string name="term_shopping_living">厨房/生活</string>
+    <string name="term_shopping_etc">其它</string>
     <!-- 프로모션 -->
-    <string name="term_show_detail">자세히보기</string>
-    <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
+    <string name="term_show_detail">查看详情</string>
+    <string name="term_dont_show_a_day">今天不再显示</string>
+    
+    <!-- 추가 String (아직 안보냄) -->
 </resources>
