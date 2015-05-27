@@ -36,6 +36,7 @@ import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
 public class MySchedulesActivity extends ActionBarActivity
@@ -94,8 +95,13 @@ public class MySchedulesActivity extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
-				startActivity(i);
+				if (!SystemUtil.isConnectNetwork(MySchedulesActivity.this))
+					new AlertDialogManager(MySchedulesActivity.this).showDontNetworkConnectDialog();
+				else
+				{
+					Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
+					startActivity(i);
+				}
 			}
 		});
 		btnRecommendSchedule = (Button) findViewById(R.id.btn_recommend_travel_schedule);
@@ -104,8 +110,13 @@ public class MySchedulesActivity extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
-				startActivity(i);
+				if (!SystemUtil.isConnectNetwork(MySchedulesActivity.this))
+					new AlertDialogManager(MySchedulesActivity.this).showDontNetworkConnectDialog();
+				else
+				{
+					Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
+					startActivity(i);
+				}
 			}
 		});
 		btnDelete = (Button) findViewById(R.id.btn_delete);

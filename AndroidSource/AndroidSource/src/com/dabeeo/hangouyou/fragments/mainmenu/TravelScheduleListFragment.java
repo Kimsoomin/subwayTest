@@ -23,14 +23,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class TravelScheduleListFragment extends Fragment
 {
@@ -133,8 +136,13 @@ public class TravelScheduleListFragment extends Fragment
 				@Override
 				public void onClick(View arg0)
 				{
-					Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
-					startActivity(i);
+					if (!SystemUtil.isConnectNetwork(getActivity()))
+						new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+					else
+					{
+						Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
+						startActivity(i);
+					}
 				}
 			});
 		}

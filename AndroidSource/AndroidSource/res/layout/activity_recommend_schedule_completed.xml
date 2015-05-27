@@ -7,18 +7,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp" >
+        android:layout_height="100dp" >
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:background="@color/appcolor" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal" >
 
             <ImageView
@@ -29,12 +29,12 @@
 
             <com.dabeeo.hangouyou.external.libraries.RoundedImageView
                 android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/default_profile_l"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:background="@drawable/shape_circle_button_pressed"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
+                android:src="@drawable/default_profile_l"
                 app:riv_corner_radius="45dp" />
 
             <ImageView
@@ -127,21 +127,21 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/btn_another_schedule_recommend"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/darker_gray"
-            android:text="@string/term_another_recommend_schedule"
-            android:textColor="@android:color/white" />
-
-        <Button
             android:id="@+id/btn_new_schedule"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/dark_pink"
             android:text="@string/term_generate_new_schedule"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_another_schedule_recommend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/darker_gray"
+            android:text="@string/term_another_recommend_schedule"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

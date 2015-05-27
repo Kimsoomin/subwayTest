@@ -293,7 +293,7 @@
     <string name="term_declare">신고하기</string>
     <string name="msg_empty_my_bookmark">북마크한 일정이 없습니다.</string>
     <string name="msg_recommend_schedule">한고우요우 자동추천일정으로\n여행일정을 만들어보세요!</string>
-    <string name="msg_empty_search_result">未找到结果</string>
+    <string name="msg_empty_search_result">결과가 없습니다.</string>
     <string name="msg_confirm_delete">정말 삭제하시겠습니까?</string>
     <string name="term_declare_review">리뷰 신고하기</string>
     <string name="msg_declare_hint">신고 내용은 운영자에게 전달됩니다. (300자 이내)</string>
