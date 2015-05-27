@@ -27,7 +27,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
-import com.dabeeo.hangouyou.activities.sub.ImagePopUpJustOneActivity;
 import com.dabeeo.hangouyou.beans.ContentBean;
 import com.dabeeo.hangouyou.beans.PremiumDetailBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -100,7 +99,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-//    getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
+    getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
     return true;
   }
   
@@ -111,16 +110,16 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     int id = item.getItemId();
     if (id == android.R.id.home)
       finish();
-//    else if (id == R.id.map)
-//    {
-//      Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-//      i.putExtra("idx", bean.idx);
-//      startActivity(i);
-//    }
-//    else if (id == R.id.close)
-//    {
-//      finish();
-//    }
+    else if (id == R.id.map)
+    {
+      Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
+      i.putExtra("idx", bean.idx);
+      startActivity(i);
+    }
+    else if (id == R.id.close)
+    {
+      finish();
+    }
     return super.onOptionsItemSelected(item);
   }
   

@@ -38,6 +38,7 @@ public class AlertDialogManager
     Builder builder = new AlertDialog.Builder(context);
     builder.setTitle(title);
     builder.setMessage(message);
+    builder.setCancelable(false);
     builder.setPositiveButton(android.R.string.ok, new OnClickListener()
     {
       @Override

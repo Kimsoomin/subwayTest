@@ -108,6 +108,7 @@
                                 android:id="@+id/badge_main_plan"
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
+                                android:layout_alignParentRight="true"
                                 android:src="@drawable/icon_new_badge"
                                 android:visibility="gone" />
 
@@ -318,15 +319,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:orientation="horizontal" >
 
                     <!-- 티켓 -->
 
                     <RelativeLayout
                         android:id="@+id/container_ticket"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
                         android:layout_weight="1"
                         android:background="@drawable/empty_round_box" >
 
@@ -367,9 +368,9 @@
 
                     <RelativeLayout
                         android:id="@+id/container_coupon"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
                         android:layout_weight="1"
                         android:background="@drawable/empty_round_box" >
 
