@@ -96,6 +96,7 @@ public class SubwayFragment extends Fragment
   
   private double nearByLat = -1, nearByLon = -1;
   private boolean isZoomed = false;
+  private int defaultZoom = 300;
   
   
   @Override
@@ -694,6 +695,8 @@ public class SubwayFragment extends Fragment
         @Override
         public void run()
         {
+          defaultZoom = (int) (webview.getScale() * 100);
+          Log.w("WARN", "Default Zoom : " + defaultZoom);
           btnMap.setVisibility(View.VISIBLE);
           btnNearByStation.setVisibility(View.VISIBLE);
           btnNearByStation.bringToFront();
@@ -1039,13 +1042,13 @@ public class SubwayFragment extends Fragment
           int zoomLevel = 0;
           if (isZoomed)
           {
-            zoomLevel = 270;
+            zoomLevel = defaultZoom;
             isZoomed = false;
             webview.setInitialScale(zoomLevel);
           }
           else
           {
-            zoomLevel = 271;
+            zoomLevel = defaultZoom + 1;
             isZoomed = true;
             webview.setInitialScale(zoomLevel);
           }
