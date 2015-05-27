@@ -244,6 +244,12 @@ public class MySchedulesActivity extends ActionBarActivity
 		{
 			isEditMode = false;
 			displayEditMode();
+			
+			if (deleteAllCheckbox.isChecked())
+			{
+				listView.setVisibility(View.GONE);
+				emptyContainer.setVisibility(View.VISIBLE);
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
