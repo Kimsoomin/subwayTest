@@ -69,7 +69,7 @@ public class SettingActivity extends ActionBarActivity
           @Override
           public void onClick(DialogInterface dialog, int which)
           {
-            
+            finish();
           }
         });
         dialog.setNegativeButton(android.R.string.cancel, null);

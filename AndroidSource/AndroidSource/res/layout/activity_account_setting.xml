@@ -26,6 +26,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="@string/term_email"
+                    android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -41,6 +42,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="dabeeo@email.com"
                         android:textColor="@color/light_gray" />
                 </LinearLayout>
             </LinearLayout>
@@ -57,6 +59,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="@string/term_name"
+                    android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -87,9 +90,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:padding="8dp"
                     android:text="@string/term_password"
+                    android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#c8c7cc" />
 
                 <LinearLayout
                     android:id="@+id/container_change_password"
@@ -113,6 +124,11 @@
                         android:contentDescription="@null"
                         android:src="@drawable/icon_arrow_g_next" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#c8c7cc" />
             </LinearLayout>
 
             <!-- 회원탈퇴 -->
@@ -125,9 +141,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:padding="8dp"
                     android:text="@string/term_withdraw"
+                    android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#c8c7cc" />
 
                 <LinearLayout
                     android:id="@+id/container_withdraw"
@@ -151,6 +175,11 @@
                         android:contentDescription="@null"
                         android:src="@drawable/icon_arrow_g_next" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#c8c7cc" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

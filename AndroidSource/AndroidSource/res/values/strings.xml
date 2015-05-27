@@ -360,4 +360,7 @@
     <!-- 마이페이지 -->
     <string name="msg_require_login">로그인이 필요합니다</string>
     <string name="msg_only_wifi_is_disable">Only WiFi 설정을 해제 하실 경우 My plan 및 콘텐츠 정보 업데이트를 위해 데이터를 사 용하여 동기화가 진행 됩니다.\nOnly Wifi 설정을 해제하시겠습니까?</string>
+    <string name="msg_help_withdraw">원활한 회원탈퇴 처리를 위해\n상담원 연결이 필요합니다.\n\n아래 고객센터로 문의 바랍니다.</string>
+    <string name="msg_help_withdraw_qq">QQ번호 : 889751559</string>
+    <string name="msg_help_withdraw_email">이메일 문의 CS@GSSHOP.COM</string>
 </resources>
