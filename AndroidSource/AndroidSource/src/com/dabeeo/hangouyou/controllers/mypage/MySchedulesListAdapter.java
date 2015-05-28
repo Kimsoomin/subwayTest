@@ -132,6 +132,10 @@ public class MySchedulesListAdapter extends BaseAdapter
 		else
 			checkBox.setVisibility(View.GONE);
 		
+		if (bean.isChecked)
+			checkBox.setChecked(true);
+		else
+			checkBox.setChecked(false);
 		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
 		{
 			@Override

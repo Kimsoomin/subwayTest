@@ -10,11 +10,12 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
+import com.dabeeo.hangouyou.external.libraries.RoundedImageView;
 
 public class ScheduleDetailTitleView extends RelativeLayout
 {
 	private Context context;
-	private ImageView imageView;
+	private RoundedImageView imageView;
 	private TextView name;
 	private TextView time;
 	private TextView likeCount;
@@ -61,7 +62,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
 		View view = LayoutInflater.from(context).inflate(resId, null);
 		
 		container = (RelativeLayout) view.findViewById(R.id.container);
-		imageView = (ImageView) view.findViewById(R.id.imageview);
+		imageView = (RoundedImageView) view.findViewById(R.id.imageview);
 		name = (TextView) view.findViewById(R.id.name);
 		time = (TextView) view.findViewById(R.id.time);
 		likeCount = (TextView) view.findViewById(R.id.like_count);

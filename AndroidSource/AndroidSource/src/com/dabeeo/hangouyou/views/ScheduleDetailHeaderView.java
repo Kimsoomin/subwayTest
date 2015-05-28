@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.views;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.sub.ImagePopUpJustOneActivity;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 
 public class ScheduleDetailHeaderView extends RelativeLayout
@@ -47,22 +49,23 @@ public class ScheduleDetailHeaderView extends RelativeLayout
 	}
 	
 	
-	public void setImageVisibility(boolean isVisible)
-	{
-		if (isVisible)
-			imageView.setVisibility(View.VISIBLE);
-		else
-			imageView.setVisibility(View.GONE);
-	}
-	
-	
-	public void setData(String imageUrl, String title, int dayCount, String budget)
+	public void setData(final String imageUrl, String title, int dayCount, String budget)
 	{
 		ImageDownloader.displayImage(context, imageUrl, imageView, null);
 		textTitle.setText(title);
 		textDayCount.setText(Integer.toString(dayCount));
 		textBudget.setText(budget);
 		
+		imageView.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent i = new Intent(context, ImagePopUpJustOneActivity.class);
+				i.putExtra("image_url", imageUrl);
+				context.startActivity(i);
+			}
+		});
 		if (Locale.getDefault().getLanguage().contains("ko"))
 			budgetIcon.setImageResource(R.drawable.icon_budget_kr);
 		else

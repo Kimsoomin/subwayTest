@@ -6,8 +6,6 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -66,6 +63,7 @@ public class TravelScheduleDetailFragment extends Fragment
 	}
 	
 	
+	@SuppressLint("CutPasteId")
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
@@ -102,10 +100,8 @@ public class TravelScheduleDetailFragment extends Fragment
 				View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
 				int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
 				
-				if (diff == 0)
-				{
+				if (diff == 0 && (reviewContainerView.getVisibility() == View.VISIBLE))
 					reviewContainerView.loadMore();
-				}
 			}
 		});
 		
@@ -159,6 +155,7 @@ public class TravelScheduleDetailFragment extends Fragment
 				headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
 				headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (70 * density)));
 				scrollView.setPadding(0, 0, 0, 0);
+				reviewContainerView.setVisibility(View.GONE);
 			}
 		}
 	}
