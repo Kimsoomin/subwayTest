@@ -23,7 +23,6 @@ public class WishListSearchActivity extends Activity
 	private EditText editSearch;
 	private ImageView backImage;
 	private ImageView typingCancel;
-	private RelativeLayout searchContainer;
 	
 	private LinearLayout emptyContainer, popularWishListContainer;
 	private GridViewWithHeaderAndFooter listView;
@@ -115,5 +114,15 @@ public class WishListSearchActivity extends Activity
 			}
 		};
 		editSearch.addTextChangedListener(watcher);
+		
+		backImage = (ImageView) findViewById(R.id.image_back_button);
+		backImage.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				finish();
+			}
+		});
 	}
 }
