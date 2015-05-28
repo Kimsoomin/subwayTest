@@ -29,6 +29,7 @@ import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.map.BlinkingMap;
 
 public class TravelScheduleDetailActivity extends ActionBarActivity
 {
@@ -205,7 +206,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		if (item.getItemId() == R.id.map)
-			Toast.makeText(this, "준비 중입니다", Toast.LENGTH_LONG).show();
+			startActivity(new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class));
 		return super.onOptionsItemSelected(item);
 	}
 	
