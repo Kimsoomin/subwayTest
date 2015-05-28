@@ -69,6 +69,7 @@
                         android:id="@+id/image_private"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
+                        android:layout_marginLeft="4dp"
                         android:src="@drawable/icon_list_private_on"
                         android:visibility="gone" />
                 </LinearLayout>

@@ -130,7 +130,12 @@ public class MyPlaceListAdapter extends BaseAdapter
     TextView category = (TextView) view.findViewById(R.id.category);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
+    ImageView imagePrivate = (ImageView) view.findViewById(R.id.image_private);
     
+    if (position % 2 == 1)
+      imagePrivate.setVisibility(View.VISIBLE);
+    else
+      imagePrivate.setVisibility(View.GONE);
     try
     {
       SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
