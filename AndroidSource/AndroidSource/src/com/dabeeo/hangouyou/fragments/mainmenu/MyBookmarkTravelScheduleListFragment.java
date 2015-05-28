@@ -50,6 +50,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   private int type = SCHEDULE_TYPE_POPULAR;
   private boolean isLoading = false;
   private int lastVisibleItem = 0;
+  private boolean isLoadEnded = false;
   
   private LinearLayout emptyContainer;
   private TextView emptyText;
@@ -102,7 +103,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           loadSchedules();
@@ -220,6 +221,9 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
         {
           e.printStackTrace();
         }
+        
+        if(beans.size() == 0)
+          isLoadEnded = true;
         
         adapter.addAll(beans);
         

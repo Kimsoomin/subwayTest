@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
@@ -47,6 +47,7 @@ public class TravelScheduleListFragment extends Fragment
   private int page = 1;
   private int type = SCHEDULE_TYPE_POPULAR;
   private boolean isLoading = false;
+  private boolean isLoadEnded = false;
   private int lastVisibleItem = 0;
   
   private LinearLayout emptyContainer;
@@ -83,35 +84,6 @@ public class TravelScheduleListFragment extends Fragment
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-        try
-        {
-          if (firstVisibleItem > lastVisibleItem)
-            ((TravelSchedulesActivity) getActivity()).showBottomTab(true);
-          else
-            ((TravelSchedulesActivity) getActivity()).showBottomTab(false);
-        }
-        catch (Exception e)
-        {
-          
-        }
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-        {
-          page++;
-          loadSchedules();
-        }
-      }
-    });
     loadSchedules();
   }
   
@@ -204,6 +176,9 @@ public class TravelScheduleListFragment extends Fragment
           e.printStackTrace();
         }
         
+        if (beans.size() == 0)
+          isLoadEnded = true;
+        
         adapter.addAll(beans);
         
         if (adapter.getCount() == 0)
@@ -245,8 +220,20 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-      if (!isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      try
       {
+        if (firstVisibleItem > lastVisibleItem)
+          ((TravelSchedulesActivity) getActivity()).showBottomTab(true);
+        else
+          ((TravelSchedulesActivity) getActivity()).showBottomTab(false);
+      }
+      catch (Exception e)
+      {
+      }
+      
+      if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        Log.w("WARN", "isLoad ended:" + isLoadEnded);
         page++;
         loadSchedules();
       }

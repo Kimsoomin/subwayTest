@@ -55,6 +55,7 @@ public class MySchedulesActivity extends ActionBarActivity
   private CheckBox deleteAllCheckbox;
   private LinearLayout emptyContainer, gridViewContainer;
   private boolean isLoading = false;
+  private boolean isLoadEnded = false;
   private ApiClient apiClient;
   private int page = 0;
   
@@ -126,7 +127,6 @@ public class MySchedulesActivity extends ActionBarActivity
     listView = (GridView) findViewById(R.id.gridview);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
     listView.setOnScrollListener(new OnScrollListener()
     {
       @Override
@@ -138,7 +138,7 @@ public class MySchedulesActivity extends ActionBarActivity
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           loadSchedules();
@@ -197,6 +197,9 @@ public class MySchedulesActivity extends ActionBarActivity
         {
           e.printStackTrace();
         }
+        
+        if (beans.size() == 0)
+          isLoadEnded = true;
         
         adapter.addAll(beans);
         

@@ -35,6 +35,7 @@ public class PlaceListFragment extends Fragment
   private ProgressBar progressBar;
   private PlaceListAdapter adapter;
   private int page = 1;
+  private boolean isLoadEnded = false;
   private ApiClient apiClient;
   private int lastVisibleItem = 0;
   private LinearLayout emptyContainer;
@@ -90,7 +91,7 @@ public class PlaceListFragment extends Fragment
         {
           
         }
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           load(page);
@@ -141,6 +142,10 @@ public class PlaceListFragment extends Fragment
         {
           e.printStackTrace();
         }
+        
+        if (places.size() == 0)
+          isLoadEnded = false;
+        
         adapter.addAll(places);
         
         if (adapter.getCount() == 0)

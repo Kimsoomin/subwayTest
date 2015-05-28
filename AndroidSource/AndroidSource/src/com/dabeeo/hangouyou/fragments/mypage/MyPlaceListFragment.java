@@ -41,6 +41,7 @@ public class MyPlaceListFragment extends Fragment
 {
   private int categoryId = -1;
   private int page = 1;
+  private boolean isLoadEnded = false;
   
   private ProgressBar progressBar;
   private MyPlaceListAdapter adapter;
@@ -128,7 +129,6 @@ public class MyPlaceListFragment extends Fragment
     adapter = new MyPlaceListAdapter();
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
     listView.setOnScrollListener(new OnScrollListener()
@@ -142,7 +142,7 @@ public class MyPlaceListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           load(page);
@@ -194,6 +194,10 @@ public class MyPlaceListFragment extends Fragment
         {
           e.printStackTrace();
         }
+        
+        if (places.size() == 0)
+          isLoadEnded = true;
+        
         adapter.addAll(places);
       }
       progressBar.setVisibility(View.GONE);
@@ -220,25 +224,6 @@ public class MyPlaceListFragment extends Fragment
       Intent i = new Intent(getActivity(), MyPlaceDetailActivity.class);
       i.putExtra("place_idx", bean.idx);
       startActivity(i);
-    }
-  };
-  
-  private OnScrollListener scrollListener = new OnScrollListener()
-  {
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState)
-    {
-    }
-    
-    
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-    {
-//      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
-//      {
-//        offset += limit;
-//        load(offset);
-//      }
     }
   };
 }

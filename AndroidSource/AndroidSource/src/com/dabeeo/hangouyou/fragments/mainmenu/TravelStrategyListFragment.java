@@ -35,6 +35,7 @@ public class TravelStrategyListFragment extends Fragment
   private ProgressBar progressBar;
   private RecommendSeoulListAdapter adapter;
   private int page = 1;
+  private boolean isLoadEnded = false;
   private ApiClient apiClient;
   private int lastVisibleItem = 0;
   
@@ -80,7 +81,7 @@ public class TravelStrategyListFragment extends Fragment
         else
           ((TravelStrategyActivity) getActivity()).showBottomTab(false);
         
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           load(page);
@@ -132,6 +133,9 @@ public class TravelStrategyListFragment extends Fragment
         {
           e.printStackTrace();
         }
+        
+        if (places.size() == 0)
+          isLoadEnded = true;
         adapter.addAll(places);
       }
       progressBar.setVisibility(View.GONE);

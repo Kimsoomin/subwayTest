@@ -48,6 +48,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
   private LinearLayout allCheckContainer;
   private CheckBox allCheckBox;
   private TextView selectDelete;
+  private boolean isLoadEnded = false;
   
   
   public MyBookmarkPlaceListFragment()
@@ -90,7 +91,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           load(page);
@@ -193,6 +194,9 @@ public class MyBookmarkPlaceListFragment extends Fragment
         {
           e.printStackTrace();
         }
+        
+        if (places.size() == 0)
+          isLoadEnded = true;
         adapter.addAll(places);
         
         if (adapter.getCount() == 0)
