@@ -48,14 +48,29 @@ public class DownloadedCouponListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new DownloadedCouponListAdapter();
+    adapter = new DownloadedCouponListAdapter(getActivity());
     
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
+//    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
-    load(page);
+//    load(page);
+    
+    //TEST BEAN
+    CouponBean bean = new CouponBean();
+    bean.title = "더페이스샵 5천원 할인쿠폰 (홍대점)";
+    bean.fromValidityDate = "2015.04.11";
+    bean.toValidityDate = "2015.09.11";
+    bean.isUsed = false;
+    adapter.add(bean);
+    
+    bean = new CouponBean();
+    bean.title = "크리스피 크림 도넛 더즌 1+1 쿠폰 (롯데 백화점 본점) 크리스피 크림 도넛 더즌 1+1";
+    bean.fromValidityDate = "2015.04.11";
+    bean.toValidityDate = "2015.09.11";
+    bean.isUsed = true;
+    adapter.add(bean);
   }
   
   
@@ -73,10 +88,13 @@ public class DownloadedCouponListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-//      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-      Intent i = new Intent(getActivity(), DownloadedCouponDetailActivity.class);
-      i.putExtra("coupon_id", position);
-      startActivity(i);
+      CouponBean bean = (CouponBean) adapter.getItem(position);
+      if (!bean.isUsed)
+      {
+        Intent i = new Intent(getActivity(), DownloadedCouponDetailActivity.class);
+        i.putExtra("coupon_id", position);
+        startActivity(i);
+      }
     }
   };
   

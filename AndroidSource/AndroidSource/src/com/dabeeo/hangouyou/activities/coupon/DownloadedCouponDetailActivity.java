@@ -1,11 +1,14 @@
 package com.dabeeo.hangouyou.activities.coupon;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,7 @@ import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.squareup.picasso.Picasso;
 
 public class DownloadedCouponDetailActivity extends ActionBarActivity
@@ -35,6 +39,12 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_downloaded_coupon_detail);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_coupon));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
@@ -49,7 +59,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     textHowToUse = (TextView) findViewById(R.id.text_how_to_use);
     textInstruction = (TextView) findViewById(R.id.text_instructions);
     
-    btnUse = (Button) findViewById(R.id.btn_use);
+    btnUse = (Button) findViewById(R.id.btn_use_coupon);
     btnUse.setOnClickListener(clickListener);
     findViewById(R.id.btn_show_location).setOnClickListener(clickListener);
     
@@ -81,10 +91,10 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   
   private void displayData()
   {
-    Picasso.with(this).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
-    textTitle.setText(getString(R.string.term_coupon_title) + " : " + coupon.title);
-    textCouponNumber.setText(getString(R.string.term_coupon_number) + " : " + coupon.couponNumber);
-    textValidityPeriod.setText(getString(R.string.term_validity_period) + " : " + coupon.fromValidityDate + "~" + coupon.toValidityDate);
+    ImageDownloader.displayImage(this, "", imageView, null);
+    textTitle.setText(coupon.title);
+    textCouponNumber.setText(coupon.couponNumber);
+    textValidityPeriod.setText(coupon.fromValidityDate + "~" + coupon.toValidityDate);
     textValidityCondition.setText(coupon.validityCondition);
     textWhereUseIn.setText(coupon.whereUseIn);
     textHowToUse.setText(coupon.howToUse);
@@ -129,7 +139,32 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     public void onClick(View v)
     {
       if (v.getId() == btnUse.getId())
-        useCoupon();
+//        useCoupon();
+      {
+        Builder builder = new AlertDialog.Builder(DownloadedCouponDetailActivity.this);
+        builder.setTitle(getString(R.string.term_alert));
+        builder.setMessage(getString(R.string.msg_use_coupon_only_employee));
+        builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
+        {
+          @Override
+          public void onClick(DialogInterface arg0, int arg1)
+          {
+            Builder builder = new AlertDialog.Builder(DownloadedCouponDetailActivity.this);
+            builder.setTitle(getString(R.string.term_alert));
+            builder.setMessage(getString(R.string.msg_complete_use_coupon));
+            builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
+            {
+              @Override
+              public void onClick(DialogInterface arg0, int arg1)
+              {
+              }
+            });
+            builder.create().show();
+          }
+        });
+        builder.setNegativeButton(getString(android.R.string.cancel), null);
+        builder.create().show();
+      }
       else if (v.getId() == R.id.btn_show_location)
         displayOnMap();
     }

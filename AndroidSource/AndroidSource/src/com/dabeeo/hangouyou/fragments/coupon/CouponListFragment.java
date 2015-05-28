@@ -49,11 +49,11 @@ public class CouponListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new CouponListAdapter();
+    adapter = new CouponListAdapter(getActivity());
     
     ListView listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
+//    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
     load(page);
@@ -62,8 +62,20 @@ public class CouponListFragment extends Fragment
   
   private void load(int offset)
   {
-    progressBar.setVisibility(View.VISIBLE);
-    new GetAsyncTask().execute();
+//    progressBar.setVisibility(View.VISIBLE);
+//    new GetAsyncTask().execute();
+    
+    CouponBean bean = new CouponBean();
+    bean.title = "더페이스샵 5천원 할인쿠폰 (홍대점)";
+    bean.fromValidityDate = "2015.04.11";
+    bean.toValidityDate = "2015.09.11";
+    adapter.add(bean);
+    
+    bean = new CouponBean();
+    bean.title = "크리스피 크림 도넛 더즌 1+1 쿠폰 (롯데 백화점 본점) 크리스피 크림 도넛 더즌 1+1";
+    bean.fromValidityDate = "2015.04.11";
+    bean.toValidityDate = "2015.09.11";
+    adapter.add(bean);
   }
   
   /**************************************************

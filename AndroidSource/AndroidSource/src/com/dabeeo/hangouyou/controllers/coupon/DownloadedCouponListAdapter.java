@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.controllers.coupon;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +13,24 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.CouponBean;
-import com.squareup.picasso.Picasso;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 
 public class DownloadedCouponListAdapter extends BaseAdapter
 {
   private ArrayList<CouponBean> items = new ArrayList<>();
+  private Context context;
+  
+  
+  public DownloadedCouponListAdapter(Context context)
+  {
+    this.context = context;
+  }
   
   
   public void add(CouponBean bean)
   {
     this.items.add(bean);
+    notifyDataSetChanged();
   }
   
   
@@ -64,10 +73,13 @@ public class DownloadedCouponListAdapter extends BaseAdapter
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView description = (TextView) view.findViewById(R.id.text_description);
+    description.setVisibility(View.GONE);
     TextView validityDate = (TextView) view.findViewById(R.id.text_validity_period);
     TextView isUsed = (TextView) view.findViewById(R.id.text_used);
     
-    Picasso.with(parent.getContext()).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
+//    Picasso.with(parent.getContext()).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
+    ImageDownloader.displayImage(context, "", imageView, null);
+    
     title.setText(bean.title);
     description.setText(bean.description);
     validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);

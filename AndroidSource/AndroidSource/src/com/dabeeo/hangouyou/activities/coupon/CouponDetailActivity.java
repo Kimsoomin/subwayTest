@@ -2,12 +2,14 @@ package com.dabeeo.hangouyou.activities.coupon;
 
 import java.util.Calendar;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +22,12 @@ import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
-import com.squareup.picasso.Picasso;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 
 public class CouponDetailActivity extends ActionBarActivity
 {
   private ImageView imageView;
-  private TextView textValidityPeriod, textValidityCondition, textWhereUseIn, textHowToUse, textInstruction;
+  private TextView textTitle, textValidityPeriod, textValidityCondition, textWhereUseIn, textHowToUse, textInstruction;
   private ApiClient apiClient;
   private String couponId;
   private CouponBean coupon;
@@ -37,12 +39,19 @@ public class CouponDetailActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coupon_detail);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_coupon));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
     couponId = getIntent().getStringExtra("coupon_idx");
     
     imageView = (ImageView) findViewById(R.id.imageview);
+    textTitle = (TextView) findViewById(R.id.text_title);
     textValidityPeriod = (TextView) findViewById(R.id.text_validity_period);
     textValidityCondition = (TextView) findViewById(R.id.text_validity_condition);
     textWhereUseIn = (TextView) findViewById(R.id.text_where_use_in);
@@ -82,8 +91,10 @@ public class CouponDetailActivity extends ActionBarActivity
   
   private void displayData()
   {
-    Picasso.with(this).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
+//    Picasso.with(this).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
+    ImageDownloader.displayImage(this, "", imageView, null);
     textValidityPeriod.setText(getString(R.string.term_validity_period) + " : " + coupon.fromValidityDate + "~" + coupon.toValidityDate);
+    textTitle.setText(coupon.title);
     textValidityCondition.setText(coupon.validityCondition);
     textWhereUseIn.setText(coupon.whereUseIn);
     textHowToUse.setText(coupon.howToUse);

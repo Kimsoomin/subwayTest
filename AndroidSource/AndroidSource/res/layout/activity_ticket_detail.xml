@@ -261,7 +261,7 @@
                 android:layout_height="1dp"
                 android:background="@color/light_gray" />
 
-            <!-- 환불조건 -->
+            <!-- 사용처 -->
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -2,9 +2,13 @@ package com.dabeeo.hangouyou.activities.coupon;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.bases.BaseNavigationTabActivity;
@@ -19,6 +23,14 @@ public class CouponActivity extends BaseNavigationTabActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_coupon));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
     
     adapter = new CouponViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setOnPageChangeListener(pageChangeListener);
@@ -52,5 +64,12 @@ public class CouponActivity extends BaseNavigationTabActivity
     
     // 쿠폰 상세에서 다운로드 버튼 누른 다음에 나오는 팝업창에서 쿠폰 내역보기를 선택했을 때 할 일
     getSupportActionBar().setSelectedNavigationItem(1);
+  }
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_empty, menu);
+    return super.onCreateOptionsMenu(menu);
   }
 }

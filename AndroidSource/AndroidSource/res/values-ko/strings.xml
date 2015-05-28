@@ -225,7 +225,7 @@
 
     <!-- 쿠폰 -->
     <string name="term_all_coupons">모든 쿠폰</string>
-    <string name="term_downloaded_coupon">받은 쿠폰</string>
+    <string name="term_downloaded_coupon">다운받은 쿠폰</string>
     <string name="term_used">사용완료</string>
     <string name="term_ticket_en">"TICKET "</string>
     <string name="term_ticket_and_coupon_buy">구매하기</string>
