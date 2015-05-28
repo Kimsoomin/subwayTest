@@ -26,6 +26,8 @@ import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.CustomScrollView;
 import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
 import com.dabeeo.hangouyou.views.ProductRecommendScheduleView;
@@ -193,7 +195,10 @@ public class TravelScheduleDetailFragment extends Fragment
 						@Override
 						public void onClick(View v)
 						{
-							getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
+							if (!SystemUtil.isConnectNetwork(getActivity()))
+								new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+							else
+								getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
 						}
 					});
 					contentContainer.addView(productRecommendView);
