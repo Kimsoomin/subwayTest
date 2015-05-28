@@ -13,8 +13,10 @@
     <color name="gray">#969b9c</color>
     <color name="light_gray">#969b9c</color>
     <color name="darker_gray">#444a4b</color>
+    <color name="darker_gray_transparent">#70444a4b</color>
     <color name="light_pink">#70ff6262</color>
     <color name="dark_pink">#ff6262</color>
+    <color name="dark_pink_transparent">#70ff6262</color>
     <color name="light_blue">#70697577</color>
     <color name="dark_blue">#697577</color>
     <color name="summary_center">#dddddd</color>

@@ -1,9 +1,11 @@
 package com.dabeeo.hangouyou.activities.ticket;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +18,11 @@ import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.NumberFormatter;
-import com.squareup.picasso.Picasso;
 
 public class BoughtTicketDetailActivity extends ActionBarActivity
 {
   private ImageView imageView, imgBarcode;
-  private TextView textTitle, textPrice, textValidityPeriod, textValidityCondition, textRefundCondition, textWhereUseIn;
+  private TextView textTitle, textPrice, textPriceCn, textOption, textValidityPeriod, textValidityCondition, textRefundCondition, textWhereUseIn;
   private ApiClient apiClient;
   private String orderId;
   private TicketBean ticket;
@@ -32,6 +33,12 @@ public class BoughtTicketDetailActivity extends ActionBarActivity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bought_ticket_detail);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_ticket));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
@@ -40,7 +47,9 @@ public class BoughtTicketDetailActivity extends ActionBarActivity
     imageView = (ImageView) findViewById(R.id.imageview);
     imgBarcode = (ImageView) findViewById(R.id.img_barcode);
     textTitle = (TextView) findViewById(R.id.text_title);
+    textOption = (TextView) findViewById(R.id.text_option);
     textPrice = (TextView) findViewById(R.id.text_price);
+    textPriceCn = (TextView) findViewById(R.id.text_price_cn);
     textValidityPeriod = (TextView) findViewById(R.id.text_validity_period);
     textValidityCondition = (TextView) findViewById(R.id.text_validity_condition);
     textRefundCondition = (TextView) findViewById(R.id.text_refund_condition);
@@ -51,7 +60,22 @@ public class BoughtTicketDetailActivity extends ActionBarActivity
     
     apiClient = new ApiClient(this);
     
-    new GetAsyncTask().execute();
+//    new GetAsyncTask().execute();
+    ticket = new TicketBean();
+    
+    ticket.title = "아쿠아리움 입장권";
+    ticket.displayPriceWon = 150000;
+    ticket.displayPriceYuan = 80;
+    ticket.priceWon = 100000;
+    ticket.priceYuan = 56;
+    ticket.discountRate = "8折";
+    ticket.fromValidityDate = "2015.01.01";
+    ticket.toValidityDate = "2015.12.31";
+    ticket.validityCondition = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    ticket.refundCondition = ticket.validityCondition;
+    ticket.whereUseIn = "신사 아쿠아리움";
+    
+    displayData();
   }
   
   
@@ -77,8 +101,7 @@ public class BoughtTicketDetailActivity extends ActionBarActivity
   
   private void displayData()
   {
-    Picasso.with(this).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
-    Picasso.with(this).load("http://lorempixel.com/400/200").fit().centerCrop().into(imgBarcode);
+    textOption.setText("성인 2명");
     textTitle.setText(ticket.title);
     textPrice.setText(getString(R.string.term_won) + NumberFormatter.addComma(ticket.priceWon) + "(" + getString(R.string.term_yuan) + ticket.priceYuan + ")");
     textValidityPeriod.setText(getString(R.string.term_validity_period) + " : " + ticket.fromValidityDate + "~" + ticket.toValidityDate);
