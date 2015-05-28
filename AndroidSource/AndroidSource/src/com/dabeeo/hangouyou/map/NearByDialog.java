@@ -132,34 +132,34 @@ public class NearByDialog extends Dialog implements android.view.View.OnClickLis
 
 			switch (v.getId()) {
 			case R.id.category_all:
-				BlinkingMap.categroyType = -1;
+				BlinkingMap.categoryType = -1;
 				break;
 			case R.id.attraction_btn:
-				BlinkingMap.categroyType = 1;
+				BlinkingMap.categoryType = 1;
 				break;
 			case R.id.shopping_btn:
-				BlinkingMap.categroyType = 2;
+				BlinkingMap.categoryType = 2;
 				break;
 			case R.id.restaurant_btn:
-				BlinkingMap.categroyType = 7;
+				BlinkingMap.categoryType = 7;
 				break;
 			case R.id.subway_btn:
-				BlinkingMap.categroyType = 99;
+				BlinkingMap.categoryType = 99;
 				break;
 			case R.id.cosmetic_btn:
-				BlinkingMap.categroyType = 40;
+				BlinkingMap.categoryType = 40;
 				break;
 			case R.id.drugstore_btn:
-				BlinkingMap.categroyType = 50;
+				BlinkingMap.categoryType = 50;
 				break;
 			case R.id.tourinfo_btn:
-				BlinkingMap.categroyType = 60;
+				BlinkingMap.categoryType = 60;
 				break;
 			case R.id.mcdonalds_btn:
-				BlinkingMap.categroyType = 80;
+				BlinkingMap.categoryType = 80;
 				break;
 			case R.id.starbucks_btn:
-				BlinkingMap.categroyType = 70;
+				BlinkingMap.categoryType = 70;
 				break;
 			}
 

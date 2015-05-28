@@ -225,7 +225,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 	private long backKeyPressedTime = 0;
 	private Toast appFininshToast;
 
-	public static int categroyType = -1;
+	public static int categoryType = -1;
 
 	/**
 	 * =====================================================================================
@@ -601,7 +601,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 							lineId = null;
 							onePlaceOverlay = null;
 							onePlaceInfo.clear();
-							categroyType = -1;
+							categoryType = -1;
 							markerRefresh();
 						}
 
@@ -667,9 +667,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 			if(!allplace)
 			{
 				//premiumInfo의 이름이 같아 에러가 나서 수정했습니다.
-				for(Entry<String, PremiumInfo> premiumInfoBean : premiumInfo.entrySet())
+				for(Entry<String, PremiumInfo> premiumItemInfo : premiumInfo.entrySet())
 				{
-					PremiumInfo preInfo = premiumInfoBean.getValue();
+					PremiumInfo preInfo = premiumItemInfo.getValue();
 					if(preInfo.m_strName.equals(m_Adapter.getItem(arg2)))
 					{
 						idx = preInfo.m_nID;
@@ -696,12 +696,11 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 						summaryDetail = true;
 						summaryviewclose = true;
 					}
-					categroyType = -1;
-					mapCenterset(0);
-					markerSel(1);
-
 				}
 			}
+			categoryType = -1;
+			mapCenterset(0);
+			markerSel(1);
 			allplace = false;
 			searchEditText.setText("");
 			searchEditText.setHint(R.string.message_search_word_here);
@@ -777,7 +776,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 		backBtn.setOnClickListener(this);
 		searchEditText.setOnEditorActionListener(this);
 		searchCancel.setOnClickListener(this);
-		placewatcher = new TextWatcher() {
+		placewatcher = new TextWatcher() 
+		{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) 
 			{
@@ -811,7 +811,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 
 					if(m_Adapter.getCount() > 0)
 					{
-						if(m_ListView.getVisibility() == View.INVISIBLE)
+						if(m_ListView.getVisibility() == View.GONE)
 							ListViewVisibleSetting(0);
 					}else
 					{
@@ -896,7 +896,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 			if(summaryViewID == 1)
 			{
 				summaryImage.setVisibility(View.VISIBLE);
-				summaryLikeLayout.setVisibility(View.VISIBLE);
+				summaryLikeLayout.setVisibility(View.INVISIBLE);
 				subwayLayout.setVisibility(View.VISIBLE);
 			}else if(summaryViewID == 2)
 			{
@@ -997,7 +997,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 
 				if(m_Adapter.getCount() > 0)
 				{
-					if(m_ListView.getVisibility() == View.INVISIBLE)
+					if(m_ListView.getVisibility() == View.GONE)
 						ListViewVisibleSetting(0);
 				}
 				else
@@ -1058,7 +1058,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 			break;
 
 		case R.id.nearbyBtn:
-			nearbydialog = new NearByDialog(mContext, categroyType);
+			nearbydialog = new NearByDialog(mContext, categoryType);
 			nearbydialog.show();
 			summaryViewVisibleSet(summaryViewInVisible, 0);
 			idx = null;
@@ -1066,7 +1066,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 			nearbydialog.setOnDismissListener(new OnDismissListener() {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
-					Log.i("DIALOG", "categoryType : "+categroyType);
+					Log.i("DIALOG", "categoryType : "+categoryType);
 					markerRefresh();
 				}
 			});
@@ -1634,7 +1634,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 
 					if(topLat >info.m_fLatitude	&& bottomLng<info.m_fLongitude && bottomLat<info.m_fLatitude && topLng>info.m_fLongitude)
 					{	
-						if(categroyType == 1)
+						if(categoryType == 1)
 						{
 							if(info.m_nCategoryID == 1 || info.m_nCategoryID == 3 || info.m_nCategoryID == 4 
 									|| info.m_nCategoryID == 5 || info.m_nCategoryID == 6)
@@ -1642,7 +1642,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								OverlayItem item = new OverlayItem(""+ info.m_nCategoryID,info.m_strName,info.m_nID, new GeoPoint(info.m_fLatitude,info.m_fLongitude));
 								localItems.add(item);
 							}
-						}else if(categroyType == 2)
+						}else if(categoryType == 2)
 						{
 							if(info.m_nCategoryID == 2)
 							{
@@ -1650,7 +1650,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								localItems.add(item);
 							}
 
-						}else if(categroyType == 7)
+						}else if(categoryType == 7)
 						{
 							if(info.m_nCategoryID == 7)
 							{
@@ -1658,7 +1658,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								localItems.add(item);
 							}
 
-						}else if(categroyType == 40)
+						}else if(categoryType == 40)
 						{
 							if(info.m_nCategoryID == 40)
 							{
@@ -1666,7 +1666,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								localItems.add(item);
 							}
 
-						}else if(categroyType == 99)
+						}else if(categoryType == 99)
 						{
 							if(info.m_nCategoryID == 99)
 							{
@@ -1674,7 +1674,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								localItems.add(item);
 							}
 
-						}else if(categroyType == 50)
+						}else if(categoryType == 50)
 						{
 							if(info.m_nCategoryID == 50)
 							{
@@ -1682,7 +1682,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								localItems.add(item);
 							}
 
-						}else if(categroyType == 60)
+						}else if(categoryType == 60)
 						{
 							if(info.m_nCategoryID == 60)
 							{
@@ -1690,7 +1690,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								localItems.add(item);
 							}
 
-						}else if(categroyType == 70)
+						}else if(categoryType == 70)
 						{
 							if(info.m_nCategoryID == 70)
 							{
@@ -1698,7 +1698,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 								localItems.add(item);
 							}
 
-						}else if(categroyType == 80)
+						}else if(categoryType == 80)
 						{
 							if(info.m_nCategoryID == 80)
 							{
@@ -1722,7 +1722,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 					if(topLat >premiumInfo.m_fLatitude	&& bottomLng<premiumInfo.m_fLongitude 
 							&& bottomLat< premiumInfo.m_fLatitude && topLng > premiumInfo.m_fLongitude)
 					{
-						if(categroyType == 1)
+						if(categoryType == 1)
 						{
 							if(premiumInfo.m_nCategoryID == 1 || premiumInfo.m_nCategoryID == 3 || premiumInfo.m_nCategoryID == 4 
 									|| premiumInfo.m_nCategoryID == 5 || premiumInfo.m_nCategoryID == 6)
@@ -1732,86 +1732,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
 								premiumitem.add(item);
 							}
-						}else if(categroyType == 2)
-						{
-							if(premiumInfo.m_nCategoryID == 2)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-						}else if(categroyType == 7)
-						{
-							if(premiumInfo.m_nCategoryID == 7)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-
-						}else if(categroyType == 40)
-						{
-							if(premiumInfo.m_nCategoryID == 40)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-
-						}else if(categroyType == 99)
-						{
-							if(premiumInfo.m_nCategoryID == 99)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-
-						}else if(categroyType == 50)
-						{
-							if(premiumInfo.m_nCategoryID == 50)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-
-						}else if(categroyType == 60)
-						{
-							if(premiumInfo.m_nCategoryID == 60)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-
-						}else if(categroyType == 70)
-						{
-							if(premiumInfo.m_nCategoryID == 70)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-
-						}else if(categroyType == 80)
-						{
-							if(premiumInfo.m_nCategoryID == 80)
-							{
-								OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-										premiumInfo.m_strName, premiumInfo.m_nID,
-										new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-								premiumitem.add(item);
-							}
-
-						}else
+						}else if(categoryType == -1)
 						{
 							OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
 									premiumInfo.m_strName, premiumInfo.m_nID,
@@ -1979,9 +1900,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 		summaryAddressInit();
 		int lineLength = line.length - 1;
 
-		for (int i = 0; lineLength > i; i++) {
+		for (int i = 0; lineLength > i; i++)
+		{
 			char a = line[i + 1].charAt(0);
-
 			if (a == '1') {
 				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line1);
