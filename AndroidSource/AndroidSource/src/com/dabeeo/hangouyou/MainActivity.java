@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.PromotionActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
-import com.dabeeo.hangouyou.fragments.mainmenu.SearchResultFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.SearchFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.WishListFragment;
 import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
@@ -159,7 +159,7 @@ public class MainActivity extends ActionBarActivity
 			case POSITION_SEARCH:
 				bottomMenuSearch.setSelected(true);
 				title.setText(R.string.term_search);
-				fragment = new SearchResultFragment();
+				fragment = new SearchFragment();
 				break;
 			
 			case POSITION_WISHLIST:

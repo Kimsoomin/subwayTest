@@ -236,7 +236,10 @@
             android:name="com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.SearchResultDetail"
+            android:name="com.dabeeo.hangouyou.activities.sub.SearchResultDetailActivity"
+            android:screenOrientation="portrait" />
+         <activity
+            android:name="com.dabeeo.hangouyou.activities.sub.SearchResultJustOneCategoryListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity"

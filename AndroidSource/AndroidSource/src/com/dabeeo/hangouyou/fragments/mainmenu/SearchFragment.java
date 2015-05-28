@@ -26,19 +26,21 @@ import android.widget.TextView.OnEditorActionListener;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
-import com.dabeeo.hangouyou.activities.sub.SearchResultDetail;
+import com.dabeeo.hangouyou.activities.sub.SearchResultDetailActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
+import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.controllers.SearchResultAdapter;
+import com.dabeeo.hangouyou.controllers.SearchResultDetailAdapter;
 import com.dabeeo.hangouyou.views.PopularKeywordView;
 import com.dabeeo.hangouyou.views.ProductView;
 
-public class SearchResultFragment extends Fragment
+public class SearchFragment extends Fragment
 {
 	private EditText inputWord;
 	private ViewGroup layoutRecommedProductParent, layoutRecommedProduct;
-	private SearchResultAdapter adapter;
+	private SearchResultDetailAdapter adapter;
 	private ImageView imageX;
 	private LinearLayout popularKeywordOuterContainer, popularKeyworkdContainer;
 	private ListView searchListView;
@@ -48,7 +50,7 @@ public class SearchResultFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		int resId = R.layout.fragment_search_result;
+		int resId = R.layout.fragment_search;
 		return inflater.inflate(resId, null);
 	}
 	
@@ -81,7 +83,7 @@ public class SearchResultFragment extends Fragment
 		layoutRecommedProductParent = (LinearLayout) getView().findViewById(R.id.layout_recommend_product_parent);
 		layoutRecommedProduct = (LinearLayout) getView().findViewById(R.id.layout_recommend_product);
 		
-		adapter = new SearchResultAdapter();
+		adapter = new SearchResultDetailAdapter();
 		searchListView = (ListView) getView().findViewById(R.id.search_list);
 		searchListView.setOnItemClickListener(itemClickListener);
 		searchListView.setAdapter(adapter);
@@ -160,8 +162,6 @@ public class SearchResultFragment extends Fragment
 	
 	private void search(String text)
 	{
-		adapter.clear();
-		
 		if (TextUtils.isEmpty(text))
 		{
 			emptyContainer.setVisibility(View.VISIBLE);
@@ -176,93 +176,14 @@ public class SearchResultFragment extends Fragment
 		}
 		
 		//TEST Beans
-		SearchResultBean resultBean = new SearchResultBean();
-		resultBean.addNormalTitle(getString(R.string.term_search_result), 300);
-		adapter.add(resultBean);
+		adapter.clear();
 		
-		SearchResultBean locationBean = new SearchResultBean();
-		locationBean.addPlaceTitle(getString(R.string.term_place), 100);
-		adapter.add(locationBean);
-		
-		for (int i = 0; i < 3; i++)
-		{
-			SearchResultBean bean = new SearchResultBean();
-			bean.addText(text + " " + getString(R.string.term_place) + i, SearchResultBean.TYPE_PLACE);
-			adapter.add(bean);
-		}
-		
-		SearchResultBean productBean = new SearchResultBean();
-		productBean.addProductTitle(getString(R.string.term_product), 3);
-		adapter.add(productBean);
-		
-		for (int i = 0; i < 3; i++)
-		{
-			SearchResultBean bean = new SearchResultBean();
-			bean.addText(text + " " + getString(R.string.term_product) + i, SearchResultBean.TYPE_PRODUCT);
-			adapter.add(bean);
-		}
-		
-		SearchResultBean recommendSeoulBean = new SearchResultBean();
-		recommendSeoulBean.addRecommendSeoulTitle(getString(R.string.term_strategy_seoul), 100);
-		adapter.add(recommendSeoulBean);
-		
-		for (int i = 0; i < 3; i++)
-		{
-			SearchResultBean bean = new SearchResultBean();
-			bean.addText(text + " " + getString(R.string.term_strategy_seoul) + i, SearchResultBean.TYPE_RECOMMEND_SEOUL);
-			adapter.add(bean);
-		}
-		
-		SearchResultBean scheduleBean = new SearchResultBean();
-		scheduleBean.addScheduleTitle(getString(R.string.term_travel_schedule), 100);
-		adapter.add(scheduleBean);
-		
-		for (int i = 0; i < 3; i++)
-		{
-			SearchResultBean bean = new SearchResultBean();
-			bean.addText(text + " " + getString(R.string.term_travel_schedule) + i, SearchResultBean.TYPE_SCHEDULE);
-			adapter.add(bean);
-		}
-		
-		adapter.notifyDataSetChanged();
-	}
-	
-	
-	private void detail(SearchResultBean searchResultBean)
-	{
-		if (searchResultBean.isTitle)
-		{
-			Intent intent = new Intent(getActivity(), SearchResultDetail.class);
-			intent.putExtra("title", searchResultBean.text + " " + getString(R.string.term_search_result));
-			intent.putExtra("results", adapter.getJsonStringForParameter(searchResultBean.type));
-			startActivity(intent);
-		}
-		else
-		{
-			switch (searchResultBean.type)
-			{
-				case SearchResultBean.TYPE_PLACE:
-					startActivity(new Intent(getActivity(), PlaceDetailActivity.class));
-					break;
-				
-				case SearchResultBean.TYPE_PRODUCT:
-					Log.i("SearchResultFragment.java | detail", "|" + "상품 상세화면으로 가기" + "|");
-					break;
-				
-				case SearchResultBean.TYPE_RECOMMEND_SEOUL:
-					startActivity(new Intent(getActivity(), TravelStrategyDetailActivity.class));
-					break;
-				
-				case SearchResultBean.TYPE_SCHEDULE:
-					startActivity(new Intent(getActivity(), MyScheduleDetailActivity.class));
-					break;
-				
-				default:
-					inputWord.setText(searchResultBean.text);
-					search(searchResultBean.text);
-					break;
-			}
-		}
+		SearchResultBean bean = new SearchResultBean();
+		bean.text = "테스트";
+		adapter.add(bean);
+		bean = new SearchResultBean();
+		bean.text = "다비오";
+		adapter.add(bean);
 	}
 	
 	/**************************************************
@@ -274,7 +195,11 @@ public class SearchResultFragment extends Fragment
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
 		{
 			if (actionId == EditorInfo.IME_ACTION_SEARCH)
-				search(v.getText().toString());
+			{
+				Intent i = new Intent(getActivity(), SearchResultDetailActivity.class);
+				i.putExtra("keyword", inputWord.getText().toString());
+				startActivity(i);
+			}
 			return false;
 		}
 	};
@@ -284,7 +209,9 @@ public class SearchResultFragment extends Fragment
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
-			detail((SearchResultBean) adapter.getItem(position));
+			Intent i = new Intent(getActivity(), SearchResultDetailActivity.class);
+			i.putExtra("keyword", ((SearchResultBean) adapter.getItem(position)).text);
+			startActivity(i);
 		}
 	};
 }

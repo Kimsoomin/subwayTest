@@ -20,6 +20,14 @@ public class SearchResultDetailAdapter extends BaseAdapter
 	public void add(SearchResultBean bean)
 	{
 		items.add(bean);
+		notifyDataSetChanged();
+	}
+	
+	
+	public void clear()
+	{
+		items.clear();
+		notifyDataSetChanged();
 	}
 	
 	

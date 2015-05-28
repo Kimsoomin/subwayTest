@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,14 +18,13 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.controllers.SearchResultDetailAdapter;
 
 @SuppressWarnings("deprecation")
-public class SearchResultDetail extends ActionBarActivity
+public class SearchResultJustOneCategoryListActivity extends ActionBarActivity
 {
 	private SearchResultDetailAdapter adapter;
 	
@@ -33,7 +33,7 @@ public class SearchResultDetail extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_search_result_detail);
+		setContentView(R.layout.fragment_search_in_category_result_detail);
 		@SuppressLint("InflateParams")
 		View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
 		TextView title = (TextView) customActionBar.findViewById(R.id.title);
@@ -78,6 +78,14 @@ public class SearchResultDetail extends ActionBarActivity
 	
 	
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		getMenuInflater().inflate(R.menu.menu_empty, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		if (item.getItemId() == android.R.id.home)
@@ -98,7 +106,7 @@ public class SearchResultDetail extends ActionBarActivity
 			switch (bean.type)
 			{
 				case SearchResultBean.TYPE_PLACE:
-					startActivity(new Intent(SearchResultDetail.this, PlaceDetailActivity.class));
+					startActivity(new Intent(SearchResultJustOneCategoryListActivity.this, PlaceDetailActivity.class));
 					break;
 				
 				case SearchResultBean.TYPE_PRODUCT:
@@ -106,15 +114,11 @@ public class SearchResultDetail extends ActionBarActivity
 					break;
 				
 				case SearchResultBean.TYPE_RECOMMEND_SEOUL:
-					startActivity(new Intent(SearchResultDetail.this, TravelStrategyDetailActivity.class));
+					startActivity(new Intent(SearchResultJustOneCategoryListActivity.this, TravelStrategyDetailActivity.class));
 					break;
 				
 				case SearchResultBean.TYPE_SCHEDULE:
-					startActivity(new Intent(SearchResultDetail.this, MyScheduleDetailActivity.class));
-					break;
-				
-				case SearchResultBean.TYPE_PHOTO_LOG:
-					startActivity(new Intent(SearchResultDetail.this, MyPhotoLogDetailActivity.class));
+					startActivity(new Intent(SearchResultJustOneCategoryListActivity.this, MyScheduleDetailActivity.class));
 					break;
 			}
 		}
