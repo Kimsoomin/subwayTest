@@ -108,11 +108,12 @@ public class SearchResultFragment extends Fragment
 				{
 					searchListView.setVisibility(View.VISIBLE);
 					emptyContainer.setVisibility(View.GONE);
-					
+					imageX.setVisibility(View.VISIBLE);
 					search(inputWord.getText().toString());
 				}
 				else
 				{
+					imageX.setVisibility(View.GONE);
 					searchListView.setVisibility(View.GONE);
 					emptyContainer.setVisibility(View.VISIBLE);
 				}
