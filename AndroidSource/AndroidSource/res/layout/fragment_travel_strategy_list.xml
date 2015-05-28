@@ -13,13 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-         <com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter
-                android:id="@+id/listview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="2" />
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-         <LinearLayout
+        <LinearLayout
             android:id="@+id/recommend_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/msg_empty_bookmark"
                 android:textColor="#969b9c" />
-
         </LinearLayout>
     </RelativeLayout>
 
