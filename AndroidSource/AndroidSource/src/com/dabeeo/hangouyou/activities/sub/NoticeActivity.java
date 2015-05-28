@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -59,6 +60,12 @@ public class NoticeActivity extends ActionBarActivity
     loadNotices();
   }
   
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_empty, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item)

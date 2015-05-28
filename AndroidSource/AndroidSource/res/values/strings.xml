@@ -91,7 +91,6 @@
     <string name="term_delete_confirm">删除吗？</string>
     <!-- Message - Intro -->
     <string name="message_alert_lte_mode">在3G/LTE网络下会消耗流量。确认使用吗？</string>
-    <string name="message_alert_download_seoul_info">正在查询首尔信息。请稍等。</string>
     <string name="message_alert_allow_notification">"接收韩哈游的推送信息吗？"</string>
     <string name="message_write_review">请留下点评。</string>
     <string name="msg_empty_value">请填写所有空间。</string>
@@ -381,5 +380,9 @@
         <item>인사동/시청 (전통문화지구)</item>
         <item>그 외 명소</item>
     </array>
-
+    <!-- 북마크 -->
+    <string name="term_schedule">일정</string>
+    <string name="msg_empty_bookmark">북마크 된 정보가 없습니다</string>
+    <!-- 인트로 -->
+	<string name="msg_download_travel_cotnent">여행정보를 다운로드중입니다\n잠시만 기다려주세요.</string>
 </resources>

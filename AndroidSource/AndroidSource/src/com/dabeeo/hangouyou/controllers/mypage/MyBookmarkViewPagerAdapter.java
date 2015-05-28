@@ -8,7 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.fragments.mypage.MyBookmarkListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkPlaceListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkTravelScheduleListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleListFragment;
 
 public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
 {
@@ -31,8 +34,11 @@ public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
   @Override
   public Fragment getItem(int position)
   {
-    Fragment fragment = new MyBookmarkListFragment();
-    ((MyBookmarkListFragment) fragment).setCategoryId(-1);
+    Fragment fragment = null;
+    if (position == 0)
+      fragment = new MyBookmarkPlaceListFragment();
+    else
+      fragment = new MyBookmarkTravelScheduleListFragment();
     return fragment;
   }
   

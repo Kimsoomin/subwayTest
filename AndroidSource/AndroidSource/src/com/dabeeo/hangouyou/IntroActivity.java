@@ -120,7 +120,7 @@ public class IntroActivity extends Activity
     Log.w("WARN", "다운로드 정보 체크");
     
     //만약 다운로드 된 정보가 없거나, 혹은 업데이트가 있는 경우 
-    alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.message_alert_download_seoul_info));
+    alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_download_travel_cotnent));
     
     //추후 아랫부분 삭제 후 네트워크 연결
     // memory leak warning 제거 

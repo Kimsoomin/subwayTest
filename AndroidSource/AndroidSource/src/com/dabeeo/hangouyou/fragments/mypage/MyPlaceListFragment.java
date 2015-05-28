@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,7 +29,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
@@ -46,6 +48,7 @@ public class MyPlaceListFragment extends Fragment
   private LinearLayout allCheckContainer;
   private CheckBox allCheckBox;
   private TextView selectDelete;
+  private GridViewWithHeaderAndFooter listView;
   
   
   @Override
@@ -77,6 +80,22 @@ public class MyPlaceListFragment extends Fragment
         public void onClick(View arg0)
         {
           Log.w("WARN", "선택된 아이템 리스트 : " + adapter.getCheckedArrayList());
+          Builder dialog = new AlertDialog.Builder(getActivity());
+          dialog.setTitle(getString(R.string.term_alert));
+          dialog.setMessage(getString(R.string.term_delete_confirm));
+          dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+              if (allCheckBox.isChecked())
+              {
+                listView.setVisibility(View.GONE);
+                emptyContainer.setVisibility(View.VISIBLE);
+              }
+            }
+          });
+          dialog.show();
         }
       });
     }
@@ -102,7 +121,7 @@ public class MyPlaceListFragment extends Fragment
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
     
     adapter = new MyPlaceListAdapter();
-    GridViewWithHeaderAndFooter listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
+    listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);

@@ -11,31 +11,24 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
-import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
-import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
-import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
-import com.dabeeo.hangouyou.utils.SystemUtil;
 
-public class TravelScheduleListFragment extends Fragment
+public class MyBookmarkTravelScheduleListFragment extends Fragment
 {
   public static final int SCHEDULE_TYPE_POPULAR = 0;
   public static final int SCHEDULE_TYPE_MY = 1;
@@ -94,17 +87,6 @@ public class TravelScheduleListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        try
-        {
-          if (firstVisibleItem > lastVisibleItem)
-            ((TravelSchedulesActivity) getActivity()).showBottomTab(true);
-          else
-            ((TravelSchedulesActivity) getActivity()).showBottomTab(false);
-        }
-        catch (Exception e)
-        {
-          
-        }
         if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
@@ -128,38 +110,6 @@ public class TravelScheduleListFragment extends Fragment
     
     if (type == SCHEDULE_TYPE_POPULAR)
       new LoadScheduleAsyncTask().execute();
-    else if (type == SCHEDULE_TYPE_MY)
-    {
-      progressBar.setVisibility(View.GONE);
-      listView.setVisibility(View.GONE);
-      emptyContainer.setVisibility(View.VISIBLE);
-      emptyText.setText(getString(R.string.msg_empty_my_schedule));
-      
-      recommendContainer.setVisibility(View.VISIBLE);
-      Button btnRecommendSchedule = (Button) getView().findViewById(R.id.recommend_button);
-      btnRecommendSchedule.setOnClickListener(new OnClickListener()
-      {
-        @Override
-        public void onClick(View arg0)
-        {
-          if (!SystemUtil.isConnectNetwork(getActivity()))
-            new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-          else
-          {
-            Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
-            startActivity(i);
-          }
-        }
-      });
-    }
-    else if (type == SCHEDULE_TYPE_BOOKMARK)
-    {
-      progressBar.setVisibility(View.GONE);
-      listView.setVisibility(View.GONE);
-      emptyContainer.setVisibility(View.VISIBLE);
-      emptyText.setText(getString(R.string.msg_empty_my_bookmark));
-      recommendContainer.setVisibility(View.GONE);
-    }
   }
   
   private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
@@ -210,7 +160,7 @@ public class TravelScheduleListFragment extends Fragment
         {
           listView.setVisibility(View.GONE);
           emptyContainer.setVisibility(View.VISIBLE);
-          emptyText.setText(getString(R.string.msg_empty_my_schedule));
+          emptyText.setText(getString(R.string.msg_empty_bookmark));
         }
       }
       progressBar.setVisibility(View.GONE);

@@ -144,6 +144,7 @@ public class SettingActivity extends ActionBarActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
+    getMenuInflater().inflate(R.menu.menu_empty, menu);
     return super.onCreateOptionsMenu(menu);
   }
   

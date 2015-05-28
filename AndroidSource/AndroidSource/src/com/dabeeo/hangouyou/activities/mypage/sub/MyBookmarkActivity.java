@@ -2,28 +2,53 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar.TabListener;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.bases.BaseNavigationTabActivity;
 import com.dabeeo.hangouyou.controllers.mypage.MyBookmarkViewPagerAdapter;
 
-public class MyBookmarkActivity extends BaseNavigationTabActivity
+public class MyBookmarkActivity extends ActionBarActivity
 {
+  private ViewPager viewPager;
   private MenuItem editMenuItem, closeMenuItem;
   private boolean isEditMode = false;
   private MyBookmarkViewPagerAdapter adapter;
   
   
+  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_bookmark);
     
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_my_bookmark));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
+    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    
+    viewPager = (ViewPager) findViewById(R.id.viewpager);
     adapter = new MyBookmarkViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);
+    viewPager.setOnPageChangeListener(pageChangeListener);
+    viewPager.setOffscreenPageLimit(100);
     
     displayTitles();
   }
@@ -33,10 +58,8 @@ public class MyBookmarkActivity extends BaseNavigationTabActivity
   private void displayTitles()
   {
     ArrayList<String> titles = new ArrayList<>();
-    titles.add("장소");
-    titles.add("일정");
-    titles.add("포토로그");
-    titles.add("추천서울");
+    titles.add(getString(R.string.term_place));
+    titles.add(getString(R.string.term_schedule));
     adapter.setTitles(titles);
     
     for (int i = 0; i < adapter.getCount(); i++)
@@ -73,4 +96,41 @@ public class MyBookmarkActivity extends BaseNavigationTabActivity
     }
     return super.onOptionsItemSelected(item);
   }
+  
+  /**************************************************
+   * listener
+   ***************************************************/
+  
+  protected TabListener tabListener = new TabListener()
+  {
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft)
+    {
+      viewPager.setCurrentItem(tab.getPosition());
+    }
+    
+    
+    @Override
+    public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+    
+    
+    @Override
+    public void onTabReselected(Tab arg0, FragmentTransaction arg1)
+    {
+      
+    }
+  };
+  
+  @SuppressWarnings("deprecation")
+  protected ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
+  {
+    @Override
+    public void onPageSelected(int position)
+    {
+      getSupportActionBar().setSelectedNavigationItem(position);
+    }
+  };
 }

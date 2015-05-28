@@ -17,33 +17,29 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.PlaceListAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
+import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
-public class PlaceListFragment extends Fragment
+public class MyBookmarkPlaceListFragment extends Fragment
 {
-  private int categoryId = -1;
-  
   private ProgressBar progressBar;
-  private PlaceListAdapter adapter;
+  private MyPlaceListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
   private int lastVisibleItem = 0;
   private LinearLayout emptyContainer;
-  private ListView listView;
+  private GridViewWithHeaderAndFooter listView;
   
   
-  public PlaceListFragment(int categoryId)
+  public MyBookmarkPlaceListFragment()
   {
-    this.categoryId = categoryId;
   }
   
   
@@ -64,9 +60,9 @@ public class PlaceListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     
-    adapter = new PlaceListAdapter(getActivity());
+    adapter = new MyPlaceListAdapter();
     
-    listView = (ListView) getView().findViewById(R.id.listview);
+    listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.listview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()
     {
@@ -79,17 +75,6 @@ public class PlaceListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        try
-        {
-          if (firstVisibleItem > lastVisibleItem)
-            ((TravelStrategyActivity) getActivity()).showBottomTab(true);
-          else
-            ((TravelStrategyActivity) getActivity()).showBottomTab(false);
-        }
-        catch (Exception e)
-        {
-          
-        }
         if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
@@ -115,7 +100,7 @@ public class PlaceListFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getPlaceList(page, categoryId);
+      return apiClient.getPlaceList(page);
     }
     
     
@@ -152,13 +137,6 @@ public class PlaceListFragment extends Fragment
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
     }
-  }
-  
-  
-  public void setCategoryId(int categoryId)
-  {
-    //전체, 명소, 쇼핑 등 
-    this.categoryId = categoryId;
   }
   
   /**************************************************

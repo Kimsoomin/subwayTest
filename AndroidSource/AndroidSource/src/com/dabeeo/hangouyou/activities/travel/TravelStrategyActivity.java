@@ -135,6 +135,9 @@ public class TravelStrategyActivity extends ActionBarActivity
       areaItem.setVisible(true);
     else
       areaItem.setVisible(false);
+    
+    if (adapter.currentPosition != 0)
+      getMenuInflater().inflate(R.menu.menu_empty, menu);
     return super.onCreateOptionsMenu(menu);
   }
   

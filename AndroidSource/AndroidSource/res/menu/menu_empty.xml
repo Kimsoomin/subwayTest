@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/map"
-        android:icon="@drawable/btn_title_map"
-        android:title="@string/term_map"
+        android:id="@+id/empty"
+        android:icon="@drawable/button_transparent"
+        android:title="@null"
+        android:enabled="false"
         app:showAsAction="always"/>
 
 </menu>

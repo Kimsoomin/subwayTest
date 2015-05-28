@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.PremiumBean;
@@ -38,6 +37,7 @@ public class TravelStrategyListFragment extends Fragment
   private int page = 1;
   private ApiClient apiClient;
   private int lastVisibleItem = 0;
+  
   
   public TravelStrategyListFragment(int categoryId)
   {

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,6 +61,14 @@ public class VersionActivity extends ActionBarActivity
     containerAgreement.setOnClickListener(clickListener);
     containerPrivateAgreement.setOnClickListener(clickListener);
     containerGpsInfoAgreement.setOnClickListener(clickListener);
+  }
+  
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_empty, menu);
+    return super.onCreateOptionsMenu(menu);
   }
   
   

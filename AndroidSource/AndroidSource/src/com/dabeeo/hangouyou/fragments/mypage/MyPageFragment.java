@@ -160,7 +160,7 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == conatinerMyBookmark.getId())
       {
-        if (SystemUtil.isConnectNetwork(getActivity()))
+        if (!SystemUtil.isConnectNetwork(getActivity()))
           showDontEnterWhenNotConnectNetworkDialog();
         else
         {
@@ -170,14 +170,14 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == conatinerMyOrders.getId())
       {
-        if (SystemUtil.isConnectNetwork(getActivity()))
+        if (!SystemUtil.isConnectNetwork(getActivity()))
           showDontEnterWhenNotConnectNetworkDialog();
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
       else if (v.getId() == conatinerMyCart.getId())
       {
-        if (SystemUtil.isConnectNetwork(getActivity()))
+        if (!SystemUtil.isConnectNetwork(getActivity()))
           showDontEnterWhenNotConnectNetworkDialog();
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();

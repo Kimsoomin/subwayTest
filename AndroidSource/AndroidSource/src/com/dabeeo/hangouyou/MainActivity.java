@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		getSupportActionBar().setElevation(0);
 		@SuppressLint("InflateParams")
 		View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
 		
