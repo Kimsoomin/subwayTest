@@ -25,7 +25,6 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
 import com.dabeeo.hangouyou.activities.sub.SearchResultDetail;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
@@ -224,16 +223,6 @@ public class SearchResultFragment extends Fragment
 			bean.addText(text + " " + getString(R.string.term_travel_schedule) + i, SearchResultBean.TYPE_SCHEDULE);
 			adapter.add(bean);
 		}
-		SearchResultBean photoLogBean = new SearchResultBean();
-		photoLogBean.addScheduleTitle(getString(R.string.term_photolog), 100);
-		adapter.add(photoLogBean);
-		
-		for (int i = 0; i < 3; i++)
-		{
-			SearchResultBean bean = new SearchResultBean();
-			bean.addText(text + " " + getString(R.string.term_photolog) + i, SearchResultBean.TYPE_PHOTO_LOG);
-			adapter.add(bean);
-		}
 		
 		adapter.notifyDataSetChanged();
 	}
@@ -266,10 +255,6 @@ public class SearchResultFragment extends Fragment
 				
 				case SearchResultBean.TYPE_SCHEDULE:
 					startActivity(new Intent(getActivity(), MyScheduleDetailActivity.class));
-					break;
-				
-				case SearchResultBean.TYPE_PHOTO_LOG:
-					startActivity(new Intent(getActivity(), MyPhotoLogDetailActivity.class));
 					break;
 				
 				default:
