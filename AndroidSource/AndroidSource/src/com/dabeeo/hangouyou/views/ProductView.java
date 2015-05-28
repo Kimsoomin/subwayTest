@@ -68,7 +68,7 @@ public class ProductView extends RelativeLayout
 			@Override
 			public void onClick(View v)
 			{
-				if (SystemUtil.isConnectNetwork(context))
+				if (!SystemUtil.isConnectNetwork(context))
 					new AlertDialogManager(context).showDontNetworkConnectDialog();
 				else
 					context.startActivity(new Intent(context, TrendProductDetailActivity.class));
@@ -85,7 +85,7 @@ public class ProductView extends RelativeLayout
 			@Override
 			public void onClick(View v)
 			{
-				if (SystemUtil.isConnectNetwork(context))
+				if (!SystemUtil.isConnectNetwork(context))
 					new AlertDialogManager(context).showDontNetworkConnectDialog();
 				else
 					context.startActivity(new Intent(context, TrendProductDetailActivity.class));

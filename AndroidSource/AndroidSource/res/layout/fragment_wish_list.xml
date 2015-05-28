@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/empty_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,10 +63,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:background="@drawable/round_app_color_stroke_box"
+                    android:background="@drawable/normal_appcolor_select_white"
                     android:padding="12dp"
                     android:text="@string/term_go_to_popular_product"
-                    android:textColor="@color/appcolor" />
+                    android:textColor="@color/color_normal_white_select_appcolor" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -69,12 +76,17 @@
             </LinearLayout>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="#cecece" />
         <!-- 인기 위시리스트 -->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            android:layout_weight="1"
             android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="8dp" >

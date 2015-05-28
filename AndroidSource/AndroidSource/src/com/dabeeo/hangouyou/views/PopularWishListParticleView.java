@@ -1,18 +1,13 @@
 package com.dabeeo.hangouyou.views;
 
-import java.util.Random;
-
 import android.content.Context;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.ProductBean;
 
 public class PopularWishListParticleView extends RelativeLayout
 {
@@ -60,6 +55,15 @@ public class PopularWishListParticleView extends RelativeLayout
 			leftText.setBackgroundResource(R.drawable.blue_rectangle);
 			rightText.setBackgroundResource(R.drawable.red_rectangle);
 		}
+		
+		view.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Toast.makeText(context, context.getString(R.string.msg_add_wishlist), Toast.LENGTH_LONG).show();
+			}
+		});
 		
 		addView(view);
 	}
