@@ -74,7 +74,7 @@ public class StationBean
       if (object.has("exits"))
       {
         JSONObject exitObject = object.getJSONObject("exits");
-        for (int i = 1; i < 12; i++)
+        for (int i = 1; i < 20; i++)
         {
           if (exitObject.has(Integer.toString(i)))
           {

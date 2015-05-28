@@ -2,12 +2,15 @@ package com.dabeeo.hangouyou.map;
 
 import java.io.File;
 
+import org.osmdroid.tileprovider.MapTile;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -19,6 +22,8 @@ import android.util.Log;
 @SuppressLint("DefaultLocale")
 public class MapDatabase extends SQLiteOpenHelper
 {
+	
+	public final String TAG = this.getClass().getName();
 	private SQLiteDatabase m_db = null;
 	
 	static DrawableCache m_drawableCache = new DrawableCache();
@@ -43,7 +48,7 @@ public class MapDatabase extends SQLiteOpenHelper
 		
 		if(new File(Global.strMapDBFilePath).exists() == false)
 		{
-			BlinkingCommon.smlLibPrintException("ERROR", "Can't open the MapDB: " + Global.strMapDBFilePath);
+			Log.e("ERROR", "Can't open the MapDB: " + Global.strMapDBFilePath);
 			return null;
 		}
 
@@ -94,6 +99,52 @@ public class MapDatabase extends SQLiteOpenHelper
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	
+	/**
+	 * XXX Get inputStream of tile from DB
+	 */
+	public Drawable getMapTile(final MapTile pTile) {
+		if (m_db == null) {
+			Log.e("ERROR", "m_db == null");
+			return null;
+		}
+
+		try {
+			final String[] tile = { "tile_data" };
+			final String[] xyz = {
+					Integer.toString(pTile.getX()),
+					Double.toString(Math.pow(2, pTile.getZoomLevel())
+							- pTile.getY() - 1),
+					Integer.toString(pTile.getZoomLevel()) };
+			Drawable d = null;
+
+			final Cursor cursor = m_db.query("tiles", tile,
+					"tile_column=? and tile_row=? and zoom_level=?", xyz, null,
+					null, null);
+
+			if (cursor.getCount() != 0) {
+				// XXX testing lower quality for speed
+				BitmapFactory.Options opts = new BitmapFactory.Options();
+				opts.inPurgeable = true;
+				opts.inDither = true;
+				opts.inPreferredConfig = Bitmap.Config.RGB_565;
+
+				cursor.moveToFirst();
+				byte[] b = cursor.getBlob(0);
+				d = new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0,
+						b.length, opts));
+			}
+			cursor.close();
+			if (d != null) {
+				return d;
+			}
+		} catch (final Throwable e) {
+			Log.w(TAG, "Error getting tile: " + pTile, e);
 		}
 
 		return null;

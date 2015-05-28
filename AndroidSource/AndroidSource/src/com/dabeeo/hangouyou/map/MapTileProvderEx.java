@@ -5,21 +5,25 @@ import org.osmdroid.tileprovider.MapTileProviderBase;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 /** 10-1 Map tile 데이터 가공 > 이미지화 */
 public class MapTileProvderEx extends MapTileProviderBase
 {
+
+	public final String TAG = this.getClass().getName();
 	private MapDatabase m_mapDB = null;
 	private Drawable m_tile = null;
 	private Context m_context;
-	
+
 	public MapTileProvderEx(ITileSource pTileSource, Drawable pTile,Context c)
 	{
 		super(pTileSource);
 
-//		m_mapDB = new MapDatabase(MainTabActivity.g_this);
+		//		m_mapDB = new MapDatabase(MainTabActivity.g_this);
 		m_mapDB = new MapDatabase(c);
 		m_tile = pTile;
 		m_context = c;
@@ -30,76 +34,105 @@ public class MapTileProvderEx extends MapTileProviderBase
 	public void detach()
 	{
 		Log.e("MapTileProvider", "detatch");
-		
+
 		if(m_mapDB != null)
 		{
 			m_mapDB.close();
 			m_mapDB = null;
 		}
-		
-//		BlinkingSeoulActivity.g_sensorcallback = null;
+
+		//		BlinkingSeoulActivity.g_sensorcallback = null;
 	}
 
 	//MapTile을 Drawable(이미지화) 하는 로직.
 	@Override
 	public Drawable getMapTile(MapTile pTile)
 	{
-		if(m_mapDB == null)
-		{
+		// Check database
+		if (m_mapDB == null) {
 			m_mapDB = new MapDatabase(m_context);
-
-			if(m_mapDB == null)
-			{
+			if (m_mapDB == null) {
 				Log.e("ERROR", "m_db == null");
 				return null;
 			}
 		}
-		
-		//로직이 hasTable 로 설정되어 있어 Tile을 보내면 해당 이미지를 리턴하게 되어 있다.
+
+		// Try to load tile from cache
 		Drawable d = this.mTileCache.getMapTile(pTile);
-		
-		if(d == null)
-		{
-			// DB에서 읽어들임. 
+
+		// If not in cache, get it
+		if (d == null) {
 			int nZoomLevel = pTile.getZoomLevel();
-			
-			// strRow(타일의 Row값) = 타일의 줌 레벨을 제곱 - 타일의 Y 값 - 1 
 			String strRow = Double.toString(Math.pow(2, pTile.getZoomLevel()) - pTile.getY() - 1);
 			int nColumn = pTile.getX();
+			// Check for zoom level and use another provider if out of the
+			// bounds
+			if (nZoomLevel >= getMaximumZoomLevel()) {
+				// Use the method to rescale the tile to fake zoom
+				Log.i(TAG, "Resizing, fake zoom");
 
-			d = m_mapDB.GetMapTile(nZoomLevel, strRow, nColumn);
-			
-			//맵의 이미지를 가져왔으면 MapTileCash에서 가져와 쓸수 있도록 Tile과 이미지를 setter에 재 설정 해줘야 함.
-			if(d != null)
-			{
-				mTileCache.putTile(pTile, d);
+				final int maxZoom = 2; // TODO adjust amount of fake Zoom
+				MapTile rTile = null;
+				Drawable fakeZoomDrawable;
+				int rx, ry;
+				for (int z = 1; z < maxZoom; z++) {
+					rx = pTile.getX() / (2 * z);
+					ry = pTile.getY() / (2 * z);
+					rTile = new MapTile(nZoomLevel - z, rx, ry);
+
+					fakeZoomDrawable = m_mapDB.getMapTile(rTile);
+
+					if (fakeZoomDrawable != null) {
+						
+						d = resize(fakeZoomDrawable, pTile.getX(),
+								pTile.getY(), z);
+					} else {
+						Log.d(TAG, "Tile doesn't exist. Can't find a tile to scale: "+ pTile);
+					}
+				}
+
+			} else {
+				// Use supported zoom level instead of fake zoom
+				d = m_mapDB.GetMapTile(nZoomLevel, strRow, nColumn);
 			}
-		}
-		else 
-		{
-			Log.d("DEBUG", "");
+
+			// Set loaded zoom to cache
+			if (d != null)
+				this.mTileCache.putTile(pTile, d);
 		}
 
-		//위의 로직을 거쳤는데도 불구하고 이미지를 불러오지 못한다면 Default 처리.
-		if(d == null)
-		{
+		// In case we can't get any tile, set the default image
+		if (d == null)
 			d = m_tile;
-//			Log.i("MapTileProvider", "" + arg0 + "  drawable: " + d);
-		}
-
+		
 		return d;
 	}
 
+	// XXX Rescale bitmap
+	private Drawable resize(Drawable image, final int rx, final int ry,
+			final int zoomLevelDiff) {
+		int mTileSizePixels = 128; // 256
+		int px = rx % (2 * zoomLevelDiff);
+		int py = ry % (2 * zoomLevelDiff);
+		Bitmap b = ((BitmapDrawable) image).getBitmap();
+		Bitmap bitmapResized = Bitmap.createBitmap(
+				Bitmap.createScaledBitmap(b, (mTileSizePixels * 2) * zoomLevelDiff, (mTileSizePixels * 2) * zoomLevelDiff, false), 
+				(px == 0) ? 0 : mTileSizePixels * px, 
+						(py == 0) ? 0 : mTileSizePixels * py,
+								mTileSizePixels, mTileSizePixels);
+
+		return new BitmapDrawable(m_context.getResources(),
+				bitmapResized);
+	}
+
 	@Override
-	public int getMaximumZoomLevel() 
-	{
+	public int getMaximumZoomLevel() {
 		return 18;
 	}
 
 	@Override
-	public int getMinimumZoomLevel() 
-	{
-		return 14;
+	public int getMinimumZoomLevel() {
+		return 13;
 	}
 
 	@Override

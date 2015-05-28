@@ -95,7 +95,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 	public double place_fLatitude = 0;
 	public double place_fLongitute = 0;
 	private int zoomLevel = 16;
-	final int nMinZoomLevel = 14;
+	final int nMinZoomLevel = 13;
 	final int nMaxZoomLevel = 18;
 	private BoundedMapView m_mapView;
 
@@ -1551,59 +1551,12 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 		return (int) px;
 	}
 
-	/**
-	 * =====================================================================================
-	 * 말풍선 로직. - 실제 말풍선 로직 - 말풍선 숨김..
-	 * PlaceInfo 객체 형식 중에 위,경도,m_nID,m_nType 값이 존재 해야한다.
-	 * =====================================================================================
-	 */
-	private void ShowBalloon(PlaceInfo placeInfo, OnItemGestureListener<OverlayItem> onItemGestureListener) {
-		// 내비게이션 모드에서는 말풍선 띄우지 않음.
-		if (m_bUseLocationInfo == true)
-			return;
-
-		HideBalloon();
-
-		double dBoxlat = placeInfo.m_fLatitude;
-		double dBoxlong = placeInfo.m_fLongitude;
-
-		ArrayList<OverlayItem> balloonItem = new ArrayList<OverlayItem>();
-		OverlayItem item = new OverlayItem(placeInfo.m_strName, String.format(
-				"%d", placeInfo.m_nID), new GeoPoint(dBoxlat, dBoxlong));
-		balloonItem.add(item);
-
-		int color;
-		if (placeInfo.m_nType == 5)
-			color = Color.BLACK;
-		else
-			color = Color.WHITE;
-
-		item.setMarker(Global.GetDrawable(this, R.drawable.transparent_balloon));
-
-		m_balloonOverlay = new BalloonOverlay(balloonItem,
-				onItemGestureListener, new DefaultResourceProxyImpl(this),
-				this, color, m_nBalloonHeight);
-
-		m_mapView.getOverlays().add(m_balloonOverlay);
-		m_mapView.invalidate();
-	}
-
-	private void HideBalloon() 
-	{
-		if (m_balloonOverlay != null) 
-		{
-			Log.d("testLog", "들어옴..");
-			m_mapView.getOverlays().remove(m_balloonOverlay);
-			m_balloonOverlay = null;
-
-			m_mapView.invalidate();
-			Global.GC();
-		}
-	}
-
 	public class MarkerSetAsyncTask extends AsyncTask<Void, Integer, Void> 
 	{
 		ArrayList<OverlayItem> localItems = new ArrayList<OverlayItem>();
+		int attractionCount = 0;
+		int shoppingCount = 0;
+		int restaurantCount = 0;
 
 		@Override
 		protected Void doInBackground(Void... params) 
@@ -1708,8 +1661,43 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 
 						}else
 						{
-							OverlayItem item = new OverlayItem(""+ info.m_nCategoryID,info.m_strName,info.m_nID, new GeoPoint(info.m_fLatitude,info.m_fLongitude));
-							localItems.add(item);
+							if(m_mapView.getZoomLevel() == 17 || m_mapView.getZoomLevel() == 18)
+							{
+								OverlayItem item = new OverlayItem(""+ info.m_nCategoryID,info.m_strName,info.m_nID, new GeoPoint(info.m_fLatitude,info.m_fLongitude));
+								localItems.add(item);
+							}else if(m_mapView.getZoomLevel() == 16)
+							{
+								if(info.m_nCategoryID == 1 || info.m_nCategoryID == 2 || info.m_nCategoryID == 3 || info.m_nCategoryID == 4 
+								   || info.m_nCategoryID == 5 || info.m_nCategoryID == 7 || info.m_nCategoryID == 6 || info.m_nCategoryID == 99
+								   || info.m_nCategoryID == 60	)
+								{
+									OverlayItem item = new OverlayItem(""+ info.m_nCategoryID,info.m_strName,info.m_nID, new GeoPoint(info.m_fLatitude,info.m_fLongitude));
+									localItems.add(item);
+								}
+							}else if (m_mapView.getZoomLevel() == 15)
+							{
+								if((info.m_nCategoryID == 1 || info.m_nCategoryID == 3 || info.m_nCategoryID == 4 
+									|| info.m_nCategoryID == 5 || info.m_nCategoryID == 6) && attractionCount>10)
+								{
+									OverlayItem item = new OverlayItem(""+ info.m_nCategoryID,info.m_strName,info.m_nID, new GeoPoint(info.m_fLatitude,info.m_fLongitude));
+									localItems.add(item);
+									attractionCount++;
+								}
+								
+								if(info.m_nCategoryID == 2 && shoppingCount>10)
+								{
+									OverlayItem item = new OverlayItem(""+ info.m_nCategoryID,info.m_strName,info.m_nID, new GeoPoint(info.m_fLatitude,info.m_fLongitude));
+									localItems.add(item);
+									shoppingCount++;
+								}
+								
+								if(info.m_nCategoryID == 7 && restaurantCount>10)
+								{
+									OverlayItem item = new OverlayItem(""+ info.m_nCategoryID,info.m_strName,info.m_nID, new GeoPoint(info.m_fLatitude,info.m_fLongitude));
+									localItems.add(item);
+									restaurantCount++;
+								}
+							}
 						}
 					}
 				}
@@ -1760,8 +1748,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 		if (lineId != null && !lineId.equals("")) 
 		{
 			Log.i("INFO","refresh :"+lineId);
-			onePlaceOverlay = new OnePlaceOverlay(oneItems, null,
-					new DefaultResourceProxyImpl(mContext), mContext);
+			onePlaceOverlay = new OnePlaceOverlay(oneItems, null, new DefaultResourceProxyImpl(mContext), mContext);
 			m_mapView.getOverlays().add(onePlaceOverlay);
 			summaryTitle.setText(onePlaceInfo.get(0).m_strName);
 
@@ -1904,79 +1891,53 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
 		{
 			char a = line[i + 1].charAt(0);
 			if (a == '1') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line1);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("1号线");
 			} else if (a == '2') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line2);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("2号线");
 			} else if (a == '3') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line3);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("3号线");
 			} else if (a == '4') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line4);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("4号线");
 			} else if (a == '5') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line5);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("5号线");
 			} else if (a == '6') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line6);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("6号线");
 			} else if (a == '7') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line7);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("7号线");
 			} else if (a == '8') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line8);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("8号线");
 			} else if (a == '9') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_line9);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("9号线");
 			} else if (a == 'd') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_linesb);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("新盆唐线");
 			} else if (a == 'p') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_linegc);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("京春线");
 			} else if (a == 'a') {
-				linenum[i].setVisibility(View.VISIBLE);
 				linenum[i].setImageResource(R.drawable.icon_subway_linea);
-				text[i].setVisibility(View.VISIBLE);
 				text[i].setText("机场线");
 			} else if (a == 'k') {
 				char b = line[i + 1].charAt(1);
 				if (b == '2') {
-					linenum[i]
-							.setImageResource(R.drawable.icon_subway_lineb);
+					linenum[i].setImageResource(R.drawable.icon_subway_lineb);
 					text[i].setText("盆唐线");
 				} else {
-					linenum[i]
-							.setImageResource(R.drawable.icon_subway_linegj);
+					linenum[i].setImageResource(R.drawable.icon_subway_linegj);
 					text[i].setText("京义中央线");
 				}
-				text[i].setVisibility(View.VISIBLE);
-				linenum[i].setVisibility(View.VISIBLE);
 			}
+			linenum[i].setVisibility(View.VISIBLE);
+			text[i].setVisibility(View.VISIBLE);
 		}
 	}
 
