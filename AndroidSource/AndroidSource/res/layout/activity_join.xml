@@ -225,7 +225,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/app_fill_button"
+            android:background="@drawable/appcolor_fill_round_button"
             android:text="@string/term_join"
             android:textColor="@android:color/white" />
     </LinearLayout>

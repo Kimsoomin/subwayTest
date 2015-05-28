@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.controllers.ticket;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,19 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TicketBean;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.squareup.picasso.Picasso;
 
 public class BoughtTicketListAdapter extends BaseAdapter
 {
   private ArrayList<TicketBean> items = new ArrayList<>();
+  private Context context;
+  
+  
+  public BoughtTicketListAdapter(Context context)
+  {
+    this.context = context;
+  }
   
   
   public void add(TicketBean bean)
@@ -65,7 +74,7 @@ public class BoughtTicketListAdapter extends BaseAdapter
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView validityDate = (TextView) view.findViewById(R.id.text_validity_period);
     
-    Picasso.with(parent.getContext()).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
+    ImageDownloader.displayImage(context, "", imageView, null);
     title.setText(bean.title);
     validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);
     return view;

@@ -10,9 +10,10 @@
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="100dp"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
         android:contentDescription="@null"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerInside" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,14 +34,16 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:lines="3"
-                android:textSize="18sp"
+                android:textColor="@color/darker_gray"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/btn_wishlist"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:contentDescription="@null"
-                android:src="@drawable/btn_add_wish" />
+                android:src="@drawable/wishlist_button" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,9 +64,9 @@
 
                     <TextView
                         android:id="@+id/text_original_price"
-                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textSize="11sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -72,25 +75,28 @@
 
                         <TextView
                             android:id="@+id/text_discount_price"
-                            style="@style/TextAppearance.AppCompat.Medium"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/text_discount_price_cn"
-                            style="@style/TextAppearance.AppCompat.Small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/text_discount_month"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textColor="@color/light_gray"
-                    android:textSize="12sp" />
+                    android:text="month"
+                    android:textColor="#ff6262"
+                    android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

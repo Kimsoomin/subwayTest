@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -30,6 +31,8 @@ public class BoughtTicketListFragment extends Fragment
   private BoughtTicketListAdapter adapter;
   private int page = 1;
   private ApiClient apiClient;
+  private ListView listView;
+  private LinearLayout emptyContainer;
   
   
   @Override
@@ -48,14 +51,45 @@ public class BoughtTicketListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new BoughtTicketListAdapter();
+    adapter = new BoughtTicketListAdapter(getActivity());
     
-    ListView listView = (ListView) getView().findViewById(android.R.id.list);
+    emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
+    listView = (ListView) getView().findViewById(android.R.id.list);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
-    load(page);
+//    load(page);
+    
+    try
+    {
+      TicketBean bean = new TicketBean();
+      bean.idx = 0;
+      bean.title = "아쿠아 리움 아쿠아플라넷 관람권";
+      bean.discountRate = "8折";
+      bean.displayPriceWon = 10000;
+      bean.priceWon = 10000;
+      bean.priceYuan = 57;
+      bean.fromValidityDate = "2015.08.10";
+      bean.toValidityDate = "2015.10.10";
+      adapter.add(bean);
+      
+      bean = new TicketBean();
+      bean.idx = 0;
+      bean.title = "아쿠아 리움 아쿠아플라넷 관람권";
+      bean.discountRate = "8折";
+      bean.displayPriceWon = 10000;
+      bean.priceWon = 10000;
+      bean.priceYuan = 57;
+      bean.fromValidityDate = "2015.08.10";
+      bean.toValidityDate = "2015.10.10";
+      adapter.add(bean);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    
   }
   
   

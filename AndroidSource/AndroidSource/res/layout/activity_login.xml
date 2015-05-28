@@ -72,9 +72,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/app_fill_button"
+        android:background="@drawable/normal_appcolor_select_white"
         android:text="@string/term_login"
-        android:textColor="@android:color/white" />
+        android:textColor="@color/color_normal_white_select_appcolor" />
 
     <Button
         android:id="@+id/btn_join"
@@ -85,7 +85,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/app_button"
         android:text="@string/term_join"
-        android:textColor="@color/appcolor" />
+        android:textColor="@color/color_normal_appcolor_select_white" />
 
     <Button
         android:id="@+id/btn_cancel"
@@ -94,8 +94,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/round_gray_box"
+        android:background="@drawable/gray_fill_round_button"
         android:text="@string/term_cancel"
-        android:textColor="#c3c3c3" />
+        android:textColor="@color/color_gray_select_white" />
 
 </LinearLayout>

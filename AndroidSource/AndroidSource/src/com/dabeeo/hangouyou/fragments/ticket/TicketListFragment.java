@@ -62,7 +62,24 @@ public class TicketListFragment extends Fragment
   private void load(int offset)
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetAsyncTask().execute();
+//    new GetAsyncTask().execute();
+    
+    //TEST BEAN
+    try
+    {
+      TicketBean bean = new TicketBean();
+      bean.idx = 0;
+      bean.title = "아쿠아 리움 아쿠아플라넷 관람권";
+      bean.discountRate = "8折";
+      bean.displayPriceWon = 10000;
+      bean.priceWon = 10000;
+      bean.priceYuan = 57;
+      adapter.add(bean);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
   
   private class GetAsyncTask extends AsyncTask<String, Integer, NetworkResult>

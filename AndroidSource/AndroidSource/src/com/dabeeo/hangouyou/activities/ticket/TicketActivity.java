@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +36,14 @@ public class TicketActivity extends BaseNavigationTabActivity
     viewPager.setAdapter(adapter);
     
     displayTitles();
+  }
+  
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_empty, menu);
+    return super.onCreateOptionsMenu(menu);
   }
   
   
