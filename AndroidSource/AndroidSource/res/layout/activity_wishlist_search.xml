@@ -58,4 +58,45 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <!-- 하단 컨텐츠 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- 빈화면 -->
+
+        <LinearLayout
+            android:id="@+id/empty_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+
+            <!-- 인기 위시리스트 -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/term_popular_wish_list"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/wish_list_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <!-- 검색화면 -->
+
+        <com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </RelativeLayout>
+
 </LinearLayout>
