@@ -1,12 +1,11 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
-import java.util.ArrayList;
-
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,15 +13,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -35,7 +32,7 @@ import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.controllers.SearchResultAdapter;
-import com.dabeeo.hangouyou.managers.PreferenceManager;
+import com.dabeeo.hangouyou.views.PopularKeywordView;
 import com.dabeeo.hangouyou.views.ProductView;
 
 public class SearchResultFragment extends Fragment
@@ -44,6 +41,9 @@ public class SearchResultFragment extends Fragment
 	private ViewGroup layoutRecommedProductParent, layoutRecommedProduct;
 	private SearchResultAdapter adapter;
 	private ImageView imageX;
+	private LinearLayout popularKeywordOuterContainer, popularKeyworkdContainer;
+	private ListView searchListView;
+	private ScrollView emptyContainer;
 	
 	
 	@Override
@@ -59,37 +59,70 @@ public class SearchResultFragment extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 		
-		inputWord = (EditText) getView().findViewById(R.id.input_word);
+		popularKeywordOuterContainer = (LinearLayout) getView().findViewById(R.id.popular_keyword_outer_container);
+		popularKeyworkdContainer = (LinearLayout) getView().findViewById(R.id.popular_keyword_container);
+		searchListView = (ListView) getView().findViewById(R.id.search_list);
+		emptyContainer = (ScrollView) getView().findViewById(R.id.empty_container);
+		
+		inputWord = (EditText) getView().findViewById(R.id.edit_search);
 		inputWord.setOnEditorActionListener(editorActionListener);
-		imageX = (ImageView) getView().findViewById(R.id.img_x);
+		
+		imageX = (ImageView) getView().findViewById(R.id.search_cancel);
+		imageX.setVisibility(View.GONE);
 		imageX.setOnClickListener(new OnClickListener()
 		{
 			@Override
-			public void onClick(View v)
+			public void onClick(View arg0)
 			{
 				inputWord.setText("");
 				search("");
 			}
 		});
+		
 		layoutRecommedProductParent = (LinearLayout) getView().findViewById(R.id.layout_recommend_product_parent);
 		layoutRecommedProduct = (LinearLayout) getView().findViewById(R.id.layout_recommend_product);
 		
 		adapter = new SearchResultAdapter();
-		ListView listView = (ListView) getView().findViewById(android.R.id.list);
-		listView.setOnItemClickListener(itemClickListener);
-		listView.setAdapter(adapter);
+		searchListView = (ListView) getView().findViewById(R.id.search_list);
+		searchListView.setOnItemClickListener(itemClickListener);
+		searchListView.setAdapter(adapter);
 		
-		loadRecentSearchWord();
+		TextWatcher watcher = new TextWatcher()
+		{
+			@Override
+			public void afterTextChanged(Editable s)
+			{
+			}
+			
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after)
+			{
+			}
+			
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count)
+			{
+				if (inputWord.getText().toString().length() > 1)
+				{
+					searchListView.setVisibility(View.VISIBLE);
+					emptyContainer.setVisibility(View.GONE);
+					
+					search(inputWord.getText().toString());
+				}
+				else
+				{
+					searchListView.setVisibility(View.GONE);
+					emptyContainer.setVisibility(View.VISIBLE);
+				}
+			}
+			
+		};
+		inputWord.addTextChangedListener(watcher);
+		
+		loadPopularWords();
 		loadRecommendProduct();
-	}
-	
-	
-	@Override
-	public void onResume()
-	{
-		loadRecentSearchWord();
-		loadRecommendProduct();
-		super.onResume();
 	}
 	
 	
@@ -106,22 +139,22 @@ public class SearchResultFragment extends Fragment
 	}
 	
 	
-	private void loadRecentSearchWord()
+	private void loadPopularWords()
 	{
-		adapter.clear();
-		SearchResultBean resultBean = new SearchResultBean();
-		resultBean.addNormalTitle(getString(R.string.term_recent_search_word), 0);
-		adapter.add(resultBean);
+		popularKeywordOuterContainer.setVisibility(View.VISIBLE);
+		popularKeyworkdContainer.removeAllViews();
 		
-		ArrayList<String> recentWords = PreferenceManager.getInstance(getActivity()).getRecentSearchWord();
-		for (String string : recentWords)
-		{
-			SearchResultBean bean = new SearchResultBean();
-			bean.addText(string, SearchResultBean.TYPE_NORMAL);
-			adapter.add(bean);
-		}
+		PopularKeywordView view = new PopularKeywordView(getActivity());
+		view.setData(1, "다비오");
+		popularKeyworkdContainer.addView(view);
 		
-		adapter.notifyDataSetChanged();
+		view = new PopularKeywordView(getActivity());
+		view.setData(2, "SKII");
+		popularKeyworkdContainer.addView(view);
+		
+		view = new PopularKeywordView(getActivity());
+		view.setData(3, "아쿠아리움");
+		popularKeyworkdContainer.addView(view);
 	}
 	
 	
@@ -129,20 +162,20 @@ public class SearchResultFragment extends Fragment
 	{
 		adapter.clear();
 		
-		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-		
 		if (TextUtils.isEmpty(text))
 		{
-			layoutRecommedProductParent.setVisibility(View.VISIBLE);
-			loadRecentSearchWord();
+			emptyContainer.setVisibility(View.VISIBLE);
+			searchListView.setVisibility(View.GONE);
+			loadPopularWords();
 			return;
 		}
 		else
-			layoutRecommedProductParent.setVisibility(View.GONE);
+		{
+			searchListView.setVisibility(View.VISIBLE);
+			emptyContainer.setVisibility(View.GONE);
+		}
 		
-		PreferenceManager.getInstance(getActivity()).setRecentSearchWord(text);
-		
+		//TEST Beans
 		SearchResultBean resultBean = new SearchResultBean();
 		resultBean.addNormalTitle(getString(R.string.term_search_result), 300);
 		adapter.add(resultBean);
@@ -255,10 +288,7 @@ public class SearchResultFragment extends Fragment
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
 		{
 			if (actionId == EditorInfo.IME_ACTION_SEARCH)
-			{
 				search(v.getText().toString());
-			}
-			
 			return false;
 		}
 	};

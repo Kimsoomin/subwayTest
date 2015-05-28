@@ -394,4 +394,6 @@
 	<string name="term_cart_with_plus">+ 장바구니 담기</string>
 	<string name="term_add_wishlist">+ 위시리스트에 추가하기</string>
 	<string name="msg_hint_add_wishlist">위시리스트 추가</string>
+	<!-- 검색 -->
+	<string name="term_search_popular_word">인기 검색어</string>
 </resources>
