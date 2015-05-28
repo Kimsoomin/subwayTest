@@ -29,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
@@ -92,9 +93,13 @@ public class MyPlaceListFragment extends Fragment
               {
                 listView.setVisibility(View.GONE);
                 emptyContainer.setVisibility(View.VISIBLE);
+                setEditMode(false);
+                ((MyPlaceActivity) getActivity()).isEditMode = false;
+                ((MyPlaceActivity) getActivity()).invalidateOptionsMenu();
               }
             }
           });
+          dialog.setNegativeButton(android.R.string.cancel, null);
           dialog.show();
         }
       });

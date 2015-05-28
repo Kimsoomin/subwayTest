@@ -23,7 +23,7 @@ public class MyPlaceActivity extends ActionBarActivity
 {
   private ViewPager viewPager;
   private MenuItem editMenuItem, closeMenuItem;
-  private boolean isEditMode = false;
+  public boolean isEditMode = false;
   private MyPlaceViewPagerAdapter adapter;
   
   

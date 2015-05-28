@@ -1,6 +1,7 @@
 package com.dabeeo.hangouyou.controllers.mypage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -10,12 +11,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkPlaceListFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkTravelScheduleListFragment;
-import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
-import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleListFragment;
 
 public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
 {
   private List<String> titles = new ArrayList<String>();
+  private HashMap<Integer, Fragment> pageReferenceMap = new HashMap<Integer, Fragment>();
   
   
   public MyBookmarkViewPagerAdapter(Context context, FragmentManager fm)
@@ -31,6 +31,12 @@ public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
+  public Fragment getFragment(int key)
+  {
+    return pageReferenceMap.get(key);
+  }
+  
+  
   @Override
   public Fragment getItem(int position)
   {
@@ -39,6 +45,7 @@ public class MyBookmarkViewPagerAdapter extends FragmentPagerAdapter
       fragment = new MyBookmarkPlaceListFragment();
     else
       fragment = new MyBookmarkTravelScheduleListFragment();
+    pageReferenceMap.put(position, fragment);
     return fragment;
   }
   

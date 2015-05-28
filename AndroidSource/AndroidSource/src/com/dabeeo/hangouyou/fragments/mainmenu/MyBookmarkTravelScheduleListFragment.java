@@ -5,25 +5,34 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
-import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
+import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
@@ -35,7 +44,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   public static final int SCHEDULE_TYPE_BOOKMARK = 2;
   
   private ProgressBar progressBar;
-  private TravelScheduleListAdapter adapter;
+  private MySchedulesListAdapter adapter;
   private ApiClient apiClient;
   private int page = 1;
   private int type = SCHEDULE_TYPE_POPULAR;
@@ -46,6 +55,9 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   private TextView emptyText;
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
+  private LinearLayout allCheckContainer;
+  private CheckBox allCheckBox;
+  private TextView selectDelete;
   
   
   @Override
@@ -63,11 +75,14 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
+    allCheckContainer = (LinearLayout) getView().findViewById(R.id.container_all_checking);
+    allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
+    selectDelete = (TextView) getView().findViewById(R.id.select_delete);
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     emptyText = (TextView) getView().findViewById(R.id.text_empty);
     recommendContainer = (LinearLayout) getView().findViewById(R.id.recommend_container);
     
-    adapter = new TravelScheduleListAdapter(getActivity());
+    adapter = new MySchedulesListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
 //    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
 //    view.setBean(null);
@@ -95,6 +110,58 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       }
     });
     loadSchedules();
+  }
+  
+  
+  public void setEditMode(boolean isEditMode)
+  {
+    adapter.setEditMode(isEditMode);
+    if (isEditMode)
+    {
+      allCheckContainer.setVisibility(View.VISIBLE);
+      allCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
+      {
+        @Override
+        public void onCheckedChanged(CompoundButton arg0, boolean arg1)
+        {
+          adapter.setAllCheck(arg1);
+        }
+      });
+      selectDelete.setVisibility(View.VISIBLE);
+      selectDelete.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View arg0)
+        {
+          Log.w("WARN", "선택된 아이템 리스트 : " + adapter.getCheckedArrayList());
+          Builder dialog = new AlertDialog.Builder(getActivity());
+          dialog.setTitle(getString(R.string.term_alert));
+          dialog.setMessage(getString(R.string.term_delete_confirm));
+          dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+              if (allCheckBox.isChecked())
+              {
+                listView.setVisibility(View.GONE);
+                emptyContainer.setVisibility(View.VISIBLE);
+                setEditMode(false);
+                ((MyBookmarkActivity) getActivity()).isEditMode = false;
+                ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
+              }
+            }
+          });
+          dialog.setNegativeButton(android.R.string.cancel, null);
+          dialog.show();
+        }
+      });
+    }
+    else
+    {
+      allCheckContainer.setVisibility(View.GONE);
+      selectDelete.setVisibility(View.GONE);
+    }
   }
   
   

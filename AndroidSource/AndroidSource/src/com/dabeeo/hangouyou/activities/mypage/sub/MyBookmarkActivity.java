@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -18,12 +19,14 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.controllers.mypage.MyBookmarkViewPagerAdapter;
+import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkPlaceListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkTravelScheduleListFragment;
 
 public class MyBookmarkActivity extends ActionBarActivity
 {
   private ViewPager viewPager;
   private MenuItem editMenuItem, closeMenuItem;
-  private boolean isEditMode = false;
+  public boolean isEditMode = false;
   private MyBookmarkViewPagerAdapter adapter;
   
   
@@ -84,14 +87,29 @@ public class MyBookmarkActivity extends ActionBarActivity
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
-    if (item.getItemId() == editMenuItem.getItemId())
+    if (item.getItemId() == android.R.id.home)
+      finish();
+    else if (item.getItemId() == editMenuItem.getItemId())
     {
       isEditMode = true;
+      
+      int index = viewPager.getCurrentItem();
+      Fragment fragment = adapter.getFragment(index);
+      if (index == 0)
+        ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
+      else
+        ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
       invalidateOptionsMenu();
     }
     else if (item.getItemId() == closeMenuItem.getItemId())
     {
       isEditMode = false;
+      int index = viewPager.getCurrentItem();
+      Fragment fragment = adapter.getFragment(index);
+      if (index == 0)
+        ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
+      else
+        ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
       invalidateOptionsMenu();
     }
     return super.onOptionsItemSelected(item);
