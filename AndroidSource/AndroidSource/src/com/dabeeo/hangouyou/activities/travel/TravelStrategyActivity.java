@@ -220,13 +220,7 @@ public class TravelStrategyActivity extends ActionBarActivity
   
   private void showSphereDialog()
   {
-    
-    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
-    
-    for (TitleCategoryBean bean : spheres)
-    {
-      arrayAdapter.add(bean.title);
-    }
+    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
     
     AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
     builderSingle.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
@@ -243,8 +237,6 @@ public class TravelStrategyActivity extends ActionBarActivity
       @Override
       public void onClick(DialogInterface dialog, int which)
       {
-        String strName = arrayAdapter.getItem(which);
-        Toast.makeText(getApplicationContext(), strName, Toast.LENGTH_SHORT).show();
       }
     });
     builderSingle.show();

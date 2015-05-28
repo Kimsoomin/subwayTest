@@ -3,6 +3,8 @@ package com.dabeeo.hangouyou.activities.travel;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -19,8 +21,10 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
@@ -97,6 +101,9 @@ public class TravelSchedulesActivity extends ActionBarActivity
     {
       getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
     }
+    
+    viewPager.setCurrentItem(1);
+    getSupportActionBar().setSelectedNavigationItem(1);
   }
   
   
@@ -116,7 +123,40 @@ public class TravelSchedulesActivity extends ActionBarActivity
       finish();
       overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
+    else if (item.getItemId() == R.id.my_schedule)
+    {
+      showStrategyDaysAlertDialog();
+    }
     return super.onOptionsItemSelected(item);
+  }
+  
+  
+  private void showStrategyDaysAlertDialog()
+  {
+    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
+    arrayAdapter.add(getString(R.string.term_all));
+    arrayAdapter.add(getString(R.string.term_two_days_schedule));
+    arrayAdapter.add(getString(R.string.term_three_days_schedule));
+    arrayAdapter.add(getString(R.string.term_four_days_schedule));
+    
+    AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+    builderSingle.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+    {
+      @Override
+      public void onClick(DialogInterface dialog, int which)
+      {
+        dialog.dismiss();
+      }
+    });
+    
+    builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener()
+    {
+      @Override
+      public void onClick(DialogInterface dialog, int which)
+      {
+      }
+    });
+    builderSingle.show();
   }
   
   /**************************************************
