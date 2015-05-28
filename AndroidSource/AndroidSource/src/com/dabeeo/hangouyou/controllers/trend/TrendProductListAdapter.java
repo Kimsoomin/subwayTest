@@ -83,7 +83,7 @@ public class TrendProductListAdapter extends BaseAdapter
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView price = (TextView) view.findViewById(R.id.price);
     price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-    TextView discountPrice = (TextView) view.findViewById(R.id.discound_price);
+    TextView discountPrice = (TextView) view.findViewById(R.id.discount_price);
     TextView chinaPrice = (TextView) view.findViewById(R.id.discount_china_currency);
     TextView month = (TextView) view.findViewById(R.id.month);
     

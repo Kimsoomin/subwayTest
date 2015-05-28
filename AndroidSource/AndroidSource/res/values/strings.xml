@@ -390,4 +390,5 @@
     <string name="term_confirm_buy">구매내역 확인</string>
 	<string name="msg_use_coupon_only_employee">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다 쿠폰을 사용하시겠습니까?</string>
 	<string name="msg_complete_use_coupon">사용완료 확인되었습니다</string>
+	<string name="term_recommend">추천</string>
 </resources>

@@ -21,11 +21,14 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
+import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
+import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.views.CustomScrollView;
 import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
+import com.dabeeo.hangouyou.views.ProductRecommendScheduleView;
 import com.dabeeo.hangouyou.views.ReviewContainerView;
 import com.dabeeo.hangouyou.views.ScheduleDetailHeaderView;
 import com.dabeeo.hangouyou.views.ScheduleDetailTitleView;
@@ -174,6 +177,27 @@ public class TravelScheduleDetailFragment extends Fragment
 				c.add(Calendar.DATE, i);
 				tView.setData("Day" + Integer.toString(i + 1), new Date(c.getTimeInMillis()));
 				contentContainer.addView(tView);
+				
+				if (i == 0)
+				{
+					//TEST ADD RECOMMEND PRODUCT VIEW
+					ProductBean bean = new ProductBean();
+					bean.title = "IOPE 화장품";
+					bean.originalPrice = 4000;
+					bean.discountPrice = 3000;
+					
+					ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
+					productRecommendView.setBean(bean);
+					productRecommendView.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
+						}
+					});
+					contentContainer.addView(productRecommendView);
+				}
 				
 				for (int j = 0; j < bean.days.get(i).spots.size(); j++)
 				{
