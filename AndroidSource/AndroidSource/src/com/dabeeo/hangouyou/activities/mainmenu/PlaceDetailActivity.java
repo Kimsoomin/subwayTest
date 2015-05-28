@@ -239,7 +239,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				if (SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+				if (!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
 					new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
 				else
 					startActivity(new Intent(PlaceDetailActivity.this, TicketDetailActivity.class));
@@ -256,7 +256,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				if (SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+				if (!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
 					new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
 				else
 					startActivity(new Intent(PlaceDetailActivity.this, CouponDetailActivity.class));

@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ProductBean;
@@ -54,7 +53,6 @@ public class WishListSearchActivity extends Activity
 		popularWishListContainer.addView(pView);
 		
 		editSearch = (EditText) findViewById(R.id.edit_search);
-		searchContainer = (RelativeLayout) findViewById(R.id.search_container);
 		typingCancel = (ImageView) findViewById(R.id.search_cancel);
 		typingCancel.setVisibility(View.GONE);
 		typingCancel.setOnClickListener(new OnClickListener()
