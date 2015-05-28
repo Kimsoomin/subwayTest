@@ -34,15 +34,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.coupon.CouponDetailActivity;
+import com.dabeeo.hangouyou.activities.ticket.TicketDetailActivity;
 import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.CustomScrollView;
+import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
 import com.dabeeo.hangouyou.views.DetailCouponView;
 import com.dabeeo.hangouyou.views.DetailTicketView;
 import com.dabeeo.hangouyou.views.PlaceDetailHeaderView;
@@ -124,6 +129,18 @@ public class PlaceDetailActivity extends ActionBarActivity
 		titleView.init();
 		
 		scrollView = (CustomScrollView) findViewById(R.id.scrollview);
+		scrollView.setScrollViewListener(new ScrollViewListener()
+		{
+			@Override
+			public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
+			{
+				View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+				int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+				
+				if (diff == 0 && (reviewContainerView.getVisibility() == View.VISIBLE))
+					reviewContainerView.loadMore();
+			}
+		});
 		
 		FrameLayout header = (FrameLayout) findViewById(R.id.header);
 		Resources r = getResources();
@@ -216,12 +233,34 @@ public class PlaceDetailActivity extends ActionBarActivity
 		ticketBean.title = "경복궁 동반1인 무료 입장";
 		DetailTicketView view = new DetailTicketView(PlaceDetailActivity.this);
 		view.setBean(ticketBean);
+		view.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if (SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+					new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+				else
+					startActivity(new Intent(PlaceDetailActivity.this, TicketDetailActivity.class));
+			}
+		});
 		containerTicketAndCoupon.addView(view);
 		
 		CouponBean couponBean = new CouponBean();
 		couponBean.title = "서울 시티투어 버스 20% 할인";
 		DetailCouponView couponView = new DetailCouponView(PlaceDetailActivity.this);
 		couponView.setBean(couponBean);
+		couponView.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if (SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+					new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+				else
+					startActivity(new Intent(PlaceDetailActivity.this, CouponDetailActivity.class));
+			}
+		});
 		containerTicketAndCoupon.addView(couponView);
 		
 		containerProduct.removeAllViews();
@@ -238,6 +277,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 		
 		reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.idx);
 		reviewLayout.addView(reviewContainerView);
+		reviewContainerView.loadMore();
 		
 		textRate.setText(Integer.toString(bean.rate));
 		textDetail.setText(bean.contents);
