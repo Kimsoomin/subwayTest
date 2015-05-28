@@ -9,8 +9,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.sub.WishListSearchActivity;
 import com.dabeeo.hangouyou.activities.trend.TrendActivity;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.WishListAdapter;
@@ -62,6 +64,19 @@ public class WishListFragment extends Fragment
 		popularWishListContainer.addView(pView);
 		
 		listView = (GridViewWithHeaderAndFooter) view.findViewById(R.id.listview);
+		View v = LayoutInflater.from(getActivity()).inflate(R.layout.view_add_wishlist, null);
+		((Button) v.findViewById(R.id.btn_add_wishlist)).setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if (!SystemUtil.isConnectNetwork(getActivity()))
+					new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+				else
+					startActivity(new Intent(getActivity(), WishListSearchActivity.class));
+			}
+		});
+		listView.addFooterView(v);
 		adapter = new WishListAdapter(getActivity(), new WishListListener()
 		{
 			@Override

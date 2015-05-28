@@ -120,6 +120,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.dabeeo.hangouyou.activities.sub.WishListSearchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.sub.ReviewDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
