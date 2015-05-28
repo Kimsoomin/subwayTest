@@ -273,7 +273,7 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/ic_heart"
+                    android:background="@drawable/like_button"
                     android:gravity="center" />
             </LinearLayout>
 
