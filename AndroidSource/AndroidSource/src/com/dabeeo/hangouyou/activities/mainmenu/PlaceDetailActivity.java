@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hangouyou.activities.ticket.TicketDetailActivity;
+import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.ProductBean;
