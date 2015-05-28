@@ -243,7 +243,8 @@ public class PlaceDetailActivity extends ActionBarActivity
 		textDetail.setText(bean.contents);
 		
 		addDetailInfo(getString(R.string.term_address), bean.address);
-		addDetailInfo(getString(R.string.term_phone), bean.contact);
+//		addDetailInfo(getString(R.string.term_phone), bean.contact);
+		addDetailInfo(getString(R.string.term_phone), "02-000-0000");
 		addDetailInfo(getString(R.string.term_homepage), bean.homepage);
 		
 		titleView.setBean(bean);
