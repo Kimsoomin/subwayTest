@@ -39,191 +39,197 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
 public class MyPlaceListFragment extends Fragment
 {
-  private int categoryId = -1;
-  private int page = 1;
-  private boolean isLoadEnded = false;
-  
-  private ProgressBar progressBar;
-  private MyPlaceListAdapter adapter;
-  private ApiClient apiClient;
-  private LinearLayout emptyContainer;
-  private LinearLayout allCheckContainer;
-  private CheckBox allCheckBox;
-  private TextView selectDelete;
-  private GridViewWithHeaderAndFooter listView;
-  
-  
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-  {
-    int resId = R.layout.fragment_my_place_list;
-    return inflater.inflate(resId, null);
-  }
-  
-  
-  public void setEditMode(boolean isEditMode)
-  {
-    adapter.setEditMode(isEditMode);
-    if (isEditMode)
-    {
-      allCheckContainer.setVisibility(View.VISIBLE);
-      allCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
-      {
-        @Override
-        public void onCheckedChanged(CompoundButton arg0, boolean arg1)
-        {
-          adapter.setAllCheck(arg1);
-        }
-      });
-      selectDelete.setVisibility(View.VISIBLE);
-      selectDelete.setOnClickListener(new OnClickListener()
-      {
-        @Override
-        public void onClick(View arg0)
-        {
-          Log.w("WARN", "선택된 아이템 리스트 : " + adapter.getCheckedArrayList());
-          Builder dialog = new AlertDialog.Builder(getActivity());
-          dialog.setTitle(getString(R.string.term_alert));
-          dialog.setMessage(getString(R.string.term_delete_confirm));
-          dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-          {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-              if (allCheckBox.isChecked())
-              {
-                listView.setVisibility(View.GONE);
-                emptyContainer.setVisibility(View.VISIBLE);
-                setEditMode(false);
-                ((MyPlaceActivity) getActivity()).isEditMode = false;
-                ((MyPlaceActivity) getActivity()).invalidateOptionsMenu();
-              }
-            }
-          });
-          dialog.setNegativeButton(android.R.string.cancel, null);
-          dialog.show();
-        }
-      });
-    }
-    else
-    {
-      allCheckContainer.setVisibility(View.GONE);
-      selectDelete.setVisibility(View.GONE);
-    }
-  }
-  
-  
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState)
-  {
-    super.onActivityCreated(savedInstanceState);
-    
-    apiClient = new ApiClient(getActivity());
-    
-    allCheckContainer = (LinearLayout) getView().findViewById(R.id.container_all_checking);
-    progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
-    emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
-    allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
-    selectDelete = (TextView) getView().findViewById(R.id.select_delete);
-    
-    adapter = new MyPlaceListAdapter();
-    listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
-    listView.setOnItemClickListener(itemClickListener);
-    listView.setAdapter(adapter);
-    
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-        {
-          page++;
-          load(page);
-        }
-      }
-    });
-    load(page);
-  }
-  
-  
-  private void load(int offset)
-  {
-    progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute();
-  }
-  
-  private class GetStoreAsyncTask extends AsyncTask<String, Integer, NetworkResult>
-  {
-    
-    @Override
-    protected NetworkResult doInBackground(String... params)
-    {
-      if (categoryId == -1)
-        return apiClient.getPlaceList(page);
-      else
-        return apiClient.getPlaceList(page, categoryId);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      if (result.isSuccess)
-      {
-        ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
-        try
-        {
-          JSONObject obj = new JSONObject(result.response);
-          JSONArray arr = obj.getJSONArray("place");
-          for (int i = 0; i < arr.length(); i++)
-          {
-            JSONObject objInArr = arr.getJSONObject(i);
-            PlaceBean bean = new PlaceBean();
-            bean.setJSONObject(objInArr);
-            places.add(bean);
-          }
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        
-        if (places.size() == 0)
-          isLoadEnded = true;
-        
-        adapter.addAll(places);
-      }
-      progressBar.setVisibility(View.GONE);
-      super.onPostExecute(result);
-    }
-  }
-  
-  
-  public void setCategoryId(int categoryId)
-  {
-    //전체, 명소, 쇼핑 등 
-    this.categoryId = categoryId;
-  }
-  
-  /**************************************************
-   * listener
-   ***************************************************/
-  private OnItemClickListener itemClickListener = new OnItemClickListener()
-  {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
-      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-      Intent i = new Intent(getActivity(), MyPlaceDetailActivity.class);
-      i.putExtra("place_idx", bean.idx);
-      startActivity(i);
-    }
-  };
+	private int categoryId = -1;
+	private int page = 1;
+	private boolean isLoadEnded = false;
+	
+	private ProgressBar progressBar;
+	private MyPlaceListAdapter adapter;
+	private ApiClient apiClient;
+	private LinearLayout emptyContainer;
+	private LinearLayout allCheckContainer;
+	private CheckBox allCheckBox;
+	private TextView selectDelete;
+	private GridViewWithHeaderAndFooter listView;
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		int resId = R.layout.fragment_my_place_list;
+		return inflater.inflate(resId, null);
+	}
+	
+	
+	public void setEditMode(boolean isEditMode)
+	{
+		if (adapter.getCount() == 0)
+		{
+			((MyPlaceActivity) getActivity()).isEditMode = false;
+			((MyPlaceActivity) getActivity()).invalidateOptionsMenu();
+			return;
+		}
+		adapter.setEditMode(isEditMode);
+		if (isEditMode)
+		{
+			allCheckContainer.setVisibility(View.VISIBLE);
+			allCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
+			{
+				@Override
+				public void onCheckedChanged(CompoundButton arg0, boolean arg1)
+				{
+					adapter.setAllCheck(arg1);
+				}
+			});
+			selectDelete.setVisibility(View.VISIBLE);
+			selectDelete.setOnClickListener(new OnClickListener()
+			{
+				@Override
+				public void onClick(View arg0)
+				{
+					Log.w("WARN", "선택된 아이템 리스트 : " + adapter.getCheckedArrayList());
+					Builder dialog = new AlertDialog.Builder(getActivity());
+					dialog.setTitle(getString(R.string.term_alert));
+					dialog.setMessage(getString(R.string.term_delete_confirm));
+					dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							if (allCheckBox.isChecked())
+							{
+								listView.setVisibility(View.GONE);
+								emptyContainer.setVisibility(View.VISIBLE);
+								setEditMode(false);
+								((MyPlaceActivity) getActivity()).isEditMode = false;
+								((MyPlaceActivity) getActivity()).invalidateOptionsMenu();
+								adapter.clear();
+							}
+						}
+					});
+					dialog.setNegativeButton(android.R.string.cancel, null);
+					dialog.show();
+				}
+			});
+		}
+		else
+		{
+			allCheckContainer.setVisibility(View.GONE);
+			selectDelete.setVisibility(View.GONE);
+		}
+	}
+	
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		
+		apiClient = new ApiClient(getActivity());
+		
+		allCheckContainer = (LinearLayout) getView().findViewById(R.id.container_all_checking);
+		progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+		emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
+		allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
+		selectDelete = (TextView) getView().findViewById(R.id.select_delete);
+		
+		adapter = new MyPlaceListAdapter();
+		listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
+		listView.setOnItemClickListener(itemClickListener);
+		listView.setAdapter(adapter);
+		
+		listView.setOnScrollListener(new OnScrollListener()
+		{
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState)
+			{
+			}
+			
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+			{
+				if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+				{
+					page++;
+					load(page);
+				}
+			}
+		});
+		load(page);
+	}
+	
+	
+	private void load(int offset)
+	{
+		progressBar.setVisibility(View.VISIBLE);
+		new GetStoreAsyncTask().execute();
+	}
+	
+	private class GetStoreAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+	{
+		
+		@Override
+		protected NetworkResult doInBackground(String... params)
+		{
+			if (categoryId == -1)
+				return apiClient.getPlaceList(page);
+			else
+				return apiClient.getPlaceList(page, categoryId);
+		}
+		
+		
+		@Override
+		protected void onPostExecute(NetworkResult result)
+		{
+			if (result.isSuccess)
+			{
+				ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+				try
+				{
+					JSONObject obj = new JSONObject(result.response);
+					JSONArray arr = obj.getJSONArray("place");
+					for (int i = 0; i < arr.length(); i++)
+					{
+						JSONObject objInArr = arr.getJSONObject(i);
+						PlaceBean bean = new PlaceBean();
+						bean.setJSONObject(objInArr);
+						places.add(bean);
+					}
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				if (places.size() == 0)
+					isLoadEnded = true;
+				
+				adapter.addAll(places);
+			}
+			progressBar.setVisibility(View.GONE);
+			super.onPostExecute(result);
+		}
+	}
+	
+	
+	public void setCategoryId(int categoryId)
+	{
+		//전체, 명소, 쇼핑 등 
+		this.categoryId = categoryId;
+	}
+	
+	/**************************************************
+	 * listener
+	 ***************************************************/
+	private OnItemClickListener itemClickListener = new OnItemClickListener()
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			PlaceBean bean = (PlaceBean) adapter.getItem(position);
+			Intent i = new Intent(getActivity(), MyPlaceDetailActivity.class);
+			i.putExtra("place_idx", bean.idx);
+			startActivity(i);
+		}
+	};
 }

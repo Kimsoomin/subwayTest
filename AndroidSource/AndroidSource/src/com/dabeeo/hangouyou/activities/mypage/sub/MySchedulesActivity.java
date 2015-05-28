@@ -53,7 +53,7 @@ public class MySchedulesActivity extends ActionBarActivity
 	
 	private TextView emptyText;
 	private CheckBox deleteAllCheckbox;
-	private LinearLayout emptyContainer, gridViewContainer;
+	private LinearLayout emptyContainer;
 	private boolean isLoading = false;
 	private boolean isLoadEnded = false;
 	private ApiClient apiClient;
@@ -78,7 +78,6 @@ public class MySchedulesActivity extends ActionBarActivity
 		apiClient = new ApiClient(this);
 		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		emptyContainer = (LinearLayout) findViewById(R.id.empty_container);
-		gridViewContainer = (LinearLayout) findViewById(R.id.gridview_container);
 		
 		emptyText = (TextView) findViewById(R.id.text_empty);
 		deleteAllCheckbox = (CheckBox) findViewById(R.id.all_check_box);
@@ -205,14 +204,14 @@ public class MySchedulesActivity extends ActionBarActivity
 				if (adapter.getCount() == 0 && beans.size() == 0)
 				{
 					emptyContainer.setVisibility(View.VISIBLE);
-					gridViewContainer.setVisibility(View.GONE);
+					listView.setVisibility(View.GONE);
 					emptyText.setText(getString(R.string.msg_empty_my_schedule));
 					btnRecommendSchedule.setVisibility(View.VISIBLE);
 				}
 				else
 				{
 					emptyContainer.setVisibility(View.GONE);
-					gridViewContainer.setVisibility(View.VISIBLE);
+					listView.setVisibility(View.VISIBLE);
 					emptyText.setText(getString(R.string.msg_empty_my_schedule));
 					btnRecommendSchedule.setVisibility(View.VISIBLE);
 				}
@@ -265,6 +264,13 @@ public class MySchedulesActivity extends ActionBarActivity
 	
 	private void displayEditMode()
 	{
+		if (adapter.getCount() == 0)
+		{
+			isEditMode = false;
+			invalidateOptionsMenu();
+			return;
+		}
+		
 		if (isEditMode)
 		{
 			btnDelete.setVisibility(View.VISIBLE);
@@ -334,7 +340,6 @@ public class MySchedulesActivity extends ActionBarActivity
 			AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
 			alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), new AlertListener()
 			{
-				
 				@Override
 				public void onPositiveButtonClickListener()
 				{
@@ -345,6 +350,7 @@ public class MySchedulesActivity extends ActionBarActivity
 						adapter.setEditMode(false);
 						isEditMode = false;
 						displayEditMode();
+						adapter.clear();
 					}
 				}
 				

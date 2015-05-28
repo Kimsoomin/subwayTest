@@ -22,6 +22,7 @@ import com.dabeeo.hangouyou.controllers.mypage.MyBookmarkViewPagerAdapter;
 import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkPlaceListFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.MyBookmarkTravelScheduleListFragment;
 
+@SuppressWarnings("deprecation")
 public class MyBookmarkActivity extends ActionBarActivity
 {
   private ViewPager viewPager;
