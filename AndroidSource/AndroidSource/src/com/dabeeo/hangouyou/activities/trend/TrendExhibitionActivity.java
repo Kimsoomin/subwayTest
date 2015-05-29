@@ -59,15 +59,6 @@ public class TrendExhibitionActivity extends ActionBarActivity
     bean.discountPrice = 452000;
     adapter.add(bean);
     
-    gridView.setOnItemClickListener(new OnItemClickListener()
-    {
-      @Override
-      public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
-      {
-        Intent i = new Intent(TrendExhibitionActivity.this, TrendProductDetailActivity.class);
-        startActivity(i);
-      }
-    });
   }
   
   

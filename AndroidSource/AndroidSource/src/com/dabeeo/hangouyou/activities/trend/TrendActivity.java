@@ -73,16 +73,19 @@ public class TrendActivity extends ActionBarActivity
     TrendKoreaBean bean = new TrendKoreaBean();
     bean.title = "한류스타들의 BEST 상품";
     bean.category = "[K STAR]";
+    bean.imageUrl = "http://image.gsshop.com/mi09/deal/dealno/166/201551517223568016.jpg";
     adapter.add(bean);
     
     bean = new TrendKoreaBean();
     bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP";
     bean.category = "[BEAUTY]";
+    bean.imageUrl = "http://image.gsshop.com/mi09/deal/dealno/166/20150520154548882748.jpg";
     adapter.add(bean);
     
     bean = new TrendKoreaBean();
     bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP 2";
     bean.category = "[BEAUTY]";
+    bean.imageUrl = "http://image.gsshop.com/mi09/deal/dealno/165/20155893948481946.jpg";
     adapter.add(bean);
     
     bean = new TrendKoreaBean();

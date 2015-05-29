@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ReviewBean;
+import com.squareup.picasso.Picasso;
 
 public class TrendExhibitionTopView extends RelativeLayout
 {
@@ -52,6 +53,7 @@ public class TrendExhibitionTopView extends RelativeLayout
     ImageView imageview = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     
+    Picasso.with(context).load("http://image.gsshop.com/mi09/deal/dealno/166/20150520154548882748.jpg").centerCrop().fit().into(imageview);
     title.setText("[BEAUTY]\n서울 현지인이 추천하는 코스메틱선물 TOP");
     addView(view);
   }
