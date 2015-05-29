@@ -422,7 +422,7 @@
 	<string name="msg_complete_auth">이메일 인증이 완료되었습니다</string>    
 	<string name="term_congratulate">Congratulation!!\n한하요우 회원이 되신 것을 축하합니다.</string> 
 	<string name="msg_success_join">회원가입이 성공적으로 완료되었습니다.\n한고우요우의 다양한 서비스를 이용해보세요.	</string>    
-    
+    <string name="term_detail">"(자세히)"</string>
 	<string name="term_qq">QQ</string>
 	<string name="term_wechat">WeChat</string>
 	<string name="term_weibo">Sina Weibo</string>

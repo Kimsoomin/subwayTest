@@ -204,13 +204,38 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:text="@string/msg_agreement"
-                        android:textColor="@color/light_gray" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="@string/msg_agreement"
+                            android:textColor="@color/light_gray" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/text_agree_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/term_detail"
+                                android:textColor="@color/light_gray" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/light_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -229,13 +254,38 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:text="@string/msg_private_agreement"
-                        android:textColor="@color/light_gray" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="@string/msg_private_agreement"
+                            android:textColor="@color/light_gray" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/text_private_agree_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/term_detail"
+                                android:textColor="@color/light_gray" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/light_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -254,13 +304,38 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:text="@string/msg_gps_agreement"
-                        android:textColor="@color/light_gray" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="@string/msg_gps_agreement"
+                            android:textColor="@color/light_gray" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/text_gps_agree_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/term_detail"
+                                android:textColor="@color/light_gray" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/light_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <Button
