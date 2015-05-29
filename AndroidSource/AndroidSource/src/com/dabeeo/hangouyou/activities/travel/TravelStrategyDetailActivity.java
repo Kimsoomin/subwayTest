@@ -32,6 +32,7 @@ import com.dabeeo.hangouyou.beans.PremiumDetailBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
+import com.dabeeo.hangouyou.views.SharePickView;
 import com.squareup.picasso.Picasso;
 
 public class TravelStrategyDetailActivity extends ActionBarActivity
@@ -47,6 +48,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   private ScrollView scrollView;
   private TextView likeCount;
   private ImageView btnLike;
+  private SharePickView sharePickView;
   
   
   @Override
@@ -72,6 +74,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     btnLike = (ImageView) findViewById(R.id.btn_like);
     findViewById(R.id.btn_share).setOnClickListener(clickListener);
     findViewById(R.id.btn_like).setOnClickListener(clickListener);
+    sharePickView = (SharePickView) findViewById(R.id.view_share_pick);
     
     scrollView = (ScrollView) findViewById(R.id.scroll_view);
     
@@ -327,10 +330,12 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       if (v.getId() == R.id.btn_share)
       {
         // 공유하기
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "공유테스트");
-        sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, null));
+//        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, "공유테스트");
+//        sendIntent.setType("text/plain");
+//        startActivity(Intent.createChooser(sendIntent, null));
+        sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.bringToFront();
       }
       else if (v.getId() == R.id.btn_like)
       {

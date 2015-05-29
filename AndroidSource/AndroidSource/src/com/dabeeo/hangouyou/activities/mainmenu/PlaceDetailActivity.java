@@ -5,9 +5,6 @@ import java.util.List;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -37,7 +34,6 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hangouyou.activities.ticket.TicketDetailActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
-import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.ProductBean;
@@ -81,11 +77,11 @@ public class PlaceDetailActivity extends ActionBarActivity
   private ViewGroup layoutDetailPlaceInfo;
   private LinearLayout containerTicketAndCoupon;
   public LinearLayout containerWriteReview;
-  private Dialog sharedialog;
   private Button btnRecommendSeoul;
   
   private boolean isEnterMap = false;
   private Button btnLike, btnBookmark;
+  private SharePickView sharePickView;
   
   
   @Override
@@ -123,6 +119,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     textDetail = (TextView) findViewById(R.id.text_detail);
     textRate = (TextView) findViewById(R.id.text_rate);
+    sharePickView = (SharePickView) findViewById(R.id.view_share_pick);
     
     btnReviewBest = (Button) findViewById(R.id.btn_review_best);
     btnReviewSoso = (Button) findViewById(R.id.btn_review_soso);
@@ -395,17 +392,8 @@ public class PlaceDetailActivity extends ActionBarActivity
       else if (v.getId() == R.id.btn_share)
       {
         // 공유하기
-        Builder builder = new AlertDialog.Builder(PlaceDetailActivity.this);
-        View view = new SharePickView(PlaceDetailActivity.this);
-        builder.setView(view);
-        
-        ((SharePickView) view).btnQQ.setOnClickListener(shareClickListener);
-        ((SharePickView) view).btnWechat.setOnClickListener(shareClickListener);
-        ((SharePickView) view).btnWeibo.setOnClickListener(shareClickListener);
-        
-        sharedialog = builder.create();
-        if (!sharedialog.isShowing())
-          sharedialog.show();
+        sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.bringToFront();
       }
       else if (v.getId() == R.id.btn_like)
       {
@@ -424,121 +412,4 @@ public class PlaceDetailActivity extends ActionBarActivity
     }
   };
   
-  private OnClickListener shareClickListener = new OnClickListener()
-  {
-    @Override
-    public void onClick(View v)
-    {
-      String url = "";
-      
-      if (v.getId() == R.id.btn_qq)
-      {
-        if (isAppInstalled("com.tencent.mobileqq"))
-        {
-          share("com.tencent.mobileqq");
-          return;
-        }
-        else
-          url = "https://play.google.com/store/apps/details?id=com.tencent.mobileqq";
-      }
-      else if (v.getId() == R.id.btn_wechat)
-      {
-        if (isAppInstalled("com.tencent.mm"))
-        {
-          share("com.tencent.mm");
-          return;
-        }
-        else
-          url = "https://play.google.com/store/apps/details?id=com.tencent.mm";
-      }
-      else if (v.getId() == R.id.btn_weibo)
-      {
-        if (isAppInstalled("com.sina.weibo"))
-        {
-          share("com.sina.weibo");
-          return;
-        }
-        else
-          url = "https://play.google.com/store/apps/details?id=com.sina.weibo";
-      }
-      
-      Intent i = new Intent(Intent.ACTION_VIEW);
-      i.setData(Uri.parse(url));
-      startActivity(i);
-      
-      if (sharedialog.isShowing())
-        sharedialog.dismiss();
-    }
-  };
-  
-  
-  @SuppressLint("DefaultLocale")
-  private void share(String sharePackageName)
-  {
-    boolean found = false;
-    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-    
-//		Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-//		String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-//		File file = new File(extStorageDirectory, "ic_launcher.png");
-//		
-//		try
-//		{
-//			if (!file.exists())
-//				file.createNewFile();
-//		} catch (IOException e1)
-//		{
-//			e1.printStackTrace();
-//		}
-//		FileOutputStream outStream;
-//		try
-//		{
-//			outStream = new FileOutputStream(file);
-//			bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-//			outStream.flush();
-//			outStream.close();
-//		} catch (Exception e)
-//		{
-//			e.printStackTrace();
-//		}
-//		
-//		intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getPath()));
-//
-//		intent.setType("image/jpeg");
-    //Weibo는 Image+Text가능, WeChat/QQ는 Text만 가능 
-    
-    intent.putExtra(Intent.EXTRA_TEXT, "[Hanhayou] Download Hanhayou! http://dabeeo.com");
-    intent.setType("text/plain");
-    List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(intent, 0);
-    if (!resInfo.isEmpty())
-    {
-      for (ResolveInfo info : resInfo)
-      {
-        if (info.activityInfo.packageName.toLowerCase().equals(sharePackageName))
-        {
-          intent.setPackage(info.activityInfo.packageName);
-          found = true;
-          break;
-        }
-      }
-      if (!found)
-        return;
-      
-      startActivity(Intent.createChooser(intent, "Share"));
-    }
-  }
-  
-  
-  private boolean isAppInstalled(String packageName)
-  {
-    try
-    {
-      getPackageManager().getApplicationInfo(packageName, 0);
-      return true;
-    }
-    catch (PackageManager.NameNotFoundException e)
-    {
-      return false;
-    }
-  }
 }

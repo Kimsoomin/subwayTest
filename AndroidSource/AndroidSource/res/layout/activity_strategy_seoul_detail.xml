@@ -182,4 +182,10 @@
         </LinearLayout>
     </LinearLayout>
 
+    <com.dabeeo.hangouyou.views.SharePickView
+        android:id="@+id/view_share_pick"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
 </RelativeLayout>
