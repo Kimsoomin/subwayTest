@@ -12,6 +12,13 @@
         android:background="@color/light_gray"
         android:contentDescription="@null" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/shadow_theme_list" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="100dp"

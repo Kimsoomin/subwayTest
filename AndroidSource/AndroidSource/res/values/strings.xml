@@ -426,4 +426,6 @@
 	<string name="term_qq">QQ</string>
 	<string name="term_wechat">WeChat</string>
 	<string name="term_weibo">Sina Weibo</string>
+	<!-- Trend -->
+	<string name="term_product_detail">상품보기</string>
 </resources>
