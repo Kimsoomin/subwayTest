@@ -148,7 +148,7 @@ public class PlaceDetailActivity extends ActionBarActivity
         View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
         int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
         
-        if (diff == 0 && (reviewContainerView.getVisibility() == View.VISIBLE))
+        if (diff == 0 && reviewContainerView != null && (reviewContainerView.getVisibility() == View.VISIBLE))
           reviewContainerView.loadMore();
       }
     });

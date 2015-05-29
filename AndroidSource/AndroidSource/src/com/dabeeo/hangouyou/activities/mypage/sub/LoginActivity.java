@@ -3,13 +3,10 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
@@ -19,7 +16,6 @@ import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 public class LoginActivity extends Activity
 {
-  private Button btnCancel;
   private EditText editEmail, editPassword;
   private LoginBottomAlertView alertView;
   
@@ -60,6 +56,13 @@ public class LoginActivity extends Activity
           alertView.setAlert(getString(R.string.msg_please_write_password));
           return;
         }
+        
+        if (editPassword.getText().toString().equals("123456"))
+        {
+          alertView.setAlert(getString(R.string.msg_wrong_password));
+          return;
+        }
+        
         startActivity(new Intent(LoginActivity.this, TicketActivity.class)); // TODO 원래꺼로 바꾸기
         finish();
       }

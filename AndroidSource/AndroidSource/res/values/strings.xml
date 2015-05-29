@@ -360,12 +360,6 @@
     <string name="msg_help_withdraw">원활한 회원탈퇴 처리를 위해\n상담원 연결이 필요합니다.\n\n아래 고객센터로 문의 바랍니다.</string>
     <string name="msg_help_withdraw_qq">QQ번호 : 889751559</string>
     <string name="msg_help_withdraw_email">이메일 문의 CS@GSSHOP.COM</string>
-    <!-- 비밀번호 찾기 -->
-    <string name="msg_please_write_password">비밀번호를 입력해주세요</string>
-    <string name="msg_please_write_new_password">새로운 비밀번호를 입력해주세요</string>
-    <string name="msg_warn_password_length">비밀번호는 6-16글자 사이로 가능합니다</string>
-    <string name="msg_warn_password_not_same">비밀번호가 일치하지 않습니다. 다시 입력해해주세요</string>
-    <string name="msg_empty_list">리스트가 없습니다.</string>
     <!-- 여행일정 -->
     <string name="term_two_days_schedule">2일 일정</string>
     <string name="term_three_days_schedule">3일 일정</string>
@@ -388,15 +382,25 @@
     <!-- 쿠폰/티켓 -->
     <string name="term_option">옵션</string>
     <string name="term_confirm_buy">구매내역 확인</string>
-	<string name="msg_use_coupon_only_employee">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다 쿠폰을 사용하시겠습니까?</string>
-	<string name="msg_complete_use_coupon">사용완료 확인되었습니다</string>
-	<string name="term_recommend">추천</string>
-	<string name="term_cart_with_plus">+ 장바구니 담기</string>
-	<string name="term_add_wishlist">+ 위시리스트에 추가하기</string>
-	<string name="msg_hint_add_wishlist">위시리스트 추가</string>
-	<!-- 검색 -->
-	<string name="term_search_popular_word">인기 검색어</string>
-	<!-- 리뷰 -->
-	<string name="msg_empty_rate">평가를 해주세요</string>
-	<string name="msg_string_length_less_six">최소 6글자 이상 입력해야 합니다</string>
+    <string name="msg_use_coupon_only_employee">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다 쿠폰을 사용하시겠습니까?</string>
+    <string name="msg_complete_use_coupon">사용완료 확인되었습니다</string>
+    <string name="term_recommend">추천</string>
+    <string name="term_cart_with_plus">+ 장바구니 담기</string>
+    <string name="term_add_wishlist">+ 위시리스트에 추가하기</string>
+    <string name="msg_hint_add_wishlist">위시리스트 추가</string>
+    <!-- 검색 -->
+    <string name="term_search_popular_word">인기 검색어</string>
+    <!-- 리뷰 -->
+    <string name="msg_empty_rate">평가를 해주세요</string>
+    <string name="msg_string_length_less_six">최소 6글자 이상 입력해야 합니다</string>
+    <!-- 비밀번호 찾기 -->
+    <string name="msg_please_write_password">비밀번호를 입력해주세요</string>
+    <string name="msg_please_write_new_password">새로운 비밀번호를 입력해주세요</string>
+    <string name="msg_warn_password_length">비밀번호는 6-16글자 사이로 가능합니다</string>
+    <string name="msg_warn_password_not_same">비밀번호가 일치하지 않습니다. 다시 입력해해주세요</string>
+    <string name="msg_empty_list">리스트가 없습니다.</string>
+    <!-- 로그인/회원가입 -->
+    <string name="msg_please_write_email">E-mail을 입력해 주세요</string>
+    <string name="msg_wrong_password">비밀번호가 일치하지 않습니다</string>
+
 </resources>
