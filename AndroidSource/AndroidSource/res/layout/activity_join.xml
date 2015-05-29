@@ -47,12 +47,24 @@
                     </EditText>
 
                     <Button
+                        android:id="@+id/btn_check_duplicate_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/app_button"
+                        android:padding="2dp"
                         android:text="@string/term_check_duplicate"
-                        android:textColor="@color/appcolor" />
+                        android:textColor="@color/color_normal_appcolor_select_white" />
                 </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/checkbox_allow_receive_ads"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msg_allow_receive_email"
+                    android:textColor="@color/light_gray"
+                    android:textSize="12sp" />
+
+                <!-- 이름 -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,12 +80,35 @@
                         android:singleLine="true" />
 
                     <Button
+                        android:id="@+id/btn_check_duplicate_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/app_button"
+                        android:padding="2dp"
                         android:text="@string/term_check_duplicate"
-                        android:textColor="@color/appcolor" />
+                        android:textColor="@color/color_normal_appcolor_select_white" />
                 </LinearLayout>
+
+                <!-- 휴대폰번호 -->
+
+                <EditText
+                    android:id="@+id/edit_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/term_phone"
+                    android:inputType="textPhonetic"
+                    android:singleLine="true" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_allow_receive_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msg_allow_receive_phone"
+                    android:textColor="@color/light_gray"
+                    android:textSize="12sp" />
+              
+                <!-- 비밀번호 -->
 
                 <EditText
                     android:id="@+id/edit_password"
@@ -109,6 +144,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal" >
 
@@ -117,18 +153,18 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/check_background"
+                            android:background="@drawable/gray_fill_select_appcolor_round_button"
                             android:text="@string/term_gender_male"
-                            android:textColor="@color/appcolor" />
+                            android:textColor="@color/color_normal_gray_select_white" />
 
                         <Button
                             android:id="@+id/radio_gender_female"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/check_background"
+                            android:background="@drawable/gray_fill_select_appcolor_round_button"
                             android:text="@string/term_gender_female"
-                            android:textColor="@color/appcolor" />
+                            android:textColor="@color/color_normal_gray_select_white" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -147,7 +183,10 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/round_gray_box"
                     android:gravity="left|center_vertical"
+                    android:paddingLeft="8dp"
                     android:text="@string/msg_date_of_birth" />
+
+                <!-- 약관 -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,19 +196,21 @@
                     android:layout_marginTop="8dp"
                     android:background="#CECECE"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/msg_agreement"
-                        android:textColor="@color/darker_gray" />
+                    android:orientation="horizontal"
+                    android:padding="8dp" >
 
                     <CheckBox
                         android:id="@+id/chk_agreement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/msg_agreement"
+                        android:textColor="@color/light_gray" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -180,19 +221,21 @@
                     android:layout_marginTop="1dp"
                     android:background="#CECECE"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/msg_private_agreement"
-                        android:textColor="@color/darker_gray" />
+                    android:orientation="horizontal"
+                    android:padding="8dp" >
 
                     <CheckBox
                         android:id="@+id/chk_private_agreement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/msg_private_agreement"
+                        android:textColor="@color/light_gray" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -203,31 +246,42 @@
                     android:layout_marginTop="1dp"
                     android:background="#CECECE"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/msg_gps_agreement"
-                        android:textColor="@color/darker_gray" />
+                    android:orientation="horizontal"
+                    android:padding="8dp" >
 
                     <CheckBox
                         android:id="@+id/chk_gps_agreement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/msg_gps_agreement"
+                        android:textColor="@color/light_gray" />
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_join"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/normal_appcolor_select_white"
+                    android:text="@string/term_join"
+                    android:textColor="@color/color_normal_white_select_appcolor" />
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/gray_fill_round_button"
+                    android:text="@string/term_cancel"
+                    android:textColor="@color/color_normal_gray_select_white" />
             </LinearLayout>
         </ScrollView>
-
-        <Button
-            android:id="@+id/btn_join"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/appcolor_fill_round_button"
-            android:text="@string/term_join"
-            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </RelativeLayout>

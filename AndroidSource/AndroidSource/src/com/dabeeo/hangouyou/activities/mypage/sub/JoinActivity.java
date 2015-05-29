@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 
 import com.dabeeo.hangouyou.R;
 
@@ -20,7 +22,12 @@ public class JoinActivity extends Activity
 {
   private Button btnDateOfbirth;
   private Calendar calendar;
+  private Button btnGenderMale, btnGenderFemale;
+  private boolean isMale = true;
   
+  private CheckBox checkAllowReceiveMail, checkAllowReceivePhone;
+  private EditText editEmail, editName, editPassword, editPasswordRe;
+  private Button btnCheckDuplicateEmail, btnCheckDuplicateName;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -39,16 +46,60 @@ public class JoinActivity extends Activity
       }
     });
     
-    ((Button) findViewById(R.id.btn_join)).setOnClickListener(new OnClickListener()
+    btnGenderMale = (Button) findViewById(R.id.radio_gender_male);
+    btnGenderFemale = (Button) findViewById(R.id.radio_gender_female);
+    btnGenderMale.setActivated(true);
+    btnGenderMale.setOnClickListener(genderBtnClickListener);
+    btnGenderFemale.setOnClickListener(genderBtnClickListener);
+    
+    checkAllowReceiveMail = (CheckBox) findViewById(R.id.checkbox_allow_receive_ads);
+    checkAllowReceivePhone = (CheckBox) findViewById(R.id.checkbox_allow_receive_phone);
+    editEmail = (EditText) findViewById(R.id.edit_email);
+    editName = (EditText) findViewById(R.id.edit_name);
+    editPassword = (EditText) findViewById(R.id.edit_password);
+    editPasswordRe = (EditText) findViewById(R.id.edit_re_password);
+    btnCheckDuplicateEmail = (Button) findViewById(R.id.btn_check_duplicate_email);
+    btnCheckDuplicateName = (Button) findViewById(R.id.btn_check_duplicate_name);
+    
+    ((Button) findViewById(R.id.btn_join)).setOnClickListener(joinClickListener);
+    ((Button) findViewById(R.id.btn_cancel)).setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
       {
-        startActivity(new Intent(JoinActivity.this, AuthEmailActivity.class));
+        finish();
       }
     });
   }
   
+  private OnClickListener joinClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      startActivity(new Intent(JoinActivity.this, AuthEmailActivity.class));
+    }
+  };
+  
+  private OnClickListener genderBtnClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (btnGenderMale.isActivated())
+      {
+        isMale = false;
+        btnGenderMale.setActivated(false);
+        btnGenderFemale.setActivated(true);
+      }
+      else
+      {
+        isMale = true;
+        btnGenderMale.setActivated(true);
+        btnGenderFemale.setActivated(false);
+      }
+    }
+  };
   private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener()
   {
     

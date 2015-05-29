@@ -104,7 +104,7 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/gray_fill_round_button"
                 android:text="@string/term_cancel"
-                android:textColor="@color/color_gray_select_white" />
+                android:textColor="@color/color_normal_gray_select_white" />
         </LinearLayout>
     </ScrollView>
 

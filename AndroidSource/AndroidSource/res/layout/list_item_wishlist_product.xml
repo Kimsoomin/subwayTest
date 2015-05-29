@@ -132,7 +132,7 @@
             android:background="@drawable/gray_fill_round_button"
             android:padding="8dp"
             android:text="@string/term_cart_with_plus"
-            android:textColor="@color/color_gray_select_white" />
+            android:textColor="@color/color_normal_gray_select_white" />
 
         <Button
             android:id="@+id/btn_buy"
