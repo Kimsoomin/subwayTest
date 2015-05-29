@@ -407,8 +407,12 @@
     <string name="msg_check_agreement">이용약관에 동의해주세요</string>
     <string name="msg_check_private_agreement">개인정보약관에 동의해주세요</string>
     <string name="msg_check_gps_agreement">위치정보약관에 동의해주세요</string>
+    <string name="msg_check_duplicate_email">이메일 중복체크를 해주세요</string>
+    <string name="msg_check_duplicate_name">이름 중복체크를 해주세요</string>
     <string name="msg_send_email_fail">이메일 발송에 실패했습니다</string>
     <string name="msg_wrong_password">비밀번호가 일치하지 않습니다</string>
+    <string name="msg_possibile_email_account">사용 가능한 메일계정입니다</string>
+    <string name="msg_possibile_name_account">사용 가능한 이름입니다</string>
     <string name="msg_send_email">E-mail 주소로 임시 비밀번호가 발송 됩니다. 로그인 후 비밀번호를 변경해주세요.</string>
     <string name="msg_allow_receive_email">이메일을 통한 상품/이벤트 정보수신에 동의합니다. (선택)</string>
     <string name="msg_allow_receive_phone">휴대폰/SMS 통한 상품/이벤트 정보수신에 동의합니다. (선택)</string>

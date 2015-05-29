@@ -34,6 +34,8 @@ public class JoinActivity extends Activity
   private Button btnCheckDuplicateEmail, btnCheckDuplicateName;
   private LoginBottomAlertView alertView;
   private CheckBox checkAgreement, checkPrivateAgreement, checkGPSAgreement;
+  private boolean isEmailChecked = false;
+  private boolean isNameChecked = false;
   
   
   @Override
@@ -79,7 +81,12 @@ public class JoinActivity extends Activity
         if (TextUtils.isEmpty(editEmail.getText().toString()))
           return;
         
-        alertView.setAlert(getString(R.string.msg_duplicate_email));
+        if (!isEmailChecked)
+          alertView.setAlert(getString(R.string.msg_duplicate_email));
+        else
+          alertView.setAlert(getString(R.string.msg_possibile_email_account));
+        
+        isEmailChecked = true;
       }
     });
     btnCheckDuplicateName.setOnClickListener(new OnClickListener()
@@ -90,7 +97,11 @@ public class JoinActivity extends Activity
         if (TextUtils.isEmpty(editName.getText().toString()))
           return;
         
-        alertView.setAlert(getString(R.string.msg_duplicate_name));
+        if (!isEmailChecked)
+          alertView.setAlert(getString(R.string.msg_duplicate_name));
+        else
+          alertView.setAlert(getString(R.string.msg_possibile_name_account));
+        isNameChecked = true;
       }
     });
     
@@ -158,6 +169,16 @@ public class JoinActivity extends Activity
       if (!checkGPSAgreement.isChecked())
       {
         alertView.setAlert(getString(R.string.msg_check_gps_agreement));
+        return;
+      }
+      if (!isEmailChecked)
+      {
+        alertView.setAlert(getString(R.string.msg_check_duplicate_email));
+        return;
+      }
+      if (!isNameChecked)
+      {
+        alertView.setAlert(getString(R.string.msg_check_duplicate_name));
         return;
       }
       startActivity(new Intent(JoinActivity.this, AuthEmailActivity.class));
