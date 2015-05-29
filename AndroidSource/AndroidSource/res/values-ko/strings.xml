@@ -355,5 +355,8 @@
     <!-- 프로모션 -->
     <string name="term_show_detail">자세히보기</string>
     <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
+    <!-- 로그인/회원가입 -->
+    <string name="msg_please_write_email">E-mail을 입력해 주세요</string>
+    <string name="msg_please_write_password">비밀번호를 입력해 주세요</string>
 
 </resources>
