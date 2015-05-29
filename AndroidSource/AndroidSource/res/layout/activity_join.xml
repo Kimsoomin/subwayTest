@@ -107,7 +107,7 @@
                     android:text="@string/msg_allow_receive_phone"
                     android:textColor="@color/light_gray"
                     android:textSize="12sp" />
-              
+
                 <!-- 비밀번호 -->
 
                 <EditText
@@ -283,5 +283,11 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
+    <com.dabeeo.hangouyou.views.LoginBottomAlertView
+        android:id="@+id/alert_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

@@ -2,12 +2,14 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,17 +19,22 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 public class JoinActivity extends Activity
 {
   private Button btnDateOfbirth;
   private Calendar calendar;
+  private Date birthDay;
   private Button btnGenderMale, btnGenderFemale;
   private boolean isMale = true;
   
   private CheckBox checkAllowReceiveMail, checkAllowReceivePhone;
   private EditText editEmail, editName, editPassword, editPasswordRe;
   private Button btnCheckDuplicateEmail, btnCheckDuplicateName;
+  private LoginBottomAlertView alertView;
+  private CheckBox checkAgreement, checkPrivateAgreement, checkGPSAgreement;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -45,12 +52,16 @@ public class JoinActivity extends Activity
         new DatePickerDialog(JoinActivity.this, dateListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
       }
     });
-    
+    alertView = (LoginBottomAlertView) findViewById(R.id.alert_view);
     btnGenderMale = (Button) findViewById(R.id.radio_gender_male);
     btnGenderFemale = (Button) findViewById(R.id.radio_gender_female);
     btnGenderMale.setActivated(true);
     btnGenderMale.setOnClickListener(genderBtnClickListener);
     btnGenderFemale.setOnClickListener(genderBtnClickListener);
+    
+    checkAgreement = (CheckBox) findViewById(R.id.chk_agreement);
+    checkPrivateAgreement = (CheckBox) findViewById(R.id.chk_private_agreement);
+    checkGPSAgreement = (CheckBox) findViewById(R.id.chk_gps_agreement);
     
     checkAllowReceiveMail = (CheckBox) findViewById(R.id.checkbox_allow_receive_ads);
     checkAllowReceivePhone = (CheckBox) findViewById(R.id.checkbox_allow_receive_phone);
@@ -60,6 +71,28 @@ public class JoinActivity extends Activity
     editPasswordRe = (EditText) findViewById(R.id.edit_re_password);
     btnCheckDuplicateEmail = (Button) findViewById(R.id.btn_check_duplicate_email);
     btnCheckDuplicateName = (Button) findViewById(R.id.btn_check_duplicate_name);
+    btnCheckDuplicateEmail.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        if (TextUtils.isEmpty(editEmail.getText().toString()))
+          return;
+        
+        alertView.setAlert(getString(R.string.msg_duplicate_email));
+      }
+    });
+    btnCheckDuplicateName.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        if (TextUtils.isEmpty(editName.getText().toString()))
+          return;
+        
+        alertView.setAlert(getString(R.string.msg_duplicate_name));
+      }
+    });
     
     ((Button) findViewById(R.id.btn_join)).setOnClickListener(joinClickListener);
     ((Button) findViewById(R.id.btn_cancel)).setOnClickListener(new OnClickListener()
@@ -77,6 +110,56 @@ public class JoinActivity extends Activity
     @Override
     public void onClick(View v)
     {
+      if (TextUtils.isEmpty(editEmail.getText().toString()))
+      {
+        alertView.setAlert(getString(R.string.msg_please_write_email));
+        return;
+      }
+      if (TextUtils.isEmpty(editName.getText().toString()))
+      {
+        alertView.setAlert(getString(R.string.msg_please_write_name));
+        return;
+      }
+      if (TextUtils.isEmpty(editPassword.getText().toString()) || TextUtils.isEmpty(editPasswordRe.getText().toString()))
+      {
+        alertView.setAlert(getString(R.string.msg_please_write_password));
+        return;
+      }
+      if (!editPassword.getText().toString().equals(editPasswordRe.getText().toString()))
+      {
+        alertView.setAlert(getString(R.string.msg_please_not_match_password));
+        return;
+      }
+      if (editPassword.getText().toString().length() > 12 || 6 > editPassword.getText().toString().length())
+      {
+        alertView.setAlert(getString(R.string.msg_warn_password_length));
+        return;
+      }
+      if (editName.getText().toString().equals(editPassword.getText().toString()))
+      {
+        alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
+        return;
+      }
+      if (editName.getText().toString().equals(editPassword.getText().toString()))
+      {
+        alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
+        return;
+      }
+      if (!checkAgreement.isChecked())
+      {
+        alertView.setAlert(getString(R.string.msg_check_agreement));
+        return;
+      }
+      if (!checkPrivateAgreement.isChecked())
+      {
+        alertView.setAlert(getString(R.string.msg_check_private_agreement));
+        return;
+      }
+      if (!checkGPSAgreement.isChecked())
+      {
+        alertView.setAlert(getString(R.string.msg_check_gps_agreement));
+        return;
+      }
       startActivity(new Intent(JoinActivity.this, AuthEmailActivity.class));
     }
   };
@@ -109,6 +192,7 @@ public class JoinActivity extends Activity
       calendar.set(Calendar.YEAR, year);
       calendar.set(Calendar.MONTH, monthOfYear);
       calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+      
       updateLabel();
     }
     
