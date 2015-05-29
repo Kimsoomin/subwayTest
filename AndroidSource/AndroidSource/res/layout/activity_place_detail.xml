@@ -159,10 +159,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
-                            android:background="@drawable/round_app_color_stroke_box"
+                            android:background="@drawable/app_button"
                             android:padding="12dp"
                             android:text="@string/term_more_pro_guide"
-                            android:textColor="@color/appcolor" />
+                            android:textColor="@color/color_normal_appcolor_select_white" />
 
                         <ImageView
                             android:layout_width="20dp"
