@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.utils.SystemUtil;
@@ -85,7 +87,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
-    ScheduleBean bean = (ScheduleBean) beans.get(position);
+    final ScheduleBean bean = (ScheduleBean) beans.get(position);
     int resId = R.layout.list_item_travel_schedule;
     
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
@@ -104,6 +106,17 @@ public class TravelScheduleListAdapter extends BaseAdapter
     reviewCount.setText(Integer.toString(bean.reviewCount));
     
     ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
+    
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(context, TravelScheduleDetailActivity.class);
+        i.putExtra("idx", bean.idx);
+        context.startActivity(i);
+      }
+    });
     return view;
   }
   

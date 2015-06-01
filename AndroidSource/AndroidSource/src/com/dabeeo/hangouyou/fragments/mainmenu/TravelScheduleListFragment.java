@@ -82,7 +82,7 @@ public class TravelScheduleListFragment extends Fragment
     view.setBean(null);
     listView.addHeaderView(view);
     
-    listView.setOnItemClickListener(itemClickListener);
+//    listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     loadSchedules();
