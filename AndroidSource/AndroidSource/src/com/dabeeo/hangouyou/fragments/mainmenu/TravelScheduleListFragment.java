@@ -34,6 +34,7 @@ import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.SystemUtil;
+import com.dabeeo.hangouyou.views.ScheduleListHeaderMallView;
 
 public class TravelScheduleListFragment extends Fragment
 {
@@ -77,9 +78,9 @@ public class TravelScheduleListFragment extends Fragment
     
     adapter = new TravelScheduleListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
-//    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
-//    view.setBean(null);
-//    listView.addHeaderView(view);
+    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
+    view.setBean(null);
+    listView.addHeaderView(view);
     
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
