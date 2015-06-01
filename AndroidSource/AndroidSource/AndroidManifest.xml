@@ -101,6 +101,9 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.trend.TrendProductWithCategoryActivity"
             android:screenOrientation="portrait" />
+          <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductImagePopupActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.trend.TrendExhibitionActivity"
             android:label="@string/term_exhibitions"

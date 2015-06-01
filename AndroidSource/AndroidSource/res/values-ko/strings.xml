@@ -208,7 +208,7 @@
     <string name="term_delivery_some_day">지정일 배송</string>
     <string name="term_product_detail_info">상세정보</string>
     <string name="term_product_detail_review">상품평</string>
-    <string name="term_product_detail_delivery_info">상품정보</string>
+    <string name="term_product_detail_delivery_info">배송정보</string>
     <string name="term_product_detail_refund">반품교환</string>
     <string name="term_buy">바로구매</string>
     <string name="term_all_rate">"/5.0"</string>
