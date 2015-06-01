@@ -343,6 +343,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
 //        sendIntent.setType("text/plain");
 //        startActivity(Intent.createChooser(sendIntent, null));
 				sharePickView.setVisibility(View.VISIBLE);
+				sharePickView.view.setVisibility(View.VISIBLE);
 				sharePickView.bringToFront();
 			}
 			else if (v.getId() == R.id.btn_like)

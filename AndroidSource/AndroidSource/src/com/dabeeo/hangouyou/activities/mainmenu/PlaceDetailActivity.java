@@ -397,6 +397,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 			{
 				// 공유하기
 				sharePickView.setVisibility(View.VISIBLE);
+				sharePickView.view.setVisibility(View.VISIBLE);
 				sharePickView.bringToFront();
 			}
 			else if (v.getId() == R.id.btn_like)

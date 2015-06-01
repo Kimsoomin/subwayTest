@@ -205,6 +205,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       public void onClick(View arg0)
       {
         sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.view.setVisibility(View.VISIBLE);
         sharePickView.bringToFront();
       }
     });

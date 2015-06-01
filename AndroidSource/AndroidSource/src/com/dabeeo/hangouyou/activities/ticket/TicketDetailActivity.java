@@ -213,6 +213,7 @@ public class TicketDetailActivity extends ActionBarActivity
       else if (v.getId() == R.id.img_share)
       {
         sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.view.setVisibility(View.VISIBLE);
         sharePickView.bringToFront();
       }
       else if (v.getId() == btnAddToCart.getId())

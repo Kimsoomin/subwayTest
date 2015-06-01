@@ -22,14 +22,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXTextObject;
 
 public class SharePickView extends RelativeLayout
 {
+  private static final String WECHAP_APP_ID = "wx3dc1d3c651002e56";
   private Context context;
-  private View view;
+  public View view;
   public LinearLayout btnWechat, btnQQ, btnWeibo;
   private TextView btnClose;
   private View background;
+  
+  private IWXAPI api;
   
   
   public SharePickView(Context context)
@@ -71,6 +79,7 @@ public class SharePickView extends RelativeLayout
     btnClose.setOnClickListener(finishClickListener);
     background = (View) view.findViewById(R.id.background);
     background.setOnClickListener(finishClickListener);
+    regToWx();
     addView(view);
   }
   
@@ -104,7 +113,8 @@ public class SharePickView extends RelativeLayout
       {
         if (isAppInstalled("com.tencent.mm"))
         {
-          share("com.tencent.mm");
+          regToWx();
+          shareWeChat();
           return;
         }
         else
@@ -128,43 +138,80 @@ public class SharePickView extends RelativeLayout
   };
   
   
+  private void regToWx()
+  {
+    api = WXAPIFactory.createWXAPI(context, WECHAP_APP_ID);
+    api.registerApp(WECHAP_APP_ID);
+  }
+  
+  
+  private void shareWeChat()
+  {
+    WXTextObject textObj = new WXTextObject();
+    textObj.text = "TEST";
+    
+    WXMediaMessage msg = new WXMediaMessage();
+    msg.mediaObject = textObj;
+    msg.description = "TEST";
+    
+    SendMessageToWX.Req req = new SendMessageToWX.Req();
+    req.transaction = buildTransaction("text");
+    req.message = msg;
+    req.scene = SendMessageToWX.Req.WXSceneSession;
+    api.sendReq(req);
+  }
+  
+  
+  private String buildTransaction(final String type)
+  {
+    return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+  }
+  
+  
   @SuppressLint("DefaultLocale")
   private void share(String sharePackageName)
   {
     boolean found = false;
     Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-    
-    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-    String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-    File file = new File(extStorageDirectory, "ic_launcher.png");
-    
-    try
-    {
-      if (!file.exists())
-        file.createNewFile();
-    }
-    catch (IOException e1)
-    {
-      e1.printStackTrace();
-    }
-    FileOutputStream outStream;
-    try
-    {
-      outStream = new FileOutputStream(file);
-      bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-      outStream.flush();
-      outStream.close();
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
     intent.putExtra(Intent.EXTRA_TEXT, "[Hanhayou] Download Hanhayou! http://dabeeo.com");
-    intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getPath()));
     
     //Weibo는 Image+Text가능, WeChat/QQ는 Text만 가능 
-    intent.setType("*/*");
-    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    if (sharePackageName.equals("com.tencent.mobileqq"))
+      intent.setType("text/plain");
+    else
+    {
+      
+      Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+      String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+      File file = new File(extStorageDirectory, "ic_launcher.png");
+      
+      try
+      {
+        if (!file.exists())
+          file.createNewFile();
+      }
+      catch (IOException e1)
+      {
+        e1.printStackTrace();
+      }
+      FileOutputStream outStream;
+      try
+      {
+        outStream = new FileOutputStream(file);
+        bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+        outStream.flush();
+        outStream.close();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
+      intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getPath()));
+      intent.setType("*/*");
+      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    }
+    
 //    intent.setType("text/plain");
     
     List<ResolveInfo> resInfo = context.getPackageManager().queryIntentActivities(intent, 0);
@@ -199,4 +246,5 @@ public class SharePickView extends RelativeLayout
       return false;
     }
   }
+  
 }
