@@ -159,6 +159,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       btnSoldOut.setVisibility(View.VISIBLE);
       btnCart.setVisibility(View.GONE);
       btnBuy.setVisibility(View.GONE);
+      btnWishList.setVisibility(View.GONE);
     }
     else
     {
