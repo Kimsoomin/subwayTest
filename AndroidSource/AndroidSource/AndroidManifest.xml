@@ -102,6 +102,11 @@
             android:name="com.dabeeo.hangouyou.activities.trend.TrendProductWithCategoryActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductPopupActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
             android:name="com.dabeeo.hangouyou.activities.trend.TrendProductImagePopupActivity"
             android:screenOrientation="portrait" />
         <activity

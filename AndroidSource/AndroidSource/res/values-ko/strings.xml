@@ -355,6 +355,7 @@
     <!-- 프로모션 -->
     <string name="term_show_detail">자세히보기</string>
     <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
+    <string name="term_go">바로가기</string>
  
 
 </resources>
