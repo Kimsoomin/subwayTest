@@ -14,6 +14,7 @@ import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
+import com.dabeeo.hangouyou.utils.NumberFormatter;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class ProductJustOneView extends RelativeLayout
@@ -44,10 +45,13 @@ public class ProductJustOneView extends RelativeLayout
     LinearLayout firstContainer = (LinearLayout) view.findViewById(R.id.conatiner_first_bean);
     ImageView firstImageView = (ImageView) view.findViewById(R.id.imageview);
     TextView firstDiscountPrice = (TextView) view.findViewById(R.id.discount_price);
+    TextView firstDiscountPriceCn = (TextView) view.findViewById(R.id.discount_price_cn);
+    
     //가데이터
     ImageDownloader.displayImage(context, "", firstImageView, null);
     firstContainer.setVisibility(View.VISIBLE);
-    firstDiscountPrice.setText("¥ 93.00");
+    firstDiscountPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(30000));
+    firstDiscountPriceCn.setText("¥ 93.00");
     firstContainer.setOnClickListener(new OnClickListener()
     {
       @Override

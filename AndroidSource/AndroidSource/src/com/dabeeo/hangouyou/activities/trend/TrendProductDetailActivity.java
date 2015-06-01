@@ -18,6 +18,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -25,7 +26,10 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.controllers.trend.TrendProductImageViewPagerAdapter;
 import com.dabeeo.hangouyou.utils.NumberFormatter;
+import com.dabeeo.hangouyou.views.CustomScrollView;
+import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
 import com.dabeeo.hangouyou.views.ProductJustOneView;
+import com.dabeeo.hangouyou.views.ProductReviewContainerView;
 
 public class TrendProductDetailActivity extends ActionBarActivity
 {
@@ -44,7 +48,10 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private LinearLayout productTextContentContainer;
   private WebView productImage;
   private Button btnImageDetail, btnTop;
-  private ScrollView scrollView;
+  private CustomScrollView scrollView;
+  
+  private RelativeLayout reviewLayout;
+  private ProductReviewContainerView reviewContainerView;
   
   
   @Override
@@ -71,7 +78,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
     imageUrls.add("http://image.gsshop.com/image/16/36/16368125_O1.jpg");
     adapter.addAll(imageUrls);
     
-    scrollView = (ScrollView) findViewById(R.id.scrollview);
+    reviewLayout = (RelativeLayout) findViewById(R.id.review_layout);
+    scrollView = (CustomScrollView) findViewById(R.id.scrollview);
     productTitle = (TextView) findViewById(R.id.text_title);
     price = (TextView) findViewById(R.id.price);
     discountPrice = (TextView) findViewById(R.id.discount_price);
@@ -117,7 +125,18 @@ public class TrendProductDetailActivity extends ActionBarActivity
           btnImageDetail.setVisibility(View.GONE);
       }
     });
-    
+    scrollView.setScrollViewListener(new ScrollViewListener()
+    {
+      @Override
+      public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
+      {
+        View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+        
+        if (diff == 0 && reviewContainerView != null && (reviewContainerView.getVisibility() == View.VISIBLE))
+          reviewContainerView.testLoadMore();
+      }
+    });
     displayProductInfo();
   }
   
@@ -132,6 +151,10 @@ public class TrendProductDetailActivity extends ActionBarActivity
     discountMonth.setText("6월");
     textRefundInfo.setText("- 自顾客收到所订购商品之日起(以签收日期为准), 7日之内提供退换货服务。退换货时仅限于同类 产品、同一颜色、同一型号。\n- 以下情况将不提供退换货服务:\n- 商品外包装(包括附带赠品)发生破损现象,并且 影响二次销售时;\n- 商品表面及内部出现使用过的痕迹(包括附带赠 品)或者商品本身破损时;\n- 衣物类商品经过洗涤时;\n- 商品附件、说明书、保修单、标签等有缺失。 若商品有吊牌,吊牌被剪掉或损坏时;");
     textDeliveryInfo.setText("- 本购物商城员工将会按照顾客所提交的订单中的 期望收货时间,按时配送到顾客赴韩后所下榻的酒 店,宾馆等、如顾客外出或暂时不在酒店、宾馆时, 则会委托所下榻酒店或宾馆的工作人员转交给顾客。 - 本购物商城会竭尽全力使整个配送流程可以快 速·准确·顺利完成,如因一些不可抗力(如火山爆 发、台风、地震、海啸等)或韩国公休日等情况下, 不能完全按照顾客期望收货时间配送货物时,敬请 谅解。- 顾客亦可提早在赴韩之前在本购物商城订购商品, 我们会根据顾客所提供的赴韩时间及预计下榻酒店、 宾馆进行配送货物。");
+    
+    reviewContainerView = new ProductReviewContainerView(TrendProductDetailActivity.this, "place", "");
+    reviewLayout.addView(reviewContainerView);
+    reviewContainerView.testLoadMore();
     
     addDetailInfo("상품코드", "8213124515");
     addDetailInfo("제품사양", "350g");

@@ -120,33 +120,41 @@ public class ReviewDetailActivity extends ActionBarActivity
   
   private void displayContent()
   {
-    
-    name.setText(bean.userName);
-    time.setText(bean.insertDateString);
-    reviewScore.setText(Integer.toString(bean.rate));
-    content.setText(bean.content);
-    
-    for (int i = 0; i < bean.imageUrls.size(); i++)
+    if (bean != null)
     {
-      ImageView imageView = new ImageView(ReviewDetailActivity.this);
-      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(80, 80);
-      params.setMargins(8, 8, 8, 8);
-      imageView.setLayoutParams(params);
-      final String imageUrl = bean.imageUrls.get(i);
-      imageView.setOnClickListener(new OnClickListener()
+      name.setText(bean.userName);
+      time.setText(bean.insertDateString);
+      reviewScore.setText(Integer.toString(bean.rate));
+      content.setText(bean.content);
+      
+      for (int i = 0; i < bean.imageUrls.size(); i++)
       {
-        @Override
-        public void onClick(View arg0)
+        ImageView imageView = new ImageView(ReviewDetailActivity.this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(80, 80);
+        params.setMargins(8, 8, 8, 8);
+        imageView.setLayoutParams(params);
+        final String imageUrl = bean.imageUrls.get(i);
+        imageView.setOnClickListener(new OnClickListener()
         {
-          Intent i = new Intent(ReviewDetailActivity.this, ImagePopUpActivity.class);
-          i.putExtra("imageUrls", bean.imageUrls);
-          i.putExtra("imageUrl", imageUrl);
-          startActivity(i);
-        }
-      });
-      imageView.setImageResource(R.drawable.default_thumbnail_s);
-      ImageDownloader.displayImage(ReviewDetailActivity.this, bean.imageUrls.get(i), imageView, null);
-      imageContainer.addView(imageView);
+          @Override
+          public void onClick(View arg0)
+          {
+            Intent i = new Intent(ReviewDetailActivity.this, ImagePopUpActivity.class);
+            i.putExtra("imageUrls", bean.imageUrls);
+            i.putExtra("imageUrl", imageUrl);
+            startActivity(i);
+          }
+        });
+        imageView.setImageResource(R.drawable.default_thumbnail_s);
+        ImageDownloader.displayImage(ReviewDetailActivity.this, bean.imageUrls.get(i), imageView, null);
+        imageContainer.addView(imageView);
+      }
+    }
+    else
+    {
+      name.setText("TourPlan B");
+      time.setText("2015.01.01 15:00:30");
+      content.setText("테스트중입니다");
     }
   }
 }
