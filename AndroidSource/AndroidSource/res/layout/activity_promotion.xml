@@ -7,7 +7,17 @@
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/btn_promotion_close" />
 
     <Button
         android:id="@+id/btn_show_detail"
@@ -15,10 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/appcolor"
         android:layout_marginBottom="90dp"
-        android:background="@drawable/app_button"
-        android:text="@string/term_show_detail" />
+        android:background="@drawable/normal_transparent_appcolor_click_appcolor"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/term_show_detail"
+        android:textColor="@android:color/white" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,15 +41,14 @@
         android:layout_margin="8dp"
         android:orientation="horizontal" >
 
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <TextView
+            android:id="@+id/text_close_a_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/term_dont_show_a_day" />
+            android:background="#901a1a1a"
+            android:padding="8dp"
+            android:text="@string/term_dont_show_a_day"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </RelativeLayout>
