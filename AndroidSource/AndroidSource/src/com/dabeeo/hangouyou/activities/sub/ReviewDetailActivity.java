@@ -214,6 +214,8 @@ public class ReviewDetailActivity extends ActionBarActivity
       time.setText("2015.01.01 15:00:30");
       content.setText("테스트중입니다");
     }
+    
+    ImageDownloader.displayProfileImage(ReviewDetailActivity.this, "", icon);
   }
   
   

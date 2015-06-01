@@ -39,6 +39,7 @@ import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.CustomScrollView;
@@ -283,7 +284,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 		productBean.discountPrice = 93;
 		productView.setBean(productBean, productBean);
 		containerProduct.addView(productView);
-		
+
 		if (bean == null)
 			return;
 		

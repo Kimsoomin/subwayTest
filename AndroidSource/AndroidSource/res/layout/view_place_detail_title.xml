@@ -36,9 +36,7 @@
                     android:id="@+id/imageview"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/circle_button"
                     android:contentDescription="@null"
-                    android:padding="8dp"
                     android:src="@drawable/default_profile_s" />
 
                 <LinearLayout

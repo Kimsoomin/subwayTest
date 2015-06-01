@@ -59,8 +59,16 @@ public class ImageDownloader
     if (imageLoader == null)
       initImageLoader(context);
     
-    DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(null).bitmapConfig(Bitmap.Config.ARGB_8888).showImageForEmptyUri(null).showImageOnFail(null).imageScaleType(
-        ImageScaleType.EXACTLY_STRETCHED).cacheInMemory(false).cacheOnDisc(true).handler(new Handler()).displayer(new RoundedBitmapDisplayer(150)).build();
+    DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_thumbnail_s)
+                                                                   .bitmapConfig(Bitmap.Config.ARGB_8888)
+                                                                   .showImageForEmptyUri(R.drawable.default_thumbnail_s)
+                                                                   .showImageOnFail(R.drawable.default_thumbnail_s)
+                                                                   .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                                                                   .cacheInMemory(false)
+                                                                   .cacheOnDisc(true)
+                                                                   .handler(new Handler())
+                                                                   .displayer(new RoundedBitmapDisplayer(150))
+                                                                   .build();
     imageLoader.displayImage(url, imageView, options);
   }
   

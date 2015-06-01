@@ -75,11 +75,19 @@ public class ReviewContainerView extends LinearLayout
   
   public void loadMore()
   {
-    if (isLoading)
-      return;
-    page++;
+//    if (isLoading)
+//      return;
+//    page++;
+//    
+//    new LoadMoreAsyncTask().execute();
     
-    new LoadMoreAsyncTask().execute();
+    //Test Loading 
+    ReviewBean bean = new ReviewBean();
+    bean.content = "테스트 리뷰입니다";
+    bean.insertDateString = "2015.01.01 15:30:00";
+    bean.userName = "Tourplan B";
+    bean.imageUrls.add("http://image.gsshop.com/image/16/65/16656247_O1.jpg");
+    addReviewView(bean);
   }
   
   private class LoadMoreAsyncTask extends AsyncTask<String, Integer, NetworkResult>

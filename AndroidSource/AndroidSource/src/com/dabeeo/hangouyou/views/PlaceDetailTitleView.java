@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 
 public class PlaceDetailTitleView extends RelativeLayout
 {
@@ -51,6 +52,7 @@ public class PlaceDetailTitleView extends RelativeLayout
     time.setText(bean.updateDateString);
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
+    ImageDownloader.displayProfileImage(context, "", imageView);
   }
   
   
