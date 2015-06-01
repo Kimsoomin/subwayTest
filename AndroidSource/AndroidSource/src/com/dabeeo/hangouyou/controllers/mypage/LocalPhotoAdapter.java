@@ -9,10 +9,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
@@ -114,11 +116,14 @@ public class LocalPhotoAdapter extends BaseAdapter
     convertView = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     RelativeLayout container = (RelativeLayout) convertView.findViewById(R.id.container);
-    
     Display display = context.getWindowManager().getDefaultDisplay();
+    @SuppressWarnings("deprecation")
     int width = display.getWidth();
     int photoSize = width / 4;
-    container.setLayoutParams(new ViewGroup.LayoutParams(photoSize, photoSize));
+    if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
+      container.setLayoutParams(new AbsListView.LayoutParams(photoSize, photoSize));
+    else
+      container.setLayoutParams(new ViewGroup.LayoutParams(photoSize, photoSize));
     
     SquareImageView photo = (SquareImageView) convertView.findViewById(R.id.photo);
     final View imageSelection = (View) convertView.findViewById(R.id.image_selection);
@@ -140,6 +145,7 @@ public class LocalPhotoAdapter extends BaseAdapter
         @Override
         public void onClick(View v)
         {
+          Log.w("WARN", "Click!");
           if (bean.isSelected)
           {
             imageSelection.setVisibility(View.GONE);

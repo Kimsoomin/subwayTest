@@ -73,7 +73,7 @@ public class AccountSettingActivity extends ActionBarActivity
 					@Override
 					public void onClick(View arg0)
 					{
-						if (isAppInstalled("com.tencent.mobileqq"))
+						if (!isAppInstalled("com.tencent.mobileqq"))
 						{
 							String url = "https://play.google.com/store/apps/details?id=com.tencent.mobileqq";
 							Intent i = new Intent(Intent.ACTION_VIEW);
