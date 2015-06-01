@@ -41,7 +41,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private TextView productTitle, price, discountPrice, discountPriceCn, textDeliverySpecificDate;
   private TextView discountMonth;
   private Button btnWishList, btnShare;
-  private Button btnCart, btnBuy;
+  private Button btnCart, btnBuy, btnSoldOut;
   private ImageView toggleProductDetailInfo, toggleDeliveryInfo, toggleRefund;
   private LinearLayout containerProductDetailInfo;
   private TextView textDeliveryInfo, textRefundInfo;
@@ -57,6 +57,9 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private TrendOptionAndAmountPickView optionAmountPickerView;
   private SharePickView sharePickView;
   
+  //품절 처리 추후 API연동되면 빠져야 함
+  private boolean isSoldOut = false;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -71,6 +74,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    isSoldOut = getIntent().getBooleanExtra("is_sold_out", false);
     
     viewPager = (ViewPager) findViewById(R.id.viewpager);
     adapter = new TrendProductImageViewPagerAdapter(this, getSupportFragmentManager());
@@ -99,6 +103,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     btnBuy = (Button) findViewById(R.id.btn_my_cart);
     btnImageDetail = (Button) findViewById(R.id.btn_image_detail);
     btnTop = (Button) findViewById(R.id.btn_top);
+    btnSoldOut = (Button) findViewById(R.id.btn_soldout);
     
     toggleProductDetailInfo = (ImageView) findViewById(R.id.toggle_product_detail_info);
     toggleDeliveryInfo = (ImageView) findViewById(R.id.toggle_product_detail_delivery_info);
@@ -149,6 +154,18 @@ public class TrendProductDetailActivity extends ActionBarActivity
   
   private void displayProductInfo()
   {
+    if (isSoldOut)
+    {
+      btnSoldOut.setVisibility(View.VISIBLE);
+      btnCart.setVisibility(View.GONE);
+      btnBuy.setVisibility(View.GONE);
+    }
+    else
+    {
+      btnSoldOut.setVisibility(View.GONE);
+      btnCart.setVisibility(View.VISIBLE);
+      btnBuy.setVisibility(View.VISIBLE);
+    }
     productTitle.setText("[헤라]천송이(전지현)립스틱-세럼인텐스립스 립스틱세럼");
     price.setText(getString(R.string.term_won) + NumberFormatter.addComma(15000));
     discountPrice.setText(getString(R.string.term_won) + NumberFormatter.addComma(12000));

@@ -300,9 +300,22 @@
         </LinearLayout>
     </ScrollView>
 
+    <com.dabeeo.hangouyou.views.SharePickView
+        android:id="@+id/view_share_pick"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <com.dabeeo.hangouyou.views.TrendOptionAndAmountPickView
+        android:id="@+id/option_picker_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
@@ -310,7 +323,7 @@
         <Button
             android:id="@+id/btn_checkout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/darker_gray_transparent"
             android:text="@string/term_buy_immediately"
@@ -319,7 +332,7 @@
         <Button
             android:id="@+id/btn_my_cart"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/dark_pink_transparent"
             android:text="@string/term_my_cart"

@@ -468,7 +468,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -477,21 +477,32 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/btn_checkout"
+            android:id="@+id/btn_soldout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/darker_gray_transparent"
-            android:text="@string/term_buy_immediately"
-            android:textColor="@android:color/white" />
+            android:enabled="false"
+            android:text="@string/term_sold_out"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_my_cart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/dark_pink_transparent"
+            android:background="@color/darker_gray_transparent"
             android:text="@string/term_my_cart"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_checkout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/dark_pink_transparent"
+            android:text="@string/term_buy_immediately"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

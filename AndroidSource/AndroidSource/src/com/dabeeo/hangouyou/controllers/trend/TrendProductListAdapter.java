@@ -78,7 +78,7 @@ public class TrendProductListAdapter extends BaseAdapter
   
   @SuppressLint("ViewHolder")
   @Override
-  public View getView(int position, View convertView, ViewGroup parent)
+  public View getView(final int position, View convertView, ViewGroup parent)
   {
     ProductBean bean = (ProductBean) beans.get(position);
     int resId = R.layout.list_item_product;
@@ -117,6 +117,8 @@ public class TrendProductListAdapter extends BaseAdapter
         else
         {
           Intent i = new Intent(context, TrendProductDetailActivity.class);
+          if (position % 2 == 1)
+            i.putExtra("is_sold_out", true);
           context.startActivity(i);
         }
       }

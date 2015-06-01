@@ -101,7 +101,7 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.trend.TrendProductWithCategoryActivity"
             android:screenOrientation="portrait" />
-          <activity
+        <activity
             android:name="com.dabeeo.hangouyou.activities.trend.TrendProductImagePopupActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -115,7 +115,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity
@@ -156,7 +155,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-         <activity
+        <activity
             android:name="com.dabeeo.hangouyou.activities.sub.CongratulateJoinActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
