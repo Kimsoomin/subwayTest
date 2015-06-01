@@ -276,8 +276,11 @@ public class TrendProductDetailActivity extends ActionBarActivity
         btnImageDetail.setVisibility(View.VISIBLE);
         if (!toggleProductDetailInfo.isActivated())
           containerProductDetailInfo.setVisibility(View.VISIBLE);
-        else
+        else{
           containerProductDetailInfo.setVisibility(View.GONE);
+          btnImageDetail.setVisibility(View.GONE);
+          btnTop.setVisibility(View.GONE);
+        }
         toggleProductDetailInfo.setActivated(!toggleProductDetailInfo.isActivated());
       }
       else if (v.getId() == toggleDeliveryInfo.getId())
