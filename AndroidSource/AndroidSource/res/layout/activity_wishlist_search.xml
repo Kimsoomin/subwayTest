@@ -71,7 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="8dp" >
 
             <!-- 인기 위시리스트 -->
 
