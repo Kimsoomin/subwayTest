@@ -131,13 +131,7 @@ public class TravelStrategyActivity extends ActionBarActivity
   {
     getMenuInflater().inflate(R.menu.menu_recommend_seoul, menu);
     areaItem = menu.findItem(R.id.all);
-    if (adapter.currentPosition == 0)
-      areaItem.setVisible(true);
-    else
-      areaItem.setVisible(false);
-    
-    if (adapter.currentPosition != 0)
-      getMenuInflater().inflate(R.menu.menu_empty, menu);
+    areaItem.setVisible(true);
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -151,7 +145,9 @@ public class TravelStrategyActivity extends ActionBarActivity
       overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
     if (item.getItemId() == R.id.all)
+    {
       showSphereDialog();
+    }
     return super.onOptionsItemSelected(item);
   }
   
@@ -223,8 +219,10 @@ public class TravelStrategyActivity extends ActionBarActivity
   
   private void showSphereDialog()
   {
-    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
-    
+    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
+    if (adapter.currentPosition != 0)
+      arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.spot_array));
+    final ArrayAdapter<String> finalArrayAdapter = arrayAdapter;
     AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
     builderSingle.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
     {
@@ -235,7 +233,7 @@ public class TravelStrategyActivity extends ActionBarActivity
       }
     });
     
-    builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener()
+    builderSingle.setAdapter(finalArrayAdapter, new DialogInterface.OnClickListener()
     {
       @Override
       public void onClick(DialogInterface dialog, int which)

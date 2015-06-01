@@ -374,6 +374,12 @@
         <item>인사동/시청 (전통문화지구)</item>
         <item>그 외 명소</item>
     </array>
+     <array name="spot_array">
+        <item>전체</item>
+        <item>인기순</item>
+        <item>북마크한 장소</item>
+        <item>등록한 장소</item>
+    </array>
     <!-- 북마크 -->
     <string name="term_schedule">일정</string>
     <string name="msg_empty_bookmark">북마크 된 정보가 없습니다</string>
