@@ -30,6 +30,8 @@ import com.dabeeo.hangouyou.views.CustomScrollView;
 import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
 import com.dabeeo.hangouyou.views.ProductJustOneView;
 import com.dabeeo.hangouyou.views.ProductReviewContainerView;
+import com.dabeeo.hangouyou.views.SharePickView;
+import com.dabeeo.hangouyou.views.TrendOptionAndAmountPickView;
 
 public class TrendProductDetailActivity extends ActionBarActivity
 {
@@ -52,6 +54,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
   
   private RelativeLayout reviewLayout;
   private ProductReviewContainerView reviewContainerView;
+  private TrendOptionAndAmountPickView optionAmountPickerView;
+  private SharePickView sharePickView;
   
   
   @Override
@@ -78,6 +82,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
     imageUrls.add("http://image.gsshop.com/image/16/36/16368125_O1.jpg");
     adapter.addAll(imageUrls);
     
+    sharePickView = (SharePickView) findViewById(R.id.view_share_pick);
+    optionAmountPickerView = (TrendOptionAndAmountPickView) findViewById(R.id.option_picker_view);
     reviewLayout = (RelativeLayout) findViewById(R.id.review_layout);
     scrollView = (CustomScrollView) findViewById(R.id.scrollview);
     productTitle = (TextView) findViewById(R.id.text_title);
@@ -165,6 +171,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
         + "\" /></center></body></html>";
     productImage.loadData(data, "text/html", null);
     
+    btnCart.setOnClickListener(cartClickListener);
+    btnBuy.setOnClickListener(cartClickListener);
     btnWishList.setOnClickListener(new OnClickListener()
     {
       @Override
@@ -178,6 +186,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
+        sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.bringToFront();
       }
     });
     btnTop.setOnClickListener(new OnClickListener()
@@ -225,6 +235,18 @@ public class TrendProductDetailActivity extends ActionBarActivity
       productTextContentContainer.addView(view);
     }
   }
+  
+  private OnClickListener cartClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      optionAmountPickerView.setVisibility(View.VISIBLE);
+      optionAmountPickerView.view.setVisibility(View.VISIBLE);
+      optionAmountPickerView.setOptions(null);
+      optionAmountPickerView.bringToFront();
+    }
+  };
   
   private OnClickListener toggleClickListener = new OnClickListener()
   {
