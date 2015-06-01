@@ -3,13 +3,22 @@ package com.dabeeo.hangouyou.activities.sub;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
@@ -21,6 +30,7 @@ import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
+import com.dabeeo.hangouyou.views.DeclareReviewView;
 
 public class ReviewDetailActivity extends ActionBarActivity
 {
@@ -68,6 +78,54 @@ public class ReviewDetailActivity extends ActionBarActivity
     reviewScore = (TextView) findViewById(R.id.text_review_score);
     btnMore = (ImageView) findViewById(R.id.btn_review_list_more);
     
+    btnMore.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Log.w("WARN", "Click!");
+        listPopupWindow = new ListPopupWindow(ReviewDetailActivity.this);
+        String[] listPopupArray = new String[2];
+        listPopupArray[0] = ReviewDetailActivity.this.getString(R.string.term_delete);
+        listPopupArray[1] = ReviewDetailActivity.this.getString(R.string.term_declare);
+        
+        listPopupWindow.setAdapter(new ArrayAdapter<String>(ReviewDetailActivity.this, android.R.layout.simple_list_item_1, listPopupArray));
+        listPopupWindow.setAnchorView(btnMore);
+        listPopupWindow.setWidth(300);
+        listPopupWindow.setOnItemClickListener(new OnItemClickListener()
+        {
+          @Override
+          public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
+          {
+            if (position == 0)
+            {
+              //삭제
+              Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
+              builder.setTitle(ReviewDetailActivity.this.getString(R.string.app_name));
+              builder.setMessage(ReviewDetailActivity.this.getString(R.string.msg_confirm_delete));
+              builder.setPositiveButton(android.R.string.ok, null);
+              builder.setNegativeButton(android.R.string.cancel, null);
+              builder.show();
+            }
+            else
+            {
+              //신고
+              Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
+              builder.setTitle(ReviewDetailActivity.this.getString(R.string.term_declare_review));
+              DeclareReviewView declareView = new DeclareReviewView(ReviewDetailActivity.this);
+              declareView.init();
+              final EditText editReasonText = (EditText) declareView.findViewById(R.id.edit_review_declare);
+              builder.setView(declareView);
+              builder.setPositiveButton(android.R.string.ok, null);
+              builder.setNegativeButton(android.R.string.cancel, null);
+              builder.show();
+            }
+            listPopupWindow.dismiss();
+          }
+        });
+        listPopupWindow.show();
+      }
+    });
     loadReviewDetail();
   }
   
@@ -157,4 +215,23 @@ public class ReviewDetailActivity extends ActionBarActivity
       content.setText("테스트중입니다");
     }
   }
+  
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_empty, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+  
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    int id = item.getItemId();
+    if (id == android.R.id.home)
+      finish();
+    return super.onOptionsItemSelected(item);
+  }
+  
 }
