@@ -272,7 +272,7 @@
                     android:id="@+id/btn_like"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_height="28dp"
                     android:background="@drawable/like_button"
                     android:gravity="center" />
             </LinearLayout>
@@ -288,8 +288,8 @@
                     android:id="@+id/btn_bookmark"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/btn_bookmark"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bookmark_button"
                     android:gravity="center" />
             </LinearLayout>
 

@@ -59,10 +59,10 @@ public class ImageDownloader
     if (imageLoader == null)
       initImageLoader(context);
     
-    DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_thumbnail_s)
+    DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_profile_s)
                                                                    .bitmapConfig(Bitmap.Config.ARGB_8888)
-                                                                   .showImageForEmptyUri(R.drawable.default_thumbnail_s)
-                                                                   .showImageOnFail(R.drawable.default_thumbnail_s)
+                                                                   .showImageForEmptyUri(R.drawable.default_profile_s)
+                                                                   .showImageOnFail(R.drawable.default_profile_s)
                                                                    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                                                                    .cacheInMemory(false)
                                                                    .cacheOnDisc(true)

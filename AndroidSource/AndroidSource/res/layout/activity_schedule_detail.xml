@@ -190,7 +190,7 @@
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@drawable/btn_bookmark"
+                        android:background="@drawable/bookmark_button"
                         android:gravity="center" />
                 </LinearLayout>
 
@@ -205,7 +205,7 @@
                         android:id="@+id/btn_share"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_height="28dp"
                         android:background="@drawable/btn_share"
                         android:gravity="center" />
                 </LinearLayout>
@@ -222,7 +222,7 @@
                         android:id="@+id/btn_write_review"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_height="28dp"
                         android:background="@drawable/btn_review"
                         android:gravity="center" />
                 </LinearLayout>
