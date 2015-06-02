@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -29,20 +30,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="350dp" >
+                    android:layout_height="200dp" >
 
                     <ImageView
                         android:id="@+id/imageview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@null"
-                        android:minHeight="350dp"
+                        android:minHeight="200dp"
                         android:scaleType="centerCrop" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#50000000" />
+                        android:background="#66000000" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -62,37 +63,40 @@
                                 style="@style/TextAppearance.AppCompat.Medium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="4"
+                                android:paddingRight="30dp"
                                 android:textColor="@android:color/white"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/text_description"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@android:color/white" />
-                        </LinearLayout>
+                                android:gravity="bottom|center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="8dp" >
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="bottom"
-                            android:orientation="horizontal"
-                            android:padding="8dp" >
+                                <TextView
+                                    android:id="@+id/text_description"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@android:color/white" />
 
-                            <ImageView
-                                android:layout_width="14dp"
-                                android:layout_height="14dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/ic_heart" />
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_heart" />
 
-                            <TextView
-                                android:id="@+id/like_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="8dp"
-                                android:textColor="@android:color/white" />
+                                <TextView
+                                    android:id="@+id/like_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="8dp"
+                                    android:textColor="@android:color/white" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>
@@ -118,15 +122,22 @@
                     </LinearLayout>
                 </HorizontalScrollView>
 
-                <LinearLayout
-                    android:id="@+id/layout_place_detail_info"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/round_gray_box"
-                    android:orientation="vertical"
-                    android:padding="8dp" >
-                </LinearLayout>
+                    android:background="#f2f2f2"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="6dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_place_detail_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/round_white_box"
+                        android:orientation="vertical"
+                        android:padding="8dp" />
+                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
 
@@ -147,22 +158,25 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp" >
 
                     <ImageView
                         android:id="@+id/btn_like"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
+                        android:layout_height="28dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="40dp"
                         android:background="@drawable/like_button" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:orientation="horizontal" >
 
@@ -170,8 +184,10 @@
                         android:id="@+id/btn_share"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
+                        android:layout_height="28dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="40dp"
                         android:background="@drawable/btn_share" />
                 </RelativeLayout>
             </LinearLayout>
