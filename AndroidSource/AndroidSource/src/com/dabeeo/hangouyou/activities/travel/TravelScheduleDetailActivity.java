@@ -192,6 +192,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	@SuppressWarnings("deprecation")
 	private void displayContent()
 	{
+		if(bean == null)
+			return;
 		//TODO 만약 내 일정이라면 btnIsPublic 의 상태를 바꿔주어야 함
 		adapter.setBean(bean);
 		
