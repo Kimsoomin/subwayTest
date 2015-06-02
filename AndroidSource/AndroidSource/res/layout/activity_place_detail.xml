@@ -305,7 +305,7 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/btn_share"
+                    android:background="@drawable/share_button"
                     android:gravity="center" />
             </LinearLayout>
 
@@ -322,7 +322,7 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/btn_review"
+                    android:background="@drawable/review_button"
                     android:gravity="center" />
             </LinearLayout>
         </LinearLayout>
