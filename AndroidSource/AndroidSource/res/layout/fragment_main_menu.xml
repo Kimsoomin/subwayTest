@@ -44,6 +44,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/term_strategy_seoul"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/main_text_size"
                         android:textStyle="bold" />
 
                     <RelativeLayout
@@ -94,6 +95,7 @@
                             android:layout_marginTop="8dp"
                             android:text="@string/term_travel_schedule"
                             android:textColor="@android:color/white"
+                            android:textSize="@dimen/main_text_size"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -148,6 +150,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/term_shopping_mall"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/main_text_size"
                         android:textStyle="bold" />
 
                     <RelativeLayout
@@ -216,6 +219,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/term_map"
                             android:textColor="@android:color/white"
+                            android:textSize="@dimen/main_text_size"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -289,6 +293,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/term_subway"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/main_text_size"
                         android:textStyle="bold" />
 
                     <RelativeLayout
@@ -339,6 +344,7 @@
                             android:layout_marginTop="8dp"
                             android:text="@string/term_ticket"
                             android:textColor="@android:color/white"
+                            android:textSize="@dimen/main_text_size"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -382,6 +388,7 @@
                             android:layout_marginTop="8dp"
                             android:text="@string/term_coupon"
                             android:textColor="@android:color/white"
+                            android:textSize="@dimen/main_text_size"
                             android:textStyle="bold" />
 
                         <RelativeLayout
