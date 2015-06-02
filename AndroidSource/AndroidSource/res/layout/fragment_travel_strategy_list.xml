@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#dfdfdf"
-            android:dividerHeight="4dp" />
+            android:dividerHeight="6dp" />
 
         <LinearLayout
             android:id="@+id/recommend_container"

@@ -135,8 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:background="@drawable/round_white_box"
-                        android:orientation="vertical"
-                        android:padding="8dp" />
+                        android:orientation="vertical" />
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>

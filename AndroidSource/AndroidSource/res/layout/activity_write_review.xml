@@ -45,6 +45,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="8dp"
                     android:background="@drawable/circle_button"
+                    android:textColor="@color/color_normal_gray_select_white"
                     android:text="@string/term_review_best"
                     android:textSize="11sp" />
 
@@ -54,6 +55,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="8dp"
                     android:background="@drawable/circle_button"
+                    android:textColor="@color/color_normal_gray_select_white"
                     android:text="@string/term_review_soso"
                     android:textSize="11sp" />
 
@@ -63,6 +65,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="8dp"
                     android:background="@drawable/circle_button"
+                    android:textColor="@color/color_normal_gray_select_white"
                     android:text="@string/term_review_worst"
                     android:textSize="11sp" />
             </LinearLayout>

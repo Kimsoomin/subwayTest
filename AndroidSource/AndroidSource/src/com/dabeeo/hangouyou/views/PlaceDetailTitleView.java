@@ -18,7 +18,8 @@ public class PlaceDetailTitleView extends RelativeLayout
   private Context context;
   public LinearLayout container;
   private ImageView imageView;
-  private TextView title, name, time, likeCount, reviewCount;
+  public TextView title;
+  private TextView name, time, likeCount, reviewCount;
   
   
   public PlaceDetailTitleView(Context context)

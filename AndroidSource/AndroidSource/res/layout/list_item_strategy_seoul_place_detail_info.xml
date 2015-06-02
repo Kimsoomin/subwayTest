@@ -2,17 +2,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="10dp" >
+    android:gravity="center_vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp" >
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical" >
 
             <TextView
@@ -33,19 +36,19 @@
 
         <ImageView
             android:id="@+id/btn_call"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:padding="8dp"
+            android:padding="16dp"
             android:src="@drawable/btn_direct_call"
             android:visibility="gone" />
 
         <ImageView
             android:id="@+id/btn_address"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:padding="8dp"
+            android:padding="16dp"
             android:src="@drawable/btn_address_map"
             android:visibility="gone" />
     </LinearLayout>
