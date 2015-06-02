@@ -248,16 +248,11 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical" >
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:background="@android:color/white"
+            android:background="@drawable/buttom_navigation_bar"
             android:orientation="horizontal"
             android:padding="8dp" >
 

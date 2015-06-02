@@ -14,20 +14,17 @@
     <LinearLayout
         android:id="@+id/container_bottom_tab"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="65dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         android:orientation="vertical" >
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/light_gray" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:orientation="horizontal" >
+            android:background="@drawable/buttom_navigation_bar"
+            android:orientation="horizontal"
+            android:paddingTop="2dp" >
 
             <!-- 홈 -->
 
