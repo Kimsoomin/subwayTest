@@ -8,7 +8,7 @@ public class PremiumBean
   public String seqCode;
   public int cityIdx;
   public String title;
-  public int categoryId;
+  public String categoryId;
   public double lat, lng;
   public int popularCount = 0;
   public int rate = 0;
@@ -41,7 +41,7 @@ public class PremiumBean
         cityIdx = obj.getInt("cityIdx");
       
       if (obj.has("category"))
-        categoryId = obj.getInt("category");
+        categoryId = obj.getString("category");
       
       try
       {

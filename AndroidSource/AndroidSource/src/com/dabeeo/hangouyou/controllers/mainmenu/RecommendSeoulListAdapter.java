@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +90,7 @@ public class RecommendSeoulListAdapter extends BaseAdapter
 //    category.setText(bean.category);
     likeCount.setText(Integer.toString(bean.likeCount));
     
+    Log.w("WARN", "bean.imageUrl : " + bean.imageUrl);
     Picasso.with(parent.getContext()).load(bean.imageUrl).fit().centerCrop().into(imageView);
     Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
     view.startAnimation(animation);
