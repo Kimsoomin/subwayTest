@@ -4,6 +4,13 @@
         <item name="windowActionBar">true</item>
         <item name="actionBarTabStyle">@style/MyActionBarTabs</item>
         <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
+        <item name="actionBarTabBarStyle">@style/Divider</item>
+    </style>
+
+    <style name="Divider" parent="@android:style/Widget.Holo.ActionBar.TabBar">
+        <item name="android:divider">@drawable/transparent</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">0dp</item>
     </style>
 
     <style name="CustomSpinner" parent="@style/Widget.AppCompat.Spinner">
