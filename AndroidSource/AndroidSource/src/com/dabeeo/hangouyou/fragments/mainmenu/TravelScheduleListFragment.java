@@ -27,6 +27,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
+import com.dabeeo.hangouyou.activities.trend.TrendExhibitionActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
@@ -80,6 +81,15 @@ public class TravelScheduleListFragment extends Fragment
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
     view.setBean(null);
+    view.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent i = new Intent(getActivity(), TrendExhibitionActivity.class);
+        startActivity(i);
+      }
+    });
     listView.addHeaderView(view);
     
 //    listView.setOnItemClickListener(itemClickListener);
