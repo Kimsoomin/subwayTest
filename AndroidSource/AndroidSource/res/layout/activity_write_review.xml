@@ -22,7 +22,7 @@
             android:background="@android:color/white"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="8dp" >
+            android:padding="16dp" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,7 +41,8 @@
 
                 <Button
                     android:id="@+id/btn_review_best"
-                    android:layout_width="50dp"
+                    android:layout_width="55dp"
+                    android:padding="4dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="8dp"
                     android:background="@drawable/circle_button"
@@ -51,9 +52,10 @@
 
                 <Button
                     android:id="@+id/btn_review_soso"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="8dp"
+                    android:padding="4dp"
                     android:background="@drawable/circle_button"
                     android:textColor="@color/color_normal_gray_select_white"
                     android:text="@string/term_review_soso"
@@ -61,8 +63,9 @@
 
                 <Button
                     android:id="@+id/btn_review_worst"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:padding="4dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="8dp"
                     android:background="@drawable/circle_button"
                     android:textColor="@color/color_normal_gray_select_white"
@@ -120,7 +123,7 @@
                 android:id="@+id/edit_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_gray_box"
+                android:background="@drawable/white"
                 android:gravity="top"
                 android:hint="@string/msg_how_about_this_place"
                 android:minHeight="150dp"

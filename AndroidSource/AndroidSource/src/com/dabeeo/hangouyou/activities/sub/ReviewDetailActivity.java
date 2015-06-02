@@ -76,6 +76,7 @@ public class ReviewDetailActivity extends ActionBarActivity
     time = (TextView) findViewById(R.id.time);
     content = (TextView) findViewById(R.id.content);
     reviewScore = (TextView) findViewById(R.id.text_review_score);
+    reviewScore.setText("4");
     btnMore = (ImageView) findViewById(R.id.btn_review_list_more);
     
     btnMore.setOnClickListener(new OnClickListener()
@@ -213,6 +214,25 @@ public class ReviewDetailActivity extends ActionBarActivity
       name.setText("TourPlan B");
       time.setText("2015.01.01 15:00:30");
       content.setText("테스트중입니다");
+      ImageView imageView = new ImageView(ReviewDetailActivity.this);
+      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(80, 80);
+      params.setMargins(8, 8, 8, 8);
+      imageView.setLayoutParams(params);
+      final String imageUrl = "http://image.gsshop.com/image/16/65/16656247_O1.jpg";
+      imageView.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View arg0)
+        {
+          Intent i = new Intent(ReviewDetailActivity.this, ImagePopUpActivity.class);
+          i.putExtra("imageUrls", bean.imageUrls);
+          i.putExtra("imageUrl", imageUrl);
+          startActivity(i);
+        }
+      });
+      imageView.setImageResource(R.drawable.default_thumbnail_s);
+      ImageDownloader.displayImage(ReviewDetailActivity.this, "http://image.gsshop.com/image/16/65/16656247_O1.jpg", imageView, null);
+      imageContainer.addView(imageView);
     }
     
     ImageDownloader.displayProfileImage(ReviewDetailActivity.this, "", icon);

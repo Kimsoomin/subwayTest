@@ -65,6 +65,7 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity"
             android:label="@string/term_write_review"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity"

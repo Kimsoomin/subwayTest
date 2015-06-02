@@ -439,4 +439,6 @@
 	<string name="msg_help_pic_detail">손가락을 좌우로 벌리면\n이미지를 확대하실 수 있습니다.</string>
 	<string name="term_product_review">상품평</string>
 	<string name="term_sold_out">일시품절 되었습니다</string>
+	<!-- 리뷰 -->
+	<string name="msg_review_declare_reason">신고사유 선택</string>
 </resources>
