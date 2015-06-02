@@ -94,14 +94,26 @@ public class TravelScheduleDetailFragment extends Fragment
 		
 		FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
 		Resources r = getResources();
-		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
+		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 51, r.getDisplayMetrics());
 		StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
+		final float density = getResources().getDisplayMetrics().density;
 		
 		scrollView.setScrollViewListener(new ScrollViewListener()
 		{
 			@Override
 			public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
 			{
+				if (scrollView.getScrollY() > 300 * density){
+					titleView.title.setVisibility(View.INVISIBLE);
+					titleView.infoContainer.setVisibility(View.INVISIBLE);
+					titleView.title.setVisibility(View.INVISIBLE);
+				}
+				else{
+					titleView.title.setVisibility(View.VISIBLE);
+					titleView.infoContainer.setVisibility(View.VISIBLE);
+					titleView.title.setVisibility(View.VISIBLE);
+				}
+				
 				View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
 				int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
 				
@@ -151,14 +163,14 @@ public class TravelScheduleDetailFragment extends Fragment
 			float density = getResources().getDisplayMetrics().density;
 			if (dayBean == null)
 			{
-				headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (400 * density)));
-				headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+				headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+				headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (200 * density)));
 				scrollView.setPadding(0, 0, 0, 0);
 			}
 			else
 			{
 				headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
-				headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (70 * density)));
+				headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (100 * density)));
 				scrollView.setPadding(0, 0, 0, 0);
 				reviewContainerView.setVisibility(View.GONE);
 			}
@@ -207,12 +219,14 @@ public class TravelScheduleDetailFragment extends Fragment
 				for (int j = 0; j < bean.days.get(i).spots.size(); j++)
 				{
 					ScheduleView view = new ScheduleView(getActivity());
+					view.setThumbnailInvisible();
 					view.setData(j, bean.days.get(i).spots.get(j));
 					
+					String planMemoTimeAndMoney = "";
+					planMemoTimeAndMoney += "여행시간 " + bean.days.get(i).dayDist + " 비용 " + bean.days.get(i).dayTime;
 					String planMemo = "";
-					planMemo += bean.days.get(i).dayDist + "\n" + bean.days.get(i).dayTime;
 					if (j == bean.days.get(i).spots.size() - 1)
-						view.setFinalView(planMemo);
+						view.setFinalView(planMemoTimeAndMoney, planMemo);
 					contentContainer.addView(view);
 				}
 			}
@@ -231,10 +245,11 @@ public class TravelScheduleDetailFragment extends Fragment
 				ScheduleView view = new ScheduleView(getActivity());
 				view.setData(i, dayBean.spots.get(i));
 				
+				String planMemoTimeAndMoney = "";
+				planMemoTimeAndMoney += "여행시간 " + dayBean.dayDist + " 비용 " + dayBean.dayTime;
 				String planMemo = "";
-				planMemo += dayBean.dayDist + "\n" + dayBean.dayTime;
 				if (i == dayBean.spots.size() - 1)
-					view.setFinalView(planMemo);
+					view.setFinalView(planMemoTimeAndMoney, planMemo);
 				contentContainer.addView(view);
 			}
 		}

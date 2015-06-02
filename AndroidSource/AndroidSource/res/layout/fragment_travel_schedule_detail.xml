@@ -8,7 +8,7 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:paddingTop="@dimen/max_height_header" >
+        tools:paddingTop="300dp" >
 
         <!-- 하단 내용 -->
 
@@ -83,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:padding="8dp"
                 android:orientation="vertical" />
 
             <RelativeLayout
@@ -97,22 +98,22 @@
     <FrameLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/max_height_header" >
+        android:layout_height="300dp" >
 
         <!-- 첫번째 이미지 -->
 
         <com.dabeeo.hangouyou.views.ScheduleDetailHeaderView
             android:id="@+id/header_view"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:paddingBottom="78dp" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="90dp" />
 
         <!-- 중간 유저에 대한 내용 박스 -->
 
         <com.dabeeo.hangouyou.views.ScheduleDetailTitleView
             android:id="@+id/title_view"
             android:layout_width="wrap_content"
-            android:layout_height="78dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom" />
     </FrameLayout>
 

@@ -48,7 +48,8 @@
     <color name="vpi__bright_foreground_inverse_holo_light">@color/vpi__bright_foreground_holo_dark</color>
 
     <drawable name="transparent_actionbar">#00000000</drawable>
-
     <drawable name="dark_gray">#444a4b</drawable>
+    <drawable name="white">#ffffff</drawable>
     <drawable name="app_color">#2dbdb6</drawable>
+
 </resources>

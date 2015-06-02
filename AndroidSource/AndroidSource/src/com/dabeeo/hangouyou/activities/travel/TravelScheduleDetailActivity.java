@@ -101,7 +101,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				Toast.makeText(TravelScheduleDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
+				if (!btnBookmark.isActivated())
+					Toast.makeText(TravelScheduleDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
+				btnBookmark.setActivated(!btnBookmark.isActivated());
 			}
 		});
 		loadScheduleDetail();
@@ -213,6 +215,11 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	{
 		if (item.getItemId() == R.id.map)
 			startActivity(new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class));
+		else if (item.getItemId() == android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	

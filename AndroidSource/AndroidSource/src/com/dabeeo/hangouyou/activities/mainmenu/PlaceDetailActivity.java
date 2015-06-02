@@ -141,17 +141,9 @@ public class PlaceDetailActivity extends ActionBarActivity
 			public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
 			{
 				if (scrollView.getScrollY() > 300 * density)
-				{
 					titleView.title.setVisibility(View.INVISIBLE);
-//          headerView.setPadding(0, 0, 0, 0);
-//          titleView.getLayoutParams().height = (int) (60 * density);
-				}
 				else
-				{
 					titleView.title.setVisibility(View.VISIBLE);
-//          titleView.getLayoutParams().height = (int) (78 * density);
-//          headerView.setPadding(0, 0, 0, (int) (78 * density));
-				}
 				
 				View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
 				int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
@@ -163,7 +155,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 		
 		FrameLayout header = (FrameLayout) findViewById(R.id.header);
 		Resources r = getResources();
-		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
+		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, r.getDisplayMetrics());
 		
 		btnBookmark = (Button) findViewById(R.id.btn_bookmark);
 		btnBookmark.setOnClickListener(clickListener);

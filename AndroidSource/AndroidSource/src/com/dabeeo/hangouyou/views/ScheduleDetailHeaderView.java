@@ -19,10 +19,6 @@ public class ScheduleDetailHeaderView extends RelativeLayout
 {
 	private Context context;
 	private ImageView imageView;
-	private TextView textTitle;
-	private ImageView budgetIcon;
-	private TextView textDayCount;
-	private TextView textBudget;
 	
 	
 	public ScheduleDetailHeaderView(Context context)
@@ -52,10 +48,6 @@ public class ScheduleDetailHeaderView extends RelativeLayout
 	public void setData(final String imageUrl, String title, int dayCount, String budget)
 	{
 		ImageDownloader.displayImage(context, imageUrl, imageView, null);
-		textTitle.setText(title);
-		textDayCount.setText(Integer.toString(dayCount));
-		textBudget.setText(budget);
-		
 		imageView.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -66,10 +58,6 @@ public class ScheduleDetailHeaderView extends RelativeLayout
 				context.startActivity(i);
 			}
 		});
-		if (Locale.getDefault().getLanguage().contains("ko"))
-			budgetIcon.setImageResource(R.drawable.icon_budget_kr);
-		else
-			budgetIcon.setImageResource(R.drawable.icon_budget_cn);
 		
 		ImageDownloader.displayImage(context, imageUrl, imageView, null);
 	}
@@ -81,11 +69,6 @@ public class ScheduleDetailHeaderView extends RelativeLayout
 		View view = LayoutInflater.from(context).inflate(resId, null);
 		
 		imageView = (ImageView) view.findViewById(R.id.imageview);
-		textTitle = (TextView) view.findViewById(R.id.title);
-		budgetIcon = (ImageView) view.findViewById(R.id.icon_budget);
-		textDayCount = (TextView) view.findViewById(R.id.text_day_count);
-		textBudget = (TextView) view.findViewById(R.id.text_budget);
-		
 		addView(view);
 	}
 }

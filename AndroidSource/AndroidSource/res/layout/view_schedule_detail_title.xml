@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="12dp"
         android:paddingLeft="16dp"
@@ -20,6 +20,68 @@
             android:layout_weight="1"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/total_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_appcolor_box"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="2dp" >
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/icon_plan_day" />
+
+                    <TextView
+                        android:id="@+id/text_days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/light_gray"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/rectangle_appcolor_box"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="2dp" >
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/icon_budget_cn" />
+
+                    <TextView
+                        android:id="@+id/text_money"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/light_gray"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -30,13 +92,16 @@
                     android:id="@+id/imageview"
                     android:layout_width="33dp"
                     android:layout_height="33dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
                     android:contentDescription="@null"
                     android:src="@drawable/default_profile_s" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical" >
 
@@ -44,8 +109,8 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textColor="#828a8f" />
+                        android:textColor="#828a8f"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/time"
@@ -54,41 +119,47 @@
                         android:gravity="center_vertical"
                         android:textColor="#c3c3c3" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_heart" />
+
+                    <TextView
+                        android:id="@+id/like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:textColor="@color/darker_gray" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_review" />
+
+                    <TextView
+                        android:id="@+id/review_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:textColor="@color/darker_gray" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|right"
-            android:orientation="horizontal" >
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_heart" />
-
-            <TextView
-                android:id="@+id/like_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:textColor="@color/darker_gray" />
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginLeft="6dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_review" />
-
-            <TextView
-                android:id="@+id/review_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:textColor="@color/darker_gray" />
         </LinearLayout>
     </LinearLayout>
 
