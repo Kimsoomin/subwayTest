@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +122,8 @@ public class PlaceListAdapter extends BaseAdapter
     
     title.setText(bean.title);
     category.setText(CategoryManager.getInstance(context).getCategoryName(bean.categoryId));
+    if (TextUtils.isEmpty(category.getText().toString()))
+      category.setVisibility(View.GONE);
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     
