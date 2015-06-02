@@ -250,7 +250,8 @@ public class PremiumdetailTemp extends ActionBarActivity {
 						else
 						{
 							Picasso.with(this).load(R.drawable.default_recommend_detail).fit().centerCrop().into(image);
-							new premiumImageDownloadAsyncTask().execute(ImageUrl,ImageName);
+							if(Global.IsNetworkConnected(mContext, false))
+								new premiumImageDownloadAsyncTask().execute(ImageUrl,ImageName);
 						}
 						premiumImage.put(ImageName, image);
 						image.setVisibility(View.VISIBLE);

@@ -22,17 +22,17 @@ import android.util.Log;
 @SuppressLint("DefaultLocale")
 public class MapDatabase extends SQLiteOpenHelper
 {
-	
+
 	public final String TAG = this.getClass().getName();
 	private SQLiteDatabase m_db = null;
-	
+
 	static DrawableCache m_drawableCache = new DrawableCache();
 
 	public MapDatabase(Context context)
 	{
 		//context, Database Name(seoul_2013.02.19.mbtiles) ,Factory , Database Version
 		super(context, Global.g_strMapDBFileName, null, 1);
-		
+
 		m_db = OpenDatabase();
 	}
 
@@ -40,19 +40,27 @@ public class MapDatabase extends SQLiteOpenHelper
 	{
 		super(context, name, factory, version);
 	}
-	
+
 	public SQLiteDatabase OpenDatabase()
 	{
-//		String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-//		String strDBFilePath = sdCardPath + "/.BlinkingSeoul/" + Global.g_strMapDBFileName;
-		
-		if(new File(Global.strMapDBFilePath).exists() == false)
+		//		String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+		//		String strDBFilePath = sdCardPath + "/.BlinkingSeoul/" + Global.g_strMapDBFileName;
+		try 
 		{
-			Log.e("ERROR", "Can't open the MapDB: " + Global.strMapDBFilePath);
+			if(new File(Global.strMapDBFilePath).exists() == false)
+			{
+				Log.e("ERROR", "Can't open the MapDB: " + Global.strMapDBFilePath);
+				return null;
+			}
+
+			return SQLiteDatabase.openDatabase(Global.strMapDBFilePath, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+		} catch (Exception e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();
 			return null;
 		}
 
-		return SQLiteDatabase.openDatabase(Global.strMapDBFilePath, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 	}
 
 	@Override
@@ -74,22 +82,22 @@ public class MapDatabase extends SQLiteOpenHelper
 			Log.e("ERROR", "m_db == null");
 			return null;
 		}
-//		Log.d("DEBUG", "nZoomLevel : " + nZoomLevel +"," +"strRow : "+strRow+","+"nColumn: "+nColumn);
-		
+		//		Log.d("DEBUG", "nZoomLevel : " + nZoomLevel +"," +"strRow : "+strRow+","+"nColumn: "+nColumn);
+
 		try
 		{
 			String strQuery = String.format("select tile_data from tiles where zoom_level = %d and tile_row = %s and tile_column = %d limit 1;", nZoomLevel, strRow, nColumn);
-			
-//			Log.d("DEBUG", "[Query] " + strQuery);
+
+			//			Log.d("DEBUG", "[Query] " + strQuery);
 
 			Cursor cursor = m_db.rawQuery(strQuery, null);
-			
+
 			Drawable d = null;
 
 			if(cursor.moveToNext())
 			{
 				byte[] b = cursor.getBlob(0);
-				
+
 				d = new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
 			}
 
@@ -103,8 +111,8 @@ public class MapDatabase extends SQLiteOpenHelper
 
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * XXX Get inputStream of tile from DB
 	 */
@@ -120,7 +128,7 @@ public class MapDatabase extends SQLiteOpenHelper
 					Integer.toString(pTile.getX()),
 					Double.toString(Math.pow(2, pTile.getZoomLevel())
 							- pTile.getY() - 1),
-					Integer.toString(pTile.getZoomLevel()) };
+							Integer.toString(pTile.getZoomLevel()) };
 			Drawable d = null;
 
 			final Cursor cursor = m_db.query("tiles", tile,
@@ -160,7 +168,7 @@ public class MapDatabase extends SQLiteOpenHelper
 
 			m_db = null;
 		}
-		
+
 		super.close();
 	}
 }

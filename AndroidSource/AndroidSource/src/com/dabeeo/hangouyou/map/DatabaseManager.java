@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -33,6 +35,7 @@ public class DatabaseManager
 
 	private static final String DATABASE_NAME = "hangouyou";
 	private static final String DATABASE_TABLE_NAME_PLACE_INFO = "place_info";
+	private static final String DATABASE_TABLE_NAME_SUBWAY = "subway";
 	private static final int DATABASE_VERSION = 1;
 	private final Context context;
 
@@ -83,7 +86,9 @@ public class DatabaseManager
 			BlinkingCommon.smlLibPrintException("ERROR", "Can't open the MapDB: " + Global.strMapDBFilePath2);
 			return null;
 		}else
+		{
 			BlinkingCommon.smlLibDebug("Success", "open the MapDB: " + Global.strMapDBFilePath2);
+		}
 
 		return SQLiteDatabase.openDatabase(Global.strMapDBFilePath2, null, SQLiteDatabase.OPEN_READWRITE);
 	}
@@ -144,12 +149,14 @@ public class DatabaseManager
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put("idx", bean.stationId);
-		initialValues.put("title", bean.nameCn);
+		initialValues.put("line", bean.line);
+		initialValues.put("name_ko", bean.nameKo);
+		initialValues.put("name_en", bean.nameEn);
+		initialValues.put("name_cn",bean.nameCn);
 		initialValues.put("category", 99);
 		initialValues.put("lat", bean.lat);
 		initialValues.put("lng", bean.lon);
-		initialValues.put("address", bean.line);
-		mDb.insert(DATABASE_TABLE_NAME_PLACE_INFO, null, initialValues);
+		mDb.insert(DATABASE_TABLE_NAME_SUBWAY, null, initialValues);
 	}
 
 
@@ -168,14 +175,14 @@ public class DatabaseManager
 				do
 				{
 					PlaceInfo placeInfo = new PlaceInfo();
-					placeInfo.m_nID = cursor.getString(0);
-					placeInfo.m_nCategoryID = cursor.getInt(7);
-					placeInfo.m_fLatitude = cursor.getFloat(16);
-					placeInfo.m_fLongitude = cursor.getFloat(17);
-					placeInfo.m_strName = cursor.getString(8);
-					placeInfo.m_strAddress = cursor.getString(9);
+					placeInfo.idx = cursor.getString(0);
+					placeInfo.category = cursor.getInt(7);
+					placeInfo.lat = cursor.getFloat(16);
+					placeInfo.lng = cursor.getFloat(17);
+					placeInfo.title = cursor.getString(8);
+					placeInfo.address = cursor.getString(9);
 
-					placeList.put(placeInfo.m_nID,placeInfo);
+					placeList.put(placeInfo.idx,placeInfo);
 				} while (cursor.moveToNext());
 			}
 		}
@@ -210,14 +217,14 @@ public class DatabaseManager
 				do
 				{
 					PlaceInfo placeInfo = new PlaceInfo();
-					placeInfo.m_nID = cursor.getString(0);
-					placeInfo.m_nCategoryID = cursor.getInt(7);
-					placeInfo.m_fLatitude = cursor.getFloat(16);
-					placeInfo.m_fLongitude = cursor.getFloat(17);
-					placeInfo.m_strName = cursor.getString(8);
-					placeInfo.m_strAddress = cursor.getString(9);
+					placeInfo.idx = cursor.getString(0);
+					placeInfo.category = cursor.getInt(7);
+					placeInfo.lat = cursor.getFloat(16);
+					placeInfo.lng = cursor.getFloat(17);
+					placeInfo.title = cursor.getString(8);
+					placeInfo.address = cursor.getString(9);
 
-					placeList.put(placeInfo.m_nID,placeInfo);
+					placeList.put(placeInfo.idx,placeInfo);
 				} while (cursor.moveToNext());
 			}
 		}
@@ -240,8 +247,7 @@ public class DatabaseManager
 	{
 		List<PlaceInfo> placeList = new ArrayList<PlaceInfo>();
 		String selectQuery = "SELECT  * FROM " + "place_info"+ " where idx like '%"+Idx+"%'";
-
-		//SQLiteDatabase db = this.getWritableDatabase();
+		
 		Cursor cursor = mDb.rawQuery(selectQuery, null);
 
 		try
@@ -252,12 +258,12 @@ public class DatabaseManager
 				{
 					PlaceInfo placeInfo = new PlaceInfo();
 
-					placeInfo.m_nID = cursor.getString(0);
-					placeInfo.m_nCategoryID = cursor.getInt(7);
-					placeInfo.m_fLatitude = cursor.getFloat(16);
-					placeInfo.m_fLongitude = cursor.getFloat(17);
-					placeInfo.m_strName = cursor.getString(8);
-					placeInfo.m_strAddress = cursor.getString(9);
+					placeInfo.idx = cursor.getString(0);
+					placeInfo.category = cursor.getInt(7);
+					placeInfo.lat = cursor.getFloat(16);
+					placeInfo.lng = cursor.getFloat(17);
+					placeInfo.title = cursor.getString(8);
+					placeInfo.address = cursor.getString(9);
 
 					placeList.add(placeInfo);
 				} while (cursor.moveToNext());
@@ -317,6 +323,125 @@ public class DatabaseManager
 			}
 		}
 		return premiumList;
+	}
+
+	public Map<String, SubwayInfo> getallSubwayInfo()
+	{
+		Map<String,SubwayInfo> subwayList = new HashMap<>();
+		String selectQuery = "SELECT  * FROM " + "Subway";
+		
+		Cursor cursor = mDb.rawQuery(selectQuery, null);
+		
+		try
+		{
+			if (cursor.moveToFirst())
+			{
+				do
+				{
+					SubwayInfo subwayInfo = new SubwayInfo();
+					subwayInfo.idx = cursor.getString(0);
+					subwayInfo.line = cursor.getString(1);
+					subwayInfo.name_ko = cursor.getString(2);
+					subwayInfo.name_en = cursor.getString(3);
+					subwayInfo.name_cn = cursor.getString(4);
+					subwayInfo.category = 99;
+					subwayInfo.lat = cursor.getFloat(5);
+					subwayInfo.lng = cursor.getFloat(6);
+					
+					subwayList.put(subwayInfo.idx, subwayInfo);
+				} while (cursor.moveToNext());
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if (cursor != null)
+			{
+				cursor.close();
+			}
+		}
+		return subwayList;
+	}
+	
+	public List<SubwayInfo> getSubwayfromIdx(String Idx)
+	{
+		List<SubwayInfo> subwayList = new ArrayList<SubwayInfo>();
+		String selectQuery = "SELECT  * FROM " + "Subway"+ " where idx like '%"+Idx+"%'";
+		
+		Cursor cursor = mDb.rawQuery(selectQuery, null);
+		
+		try
+		{
+			if (cursor.moveToFirst())
+			{
+				do
+				{
+					SubwayInfo subwayInfo = new SubwayInfo();
+					subwayInfo.idx = cursor.getString(0);
+					subwayInfo.line = cursor.getString(1);
+					subwayInfo.name_ko = cursor.getString(2);
+					subwayInfo.name_en = cursor.getString(3);
+					subwayInfo.name_cn = cursor.getString(4);
+					subwayInfo.category = 99;
+					subwayInfo.lat = cursor.getFloat(5);
+					subwayInfo.lng = cursor.getFloat(6);
+					
+					subwayList.add(subwayInfo);
+				} while (cursor.moveToNext());
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if (cursor != null)
+			{
+				cursor.close();
+			}
+		}
+
+		return subwayList;
+	}
+	
+	public Map<String, SubwayExitInfo> getallSubwayExitInfo()
+	{
+		Map<String,SubwayExitInfo> subwayExitList = new HashMap<>();
+		String selectQuery = "SELECT  * FROM " + "SubwayExit";
+		
+		Cursor cursor = mDb.rawQuery(selectQuery, null);
+		try
+		{
+			if (cursor.moveToFirst())
+			{
+				do
+				{
+					SubwayExitInfo subwayExitInfo = new SubwayExitInfo();
+					subwayExitInfo.idx = cursor.getString(0);
+					subwayExitInfo.exit = cursor.getString(1);
+					JSONObject contentObj = new JSONObject(subwayExitInfo.exit);
+					subwayExitInfo.setSubwayExitJSON(contentObj);
+					
+					subwayExitList.put(subwayExitInfo.idx, subwayExitInfo);
+				} while (cursor.moveToNext());
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if (cursor != null)
+			{
+				cursor.close();
+			}
+		}
+		return subwayExitList;
 	}
 
 	public List<PremiumInfo> getPremiumfromIDX(String Idx)
