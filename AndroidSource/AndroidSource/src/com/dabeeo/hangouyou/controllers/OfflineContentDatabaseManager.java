@@ -220,6 +220,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
           insertValues.put("isBookmarked", obj.getInt("isBookmarked"));
         insertValues.put("insertDate", obj.getString("insertDate"));
         insertValues.put("updateDate", obj.getString("updateDate"));
+        insertValues.put("premiumIdx", obj.getString("premiumIdx"));
         if (obj.has("image"))
           insertValues.put("image", obj.getString("image"));
         if (obj.has("offlineimage"))
