@@ -28,6 +28,13 @@ public class ApiClient
   }
   
   
+  //오프라인 컨텐츠 
+  public NetworkResult getOfflineContents()
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=OFFLINE_CONTENTS");
+  }
+  
+  
   public NetworkResult getCategories()
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CATEGORY_LIST");

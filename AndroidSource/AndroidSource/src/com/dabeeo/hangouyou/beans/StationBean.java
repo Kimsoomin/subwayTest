@@ -19,6 +19,7 @@ public class StationBean
   public String beforeLine, afterLine;
   
   public ArrayList<StationExitBean> exits = new ArrayList<>();
+  public String exitsJsonString = "";
   public ArrayList<String> lines = new ArrayList<String>();
   public boolean isDuplicate = false;
   
@@ -73,6 +74,7 @@ public class StationBean
       
       if (object.has("exits"))
       {
+        exitsJsonString = object.getString("exits");
         JSONObject exitObject = object.getJSONObject("exits");
         for (int i = 1; i < 20; i++)
         {

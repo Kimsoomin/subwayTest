@@ -1,6 +1,12 @@
 package com.dabeeo.hangouyou.managers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -32,6 +38,58 @@ public class SubwayManager
   private SubwayManager(Context context)
   {
     this.context = context;
+  }
+  
+  
+  public void loadAllStations(Context context)
+  {
+    try
+    {
+      InputStream is = context.getAssets().open("subway_data.js");
+      int size = is.available();
+      byte[] buffer = new byte[size];
+      is.read(buffer);
+      is.close();
+      String jsString = new String(buffer, "UTF-8");
+      
+      String[] jsStrings = jsString.split("\n");
+      
+      String stationsString = jsStrings[1];
+      stationsString = stationsString.replaceFirst("station_ids = ", "");
+      JSONArray stations = new JSONArray(stationsString);
+      
+      String stationsInfoString = jsStrings[0];
+      stationsInfoString = stationsInfoString.replaceFirst("stations = ", "");
+      
+      JSONObject stationInfoJSONObject = new JSONObject(stationsInfoString);
+      
+      ArrayList<StationBean> tempArray = new ArrayList<StationBean>();
+      for (int i = 0; i < stations.length(); i++)
+      {
+        try
+        {
+          JSONObject obj = stationInfoJSONObject.getJSONObject(stations.getString(i));
+          StationBean bean = new StationBean();
+          bean.setJSONObject(obj);
+          tempArray.add(bean);
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+      }
+      Log.w("WARN", "Stations size : " + tempArray.size());
+      this.stations.clear();
+      this.stations.addAll(tempArray);
+    }
+    catch (IOException ex)
+    {
+      ex.printStackTrace();
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
   }
   
   

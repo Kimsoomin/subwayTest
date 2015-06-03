@@ -25,8 +25,11 @@ import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.dabeeo.hangouyou.activities.sub.GuideActivity;
+import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.utils.SystemUtil;
@@ -38,6 +41,8 @@ public class IntroActivity extends Activity
   private AlertDialogManager alertManager;
   private Handler handler = new Handler();
   private AlertDialog tempdialog;
+  private ApiClient client;
+  private OfflineContentDatabaseManager contentDatabaseManager;
   
   private boolean mapdownloading = false;
   
@@ -52,6 +57,7 @@ public class IntroActivity extends Activity
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     alertManager = new AlertDialogManager(this);
+    client = new ApiClient(this);
     
     progressBar.bringToFront();
     
@@ -116,25 +122,57 @@ public class IntroActivity extends Activity
   
   private void checkDownloadInfo()
   {
-    //지도정보, 상품정보, 지하철정보 다운로드
-    Log.w("WARN", "다운로드 정보 체크");
-    
-    //만약 다운로드 된 정보가 없거나, 혹은 업데이트가 있는 경우 
+    Log.w("WARN", "다운로드 - 오프라인 컨텐츠 체크");
     alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_download_travel_cotnent));
     
-    //추후 아랫부분 삭제 후 네트워크 연결
-    // memory leak warning 제거 
-    Runnable runn = new Runnable()
+    //오프라인 컨텐츠 DB 있는 지 확인 
+    File file = new File(OfflineContentDatabaseManager.DB_PATH + OfflineContentDatabaseManager.DB_NAME);
+    
+    if (file.exists())
+      //새로 다운로드 받으려면 아래 주석 풀기 
+//      file.delete();
+      checkMapTemp();
+    else
+      makeOfflineContentDatabase();
+  }
+  
+  
+  private void makeOfflineContentDatabase()
+  {
+    //오프라인 컨텐츠 database를 만듬
+    contentDatabaseManager = new OfflineContentDatabaseManager(this);
+    try
     {
-      @Override
-      public void run()
-      {
-        alertManager.hideProgressDialog();
-        checkMapTemp();
-      }
-    };
-    Handler handler = new Handler();
-    handler.postDelayed(runn, 1000);
+      contentDatabaseManager.createDataBase();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+    
+    new GetOfflineContentAsyncTask().execute();
+  }
+  
+  private class GetOfflineContentAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... arg0)
+    {
+      Log.w("WARN", "오프라인 컨텐츠 다운로드 중");
+      NetworkResult result = client.getOfflineContents();
+      contentDatabaseManager.writeDatabase(result.response);
+      return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      Log.w("WARN", "오프라인 컨텐츠 DB화 완료");
+      alertManager.hideProgressDialog();
+      checkMapTemp();
+      super.onPostExecute(result);
+    }
   }
   
   
