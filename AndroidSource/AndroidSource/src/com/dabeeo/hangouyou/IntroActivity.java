@@ -130,10 +130,10 @@ public class IntroActivity extends Activity
     
     if (file.exists())
       //새로 다운로드 받으려면 아래 주석 풀기 
-//      file.delete();
-      checkMapTemp();
-    else
-      makeOfflineContentDatabase();
+      file.delete();
+//      checkMapTemp();
+//    else
+    makeOfflineContentDatabase();
   }
   
   
