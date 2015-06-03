@@ -129,11 +129,26 @@ public class IntroActivity extends Activity
     File file = new File(OfflineContentDatabaseManager.DB_PATH + OfflineContentDatabaseManager.DB_NAME);
     
     if (file.exists())
-      //새로 다운로드 받으려면 아래 주석 풀기 
-      file.delete();
-//      checkMapTemp();
-//    else
-    makeOfflineContentDatabase();
+    {
+      if (SystemUtil.isConnectNetwork(IntroActivity.this))
+      {
+        //기존에 오프라인 컨텐츠를 만들어놓은 상태, 인터넷 연결 시 다시 오프라인컨텐츠 생성
+        file.delete();
+        makeOfflineContentDatabase();
+      }
+      else
+      {
+        //기존에 오프라인 컨텐츠를 만들어놓은 상태,인터넷 연결이 안된 상태일 때 바로 첫화면으로 이동
+        finish();
+      }
+    }
+    else
+    {
+      if (SystemUtil.isConnectNetwork(IntroActivity.this))
+        makeOfflineContentDatabase(); // 인터넷 연결된 상태이고 오프라인컨텐츠를 만들지 않았을 때
+      else
+        finish();
+    }
   }
   
   
