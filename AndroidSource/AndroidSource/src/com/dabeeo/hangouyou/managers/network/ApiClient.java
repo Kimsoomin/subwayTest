@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
@@ -120,9 +121,26 @@ public class ApiClient
   }
   
   
-  public NetworkResult getPlaceDetail(String placeIdx)
+  public PlaceDetailBean getPlaceDetail(String placeIdx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_VIEW&idx=" + placeIdx);
+    PlaceDetailBean bean = new PlaceDetailBean();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_VIEW&idx=" + placeIdx);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        bean = new PlaceDetailBean();
+        bean.setJSONObject(obj.getJSONObject("place"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    else
+      bean = offlineDatabaseManager.getPlaceDetail(placeIdx);
+    return bean;
   }
   
   

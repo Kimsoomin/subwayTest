@@ -23,6 +23,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
@@ -388,12 +389,31 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         }
         catch (Exception e)
         {
-          
         }
       } while (c.moveToNext());
     }
     c.close();
     myDataBase.close();
     return beans;
+  }
+  
+  
+  public PlaceDetailBean getPlaceDetail(String placeIdx)
+  {
+    this.openDataBase();
+    PlaceDetailBean bean = new PlaceDetailBean();
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE idx = " + placeIdx, null);
+    c.moveToFirst();
+    try
+    {
+      Log.w("WARN", "c : " + c.getString(c.getColumnIndex("title")));
+      bean.setCursor(c);
+    }
+    catch (Exception e)
+    {
+    }
+    c.close();
+    myDataBase.close();
+    return bean;
   }
 }

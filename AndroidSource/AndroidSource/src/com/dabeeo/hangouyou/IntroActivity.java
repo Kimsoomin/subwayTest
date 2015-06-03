@@ -123,8 +123,6 @@ public class IntroActivity extends Activity
   private void checkDownloadInfo()
   {
     Log.w("WARN", "다운로드 - 오프라인 컨텐츠 체크");
-    alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_download_travel_cotnent));
-    
     //오프라인 컨텐츠 DB 있는 지 확인 
     File file = new File(OfflineContentDatabaseManager.DB_PATH + OfflineContentDatabaseManager.DB_NAME);
     
@@ -139,7 +137,7 @@ public class IntroActivity extends Activity
       else
       {
         //기존에 오프라인 컨텐츠를 만들어놓은 상태,인터넷 연결이 안된 상태일 때 바로 첫화면으로 이동
-        finish();
+        startMainActivity();
       }
     }
     else
@@ -147,7 +145,7 @@ public class IntroActivity extends Activity
       if (SystemUtil.isConnectNetwork(IntroActivity.this))
         makeOfflineContentDatabase(); // 인터넷 연결된 상태이고 오프라인컨텐츠를 만들지 않았을 때
       else
-        finish();
+        startMainActivity();
     }
   }
   
@@ -170,6 +168,14 @@ public class IntroActivity extends Activity
   
   private class GetOfflineContentAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
+    @Override
+    protected void onPreExecute()
+    {
+      alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_download_travel_cotnent));
+      super.onPreExecute();
+    }
+    
+    
     @Override
     protected NetworkResult doInBackground(String... arg0)
     {

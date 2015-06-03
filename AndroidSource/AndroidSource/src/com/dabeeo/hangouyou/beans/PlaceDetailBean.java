@@ -1,6 +1,12 @@
 package com.dabeeo.hangouyou.beans;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
+import android.database.Cursor;
 
 public class PlaceDetailBean
 {
@@ -111,5 +117,41 @@ public class PlaceDetailBean
       e.printStackTrace();
     }
     
+  }
+  
+  
+  @SuppressLint("SimpleDateFormat")
+  public void setCursor(Cursor c)
+  {
+    try
+    {
+      idx = c.getString(c.getColumnIndex("idx"));
+      seqCode = c.getString(c.getColumnIndex("seqCode"));
+      userName = c.getString(c.getColumnIndex("userName"));
+      gender = c.getString(c.getColumnIndex("gender"));
+      mfidx = c.getString(c.getColumnIndex("mfidx"));
+      categoryId = c.getInt(c.getColumnIndex("category"));
+      title = c.getString(c.getColumnIndex("title"));
+      address = c.getString(c.getColumnIndex("address"));
+      businessHours = c.getString(c.getColumnIndex("businessHours"));
+      priceInfo = c.getString(c.getColumnIndex("priceInfo"));
+      trafficInfo = c.getString(c.getColumnIndex("trafficInfo"));
+      homepage = c.getString(c.getColumnIndex("homepage"));
+      contact = c.getString(c.getColumnIndex("contact"));
+      contents = c.getString(c.getColumnIndex("contents"));
+      lat = c.getDouble(c.getColumnIndex("lat"));
+      lng = c.getDouble(c.getColumnIndex("lng"));
+      tag = c.getString(c.getColumnIndex("tag"));
+      rate = c.getInt(c.getColumnIndex("rate"));
+      likeCount = c.getInt(c.getColumnIndex("likeCount"));
+      bookmarkCount = c.getInt(c.getColumnIndex("bookmarkCount"));
+      shareCount = c.getInt(c.getColumnIndex("shareCount"));
+      reviewCount = c.getInt(c.getColumnIndex("reviewCount"));
+      updateDateString = c.getString(c.getColumnIndex("updateDate"));
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
 }

@@ -2,9 +2,6 @@ package com.dabeeo.hangouyou.fragments.mainmenu;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,8 +23,6 @@ import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.PlaceListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
-import com.dabeeo.hangouyou.managers.network.NetworkResult;
-import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class PlaceListFragment extends Fragment
 {
