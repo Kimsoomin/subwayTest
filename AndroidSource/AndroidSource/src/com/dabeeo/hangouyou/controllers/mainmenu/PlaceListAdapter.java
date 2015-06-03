@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.managers.CategoryManager;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class PlaceListAdapter extends BaseAdapter
 {
@@ -127,9 +128,12 @@ public class PlaceListAdapter extends BaseAdapter
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     
-    Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-    view.startAnimation(animation);
-    lastPosition = position;
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+      view.startAnimation(animation);
+      lastPosition = position;
+    }
     return view;
   }
 }

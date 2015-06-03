@@ -37,9 +37,12 @@ import com.dabeeo.hangouyou.activities.ticket.TicketActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.trend.TrendActivity;
+import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.utils.SystemUtil;
@@ -50,6 +53,8 @@ public class MainFragment extends Fragment
   private RelativeLayout containerStrategySeoul, containerTravelSchedule, containerShoppingMall, containerMap, containerSubway, containerTicket, containerCoupon;
   private LinearLayout containerMsgDownloadMap;
   private ImageView badgeStrategySeoul, badgeTravelSchedule, badgeTrend, badgeSubway, badgeTicket, badgeCoupon;
+  private OfflineContentDatabaseManager contentDatabaseManager;
+  private ApiClient client;
   
   
   @Override
@@ -58,6 +63,7 @@ public class MainFragment extends Fragment
     int resId = R.layout.fragment_main_menu;
     View view = inflater.inflate(resId, null);
     
+    client = new ApiClient(getActivity());
     containerStrategySeoul = (RelativeLayout) view.findViewById(R.id.container_strategy_seoul);
     containerTravelSchedule = (RelativeLayout) view.findViewById(R.id.container_travel_schedule);
     containerShoppingMall = (RelativeLayout) view.findViewById(R.id.container_shopping_mall);
@@ -266,6 +272,11 @@ public class MainFragment extends Fragment
     @Override
     protected Boolean doInBackground(String... params)
     {
+      File file = new File(OfflineContentDatabaseManager.DB_PATH + OfflineContentDatabaseManager.DB_NAME);
+      
+      if (!file.exists())
+        makeOfflineContentDatabase();
+      
       int count = 0;
       
       try
@@ -279,7 +290,7 @@ public class MainFragment extends Fragment
         Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
         
         InputStream input = new BufferedInputStream(url.openStream());
-        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+        file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
         try
         {
           if (!file.exists())
@@ -340,4 +351,21 @@ public class MainFragment extends Fragment
     }
   }
   
+  
+  private void makeOfflineContentDatabase()
+  {
+    //오프라인 컨텐츠 database를 만듬
+    contentDatabaseManager = new OfflineContentDatabaseManager(getActivity());
+    try
+    {
+      contentDatabaseManager.createDataBase();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+    
+    NetworkResult result = client.getOfflineContents();
+    contentDatabaseManager.writeDatabase(result.response);
+  }
 }

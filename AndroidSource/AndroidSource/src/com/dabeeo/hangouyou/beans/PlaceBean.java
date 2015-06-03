@@ -1,18 +1,21 @@
 package com.dabeeo.hangouyou.beans;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 
 public class PlaceBean
 {
   public String idx;
   public String seqCode;
-  public int cityIdx;
+  public String cityIdx;
   public String title;
+  
   public int categoryId;
   public double lat, lng;
   public int popularCount = 0;
@@ -32,6 +35,9 @@ public class PlaceBean
   
   public boolean isChecked = false;
   
+  //Detail 
+  public String address, businessHours;
+  
   
   @SuppressLint("SimpleDateFormat")
   public void setJSONObject(JSONObject obj)
@@ -44,11 +50,17 @@ public class PlaceBean
       if (obj.has("idx"))
         idx = obj.getString("idx");
       
+      if (obj.has("address"))
+        address = obj.getString("address");
+      
+      if (obj.has("businessHours"))
+        businessHours = obj.getString("businessHours");
+      
       if (obj.has("title"))
         title = obj.getString("title");
       
       if (obj.has("cityIdx"))
-        cityIdx = obj.getInt("cityIdx");
+        cityIdx = obj.getString("cityIdx");
       
       if (obj.has("category"))
         categoryId = obj.getInt("category");
@@ -98,5 +110,33 @@ public class PlaceBean
       e.printStackTrace();
     }
     
+  }
+  
+  
+  @SuppressLint("SimpleDateFormat")
+  public void setCursor(Cursor c)
+  {
+    try
+    {
+      idx = c.getString(c.getColumnIndex("idx"));
+      seqCode = c.getString(c.getColumnIndex("seqCode"));
+      cityIdx = c.getString(c.getColumnIndex("cityIdx"));
+      userName = c.getString(c.getColumnIndex("userName"));
+      gender = c.getString(c.getColumnIndex("gender"));
+      mfidx = c.getString(c.getColumnIndex("mfidx"));
+      categoryId = c.getInt(c.getColumnIndex("category"));
+      title = c.getString(c.getColumnIndex("title"));
+      likeCount = c.getInt(c.getColumnIndex("likeCount"));
+      bookmarkCount = c.getInt(c.getColumnIndex("bookmarkCount"));
+      shareCount = c.getInt(c.getColumnIndex("shareCount"));
+      reviewCount = c.getInt(c.getColumnIndex("reviewCount"));
+      insertDateString = c.getString(c.getColumnIndex("insertDate"));
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+      insertDate = format.parse(insertDateString);
+    }
+    catch (ParseException e)
+    {
+      e.printStackTrace();
+    }
   }
 }

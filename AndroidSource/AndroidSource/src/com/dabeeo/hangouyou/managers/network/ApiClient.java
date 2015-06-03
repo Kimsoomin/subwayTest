@@ -1,17 +1,28 @@
 package com.dabeeo.hangouyou.managers.network;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+
+import com.dabeeo.hangouyou.beans.PlaceBean;
+import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class ApiClient
 {
   private String siteUrl = "http://gs.blinking.kr:8900/_libs/api.common.php";
   private HttpClient httpClient;
+  private Context context;
+  private OfflineContentDatabaseManager offlineDatabaseManager;
   
   
   public ApiClient(Context context)
   {
+    this.context = context;
+    offlineDatabaseManager = new OfflineContentDatabaseManager(context);
     httpClient = new HttpClient(context, siteUrl);
   }
   
@@ -53,15 +64,59 @@ public class ApiClient
   }
   
   
-  public NetworkResult getPlaceList(int page)
+  public ArrayList<PlaceBean> getPlaceList(int page)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page);
+    ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        JSONArray arr = obj.getJSONArray("place");
+        for (int i = 0; i < arr.length(); i++)
+        {
+          JSONObject objInArr = arr.getJSONObject(i);
+          PlaceBean bean = new PlaceBean();
+          bean.setJSONObject(objInArr);
+          places.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    return places;
   }
   
   
-  public NetworkResult getPlaceList(int page, int categoryId)
+  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId);
+    ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        JSONArray arr = obj.getJSONArray("place");
+        for (int i = 0; i < arr.length(); i++)
+        {
+          JSONObject objInArr = arr.getJSONObject(i);
+          PlaceBean bean = new PlaceBean();
+          bean.setJSONObject(objInArr);
+          places.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    else
+      places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
+    return places;
   }
   
   

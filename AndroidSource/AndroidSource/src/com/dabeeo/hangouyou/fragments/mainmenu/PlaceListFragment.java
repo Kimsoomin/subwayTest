@@ -27,6 +27,7 @@ import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.PlaceListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class PlaceListFragment extends Fragment
 {
@@ -110,49 +111,27 @@ public class PlaceListFragment extends Fragment
     new GetStoreAsyncTask().execute();
   }
   
-  private class GetStoreAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class GetStoreAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceBean>>
   {
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected ArrayList<PlaceBean> doInBackground(String... params)
     {
       return apiClient.getPlaceList(page, categoryId);
     }
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ArrayList<PlaceBean> result)
     {
-      if (result.isSuccess)
+      adapter.addAll(result);
+      if (result.size() == 0)
+        isLoadEnded = true;
+      
+      if (adapter.getCount() == 0)
       {
-        ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
-        try
-        {
-          JSONObject obj = new JSONObject(result.response);
-          JSONArray arr = obj.getJSONArray("place");
-          for (int i = 0; i < arr.length(); i++)
-          {
-            JSONObject objInArr = arr.getJSONObject(i);
-            PlaceBean bean = new PlaceBean();
-            bean.setJSONObject(objInArr);
-            places.add(bean);
-          }
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        
-        if (places.size() == 0)
-          isLoadEnded = false;
-        
-        adapter.addAll(places);
-        
-        if (adapter.getCount() == 0)
-        {
-          listView.setVisibility(View.GONE);
-          emptyContainer.setVisibility(View.VISIBLE);
-        }
+        listView.setVisibility(View.GONE);
+        emptyContainer.setVisibility(View.VISIBLE);
       }
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);

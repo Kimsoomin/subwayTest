@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -21,8 +22,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 
+import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 {
@@ -360,5 +363,36 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         }
       }
     }
+  }
+  
+  
+  /**
+   * Get Data
+   */
+  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
+  {
+    this.openDataBase();
+    ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
+//    " LIMIT 10 OFFSET " + (10 * page)
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
+    if (c.moveToFirst())
+    {
+      do
+      {
+        try
+        {
+          PlaceBean bean = new PlaceBean();
+          bean.setCursor(c);
+          beans.add(bean);
+        }
+        catch (Exception e)
+        {
+          
+        }
+      } while (c.moveToNext());
+    }
+    c.close();
+    myDataBase.close();
+    return beans;
   }
 }
