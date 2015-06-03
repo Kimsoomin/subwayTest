@@ -65,8 +65,8 @@
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity"
             android:label="@string/term_write_review"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity"
             android:label="@string/term_strategy_seoul"
@@ -303,6 +303,14 @@
             android:name="com.dabeeo.hangouyou.map.PremiumdetailTemp"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <!-- Receiver -->
+        <receiver android:name="com.dabeeo.hangouyou.controllers.NetworkBraodCastReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -10,7 +10,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,6 +33,7 @@ import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
 import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
 import com.dabeeo.hangouyou.activities.sub.SettingActivity;
+import com.dabeeo.hangouyou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hangouyou.external.libraries.RoundedImageView;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
@@ -82,19 +86,47 @@ public class MyPageFragment extends Fragment
   @Override
   public void onResume()
   {
-    if (!SystemUtil.isConnectNetwork(getActivity()))
+    setNetworkOnOffDisplay(SystemUtil.isConnectNetwork(getActivity()));
+    
+    IntentFilter filter = new IntentFilter(NetworkBraodCastReceiver.ACTION_NETWORK_STATUS_CHANGE);
+    getActivity().registerReceiver(receiver, filter);
+    super.onResume();
+  }
+  
+  
+  @Override
+  public void onPause()
+  {
+    getActivity().unregisterReceiver(receiver);
+    super.onPause();
+  }
+  
+  //Network On/Off status change receiver
+  private BroadcastReceiver receiver = new BroadcastReceiver()
+  {
+    @Override
+    public void onReceive(Context context, Intent intent)
     {
-      imageBookmark.setImageResource(R.drawable.btn_mypage_bookmark_offline);
-      imageOrder.setImageResource(R.drawable.btn_mypage_buylist_offline);
-      imageCart.setImageResource(R.drawable.btn_mypage_cart_offline);
+      boolean isNetworkConnected = intent.getBooleanExtra("is_network_connected", false);
+      setNetworkOnOffDisplay(isNetworkConnected);
     }
-    else
+  };
+  
+  
+  private void setNetworkOnOffDisplay(boolean isConnected)
+  {
+    if (isConnected)
     {
       imageBookmark.setImageResource(R.drawable.btn_mypage_bookmark);
       imageOrder.setImageResource(R.drawable.btn_mypage_buylist);
       imageCart.setImageResource(R.drawable.btn_mypage_cart);
     }
-    super.onResume();
+    else
+    {
+      imageBookmark.setImageResource(R.drawable.btn_mypage_bookmark_offline);
+      imageOrder.setImageResource(R.drawable.btn_mypage_buylist_offline);
+      imageCart.setImageResource(R.drawable.btn_mypage_cart_offline);
+    }
   }
   
   
