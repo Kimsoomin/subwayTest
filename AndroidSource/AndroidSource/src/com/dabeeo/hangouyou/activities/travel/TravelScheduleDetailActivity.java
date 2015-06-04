@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.activities.travel;
 
-import java.util.ArrayList;
-
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -27,7 +25,6 @@ import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
-import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;

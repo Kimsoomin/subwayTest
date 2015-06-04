@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
-import com.squareup.picasso.Picasso;
 
 public class BoughtTicketListAdapter extends BaseAdapter
 {

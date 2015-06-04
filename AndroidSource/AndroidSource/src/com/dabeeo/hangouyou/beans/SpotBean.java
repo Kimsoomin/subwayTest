@@ -1,8 +1,5 @@
 package com.dabeeo.hangouyou.beans;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.json.JSONObject;
 
 public class SpotBean
