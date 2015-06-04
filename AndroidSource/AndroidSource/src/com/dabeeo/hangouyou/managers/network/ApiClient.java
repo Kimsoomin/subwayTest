@@ -3,12 +3,14 @@ package com.dabeeo.hangouyou.managers.network;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
+import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
@@ -222,15 +224,56 @@ public class ApiClient
   }
   
   
-  public NetworkResult getReviewDetail(int reviewIdx)
+  public ReviewBean getReviewDetail(String reviewIdx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_VIEW&idx=" + reviewIdx);
+    ReviewBean bean = new ReviewBean();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_VIEW&idx=" + reviewIdx);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        bean = new ReviewBean();
+        bean.setJSONObject(obj.getJSONObject("review"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    else
+      bean = offlineDatabaseManager.getReview(reviewIdx);
+    return bean;
   }
   
   
-  public NetworkResult getReviews(int page, String parentType, String parentIdx)
+  public ArrayList<ReviewBean> getReviews(int page, String parentType, String parentIdx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
+    ArrayList<ReviewBean> beans = new ArrayList<ReviewBean>();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
+      JSONObject obj;
+      try
+      {
+        obj = new JSONObject(result.response);
+        JSONArray arr = obj.getJSONArray("review");
+        for (int i = 0; i < arr.length(); i++)
+        {
+          JSONObject reviewObj = arr.getJSONObject(i);
+          ReviewBean bean = new ReviewBean();
+          bean.setJSONObject(reviewObj);
+          beans.add(bean);
+        }
+      }
+      catch (JSONException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    else
+      beans.addAll(offlineDatabaseManager.getReviews(page, parentType));
+    return beans;
   }
   
   

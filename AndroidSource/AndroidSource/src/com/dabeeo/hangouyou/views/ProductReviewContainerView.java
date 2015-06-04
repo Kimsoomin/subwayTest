@@ -2,9 +2,6 @@ package com.dabeeo.hangouyou.views;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,7 +16,6 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ReviewDetailActivity;
 import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
-import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
 public class ProductReviewContainerView extends LinearLayout
 {
@@ -93,7 +89,7 @@ public class ProductReviewContainerView extends LinearLayout
     new LoadMoreAsyncTask().execute();
   }
   
-  private class LoadMoreAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class LoadMoreAsyncTask extends AsyncTask<String, Integer, ArrayList<ReviewBean>>
   {
     @Override
     protected void onPreExecute()
@@ -105,7 +101,7 @@ public class ProductReviewContainerView extends LinearLayout
     
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected ArrayList<ReviewBean> doInBackground(String... params)
     {
       if (apiClient == null)
         apiClient = new ApiClient(context);
@@ -114,24 +110,13 @@ public class ProductReviewContainerView extends LinearLayout
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ArrayList<ReviewBean> result)
     {
       try
       {
-        ArrayList<ReviewBean> beans = new ArrayList<ReviewBean>();
-        JSONObject obj = new JSONObject(result.response);
-        JSONArray arr = obj.getJSONArray("review");
-        for (int i = 0; i < arr.length(); i++)
+        for (int i = 0; i < result.size(); i++)
         {
-          JSONObject reviewObj = arr.getJSONObject(i);
-          ReviewBean bean = new ReviewBean();
-          bean.setJSONObject(reviewObj);
-          beans.add(bean);
-        }
-        
-        for (int i = 0; i < beans.size(); i++)
-        {
-          addReviewView(beans.get(i));
+          addReviewView(result.get(i));
         }
       }
       catch (Exception e)

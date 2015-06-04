@@ -24,6 +24,7 @@ import android.util.Log;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
+import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
@@ -432,6 +433,54 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         try
         {
           ScheduleBean bean = new ScheduleBean();
+          bean.setCursor(c);
+          beans.add(bean);
+        }
+        catch (Exception e)
+        {
+        }
+      } while (c.moveToNext());
+    }
+    c.close();
+    myDataBase.close();
+    return beans;
+  }
+  
+  
+  public ReviewBean getReview(String reviewIdx)
+  {
+    this.openDataBase();
+    Log.w("WARN", "찾을 리뷰 아이디 : " + reviewIdx);
+    ReviewBean bean = new ReviewBean();
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_REVIEW + " WHERE idx = " + reviewIdx, null);
+    c.moveToFirst();
+    try
+    {
+      bean.setCursor(c);
+    }
+    catch (Exception e)
+    {
+    }
+    c.close();
+    myDataBase.close();
+    return bean;
+  }
+  
+  
+  public ArrayList<ReviewBean> getReviews(int page, String parentType)
+  {
+    this.openDataBase();
+    Log.w("WARN", "GetOffline reviews " + page);
+    ArrayList<ReviewBean> beans = new ArrayList<ReviewBean>();
+//    " LIMIT 10 OFFSET " + (10 * page)
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_REVIEW + " WEHRE parentType = " + parentType + "LIMIT 10 OFFSET " + (10 * page), null);
+    if (c.moveToFirst())
+    {
+      do
+      {
+        try
+        {
+          ReviewBean bean = new ReviewBean();
           bean.setCursor(c);
           beans.add(bean);
         }

@@ -8,10 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 
 public class ReviewBean
 {
-  public int idx;
+  public String idx;
   public String seqCode;
   public String reviewSeqCode;
   
@@ -39,7 +40,7 @@ public class ReviewBean
     try
     {
       if (obj.has("idx"))
-        idx = obj.getInt("idx");
+        idx = obj.getString("idx");
       
       if (obj.has("seqCode"))
         seqCode = obj.getString("seqCode");
@@ -86,6 +87,35 @@ public class ReviewBean
         }
       }
       
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
+  @SuppressLint("SimpleDateFormat")
+  public void setCursor(Cursor c)
+  {
+    try
+    {
+      idx = c.getString(c.getColumnIndex("idx"));
+      seqCode = c.getString(c.getColumnIndex("seqCode"));
+      reviewSeqCode = c.getString(c.getColumnIndex("reviewSeqCode"));
+      rate = c.getInt(c.getColumnIndex("rate"));
+      likeCount = c.getInt(c.getColumnIndex("likeCount"));
+      userName = c.getString(c.getColumnIndex("userName"));
+      gender = c.getString(c.getColumnIndex("gender"));
+      mfidx = c.getString(c.getColumnIndex("gender"));
+      
+      insertDateString = c.getString(c.getColumnIndex("insertDate"));
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+      insertDate = format.parse(insertDateString);
+      
+      updateDateString = c.getString(c.getColumnIndex("updateDate"));
+      format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+      updateDate = format.parse(updateDateString);
     }
     catch (Exception e)
     {

@@ -44,7 +44,7 @@ public class ReviewDetailActivity extends ActionBarActivity
   private ListPopupWindow listPopupWindow;
   private LinearLayout imageContainer;
   
-  private int reviewIdx = -1;
+  private String reviewIdx = "";
   private ApiClient apiClient;
   private ReviewBean bean;
   
@@ -67,7 +67,7 @@ public class ReviewDetailActivity extends ActionBarActivity
     setContentView(R.layout.activity_review_detail);
     
     apiClient = new ApiClient(this);
-    reviewIdx = getIntent().getIntExtra("review_idx", -1);
+    reviewIdx = getIntent().getStringExtra("review_idx");
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     imageContainer = (LinearLayout) findViewById(R.id.image_container);
@@ -136,7 +136,7 @@ public class ReviewDetailActivity extends ActionBarActivity
     new LoadReviewDetailAsyncTask().execute();
   }
   
-  private class LoadReviewDetailAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class LoadReviewDetailAsyncTask extends AsyncTask<String, Integer, ReviewBean>
   {
     @Override
     protected void onPreExecute()
@@ -147,29 +147,16 @@ public class ReviewDetailActivity extends ActionBarActivity
     
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected ReviewBean doInBackground(String... params)
     {
       return apiClient.getReviewDetail(reviewIdx);
     }
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ReviewBean result)
     {
-      if (result.isSuccess)
-      {
-        try
-        {
-          JSONObject obj = new JSONObject(result.response);
-          bean = new ReviewBean();
-          bean.setJSONObject(obj.getJSONObject("review"));
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        
-      }
+      bean = result;
       progressBar.setVisibility(View.GONE);
       displayContent();
       super.onPostExecute(result);
