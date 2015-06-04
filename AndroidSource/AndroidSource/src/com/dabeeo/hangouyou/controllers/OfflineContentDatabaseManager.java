@@ -24,9 +24,9 @@ import android.util.Log;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
-import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 {
@@ -377,6 +377,8 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
 //    " LIMIT 10 OFFSET " + (10 * page)
     Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
+    if (categoryId == -1)
+      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE, null);
     if (c.moveToFirst())
     {
       do
@@ -415,5 +417,31 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     c.close();
     myDataBase.close();
     return bean;
+  }
+  
+  
+  public ArrayList<ScheduleBean> getTravelSchedules(int page)
+  {
+    this.openDataBase();
+    ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " LIMIT 10 OFFSET " + (10 * page), null);
+    if (c.moveToFirst())
+    {
+      do
+      {
+        try
+        {
+          ScheduleBean bean = new ScheduleBean();
+          bean.setCursor(c);
+          beans.add(bean);
+        }
+        catch (Exception e)
+        {
+        }
+      } while (c.moveToNext());
+    }
+    c.close();
+    myDataBase.close();
+    return beans;
   }
 }

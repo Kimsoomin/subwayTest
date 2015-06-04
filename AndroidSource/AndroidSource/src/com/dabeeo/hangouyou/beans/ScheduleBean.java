@@ -1,8 +1,11 @@
 package com.dabeeo.hangouyou.beans;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -150,6 +153,40 @@ public class ScheduleBean
       
     }
     catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
+  public void setCursor(Cursor c)
+  {
+    try
+    {
+      idx = c.getString(c.getColumnIndex("idx"));
+      planCode = c.getString(c.getColumnIndex("planCode"));
+      title = c.getString(c.getColumnIndex("title"));
+      startDateString = c.getString(c.getColumnIndex("startDate"));
+      endDateString = c.getString(c.getColumnIndex("endDate"));
+      insertDateString = c.getString(c.getColumnIndex("insertDate"));
+      updateDateString = c.getString(c.getColumnIndex("updateDate"));
+      likeCount = c.getInt(c.getColumnIndex("likeCount"));
+      reviewCount = c.getInt(c.getColumnIndex("reviewCount"));
+      bookmarkCount = c.getInt(c.getColumnIndex("bookmarkCount"));
+      shareCount = c.getInt(c.getColumnIndex("shareCount"));
+      rate = c.getInt(c.getColumnIndex("rate"));
+      userName = c.getString(c.getColumnIndex("userName"));
+      gender = c.getString(c.getColumnIndex("gender"));
+      mfidx = c.getString(c.getColumnIndex("mfidx"));
+      dayCount = c.getInt(c.getColumnIndex("dayCount"));
+      distance = c.getString(c.getColumnIndex("distance"));
+      budgetTotal = c.getString(c.getColumnIndex("budgetTotal"));
+//      budget1 = c.getString(c.getColumnIndex("budget1"));
+//      budget2 = c.getString(c.getColumnIndex("budget2"));
+//      budget3 = c.getString(c.getColumnIndex("budget3"));
+//      days = c.getString(c.getColumnIndex("days"));
+    }
+    catch (Exception e)
     {
       e.printStackTrace();
     }

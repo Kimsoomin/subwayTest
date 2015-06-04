@@ -9,6 +9,7 @@ import android.content.Context;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
@@ -53,9 +54,32 @@ public class ApiClient
   }
   
   
-  public NetworkResult getTravelSchedules(int page)
+  public ArrayList<ScheduleBean> getTravelSchedules(int page)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page);
+    ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        JSONArray array = obj.getJSONArray("plan");
+        for (int i = 0; i < array.length(); i++)
+        {
+          JSONObject beanObj = array.getJSONObject(i);
+          ScheduleBean bean = new ScheduleBean();
+          bean.setJSONObject(beanObj);
+          beans.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    else
+      beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
+    return beans;
   }
   
   
@@ -87,6 +111,10 @@ public class ApiClient
       {
         e.printStackTrace();
       }
+    }
+    else
+    {
+      places.addAll(offlineDatabaseManager.getPlaceList(page, -1));
     }
     return places;
   }

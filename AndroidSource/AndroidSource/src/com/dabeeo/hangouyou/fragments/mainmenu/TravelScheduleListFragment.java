@@ -2,9 +2,6 @@ package com.dabeeo.hangouyou.fragments.mainmenu;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,7 +30,6 @@ import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
-import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.ScheduleListHeaderMallView;
 
@@ -46,7 +42,7 @@ public class TravelScheduleListFragment extends Fragment
   private ProgressBar progressBar;
   private TravelScheduleListAdapter adapter;
   private ApiClient apiClient;
-  private int page = 1;
+  private int page = 0;
   private int type = SCHEDULE_TYPE_POPULAR;
   private boolean isLoading = false;
   private boolean isLoadEnded = false;
@@ -145,7 +141,7 @@ public class TravelScheduleListFragment extends Fragment
     }
   }
   
-  private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ArrayList<ScheduleBean>>
   {
     @Override
     protected void onPreExecute()
@@ -157,7 +153,7 @@ public class TravelScheduleListFragment extends Fragment
     
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
       //TODO 추후 "내"일정으로 바꿔야 함
       return apiClient.getTravelSchedules(page);
@@ -165,39 +161,18 @@ public class TravelScheduleListFragment extends Fragment
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ArrayList<ScheduleBean> result)
     {
-      if (result.isSuccess)
+      if (result.size() == 0)
+        isLoadEnded = true;
+      
+      adapter.addAll(result);
+      
+      if (adapter.getCount() == 0)
       {
-        ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
-        try
-        {
-          JSONObject obj = new JSONObject(result.response);
-          JSONArray array = obj.getJSONArray("plan");
-          for (int i = 0; i < array.length(); i++)
-          {
-            JSONObject beanObj = array.getJSONObject(i);
-            ScheduleBean bean = new ScheduleBean();
-            bean.setJSONObject(beanObj);
-            beans.add(bean);
-          }
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        
-        if (beans.size() == 0)
-          isLoadEnded = true;
-        
-        adapter.addAll(beans);
-        
-        if (adapter.getCount() == 0)
-        {
-          listView.setVisibility(View.GONE);
-          emptyContainer.setVisibility(View.VISIBLE);
-          emptyText.setText(getString(R.string.msg_empty_my_schedule));
-        }
+        listView.setVisibility(View.GONE);
+        emptyContainer.setVisibility(View.VISIBLE);
+        emptyText.setText(getString(R.string.msg_empty_my_schedule));
       }
       progressBar.setVisibility(View.GONE);
       isLoading = false;
