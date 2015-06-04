@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,12 +104,14 @@ public class TravelScheduleDetailFragment extends Fragment
 			@Override
 			public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
 			{
-				if (scrollView.getScrollY() > 300 * density){
+				if (scrollView.getScrollY() > 300 * density)
+				{
 					titleView.title.setVisibility(View.INVISIBLE);
 					titleView.infoContainer.setVisibility(View.INVISIBLE);
 					titleView.title.setVisibility(View.INVISIBLE);
 				}
-				else{
+				else
+				{
 					titleView.title.setVisibility(View.VISIBLE);
 					titleView.infoContainer.setVisibility(View.VISIBLE);
 					titleView.title.setVisibility(View.VISIBLE);
@@ -121,7 +124,6 @@ public class TravelScheduleDetailFragment extends Fragment
 					reviewContainerView.loadMore();
 			}
 		});
-		
 		displayContentData();
 	}
 	
@@ -132,7 +134,6 @@ public class TravelScheduleDetailFragment extends Fragment
 		this.bean = bean;
 		this.dayBean = dayBean;
 		this.isMySchedule = isMySchedule;
-		
 	}
 	
 	
@@ -140,15 +141,14 @@ public class TravelScheduleDetailFragment extends Fragment
 	{
 		contentContainer.removeAllViews();
 		
+		displayDayView();
+		
+		textRate.setText(Integer.toString(bean.rate));
 		headerView.setData(bean.imageUrl, bean.title, bean.days.size(), bean.budgetTotal);
 		titleView.setBean(bean);
 		
-		displayDayView();
-		
 		reviewContainerView = new ReviewContainerView(getActivity(), "plan", bean.idx);
 		reviewLayout.addView(reviewContainerView);
-		
-		textRate.setText(Integer.toString(bean.rate));
 		reviewContainerView.loadMore();
 		
 		if (isMySchedule)
@@ -182,6 +182,7 @@ public class TravelScheduleDetailFragment extends Fragment
 	{
 		if (dayBean == null)
 		{
+			Log.w("WARN", "전체에 대한 뷰 "+ bean.days.size());
 			//전체에 대한 내용
 			for (int i = 0; i < bean.days.size(); i++)
 			{
@@ -233,6 +234,7 @@ public class TravelScheduleDetailFragment extends Fragment
 		}
 		else
 		{
+			Log.w("WARN", "일정에 대한 뷰");
 			ScheduleTitleView tView = new ScheduleTitleView(getActivity());
 			Calendar c = Calendar.getInstance();
 			c.setTime(bean.startDate);

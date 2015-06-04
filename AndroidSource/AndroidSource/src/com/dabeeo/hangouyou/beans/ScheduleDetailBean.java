@@ -15,7 +15,7 @@ public class ScheduleDetailBean
 	public String idx;
 	public String planCode;
 	public String title;
-
+	
 	public String startDateString;
 	public Date startDate;
 	public String endDateString;
@@ -24,7 +24,7 @@ public class ScheduleDetailBean
 	public Date insertDate;
 	public String updateDateString;
 	public Date updateDate;
-
+	
 	public int likeCount = 0;
 	public int reviewCount = 0;
 	public int bookmarkCount = 0;
@@ -37,15 +37,15 @@ public class ScheduleDetailBean
 	public int dayCount = 0;
 	public String dayNum;
 	public String distance;
-	public String budgetTotal;
-	public String budget1;
-	public String budget2;
-	public String budget3;
+	public String budgetTotal = "0";
+	public String budget1 = "0";
+	public String budget2 = "0";
+	public String budget3 = "0";
 	public String imageUrl;
-
+	
 	public ArrayList<ScheduleDayBean> days = new ArrayList<ScheduleDayBean>();
-
-
+	
+	
 	@SuppressLint("SimpleDateFormat")
 	public void setJSONObject(JSONObject obj)
 	{
@@ -53,13 +53,13 @@ public class ScheduleDetailBean
 		{
 			if (obj.has("idx"))
 				idx = obj.getString("idx");
-
+			
 			if (obj.has("planCode"))
 				planCode = obj.getString("planCode");
-
+			
 			if (obj.has("title"))
 				title = obj.getString("title");
-
+			
 			try
 			{
 				if (obj.has("likeCount"))
@@ -72,15 +72,14 @@ public class ScheduleDetailBean
 					shareCount = obj.getInt("shareCount");
 				if (obj.has("rate"))
 					rate = obj.getInt("rate");
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
-
+			
 			if (obj.has("ownerUserSeq"))
 				ownerUserSeq = obj.getInt("ownerUserSeq");
-
+			
 			if (obj.has("userName"))
 				userName = obj.getString("userName");
 			if (obj.has("gender"))
@@ -91,10 +90,9 @@ public class ScheduleDetailBean
 			{
 				if (obj.has("dayCount"))
 					dayCount = obj.getInt("dayCount");
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
-
+				
 			}
 			if (obj.has("distance"))
 				distance = obj.getString("distance");
@@ -106,7 +104,7 @@ public class ScheduleDetailBean
 				budget2 = obj.getString("budget2");
 			if (obj.has("budget3"))
 				budget3 = obj.getString("budget3");
-
+			
 			if (obj.has("image"))
 			{
 				JSONObject imgObject = obj.getJSONObject("image");
@@ -119,13 +117,12 @@ public class ScheduleDetailBean
 					startDateString = obj.getString("startDate");
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					startDate = format.parse(startDateString);
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					e.printStackTrace();
 				}
 			}
-
+			
 			if (obj.has("endDate"))
 			{
 				try
@@ -133,13 +130,12 @@ public class ScheduleDetailBean
 					endDateString = obj.getString("endDate");
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					endDate = format.parse(endDateString);
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					e.printStackTrace();
 				}
 			}
-
+			
 			if (obj.has("insertDate"))
 			{
 				try
@@ -147,13 +143,12 @@ public class ScheduleDetailBean
 					insertDateString = obj.getString("insertDate");
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					insertDate = format.parse(insertDateString);
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					e.printStackTrace();
 				}
 			}
-
+			
 			if (obj.has("updateDate"))
 			{
 				try
@@ -161,16 +156,15 @@ public class ScheduleDetailBean
 					updateDateString = obj.getString("updateDate");
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					updateDate = format.parse(updateDateString);
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					e.printStackTrace();
 				}
 			}
-
+			
 			if (obj.has("days"))
 			{
-				if(obj.has("dayNum"))
+				if (obj.has("dayNum"))
 					dayNum = obj.getString("dayNum");
 				days.clear();
 				JSONArray daysJSONArray = obj.getJSONArray("days");
@@ -181,8 +175,7 @@ public class ScheduleDetailBean
 					days.add(detailBean);
 				}
 			}
-		}
-		catch (JSONException e)
+		} catch (JSONException e)
 		{
 			e.printStackTrace();
 		}

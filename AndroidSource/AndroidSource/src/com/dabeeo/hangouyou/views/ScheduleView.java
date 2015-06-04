@@ -103,7 +103,7 @@ public class ScheduleView extends RelativeLayout
 		{
 			nextKmAndMinConatiner.setVisibility(View.GONE);
 		}
-		this.position.setText(Integer.toString(position));
+		this.position.setText(Integer.toString(position + 1));
 		hours.setText(NumberFormatter.getTimeString(bean.time));
 		
 		if (TextUtils.isEmpty(bean.memo))

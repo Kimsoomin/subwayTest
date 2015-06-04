@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.activities.travel;
 
-import java.util.ArrayList;
-
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -14,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
-import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -35,6 +33,7 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.views.SharePickView;
 
+@SuppressWarnings("deprecation")
 public class TravelScheduleDetailActivity extends ActionBarActivity
 {
 	private ViewPager viewPager;
@@ -50,7 +49,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	private SharePickView sharePickView;
 	
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -81,9 +79,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		containerIsPublic = (LinearLayout) findViewById(R.id.container_is_public);
 		btnIsPublic = (Button) findViewById(R.id.btn_is_public);
 		btnBookmark = (Button) findViewById(R.id.btn_bookmark);
-		
-		adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
-		viewPager.setAdapter(adapter);
 		
 		findViewById(R.id.btn_bookmark).setOnClickListener(clickListener);
 		findViewById(R.id.btn_share).setOnClickListener(clickListener);
@@ -191,13 +186,15 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	}
 	
 	
-	@SuppressWarnings("deprecation")
 	private void displayContent()
 	{
-		if(bean == null)
-			return;
-		//TODO 만약 내 일정이라면 btnIsPublic 의 상태를 바꿔주어야 함
+		Log.w("WARN", "Bean : " + bean.title);
+		adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
 		adapter.setBean(bean);
+		viewPager.setAdapter(adapter);
+		
+		adapter.notifyDataSetChanged();
+		viewPager.invalidate();
 		
 		for (int i = 0; i < adapter.getCount(); i++)
 		{
@@ -235,7 +232,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	/**************************************************
 	 * listener
 	 ***************************************************/
-	@SuppressWarnings("deprecation")
 	protected TabListener tabListener = new TabListener()
 	{
 		@Override

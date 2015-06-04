@@ -26,6 +26,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
 	public TextView title, textMoney, textDays;
 	public LinearLayout infoContainer;
 	
+	
 	public ScheduleDetailTitleView(Context context)
 	{
 		super(context);
@@ -57,7 +58,13 @@ public class ScheduleDetailTitleView extends RelativeLayout
 		likeCount.setText(Integer.toString(bean.likeCount));
 		reviewCount.setText(Integer.toString(bean.reviewCount));
 		title.setText(bean.title);
-		textMoney.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.budgetTotal));
+		try
+		{
+			textMoney.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.budgetTotal));
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		textDays.setText(Integer.toString(bean.dayCount));
 		ImageDownloader.displayProfileImage(context, "", imageView);
 	}
