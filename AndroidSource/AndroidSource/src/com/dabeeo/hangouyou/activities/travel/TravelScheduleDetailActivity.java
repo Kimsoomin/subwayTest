@@ -47,6 +47,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	public LinearLayout containerWriteReview, containerLike, containerIsPublic;
 	public Button btnIsPublic, btnLike, btnBookmark;
 	private SharePickView sharePickView;
+	private int currentDayNum = 1;
+	private int currentPosition = 0;
 	
 	
 	@Override
@@ -218,6 +220,30 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		{
 			Intent intent = new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class);
 			intent.putExtra("plan", bean.days);
+			
+			//아래에서 쓰시면 됩니다. 
+			//전체일정 dayNum 1
+			//N일 일정인 경우 dayNum = currentDayNum 쓰시면 됩니다 (1일은 2, 2일은 3)
+			
+			try
+			{
+				if (currentPosition == 0)
+				{
+					//전체인경우
+					Log.w("WARN", "경도 : " + bean.days.get(0).spots.get(0).lat);
+					Log.w("WARN", "위도 : " + bean.days.get(0).spots.get(0).lng);
+				}
+				else
+				{
+					//N번쨰 일정인 경우
+					Log.w("WARN", "경도 : " + bean.days.get(currentPosition - 1).spots.get(0).lat);
+					Log.w("WARN", "위도 : " + bean.days.get(currentPosition - 1).spots.get(0).lng);
+				}
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
 //			intent.putExtra("plan_daycount", bean.dayCount);
 			startActivity(intent);
 		}
@@ -261,6 +287,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		public void onPageSelected(int position)
 		{
 			getSupportActionBar().setSelectedNavigationItem(position);
+			currentPosition = position;
+			currentDayNum = position + 1;
 		}
 	};
 }
