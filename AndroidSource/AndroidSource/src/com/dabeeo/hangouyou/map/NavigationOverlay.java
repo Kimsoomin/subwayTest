@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
 import com.dabeeo.hangouyou.R;
@@ -48,9 +47,7 @@ public class NavigationOverlay extends ItemizedIconOverlayEx<OverlayItem> {
 		
 		Paint paint = new Paint();
 		paint.setARGB(89, 87, 106, 117);
-//		paint.setColor(R.color.light_gray);
 		paint.setStrokeWidth(5);
-//		paint.setAlpha(89);
 		
 		OverlayItem overlayitem = getItem(0);
 		OverlayItem overlayItem2 = getItem(1);
