@@ -45,6 +45,8 @@ public class SubwayActivity extends Activity
   private RelativeLayout searchContainer;
   private RelativeLayout emptySearchContainer;
   
+  public static Activity subwayactivity;
+  
   
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
   @Override
@@ -55,6 +57,7 @@ public class SubwayActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_subway);
     setTitle(getString(R.string.term_subway));
+    subwayactivity = this;
     
     editSearch = (EditText) findViewById(R.id.edit_search);
     searchContainer = (RelativeLayout) findViewById(R.id.search_container);

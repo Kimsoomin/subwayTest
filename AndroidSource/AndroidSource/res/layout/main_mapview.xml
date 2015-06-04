@@ -152,6 +152,58 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/btn_map_subway_state" />
             </FrameLayout>
+            
+            <LinearLayout 
+                android:id="@+id/planDay"
+                android:layout_width="200dip"
+                android:layout_height="60dip"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:background="@drawable/btn_plan_day_change"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                
+                <ImageButton 
+                    android:id="@+id/dayLeft"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:background="@drawable/btn_plan_day_left"/>
+                
+                <LinearLayout
+                    android:id="@+id/dayLayout" 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dip"
+                    android:layout_marginRight="30dip"
+                    android:orientation="vertical">
+                    
+                    <TextView 
+                        android:id="@+id/dayText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1day"
+                        android:layout_gravity="center"
+                        android:textColor="@color/darker_gray"
+                        android:textSize="18sp"
+                        android:textAlignment="center"/>
+                    
+                    <TextView 
+                        android:id="@+id/ymdText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2015.07.05"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+                
+                <ImageButton 
+                    android:id="@+id/dayRight"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:background="@drawable/btn_plan_day_right"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/navigationView"

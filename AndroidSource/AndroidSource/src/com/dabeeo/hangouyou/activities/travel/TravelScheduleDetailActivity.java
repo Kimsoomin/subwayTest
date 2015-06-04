@@ -1,5 +1,7 @@
 package com.dabeeo.hangouyou.activities.travel;
 
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -24,8 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
+import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
@@ -216,7 +218,12 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		if (item.getItemId() == R.id.map)
-			startActivity(new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class));
+		{
+			Intent intent = new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class);
+			intent.putExtra("plan", bean.days);
+//			intent.putExtra("plan_daycount", bean.dayCount);
+			startActivity(intent);
+		}
 		else if (item.getItemId() == android.R.id.home)
 		{
 			finish();

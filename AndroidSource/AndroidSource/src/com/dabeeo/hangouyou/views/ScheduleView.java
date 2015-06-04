@@ -162,7 +162,7 @@ public class ScheduleView extends RelativeLayout
 			public void onClick(View arg0)
 			{
 				Intent i = new Intent(context, PlaceDetailActivity.class);
-				i.putExtra("place_idx", bean.contentsIdx);
+				i.putExtra("place_idx", bean.idx);
 				context.startActivity(i);
 			}
 		});
