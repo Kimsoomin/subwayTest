@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.ticket.TicketDetailActivity;
 import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;

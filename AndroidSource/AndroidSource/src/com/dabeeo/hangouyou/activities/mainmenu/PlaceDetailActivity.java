@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.activities.mainmenu;
 
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -37,7 +35,6 @@ import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
-import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.utils.SystemUtil;

@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.views;
 
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
@@ -9,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ImagePopUpJustOneActivity;

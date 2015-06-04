@@ -3,7 +3,7 @@ package com.dabeeo.hangouyou.map;
 
 public class PlaceInfo
 {
-	public String idx;					// 장소 ID
+	public String idx;
 	public String seqCode;
 	public String cityIdx;
 	public String ownerUserSeq;
@@ -32,4 +32,7 @@ public class PlaceInfo
 	public int isBookmarked;
 	public String insertDate;
 	public String updateDate;
+	public String premiumIdx;
+	public String image;
+	public String offlineimage;
 }

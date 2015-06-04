@@ -18,6 +18,7 @@ import com.dabeeo.hangouyou.utils.SystemUtil;
 public class ApiClient
 {
   private String siteUrl = "http://gs.blinking.kr:8900/_libs/api.common.php";
+//  private String testUrl = "http://10.53.13.18/_libs/api.common.php";
   private HttpClient httpClient;
   private Context context;
   private OfflineContentDatabaseManager offlineDatabaseManager;

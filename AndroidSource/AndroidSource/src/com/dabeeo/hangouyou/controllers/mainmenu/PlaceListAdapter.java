@@ -3,8 +3,6 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import org.osmdroid.ResourceProxy.bitmap;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,7 +23,6 @@ import com.dabeeo.hangouyou.managers.CategoryManager;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class PlaceListAdapter extends BaseAdapter

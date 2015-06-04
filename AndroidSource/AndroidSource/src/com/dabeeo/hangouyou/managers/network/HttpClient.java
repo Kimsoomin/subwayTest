@@ -51,7 +51,7 @@ public class HttpClient
       
       HttpResponse response = client.execute(requestBase);
       String responseString = EntityUtils.toString(response.getEntity());
-      
+            
       if (response.getStatusLine().getStatusCode() < 400)
         result = new NetworkResult(true, responseString, response.getStatusLine().getStatusCode());
       else

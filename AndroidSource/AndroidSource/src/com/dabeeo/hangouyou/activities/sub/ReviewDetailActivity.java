@@ -1,7 +1,5 @@
 package com.dabeeo.hangouyou.activities.sub;
 
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -28,7 +26,6 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
-import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.views.DeclareReviewView;
 

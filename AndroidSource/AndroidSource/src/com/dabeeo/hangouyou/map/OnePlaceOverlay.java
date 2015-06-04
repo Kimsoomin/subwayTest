@@ -10,7 +10,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 
 import com.dabeeo.hangouyou.R;
 

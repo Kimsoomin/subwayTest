@@ -1,8 +1,5 @@
 package com.dabeeo.hangouyou.beans;
 
-import android.annotation.SuppressLint;
-
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +7,8 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 
 public class ScheduleDetailBean
 {

@@ -25,7 +25,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;

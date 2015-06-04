@@ -22,7 +22,6 @@ import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
-import com.squareup.picasso.Picasso;
 
 public class DownloadedCouponDetailActivity extends ActionBarActivity
 {
