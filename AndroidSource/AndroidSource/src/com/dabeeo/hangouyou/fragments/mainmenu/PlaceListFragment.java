@@ -133,7 +133,7 @@ public class PlaceListFragment extends Fragment
 			if (adapter.getCount() == 0)
 			{
 				listView.setVisibility(View.GONE);
-				//emptyContainer.setVisibility(View.VISIBLE);
+				emptyContainer.setVisibility(View.VISIBLE);
 			}
 			isLoading = false;
 			progressBar.setVisibility(View.GONE);
