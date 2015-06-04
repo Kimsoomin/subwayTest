@@ -72,7 +72,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     
-    adapter = new MyPlaceListAdapter();
+    adapter = new MyPlaceListAdapter(getActivity());
     
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     listView.setOnItemClickListener(itemClickListener);

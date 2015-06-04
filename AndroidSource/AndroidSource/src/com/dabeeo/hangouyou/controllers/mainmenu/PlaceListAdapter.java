@@ -3,8 +3,11 @@ package com.dabeeo.hangouyou.controllers.mainmenu;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import org.osmdroid.ResourceProxy.bitmap;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +22,11 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.managers.CategoryManager;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.utils.SystemUtil;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class PlaceListAdapter extends BaseAdapter
 {
@@ -84,7 +91,7 @@ public class PlaceListAdapter extends BaseAdapter
     int resId = R.layout.list_item_place;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
-    ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+    final ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView isCoupon = (TextView) view.findViewById(R.id.text_coupon);
     TextView createdAt = (TextView) view.findViewById(R.id.created_at);
     TextView title = (TextView) view.findViewById(R.id.title);
@@ -121,6 +128,38 @@ public class PlaceListAdapter extends BaseAdapter
       createdAt.setVisibility(View.GONE);
     }
     
+    ImageDownloader.displayImage(context, bean.imageUrl, imageView, new ImageLoadingListener()
+    {
+      @Override
+      public void onLoadingStarted(String arg0, View arg1)
+      {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+      }
+      
+      
+      @Override
+      public void onLoadingFailed(String arg0, View arg1, FailReason arg2)
+      {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+      }
+      
+      
+      @Override
+      public void onLoadingComplete(String arg0, View arg1, Bitmap bitmap)
+      {
+        if (bitmap == null)
+          imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        else
+          imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+      }
+      
+      
+      @Override
+      public void onLoadingCancelled(String arg0, View arg1)
+      {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+      }
+    });
     title.setText(bean.title);
     category.setText(CategoryManager.getInstance(context).getCategoryName(bean.categoryId));
     if (TextUtils.isEmpty(category.getText().toString()))

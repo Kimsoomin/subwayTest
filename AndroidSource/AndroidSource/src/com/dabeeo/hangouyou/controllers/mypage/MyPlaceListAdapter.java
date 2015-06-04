@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,21 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.managers.CategoryManager;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class MyPlaceListAdapter extends BaseAdapter
 {
   private ArrayList<PlaceBean> beans = new ArrayList<>();
   private boolean isEditMode = false;
+  private Context context;
+  
+  
+  public MyPlaceListAdapter(Context context)
+  {
+    this.context = context;
+  }
   
   
   public void setAllCheck(boolean isCheck)
@@ -124,7 +136,7 @@ public class MyPlaceListAdapter extends BaseAdapter
       }
     });
     
-    ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+    final ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView createdAt = (TextView) view.findViewById(R.id.created_at);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView category = (TextView) view.findViewById(R.id.category);
@@ -132,6 +144,38 @@ public class MyPlaceListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     ImageView imagePrivate = (ImageView) view.findViewById(R.id.image_private);
     
+    ImageDownloader.displayImage(context, bean.imageUrl, imageView, new ImageLoadingListener()
+    {
+      @Override
+      public void onLoadingStarted(String arg0, View arg1)
+      {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+      }
+      
+      
+      @Override
+      public void onLoadingFailed(String arg0, View arg1, FailReason arg2)
+      {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+      }
+      
+      
+      @Override
+      public void onLoadingComplete(String arg0, View arg1, Bitmap bitmap)
+      {
+        if (bitmap == null)
+          imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        else
+          imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+      }
+      
+      
+      @Override
+      public void onLoadingCancelled(String arg0, View arg1)
+      {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+      }
+    });
     if (position % 2 == 1)
       imagePrivate.setVisibility(View.VISIBLE);
     else

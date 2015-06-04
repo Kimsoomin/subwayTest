@@ -1,8 +1,8 @@
 package com.dabeeo.hangouyou.beans;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -42,6 +42,8 @@ public class PlaceDetailBean
   
   public int isLiked;
   public int isBookmarked;
+  public String imageUrl;
+  public ArrayList<String> imageUrls = new ArrayList<String>();
   
   public String updateDateString;
   
@@ -111,6 +113,16 @@ public class PlaceDetailBean
       
       if (obj.has("updateDate"))
         updateDateString = obj.getString("updateDate");
+      
+      if (obj.has("image"))
+      {
+        JSONArray arr = obj.getJSONArray("image");
+        for (int i = 0; i < arr.length(); i++)
+        {
+          imageUrls.add(arr.getJSONObject(i).getString("url"));
+        }
+        imageUrl = arr.getJSONObject(0).getString("url");
+      }
     }
     catch (Exception e)
     {

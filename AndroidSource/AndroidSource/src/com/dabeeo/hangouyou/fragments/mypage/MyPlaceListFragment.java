@@ -2,9 +2,6 @@ package com.dabeeo.hangouyou.fragments.mypage;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -35,7 +32,6 @@ import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
-import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
 public class MyPlaceListFragment extends Fragment
 {
@@ -133,7 +129,7 @@ public class MyPlaceListFragment extends Fragment
     allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
     
-    adapter = new MyPlaceListAdapter();
+    adapter = new MyPlaceListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setAdapter(adapter);

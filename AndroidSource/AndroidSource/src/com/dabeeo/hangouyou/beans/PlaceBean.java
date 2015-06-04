@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -32,11 +33,9 @@ public class PlaceBean
   
   public String insertDateString;
   public Date insertDate;
+  public String imageUrl;
   
   public boolean isChecked = false;
-  
-  //Detail 
-  public String address, businessHours;
   
   
   @SuppressLint("SimpleDateFormat")
@@ -49,12 +48,6 @@ public class PlaceBean
       
       if (obj.has("idx"))
         idx = obj.getString("idx");
-      
-      if (obj.has("address"))
-        address = obj.getString("address");
-      
-      if (obj.has("businessHours"))
-        businessHours = obj.getString("businessHours");
       
       if (obj.has("title"))
         title = obj.getString("title");
@@ -104,6 +97,11 @@ public class PlaceBean
       if (obj.has("area"))
         area = obj.getDouble("area");
       
+      if (obj.has("image"))
+      {
+        JSONArray arr = obj.getJSONArray("image");
+        imageUrl = arr.getJSONObject(0).getString("url");
+      }
     }
     catch (Exception e)
     {

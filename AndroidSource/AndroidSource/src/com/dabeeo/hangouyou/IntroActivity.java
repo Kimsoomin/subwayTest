@@ -131,8 +131,9 @@ public class IntroActivity extends Activity
       if (SystemUtil.isConnectNetwork(IntroActivity.this))
       {
         //기존에 오프라인 컨텐츠를 만들어놓은 상태, 인터넷 연결 시 다시 오프라인컨텐츠 생성
-        file.delete();
-        makeOfflineContentDatabase();
+//        file.delete();
+//        makeOfflineContentDatabase();
+        startMainActivity();
       }
       else
       {

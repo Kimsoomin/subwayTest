@@ -2,6 +2,7 @@ package com.dabeeo.hangouyou.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.sub.ImagePopUpJustOneActivity;
+import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
-import com.squareup.picasso.Picasso;
+import com.dabeeo.hangouyou.utils.ImageDownloader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class PlaceDetailHeaderView extends RelativeLayout
 {
@@ -45,10 +48,58 @@ public class PlaceDetailHeaderView extends RelativeLayout
   }
   
   
-  public void setBean(PlaceDetailBean bean)
+  public void setBean(final PlaceDetailBean bean)
   {
     if (bean != null)
-      imageCount.setText("+" + Integer.toString(bean.bookmarkCount));
+    {
+      if (bean.imageUrls.size() > 1)
+        imageCount.setText("+" + Integer.toString(bean.imageUrls.size()));
+      
+      ImageDownloader.displayImage(context, bean.imageUrl, imageView, new ImageLoadingListener()
+      {
+        @Override
+        public void onLoadingStarted(String arg0, View arg1)
+        {
+          imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+        
+        
+        @Override
+        public void onLoadingFailed(String arg0, View arg1, FailReason arg2)
+        {
+          imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+        
+        
+        @Override
+        public void onLoadingComplete(String arg0, View arg1, Bitmap bitmap)
+        {
+          if (bitmap == null)
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+          else
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+        
+        
+        @Override
+        public void onLoadingCancelled(String arg0, View arg1)
+        {
+          imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+      });
+      
+      imageView.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          Intent i = new Intent(context, ImagePopUpActivity.class);
+          i.putExtra("ImageUrls", bean.imageUrls);
+          i.putExtra("ImageUrl", bean.imageUrl);
+          context.startActivity(i);
+        }
+      });
+    }
   }
   
   
@@ -60,19 +111,7 @@ public class PlaceDetailHeaderView extends RelativeLayout
     imageView = (ImageView) view.findViewById(R.id.imageview);
     imageCount = (TextView) view.findViewById(R.id.image_count);
     imageCount.setVisibility(View.GONE);
-    Picasso.with(context).load("https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759").fit().centerCrop().into(
-        imageView);
     
-    imageView.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View v)
-      {
-        Intent i = new Intent(context, ImagePopUpJustOneActivity.class);
-        i.putExtra("image_url", "https://ssproxy.ucloudbiz.olleh.com/v1/AUTH_f46e842e-c688-460e-a70b-e6a4d30e9885/aimper/store_photos/500/photos/small/Punkt_1.jpg?1426234759");
-        context.startActivity(i);
-      }
-    });
     addView(view);
   }
 }
