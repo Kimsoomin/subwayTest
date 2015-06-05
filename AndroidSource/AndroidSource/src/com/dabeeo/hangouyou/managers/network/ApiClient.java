@@ -12,6 +12,7 @@ import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
+import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
@@ -85,9 +86,29 @@ public class ApiClient
 	}
 	
 	
-	public NetworkResult getTravelScheduleDetail(String idx)
+	public ScheduleDetailBean getTravelScheduleDetail(String idx)
 	{
-		return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx);
+		ScheduleDetailBean bean = new ScheduleDetailBean();
+		if (SystemUtil.isConnectNetwork(context))
+		{
+			NetworkResult result =httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx);
+			if (result.isSuccess)
+			{
+				try
+				{
+					JSONObject obj = new JSONObject(result.response);
+					bean = new ScheduleDetailBean();
+					bean.setJSONObject(obj.getJSONObject("plan"));
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+			}
+		}else{
+			bean = offlineDatabaseManager.getTravelScheduleDetailBean(idx);
+		}
+		return bean;
 	}
 	
 	

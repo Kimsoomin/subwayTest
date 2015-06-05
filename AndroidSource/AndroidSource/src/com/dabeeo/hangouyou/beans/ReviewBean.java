@@ -103,6 +103,8 @@ public class ReviewBean
 			idx = c.getString(c.getColumnIndex("idx"));
 			seqCode = c.getString(c.getColumnIndex("seqCode"));
 			reviewSeqCode = c.getString(c.getColumnIndex("reviewSeqCode"));
+			content = c.getString(c.getColumnIndex("contents"));
+			
 			rate = c.getInt(c.getColumnIndex("rate"));
 			likeCount = c.getInt(c.getColumnIndex("likeCount"));
 			userName = c.getString(c.getColumnIndex("userName"));

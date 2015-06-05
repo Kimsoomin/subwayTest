@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -27,6 +26,7 @@ import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
 import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
+import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
 
@@ -438,6 +438,24 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 		c.close();
 		myDataBase.close();
 		return beans;
+	}
+	
+	
+	public ScheduleDetailBean getTravelScheduleDetailBean(String idx)
+	{
+		this.openDataBase();
+		ScheduleDetailBean bean = new ScheduleDetailBean();
+		Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx, null);
+		c.moveToFirst();
+		try
+		{
+			bean.setCursor(c);
+		} catch (Exception e)
+		{
+		}
+		c.close();
+		myDataBase.close();
+		return bean;
 	}
 	
 	
