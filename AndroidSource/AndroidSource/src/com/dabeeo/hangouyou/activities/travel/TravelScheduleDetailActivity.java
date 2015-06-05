@@ -1,5 +1,9 @@
 package com.dabeeo.hangouyou.activities.travel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -12,6 +16,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,17 +45,16 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	public TravelScheduleDetailViewPagerAdapter adapter;
 	private ProgressBar progressBar;
 	private ApiClient apiClient;
-	
+
 	private String idx;
 	private ScheduleDetailBean bean;
-	
+
 	public LinearLayout containerWriteReview, containerLike, containerIsPublic;
 	public Button btnIsPublic, btnLike, btnBookmark;
 	private SharePickView sharePickView;
-	private int currentDayNum = 1;
 	private int currentPosition = 0;
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -64,9 +68,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		getSupportActionBar().setDisplayShowCustomEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
-		
+
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
+
 		idx = getIntent().getStringExtra("idx");
 		apiClient = new ApiClient(this);
 		progressBar = (ProgressBar) findViewById(R.id.progressbar);
@@ -74,19 +78,19 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		viewPager.setOnPageChangeListener(pageChangeListener);
 		viewPager.setOffscreenPageLimit(100);
 		sharePickView = (SharePickView) findViewById(R.id.view_share_pick);
-		
+
 		btnLike = (Button) findViewById(R.id.btn_like);
 		containerLike = (LinearLayout) findViewById(R.id.container_like);
 		containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);
 		containerIsPublic = (LinearLayout) findViewById(R.id.container_is_public);
 		btnIsPublic = (Button) findViewById(R.id.btn_is_public);
 		btnBookmark = (Button) findViewById(R.id.btn_bookmark);
-		
+
 		findViewById(R.id.btn_bookmark).setOnClickListener(clickListener);
 		findViewById(R.id.btn_share).setOnClickListener(clickListener);
 		findViewById(R.id.btn_like).setOnClickListener(clickListener);
 		findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
-		
+
 		btnLike.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -107,7 +111,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		});
 		loadScheduleDetail();
 	}
-	
+
 	private OnClickListener clickListener = new OnClickListener()
 	{
 		@Override
@@ -141,13 +145,13 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 			}
 		}
 	};
-	
-	
+
+
 	private void loadScheduleDetail()
 	{
 		new LoadScheduleAsyncTask().execute();
 	}
-	
+
 	private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
 	{
 		@Override
@@ -156,15 +160,15 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 			progressBar.setVisibility(View.VISIBLE);
 			super.onPreExecute();
 		}
-		
-		
+
+
 		@Override
 		protected NetworkResult doInBackground(String... params)
 		{
 			return apiClient.getTravelScheduleDetail(idx);
 		}
-		
-		
+
+
 		@Override
 		protected void onPostExecute(NetworkResult result)
 		{
@@ -179,40 +183,40 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 				{
 					e.printStackTrace();
 				}
-				
+
 			}
 			progressBar.setVisibility(View.GONE);
 			displayContent();
 			super.onPostExecute(result);
 		}
 	}
-	
-	
+
+
 	private void displayContent()
 	{
 		Log.w("WARN", "Bean : " + bean.title);
 		adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
 		adapter.setBean(bean);
 		viewPager.setAdapter(adapter);
-		
+
 		adapter.notifyDataSetChanged();
 		viewPager.invalidate();
-		
+
 		for (int i = 0; i < adapter.getCount(); i++)
 		{
 			getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
 		}
 	}
-	
-	
+
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		getMenuInflater().inflate(R.menu.menu_map, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
-	
+
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -220,31 +224,37 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		{
 			Intent intent = new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class);
 			intent.putExtra("plan", bean.days);
-			
-			//아래에서 쓰시면 됩니다. 
-			//전체일정 dayNum 1
-			//N일 일정인 경우 dayNum = currentDayNum 쓰시면 됩니다 (1일은 2, 2일은 3)
-			
+			SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy.MM.dd");
+			String currentDate;
+			long daydiff = diffOfDate(bean.startDate, bean.endDate);
+			intent.putExtra("palnDayDiff", daydiff);
+
 			try
 			{
 				if (currentPosition == 0)
 				{
-					//전체인경우
-					Log.w("WARN", "경도 : " + bean.days.get(0).spots.get(0).lat);
-					Log.w("WARN", "위도 : " + bean.days.get(0).spots.get(0).lng);
+					//전체일정
+					currentDate = simpleDateformat.format(bean.startDate);
+					intent.putExtra("planDayNum", 1);
+					intent.putExtra("planDayLat", bean.days.get(0).spots.get(0).lat);
+					intent.putExtra("planDayLng", bean.days.get(0).spots.get(0).lng);
+					intent.putExtra("planYMD", currentDate);
 				}
 				else
 				{
 					//N번쨰 일정인 경우
-					Log.w("WARN", "경도 : " + bean.days.get(currentPosition - 1).spots.get(0).lat);
-					Log.w("WARN", "위도 : " + bean.days.get(currentPosition - 1).spots.get(0).lng);
+					Date date = calCalender(currentPosition - 1);	
+					currentDate = simpleDateformat.format(date);
+					intent.putExtra("planDayNum", currentPosition);
+					intent.putExtra("planDayLat", bean.days.get(currentPosition-1).spots.get(0).lat);
+					intent.putExtra("planDayLng", bean.days.get(currentPosition-1).spots.get(0).lng);
+					intent.putExtra("planYMD", currentDate);
 				}
 			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
-			
-//			intent.putExtra("plan_daycount", bean.dayCount);
+
 			startActivity(intent);
 		}
 		else if (item.getItemId() == android.R.id.home)
@@ -254,7 +264,26 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
+	public Date calCalender(int calender)
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(bean.startDate);
+		cal.add(Calendar.DATE, calender);
+		return cal.getTime();
+	}
+
+	public long diffOfDate(Date begin, Date end)
+	{	    
+		Date beginDate = begin;
+		Date endDate = end;
+
+		long diff = endDate.getTime() - beginDate.getTime();
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+
+		return diffDays;
+	}
+
 	/**************************************************
 	 * listener
 	 ***************************************************/
@@ -265,19 +294,19 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		{
 			viewPager.setCurrentItem(tab.getPosition());
 		}
-		
-		
+
+
 		@Override
 		public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
 		{
-			
+
 		}
-		
-		
+
+
 		@Override
 		public void onTabReselected(Tab arg0, FragmentTransaction arg1)
 		{
-			
+
 		}
 	};
 	@SuppressWarnings("deprecation")
@@ -288,7 +317,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		{
 			getSupportActionBar().setSelectedNavigationItem(position);
 			currentPosition = position;
-			currentDayNum = position + 1;
 		}
 	};
 }
