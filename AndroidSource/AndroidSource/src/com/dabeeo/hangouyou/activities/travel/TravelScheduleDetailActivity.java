@@ -190,11 +190,15 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 	
 	private void displayContent()
 	{
-		Log.w("WARN", "Bean : " + bean.title);
-		adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
-		adapter.setBean(bean);
-		viewPager.setAdapter(adapter);
-		
+		try
+		{
+			adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
+			adapter.setBean(bean);
+			viewPager.setAdapter(adapter);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		adapter.notifyDataSetChanged();
 		viewPager.invalidate();
 		

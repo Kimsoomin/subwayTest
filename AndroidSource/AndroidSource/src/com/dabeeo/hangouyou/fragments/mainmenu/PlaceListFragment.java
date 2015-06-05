@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -35,7 +35,6 @@ public class PlaceListFragment extends Fragment
 	private boolean isLoading = false;
 	private ApiClient apiClient;
 	private int lastVisibleItem = 0;
-	private LinearLayout emptyContainer;
 	private ListView listView;
 	
 	
@@ -60,7 +59,6 @@ public class PlaceListFragment extends Fragment
 		
 		apiClient = new ApiClient(getActivity());
 		progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
-		emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
 		
 		adapter = new PlaceListAdapter(getActivity());
 		
@@ -127,13 +125,12 @@ public class PlaceListFragment extends Fragment
 		protected void onPostExecute(ArrayList<PlaceBean> result)
 		{
 			adapter.addAll(result);
-			if (result.size() == 0)
+			if (result.size() < 10)
 				isLoadEnded = true;
 			
 			if (adapter.getCount() == 0)
 			{
 				listView.setVisibility(View.GONE);
-				emptyContainer.setVisibility(View.VISIBLE);
 			}
 			isLoading = false;
 			progressBar.setVisibility(View.GONE);

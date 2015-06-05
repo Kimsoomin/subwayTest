@@ -52,7 +52,13 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
 	@Override
 	public int getCount()
 	{
-		return bean.days.size() + 1;
+		try
+		{
+			return bean.days.size() + 1;
+		} catch (Exception e)
+		{
+			return 0;
+		}
 	}
 	
 	

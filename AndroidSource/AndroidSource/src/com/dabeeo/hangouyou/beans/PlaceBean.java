@@ -131,6 +131,8 @@ public class PlaceBean
       insertDateString = c.getString(c.getColumnIndex("insertDate"));
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
       insertDate = format.parse(insertDateString);
+      
+      imageUrl = c.getString(c.getColumnIndex("offlineimage"));
     }
     catch (ParseException e)
     {
