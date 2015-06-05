@@ -243,9 +243,9 @@ public class DatabaseManager
 		return placeList;
 	}
 
-	public List<PlaceInfo> getPlacefromIDX(String Idx)
+	public PlaceInfo getPlacefromIDX(String Idx)
 	{
-		List<PlaceInfo> placeList = new ArrayList<PlaceInfo>();
+		PlaceInfo placeInfo = new PlaceInfo();
 		String selectQuery = "SELECT  * FROM " + "place_info"+ " where idx like '%"+Idx+"%'";
 		
 		Cursor cursor = mDb.rawQuery(selectQuery, null);
@@ -256,16 +256,12 @@ public class DatabaseManager
 			{
 				do
 				{
-					PlaceInfo placeInfo = new PlaceInfo();
-
 					placeInfo.idx = cursor.getString(0);
 					placeInfo.category = cursor.getInt(7);
 					placeInfo.lat = cursor.getFloat(16);
 					placeInfo.lng = cursor.getFloat(17);
 					placeInfo.title = cursor.getString(8);
 					placeInfo.address = cursor.getString(9);
-
-					placeList.add(placeInfo);
 				} while (cursor.moveToNext());
 			}
 		}
@@ -280,7 +276,7 @@ public class DatabaseManager
 				cursor.close();
 			}
 		}
-		return placeList;
+		return placeInfo;
 	}
 
 	public Map<String,PremiumInfo> getallPremiumInfo()

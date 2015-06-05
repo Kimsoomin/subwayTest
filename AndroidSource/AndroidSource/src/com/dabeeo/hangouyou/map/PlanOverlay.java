@@ -22,52 +22,54 @@ import com.dabeeo.hangouyou.R;
 
 public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem> 
 {
-
-	Context m_context;
-
-	int offset = 20;
-	Paint paint;
-	Paint textpaint;
-	Bitmap pinPlan;
-	Bitmap flagPlan;
-	String day;
-	int size;
-	int bmpWidth;
-	int bmpHeight;
-	
-	int spotNum;
-	int textsize;
-	Typeface typeface;
-	float scale;
-
-	public PlanOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener,
-			ResourceProxy pResourceProxy, Context ct, String day) 
-	{
-		super(pList, Global.GetDrawable(ct, R.drawable.transparent), pOnItemGestureListener, pResourceProxy);
-
-		m_context = ct;
-		this.day = day;
-
-		size = Global.DpToPixel(m_context, 30);		
-		typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
-
-		paint = new Paint();
-		paint.setARGB(200, 172, 186, 191);
-		paint.setStrokeWidth(6);
-		paint.setStrokeCap(Cap.ROUND);
-		
-		textpaint = new Paint(Paint.FAKE_BOLD_TEXT_FLAG);
-		textpaint.setColor(Color.rgb(255, 255, 255));
-		textpaint.setTextSize(19);
-		textpaint.setTextAlign(Align.CENTER);
-		textpaint.setTypeface(typeface);
-	}
-
-	public void dayset(String day)
-	{
-		this.day = day;
-	}
-
+  
+  Context m_context;
+  
+  int offset = 20;
+  Paint paint;
+  Paint textpaint;
+  Bitmap pinPlan;
+  Bitmap flagPlan;
+  String day;
+  int size;
+  int bmpWidth;
+  int bmpHeight;
+  
+  int spotNum;
+  int textsize;
+  Typeface typeface;
+  float scale;
+  
+  public PlanOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener,
+      ResourceProxy pResourceProxy, Context ct) 
+  {
+    super(pList, Global.GetDrawable(ct, R.drawable.transparent), pOnItemGestureListener, pResourceProxy);
+    
+    m_context = ct;
+    
+    size = Global.DpToPixel(m_context, 30);		
+    typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
+    
+    paint = new Paint();
+    paint.setARGB(200, 172, 186, 191);
+    paint.setStrokeWidth(6);
+    paint.setStrokeCap(Cap.ROUND);
+    
+    textpaint = new Paint(Paint.FAKE_BOLD_TEXT_FLAG);
+    textpaint.setColor(Color.rgb(255, 255, 255));
+    textpaint.setTextSize(19);
+    textpaint.setTextAlign(Align.CENTER);
+    textpaint.setTypeface(typeface);
+    
+    pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
+    flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
+  }
+  
+  public void dayset(String day)
+  {
+    this.day = day;
+  }
+  
 	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
 		// TODO Auto-generated method stub
@@ -75,12 +77,17 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
 
 		int nSize = size();
 		String dayStr;
-		if(getItem(0).mDescription.equals(day))
+		
+		OverlayItem dksehoakdgoTdj = getItem(nSize-1);
+		
+		if(dksehoakdgoTdj.mDescription.equals(day))
 		{
+		  BlinkingCommon.smlLibDebug("PlanOverlay", "dksehoakdgoTdj.mDescription : " + dksehoakdgoTdj.mDescription);
 			pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
 			flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
 		}else
 		{
+		  BlinkingCommon.smlLibDebug("PlanOverlay", "dksehoakdgoTdj.mDescriptionjlkasjfdlkdjsal : " + dksehoakdgoTdj.mDescription);
 			pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
 			flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
 		}

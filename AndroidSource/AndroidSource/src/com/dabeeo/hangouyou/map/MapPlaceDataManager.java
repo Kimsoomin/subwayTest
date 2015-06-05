@@ -70,7 +70,7 @@ public class MapPlaceDataManager
 		return db.getBoundaryPlace(botomLat, topLat, bottomLng, topLng);
 	}
 
-	public List<PlaceInfo> getPlacefromIdx(String Idx)
+	public PlaceInfo getPlacefromIdx(String Idx)
 	{
 		return db.getPlacefromIDX(Idx);
 	}
