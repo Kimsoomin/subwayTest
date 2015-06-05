@@ -160,6 +160,8 @@ public class PlaceDetailBean
       shareCount = c.getInt(c.getColumnIndex("shareCount"));
       reviewCount = c.getInt(c.getColumnIndex("reviewCount"));
       updateDateString = c.getString(c.getColumnIndex("updateDate"));
+      
+      imageUrl = c.getString(c.getColumnIndex("offlineimage"));
     }
     catch (Exception e)
     {

@@ -44,6 +44,7 @@ public class ImageDownloader
 		
 		DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(null).bitmapConfig(Bitmap.Config.ARGB_8888).showImageForEmptyUri(R.drawable.default_thumbnail_s)
 				.showImageOnFail(R.drawable.default_thumbnail_s).cacheInMemory(false).cacheOnDisc(true).imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2).handler(new Handler()).build();
+		
 		imageLoader.displayImage(url, imageView, options, new ImageLoadingListener()
 		{
 			@Override

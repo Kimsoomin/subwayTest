@@ -5,9 +5,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +22,6 @@ import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.managers.CategoryManager;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.utils.SystemUtil;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class PlaceListAdapter extends BaseAdapter
 {
@@ -130,7 +126,7 @@ public class PlaceListAdapter extends BaseAdapter
 			ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
 		else
 			ImageDownloader.displayImage(context, "file:///" + OfflineContentDatabaseManager.DB_PATH + bean.imageUrl, imageView, null);
-		
+
 		title.setText(bean.title);
 		category.setText(CategoryManager.getInstance(context).getCategoryName(bean.categoryId));
 		if (TextUtils.isEmpty(category.getText().toString()))
