@@ -152,7 +152,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		new LoadScheduleAsyncTask().execute();
 	}
 
-	private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ScheduleDetailBean>
 	{
 		@Override
 		protected void onPreExecute()
@@ -163,28 +163,16 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 
 
 		@Override
-		protected NetworkResult doInBackground(String... params)
+    protected ScheduleDetailBean doInBackground(String... params)
 		{
 			return apiClient.getTravelScheduleDetail(idx);
 		}
 
 
 		@Override
-		protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ScheduleDetailBean result)
 		{
-			if (result.isSuccess)
-			{
-				try
-				{
-					JSONObject obj = new JSONObject(result.response);
-					bean = new ScheduleDetailBean();
-					bean.setJSONObject(obj.getJSONObject("plan"));
-				} catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-
-			}
+      bean = result;
 			progressBar.setVisibility(View.GONE);
 			displayContent();
 			super.onPostExecute(result);

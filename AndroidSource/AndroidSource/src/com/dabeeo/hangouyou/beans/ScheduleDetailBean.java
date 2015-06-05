@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 
 public class ScheduleDetailBean
 {
@@ -176,6 +177,80 @@ public class ScheduleDetailBean
 				}
 			}
 		} catch (JSONException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void setCursor(Cursor c)
+	{
+		try
+		{
+			idx = c.getString(c.getColumnIndex("idx"));
+			planCode = c.getString(c.getColumnIndex("planCode"));
+			title = c.getString(c.getColumnIndex("title"));
+			startDateString = c.getString(c.getColumnIndex("startDate"));
+			try
+			{
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				startDate = format.parse(startDateString);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			endDateString = c.getString(c.getColumnIndex("endDate"));
+			try
+			{
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				endDate = format.parse(endDateString);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			insertDateString = c.getString(c.getColumnIndex("insertDate"));
+			try
+			{
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				insertDate = format.parse(insertDateString);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			updateDateString = c.getString(c.getColumnIndex("updateDate"));
+			try
+			{
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				updateDate = format.parse(updateDateString);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+
+			likeCount = c.getInt(c.getColumnIndex("likeCount"));
+			reviewCount = c.getInt(c.getColumnIndex("reviewCount"));
+			bookmarkCount = c.getInt(c.getColumnIndex("bookmarkCount"));
+			shareCount = c.getInt(c.getColumnIndex("shareCount"));
+			rate = c.getInt(c.getColumnIndex("rate"));
+			userName = c.getString(c.getColumnIndex("userName"));
+			gender = c.getString(c.getColumnIndex("gender"));
+			mfidx = c.getString(c.getColumnIndex("mfidx"));
+			dayCount = c.getInt(c.getColumnIndex("dayCount"));
+			distance = c.getString(c.getColumnIndex("distance"));
+			budgetTotal = c.getString(c.getColumnIndex("budgetTotal"));
+			budget1 = c.getString(c.getColumnIndex("budget1"));
+			budget2 = c.getString(c.getColumnIndex("budget2"));
+			budget3 = c.getString(c.getColumnIndex("budget3"));
+			
+			days.clear();
+			JSONArray daysJSONArray = new JSONArray(c.getString(c.getColumnIndex("days")));
+			for (int i = 0; i < daysJSONArray.length(); i++)
+			{
+				ScheduleDayBean detailBean = new ScheduleDayBean();
+				detailBean.setJSONObject(daysJSONArray.getJSONObject(i));
+				days.add(detailBean);
+			}
+		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
