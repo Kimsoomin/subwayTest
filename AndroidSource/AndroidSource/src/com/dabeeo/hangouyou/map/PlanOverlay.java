@@ -22,7 +22,6 @@ import com.dabeeo.hangouyou.R;
 
 public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem> 
 {
-  
   Context m_context;
   
   int offset = 20;
@@ -34,18 +33,22 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   int size;
   int bmpWidth;
   int bmpHeight;
+
+  String dayStr;
   
-  int spotNum;
+  int nSize;
+  int spotNum = 0;
   int textsize;
   Typeface typeface;
   float scale;
   
   public PlanOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener,
-      ResourceProxy pResourceProxy, Context ct) 
+      ResourceProxy pResourceProxy, Context ct, String day) 
   {
     super(pList, Global.GetDrawable(ct, R.drawable.transparent), pOnItemGestureListener, pResourceProxy);
     
     m_context = ct;
+    this.day = day;
     
     size = Global.DpToPixel(m_context, 40);		
     typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
@@ -60,9 +63,6 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     textpaint.setTextSize(25);
     textpaint.setTextAlign(Align.CENTER);
     textpaint.setTypeface(typeface);
-    
-    pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
-    flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
   }
   
   public void dayset(String day)
@@ -71,24 +71,12 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   }
   
 	@Override
-	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
+	public void draw(Canvas canvas, MapView mapView, boolean shadow) 
+	{
 		// TODO Auto-generated method stub
 		super.draw(canvas, mapView, shadow);
 
-		int nSize = size();
-		String dayStr;
-		
-		OverlayItem dksehoakdgoTdj = getItem(nSize-1);
-		
-		if(dksehoakdgoTdj.mDescription.equals(day))
-		{
-			pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
-			flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
-		}else
-		{
-			pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
-			flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
-		}
+		nSize = size();
 		
 		for(int i = 0; i < nSize; i++)
 		{
@@ -97,23 +85,45 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
 			GeoPoint geoPoint = overlayitem.getPoint();
 			Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
 			
-			if(i != 0)
+			if(i != nSize -1)
 			{
-				OverlayItem nextItem = getItem(i-1);
+				OverlayItem nextItem = getItem(i+1);
 				Point pt2 = mapView.getProjection().toPixels(nextItem.getPoint(), null);
-				canvas.drawLine(pt1.x, pt1.y-35, pt2.x, pt2.y-35, paint);
+				if(overlayitem.mDescription.equals(nextItem.mDescription))
+				  canvas.drawLine(pt1.x, pt1.y-35, pt2.x, pt2.y-35, paint);
 			}
 		}
-
+		
 		for (int i = 0; i < nSize; i++)
 		{
-			spotNum = i+1;
 			OverlayItem overlayitem = getItem(i);
 
 			GeoPoint geoPoint = overlayitem.getPoint();
 			Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
+			
+			if(i > 0)
+			{
+			  OverlayItem preItem = getItem(i-1);
+			  if(overlayitem.mDescription.equals(preItem.mDescription) == false)
+			    spotNum = 0;
+			}else if(i == 0)
+			{
+			  spotNum = 0;
+			}
+			
+			if(overlayitem.mDescription.equals(day))
+      {
+        pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
+        flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
+      }else
+      {
+        pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
+        flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
+      }
+			
+			spotNum = spotNum + 1;
 						
-			if(i==0)
+			if(spotNum == 1)
 			{
 				dayStr = "第"+overlayitem.mDescription+"天";
 				canvas.drawBitmap(flagPlan, pt1.x-pinPlan.getWidth()/2+50, pt1.y-pinPlan.getHeight()/2-60,null);

@@ -642,7 +642,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     });
     
     g_sensorcallback = this;
-    mapCenterset(0);
   } // - onCreate end..
   
   private OnItemClickListener onClickListItem = new OnItemClickListener() 
@@ -1565,14 +1564,13 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       
       if(planIntent.hasExtra("palnDayDiff"))
       {
-        daydiff = planIntent.getLongExtra("palnDayDiff", 0);
+        daydiff = planIntent.getIntExtra("palnDayDiff", 0);
       }        
       
       planDayLayout(planDayNum, planYMD, daydiff);
-      for(int i = 0; i < planInfo.size(); i++)
-      {
-        new PlanSetAsyncTask().execute(i);
-      }
+      
+      new PlanSetAsyncTask().execute();
+      
       categoryType = -2;
     }
   }
@@ -1613,6 +1611,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       dayLeft.setVisibility(View.INVISIBLE);
     }
+    
+    if(planOverlay != null)
+      planOverlay.dayset(""+planDayNum);
+    
     calCalender(-1, ymdText.getText().toString());
   }
   
@@ -1631,6 +1633,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       dayLeft.setVisibility(View.VISIBLE);
     }
+    
+    if(planOverlay != null)
+      planOverlay.dayset(""+planDayNum);
     
     calCalender(1, ymdText.getText().toString());
   }
@@ -1862,20 +1867,23 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     protected Void doInBackground(Integer... params) 
     {
       localPlanItem.clear();
-      for(int j = 0; j<planInfo.get(params[0]).spots.size();j++)
+      for(int i = 0; i < planInfo.size(); i++)
       {
-        String placeIdx = planInfo.get(params[0]).spots.get(j).idx;
-        String placeTitle = planInfo.get(params[0]).spots.get(j).title;
-        double planPlaceLat = planInfo.get(params[0]).spots.get(j).lat;
-        double planPlaceLng = planInfo.get(params[0]).spots.get(j).lng;
-        daynum = params[0]+1;
-        if(planPlaceLat != 0 && planPlaceLng != 0)
+        daynum = i+1;
+        BlinkingCommon.smlLibDebug("BlinkingMap", "Async DayNum : " + daynum);
+        for(int j = 0; j < planInfo.get(i).spots.size(); j++)
         {
-          OverlayItem item = new OverlayItem(placeIdx, placeTitle, ""+daynum, new GeoPoint(planPlaceLat, planPlaceLng));
-          localPlanItem.add(item);
+          String placeIdx = planInfo.get(i).spots.get(j).idx;
+          String placeTitle = planInfo.get(i).spots.get(j).title;
+          double planPlaceLat = planInfo.get(i).spots.get(j).lat;
+          double planPlaceLng = planInfo.get(i).spots.get(j).lng;
+          if(planPlaceLat != 0 && planPlaceLng != 0)
+          {
+            OverlayItem item = new OverlayItem(placeIdx, placeTitle, ""+daynum, new GeoPoint(planPlaceLat, planPlaceLng));
+            localPlanItem.add(item);
+          }
         }
       }
-      
       return null;
     }
     
@@ -1899,7 +1907,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
           selectMarker(arg1, 3);
           return false;
         }
-      }, new DefaultResourceProxyImpl(mContext), mContext);
+      }, new DefaultResourceProxyImpl(mContext), mContext , ""+planDayNum);
       
       m_mapView.getOverlays().add(planOverlay);
       runOnUiThread(new Runnable()
@@ -1908,8 +1916,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         @Override
         public void run()
         {
-          // TODO Auto-generated method stub
-          planOverlay.dayset(""+planDayNum);
           m_mapView.invalidate();
         }
       });
@@ -1999,7 +2005,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
                 }
               }else
               {
-                if(info.premiumIdx != null && premiumIdxCount < 100)
+                if(info.premiumIdx != null)
                 {
                   OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
                       new GeoPoint(info.lat,info.lng));

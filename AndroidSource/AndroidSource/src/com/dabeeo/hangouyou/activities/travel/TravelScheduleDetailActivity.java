@@ -215,10 +215,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 			intent.putExtra("plan", bean.days);
 			SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy.MM.dd");
 			String currentDate;
-			long daydiff = diffOfDate(bean.startDate, bean.endDate);
-			BlinkingCommon.smlLibDebug("Plan", "bean.startDate : " + bean.startDate);
-			BlinkingCommon.smlLibDebug("Plan", "bean.endDate : " + bean.endDate);
-			intent.putExtra("palnDayDiff", daydiff);
+			intent.putExtra("palnDayDiff", adapter.getCount()-1);
 
 			try
 			{
@@ -262,17 +259,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 		cal.setTime(bean.startDate);
 		cal.add(Calendar.DATE, calender);
 		return cal.getTime();
-	}
-
-	public long diffOfDate(Date begin, Date end)
-	{	    
-		Date beginDate = begin;
-		Date endDate = end;
-
-		long diff = endDate.getTime() - beginDate.getTime();
-		long diffDays = diff / (24 * 60 * 60 * 1000);
-
-		return diffDays;
 	}
 
 	/**************************************************
