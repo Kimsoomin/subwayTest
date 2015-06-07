@@ -1,7 +1,6 @@
 package com.dabeeo.hangouyou.map;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +16,8 @@ import java.util.TimerTask;
 
 import microsoft.mappoint.TileSystem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.events.MapListener;
@@ -88,9 +89,7 @@ import com.dabeeo.hangouyou.map.SubwayExitInfo.ExitInfo;
 import com.squareup.picasso.Picasso;
 
 public class BlinkingMap extends Activity implements OnClickListener,SensorUpdaterCallback, OnEditorActionListener 
-{
-  static public boolean g_bNeedToReloadActivity = false;
-  
+{ 
   public Context mContext;
   
   // - Location
@@ -121,24 +120,18 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   private CurrentPositionOverlay m_curPosOverlay;
   private PlaceOverlay allplaceOverlay;
   private PlaceOverlay subwayOverlay;
-  private PlaceOverlay premiumOverlay;
   private SubwayExitOverlay subwayExitOverlay;
   private PlanOverlay planOverlay;
   
   private ArrayList<OverlayItem> allPlaceInfoItems;
   private ArrayList<OverlayItem> subwayItems;
-//	private ArrayList<OverlayItem> oneItems;
-  private ArrayList<OverlayItem> premiumitem;
   private ArrayList<OverlayItem> exitItems;
   private ArrayList<OverlayItem> planItems;
   
   private Map<String,PlaceInfo> allplaceinfo;
-  private List<SubwayInfo> onePlaceInfo;
-  private Map<String, PremiumInfo> premiumInfo;
   private Map<String, SubwayInfo> subwayInfo;
   private Map<String, SubwayExitInfo> subwayExitInfo;	
   private ArrayList<ScheduleDayBean> planInfo;
-  
   
   // - map button
   private FrameLayout btnlayout;
@@ -596,7 +589,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         }
         
         selectItem = -1;
-//				categoryType = -1;
         markerSel(selectItem);
         summaryViewVisibleSet(summaryViewInVisible, 0);
         
@@ -650,7 +642,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     });
     
     g_sensorcallback = this;
-    g_bNeedToReloadActivity = true; // 초기 터치를 위해서
+    mapCenterset(0);
   } // - onCreate end..
   
   private OnItemClickListener onClickListItem = new OnItemClickListener() 
@@ -688,64 +680,30 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       
       if(!allplace)
       {
-        for(Entry<String, PremiumInfo> premiumItemInfo : premiumInfo.entrySet())
+        for(Entry<String, SubwayInfo> subInfo : subwayInfo.entrySet())
         {
-          PremiumInfo preInfo = premiumItemInfo.getValue();
-          if(preInfo.m_strName.equals(m_Adapter.getItem(arg2)))
+          SubwayInfo subway = subInfo.getValue();
+          if(subway.name_cn.equals(m_Adapter.getItem(arg2)))
           {
-            idx = preInfo.m_nID;
-            place_fLatitude = preInfo.m_fLatitude;
-            place_fLongitute = preInfo.m_fLongitude;
+            idx = subway.idx;
+            place_fLatitude = subway.lat;
+            place_fLongitute = subway.lng;
             m_locMarkTarget = new Location("MarkTaget");
             m_locMarkTarget.setLatitude(place_fLatitude);
             m_locMarkTarget.setLongitude(place_fLongitute);
-            DestinationTitle = preInfo.m_strName;
-            String summaryImageName = Global.MD5Encoding(preInfo.m_strImageFilePath);
-            File imagefile = new File(Global.GetPathWithSDCard()+".temp/"+summaryImageName);
-            
-            if(imagefile.exists())
-              Picasso.with(mContext).load(imagefile).fit().into(summaryImage);
-            else
-              new summaryImageDownload().execute(preInfo.m_strImageFilePath,summaryImageName);
-            summaryTitle.setText(DestinationTitle);
+            DestinationTitle = subway.name_cn;
             summaryAddressInit();
-            summarysubTitle.setVisibility(View.VISIBLE);
-            summarysubTitle.setText(preInfo.m_strAddress);
-            summarylikeCount.setText(""+preInfo.m_nLikeCount);
-            summaryDetail = true;
-            summaryId = 1;
-            selectItem = 0;
-            allplace = true;
-          }
-          
-        }
-        
-        if(!allplace)
-        {
-          for(Entry<String, SubwayInfo> subInfo : subwayInfo.entrySet())
-          {
-            SubwayInfo subway = subInfo.getValue();
-            if(subway.name_cn.equals(m_Adapter.getItem(arg2)))
-            {
-              idx = subway.idx;
-              place_fLatitude = subway.lat;
-              place_fLongitute = subway.lng;
-              m_locMarkTarget = new Location("MarkTaget");
-              m_locMarkTarget.setLatitude(place_fLatitude);
-              m_locMarkTarget.setLongitude(place_fLongitute);
-              DestinationTitle = subway.name_cn;
-              summaryAddressInit();
-              subwaylineNumSet(idx);
-              summaryTitle.setText(DestinationTitle);
-              summarysubTitle.setVisibility(View.INVISIBLE);
-              summaryViewVisibleSet(summaryViewVisible, 2);
-              summaryDetail = false;
-              selectItem = 2;
-              summaryId = 2;
-            }
+            subwaylineNumSet(idx);
+            summaryTitle.setText(DestinationTitle);
+            summarysubTitle.setVisibility(View.INVISIBLE);
+            summaryViewVisibleSet(summaryViewVisible, 2);
+            summaryDetail = false;
+            selectItem = 2;
+            summaryId = 2;
           }
         }
       }
+      
       categoryType = -1;
       summaryViewVisibleSet(summaryViewVisible, summaryId);
       mapCenterset(0);
@@ -778,18 +736,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     }else
     {
       goHome();
-//			if (System.currentTimeMillis() > backKeyPressedTime + 2000) 
-//			{
-//				backKeyPressedTime = System.currentTimeMillis();
-//				showGuide();
-//				return;
-//			}
-//
-//			if (System.currentTimeMillis() <= backKeyPressedTime + 2000) 
-//			{
-//				android.os.Process.killProcess(android.os.Process.myPid());
-//				appFininshToast.cancel();
-//			}
     }
   }
   
@@ -803,11 +749,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   {
     allPlaceInfoItems = new ArrayList<OverlayItem>();
     subwayItems = new ArrayList<OverlayItem>();
-    premiumitem = new ArrayList<OverlayItem>();
     exitItems = new ArrayList<OverlayItem>();
     MapPlaceDataManager.getInstance(this).initDatabase();
     allplaceinfo = MapPlaceDataManager.getInstance(this).getAllPlaces();
-    premiumInfo = MapPlaceDataManager.getInstance(this).getallPremium();
     subwayInfo = MapPlaceDataManager.getInstance(this).getallSubwayInfo();
     subwayExitInfo = MapPlaceDataManager.getInstance(this).getallSubwayExitInfo();
   }
@@ -851,6 +795,18 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       public void onTextChanged(CharSequence s, int start, int before, int count) 
       {
         // TODO Auto-generated method stub
+      }
+      
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count,
+          int after) {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void afterTextChanged(Editable s) {
+        // TODO Auto-generated method stub
         if(searchEditText.getText().toString().length() > 1)
         {
           if(summaryView.getVisibility() == View.VISIBLE)
@@ -866,15 +822,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
             if(info.title.contains(searchEditText.getText().toString()))
             {
               m_Adapter.add(info.title);
-            }
-          }
-          
-          for(Entry<String, PremiumInfo> preInfo : premiumInfo.entrySet())
-          {
-            PremiumInfo info2 = preInfo.getValue();
-            if(info2.m_strName.contains(searchEditText.getText().toString()))
-            {
-              m_Adapter.add(info2.m_strName);
             }
           }
           
@@ -896,18 +843,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
             search.show();
           }
         }
-      }
-      
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count,
-          int after) {
-        // TODO Auto-generated method stub
-        
-      }
-      
-      @Override
-      public void afterTextChanged(Editable s) {
-        // TODO Auto-generated method stub
         
       }
     };
@@ -1029,7 +964,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     
     dayLeft.setOnClickListener(this);
     dayRight.setOnClickListener(this);
-    planIntent();
   }
   
   
@@ -1074,15 +1008,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
             if(info.title.contains(searchEditText.getText().toString()))
             {
               m_Adapter.add(info.title);
-            }
-          }
-          
-          for(Entry<String, PremiumInfo> preInfo : premiumInfo.entrySet())
-          {
-            PremiumInfo info2 = preInfo.getValue();
-            if(info2.m_strName.contains(searchEditText.getText().toString()))
-            {
-              m_Adapter.add(info2.m_strName);
             }
           }
           
@@ -1203,12 +1128,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         break;
         
       case R.id.summaryView:
-        if(summaryDetail == true)
+        if(summaryDetail == false)
         {
-          int i = 0;
           Intent detailPlaceIntent = new Intent(this, PlaceDetailActivity.class);
-          i = Integer.parseInt(idx);
-          detailPlaceIntent.putExtra("place_idx", i);
+          detailPlaceIntent.putExtra("place_idx", idx);
           detailPlaceIntent.putExtra("is_map", true);
           startActivity(detailPlaceIntent);
           Log.i("INFO", "place_idx : " + idx);
@@ -1336,6 +1259,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     
     lineId = "";
     idx = null;
+    if(planOverlay != null)
+      new PlanSetAsyncTask().execute(planDayNum);
     markerRefresh();
     
     summaryViewVisibleSet(summaryViewInVisible, 0);
@@ -1519,23 +1444,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       if (intent.hasExtra("lineId"))
       {
-        lineId = intent.getStringExtra("lineId");
-        if(intent.hasExtra("Latitude"))
-        {
-          place_fLatitude = intent.getDoubleExtra("Latitude", 0);
-          if(intent.hasExtra("Longitude"))
-          {
-            place_fLongitute = intent.getDoubleExtra("Longitude", 0);
-            m_mapView.getController().setZoom(17);
-            mapCenterset(0);
-          }
-        }
-        getintent = true;
-        
-        getStartSubway();
+       
       }
-      
-      
     }else
     {
       lineId = "";
@@ -1543,29 +1453,45 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     }
   }
   
+  public void subwayIntnet(Intent subwayIntent)
+  {
+    lineId = subwayIntent.getStringExtra("lineId");
+    if(subwayIntent.hasExtra("Latitude"))
+    {
+      place_fLatitude = subwayIntent.getDoubleExtra("Latitude", 0);
+      if(subwayIntent.hasExtra("Longitude"))
+      {
+        place_fLongitute = subwayIntent.getDoubleExtra("Longitude", 0);
+        m_mapView.getController().setZoom(17);
+        mapCenterset(0);
+      }
+    }
+    getintent = true;
+    planIntentget = false;
+    getStartSubway();
+  }
+  
   public void getStartSubway()
   {
-    onePlaceInfo = new ArrayList<SubwayInfo>();
-    MapPlaceDataManager.getInstance(mContext).initDatabase();
-    onePlaceInfo = MapPlaceDataManager.getInstance(mContext).getSubwayfromIdx(lineId);
-    idx = onePlaceInfo.get(0).idx;
-    place_fLatitude = onePlaceInfo.get(0).lat;
-    place_fLongitute = onePlaceInfo.get(0).lng;
-    summaryTitle.setText(onePlaceInfo.get(0).name_cn);
+    SubwayInfo subwayInfo = new SubwayInfo();
+    subwayInfo = MapPlaceDataManager.getInstance(mContext).getSubwayfromIdx(lineId);
+    idx = subwayInfo.idx;
+    place_fLatitude = subwayInfo.lat;
+    place_fLongitute = subwayInfo.lng;
+    summaryTitle.setText(subwayInfo.name_cn);
     summaryAddressInit();
     subwaylineNumSet(idx);
     m_locMarkTarget = new Location("MarkTaget");
     m_locMarkTarget.setLatitude(place_fLatitude);
     m_locMarkTarget.setLongitude(place_fLongitute);
-    DestinationTitle = onePlaceInfo.get(0).name_cn;
+    DestinationTitle = subwayInfo.name_cn;
     mapCenterset(0);
     markerSel(2);
     summaryViewVisibleSet(summaryViewVisible, 3);
   }
   
-  public void planIntent()
+  public void planIntent(Intent planIntent)
   {
-    Intent planIntent = getIntent();
     if(planIntent.hasExtra("plan"))
     {
       planIntentget = true;
@@ -1600,8 +1526,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       {
         new PlanSetAsyncTask().execute(i);
       }
-    }
-    BlinkingCommon.smlLibDebug("BlinkingMap", "planIntentGetasfdasf : " + planIntentget);
+      categoryType = -2;
+    }else
+      categoryType = -1;
   }
   
   public void planDayLayout(int planDayNum, String planYMD, long daydiff)
@@ -1688,19 +1615,11 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   {
     super.onResume();
     
-    Intent i = getIntent();
-    if (i.hasExtra("lineId"))
-      lineId = i.getStringExtra("lineId");
-    if(i.hasExtra("Latitude"))
-      place_fLatitude = i.getDoubleExtra("Latitude", 0);
-    if(i.hasExtra("Longitude"))
-      place_fLongitute = i.getDoubleExtra("Longitude", 0);
-    
-    if (allplaceOverlay != null)
-      m_mapView.getOverlays().remove(allplaceOverlay);
-    
-    mapCenterset(0);
-    
+    Intent intent = getIntent();
+    if(intent.hasExtra("plan"))
+      planIntent(intent);
+    else if (intent.hasExtra("lineId"))
+      subwayIntnet(intent);
   }
   
   public void mapCenterset(int type)
@@ -1728,28 +1647,18 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   public void markerSel(int select)
   {
-    
-    if(select==0)
-    {
-      premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
-      allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
-      subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
-    }else if(select==1)
+    if(select==1)
     {
       allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
-      premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
       subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
     }else if(select == 2)
     {
       subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
-      premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
       allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
     }else if (select == -1)
     {
       if(allplaceOverlay != null)
         allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
-      if(premiumOverlay != null)
-        premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
       if(subwayOverlay != null)
         subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
     }
@@ -1773,8 +1682,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         {
           if(allplaceOverlay != null)
             m_mapView.getOverlays().remove(allplaceOverlay);
-          if(premiumOverlay != null)
-            m_mapView.getOverlays().remove(premiumOverlay);
           if(subwayOverlay != null)
             m_mapView.getOverlays().remove(subwayOverlay);
           if(subwayExitOverlay != null)
@@ -1789,6 +1696,75 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       m_timer = new Timer();
       m_timer.schedule(onTimer, 1000);
     }
+  }
+  
+  public void selectMarker(OverlayItem arg1, int selectType)
+  {
+    summaryAddressInit();
+    if(selectType == 1 || selectType == 3)
+    {
+      if(selectType == 1)
+      {
+        idx = arg1.mDescription;
+        markerSel(selectType);
+      }else
+      {
+        idx = arg1.mUid;
+      }
+      PlaceInfo info = allplaceinfo.get(idx);
+      place_fLatitude = info.lat;
+      place_fLongitute = info.lng;
+      DestinationTitle = arg1.mTitle;
+      summarysubTitle.setVisibility(View.VISIBLE);
+      summarysubTitle.setText(info.address);
+      
+      if(info.offlineimage != null)
+      {
+        File imagefile = new File(Global.GetPathWithSDCard()+"place_image/"+info.offlineimage);
+        
+        if(imagefile.exists())
+        {
+          Picasso.with(mContext).load(imagefile).fit().centerCrop().into(summaryImage);
+        }
+        
+        summaryViewVisibleSet(summaryViewVisible, 1);
+      }else 
+      {
+        if(info.image != null)
+        {
+          if(Global.IsNetworkConnected(mContext, false))
+          {
+            new summaryImageGetFromUrl().execute(info.image);
+          }
+          
+          summaryViewVisibleSet(summaryViewVisible, 1);
+        }else
+        {
+          summaryViewVisibleSet(summaryViewVisible, 2);
+        }
+      }
+
+      
+    }else if (selectType == 2)
+    {
+      idx = arg1.mDescription;
+      SubwayInfo subwayinfo = subwayInfo.get(idx);
+      place_fLatitude = subwayinfo.lat;
+      place_fLongitute = subwayinfo.lng;
+      DestinationTitle = subwayinfo.name_cn;
+      summaryTitle.setText(DestinationTitle);
+      summarysubTitle.setVisibility(View.INVISIBLE);
+      subwaylineNumSet(idx);
+      summaryViewVisibleSet(summaryViewVisible, 2);
+
+      markerSel(selectType);
+    }
+    
+    m_locMarkTarget = new Location("MarkTaget");
+    m_locMarkTarget.setLatitude(place_fLatitude);
+    m_locMarkTarget.setLongitude(place_fLongitute);
+    summaryTitle.setText(DestinationTitle);
+    mapCenterset(0);   
   }
   
   /**
@@ -1873,11 +1849,11 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) 
         {
           // TODO Auto-generated method stub
-          BlinkingCommon.smlLibDebug("BlinkingMap", arg1.mDescription);
+          selectMarker(arg1, 3);
           return false;
         }
       }, new DefaultResourceProxyImpl(mContext), mContext);
-     
+      
       m_mapView.getOverlays().add(planOverlay);
       runOnUiThread(new Runnable()
       {
@@ -1898,10 +1874,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     ArrayList<OverlayItem> localPlaceItems = new ArrayList<OverlayItem>();
     ArrayList<OverlayItem> localSubwayItems = new ArrayList<OverlayItem>();
     ArrayList<OverlayItem> localSubwayExitItems = new ArrayList<OverlayItem>();
-    ArrayList<OverlayItem> localPremiumItems = new ArrayList<OverlayItem>();
     int attractionCount = 0;
     int shoppingCount = 0;
     int restaurantCount = 0;
+    int premiumIdxCount = 0;
     
     @Override
     protected Void doInBackground(Void... params) 
@@ -1910,21 +1886,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       double topLat = topLeftGpt.getLatitudeE6()/1e6;
       double bottomLng = topLeftGpt.getLongitudeE6()/1e6;
       double topLng = bottomRightGpt.getLongitudeE6()/1e6;
-      
-//			if (lineId != null && !lineId.equals("")) 
-//			{
-//				onePlaceInfo = new ArrayList<SubwayInfo>();
-//				MapPlaceDataManager.getInstance(mContext).initDatabase();
-//				onePlaceInfo = MapPlaceDataManager.getInstance(mContext).getSubwayfromIdx(lineId);
-//				Log.i("INFO", "onePlaceInfo size :"+onePlaceInfo.size());
-//				//				oneItems = new ArrayList<OverlayItem>();
-//				//				OverlayItem oneItem = new OverlayItem("" + onePlaceInfo.get(0).category,onePlaceInfo.get(0).name_cn,
-//				//						onePlaceInfo.get(0).idx, new GeoPoint(onePlaceInfo.get(0).lat,onePlaceInfo.get(0).lng));
-//				//
-//				//				oneItems.add(oneItem);
-//			}
-      
-      BlinkingCommon.smlLibDebug("BlinkingMap", "planIntentGet : " + planIntentget);
       
       if(lineId.equals("") && !planIntentget)
       {
@@ -1938,7 +1899,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
             if(categoryType == 1)
             {
               if(info.category == 1 || info.category == 3 || info.category == 4 
-                  || info.category == 5 || info.category == 6)
+                  || info.category == 5 || info.category == 6 )
               {
                 OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
                     new GeoPoint(info.lat,info.lng));
@@ -1958,10 +1919,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
               }else if(m_mapView.getZoomLevel() == 16)
               {
                 if(info.category == 1 || info.category == 2 || info.category == 3 || info.category == 4 
-                    || info.category == 5 || info.category == 7 || info.category == 6 || info.category == 60)
+                    || info.category == 5 || info.category == 8 || info.category == 7 || info.category == 6 || info.category == 60)
                 {
-                  OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
-                      new GeoPoint(info.lat,info.lng));
+                  OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
                   localPlaceItems.add(item);
                 }
               }else if (m_mapView.getZoomLevel() == 15)
@@ -1990,33 +1950,15 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
                   localPlaceItems.add(item);
                   restaurantCount++;
                 }
-              }
-            }
-          }
-          
-          localPremiumItems.clear();
-          for (Entry<String, PremiumInfo> premiumItemInfo : premiumInfo.entrySet()) 
-          {
-            PremiumInfo premiumInfo = premiumItemInfo.getValue();
-            if(topLat >premiumInfo.m_fLatitude	&& bottomLng<premiumInfo.m_fLongitude 
-                && bottomLat< premiumInfo.m_fLatitude && topLng > premiumInfo.m_fLongitude)
-            {
-              if(categoryType == 1)
+              }else
               {
-                if(premiumInfo.m_nCategoryID == 1 || premiumInfo.m_nCategoryID == 3 || premiumInfo.m_nCategoryID == 4 
-                    || premiumInfo.m_nCategoryID == 5 || premiumInfo.m_nCategoryID == 6)
+                if(info.premiumIdx != null && premiumIdxCount < 100)
                 {
-                  OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-                      premiumInfo.m_strName, premiumInfo.m_nID,
-                      new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-                  localPremiumItems.add(item);
+                  OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
+                      new GeoPoint(info.lat,info.lng));
+                  localPlaceItems.add(item);
+                  premiumIdxCount++;
                 }
-              }else if(categoryType == -1)
-              {
-                OverlayItem item = new OverlayItem(""+ premiumInfo.m_nCategoryID,
-                    premiumInfo.m_strName, premiumInfo.m_nID,
-                    new GeoPoint(premiumInfo.m_fLatitude,premiumInfo.m_fLongitude));
-                localPremiumItems.add(item);
               }
             }
           }
@@ -2070,7 +2012,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       allPlaceInfoItems = localPlaceItems;
       subwayItems = localSubwayItems;
       exitItems = localSubwayExitItems;
-      premiumitem = localPremiumItems;
       refreshState();
     }
   }
@@ -2082,58 +2023,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       subwayExitOverlay = new SubwayExitOverlay(exitItems, null, new DefaultResourceProxyImpl(mContext), mContext, exitNumber);
       m_mapView.getOverlays().add(subwayExitOverlay);
-    }
-    
-    if(premiumitem != null && lineId.equals(""))
-    {
-      premiumOverlay = new PlaceOverlay(premiumitem, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-        @Override
-        public boolean onItemLongPress(int arg0,OverlayItem arg1) 
-        {
-          return false;
-        }
-        
-        @Override
-        public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) 
-        {
-          selectItem = 0;
-          idx = arg1.mDescription;
-          PremiumInfo premiuminfo = premiumInfo.get(idx);
-          String summaryImageName = Global.MD5Encoding(premiuminfo.m_strImageFilePath);
-          place_fLatitude = premiuminfo.m_fLatitude;
-          place_fLongitute = premiuminfo.m_fLongitude;
-          m_locMarkTarget = new Location("MarkTaget");
-          m_locMarkTarget.setLatitude(place_fLatitude);
-          m_locMarkTarget.setLongitude(place_fLongitute);
-          DestinationTitle = arg1.mTitle;
-          File imagefile = new File(Global.GetPathWithSDCard()+".temp/"+summaryImageName);
-          
-          if(imagefile.exists())
-            Picasso.with(mContext).load(imagefile).fit().into(summaryImage);
-          else
-          {
-            if(Global.IsNetworkConnected(mContext, false))
-              new summaryImageDownload().execute(premiuminfo.m_strImageFilePath,summaryImageName);
-            else
-              Picasso.with(mContext).load(R.drawable.default_recommend_detail).fit().into(summaryImage);
-          }
-          summaryTitle.setText(DestinationTitle);	
-          summaryAddressInit();
-          summarysubTitle.setVisibility(View.VISIBLE);
-          summarysubTitle.setText(premiuminfo.m_strAddress);
-          summarylikeCount.setText(""+premiuminfo.m_nLikeCount);
-          summaryViewVisibleSet(summaryViewVisible, 1);					
-          
-          summaryDetail = true;
-          
-          mapCenterset(0);
-          
-          markerSel(selectItem);
-          return false;
-        }
-      }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
-      
-      m_mapView.getOverlays().add(premiumOverlay);
     }
     
     if(allPlaceInfoItems != null && lineId.equals(""))
@@ -2149,22 +2038,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) 
         {
           selectItem = 1;
-          PlaceInfo info = allplaceinfo.get(arg1.mDescription);
-          idx = arg1.mDescription;
-          place_fLatitude = info.lat;
-          place_fLongitute = info.lng;
-          m_locMarkTarget = new Location("MarkTaget");
-          m_locMarkTarget.setLatitude(place_fLatitude);
-          m_locMarkTarget.setLongitude(place_fLongitute);
-          DestinationTitle = arg1.mTitle;
-          summaryTitle.setText(DestinationTitle);
-          summaryAddressInit();
-          summarysubTitle.setVisibility(View.VISIBLE);
-          summarysubTitle.setText(info.address);
-          summaryViewVisibleSet(summaryViewVisible, 2);
-          summaryDetail = false;
-          mapCenterset(0);
-          markerSel(selectItem);
+          selectMarker(arg1, selectItem);
           return false;
         }
       }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
@@ -2184,22 +2058,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) 
         {
           selectItem = 2;
-          idx = arg1.mDescription;
-          SubwayInfo info = subwayInfo.get(idx);
-          place_fLatitude = info.lat;
-          place_fLongitute = info.lng;
-          m_locMarkTarget = new Location("MarkTaget");
-          m_locMarkTarget.setLatitude(place_fLatitude);
-          m_locMarkTarget.setLongitude(place_fLongitute);
-          DestinationTitle = info.name_cn;
-          summaryTitle.setText(DestinationTitle);
-          summarysubTitle.setVisibility(View.INVISIBLE);
-          summaryAddressInit();
-          subwaylineNumSet(idx);
-          summaryViewVisibleSet(summaryViewVisible, 2);
-          summaryDetail = false;
-          mapCenterset(0);
-          markerSel(selectItem);
+          selectMarker(arg1, selectItem);
           return false;
         }
       }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
@@ -2220,8 +2079,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
           allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
         else if(selectItem == 2)
           subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
-        else if(selectItem == 0)
-          premiumOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
         m_mapView.invalidate();
       }
     });
@@ -2309,10 +2166,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       R.drawable.icon_map_attraction,R.drawable.icon_map_shopping,
       R.drawable.icon_map_culture,R.drawable.icon_map_history,
       R.drawable.icon_map_rest,R.drawable.icon_map_experience,
-      R.drawable.icon_map_restaurant,R.drawable.icon_map_cosmetic,
-      R.drawable.icon_map_drugstore,R.drawable.icon_map_infocenter,
-      R.drawable.icon_map_starbucks,R.drawable.icon_map_mcdonald,
-      R.drawable.icon_map_subway};
+      R.drawable.icon_map_restaurant,R.drawable.icon_map_accomodation,
+      R.drawable.icon_map_cosmetic,R.drawable.icon_map_drugstore,
+      R.drawable.icon_map_infocenter,R.drawable.icon_map_starbucks,
+      R.drawable.icon_map_mcdonald,R.drawable.icon_map_subway};
   public void createCategoryBitmap()
   {
     if(categorys == null) 
@@ -2361,19 +2218,25 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   }
   
   
-  private class summaryImageDownload extends AsyncTask<String, Integer, Boolean>
+  private class summaryImageGetFromUrl extends AsyncTask<String, Integer, Boolean>
   {
-    String testurl;
-    String testname;
+    String summaryUrl;
     @Override
     protected Boolean doInBackground(String... params) 
     {
-      testurl = params[0];
-      testname = params[1];
-      try 
+      summaryUrl = params[0];
+      try
       {
-        Global.DownloadImage(testurl, testname);
-      } catch (IOException e) 
+        JSONArray urlObject = new JSONArray(summaryUrl);
+        if (urlObject.getJSONObject(0).has("url"))
+        {
+          summaryUrl = urlObject.getJSONObject(0).getString("url");
+        }else
+        {
+          summaryUrl = null;
+        }
+      }
+      catch (JSONException e)
       {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -2386,10 +2249,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       // TODO Auto-generated method stub
       super.onPostExecute(result);
-      File file = new File(Global.GetPathWithSDCard()+".temp/"+testname);
-      if(file.exists())
+      
+      if(summaryUrl != null)
       {
-        Picasso.with(mContext).load(file).fit().centerCrop().into(summaryImage);
+        Picasso.with(mContext).load(summaryUrl).fit().centerCrop().into(summaryImage);
       }
     }
   }

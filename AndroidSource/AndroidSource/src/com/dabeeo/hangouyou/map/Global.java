@@ -82,7 +82,7 @@ public class Global
 	static boolean g_bLoggedIn = false;
 	static String g_strUserSeq = null; // 유저 시퀀스 키...
 	public static String g_strMapDBFileName = "gs_seoul.mbtiles";
-	public static String HangouyouDBFileName = "hangouyou.sqlite";
+	public static String HangouyouDBFileName = "hanhayou.sqlite";
 	static final String strURLPath = "http://blinkingtour.com/map_data/dabeeo_map_seoul.mbtiles";
 	static String strSetLanguage = null;
 	static String strMapDBFilePath;

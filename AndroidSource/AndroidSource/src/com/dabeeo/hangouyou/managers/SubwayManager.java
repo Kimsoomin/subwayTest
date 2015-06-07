@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.array;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -124,7 +125,6 @@ public class SubwayManager
       return bean.lon;
   }
   
-  
   public StationBean findStation(String stationId)
   {
     StationBean bean = null;
@@ -135,8 +135,7 @@ public class SubwayManager
     }
     
     return bean;
-  }
-  
+  }  
   
   public StationBean findStationWithTransfer(String stationId)
   {

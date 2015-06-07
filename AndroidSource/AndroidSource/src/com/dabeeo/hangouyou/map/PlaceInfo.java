@@ -19,8 +19,8 @@ public class PlaceInfo
 	public String homepage;
 	public String contact;
 	public String contents;
-	public float lat;
-	public float lng;
+	public double lat;
+	public double lng;
 	public String tag;
 	public int popular;
 	public int rate;

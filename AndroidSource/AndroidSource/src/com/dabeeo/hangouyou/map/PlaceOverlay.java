@@ -22,8 +22,8 @@ import com.dabeeo.hangouyou.R;
 
 public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 
-	Integer[] indexCategory = {1,2,3,4,5,6,7,40,50,60,70,80,99};
-	Integer[] passCategory = {8,9};
+	Integer[] indexCategory = {1,2,3,4,5,6,7,8,40,50,60,70,80,99};
+	Integer[] passCategory = {9};
 
 	Context m_context;
 	BitmapDrawable d;
@@ -95,6 +95,9 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 		} else 
 		{
 			m_bmpPosition = this.d.getBitmap();
+			
+//			BlinkingCommon.smlLibDebug("PlaceOverlay", "curScreenCoords.x : " +(curScreenCoords.x - m_bmpPosition.getWidth()/2));
+//			BlinkingCommon.smlLibDebug("PlaceOverlay", "curScreenCoords.y : " +(curScreenCoords.y - m_bmpPosition.getHeight()/2 - nOffset));
 
 			canvas.drawBitmap(m_bmpPosition, curScreenCoords.x - m_bmpPosition.getWidth()/2, curScreenCoords.y - m_bmpPosition.getHeight()/2 - nOffset, null);
 		}

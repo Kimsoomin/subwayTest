@@ -75,22 +75,12 @@ public class MapPlaceDataManager
 		return db.getPlacefromIDX(Idx);
 	}
 
-	public Map<String, PremiumInfo> getallPremium()
-	{
-		return db.getallPremiumInfo();
-	}
-
-	public List<PremiumInfo> getPremiumfromIdx(String Idx)
-	{
-		return db.getPremiumfromIDX(Idx);
-	}
-
 	public Map<String, SubwayInfo> getallSubwayInfo()
 	{
 		return db.getallSubwayInfo();
 	}
 
-	public List<SubwayInfo> getSubwayfromIdx(String Idx)
+	public SubwayInfo getSubwayfromIdx(String Idx)
 	{
 		return db.getSubwayfromIdx(Idx);
 	}

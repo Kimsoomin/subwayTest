@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,6 +30,7 @@ import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
+import com.dabeeo.hangouyou.map.Global;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 {
@@ -36,7 +38,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 	public static String DB_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/";
 	public static String DB_IMAGE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/place_image/";
 //  public static String DB_PATH = "";
-	public static String DB_NAME = "contents.sqlite";
+	public static String DB_NAME = "hanhayou.sqlite";
 	//Tables
 	private static String TABLE_NAME_SUBWAY = "Subway";
 	private static String TABLE_NAME_SUBWAY_EXITS = "SubwayExit";
@@ -102,27 +104,60 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 	
 	private void copyDataBase() throws IOException
 	{
-		InputStream myInput = context.getAssets().open("hanhayou.sqlite");
-		String outFileName = DB_PATH + DB_NAME;
-		File dbFolder = new File(DB_PATH);
-		if (!dbFolder.exists())
-			dbFolder.mkdir();
-		
-		File dbFile = new File(outFileName);
-		if (!dbFile.exists())
-			dbFile.createNewFile();
-		OutputStream myOutput = new FileOutputStream(dbFile);
-		
-		byte[] buffer = new byte[1024];
-		int length;
-		while ((length = myInput.read(buffer)) > 0)
-		{
-			myOutput.write(buffer, 0, length);
-		}
-		
-		myOutput.flush();
-		myOutput.close();
-		myInput.close();
+	  AssetManager assetManager = context.getAssets();
+    
+    File file = new File(Global.GetPathWithSDCard() + DB_NAME);
+    
+    if (!file.exists())
+    {
+      try
+      {
+        InputStream is = assetManager.open("hanhayou.sqlite");
+        OutputStream out = new FileOutputStream(file);
+        
+        int size = is.available();
+        
+        if (size > 0)
+        {
+          byte[] data = new byte[size];
+          is.read(data);
+          
+          out.write(data);
+        }
+        out.flush();
+        out.close();
+        
+        is.close();
+      } catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+//		InputStream myInput = context.getAssets().open("hanhayou.sqlite");
+//		String outFileName = DB_PATH + DB_NAME;
+//		File dbFolder = new File(DB_PATH);
+//		if (!dbFolder.exists())
+//			dbFolder.mkdir();
+//		
+//		File dbFile = new File(outFileName);
+//		if (!dbFile.exists())
+//		{
+//			dbFile.createNewFile();
+//			return;
+//		}
+//		
+//		OutputStream myOutput = new FileOutputStream(dbFile);
+//		
+//		byte[] buffer = new byte[1024];
+//		int length;
+//		while ((length = myInput.read(buffer)) > 0)
+//		{
+//			myOutput.write(buffer, 0, length);
+//		}
+//		
+//		myOutput.flush();
+//		myOutput.close();
+//		myInput.close();
 	}
 	
 	
@@ -186,6 +221,8 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 				insertValues.put("budget2", obj.getString("budget2"));
 				insertValues.put("budget3", obj.getString("budget3"));
 				insertValues.put("days", obj.getString("days"));
+				insertValues.put("currency",obj.getString("currency"));
+				insertValues.put("currencySymbol", obj.getString("currencySymbol"));
 			}
 			else if (tableName.equals(TABLE_NAME_PLACE))
 			{
@@ -227,9 +264,19 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 				insertValues.put("insertDate", obj.getString("insertDate"));
 				insertValues.put("updateDate", obj.getString("updateDate"));
 				if (obj.has("premiumIdx"))
-					insertValues.put("premiumIdx", obj.getString("premiumIdx"));
+				{
+				  if(obj.getString("premiumIdx") != null)
+				  {
+				    insertValues.put("premiumIdx", obj.getString("premiumIdx"));
+				  }else
+				  {
+				    insertValues.put("premiumIdx", "null");
+				  }
+				}
 				if (obj.has("offlineImage"))
 					insertValues.put("offlineimage", obj.getString("offlineImage"));
+				if(obj.has("image"))
+				  insertValues.put("image", obj.getString("image"));
 			}
 			else if (tableName.equals(TABLE_NAME_REVIEW))
 			{
@@ -279,7 +326,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 		}
 		myDataBase.insert(TABLE_NAME_SUBWAY, null, insertValues);
 		
-		if (bean.exits.size() > 0)
+		if (bean.exits.size() > 0 && bean.line.contains("환승"))
 		{
 			insertValues = new ContentValues();
 			insertValues.put("idx", bean.stationId);
@@ -296,7 +343,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 		{
 			JSONObject obj = new JSONObject(jsonString);
 			
-			putSubwayStationDatas();
+//			putSubwayStationDatas();
 			
 			//Plan
 			JSONArray arr = obj.getJSONArray("plan");
@@ -364,7 +411,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 			}
 		}
 	}
-	
 	
 	/**
 	 * Get Data

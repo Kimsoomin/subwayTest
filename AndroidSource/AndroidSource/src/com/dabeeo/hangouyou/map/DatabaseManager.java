@@ -31,10 +31,10 @@ public class DatabaseManager
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
 
-	private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS place_info (idx TEXT PRIMARY KEY NOT NULL, seqCode TEXT, cityIdx TEXT, ownerUserSeq TEXT, userName TEXT, gender TEXT, mfidx TEXT, category INTEGER, title TEXT NOT NULL, address TEXT, businessHours TEXT, priceInfo TEXT, trafficInfo TEXT, homepage TEXT, contact TEXT, contents TEXT, lat DOUBLE NOT NULL, lng DOUBLE NOT NULL, tag TEXT, popular INTEGER, rate INTEGER, likeCount INTEGER, bookmarkCount INTEGER, shareCount INTEGER, reviewCount INTEGER, isLiked INTEGER, isBookmarked INTEGER, insertDate TEXT, updateDate TEXT)";
+	private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS place (idx TEXT PRIMARY KEY NOT NULL, seqCode TEXT, cityIdx TEXT, ownerUserSeq TEXT, userName TEXT, gender TEXT, mfidx TEXT, category INTEGER, title TEXT NOT NULL, address TEXT, businessHours TEXT, priceInfo TEXT, trafficInfo TEXT, homepage TEXT, contact TEXT, contents TEXT, lat DOUBLE NOT NULL, lng DOUBLE NOT NULL, tag TEXT, popular INTEGER, rate INTEGER, likeCount INTEGER, bookmarkCount INTEGER, shareCount INTEGER, reviewCount INTEGER, isLiked INTEGER, isBookmarked INTEGER, insertDate TEXT, updateDate TEXT)";
 
-	private static final String DATABASE_NAME = "hangouyou";
-	private static final String DATABASE_TABLE_NAME_PLACE_INFO = "place_info";
+	private static final String DATABASE_NAME = "contents";
+	private static final String DATABASE_TABLE_NAME_PLACE_INFO = "place";
 	private static final String DATABASE_TABLE_NAME_SUBWAY = "subway";
 	private static final int DATABASE_VERSION = 1;
 	private final Context context;
@@ -163,7 +163,7 @@ public class DatabaseManager
 	public Map<String,PlaceInfo> getAllPlaces()
 	{
 		Map<String,PlaceInfo> placeList = new HashMap<>();
-		String selectQuery = "SELECT  * FROM " + "place_info WHERE category != '8'";
+		String selectQuery = "SELECT idx, category, title, address, lat, lng, premiumIdx, image, offlineimage FROM " + "place";
 
 		//SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = mDb.rawQuery(selectQuery, null);
@@ -176,11 +176,14 @@ public class DatabaseManager
 				{
 					PlaceInfo placeInfo = new PlaceInfo();
 					placeInfo.idx = cursor.getString(0);
-					placeInfo.category = cursor.getInt(7);
-					placeInfo.lat = cursor.getFloat(16);
-					placeInfo.lng = cursor.getFloat(17);
-					placeInfo.title = cursor.getString(8);
-					placeInfo.address = cursor.getString(9);
+					placeInfo.category = cursor.getInt(1);
+					placeInfo.title = cursor.getString(2);
+					placeInfo.address = cursor.getString(3);
+					placeInfo.lat = cursor.getDouble(4);
+					placeInfo.lng = cursor.getDouble(5);
+					placeInfo.premiumIdx = cursor.getString(6);
+					placeInfo.image = cursor.getString(7);
+					placeInfo.offlineimage = cursor.getString(8);
 
 					placeList.put(placeInfo.idx,placeInfo);
 				} while (cursor.moveToNext());
@@ -204,8 +207,8 @@ public class DatabaseManager
 	public Map<String,PlaceInfo> getBoundaryPlace(double botomLat, double topLat, double bottomLng, double topLng)
 	{
 		Map<String,PlaceInfo> placeList = new HashMap<>();
-		String selectQuery = "SELECT  * FROM " + "place_info WHERE (lat BETWEEN '"+botomLat+"' AND '"+topLat+"') "
-				+" AND (lng BETWEEN '"+bottomLng+"' AND '" + topLng +"')";
+		String selectQuery = "SELECT idx, category, title, address, lat, lng, image, offlineimage FROM " + "place WHERE (lat BETWEEN '"
+		                      +botomLat+"' AND '"+topLat+"') " + " AND (lng BETWEEN '"+bottomLng+"' AND '" + topLng +"')";
 
 		//SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = mDb.rawQuery(selectQuery, null);
@@ -216,15 +219,17 @@ public class DatabaseManager
 			{
 				do
 				{
-					PlaceInfo placeInfo = new PlaceInfo();
-					placeInfo.idx = cursor.getString(0);
-					placeInfo.category = cursor.getInt(7);
-					placeInfo.lat = cursor.getFloat(16);
-					placeInfo.lng = cursor.getFloat(17);
-					placeInfo.title = cursor.getString(8);
-					placeInfo.address = cursor.getString(9);
+				  PlaceInfo placeInfo = new PlaceInfo();
+          placeInfo.idx = cursor.getString(0);
+          placeInfo.category = cursor.getInt(1);
+          placeInfo.title = cursor.getString(2);
+          placeInfo.address = cursor.getString(3);
+          placeInfo.lat = cursor.getDouble(4);
+          placeInfo.lng = cursor.getDouble(5);
+          placeInfo.image = cursor.getString(6);
+          placeInfo.offlineimage = cursor.getString(7);
 
-					placeList.put(placeInfo.idx,placeInfo);
+          placeList.put(placeInfo.idx,placeInfo);
 				} while (cursor.moveToNext());
 			}
 		}
@@ -246,7 +251,7 @@ public class DatabaseManager
 	public PlaceInfo getPlacefromIDX(String Idx)
 	{
 		PlaceInfo placeInfo = new PlaceInfo();
-		String selectQuery = "SELECT  * FROM " + "place_info"+ " where idx like '%"+Idx+"%'";
+		String selectQuery = "SELECT idx, category, title, address, lat, lng, premiumIdx, image, offlineimage FROM " + "place  where idx like '%"+Idx+"%'";
 		
 		Cursor cursor = mDb.rawQuery(selectQuery, null);
 
@@ -256,12 +261,14 @@ public class DatabaseManager
 			{
 				do
 				{
-					placeInfo.idx = cursor.getString(0);
-					placeInfo.category = cursor.getInt(7);
-					placeInfo.lat = cursor.getFloat(16);
-					placeInfo.lng = cursor.getFloat(17);
-					placeInfo.title = cursor.getString(8);
-					placeInfo.address = cursor.getString(9);
+          placeInfo.idx = cursor.getString(0);
+          placeInfo.category = cursor.getInt(1);
+          placeInfo.title = cursor.getString(2);
+          placeInfo.address = cursor.getString(3);
+          placeInfo.lat = cursor.getDouble(4);
+          placeInfo.lng = cursor.getDouble(5);
+          placeInfo.image = cursor.getString(6);
+          placeInfo.offlineimage = cursor.getString(7);
 				} while (cursor.moveToNext());
 			}
 		}
@@ -277,48 +284,6 @@ public class DatabaseManager
 			}
 		}
 		return placeInfo;
-	}
-
-	public Map<String,PremiumInfo> getallPremiumInfo()
-	{
-		Map<String,PremiumInfo> premiumList = new HashMap<>();
-		String selectQuery = "SELECT  * FROM " + "premium_info";
-
-		Cursor cursor = mDb.rawQuery(selectQuery, null);
-
-		try
-		{
-			if (cursor.moveToFirst())
-			{
-				do
-				{
-					PremiumInfo premiumInfo = new PremiumInfo();
-					premiumInfo.m_nID = cursor.getString(0);
-					premiumInfo.m_strName = cursor.getString(2);
-					premiumInfo.m_fLatitude = cursor.getFloat(3);
-					premiumInfo.m_fLongitude = cursor.getFloat(4);
-					premiumInfo.m_strImageFilePath = cursor.getString(5);
-					premiumInfo.m_strIntro = cursor.getString(6);
-					premiumInfo.m_strAddress = cursor.getString(10);
-					premiumInfo.m_nLikeCount = cursor.getInt(11);
-					premiumInfo.m_nCategoryID = cursor.getInt(12);
-
-					premiumList.put(premiumInfo.m_nID, premiumInfo);
-				} while (cursor.moveToNext());
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (cursor != null)
-			{
-				cursor.close();
-			}
-		}
-		return premiumList;
 	}
 
 	public Map<String, SubwayInfo> getallSubwayInfo()
@@ -362,9 +327,9 @@ public class DatabaseManager
 		return subwayList;
 	}
 	
-	public List<SubwayInfo> getSubwayfromIdx(String Idx)
+	public SubwayInfo getSubwayfromIdx(String Idx)
 	{
-		List<SubwayInfo> subwayList = new ArrayList<SubwayInfo>();
+	  SubwayInfo subwayInfo = new SubwayInfo();
 		String selectQuery = "SELECT  * FROM " + "Subway"+ " where idx like '%"+Idx+"%'";
 		
 		Cursor cursor = mDb.rawQuery(selectQuery, null);
@@ -375,7 +340,7 @@ public class DatabaseManager
 			{
 				do
 				{
-					SubwayInfo subwayInfo = new SubwayInfo();
+					
 					subwayInfo.idx = cursor.getString(0);
 					subwayInfo.line = cursor.getString(1);
 					subwayInfo.name_ko = cursor.getString(2);
@@ -384,8 +349,6 @@ public class DatabaseManager
 					subwayInfo.category = 99;
 					subwayInfo.lat = cursor.getFloat(5);
 					subwayInfo.lng = cursor.getFloat(6);
-					
-					subwayList.add(subwayInfo);
 				} while (cursor.moveToNext());
 			}
 		}
@@ -401,7 +364,7 @@ public class DatabaseManager
 			}
 		}
 
-		return subwayList;
+		return subwayInfo;
 	}
 	
 	public Map<String, SubwayExitInfo> getallSubwayExitInfo()
@@ -439,45 +402,5 @@ public class DatabaseManager
 		}
 		return subwayExitList;
 	}
-
-	public List<PremiumInfo> getPremiumfromIDX(String Idx)
-	{
-		List<PremiumInfo> premiumList = new ArrayList<PremiumInfo>();
-		String selectQuery = "SELECT  * FROM " + "premium_info"+ " where idx = '"+Idx+"'";
-		Cursor cursor = mDb.rawQuery(selectQuery, null);
-
-		try
-		{
-			if (cursor.moveToFirst())
-			{
-				do
-				{
-					PremiumInfo premiumInfo = new PremiumInfo();
-					premiumInfo.m_nID = cursor.getString(0);
-					premiumInfo.m_strName = cursor.getString(2);
-					premiumInfo.m_fLatitude = cursor.getFloat(3);
-					premiumInfo.m_fLongitude = cursor.getFloat(4);
-					premiumInfo.m_strImageFilePath = cursor.getString(5);
-					premiumInfo.m_strIntro = cursor.getString(6);
-					premiumInfo.m_strAddress = cursor.getString(10);
-					premiumInfo.m_nLikeCount = cursor.getInt(11);
-					premiumInfo.m_nCategoryID = cursor.getInt(12);
-
-					premiumList.add(premiumInfo);
-				} while (cursor.moveToNext());
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (cursor != null)
-			{
-				cursor.close();
-			}
-		}
-		return premiumList;
-	}
+	
 }

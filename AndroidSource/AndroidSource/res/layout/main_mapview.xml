@@ -186,6 +186,7 @@
                         android:layout_gravity="center"
                         android:textColor="@color/darker_gray"
                         android:textSize="18sp"
+                        android:textStyle="bold"
                         android:textAlignment="center"/>
                     
                     <TextView 

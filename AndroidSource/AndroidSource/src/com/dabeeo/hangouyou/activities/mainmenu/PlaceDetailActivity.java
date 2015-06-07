@@ -193,6 +193,8 @@ public class PlaceDetailActivity extends ActionBarActivity
         {
           Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
           i.putExtra("idx", bean.idx);
+          i.putExtra("lat", bean.lat);
+          i.putExtra("lng", bean.lng);
           startActivity(i);
         }
       });
@@ -287,8 +289,8 @@ public class PlaceDetailActivity extends ActionBarActivity
     textDetail.setText(bean.contents);
     
     addDetailInfo(getString(R.string.term_address), bean.address);
-//		addDetailInfo(getString(R.string.term_phone), bean.contact);
-    addDetailInfo(getString(R.string.term_phone), "02-000-0000");
+		addDetailInfo(getString(R.string.term_phone), bean.contact);
+//    addDetailInfo(getString(R.string.term_phone), "02-000-0000");
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);
     
     titleView.setBean(bean);
@@ -308,7 +310,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       
       ImageView btnCall = (ImageView) view.findViewById(R.id.btn_call);
       ImageView btnAddress = (ImageView) view.findViewById(R.id.btn_address);
-      if (title.equals(getString(R.string.term_address)))
+      if (title.equals(getString(R.string.term_address)) && !isEnterMap)
       {
         btnAddress.setVisibility(View.VISIBLE);
         btnAddress.setOnClickListener(new OnClickListener()

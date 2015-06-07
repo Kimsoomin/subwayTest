@@ -47,7 +47,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     
     m_context = ct;
     
-    size = Global.DpToPixel(m_context, 30);		
+    size = Global.DpToPixel(m_context, 40);		
     typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
     
     paint = new Paint();
@@ -57,7 +57,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     
     textpaint = new Paint(Paint.FAKE_BOLD_TEXT_FLAG);
     textpaint.setColor(Color.rgb(255, 255, 255));
-    textpaint.setTextSize(19);
+    textpaint.setTextSize(25);
     textpaint.setTextAlign(Align.CENTER);
     textpaint.setTypeface(typeface);
     
@@ -82,12 +82,10 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
 		
 		if(dksehoakdgoTdj.mDescription.equals(day))
 		{
-		  BlinkingCommon.smlLibDebug("PlanOverlay", "dksehoakdgoTdj.mDescription : " + dksehoakdgoTdj.mDescription);
 			pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
 			flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
 		}else
 		{
-		  BlinkingCommon.smlLibDebug("PlanOverlay", "dksehoakdgoTdj.mDescriptionjlkasjfdlkdjsal : " + dksehoakdgoTdj.mDescription);
 			pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
 			flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
 		}
@@ -103,7 +101,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
 			{
 				OverlayItem nextItem = getItem(i-1);
 				Point pt2 = mapView.getProjection().toPixels(nextItem.getPoint(), null);
-				canvas.drawLine(pt1.x+pinPlan.getWidth()/2, pt1.y-offset, pt2.x+pinPlan.getWidth()/2, pt2.y-offset, paint);
+				canvas.drawLine(pt1.x, pt1.y-35, pt2.x, pt2.y-35, paint);
 			}
 		}
 
@@ -114,16 +112,16 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
 
 			GeoPoint geoPoint = overlayitem.getPoint();
 			Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
-			
+						
 			if(i==0)
 			{
 				dayStr = "第"+overlayitem.mDescription+"天";
-				canvas.drawBitmap(flagPlan, pt1.x+pinPlan.getWidth()-5, pt1.y-pinPlan.getHeight()-10,null);
-				canvas.drawText(dayStr, pt1.x+pinPlan.getWidth()+23, pt1.y-pinPlan.getHeight()+10, textpaint);
+				canvas.drawBitmap(flagPlan, pt1.x-pinPlan.getWidth()/2+50, pt1.y-pinPlan.getHeight()/2-60,null);
+				canvas.drawText(dayStr, pt1.x+pinPlan.getWidth()/2+30, pt1.y-pinPlan.getHeight()+5, textpaint);
 			}
-			
-			canvas.drawBitmap(pinPlan, pt1.x, pt1.y - pinPlan.getHeight() - offset, null);
-			canvas.drawText(""+spotNum, pt1.x+pinPlan.getWidth()/2-1, pt1.y- pinPlan.getHeight()+5, textpaint);
+		
+			canvas.drawBitmap(pinPlan, pt1.x-pinPlan.getWidth()/2, pt1.y - pinPlan.getHeight()/2-50-offset, null);
+			canvas.drawText(""+spotNum, pt1.x-pinPlan.getWidth()/2+30, pt1.y- pinPlan.getHeight()/2-35, textpaint);
 		}
 	}
 }
