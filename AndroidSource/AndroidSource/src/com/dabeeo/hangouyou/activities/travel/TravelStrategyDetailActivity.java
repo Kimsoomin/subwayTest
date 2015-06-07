@@ -32,6 +32,7 @@ import com.dabeeo.hangouyou.beans.ContentBean;
 import com.dabeeo.hangouyou.beans.PremiumDetailBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.views.SharePickView;
@@ -124,7 +125,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         public void run()
         {
           Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-          i.putExtra("idx", bean.idx);
+          i.putExtra("premiumIdx", ""+placeIdx);
           startActivity(i);
         }
       });
@@ -137,7 +138,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   }
   
   
-  private void loadPlaceDetail()
+  public void loadPlaceDetail()
   {
     progressBar.setVisibility(View.VISIBLE);
     progressBar.bringToFront();
@@ -150,6 +151,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
+      BlinkingCommon.smlLibDebug("추천서울", "premiumIdx : " +placeIdx); 
       return apiClient.getPremiumDetail(placeIdx);
     }
     
@@ -178,7 +180,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   }
   
   
-  private void displayContentData()
+  public void displayContentData()
   {
     if (bean == null)
       return;
@@ -264,8 +266,14 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       horizontalImagesView.addView(parentView);
     }
     
-    addDetailInfo(getString(R.string.term_address), "서울특별시 광진구 능동로 216");
-    addDetailInfo(getString(R.string.term_phone), "02-450-9311");
+//    if(bean.address != null)
+//      addDetailInfo(getString(R.string.term_address), bean.address);
+//    else
+      addDetailInfo(getString(R.string.term_address), "s");
+//    if(bean.contact != null)
+//      addDetailInfo(getString(R.string.term_phone), bean.contact);
+//    else
+      addDetailInfo(getString(R.string.term_phone), "a");
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);
     addDetailInfo(getString(R.string.term_working_time), bean.businessHours);
     addDetailInfo(getString(R.string.term_price_info), bean.priceInfo);
@@ -274,7 +282,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   }
   
   
-  private void addDetailInfo(String title, final String text)
+  public void addDetailInfo(String title, final String text)
   {
     if (!TextUtils.isEmpty(text))
     {
@@ -312,7 +320,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
           public void onClick(View arg0)
           {
             Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-            i.putExtra("place_idx", bean.idx);
+            i.putExtra("premiumIdx", ""+placeIdx);
             startActivity(i);
           }
         });

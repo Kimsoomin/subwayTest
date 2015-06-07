@@ -285,6 +285,37 @@ public class DatabaseManager
 		}
 		return placeInfo;
 	}
+	
+	public String getPremiumfromIDX(String Idx)
+  {
+    String idx = null;
+    String selectQuery = "SELECT idx FROM " + "place  where premiumIdx ='"+Idx+"'";
+    
+    Cursor cursor = mDb.rawQuery(selectQuery, null);
+
+    try
+    {
+      if (cursor.moveToFirst())
+      {
+        do
+        {
+          idx = cursor.getString(0);
+        } while (cursor.moveToNext());
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      if (cursor != null)
+      {
+        cursor.close();
+      }
+    }
+    return idx;
+  }
 
 	public Map<String, SubwayInfo> getallSubwayInfo()
 	{

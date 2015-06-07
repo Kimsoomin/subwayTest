@@ -35,6 +35,7 @@ import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.views.SharePickView;
 
@@ -215,6 +216,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
 			SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy.MM.dd");
 			String currentDate;
 			long daydiff = diffOfDate(bean.startDate, bean.endDate);
+			BlinkingCommon.smlLibDebug("Plan", "bean.startDate : " + bean.startDate);
+			BlinkingCommon.smlLibDebug("Plan", "bean.endDate : " + bean.endDate);
 			intent.putExtra("palnDayDiff", daydiff);
 
 			try

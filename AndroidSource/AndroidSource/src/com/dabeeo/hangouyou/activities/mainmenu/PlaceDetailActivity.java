@@ -192,9 +192,7 @@ public class PlaceDetailActivity extends ActionBarActivity
         public void run()
         {
           Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
-          i.putExtra("idx", bean.idx);
-          i.putExtra("lat", bean.lat);
-          i.putExtra("lng", bean.lng);
+          i.putExtra("placeIdx", bean.idx);
           startActivity(i);
         }
       });
@@ -319,6 +317,7 @@ public class PlaceDetailActivity extends ActionBarActivity
           public void onClick(View arg0)
           {
             Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
+            i.putExtra("placeIdx", bean.idx);
             startActivity(i);
           }
         });

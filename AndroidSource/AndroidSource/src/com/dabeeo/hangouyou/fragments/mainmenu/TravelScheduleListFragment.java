@@ -53,7 +53,6 @@ public class TravelScheduleListFragment extends Fragment
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
   
-  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {

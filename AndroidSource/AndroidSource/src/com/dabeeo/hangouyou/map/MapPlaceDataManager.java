@@ -74,6 +74,11 @@ public class MapPlaceDataManager
 	{
 		return db.getPlacefromIDX(Idx);
 	}
+	
+	public String getPremiumfromIDX(String Idx)
+	{
+	  return db.getPremiumfromIDX(Idx);
+	}
 
 	public Map<String, SubwayInfo> getallSubwayInfo()
 	{

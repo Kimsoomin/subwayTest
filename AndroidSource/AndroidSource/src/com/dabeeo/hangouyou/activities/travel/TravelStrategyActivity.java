@@ -47,7 +47,7 @@ public class TravelStrategyActivity extends ActionBarActivity
   
   
   @Override
-  protected void onCreate(Bundle savedInstanceState)
+  public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_travel_strategy);

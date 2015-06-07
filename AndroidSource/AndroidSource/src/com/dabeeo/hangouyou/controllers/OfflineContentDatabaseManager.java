@@ -347,7 +347,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 			
 			//Plan
 			JSONArray arr = obj.getJSONArray("plan");
-			Log.w("WARN", "오프라인 여행 Plan size : " + arr.length());
 			for (int i = 0; i < arr.length(); i++)
 			{
 				JSONObject innerObj = arr.getJSONObject(i);
@@ -360,7 +359,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 			}
 			
 			arr = obj.getJSONArray("place");
-			Log.w("WARN", "오프라인 Place size : " + arr.length());
 			for (int i = 0; i < arr.length(); i++)
 			{
 				JSONObject innerObj = arr.getJSONObject(i);
@@ -373,7 +371,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 			}
 			
 			arr = obj.getJSONArray("review");
-			Log.w("WARN", "오프라인 Review size : " + arr.length());
 			for (int i = 0; i < arr.length(); i++)
 			{
 				JSONObject innerObj = arr.getJSONObject(i);
