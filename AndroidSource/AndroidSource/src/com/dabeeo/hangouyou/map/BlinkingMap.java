@@ -37,7 +37,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -61,7 +60,6 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewDebug.FlagToString;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -622,12 +620,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
             idx = null;
             lineId = "";
             markerSel(selectItem);
-//						categoryType = -1;
           }
-//					else
-//					{
-//						markerRefresh();
-//					}
           
           markerRefresh();
           place_fLatitude = m_mapView.getMapCenter().getLatitudeE6()/1e6;
@@ -967,6 +960,12 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     
     dayLeft.setOnClickListener(this);
     dayRight.setOnClickListener(this);
+    
+    Intent planIntent = getIntent();
+    if(planIntent.hasExtra("plan"))
+    {
+      planIntent();
+    }
   }
   
   
@@ -1452,9 +1451,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         idx = intent.getStringExtra("placeIdx");
         selectItem = 1;
         selectMarker(null, 4);
-      }else if(intent.hasExtra("plan"))
-      {
-        planIntent(intent);
       }else if(intent.hasExtra("premiumIdx"))
       {      
         idx = intent.getStringExtra("premiumIdx");
@@ -1477,27 +1473,24 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     super.onResume();
     
     Intent intent = getIntent();
-    if(intent.hasExtra("plan"))
-      planIntent(intent);
-    else if (intent.hasExtra("lineId"))
+    if (intent.hasExtra("lineId"))
     {
       subwayIntnet(intent);
       selectItem = 2;
-    }
-    else if (intent.hasExtra("placeIdx"))
+    }else if (intent.hasExtra("placeIdx"))
     {
       idx = intent.getStringExtra("placeIdx");
       BlinkingCommon.smlLibDebug("BlinkingMap", "idx : " +idx );
       selectItem = 1;
       selectMarker(null, 4);
     }else if(intent.hasExtra("premiumIdx"))
-    {
+    {      
       idx = intent.getStringExtra("premiumIdx");
       idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(idx);
-      BlinkingCommon.smlLibDebug("BlinkingMap", "premiumIdx : " + idx);
       selectItem = 1;
       selectMarker(null, 4);
     }
+    
     mapCenterset(0);
   }
   
@@ -1537,43 +1530,42 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     summaryViewVisibleSet(summaryViewVisible, 3);
   }
   
-  public void planIntent(Intent planIntent)
+  public void planIntent()
   {
-    if(planIntent.hasExtra("plan"))
+    Intent planIntent = getIntent();
+    
+    planIntentget = true;
+    
+    planItems = new ArrayList<OverlayItem>();
+    planInfo = (ArrayList<ScheduleDayBean>) planIntent.getSerializableExtra("plan");
+    long daydiff = 0;
+    
+    if(planIntent.hasExtra("planDayNum"))
     {
-      planIntentget = true;
-      
-      planItems = new ArrayList<OverlayItem>();
-      planInfo = (ArrayList<ScheduleDayBean>) planIntent.getSerializableExtra("plan");
-      long daydiff = 0;
-      
-      if(planIntent.hasExtra("planDayNum"))
-      {
-        planDayNum = planIntent.getIntExtra("planDayNum", 0);
-      }
-      
-      if(planIntent.hasExtra("planDayLat") && planIntent.hasExtra("planDayLng"))
-      {
-        place_fLatitude = planIntent.getDoubleExtra("planDayLat", 0);
-        place_fLongitute = planIntent.getDoubleExtra("planDayLng", 0);
-      }
-      
-      if(planIntent.hasExtra("planYMD"))
-      {
-        planYMD = planIntent.getStringExtra("planYMD");
-      }
-      
-      if(planIntent.hasExtra("palnDayDiff"))
-      {
-        daydiff = planIntent.getIntExtra("palnDayDiff", 0);
-      }        
-      
-      planDayLayout(planDayNum, planYMD, daydiff);
-      
-      new PlanSetAsyncTask().execute();
-      
-      categoryType = -2;
+      planDayNum = planIntent.getIntExtra("planDayNum", 0);
     }
+    
+    if(planIntent.hasExtra("planDayLat") && planIntent.hasExtra("planDayLng"))
+    {
+      place_fLatitude = planIntent.getDoubleExtra("planDayLat", 0);
+      place_fLongitute = planIntent.getDoubleExtra("planDayLng", 0);
+    }
+    
+    if(planIntent.hasExtra("planYMD"))
+    {
+      planYMD = planIntent.getStringExtra("planYMD");
+    }
+    
+    if(planIntent.hasExtra("palnDayDiff"))
+    {
+      daydiff = planIntent.getIntExtra("palnDayDiff", 0);
+    }        
+    
+    planDayLayout(planDayNum, planYMD, daydiff);
+    
+    new PlanSetAsyncTask().execute();
+    
+    categoryType = -2;
   }
   
   public void planDayLayout(int planDayNum, String planYMD, long daydiff)
@@ -1694,18 +1686,32 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         allplaceOverlay.changeMethod(idx);
       if(subwayOverlay != null)
         subwayOverlay.changeMethod(null);
+      if(planOverlay != null)
+        planOverlay.changeMethod(null);
     }else if(select == 2)
     {
-      if(subwayOverlay != null)
-        subwayOverlay.changeMethod(idx);
       if(allplaceOverlay != null)
         allplaceOverlay.changeMethod(null);
+      if(subwayOverlay != null)
+        subwayOverlay.changeMethod(idx);
+      if(planOverlay != null)
+        planOverlay.changeMethod(null);
+    }else if (select == 3)
+    {
+      if(allplaceOverlay != null)
+        allplaceOverlay.changeMethod(null);
+      if(subwayOverlay != null)
+        subwayOverlay.changeMethod(null);
+      if(planOverlay != null)
+        planOverlay.changeMethod(idx);
     }else if (select == -1)
     {
       if(allplaceOverlay != null)
         allplaceOverlay.changeMethod(null);
       if(subwayOverlay != null)
         subwayOverlay.changeMethod(null);
+      if(planOverlay != null)
+        planOverlay.changeMethod(null);
     }
     
     m_mapView.invalidate();
@@ -1755,6 +1761,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       }else if (selectType == 3)
       {
         idx = arg1.mUid;
+        markerSel(selectType);
       }
       
       PlaceInfo info = allplaceinfo.get(idx);
@@ -1932,7 +1939,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     int attractionCount = 0;
     int shoppingCount = 0;
     int restaurantCount = 0;
-    int premiumIdxCount = 0;
+    
     
     @Override
     protected Void doInBackground(Void... params) 
@@ -1949,70 +1956,91 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         {	
           PlaceInfo info = itemInfo.getValue();
           
-          if(topLat >info.lat	&& bottomLng<info.lng && bottomLat<info.lat && topLng>info.lng)
-          {	
-            if(categoryType == 1)
+          boolean planExist = false;
+          if(planItems != null)
+          {
+            for(int i = 0; i<planItems.size(); i++)
             {
-              if(info.category == 1 || info.category == 3 || info.category == 4 
-                  || info.category == 5 || info.category == 6 )
+              if(planItems.get(i).mUid.equals(info.idx))
               {
-                OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
-                    new GeoPoint(info.lat,info.lng));
-                localPlaceItems.add(item);
+                planExist = true;
+                break;
               }
-            }else if(categoryType == info.category)
-            {
-              OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
-                  new GeoPoint(info.lat,info.lng));
-              localPlaceItems.add(item);
-            }else if (categoryType == -1)
-            {
-              if(m_mapView.getZoomLevel() == 17 || m_mapView.getZoomLevel() == 18)
+            }
+          }
+          if(!planExist)
+          {
+            if(topLat>info.lat && bottomLng<info.lng && bottomLat<info.lat && topLng>info.lng)
+            {	
+              if(categoryType == 1)
               {
-                OverlayItem item = new OverlayItem(""+ info.category,info.title, info.idx, new GeoPoint(info.lat,info.lng));
-                localPlaceItems.add(item);
-              }else if(m_mapView.getZoomLevel() == 16)
-              {
-                if(info.category == 1 || info.category == 2 || info.category == 3 || info.category == 4 
-                    || info.category == 5 || info.category == 8 || info.category == 7 || info.category == 6 || info.category == 60)
+                if(info.category == 1 || info.category == 3 || info.category == 4 || info.category == 5 || info.category == 6 )
                 {
                   OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
                   localPlaceItems.add(item);
                 }
-              }else if (m_mapView.getZoomLevel() == 15)
+              }else if(categoryType == info.category)
               {
-                if((info.category == 1 || info.category == 3 || info.category == 4 
-                    || info.category == 5 || info.category == 6) && attractionCount<10)
-                {
-                  OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
-                      new GeoPoint(info.lat,info.lng));
-                  localPlaceItems.add(item);
-                  attractionCount++;
-                }
-                
-                if(info.category == 2 && shoppingCount<10)
-                {
-                  OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
-                      new GeoPoint(info.lat,info.lng));
-                  localPlaceItems.add(item);
-                  shoppingCount++;
-                }
-                
-                if(info.category == 7 && restaurantCount<10)
-                {
-                  OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
-                      new GeoPoint(info.lat,info.lng));
-                  localPlaceItems.add(item);
-                  restaurantCount++;
-                }
-              }else
+                OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                localPlaceItems.add(item);
+              }else if (categoryType == -1)
               {
-                if(info.premiumIdx != null)
+                if(m_mapView.getZoomLevel() == 17 || m_mapView.getZoomLevel() == 18)
                 {
-                  OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, 
-                      new GeoPoint(info.lat,info.lng));
+                  OverlayItem item = new OverlayItem(""+ info.category,info.title, info.idx, new GeoPoint(info.lat,info.lng));
                   localPlaceItems.add(item);
-                  premiumIdxCount++;
+                }else if(m_mapView.getZoomLevel() == 16)
+                {
+                  if(!info.premiumIdx.equals("null"))
+                  {
+                    OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                    localPlaceItems.add(item); 
+                  }else
+                  {
+                    if(info.category == 1 || info.category == 2 || info.category == 3 || info.category == 4 
+                        || info.category == 5 || info.category == 8 || info.category == 7 || info.category == 6 || info.category == 60)
+                    {
+                      OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                      localPlaceItems.add(item);
+                    }
+                  }
+                }else if (m_mapView.getZoomLevel() == 15)
+                {
+                  if(!info.premiumIdx.equals("null"))
+                  {
+                    OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                    localPlaceItems.add(item);
+                  }else
+                  {
+                    if((info.category == 1 || info.category == 3 || info.category == 4 
+                        || info.category == 5 || info.category == 6) && attractionCount<10)
+                    {
+                      OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                      localPlaceItems.add(item);
+                      attractionCount++;
+                    }
+                    
+                    if(info.category == 2 && shoppingCount<10)
+                    {
+                      OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                      localPlaceItems.add(item);
+                      shoppingCount++;
+                    }
+                    
+                    if(info.category == 7 && restaurantCount<10)
+                    {
+                      OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                      localPlaceItems.add(item);
+                      restaurantCount++;
+                    }
+                  }
+                }else
+                {
+                  if(!info.premiumIdx.equals("null"))
+                  {
+                    OverlayItem item = new OverlayItem(""+ info.category,info.title,info.idx, new GeoPoint(info.lat,info.lng));
+                    localPlaceItems.add(item);
+                  }
                 }
               }
             }
@@ -2032,8 +2060,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
             if(topLat > ex.lat && bottomLng < ex.lng && bottomLat < ex.lat && topLng > ex.lng)
             {
               
-              OverlayItem item = new OverlayItem("99",ex.exit,
-                  subwayEx.idx, new GeoPoint(ex.lat, ex.lng));
+              OverlayItem item = new OverlayItem("99",ex.exit, subwayEx.idx, new GeoPoint(ex.lat, ex.lng));
               localSubwayExitItems.add(item);
             }
           }
@@ -2057,6 +2084,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
           }
         }
       }
+      
       return null;
     }
     

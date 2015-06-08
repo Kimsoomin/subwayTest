@@ -74,11 +74,10 @@ public class ImageDownloader
 			@Override
 			public void onLoadingCancelled(String arg0, View arg1)
 			{
-				((ImageView) arg1).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			  
 			}
 		});
 	}
-	
 	
 	public static void displayProfileImage(Context context, String url, ImageView imageView)
 	{

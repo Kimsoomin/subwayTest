@@ -62,7 +62,6 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CATEGORY_LIST");
   }
   
-  
   public ArrayList<ScheduleBean> getTravelSchedules(int page)
   {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
@@ -174,7 +173,6 @@ public class ApiClient
     return places;
   }
   
-  
   public PlaceDetailBean getPlaceDetail(String placeIdx)
   {
     PlaceDetailBean bean = new PlaceDetailBean();
@@ -213,7 +211,6 @@ public class ApiClient
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType + "&pn=10");
   }
-  
   
   public NetworkResult postReview(int rate, String content, int placeIdx, String placeType)
   {

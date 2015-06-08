@@ -34,6 +34,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   Bitmap pinPlan_on;
   Bitmap flagPlan;
   Bitmap flagPlan_on;
+  Bitmap pin_map;
   
   String day;
   int size;
@@ -45,6 +46,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   int textsize;
   Typeface typeface;
   float scale;
+  String idx = "";
   
   public PlanOverlay(ArrayList<OverlayItem> pList, ItemizedIconOverlay.OnItemGestureListener<OverlayItem> pOnItemGestureListener,
       ResourceProxy pResourceProxy, Context ct, String day) 
@@ -63,6 +65,8 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     pinPlan_on = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
     flagPlan_on = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
     
+    pin_map = Global.fitImageSize(m_context, R.drawable.pin_map_place, size, size);
+    
     paint = new Paint();
     paint.setARGB(200, 172, 186, 191);
     paint.setStrokeWidth(6);
@@ -78,8 +82,11 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   public void dayset(String day)
   {
     this.day = day;
-    pinPlan_on = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
-    flagPlan_on = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
+  }
+  
+  public void changeMethod(String idx)
+  {
+    this.idx = idx;
   }
   
   @Override
@@ -97,7 +104,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
       GeoPoint geoPoint = overlayitem.getPoint();
       Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
       
-      if(i != nSize -1)
+      if(i != nSize-1)
       {
         OverlayItem nextItem = getItem(i+1);
         Point pt2 = mapView.getProjection().toPixels(nextItem.getPoint(), null);
@@ -125,28 +132,34 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
       
       spotNum = spotNum + 1;
       
-      if(overlayitem.mDescription.equals(day))
-      {        
-        if(spotNum == 1)
-        {
-          dayStr = "第"+overlayitem.mDescription+"天";
-          canvas.drawBitmap(flagPlan_on, pt1.x-pinPlan_on.getWidth()/2+50, pt1.y-pinPlan_on.getHeight()/2-60,null);
-          canvas.drawText(dayStr, pt1.x+pinPlan_on.getWidth()/2+30, pt1.y-pinPlan_on.getHeight()+5, textpaint);
-        }
-        
-        canvas.drawBitmap(pinPlan_on, pt1.x-pinPlan_on.getWidth()/2, pt1.y - pinPlan_on.getHeight()/2-50-offset, null);
-        canvas.drawText(""+spotNum, pt1.x-pinPlan_on.getWidth()/2+30, pt1.y- pinPlan_on.getHeight()/2-35, textpaint);
+      if(overlayitem.mUid.equals(idx))
+      {
+        canvas.drawBitmap(pin_map, pt1.x-pinPlan.getWidth()/2+25, pt1.y - pinPlan.getHeight()/2-50-offset, null);
       }else
       {
-        if(spotNum == 1)
+        if(overlayitem.mDescription.equals(day))
+        {        
+          if(spotNum == 1)
+          {
+            dayStr = "第"+overlayitem.mDescription+"天";
+            canvas.drawBitmap(flagPlan_on, pt1.x-pinPlan_on.getWidth()/2+50, pt1.y-pinPlan_on.getHeight()/2-60,null);
+            canvas.drawText(dayStr, pt1.x+pinPlan_on.getWidth()/2+30, pt1.y-pinPlan_on.getHeight()+5, textpaint);
+          }
+          
+          canvas.drawBitmap(pinPlan_on, pt1.x-pinPlan_on.getWidth()/2, pt1.y - pinPlan_on.getHeight()/2-50-offset, null);
+          canvas.drawText(""+spotNum, pt1.x-pinPlan_on.getWidth()/2+30, pt1.y- pinPlan_on.getHeight()/2-35, textpaint);
+        }else
         {
-          dayStr = "第"+overlayitem.mDescription+"天";
-          canvas.drawBitmap(flagPlan, pt1.x-pinPlan.getWidth()/2+50, pt1.y-pinPlan.getHeight()/2-60,null);
-          canvas.drawText(dayStr, pt1.x+pinPlan.getWidth()/2+30, pt1.y-pinPlan.getHeight()+5, textpaint);
+          if(spotNum == 1)
+          {
+            dayStr = "第"+overlayitem.mDescription+"天";
+            canvas.drawBitmap(flagPlan, pt1.x-pinPlan.getWidth()/2+50, pt1.y-pinPlan.getHeight()/2-60,null);
+            canvas.drawText(dayStr, pt1.x+pinPlan.getWidth()/2+30, pt1.y-pinPlan.getHeight()+5, textpaint);
+          }
+          
+          canvas.drawBitmap(pinPlan, pt1.x-pinPlan.getWidth()/2, pt1.y - pinPlan.getHeight()/2-50-offset, null);
+          canvas.drawText(""+spotNum, pt1.x-pinPlan.getWidth()/2+30, pt1.y- pinPlan.getHeight()/2-35, textpaint);
         }
-        
-        canvas.drawBitmap(pinPlan, pt1.x-pinPlan.getWidth()/2, pt1.y - pinPlan.getHeight()/2-50-offset, null);
-        canvas.drawText(""+spotNum, pt1.x-pinPlan.getWidth()/2+30, pt1.y- pinPlan.getHeight()/2-35, textpaint);
       }
     }
   }

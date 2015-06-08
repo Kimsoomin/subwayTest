@@ -71,6 +71,7 @@ public class TravelScheduleListFragment extends Fragment
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     emptyText = (TextView) getView().findViewById(R.id.text_empty);
     recommendContainer = (LinearLayout) getView().findViewById(R.id.recommend_container);
+    ((TravelSchedulesActivity) getActivity()).showBottomTab(true);
     
     adapter = new TravelScheduleListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
@@ -205,17 +206,6 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-      try
-      {
-        if (firstVisibleItem > lastVisibleItem)
-          ((TravelSchedulesActivity) getActivity()).showBottomTab(true);
-        else
-          ((TravelSchedulesActivity) getActivity()).showBottomTab(false);
-      }
-      catch (Exception e)
-      {
-      }
-      
       if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
       {
         Log.w("WARN", "isLoad ended:" + isLoadEnded);

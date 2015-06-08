@@ -38,7 +38,7 @@ public class MapCheckUtil
 		if (!directory.exists())
 			directory.mkdirs();
 		
-		File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+		File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
 		if (!file.exists())
 		{
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -127,7 +127,7 @@ public class MapCheckUtil
 				Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 				
 				InputStream input = new BufferedInputStream(url.openStream());
-				File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+				File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
 				try
 				{
 					if (!file.exists())
@@ -188,13 +188,13 @@ public class MapCheckUtil
 	  {
 	    AssetManager assetManager = context.getAssets();
 	    
-	    File file = new File(Global.GetPathWithSDCard() + Global.HangouyouDBFileName);
+	    File file = new File(Global.GetDatabaseFilePath() + Global.HangouyouDBFileName);
 	    
 	    if (!file.exists())
 	    {
 	      try
 	      {
-	        InputStream is = assetManager.open("hangouyou.sqlite");
+	        InputStream is = assetManager.open("hanhayou.sqlite");
 	        OutputStream out = new FileOutputStream(file);
 	        
 	        int size = is.available();
@@ -216,87 +216,9 @@ public class MapCheckUtil
 	        e.printStackTrace();
 	      }
 	    }
-//	    AssetManager assetManager = getAssets();
-//	    InputStream inputStream = null;
-//	    String placeJsonString = "";
-//	    try
-//	    {
-//	      inputStream = assetManager.open("place_json.txt");
-//	      if (inputStream != null)
-//	      {
-//	        Writer writer = new StringWriter();
-//	        
-//	        char[] buffer = new char[1024];
-//	        try
-//	        {
-//	          Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-//	          int n;
-//	          while ((n = reader.read(buffer)) != -1)
-//	          {
-//	            writer.write(buffer, 0, n);
-//	          }
-//	        }
-//	        finally
-//	        {
-//	          inputStream.close();
-//	        }
-//	        placeJsonString = writer.toString();
-//	      }
-//	    }
-//	    catch (IOException e)
-//	    {
-//	      Log.e("message: ", e.getMessage());
-//	    }
-	//    
-//	    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
-//	    MapPlaceDataManager.getInstance(IntroActivity.this).deleteDatabase();
-//	    MapPlaceDataManager.getInstance(IntroActivity.this).initDatabase();
-	//    
-//	    JSONArray array;
-//	    try
-//	    {
-//	      JSONObject obj = new JSONObject(placeJsonString);
-//	      array = obj.getJSONArray("place");
-//	      for (int i = 0; i < array.length(); i++)
-//	      {
-//	        PlaceBean bean = new PlaceBean();
-//	        bean.setJSONObject(array.getJSONObject(i));
-//	        MapPlaceDataManager.getInstance(IntroActivity.this).addPlace(bean);
-//	      }
-//	      
-//	      ArrayList<StationBean> stations = SubwayManager.getInstance(IntroActivity.this).stations;
-//	      ArrayList<StationBean> afterArray = new ArrayList<StationBean>();
-//	      String append = "";
-//	      for (int i = 0; i < stations.size(); i++)
-//	      {
-//	        boolean isContain = false;
-//	        for (int j = 0; j < afterArray.size(); j++)
-//	        {
-//	          if (afterArray.get(j).nameKo.equals(stations.get(i).nameKo))
-//	            isContain = true;
-//	        }
-//	        
-//	        if (!isContain)
-//	        {
-//	          append += stations.get(i).nameKo + " ";
-//	          afterArray.add(stations.get(i));
-//	        }
-//	      }
-//	      for (int j = 0; j < afterArray.size(); j++)
-//	      {
-//	        MapPlaceDataManager.getInstance(IntroActivity.this).addSubway(afterArray.get(j));
-//	      }
-//	      
-//	      Log.w("WARN", "Stations : " + append);
-//	      Log.w("WARN", "Station : " + afterArray.size());
-//	    }
-//	    catch (JSONException e)
-//	    {
-//	      e.printStackTrace();
-//	    }
 	    
 	    if (run != null)
-			run.run();
+	      run.run();
 	  }
 	  
 }

@@ -165,16 +165,16 @@ public class MyBookmarkPlaceListFragment extends Fragment
   private void load(int offset)
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute();
+    new GetStoreAsyncTask().execute(page);
   }
   
-  private class GetStoreAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceBean>>
+  private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
   {
     
     @Override
-    protected ArrayList<PlaceBean> doInBackground(String... params)
+    protected ArrayList<PlaceBean> doInBackground(Integer... params)
     {
-      return apiClient.getPlaceList(page);
+      return apiClient.getPlaceList(params[0]);
     }
     
     

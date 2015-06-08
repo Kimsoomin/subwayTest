@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.PlaceListAdapter;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.map.BlinkingCommon;
 
 public class PlaceListFragment extends Fragment
 {
@@ -61,6 +61,7 @@ public class PlaceListFragment extends Fragment
 		progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
 		
 		adapter = new PlaceListAdapter(getActivity());
+		((TravelStrategyActivity) getActivity()).showBottomTab(true);
 		
 		listView = (ListView) getView().findViewById(R.id.listview);
 		listView.setOnItemClickListener(itemClickListener);
@@ -75,19 +76,10 @@ public class PlaceListFragment extends Fragment
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
 			{
-				try
-				{
-					if (firstVisibleItem > lastVisibleItem)
-						((TravelStrategyActivity) getActivity()).showBottomTab(true);
-					else
-						((TravelStrategyActivity) getActivity()).showBottomTab(false);
-				} catch (Exception e)
-				{
-					
-				}
 				if (!isLoading && !isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
 				{
 					page++;
+					BlinkingCommon.smlLibDebug("PlaceListFragment", "page : " + page);
 					load(page);
 				}
 			}
@@ -101,10 +93,10 @@ public class PlaceListFragment extends Fragment
 	private void load(int offset)
 	{
 		progressBar.setVisibility(View.VISIBLE);
-		new GetStoreAsyncTask().execute();
+		new GetStoreAsyncTask().execute(page);
 	}
 	
-	private class GetStoreAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceBean>>
+	private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
 	{
 		@Override
 		protected void onPreExecute()
@@ -115,9 +107,9 @@ public class PlaceListFragment extends Fragment
 		
 		
 		@Override
-		protected ArrayList<PlaceBean> doInBackground(String... params)
+		protected ArrayList<PlaceBean> doInBackground(Integer... params)
 		{
-			return apiClient.getPlaceList(page, categoryId);
+			return apiClient.getPlaceList(params[0], categoryId);
 		}
 		
 		

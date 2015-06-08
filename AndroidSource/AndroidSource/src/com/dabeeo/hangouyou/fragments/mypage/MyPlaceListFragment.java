@@ -159,19 +159,19 @@ public class MyPlaceListFragment extends Fragment
   private void load(int offset)
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute();
+    new GetStoreAsyncTask().execute(page);
   }
   
-  private class GetStoreAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceBean>>
+  private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
   {
     
     @Override
-    protected ArrayList<PlaceBean> doInBackground(String... params)
+    protected ArrayList<PlaceBean> doInBackground(Integer... params)
     {
       if (categoryId == -1)
-        return apiClient.getPlaceList(page);
+        return apiClient.getPlaceList(params[0]);
       else
-        return apiClient.getPlaceList(page, categoryId);
+        return apiClient.getPlaceList(params[0], categoryId);
     }
     
     

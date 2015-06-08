@@ -28,7 +28,8 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 	Context m_context;
 	BitmapDrawable d;
 	BitmapDrawable d2;
-	Bitmap m_bmpPosition = null;
+	Bitmap place_marker = null;
+	Bitmap pin_map = null;
 	int category;
 	String idx;
 	int nOffset = 20;
@@ -44,6 +45,10 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 		super(pList, Global.GetDrawable(ct, R.drawable.transparent),
 				pOnItemGestureListener, pResourceProxy);
 		m_context = ct;
+		
+		int size = Global.DpToPixel(m_context, 40);
+		pin_map = Global.fitImageSize(m_context, R.drawable.pin_map_place, size, size);
+    
 		this.categoryDrawable = categoryDrawable;
 	}
 
@@ -86,13 +91,11 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 
 		if (item.mDescription.equals(idx)) 
 		{
-			int size = Global.DpToPixel(m_context, 40);
-			m_bmpPosition = Global.fitImageSize(m_context, R.drawable.pin_map_place, size, size);
-			canvas.drawBitmap(m_bmpPosition, curScreenCoords.x, curScreenCoords.y - m_bmpPosition.getHeight()+2 - nOffset, null);
+			canvas.drawBitmap(pin_map, curScreenCoords.x, curScreenCoords.y - pin_map.getHeight()+2 - nOffset, null);
 		} else 
 		{
-			m_bmpPosition = this.d.getBitmap();
-			canvas.drawBitmap(m_bmpPosition, curScreenCoords.x - m_bmpPosition.getWidth()/2, curScreenCoords.y - m_bmpPosition.getHeight()/2 - nOffset, null);
+		  place_marker = this.d.getBitmap();
+			canvas.drawBitmap(place_marker, curScreenCoords.x - place_marker.getWidth()/2, curScreenCoords.y - place_marker.getHeight()/2 - nOffset, null);
 		}
 	}
 

@@ -63,6 +63,8 @@ public class TravelStrategyListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     adapter = new RecommendSeoulListAdapter(getActivity());
+
+    ((TravelStrategyActivity) getActivity()).showBottomTab(true);
     ListView listView = (ListView) getView().findViewById(R.id.listview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()
@@ -76,11 +78,6 @@ public class TravelStrategyListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (firstVisibleItem > lastVisibleItem)
-          ((TravelStrategyActivity) getActivity()).showBottomTab(true);
-        else
-          ((TravelStrategyActivity) getActivity()).showBottomTab(false);
-        
         if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
@@ -98,16 +95,16 @@ public class TravelStrategyListFragment extends Fragment
   {
     progressBar.setVisibility(View.VISIBLE);
     
-    new GetStoreAsyncTask().execute();
+    new GetStoreAsyncTask().execute(page);
   }
   
-  private class GetStoreAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, NetworkResult>
   {
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected NetworkResult doInBackground(Integer... params)
     {
-      return apiClient.getPremiumList(page);
+      return apiClient.getPremiumList(params[0]);
     }
     
     

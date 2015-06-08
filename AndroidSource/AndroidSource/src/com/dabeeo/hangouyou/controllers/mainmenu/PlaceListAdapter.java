@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceBean;
-import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.managers.CategoryManager;
 import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
@@ -127,8 +126,8 @@ public class PlaceListAdapter extends BaseAdapter
 			ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
 		else
 		{
-		  String filename = Global.MD5Encoding(bean.imageUrl);
-			ImageDownloader.displayImage(context, "file:///" + Global.GetDatabaseFilePath() + filename, imageView, null);
+//		  String filename = Global.MD5Encoding(bean.imageUrl);
+//			ImageDownloader.displayImage(context, "file:///" + Global.GetDatabaseFilePath() + filename, imageView, null);
 		}
 
 		title.setText(bean.title);
