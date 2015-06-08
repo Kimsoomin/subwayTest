@@ -1,6 +1,5 @@
 package com.dabeeo.hangouyou.map;
 
-import java.util.List;
 import java.util.Map;
 
 import android.content.Context;

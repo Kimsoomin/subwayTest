@@ -35,8 +35,6 @@ import com.dabeeo.hangouyou.map.Global;
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 {
 	@SuppressLint("SdCardPath")
-	public static String DB_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/";
-	public static String DB_IMAGE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/place_image/";
 //  public static String DB_PATH = "";
 	public static String DB_NAME = "hanhayou.sqlite";
 	//Tables
@@ -83,7 +81,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 		SQLiteDatabase checkDB = null;
 		try
 		{
-			String myPath = DB_PATH + DB_NAME;
+			String myPath = Global.GetDatabaseFilePath() + DB_NAME;
 			Log.w("WARN", "MyPath : " + myPath);
 			File file = new File(myPath);
 			if (file.exists())
@@ -106,7 +104,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 	{
 	  AssetManager assetManager = context.getAssets();
     
-    File file = new File(Global.GetPathWithSDCard() + DB_NAME);
+    File file = new File(Global.GetDatabaseFilePath() + DB_NAME);
     
     if (!file.exists())
     {
@@ -133,37 +131,12 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         e.printStackTrace();
       }
     }
-//		InputStream myInput = context.getAssets().open("hanhayou.sqlite");
-//		String outFileName = DB_PATH + DB_NAME;
-//		File dbFolder = new File(DB_PATH);
-//		if (!dbFolder.exists())
-//			dbFolder.mkdir();
-//		
-//		File dbFile = new File(outFileName);
-//		if (!dbFile.exists())
-//		{
-//			dbFile.createNewFile();
-//			return;
-//		}
-//		
-//		OutputStream myOutput = new FileOutputStream(dbFile);
-//		
-//		byte[] buffer = new byte[1024];
-//		int length;
-//		while ((length = myInput.read(buffer)) > 0)
-//		{
-//			myOutput.write(buffer, 0, length);
-//		}
-//		
-//		myOutput.flush();
-//		myOutput.close();
-//		myInput.close();
 	}
 	
 	
 	public void openDataBase() throws SQLException
 	{
-		String myPath = DB_PATH + DB_NAME;
+		String myPath = Global.GetDatabaseFilePath() + DB_NAME;
 		myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 	}
 	

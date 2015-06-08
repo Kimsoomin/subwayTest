@@ -27,7 +27,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
@@ -94,7 +93,7 @@ public class IntroActivity extends Activity
   {
     if (mapdownloading == true)
     {
-      File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+      File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
       if (file.exists())
         file.delete();
     }
@@ -138,7 +137,13 @@ public class IntroActivity extends Activity
   {
     Log.w("WARN", "다운로드 - 오프라인 컨텐츠 체크");
     //오프라인 컨텐츠 DB 있는 지 확인 
-    File file = new File(OfflineContentDatabaseManager.DB_PATH + OfflineContentDatabaseManager.DB_NAME);
+    File dir = new File(Global.GetDatabaseFilePath());
+    if(!dir.exists())
+    {
+      dir.mkdirs();
+    }
+    
+    File file = new File(Global.GetDatabaseFilePath()+ OfflineContentDatabaseManager.DB_NAME);
     
     if (file.exists())
     {
@@ -240,13 +245,18 @@ public class IntroActivity extends Activity
     {
       Log.w("WARN", "오프라인 컨텐츠 다운로드 중");
       NetworkResult result = client.getOfflineContents();
-      File dbFile = new File(Global.GetPathWithSDCard() + contentDatabaseManager.DB_NAME);
+      File dbFile = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
       if(dbFile.exists())
         contentDatabaseManager.writeDatabase(result.response);
       try
       {
+        File directory = new File(Global.GetImageFilePath());
+        
+        if (!directory.exists())
+          directory.mkdirs();
+        
         JSONObject obj = new JSONObject(result.response);
-        File outputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Hangouyou/place_image.zip");
+        File outputFile = new File(Global.GetImageFilePath() + "place_image.zip");
 //				if (outputFile.exists())
 //					outputFile.delete();
         
@@ -315,13 +325,8 @@ public class IntroActivity extends Activity
         byte[] buffer = new byte[1024];
         int count;
         
-        File directory = new File(OfflineContentDatabaseManager.DB_IMAGE_PATH);
-        
-        if (!directory.exists())
-          directory.mkdirs();
-        
-        String filename = ze.getName();
-        FileOutputStream fout = new FileOutputStream(OfflineContentDatabaseManager.DB_IMAGE_PATH + filename);
+        String filename = Global.MD5Encoding(ze.getName());
+        FileOutputStream fout = new FileOutputStream(Global.GetImageFilePath() + filename);
         
         // reading and writing
         while ((count = zis.read(buffer)) != -1)
@@ -350,14 +355,15 @@ public class IntroActivity extends Activity
   private void checkMapDownload()
   {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle(R.string.term_alert);
     builder.setMessage(R.string.msg_is_download_map);
     builder.setCancelable(false);
     
-    File directory = new File(Global.GetPathWithSDCard());
+    File directory = new File(Global.GetDatabaseFilePath());
     if (!directory.exists())
       directory.mkdirs();
     
-    File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+    File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
     if (!file.exists())
     {
       builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
@@ -429,7 +435,7 @@ public class IntroActivity extends Activity
         Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
         
         InputStream input = new BufferedInputStream(url.openStream());
-        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+        File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
         try
         {
           if (!file.exists())

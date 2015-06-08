@@ -1,9 +1,7 @@
 package com.dabeeo.hangouyou.map;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -33,7 +31,7 @@ public class DatabaseManager
 
 	private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS place (idx TEXT PRIMARY KEY NOT NULL, seqCode TEXT, cityIdx TEXT, ownerUserSeq TEXT, userName TEXT, gender TEXT, mfidx TEXT, category INTEGER, title TEXT NOT NULL, address TEXT, businessHours TEXT, priceInfo TEXT, trafficInfo TEXT, homepage TEXT, contact TEXT, contents TEXT, lat DOUBLE NOT NULL, lng DOUBLE NOT NULL, tag TEXT, popular INTEGER, rate INTEGER, likeCount INTEGER, bookmarkCount INTEGER, shareCount INTEGER, reviewCount INTEGER, isLiked INTEGER, isBookmarked INTEGER, insertDate TEXT, updateDate TEXT)";
 
-	private static final String DATABASE_NAME = "contents";
+	private static final String DATABASE_NAME = "hanhayou.sqtlite";
 	private static final String DATABASE_TABLE_NAME_PLACE_INFO = "place";
 	private static final String DATABASE_TABLE_NAME_SUBWAY = "subway";
 	private static final int DATABASE_VERSION = 1;
@@ -79,7 +77,7 @@ public class DatabaseManager
 	}
 
 	public SQLiteDatabase OpenDatabase() {
-		Global.strMapDBFilePath2 = Global.GetPathWithSDCard()+ Global.HangouyouDBFileName;
+		Global.strMapDBFilePath2 = Global.GetDatabaseFilePath() + Global.HangouyouDBFileName;
 
 		if (new File(Global.strMapDBFilePath2).exists() == false) 
 		{

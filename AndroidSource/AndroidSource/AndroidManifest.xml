@@ -60,7 +60,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity"
@@ -184,7 +183,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hangouyou.activities.mypage.sub.AuthEmailActivity"

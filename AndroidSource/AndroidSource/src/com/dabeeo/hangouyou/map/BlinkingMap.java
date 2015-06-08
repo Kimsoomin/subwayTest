@@ -496,7 +496,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
      * =====================================================================================
      */
     noTile = getResources().getDrawable(R.drawable.no_tile);
-    Global.strMapDBFilePath = Global.GetPathWithSDCard() + Global.g_strMapDBFileName;
+    Global.strMapDBFilePath = Global.GetDatabaseFilePath() + Global.g_strMapDBFileName;
     
     /*
      * =====================================================================================
@@ -1774,7 +1774,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       
       if(info.offlineimage != null)
       {
-        File imagefile = new File(Global.GetPathWithSDCard()+"place_image/"+info.offlineimage);
+        String imageName = Global.MD5Encoding(info.offlineimage);
+        File imagefile = new File(Global.GetImageFilePath()+imageName);
         
         if(imagefile.exists())
         {

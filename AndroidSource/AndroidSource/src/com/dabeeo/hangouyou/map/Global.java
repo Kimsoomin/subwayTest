@@ -65,6 +65,7 @@ import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Debug;
+import android.os.Environment;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -940,11 +941,18 @@ public class Global
 	public static String GetDatabaseFilePath()
 	{
 		String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-		String strDBFilePath = sdCardPath + "/.BlinkingSeoul/blinking.sqlite";
+		String strDBFilePath = sdCardPath + "/Android/data/com.dabeeo.hanhayou/file/.db/";
 
 		return strDBFilePath;
 	}
+	
+	public static String GetImageFilePath()
+	{
+	  String sdCardPath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+    String strImageFilePath = sdCardPath + "/Android/data/com.dabeeo.hanhayou/file/.image/";
 
+    return strImageFilePath;
+	}
 
 	// -v1.5 추가.
 

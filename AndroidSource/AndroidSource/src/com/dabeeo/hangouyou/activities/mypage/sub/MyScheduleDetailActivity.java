@@ -22,7 +22,7 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		adapter.setIsMySchedule(true);
+//		adapter.setIsMySchedule(true);
 		
 		containerIsPublicPopup = (LinearLayout) findViewById(R.id.container_set_public);
 		containerPublic = (RelativeLayout) findViewById(R.id.container_public);

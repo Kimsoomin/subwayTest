@@ -109,12 +109,11 @@ public class MainFragment extends Fragment
   @Override
   public void onResume()
   {
-//    File directory = new File(Global.GetPathWithSDCard("/BlinkingMap/"));
-    File directory = new File(Global.GetPathWithSDCard());
+    File directory = new File(Global.GetDatabaseFilePath());
     if (!directory.exists())
       directory.mkdirs();
     
-    File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+    File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
     if (!file.exists())
       containerMsgDownloadMap.setVisibility(View.VISIBLE);
     else
@@ -144,11 +143,11 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerMap.getId())
       {
-        File directory = new File(Global.GetPathWithSDCard());
+        File directory = new File(Global.GetDatabaseFilePath());
         if (!directory.exists())
           directory.mkdirs();
         
-        File file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+        File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
         if (!file.exists())
         {
           AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -271,7 +270,7 @@ public class MainFragment extends Fragment
     @Override
     protected Boolean doInBackground(String... params)
     {
-      File file = new File(OfflineContentDatabaseManager.DB_PATH + OfflineContentDatabaseManager.DB_NAME);
+      File file = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
       
       if (!file.exists())
         makeOfflineContentDatabase();
@@ -289,7 +288,7 @@ public class MainFragment extends Fragment
         Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
         
         InputStream input = new BufferedInputStream(url.openStream());
-        file = new File(Global.GetPathWithSDCard() + Global.g_strMapDBFileName);
+        file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
         try
         {
           if (!file.exists())

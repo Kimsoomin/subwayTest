@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
-import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
+import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
@@ -57,7 +57,10 @@ public class PlaceDetailHeaderView extends RelativeLayout
 			if (SystemUtil.isConnectNetwork(context))
 				ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
 			else
-				ImageDownloader.displayImage(context, "file:///" + OfflineContentDatabaseManager.DB_PATH + bean.imageUrl, imageView, null);
+			{
+			  String filename = Global.MD5Encoding(bean.imageUrl);
+				ImageDownloader.displayImage(context, "file:///" + Global.GetDatabaseFilePath() + filename, imageView, null);
+			}
 		}
 	}
 	
