@@ -25,7 +25,6 @@ import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -103,30 +102,35 @@ public class IntroActivity extends Activity
     super.onBackPressed();
   }
   
-  
   private void checkNetworkStatus()
   {
-    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
+    if (!SystemUtil.isConnectedWiFi(IntroActivity.this))
     {
-      //3G or LTE Mode
-      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+      if(SystemUtil.isConnectNetwork(IntroActivity.this))
       {
-        @Override
-        public void onPositiveButtonClickListener()
+        //3G or LTE Mode
+        alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
         {
-          checkMapTemp();
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-          finish();
-        }
-      });
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            checkMapDownload();
+          }
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            checkAllowAlarm();
+          }
+        });
+      }else
+      {
+        checkAllowAlarm();
+      }
+    }else
+    {
+      checkMapDownload();
     }
-    else
-      checkDownloadInfo();
   }
   
   
@@ -140,27 +144,71 @@ public class IntroActivity extends Activity
     {
       if (SystemUtil.isConnectNetwork(IntroActivity.this))
       {
-        //기존에 오프라인 컨텐츠를 만들어놓은 상태, 인터넷 연결 시 다시 오프라인컨텐츠 생성
-//        file.delete();
-//        makeOfflineContentDatabase();
-//        startMainActivity();
-        checkAllowAlarm();
+        upateCheckOfflineContent();
       }
       else
       {
         //기존에 오프라인 컨텐츠를 만들어놓은 상태,인터넷 연결이 안된 상태일 때 바로 첫화면으로 이동
-        startMainActivity();
+        checkAllowAlarm();
       }
     }
     else
     {
       if (SystemUtil.isConnectNetwork(IntroActivity.this))
+      {
         makeOfflineContentDatabase(); // 인터넷 연결된 상태이고 오프라인컨텐츠를 만들지 않았을 때
+      }
       else
-        startMainActivity();
+      {
+        checkAllowAlarm();
+      }
     }
   }
   
+  private void upateCheckOfflineContent()
+  {
+    //To-do : updateContent check - 오프라인 컨텐츠 업데이트 관련(추후 동기화 시나리오 적용)
+    new UpdateCheckOfflineContentAsyncTask().execute();
+  }
+  
+  private class UpdateCheckOfflineContentAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    
+    @Override
+    protected void onPreExecute()
+    {
+      // TODO Auto-generated method stub
+      alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_update_travel_content));
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      // TODO Auto-generated method stub
+      NetworkResult result = client.updateOfflineContents();
+      try
+      {
+        Thread.sleep(2000);
+      }
+      catch (InterruptedException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      return null;
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      // TODO Auto-generated method stub
+      super.onPostExecute(result);
+      alertManager.hideProgressDialog();
+      checkAllowAlarm();
+    }
+    
+  }
   
   private void makeOfflineContentDatabase()
   {
@@ -245,7 +293,7 @@ public class IntroActivity extends Activity
     {
       Log.w("WARN", "오프라인 컨텐츠 DB화 완료");
       alertManager.hideProgressDialog();
-      checkMapTemp();
+      checkAllowAlarm();
       super.onPostExecute(result);
     }
   }
@@ -299,7 +347,7 @@ public class IntroActivity extends Activity
   }
   
   
-  private void checkMapTemp()
+  private void checkMapDownload()
   {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setMessage(R.string.msg_is_download_map);
@@ -317,7 +365,8 @@ public class IntroActivity extends Activity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-          temp3G();
+          mapdownloading = true;
+          new GetMapAsyncTask().execute();
         }
       });
       builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
@@ -325,7 +374,7 @@ public class IntroActivity extends Activity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-          checkDownloadInfo();
+          checkAllowAlarm();
         }
       });
       tempdialog = builder.create();
@@ -333,41 +382,8 @@ public class IntroActivity extends Activity
       tempdialog.show();
     }
     else
-      checkDownloadInfo();
-  }
-  
-  
-  private void temp3G()
-  {
-    if (SystemUtil.isConnectNetwork(IntroActivity.this) && !SystemUtil.isConnectedWiFi(IntroActivity.this))
     {
-      //3G or LTE Mode
-      alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-      {
-        @Override
-        public void onPositiveButtonClickListener()
-        {
-          mapdownloading = true;
-          new GetMapAsyncTask().execute();
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-          alertManager.dismiss();
-          if (!tempdialog.isShowing())
-            tempdialog.show();
-        }
-      });
-    }
-    
-    if (SystemUtil.isConnectedWiFi(IntroActivity.this))
-    {
-      if (tempdialog.isShowing())
-        tempdialog.cancel();
-      mapdownloading = true;
-      new GetMapAsyncTask().execute();
+      upateCheckOfflineContent();
     }
   }
   
@@ -490,9 +506,10 @@ public class IntroActivity extends Activity
           startGuideActivity();
         }
       });
-    }
-    else
+    }else
+    {
       startMainActivity();
+    }
   }
   
   

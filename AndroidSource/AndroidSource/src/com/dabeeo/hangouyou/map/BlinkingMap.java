@@ -61,6 +61,7 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewDebug.FlagToString;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -1690,21 +1691,21 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     if(select==1)
     {
       if(allplaceOverlay != null)
-        allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
+        allplaceOverlay.changeMethod(idx);
       if(subwayOverlay != null)
-        subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
+        subwayOverlay.changeMethod(null);
     }else if(select == 2)
     {
       if(subwayOverlay != null)
-        subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
+        subwayOverlay.changeMethod(idx);
       if(allplaceOverlay != null)
-        allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
+        allplaceOverlay.changeMethod(null);
     }else if (select == -1)
     {
       if(allplaceOverlay != null)
-        allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
+        allplaceOverlay.changeMethod(null);
       if(subwayOverlay != null)
-        subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),null);
+        subwayOverlay.changeMethod(null);
     }
     
     m_mapView.invalidate();
@@ -2125,12 +2126,11 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       {
         if(selectItem == 1)
         {
-          BlinkingCommon.smlLibDebug("BlinkingMap", " idx : "+idx);
-          allplaceOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
+          allplaceOverlay.changeMethod(idx);
         }
         else if(selectItem == 2)
         {
-          subwayOverlay.changeMethod((BitmapDrawable) Global.GetDrawable(mContext,R.drawable.pin_map_place),idx);
+          subwayOverlay.changeMethod(idx);
         }
         m_mapView.invalidate();
       }

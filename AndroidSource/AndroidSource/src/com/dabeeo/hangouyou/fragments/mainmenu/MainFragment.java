@@ -56,7 +56,6 @@ public class MainFragment extends Fragment
   private OfflineContentDatabaseManager contentDatabaseManager;
   private ApiClient client;
   
-  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -153,7 +152,7 @@ public class MainFragment extends Fragment
         if (!file.exists())
         {
           AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-          builder.setTitle(R.string.app_name).setMessage(R.string.msg_is_download_map).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+          builder.setTitle(R.string.term_alert).setMessage(R.string.message_alert_lte_mode).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
           {
             public void onClick(DialogInterface dialog, int whichButton)
             {
@@ -337,7 +336,6 @@ public class MainFragment extends Fragment
       pView.setProgress(progress[0]);
       super.onProgressUpdate(progress);
     }
-    
     
     @Override
     protected void onPostExecute(Boolean result)

@@ -66,9 +66,8 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 		return d;
 	}
 
-	public void changeMethod(BitmapDrawable drawable, String idx) 
+	public void changeMethod(String idx) 
 	{
-		this.d2 = drawable;
 		this.idx = idx;
 	}
 
@@ -87,18 +86,12 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 
 		if (item.mDescription.equals(idx)) 
 		{
-			d = d2;
-
 			int size = Global.DpToPixel(m_context, 40);
 			m_bmpPosition = Global.fitImageSize(m_context, R.drawable.pin_map_place, size, size);
 			canvas.drawBitmap(m_bmpPosition, curScreenCoords.x, curScreenCoords.y - m_bmpPosition.getHeight()+2 - nOffset, null);
 		} else 
 		{
 			m_bmpPosition = this.d.getBitmap();
-			
-//			BlinkingCommon.smlLibDebug("PlaceOverlay", "curScreenCoords.x : " +(curScreenCoords.x - m_bmpPosition.getWidth()/2));
-//			BlinkingCommon.smlLibDebug("PlaceOverlay", "curScreenCoords.y : " +(curScreenCoords.y - m_bmpPosition.getHeight()/2 - nOffset));
-
 			canvas.drawBitmap(m_bmpPosition, curScreenCoords.x - m_bmpPosition.getWidth()/2, curScreenCoords.y - m_bmpPosition.getHeight()/2 - nOffset, null);
 		}
 	}

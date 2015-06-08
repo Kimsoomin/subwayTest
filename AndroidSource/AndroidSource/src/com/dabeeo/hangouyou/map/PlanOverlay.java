@@ -17,6 +17,7 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Cap;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.dabeeo.hangouyou.R;
 
@@ -25,15 +26,18 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   Context m_context;
   
   int offset = 20;
+  
   Paint paint;
   Paint textpaint;
+  
   Bitmap pinPlan;
+  Bitmap pinPlan_on;
   Bitmap flagPlan;
+  Bitmap flagPlan_on;
+  
   String day;
   int size;
-  int bmpWidth;
-  int bmpHeight;
-
+  
   String dayStr;
   
   int nSize;
@@ -53,6 +57,12 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     size = Global.DpToPixel(m_context, 40);		
     typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
     
+    pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
+    flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
+    
+    pinPlan_on = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
+    flagPlan_on = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
+    
     paint = new Paint();
     paint.setARGB(200, 172, 186, 191);
     paint.setStrokeWidth(6);
@@ -68,70 +78,76 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   public void dayset(String day)
   {
     this.day = day;
+    pinPlan_on = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
+    flagPlan_on = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
   }
   
-	@Override
-	public void draw(Canvas canvas, MapView mapView, boolean shadow) 
-	{
-		// TODO Auto-generated method stub
-		super.draw(canvas, mapView, shadow);
-
-		nSize = size();
-		
-		for(int i = 0; i < nSize; i++)
-		{
-			OverlayItem overlayitem = getItem(i);
-
-			GeoPoint geoPoint = overlayitem.getPoint();
-			Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
-			
-			if(i != nSize -1)
-			{
-				OverlayItem nextItem = getItem(i+1);
-				Point pt2 = mapView.getProjection().toPixels(nextItem.getPoint(), null);
-				if(overlayitem.mDescription.equals(nextItem.mDescription))
-				  canvas.drawLine(pt1.x, pt1.y-35, pt2.x, pt2.y-35, paint);
-			}
-		}
-		
-		for (int i = 0; i < nSize; i++)
-		{
-			OverlayItem overlayitem = getItem(i);
-
-			GeoPoint geoPoint = overlayitem.getPoint();
-			Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
-			
-			if(i > 0)
-			{
-			  OverlayItem preItem = getItem(i-1);
-			  if(overlayitem.mDescription.equals(preItem.mDescription) == false)
-			    spotNum = 0;
-			}else if(i == 0)
-			{
-			  spotNum = 0;
-			}
-			
-			if(overlayitem.mDescription.equals(day))
+  @Override
+  public void draw(Canvas canvas, MapView mapView, boolean shadow) 
+  {
+    // TODO Auto-generated method stub
+    super.draw(canvas, mapView, shadow);
+    
+    nSize = size();
+    
+    for(int i = 0; i < nSize; i++)
+    {
+      OverlayItem overlayitem = getItem(i);
+      
+      GeoPoint geoPoint = overlayitem.getPoint();
+      Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
+      
+      if(i != nSize -1)
       {
-        pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan_on, size, size);
-        flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day_on, size, size);
+        OverlayItem nextItem = getItem(i+1);
+        Point pt2 = mapView.getProjection().toPixels(nextItem.getPoint(), null);
+        if(overlayitem.mDescription.equals(nextItem.mDescription))
+          canvas.drawLine(pt1.x, pt1.y-35, pt2.x, pt2.y-35, paint);
+      }
+    }
+    
+    for (int i = 0; i < nSize; i++)
+    {
+      OverlayItem overlayitem = getItem(i);
+      
+      GeoPoint geoPoint = overlayitem.getPoint();
+      Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
+      
+      if(i > 0)
+      {
+        OverlayItem preItem = getItem(i-1);
+        if(overlayitem.mDescription.equals(preItem.mDescription) == false)
+          spotNum = 0;
+      }else if(i == 0)
+      {
+        spotNum = 0;
+      }
+      
+      spotNum = spotNum + 1;
+      
+      if(overlayitem.mDescription.equals(day))
+      {        
+        if(spotNum == 1)
+        {
+          dayStr = "第"+overlayitem.mDescription+"天";
+          canvas.drawBitmap(flagPlan_on, pt1.x-pinPlan_on.getWidth()/2+50, pt1.y-pinPlan_on.getHeight()/2-60,null);
+          canvas.drawText(dayStr, pt1.x+pinPlan_on.getWidth()/2+30, pt1.y-pinPlan_on.getHeight()+5, textpaint);
+        }
+        
+        canvas.drawBitmap(pinPlan_on, pt1.x-pinPlan_on.getWidth()/2, pt1.y - pinPlan_on.getHeight()/2-50-offset, null);
+        canvas.drawText(""+spotNum, pt1.x-pinPlan_on.getWidth()/2+30, pt1.y- pinPlan_on.getHeight()/2-35, textpaint);
       }else
       {
-        pinPlan = Global.fitImageSize(m_context, R.drawable.pin_plan, size, size);
-        flagPlan = Global.fitImageSize(m_context, R.drawable.flag_plan_day, size, size);
+        if(spotNum == 1)
+        {
+          dayStr = "第"+overlayitem.mDescription+"天";
+          canvas.drawBitmap(flagPlan, pt1.x-pinPlan.getWidth()/2+50, pt1.y-pinPlan.getHeight()/2-60,null);
+          canvas.drawText(dayStr, pt1.x+pinPlan.getWidth()/2+30, pt1.y-pinPlan.getHeight()+5, textpaint);
+        }
+        
+        canvas.drawBitmap(pinPlan, pt1.x-pinPlan.getWidth()/2, pt1.y - pinPlan.getHeight()/2-50-offset, null);
+        canvas.drawText(""+spotNum, pt1.x-pinPlan.getWidth()/2+30, pt1.y- pinPlan.getHeight()/2-35, textpaint);
       }
-			
-			spotNum = spotNum + 1;
-						
-			if(spotNum == 1)
-			{
-				dayStr = "第"+overlayitem.mDescription+"天";
-				canvas.drawBitmap(flagPlan, pt1.x-pinPlan.getWidth()/2+50, pt1.y-pinPlan.getHeight()/2-60,null);
-				canvas.drawText(dayStr, pt1.x+pinPlan.getWidth()/2+30, pt1.y-pinPlan.getHeight()+5, textpaint);
-			}
-		
-			canvas.drawBitmap(pinPlan, pt1.x-pinPlan.getWidth()/2, pt1.y - pinPlan.getHeight()/2-50-offset, null);
-			canvas.drawText(""+spotNum, pt1.x-pinPlan.getWidth()/2+30, pt1.y- pinPlan.getHeight()/2-35, textpaint);
-		}
-	}
+    }
+  }
 }
