@@ -155,7 +155,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   private ImageButton backBtn;
   private ImageButton searchCancel;
   private LinearLayout searchView;
-//	private RelativeLayout emptysearchList;
+  private RelativeLayout emptysearchList;
   private EditText searchEditText;
   private TextWatcher placewatcher;
   
@@ -772,7 +772,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   public void SearchSetting()
   {
     m_ListView = (ListView) findViewById(R.id.search_list);
-//		emptysearchList = (RelativeLayout) findViewById(R.id.empty_search_container);
+    emptysearchList = (RelativeLayout) findViewById(R.id.empty_search_container);
     m_Adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1);
     m_ListView.setAdapter(m_Adapter);
     m_ListView.setOnItemClickListener(onClickListItem);
@@ -787,7 +787,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     searchCancel.setOnClickListener(this);
     placewatcher = new TextWatcher() 
     {
-      Toast search = Toast.makeText(mContext, R.string.msg_no_search_result, Toast.LENGTH_SHORT);
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) 
       {
@@ -798,52 +797,81 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       public void beforeTextChanged(CharSequence s, int start, int count,
           int after) {
         // TODO Auto-generated method stub
-        
       }
       
       @Override
       public void afterTextChanged(Editable s) {
-        // TODO Auto-generated method stub
-        if(searchEditText.getText().toString().length() > 1)
-        {
-          if(summaryView.getVisibility() == View.VISIBLE)
-            summaryViewVisibleSet(summaryViewInVisible, 0);
-          if(m_Adapter != null)
-          {
-            m_Adapter.clear();
-          }
-          
-          for(Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
-          {
-            PlaceInfo info = itemInfo.getValue(); 
-            if(info.title.contains(searchEditText.getText().toString()))
-            {
-              m_Adapter.add(info.title);
-            }
-          }
-          
-          for(Entry<String, SubwayInfo> subInfo : subwayInfo.entrySet())
-          {
-            SubwayInfo info = subInfo.getValue();
-            if(info.name_ko.contains(searchEditText.getText().toString()))
-            {
-              m_Adapter.add(info.name_cn);
-            }
-          }
-          
-          if(m_Adapter.getCount() > 0)
-          {
-            if(m_ListView.getVisibility() == View.GONE)
-              ListViewVisibleSetting(0);
-          }else
-          {
-            search.show();
-          }
-        }
-        
+        // TODO Auto-generated method stub   
+        searchList();
       }
     };
     searchEditText.addTextChangedListener(placewatcher);
+  }
+  
+  @Override
+  public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+  {
+    
+    switch (actionId) 
+    {
+      case EditorInfo.IME_ACTION_SEARCH:
+        searchList();
+        HideKeyboard(m_mapView);
+        break;
+      default:
+        break;
+    }
+    
+    return false;
+  }
+  
+  
+  public void searchList()
+  {
+    if(searchEditText.getText().toString().length() > 1)
+    {
+      if(summaryView.getVisibility() == View.VISIBLE)
+        summaryViewVisibleSet(summaryViewInVisible, 0);
+      if(m_Adapter != null)
+      {
+        m_Adapter.clear();
+      }
+      
+      for(Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
+      {
+        PlaceInfo info = itemInfo.getValue(); 
+        if(info.title.contains(searchEditText.getText().toString()))
+        {
+          m_Adapter.add(info.title);
+        }
+      }
+      
+      for(Entry<String, SubwayInfo> subInfo : subwayInfo.entrySet())
+      {
+        SubwayInfo info = subInfo.getValue();
+        if(info.name_ko.contains(searchEditText.getText().toString()))
+        {
+          m_Adapter.add(info.name_cn);
+        }
+      }
+      
+      if(m_Adapter.getCount() > 0)
+      {
+        if(m_ListView.getVisibility() == View.GONE)
+          ListViewVisibleSetting(0);
+        if(emptysearchList.getVisibility() == View.VISIBLE)
+          emptysearchList.setVisibility(View.GONE);
+      }else
+      {
+        if(m_ListView.getVisibility() == View.VISIBLE)
+          ListViewVisibleSetting(1);
+        if(emptysearchList.getVisibility() == View.GONE)
+        {
+          emptysearchList.bringToFront();
+          emptysearchList.setVisibility(View.VISIBLE);
+        }
+      }
+    }    
   }
   
   public void summaryViewSetting() 
@@ -987,59 +1015,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   {
     InputMethodManager manager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
     manager.hideSoftInputFromWindow(view.getWindowToken(),0);
-  }
-  
-  @Override
-  public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-  {
-    if(searchEditText.getText().toString().length() > 1)
-    {
-      Toast search;
-      switch (actionId) {
-        case EditorInfo.IME_ACTION_SEARCH:
-          if(summaryView.getVisibility() == View.VISIBLE)
-            summaryViewVisibleSet(summaryViewInVisible, 0);
-          if(m_Adapter != null)
-          {
-            m_Adapter.clear();
-          }
-          
-          for(Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
-          {
-            PlaceInfo info = itemInfo.getValue(); 
-            if(info.title.contains(searchEditText.getText().toString()))
-            {
-              m_Adapter.add(info.title);
-            }
-          }
-          
-          for(Entry<String, SubwayInfo> subInfo : subwayInfo.entrySet())
-          {
-            SubwayInfo info3 = subInfo.getValue();
-            if(info3.name_ko.contains(searchEditText.getText().toString()))
-            {
-              m_Adapter.add(info3.name_cn);
-            }
-          }
-          
-          if(m_Adapter.getCount() > 0)
-          {
-            if(m_ListView.getVisibility() == View.GONE)
-              ListViewVisibleSetting(0);
-          }
-          else
-          {
-            search = Toast.makeText(mContext, R.string.msg_no_search_result, Toast.LENGTH_SHORT);
-            search.show();
-          }
-          break;
-          
-        default:
-          break;
-      }
-    }
-    HideKeyboard(m_mapView);
-    return false;
   }
   
   @Override
