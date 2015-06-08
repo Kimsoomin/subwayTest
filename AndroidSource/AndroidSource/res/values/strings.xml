@@ -384,7 +384,8 @@
     <string name="term_schedule">일정</string>
     <string name="msg_empty_bookmark">북마크 된 정보가 없습니다</string>
     <!-- 인트로 -->
-    <string name="msg_download_travel_cotnent">여행정보를 다운로드중입니다\n잠시만 기다려주세요.</string>
+    <string name="msg_download_travel_cotnent">여행정보를 다운로드중입니다\n잠시만 기다려주세요</string>
+    <string name="msg_update_travel_content">업데이트 정보를 다운로드중입니다\n잠시만 기다려주세요</string>
     <!-- 쿠폰/티켓 -->
     <string name="term_option">옵션</string>
     <string name="term_confirm_buy">구매내역 확인</string>

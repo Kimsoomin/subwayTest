@@ -114,7 +114,7 @@ public class IntroActivity extends Activity
           @Override
           public void onPositiveButtonClickListener()
           {
-            checkMapDownload();
+            checkDownloadInfo();
           }
           
           @Override
@@ -129,7 +129,7 @@ public class IntroActivity extends Activity
       }
     }else
     {
-      checkMapDownload();
+      checkDownloadInfo();
     }
   }
   
@@ -293,7 +293,7 @@ public class IntroActivity extends Activity
     {
       Log.w("WARN", "오프라인 컨텐츠 DB화 완료");
       alertManager.hideProgressDialog();
-      checkAllowAlarm();
+      checkMapDownload();
       super.onPostExecute(result);
     }
   }
@@ -479,7 +479,7 @@ public class IntroActivity extends Activity
     {
       if (dialog.isShowing())
         dialog.dismiss();
-      checkDownloadInfo();
+      checkAllowAlarm();
       super.onPostExecute(result);
     }
   }  
