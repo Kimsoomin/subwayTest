@@ -1,58 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="8dp" >
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/progressLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/term_auth_email"
-        android:textColor="@color/appcolor"
-        android:textSize="21sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:visibility="invisible" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="@string/msg_complete_join"
-        android:textColor="@color/light_gray" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/edit_text"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/term_input_auth_number"
-            android:singleLine="true" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/term_auth_email"
+            android:textColor="@color/appcolor"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/msg_complete_join"
+            android:textColor="@color/light_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/term_input_auth_number"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/btn_re_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gray_fill_round_button"
+                android:text="@string/term_re_send"
+                android:textColor="@color/color_normal_gray_select_white" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btn_re_send"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_auth"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gray_fill_round_button"
-            android:text="@string/term_re_send"
-            android:textColor="@color/color_normal_gray_select_white" />
+            android:layout_marginTop="12dp"
+            android:background="@drawable/normal_gray_select_appcolor"
+            android:text="@string/term_auth"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_auth_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/normal_gray_select_appcolor"
+            android:text="@string/term_cancel"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_auth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/normal_gray_select_appcolor"
-        android:text="@string/term_auth"
-        android:textColor="@android:color/white" />
-
-</LinearLayout>
+</FrameLayout>

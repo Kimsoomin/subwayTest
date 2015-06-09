@@ -31,6 +31,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.AgreementActivity;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 public class JoinActivity extends Activity implements OnFocusChangeListener
@@ -296,19 +297,19 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
-      if(checkAgreement.isChecked())
+      if(!checkAgreement.isChecked())
       {
         alertView.setAlert(getString(R.string.msg_check_agreement));
         return;
       }
       
-      if(checkPrivateAgreement.isChecked())
+      if(!checkPrivateAgreement.isChecked())
       {
         alertView.setAlert(getString(R.string.msg_check_private_agreement));
         return;
       }
       
-      if(checkGPSAgreement.isChecked())
+      if(!checkGPSAgreement.isChecked())
       {
         alertView.setAlert(getString(R.string.msg_check_gps_agreement));
         return;
@@ -418,7 +419,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   
   public boolean validCheckPassword(String password)
   {
-    isValidPassword = false;
+    boolean validPassword = true;
     
     String expression = "^[a-z0-9A-Z]*@#";
     CharSequence inputStr = password;
@@ -427,10 +428,10 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     Matcher matcher = pattern.matcher(inputStr);
     if (matcher.matches()) 
     {
-      isValidName = true;
+      validPassword = true;
     }
     
-    return isValidPassword;
+    return validPassword;
   }
   
   /*
@@ -458,15 +459,32 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     {
       // TODO Auto-generated method stub
       super.onPostExecute(result);
+      String response = null;
       progressLayout.setVisibility(View.GONE);
-      if(!result.isSuccess)
-      {
-        alertView.setAlert(getString(R.string.msg_duplicate_email));
-      }else
-      {
-        isValidEmail = true;
-        alertView.setAlert(getString(R.string.msg_possibile_email_account));
-      }
+      BlinkingCommon.smlLibDebug("Join", "respose : " + result.response);
+//      try
+//      {
+//        JSONObject jsonObject = new JSONObject(result.response);
+//        if (jsonObject.has("status"))
+//        {
+//          response = jsonObject.getString("status");
+//        }
+//      }
+//      catch (JSONException e)
+//      {
+//        response = "";
+//        e.printStackTrace();
+//      }
+      
+      
+//      if(response.equals("OK"))
+//      {
+//        isValidEmail = true;
+//        alertView.setAlert(getString(R.string.msg_possibile_email_account));
+//      }else
+//      {
+//        alertView.setAlert(getString(R.string.msg_duplicate_email));
+//      }
     }
   }
   
@@ -504,7 +522,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     }
   }
   
-  private class joinHanhayouTask extends AsyncTask<String, Void, NetworkResult>
+  private class joinHanhayouTask extends AsyncTask<Void, Void, NetworkResult>
   {
     
     @Override
@@ -516,7 +534,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     }
 
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected NetworkResult doInBackground(Void... params)
     {
       String allowReceiveMail = null;
       String allowReceiveSms = null;

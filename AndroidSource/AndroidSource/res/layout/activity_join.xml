@@ -3,15 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
+        <RelativeLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:visibility="invisible"
+            android:clickable="true" >
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:padding="8dp" >
 
             <LinearLayout
@@ -41,6 +56,7 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:hint="@string/term_email"
+                        android:inputType="textEmailAddress"
                         android:singleLine="true" >
 
                         <requestFocus />
@@ -97,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/term_phone"
-                    android:inputType="textPhonetic"
+                    android:inputType="text|phone"
                     android:singleLine="true" />
 
                 <CheckBox
@@ -357,7 +373,7 @@
                     android:textColor="@color/color_normal_gray_select_white" />
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+    </FrameLayout>
 
     <com.dabeeo.hangouyou.views.LoginBottomAlertView
         android:id="@+id/alert_view"

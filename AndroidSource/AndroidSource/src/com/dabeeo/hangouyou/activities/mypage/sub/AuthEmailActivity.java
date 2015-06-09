@@ -1,6 +1,9 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,8 +16,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.sub.CongratulateJoinActivity;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.map.BlinkingCommon;
 
 public class AuthEmailActivity extends Activity implements OnClickListener
 {
@@ -28,13 +33,16 @@ public class AuthEmailActivity extends Activity implements OnClickListener
   
   private ApiClient apiClient;
   
+  public Context mContext;
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_auth_email);
     
-    apiClient = new ApiClient(this);
+    mContext = this;
+    apiClient = new ApiClient(mContext);
     
     Intent intent = getIntent();
     if(intent.hasExtra("userSeq"))
@@ -87,12 +95,34 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     {
       case R.id.btn_auth:
         new emailAuthCheckTask().execute();
+        System.out.println(editText.getText().toString());
         break;
         
       case R.id.btn_auth_cancel:
         finish();
         break;
     }
+  }
+  
+  public void CreateAlert(String message, final boolean isSuccess)
+  {
+    AlertDialog.Builder ab = new AlertDialog.Builder(this);
+    ab.setTitle(R.string.term_alert);
+    ab.setPositiveButton(R.string.term_ok,
+        new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) 
+      {
+        dialog.dismiss();
+        if(isSuccess)
+        {
+          startActivity(new Intent(mContext, CongratulateJoinActivity.class));
+        }
+      }
+    });
+    
+    ab.setMessage(message);
+    ab.show();
   }
   
   private class emailAuthCheckTask extends AsyncTask<Void, Void, NetworkResult>
@@ -109,6 +139,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
+      
       return apiClient.userEmailKeycheck(userSeq, editText.getText().toString());
     }
     
@@ -116,9 +147,13 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     protected void onPostExecute(NetworkResult result)
     {
       progressLayout.setVisibility(View.GONE);
+      BlinkingCommon.smlLibDebug("AuthEmail", result.response);
       if(!result.isSuccess)
       {
-        
+        CreateAlert(getString(R.string.msg_not_correct_email_auth), result.isSuccess());
+      }else
+      {
+        CreateAlert(getString(R.string.msg_complete_auth), result.isSuccess());
       }
       super.onPostExecute(result);
     }
