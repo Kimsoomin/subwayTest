@@ -371,6 +371,48 @@ public class ApiClient
   
   public NetworkResult getRecommendSchedule(String type, int days, int year, int month, int dayOfMonth)
   {
-    return httpClient.requestGet(getSiteUrl() + "v=m1&mode=PLAN_LIST&isRec=1");
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&isRec=1");
+  }
+  
+  //회원관련 API
+  public NetworkResult userLogin(String Email, String Password)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USER_LOGIN&userEmail="+Email+"&userPw="+Password);
+  }
+  
+  public NetworkResult userIdDuplicateCheck(String Email)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USER_IDCHECK&userEmail="+Email);
+  }
+  
+  public NetworkResult userNameDuplicateCheck(String userName)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USER_NAMECHECK&userName="+userName);
+  }
+  
+  public NetworkResult userJoin(String Email, String Password, String userName, String phoneNum, String gender, String birthday, String agreeEmail, String agreeSms)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USER_INS&userEmail="+Email+"&userPw="+Password+"&userName="+userName+"&phone="+phoneNum
+                                  +"&gender="+gender+"&birthday="+birthday+"&agreeEmail="+agreeEmail+"&agreeSms="+agreeSms);
+  }
+  
+  public NetworkResult userEmailKeycheck(String userSeq, String Key)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USER_EMAILKEYCHECK&userSeq="+userSeq+"&key="+Key);
+  }
+  
+  public NetworkResult userNameModify(String userSeq, String userName)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USER_INFO_MOD&userSeq="+userSeq+"&userName="+userName);
+  }
+  
+  public NetworkResult userPasswordModify(String userSeq, String userName, String userOldPw, String userNewPw)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USER_INFO_MOD&userSeq="+userSeq+"&userName="+userName+"&userOldPw="+userOldPw+"&userNewPw="+userNewPw);
+  }
+  
+  public NetworkResult userInfoinquiry(String userSeq)
+  {
+    return httpClient.requestPost(getSiteUrl(), "?v=m1&mode=USERINFO&userSeq="+userSeq);
   }
 }

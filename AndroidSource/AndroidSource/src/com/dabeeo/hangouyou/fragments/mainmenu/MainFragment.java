@@ -206,11 +206,11 @@ public class MainFragment extends Fragment
       else if (v.getId() == containerTicket.getId())
       {
         //네트워크 연결 체크 후 연결했을 때만 실행
-        if (!SystemUtil.isConnectNetwork(getActivity()))
-        {
-          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
-          return;
-        }
+//        if (!SystemUtil.isConnectNetwork(getActivity()))
+//        {
+//          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
+//          return;
+//        }
         
         if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
         {
