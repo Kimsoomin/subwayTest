@@ -31,7 +31,6 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.AgreementActivity;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
-import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 public class JoinActivity extends Activity implements OnFocusChangeListener
@@ -141,7 +140,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           alertView.setAlert(getString(R.string.msg_please_write_name));
           return;
         }
-                
+        
         if (validCheckName(editName.getText().toString()))
         {
           new checkDuplicatedNamelTask().execute();
@@ -434,6 +433,25 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     return validPassword;
   }
   
+  public String responseParser(String response)
+  {
+    String status = null;
+    try
+    {
+      JSONObject jsonObject = new JSONObject(response);
+      if (jsonObject.has("status"))
+      {
+        status = jsonObject.getString("status");
+      }
+    }
+    catch (JSONException e)
+    {
+      status = "";
+      e.printStackTrace();
+    }
+    return status;
+  }
+  
   /*
    * AsyncTask
    */  
@@ -459,32 +477,16 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     {
       // TODO Auto-generated method stub
       super.onPostExecute(result);
-      String response = null;
       progressLayout.setVisibility(View.GONE);
-      BlinkingCommon.smlLibDebug("Join", "respose : " + result.response);
-//      try
-//      {
-//        JSONObject jsonObject = new JSONObject(result.response);
-//        if (jsonObject.has("status"))
-//        {
-//          response = jsonObject.getString("status");
-//        }
-//      }
-//      catch (JSONException e)
-//      {
-//        response = "";
-//        e.printStackTrace();
-//      }
-      
-      
-//      if(response.equals("OK"))
-//      {
-//        isValidEmail = true;
-//        alertView.setAlert(getString(R.string.msg_possibile_email_account));
-//      }else
-//      {
-//        alertView.setAlert(getString(R.string.msg_duplicate_email));
-//      }
+      String status = responseParser(result.response);
+      if(status.equals("OK"))
+      {
+        isValidEmail = true;
+        alertView.setAlert(getString(R.string.msg_possibile_email_account));
+      }else
+      {
+        alertView.setAlert(getString(R.string.msg_duplicate_email));
+      }
     }
   }
   
@@ -511,13 +513,14 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       // TODO Auto-generated method stub
       super.onPostExecute(result);
       progressLayout.setVisibility(View.GONE);
-      if(!result.isSuccess)
-      {
-        alertView.setAlert(getString(R.string.msg_duplicate_name));
-      }else
+      String status = responseParser(result.response);
+      if(status.equals("OK"))
       {
         isValidName = true;
         alertView.setAlert(getString(R.string.msg_possibile_name_account));
+      }else
+      {
+        alertView.setAlert(getString(R.string.msg_duplicate_name));
       }
     }
   }
@@ -532,7 +535,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       progressLayout.setVisibility(View.VISIBLE);
       super.onPreExecute();
     }
-
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
@@ -556,7 +559,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       }
       
       return apiClient.userJoin(email, passWord, name, phoneNum, mailFemail, btnDateOfbirth.getText().toString(), 
-                                allowReceiveMail, allowReceiveSms);
+          allowReceiveMail, allowReceiveSms);
     }
     
     @Override
@@ -566,10 +569,9 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       super.onPostExecute(result);
       String userSeq = null;
       progressLayout.setVisibility(View.GONE);
-      if(!result.isSuccess)
-      {
-        alertView.setAlert(getString(R.string.msg_please_check_user_info));
-      }else
+      String status = responseParser(result.response);
+      
+      if(status.equals("OK"))
       {
         try
         {
@@ -587,8 +589,10 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         Intent intent = new Intent(JoinActivity.this, AuthEmailActivity.class);
         intent.putExtra("userSeq", userSeq);
         startActivity(intent);
+      }else
+      {
+        alertView.setAlert(getString(R.string.msg_please_check_user_info));
       }
     }
-    
   }
 }

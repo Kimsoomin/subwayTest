@@ -1,7 +1,12 @@
 package com.dabeeo.hangouyou.managers.network;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -13,11 +18,13 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -110,7 +117,7 @@ public class HttpClient
   }
   
   
-  public NetworkResult requestPost(String url, String content)
+  public NetworkResult requestPost(String url)
   {
     NetworkResult result = new NetworkResult(false, "", 0);
     
@@ -120,15 +127,14 @@ public class HttpClient
     try
     {
       DefaultHttpClient client = new DefaultHttpClient();
-      HttpRequestBase requestBase = null;
+      System.out.println("url : "+url);
+      HttpPost post = new HttpPost(url);
+      post.setHeader("Content-Type", "application/json");
+      post.setHeader("Accept-Charset",HTTP.UTF_8);
       
-      requestBase = new HttpPost(url);
-      requestBase.setHeader("Content-Type", "application/json");
-      ((HttpPost) requestBase).setEntity(new StringEntity(content, "utf-8"));
-      
-      HttpResponse response = client.execute(requestBase);
+      HttpResponse response = client.execute(post);
       String responseString = EntityUtils.toString(response.getEntity());
-      
+
       if (response.getStatusLine().getStatusCode() < 400)
         result = new NetworkResult(true, responseString, response.getStatusLine().getStatusCode());
       else

@@ -1,5 +1,8 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,7 +22,6 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.CongratulateJoinActivity;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
-import com.dabeeo.hangouyou.map.BlinkingCommon;
 
 public class AuthEmailActivity extends Activity implements OnClickListener
 {
@@ -147,14 +149,29 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     protected void onPostExecute(NetworkResult result)
     {
       progressLayout.setVisibility(View.GONE);
-      BlinkingCommon.smlLibDebug("AuthEmail", result.response);
-      if(!result.isSuccess)
+      String status = null;
+      try
       {
-        CreateAlert(getString(R.string.msg_not_correct_email_auth), result.isSuccess());
+        JSONObject jsonObject = new JSONObject(result.response);
+        if (jsonObject.has("status"))
+        {
+          status = jsonObject.getString("status");
+        }
+      }
+      catch (JSONException e)
+      {
+        status = "";
+        e.printStackTrace();
+      }
+      
+      if(status.equals("OK"))
+      {
+        CreateAlert(getString(R.string.msg_complete_auth), true);
       }else
       {
-        CreateAlert(getString(R.string.msg_complete_auth), result.isSuccess());
+        CreateAlert(getString(R.string.msg_not_correct_email_auth), false);
       }
+      
       super.onPostExecute(result);
     }
   }
