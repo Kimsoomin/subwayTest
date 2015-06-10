@@ -22,6 +22,7 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.NumberFormatter;
 import com.squareup.picasso.Picasso;
 
+@SuppressWarnings("deprecation")
 public class TicketCheckoutActivity extends ActionBarActivity
 {
   private ImageView imageView;

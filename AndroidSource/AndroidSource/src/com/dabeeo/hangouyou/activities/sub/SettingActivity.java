@@ -24,6 +24,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.map.Global;
 
+@SuppressWarnings("deprecation")
 public class SettingActivity extends ActionBarActivity
 {
   private TextView textName;

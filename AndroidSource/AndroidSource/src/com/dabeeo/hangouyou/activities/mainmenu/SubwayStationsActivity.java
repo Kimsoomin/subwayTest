@@ -27,6 +27,7 @@ import com.dabeeo.hangouyou.beans.StationBean.StationExitBean;
 import com.dabeeo.hangouyou.controllers.SubwayListAdapter;
 import com.dabeeo.hangouyou.managers.SubwayManager;
 
+@SuppressWarnings("deprecation")
 public class SubwayStationsActivity extends ActionBarActivity
 {
   private ListView listView;

@@ -19,6 +19,7 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.NumberFormatter;
 
+@SuppressWarnings("deprecation")
 public class BoughtTicketDetailActivity extends ActionBarActivity
 {
   private ImageView imageView, imgBarcode;

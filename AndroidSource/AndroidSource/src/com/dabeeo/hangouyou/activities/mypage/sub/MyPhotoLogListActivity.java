@@ -22,6 +22,7 @@ import com.dabeeo.hangouyou.controllers.mypage.MyPhotoLogListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 
+@SuppressWarnings("deprecation")
 public class MyPhotoLogListActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;

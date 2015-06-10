@@ -32,6 +32,7 @@ import com.dabeeo.hangouyou.utils.NumberFormatter;
 import com.dabeeo.hangouyou.views.SharePickView;
 import com.dabeeo.hangouyou.views.TrendOptionAndAmountPickView;
 
+@SuppressWarnings("deprecation")
 public class TicketDetailActivity extends ActionBarActivity
 {
   private ImageView imageView;

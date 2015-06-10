@@ -48,6 +48,7 @@ import com.dabeeo.hangouyou.views.ProductView;
 import com.dabeeo.hangouyou.views.ReviewContainerView;
 import com.dabeeo.hangouyou.views.SharePickView;
 
+@SuppressWarnings("deprecation")
 public class PlaceDetailActivity extends ActionBarActivity
 {
   private CustomScrollView scrollView;

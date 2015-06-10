@@ -12,6 +12,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.views.photolog.PhotoLogDaySeperater;
 import com.dabeeo.hangouyou.views.photolog.PhotoLogDayView;
 
+@SuppressWarnings("deprecation")
 public class MyPhotoLogDetailActivity extends ActionBarActivity
 {
   private ViewGroup container;

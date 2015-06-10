@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.array;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;

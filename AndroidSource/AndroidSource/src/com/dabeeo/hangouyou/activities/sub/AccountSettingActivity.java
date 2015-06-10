@@ -35,6 +35,7 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
+@SuppressWarnings("deprecation")
 public class AccountSettingActivity extends ActionBarActivity
 {
 	private TextView textEmail;

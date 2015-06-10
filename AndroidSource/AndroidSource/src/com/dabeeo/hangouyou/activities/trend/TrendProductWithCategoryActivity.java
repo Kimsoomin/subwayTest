@@ -22,6 +22,7 @@ import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.controllers.trend.TrendProductListAdapter;
 import com.dabeeo.hangouyou.views.TrendProductCategoryView;
 
+@SuppressWarnings("deprecation")
 public class TrendProductWithCategoryActivity extends ActionBarActivity
 {
 	private GridView gridView;

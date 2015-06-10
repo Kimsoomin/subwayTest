@@ -25,6 +25,7 @@ import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
 
+@SuppressWarnings("deprecation")
 public class CouponDetailActivity extends ActionBarActivity
 {
   private ImageView imageView;

@@ -289,6 +289,8 @@ public class IntroActivity extends Activity
             e.printStackTrace();
           }
           unpackZip(outputFile.getAbsolutePath());
+          
+          outputFile.delete();
         }
       } catch (Exception e)
       {
@@ -523,6 +525,7 @@ public class IntroActivity extends Activity
   {
     PreferenceManager.getInstance(this).setIsFirst(false);
     startActivity(new Intent(IntroActivity.this, GuideActivity.class));
+    finish();
   }
   
   
@@ -531,5 +534,4 @@ public class IntroActivity extends Activity
     startActivity(new Intent(IntroActivity.this, MainActivity.class));
     finish();
   }
-  
 }

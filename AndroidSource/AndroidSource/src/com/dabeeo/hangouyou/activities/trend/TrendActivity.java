@@ -28,6 +28,7 @@ import com.dabeeo.hangouyou.beans.TrendKoreaBean;
 import com.dabeeo.hangouyou.controllers.trend.TrendKoreaListAdapter;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
+@SuppressWarnings("deprecation")
 public class TrendActivity extends ActionBarActivity
 {
   private ListView listview;

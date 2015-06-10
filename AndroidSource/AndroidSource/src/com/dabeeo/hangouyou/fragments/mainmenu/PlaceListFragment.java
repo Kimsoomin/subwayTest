@@ -34,7 +34,6 @@ public class PlaceListFragment extends Fragment
   private boolean isLoadEnded = false;
   private boolean isLoading = false;
   private ApiClient apiClient;
-  private int lastVisibleItem = 0;
   private ListView listView;
   
   
