@@ -60,11 +60,14 @@ public class PlaceDetailHeaderView extends RelativeLayout
       ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
     else
     {
+      String imageUrl = null;
       if (!TextUtils.isEmpty(bean.imageUrl))
       {
         String filename = Global.MD5Encoding(bean.imageUrl);
-        ImageDownloader.displayImage(context, "file:///" + Global.GetImageFilePath() + filename, imageView, null);
+        imageUrl = "file:///" + Global.GetImageFilePath() + filename;
       }
+      
+      ImageDownloader.displayImage(context, imageUrl, imageView, null);
     }
   }
   
