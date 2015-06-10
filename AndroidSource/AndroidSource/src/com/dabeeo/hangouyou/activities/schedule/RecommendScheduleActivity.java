@@ -26,6 +26,7 @@ import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.views.CharacterProgressView;
 
+@SuppressWarnings("deprecation")
 public class RecommendScheduleActivity extends ActionBarActivity
 {
   private LinearLayout containerChoiceStartDate;
@@ -119,6 +120,60 @@ public class RecommendScheduleActivity extends ActionBarActivity
     return super.onCreateOptionsMenu(menu);
   }
   
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    int id = item.getItemId();
+    if (id == android.R.id.home)
+      finish();
+    else if (item.getItemId() == R.id.next)
+    {
+      if (year == -1)
+      {
+        Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_empty_start_date), Toast.LENGTH_LONG).show();
+      }
+      else if (TextUtils.isEmpty(type))
+      {
+        Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_select_theme), Toast.LENGTH_LONG).show();
+      }
+      else
+        findAndShowDialog();
+    }
+    return super.onOptionsItemSelected(item);
+  }
+  
+  
+  private void findAndShowDialog()
+  {
+    new FindAsyncTask().execute();
+//    Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
+//    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
+//    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
+//    builder.setView(pView);
+//    builder.setCancelable(false);
+//    final AlertDialog dialog = builder.create();
+//    
+//    if (!dialog.isShowing())
+//      dialog.show();
+//    
+//    Log.i("RecommendScheduleActivity.java | findAndShowDialog", );
+//    
+//    new Handler().postDelayed(new Runnable()
+//    {
+//      @Override
+//      public void run()
+//      {
+//        dialog.dismiss();
+//        Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
+//        startActivity(i);
+//      }
+//    }, 5000);
+  }
+  
+  /**************************************************
+   * listener
+   ***************************************************/
   private OnClickListener dayClickListener = new OnClickListener()
   {
     @Override
@@ -183,61 +238,9 @@ public class RecommendScheduleActivity extends ActionBarActivity
     }
   };
   
-  
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    int id = item.getItemId();
-    if (id == android.R.id.home)
-      finish();
-    else if (item.getItemId() == R.id.next)
-    {
-      if (year == -1)
-      {
-        Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_empty_start_date), Toast.LENGTH_LONG).show();
-      }
-      else if (TextUtils.isEmpty(type))
-      {
-        Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_select_theme), Toast.LENGTH_LONG).show();
-      }
-      else
-        findAndShowDialog();
-    }
-    return super.onOptionsItemSelected(item);
-  }
-  
-  
-  private void findAndShowDialog()
-  {
-//    new FindAsyncTask().execute();
-    Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
-    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
-    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
-    builder.setView(pView);
-    builder.setCancelable(false);
-    final AlertDialog dialog = builder.create();
-    
-    if (!dialog.isShowing())
-      dialog.show();
-    
-    Log.w("WARN", "Days : " + day);
-    Log.w("WARN", "Year : " + year);
-    Log.w("WARN", "month : " + month);
-    Log.w("WARN", "dayOfMonth : " + dayOfMonth);
-    Log.w("WARN", "type : " + type);
-    
-    new Handler().postDelayed(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        dialog.dismiss();
-        Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
-        startActivity(i);
-      }
-    }, 5000);
-  }
-  
+  /**************************************************
+   * async task
+   ***************************************************/
   private class FindAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     AlertDialog dialog;
@@ -256,11 +259,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       if (!dialog.isShowing())
         dialog.show();
       
-      Log.w("WARN", "Days : " + day);
-      Log.w("WARN", "Year : " + year);
-      Log.w("WARN", "month : " + month);
-      Log.w("WARN", "dayOfMonth : " + dayOfMonth);
-      Log.w("WARN", "type : " + type);
+      Log.i("RecommendScheduleActivity.java | onPreExecute", "|" + year + "|" + month + "|" + dayOfMonth + "|" + day + "일 짜리|" + type + "|");
       super.onPreExecute();
     }
     

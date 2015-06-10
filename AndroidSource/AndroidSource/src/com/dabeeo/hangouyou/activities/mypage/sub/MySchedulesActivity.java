@@ -2,7 +2,6 @@ package com.dabeeo.hangouyou.activities.mypage.sub;
 
 import java.util.ArrayList;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,8 +61,8 @@ public class MySchedulesActivity extends ActionBarActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_schedule);
     
-    @SuppressLint("InflateParams")
-    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    int resId = R.layout.custom_action_bar;
+    View customActionBar = LayoutInflater.from(this).inflate(resId, null);
     TextView title = (TextView) customActionBar.findViewById(R.id.title);
     title.setText(getString(R.string.term_my_schedule));
     getSupportActionBar().setCustomView(customActionBar);
@@ -86,60 +85,19 @@ public class MySchedulesActivity extends ActionBarActivity
       }
     });
     btnRecommendScheduleInEmpty = (Button) findViewById(R.id.recommend_button);
-    btnRecommendScheduleInEmpty.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View v)
-      {
-        if (!SystemUtil.isConnectNetwork(MySchedulesActivity.this))
-          new AlertDialogManager(MySchedulesActivity.this).showDontNetworkConnectDialog();
-        else
-        {
-          Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
-          startActivity(i);
-        }
-      }
-    });
+    btnRecommendScheduleInEmpty.setOnClickListener(buttonClickListener);
+    
     btnRecommendSchedule = (Button) findViewById(R.id.btn_recommend_travel_schedule);
-    btnRecommendSchedule.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View v)
-      {
-        if (!SystemUtil.isConnectNetwork(MySchedulesActivity.this))
-          new AlertDialogManager(MySchedulesActivity.this).showDontNetworkConnectDialog();
-        else
-        {
-          Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
-          startActivity(i);
-        }
-      }
-    });
+    btnRecommendSchedule.setOnClickListener(buttonClickListener);
+    
     btnDelete = (Button) findViewById(R.id.btn_delete);
-    btnDelete.setOnClickListener(deleteBtnClickListener);
+    btnDelete.setOnClickListener(buttonClickListener);
     
     adapter = new MySchedulesListAdapter(this);
     listView = (GridView) findViewById(R.id.gridview);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-        if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-        {
-          page++;
-          loadSchedules();
-        }
-      }
-    });
+    listView.setOnScrollListener(scrollListener);
     
     loadSchedules();
   }
@@ -268,76 +226,48 @@ public class MySchedulesActivity extends ActionBarActivity
   /**************************************************
    * listener
    ***************************************************/
-  private OnClickListener deleteBtnClickListener = new OnClickListener()
+  private OnClickListener buttonClickListener = new OnClickListener()
   {
     @Override
     public void onClick(View v)
     {
-//      AlertListener listener;
-//      
-//      if (v.getId() == btnDelete.getId())
-//      {
-//        listener = new AlertListener()
-//        {
-//          @Override
-//          public void onPositiveButtonClickListener()
-//          {
-//            adapter.delete();
-//          }
-//          
-//          
-//          @Override
-//          public void onNegativeButtonClickListener()
-//          {
-//            
-//          }
-//        };
-//      }
-//      else
-//      {
-//        listener = new AlertListener()
-//        {
-//          @Override
-//          public void onPositiveButtonClickListener()
-//          {
-//            adapter.clear();
-//            isEditMode = false;
-//            displayEditMode();
-//          }
-//          
-//          
-//          @Override
-//          public void onNegativeButtonClickListener()
-//          {
-//            
-//          }
-//        };
-//      }
-//      
-      AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
-      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), new AlertListener()
+      if (v.getId() == btnRecommendScheduleInEmpty.getId() || v.getId() == btnRecommendSchedule.getId())
       {
-        @Override
-        public void onPositiveButtonClickListener()
+        if (!SystemUtil.isConnectNetwork(MySchedulesActivity.this))
+          new AlertDialogManager(MySchedulesActivity.this).showDontNetworkConnectDialog();
+        else
         {
-          if (deleteAllCheckbox.isChecked())
+          Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
+          startActivity(i);
+        }
+      }
+      else if (v.getId() == btnDelete.getId())
+      {
+        AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
+        alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
           {
-            listView.setVisibility(View.GONE);
-            emptyContainer.setVisibility(View.VISIBLE);
-            adapter.setEditMode(false);
-            isEditMode = false;
-            displayEditMode();
-            adapter.clear();
+            if (deleteAllCheckbox.isChecked())
+            {
+              listView.setVisibility(View.GONE);
+              emptyContainer.setVisibility(View.VISIBLE);
+              adapter.setEditMode(false);
+              isEditMode = false;
+              displayEditMode();
+              adapter.clear();
+            }
           }
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
           
-        }
-      });
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            
+          }
+        });
+      }
     }
   };
   
@@ -364,11 +294,11 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-//      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
-//      {
-//        offset += limit;
-//        load(offset);
-//      }
+      if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        page++;
+        loadSchedules();
+      }
     }
   };
 }
