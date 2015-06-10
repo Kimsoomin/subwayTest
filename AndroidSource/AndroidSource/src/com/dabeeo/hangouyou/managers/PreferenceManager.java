@@ -35,6 +35,11 @@ public class PreferenceManager extends BasePreferenceManager
   private static final String KEY_IS_ALLOW_POPUP = "key_is_allow_pop_up";
   private static final String KEY_RECENT_SEARCH_WORD = "key_recent_search_word";
   private static final String KEY_USER_SEQ = "key_user_seq";
+  //유저정보 추가
+  private static final String KEY_USER_EMAIL = "key_user_email";
+  private static final String KEY_USER_NAME = "key_user_Name";
+  private static final String KEY_USER_GENDER = "key_user_gender";
+  private static final String KEY_USER_PROFILE = "key_user_profile";
   
   private static final String KEY_DONT_SHOW_POPUP_DATE = "key_dont_show_popup_date";
   
@@ -94,6 +99,26 @@ public class PreferenceManager extends BasePreferenceManager
     put(KEY_USER_SEQ, value);
   }
   
+  //회원과련 정보 추가
+  public void setUserEmail(String value)
+  {
+    put(KEY_USER_EMAIL, value);
+  }
+  
+  public void setUserName(String value)
+  {
+    put(KEY_USER_NAME, value);
+  }
+  
+  public void setUserGender(String value)
+  {
+    put(KEY_USER_GENDER, value);
+  }
+  
+  public void setUserProfile(String value)
+  {
+    put(KEY_USER_PROFILE, value);
+  }
   
   public String getUserSeq()
   {

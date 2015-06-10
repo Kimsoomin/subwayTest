@@ -127,7 +127,6 @@ public class HttpClient
     try
     {
       DefaultHttpClient client = new DefaultHttpClient();
-      System.out.println("url : "+url);
       HttpPost post = new HttpPost(url);
       post.setHeader("Content-Type", "application/json");
       post.setHeader("Accept-Charset",HTTP.UTF_8);

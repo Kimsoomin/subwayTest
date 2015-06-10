@@ -97,7 +97,6 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     {
       case R.id.btn_auth:
         new emailAuthCheckTask().execute();
-        System.out.println(editText.getText().toString());
         break;
         
       case R.id.btn_auth_cancel:

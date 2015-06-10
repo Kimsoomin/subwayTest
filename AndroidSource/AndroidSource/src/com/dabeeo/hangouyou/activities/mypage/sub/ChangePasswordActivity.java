@@ -9,15 +9,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 public class ChangePasswordActivity extends ActionBarActivity
 {
   private EditText editCurrentPassword, editNewPassword, editNewPasswordRe;
-  
+  private LoginBottomAlertView alertView;
+  public RelativeLayout progressLayout;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -34,10 +37,11 @@ public class ChangePasswordActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
+    alertView = (LoginBottomAlertView) findViewById(R.id.alert_view);
     editCurrentPassword = (EditText) findViewById(R.id.edit_current_password);
     editNewPassword = (EditText) findViewById(R.id.edit_new_password);
     editNewPasswordRe = (EditText) findViewById(R.id.edit_new_password_re);
-    
   }
   
   
@@ -58,19 +62,19 @@ public class ChangePasswordActivity extends ActionBarActivity
     {
       if (TextUtils.isEmpty(editCurrentPassword.getText().toString()))
       {
-        Toast.makeText(ChangePasswordActivity.this, getString(R.string.msg_please_write_password), Toast.LENGTH_LONG).show();
+        alertView.setAlert(getString(R.string.msg_please_write_password));
         return true;
       }
       
       if (TextUtils.isEmpty(editNewPassword.getText().toString()) || TextUtils.isEmpty(editNewPasswordRe.getText().toString()))
       {
-        Toast.makeText(ChangePasswordActivity.this, getString(R.string.msg_please_write_new_password), Toast.LENGTH_LONG).show();
+        alertView.setAlert(getString(R.string.msg_please_write_password));
         return true;
       }
       
       if (editNewPassword.length() > 12 || 6 > editNewPassword.length())
       {
-        Toast.makeText(ChangePasswordActivity.this, getString(R.string.msg_warn_password_length), Toast.LENGTH_LONG).show();
+        alertView.setAlert(getString(R.string.msg_warn_password_length));
         return true;
       }
       

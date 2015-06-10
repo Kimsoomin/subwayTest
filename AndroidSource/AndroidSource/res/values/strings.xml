@@ -403,15 +403,15 @@
     <!-- 비밀번호 찾기 -->
     <string name="msg_please_write_password">비밀번호를 입력해주세요</string>
     <string name="msg_please_write_new_password">새로운 비밀번호를 입력해주세요</string>
-    <string name="msg_warn_password_length">비밀번호는 6\-16글자 사이로 가능합니다</string>
+    <string name="msg_warn_password_length">비밀번호는 6\\-16글자 사이로 가능합니다</string>
     <string name="msg_please_valid_check_password">비밀번호는 영문/숫자/특수문자만 입력가능합니다</string>
     <string name="msg_warn_password_not_same">비밀번호가 일치하지 않습니다. 다시 입력해해주세요</string>
     <string name="msg_empty_list">리스트가 없습니다.</string>
     <!-- 로그인/회원가입 -->
-    <string name="msg_please_write_email">E-mail을 입력해 주세요</string>
+    <string name="msg_please_write_email">E-mail을 입력력해 주세요</string>
     <string name="msg_please_vaild_check_email">올바른 E-mail을 입력해주세요</string>
     <string name="msg_check_duplicate_email">이메일 중복체크를 해주세요</string>
-    <string name="msg_duplicate_email">중복된 E-mail읿니다</string>
+    <string name="msg_duplicate_email">중복된 E-mail입니다</string>
     <string name="msg_possibile_email_account">사용 가능한 메일계정입니다</string>
     <string name="msg_please_write_name">이름 또는 별명을 입력해 주세요</string>
     <string name="msg_please_valid_check_name">프로필 이름은 영문/숫자만 입력가능합니다.</string>
@@ -434,8 +434,12 @@
 	<string name="msg_not_correct_email_auth">입력된 인증번호가 일치하지 않습니다. 확인 후 다시 입력해 주세요.</string>
 	<string name="msg_complete_auth">이메일 인증이 완료되었습니다</string>    
 	<string name="term_congratulate">Congratulation!!\n한하요우 회원이 되신 것을 축하합니다.</string> 
-	<string name="msg_success_join">회원가입이 성공적으로 완료되었습니다.\n한고우요우의 다양한 서비스를 이용해보세요.	</string>    
-    <string name="term_detail">"(자세히)"</string>
+	<string name="msg_success_join">회원가입이 성공적으로 완료되었습니다.\n한고우요우의 다양한 서비스를 이용해보세요.</string>
+	<string name="msg_please_error_id">등록된 계쩡이 없습니다</string>
+	<string name="msg_please_error_auth">인증되지 않은 E-mail입니다</string>
+	<string name="msg_please_error_out">탈퇴한 회원입니다</string>
+	<string name="msg_please_error_password">잘못된 비밀번호입니다</string>
+	<string name="term_detail">"(자세히)"</string>
 	<string name="term_qq">QQ</string>
 	<string name="term_wechat">WeChat</string>
 	<string name="term_weibo">Sina Weibo</string>

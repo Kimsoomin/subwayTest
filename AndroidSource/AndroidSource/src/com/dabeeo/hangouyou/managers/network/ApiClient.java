@@ -415,4 +415,12 @@ public class ApiClient
   {
     return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USERINFO&userSeq="+userSeq);
   }
+  
+  public NetworkResult userTempPasswordGet(String userEmail)
+  {
+    //TODO Temp PassWord Get API 연동 필요
+    NetworkResult result = new NetworkResult(false, "", 0);
+//    return httpClient.requestPost(getSiteUrl()+""+userEmail);
+    return result;
+  }
 }
