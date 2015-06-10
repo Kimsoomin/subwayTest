@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.bases.BaseNavigationTabActivity;
 import com.dabeeo.hangouyou.controllers.ticket.TicketViewPagerAdapter;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class TicketActivity extends BaseNavigationTabActivity
 {
@@ -32,7 +35,6 @@ public class TicketActivity extends BaseNavigationTabActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     adapter = new TicketViewPagerAdapter(this, getSupportFragmentManager());
-    viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setAdapter(adapter);
     
     displayTitles();
@@ -61,5 +63,39 @@ public class TicketActivity extends BaseNavigationTabActivity
     }
     
     adapter.notifyDataSetChanged();
+    
+    if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+      viewPager.setCurrentItem(1);
+    
+    viewPager.setOnPageChangeListener(pageChangeListener);
   }
+  
+  private OnPageChangeListener pageChangeListener = new OnPageChangeListener()
+  {
+    @Override
+    public void onPageSelected(int position)
+    {
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()) && position == 0)
+      {
+        new AlertDialogManager(TicketActivity.this).showDontNetworkConnectDialog();
+        getSupportActionBar().setSelectedNavigationItem(1);
+      }
+      else
+      {
+        getSupportActionBar().setSelectedNavigationItem(position);
+      }
+    }
+    
+    
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+    {
+    }
+    
+    
+    @Override
+    public void onPageScrollStateChanged(int state)
+    {
+    }
+  };
 }
