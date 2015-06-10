@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
@@ -32,9 +32,8 @@ public class GuideActivity extends Activity
     
     CirclePageIndicator circleIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
     circleIndicator.setViewPager(viewPager);
-    circleIndicator.setFillColor(Color.parseColor("#C0C0C0"));
-    circleIndicator.setPageColor(Color.parseColor("#FFA500"));
-    
+    circleIndicator.setFillColor(Color.WHITE);
+    circleIndicator.setPageColor(Color.argb(50, 255, 255, 255));
     ((Button) findViewById(R.id.btn_skip)).setOnClickListener(new OnClickListener()
     {
       @Override
@@ -57,7 +56,7 @@ public class GuideActivity extends Activity
     @Override
     public int getCount()
     {
-      return 3;
+      return 6;
     }
     
     
@@ -67,21 +66,33 @@ public class GuideActivity extends Activity
       int resId = R.layout.view_guide;
       View v = LayoutInflater.from(GuideActivity.this).inflate(resId, null);
       ImageView image = (ImageView) v.findViewById(R.id.guide_image);
-      TextView text = (TextView) v.findViewById(R.id.guide_text);
+      ImageButton startHome = (ImageButton) v.findViewById(R.id.start_home);
       if (position == 0)
       {
-        image.setImageResource(R.drawable.ic_guide_1);
-        text.setText("Guide 1입니다");
+        image.setImageResource(R.drawable.intro_tutorial01);
+        startHome.setVisibility(View.INVISIBLE);
       }
       else if (position == 1)
       {
-        image.setImageResource(R.drawable.ic_guide_2);
-        text.setText("Guide 2입니다");
+        image.setImageResource(R.drawable.intro_tutorial02);
+        startHome.setVisibility(View.INVISIBLE);
       }
-      else
+      else if(position == 2)
       {
-        image.setImageResource(R.drawable.ic_guide_3);
-        text.setText("Guide 3입니다");
+        image.setImageResource(R.drawable.intro_tutorial03);
+        startHome.setVisibility(View.INVISIBLE);
+      }else if(position == 3)
+      {
+        image.setImageResource(R.drawable.intro_tutorial04);
+        startHome.setVisibility(View.INVISIBLE);
+      }else if(position == 4)
+      {
+        image.setImageResource(R.drawable.intro_tutorial05);
+        startHome.setVisibility(View.INVISIBLE);
+      }else
+      {
+        image.setImageResource(R.drawable.intro_tutorial06);
+        startHome.setVisibility(View.VISIBLE);
       }
       ((ViewPager) pager).addView(v, 0);
       
