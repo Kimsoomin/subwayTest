@@ -157,7 +157,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
     if (!dialog.isShowing())
       dialog.show();
     
-    Log.i("RecommendScheduleActivity.java | findAndShowDialog", );
+    Log.i("RecommendScheduleActivity.java | findAndShowDialog", "|" + year + "|" + month + "|" + dayOfMonth + "|" + day + "일 짜리|" + type + "|");
     
     new Handler().postDelayed(new Runnable()
     {
