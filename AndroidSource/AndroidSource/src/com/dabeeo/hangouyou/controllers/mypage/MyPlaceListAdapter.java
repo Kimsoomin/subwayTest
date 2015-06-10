@@ -176,6 +176,7 @@ public class MyPlaceListAdapter extends BaseAdapter
         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
       }
     });
+    
     if (position % 2 == 1)
       imagePrivate.setVisibility(View.VISIBLE);
     else

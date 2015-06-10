@@ -56,6 +56,7 @@ public class MainFragment extends Fragment
   private OfflineContentDatabaseManager contentDatabaseManager;
   private ApiClient client;
   
+  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -138,6 +139,11 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerShoppingMall.getId())
       {
+        if (!SystemUtil.isConnectNetwork(getActivity()))
+        {
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+          return;
+        }
         startActivity(new Intent(getActivity(), TrendActivity.class));
         getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
@@ -335,6 +341,7 @@ public class MainFragment extends Fragment
       pView.setProgress(progress[0]);
       super.onProgressUpdate(progress);
     }
+    
     
     @Override
     protected void onPostExecute(Boolean result)

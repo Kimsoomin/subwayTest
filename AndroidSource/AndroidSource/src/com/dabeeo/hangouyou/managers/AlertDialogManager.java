@@ -30,13 +30,7 @@ public class AlertDialogManager
   
   public void showDontNetworkConnectDialog()
   {
-    Builder builder = new AlertDialog.Builder(context);
-    builder.setTitle(context.getString(R.string.term_alert));
-    builder.setMessage(context.getString(R.string.msg_dont_connect_network));
-    builder.setCancelable(false);
-    builder.setPositiveButton(android.R.string.ok, null);
-    dialog = builder.create();
-    dialog.show();
+    new AlertDialog.Builder(context).setTitle(R.string.term_alert).setMessage(R.string.msg_dont_connect_network).setCancelable(false).setPositiveButton(android.R.string.ok, null).show();
   }
   
   

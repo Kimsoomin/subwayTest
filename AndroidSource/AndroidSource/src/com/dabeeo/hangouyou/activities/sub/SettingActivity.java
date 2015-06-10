@@ -21,8 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.map.Global;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
 public class SettingActivity extends ActionBarActivity
@@ -165,6 +167,12 @@ public class SettingActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+      {
+        new AlertDialogManager(SettingActivity.this).showDontNetworkConnectDialog();
+        return;
+      }
+      
       Intent i = new Intent(SettingActivity.this, AccountSettingActivity.class);
       startActivity(i);
     }
@@ -181,6 +189,12 @@ public class SettingActivity extends ActionBarActivity
       }
       else if (v.getId() == containerRatingApp.getId())
       {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(SettingActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
         Toast.makeText(SettingActivity.this, "준비중입니다", Toast.LENGTH_LONG).show();
       }
       else if (v.getId() == containerNotice.getId())

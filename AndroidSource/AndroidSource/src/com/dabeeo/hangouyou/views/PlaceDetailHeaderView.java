@@ -56,19 +56,22 @@ public class PlaceDetailHeaderView extends RelativeLayout
     else
       imageCount.setVisibility(View.GONE);
     
-    if (SystemUtil.isConnectNetwork(context))
-      ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
-    else
+    String imageUrl = null;
+    
+    if (!TextUtils.isEmpty(bean.imageUrl))
     {
-      String imageUrl = null;
-      if (!TextUtils.isEmpty(bean.imageUrl))
+      if (SystemUtil.isConnectNetwork(context))
+      {
+        imageUrl = bean.imageUrl;
+      }
+      else
       {
         String filename = Global.MD5Encoding(bean.imageUrl);
         imageUrl = "file:///" + Global.GetImageFilePath() + filename;
       }
-      
-      ImageDownloader.displayImage(context, imageUrl, imageView, null);
     }
+    
+    ImageDownloader.displayImage(context, imageUrl, imageView, null);
   }
   
   

@@ -1,8 +1,6 @@
 package com.dabeeo.hangouyou.activities.trend;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +24,7 @@ import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.TrendKoreaBean;
 import com.dabeeo.hangouyou.controllers.trend.TrendKoreaListAdapter;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -209,7 +208,7 @@ public class TrendActivity extends ActionBarActivity
       {
         if (!SystemUtil.isConnectNetwork(TrendActivity.this))
         {
-          showDontEnterWhenNotConnectNetworkDialog();
+          new AlertDialogManager(TrendActivity.this).showDontNetworkConnectDialog();
           return;
         }
         
@@ -251,16 +250,6 @@ public class TrendActivity extends ActionBarActivity
       }
     }
   };
-  
-  
-  private void showDontEnterWhenNotConnectNetworkDialog()
-  {
-    Builder dialog = new AlertDialog.Builder(TrendActivity.this);
-    dialog.setTitle(getString(R.string.app_name));
-    dialog.setMessage(getString(R.string.msg_dont_connect_network));
-    dialog.setPositiveButton(android.R.string.ok, null);
-    dialog.show();
-  }
   
   
   @Override

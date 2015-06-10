@@ -30,9 +30,11 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.ChangePasswordActivity;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.Global;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 @SuppressWarnings("deprecation")
@@ -90,6 +92,12 @@ public class AccountSettingActivity extends ActionBarActivity
 		{
 			if (v.getId() == changePasswordContainer.getId())
 			{
+			  if(!SystemUtil.isConnectNetwork(getApplicationContext()))
+			  {
+			    new AlertDialogManager(AccountSettingActivity.this).showDontNetworkConnectDialog();
+			    return;
+			  }
+			  
 				Intent i = new Intent(AccountSettingActivity.this, ChangePasswordActivity.class);
 				startActivity(i);
 			}

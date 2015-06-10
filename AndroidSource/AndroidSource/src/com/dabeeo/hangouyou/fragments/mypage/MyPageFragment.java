@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -35,6 +33,7 @@ import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
 import com.dabeeo.hangouyou.activities.sub.SettingActivity;
 import com.dabeeo.hangouyou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hangouyou.external.libraries.RoundedImageView;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class MyPageFragment extends Fragment
@@ -115,18 +114,9 @@ public class MyPageFragment extends Fragment
   
   private void setNetworkOnOffDisplay(boolean isConnected)
   {
-    if (isConnected)
-    {
-      imageBookmark.setImageResource(R.drawable.btn_mypage_bookmark);
-      imageOrder.setImageResource(R.drawable.btn_mypage_buylist);
-      imageCart.setImageResource(R.drawable.btn_mypage_cart);
-    }
-    else
-    {
-      imageBookmark.setImageResource(R.drawable.btn_mypage_bookmark_offline);
-      imageOrder.setImageResource(R.drawable.btn_mypage_buylist_offline);
-      imageCart.setImageResource(R.drawable.btn_mypage_cart_offline);
-    }
+    imageBookmark.setImageResource(isConnected ? R.drawable.btn_mypage_bookmark : R.drawable.btn_mypage_bookmark_offline);
+    imageOrder.setImageResource(isConnected ? R.drawable.btn_mypage_buylist : R.drawable.btn_mypage_buylist_offline);
+    imageCart.setImageResource(isConnected ? R.drawable.btn_mypage_cart : R.drawable.btn_mypage_cart_offline);
   }
   
   
@@ -193,7 +183,7 @@ public class MyPageFragment extends Fragment
       else if (v.getId() == conatinerMyBookmark.getId())
       {
         if (!SystemUtil.isConnectNetwork(getActivity()))
-          showDontEnterWhenNotConnectNetworkDialog();
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
         else
         {
           startActivity(new Intent(getActivity(), MyBookmarkActivity.class));
@@ -203,29 +193,20 @@ public class MyPageFragment extends Fragment
       else if (v.getId() == conatinerMyOrders.getId())
       {
         if (!SystemUtil.isConnectNetwork(getActivity()))
-          showDontEnterWhenNotConnectNetworkDialog();
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
       else if (v.getId() == conatinerMyCart.getId())
       {
         if (!SystemUtil.isConnectNetwork(getActivity()))
-          showDontEnterWhenNotConnectNetworkDialog();
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
         else
           Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
       }
     }
   };
   
-  
-  private void showDontEnterWhenNotConnectNetworkDialog()
-  {
-    Builder dialog = new AlertDialog.Builder(getActivity());
-    dialog.setTitle(getString(R.string.app_name));
-    dialog.setMessage(getString(R.string.msg_dont_connect_network));
-    dialog.setPositiveButton(android.R.string.ok, null);
-    dialog.show();
-  }
   
   private OnClickListener clickListener = new OnClickListener()
   {

@@ -78,6 +78,8 @@ public class PlaceDetailActivity extends ActionBarActivity
   private Button btnLike, btnBookmark;
   private SharePickView sharePickView;
   
+  private ViewGroup layoutRecommendProduct;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -164,6 +166,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
     
+    layoutRecommendProduct = (ViewGroup) findViewById(R.id.layout_recommend_product);
     loadPlaceDetail();
   }
   
@@ -268,14 +271,22 @@ public class PlaceDetailActivity extends ActionBarActivity
     });
     containerTicketAndCoupon.addView(couponView);
     
-    containerProduct.removeAllViews();
-    ProductView productView = new ProductView(PlaceDetailActivity.this);
-    ProductBean productBean = new ProductBean();
-    productBean.title = "XXX 수분크림";
-    productBean.originalPrice = 150;
-    productBean.discountPrice = 93;
-    productView.setBean(productBean, productBean);
-    containerProduct.addView(productView);
+    if (SystemUtil.isConnectNetwork(getApplicationContext()))
+    {
+      layoutRecommendProduct.setVisibility(View.VISIBLE);
+      containerProduct.removeAllViews();
+      ProductView productView = new ProductView(PlaceDetailActivity.this);
+      ProductBean productBean = new ProductBean();
+      productBean.title = "XXX 수분크림";
+      productBean.originalPrice = 150;
+      productBean.discountPrice = 93;
+      productView.setBean(productBean, productBean);
+      containerProduct.addView(productView);
+    }
+    else
+    {
+      layoutRecommendProduct.setVisibility(View.GONE);
+    }
     
     if (bean == null)
       return;
@@ -288,7 +299,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     textDetail.setText(bean.contents);
     
     addDetailInfo(getString(R.string.term_address), bean.address);
-		addDetailInfo(getString(R.string.term_phone), bean.contact);
+    addDetailInfo(getString(R.string.term_phone), bean.contact);
 //    addDetailInfo(getString(R.string.term_phone), "02-000-0000");
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);
     
@@ -383,6 +394,12 @@ public class PlaceDetailActivity extends ActionBarActivity
     {
       if (v.getId() == R.id.btn_bookmark)
       {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
         // 북마크 토글
         if (!btnBookmark.isActivated())
           Toast.makeText(PlaceDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
@@ -390,6 +407,12 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
       else if (v.getId() == R.id.btn_share)
       {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
         // 공유하기
         sharePickView.setVisibility(View.VISIBLE);
         sharePickView.view.setVisibility(View.VISIBLE);
@@ -397,6 +420,12 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
       else if (v.getId() == R.id.btn_like)
       {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
         //좋아요 
         btnLike.setActivated(!btnLike.isActivated());
       }

@@ -9,84 +9,92 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
 {
-	private LinearLayout containerIsPublicPopup;
-	private RelativeLayout containerPublic, containerPrivate;
-	private View background;
-	private TextView btnCancelIsPublic;
-	
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+  private LinearLayout containerIsPublicPopup;
+  private RelativeLayout containerPublic, containerPrivate;
+  private View background;
+  private TextView btnCancelIsPublic;
+  
+  
+  @Override
+  protected void onCreate(Bundle savedInstanceState)
+  {
+    super.onCreate(savedInstanceState);
 //		adapter.setIsMySchedule(true);
-		
-		containerIsPublicPopup = (LinearLayout) findViewById(R.id.container_set_public);
-		containerPublic = (RelativeLayout) findViewById(R.id.container_public);
-		containerPrivate = (RelativeLayout) findViewById(R.id.container_private);
-		background = (View) findViewById(R.id.background);
-		btnCancelIsPublic = (TextView) findViewById(R.id.btn_cancel_set_is_public);
-		containerPublic.setActivated(true);
-	}
-	
-	
-	@Override
-	protected void onResume()
-	{
-		super.containerWriteReview.setVisibility(View.GONE);
-		super.containerLike.setVisibility(View.GONE);
-		super.containerIsPublic.setVisibility(View.VISIBLE);
-		super.btnIsPublic.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View arg0)
-			{
-				containerIsPublicPopup.setVisibility(View.VISIBLE);
-				containerIsPublicPopup.bringToFront();
-				containerPublic.setOnClickListener(new OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						containerIsPublicPopup.setVisibility(View.GONE);
-						containerPublic.setActivated(true);
-						containerPrivate.setActivated(false);
-						btnIsPublic.setActivated(true);
-					}
-				});
-				containerPrivate.setOnClickListener(new OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						containerIsPublicPopup.setVisibility(View.GONE);
-						containerPublic.setActivated(false);
-						containerPrivate.setActivated(true);
-						btnIsPublic.setActivated(false);
-					}
-				});
-				background.setOnClickListener(new OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						containerIsPublicPopup.setVisibility(View.GONE);
-					}
-				});
-				btnCancelIsPublic.setOnClickListener(new OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						containerIsPublicPopup.setVisibility(View.GONE);
-					}
-				});
-			}
-		});
-		super.onResume();
-	}
-	
+    
+    containerIsPublicPopup = (LinearLayout) findViewById(R.id.container_set_public);
+    containerPublic = (RelativeLayout) findViewById(R.id.container_public);
+    containerPrivate = (RelativeLayout) findViewById(R.id.container_private);
+    background = (View) findViewById(R.id.background);
+    btnCancelIsPublic = (TextView) findViewById(R.id.btn_cancel_set_is_public);
+    containerPublic.setActivated(true);
+  }
+  
+  
+  @Override
+  protected void onResume()
+  {
+    super.containerWriteReview.setVisibility(View.GONE);
+    super.containerLike.setVisibility(View.GONE);
+    super.containerIsPublic.setVisibility(View.VISIBLE);
+    super.btnIsPublic.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        if(!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(MyScheduleDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
+        containerIsPublicPopup.setVisibility(View.VISIBLE);
+        containerIsPublicPopup.bringToFront();
+        containerPublic.setOnClickListener(new OnClickListener()
+        {
+          @Override
+          public void onClick(View v)
+          {
+            containerIsPublicPopup.setVisibility(View.GONE);
+            containerPublic.setActivated(true);
+            containerPrivate.setActivated(false);
+            btnIsPublic.setActivated(true);
+          }
+        });
+        containerPrivate.setOnClickListener(new OnClickListener()
+        {
+          @Override
+          public void onClick(View v)
+          {
+            containerIsPublicPopup.setVisibility(View.GONE);
+            containerPublic.setActivated(false);
+            containerPrivate.setActivated(true);
+            btnIsPublic.setActivated(false);
+          }
+        });
+        background.setOnClickListener(new OnClickListener()
+        {
+          @Override
+          public void onClick(View v)
+          {
+            containerIsPublicPopup.setVisibility(View.GONE);
+          }
+        });
+        btnCancelIsPublic.setOnClickListener(new OnClickListener()
+        {
+          @Override
+          public void onClick(View v)
+          {
+            containerIsPublicPopup.setVisibility(View.GONE);
+          }
+        });
+      }
+    });
+    super.onResume();
+  }
+  
 }
