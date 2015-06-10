@@ -146,29 +146,29 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   private void findAndShowDialog()
   {
-    new FindAsyncTask().execute();
-//    Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
-//    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
-//    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
-//    builder.setView(pView);
-//    builder.setCancelable(false);
-//    final AlertDialog dialog = builder.create();
-//    
-//    if (!dialog.isShowing())
-//      dialog.show();
-//    
-//    Log.i("RecommendScheduleActivity.java | findAndShowDialog", );
-//    
-//    new Handler().postDelayed(new Runnable()
-//    {
-//      @Override
-//      public void run()
-//      {
-//        dialog.dismiss();
-//        Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
-//        startActivity(i);
-//      }
-//    }, 5000);
+//    new FindAsyncTask().execute();
+    Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
+    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
+    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
+    builder.setView(pView);
+    builder.setCancelable(false);
+    final AlertDialog dialog = builder.create();
+    
+    if (!dialog.isShowing())
+      dialog.show();
+    
+    Log.i("RecommendScheduleActivity.java | findAndShowDialog", );
+    
+    new Handler().postDelayed(new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        dialog.dismiss();
+        Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
+        startActivity(i);
+      }
+    }, 5000);
   }
   
   /**************************************************
