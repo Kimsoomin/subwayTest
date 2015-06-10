@@ -32,6 +32,7 @@ import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.views.ReviewImageUploadView;
 
+@SuppressWarnings("deprecation")
 public class WriteReviewActivity extends ActionBarActivity
 {
   private final static int REQUEST_CODE = 120;

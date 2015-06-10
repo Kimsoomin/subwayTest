@@ -21,6 +21,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.NoticeBean;
 import com.dabeeo.hangouyou.controllers.mypage.NoticeAdapter;
 
+@SuppressWarnings("deprecation")
 public class NoticeActivity extends ActionBarActivity
 {
   private ExpandableListView listView;

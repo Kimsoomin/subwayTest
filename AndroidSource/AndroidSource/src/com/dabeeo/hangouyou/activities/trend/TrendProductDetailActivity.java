@@ -33,6 +33,7 @@ import com.dabeeo.hangouyou.views.ProductReviewContainerView;
 import com.dabeeo.hangouyou.views.SharePickView;
 import com.dabeeo.hangouyou.views.TrendOptionAndAmountPickView;
 
+@SuppressWarnings("deprecation")
 public class TrendProductDetailActivity extends ActionBarActivity
 {
   private ViewPager viewPager;

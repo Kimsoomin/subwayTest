@@ -30,6 +30,7 @@ import com.dabeeo.hangouyou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hangouyou.managers.CategoryManager;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 
+@SuppressWarnings("deprecation")
 public class MainActivity extends ActionBarActivity
 {
 	public static SubwayFragment subwayFrament;

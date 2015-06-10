@@ -38,6 +38,7 @@ import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.views.SharePickView;
 import com.squareup.picasso.Picasso;
 
+@SuppressWarnings("deprecation")
 public class TravelStrategyDetailActivity extends ActionBarActivity
 {
   private LinearLayout contentContainer;

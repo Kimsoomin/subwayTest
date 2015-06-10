@@ -16,6 +16,7 @@ import com.dabeeo.hangouyou.controllers.trend.TrendProductListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hangouyou.views.TrendExhibitionTopView;
 
+@SuppressWarnings("deprecation")
 public class TrendExhibitionActivity extends ActionBarActivity
 {
   private GridViewWithHeaderAndFooter gridView;

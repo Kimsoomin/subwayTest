@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
+@SuppressWarnings("deprecation")
 public class ChangePasswordActivity extends ActionBarActivity
 {
   private EditText editCurrentPassword, editNewPassword, editNewPasswordRe;

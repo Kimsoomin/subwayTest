@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.ChangePasswordActivity;
 
+@SuppressWarnings("deprecation")
 public class AccountSettingActivity extends ActionBarActivity
 {
 	private TextView textEmail;

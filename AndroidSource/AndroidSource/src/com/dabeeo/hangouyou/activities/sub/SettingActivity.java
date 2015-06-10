@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 
+@SuppressWarnings("deprecation")
 public class SettingActivity extends ActionBarActivity
 {
   private TextView textName;

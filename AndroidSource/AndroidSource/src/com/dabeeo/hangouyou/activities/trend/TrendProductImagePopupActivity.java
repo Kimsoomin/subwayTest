@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 
+@SuppressWarnings("deprecation")
 public class TrendProductImagePopupActivity extends ActionBarActivity
 {
   private WebView webView;

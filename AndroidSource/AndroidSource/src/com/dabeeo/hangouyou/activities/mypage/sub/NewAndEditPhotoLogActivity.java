@@ -12,6 +12,7 @@ import com.dabeeo.hangouyou.controllers.mypage.EditPhotoLogListAdapter;
 import com.dabeeo.hangouyou.external.libraries.DragSortController;
 import com.dabeeo.hangouyou.external.libraries.DragSortListView;
 
+@SuppressWarnings("deprecation")
 public class NewAndEditPhotoLogActivity extends ActionBarActivity
 {
   private DragSortListView listView;

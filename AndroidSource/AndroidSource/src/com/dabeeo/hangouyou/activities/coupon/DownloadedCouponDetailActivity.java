@@ -23,6 +23,7 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 
+@SuppressWarnings("deprecation")
 public class DownloadedCouponDetailActivity extends ActionBarActivity
 {
   private ImageView imageView;

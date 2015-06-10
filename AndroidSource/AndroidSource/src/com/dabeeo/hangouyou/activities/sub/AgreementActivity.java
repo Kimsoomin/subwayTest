@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 
+@SuppressWarnings("deprecation")
 public class AgreementActivity extends ActionBarActivity
 {
   public static final String TYPE_AGREEMENT = "agreement";

@@ -29,6 +29,7 @@ import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.views.DeclareReviewView;
 
+@SuppressWarnings("deprecation")
 public class ReviewDetailActivity extends ActionBarActivity
 {
   private ImageView icon;
