@@ -408,7 +408,7 @@
     <string name="msg_warn_password_not_same">비밀번호가 일치하지 않습니다. 다시 입력해해주세요</string>
     <string name="msg_empty_list">리스트가 없습니다.</string>
     <!-- 로그인/회원가입 -->
-    <string name="msg_please_write_email">E-mail을 입력력해 주세요</string>
+    <string name="msg_please_write_email">E-mail을 입력해 주세요</string>
     <string name="msg_please_valid_check_email">올바른 E-mail을 입력해주세요</string>
     <string name="msg_check_duplicate_email">이메일 중복체크를 해주세요</string>
     <string name="msg_duplicate_email">중복된 E-mail입니다</string>
