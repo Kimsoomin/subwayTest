@@ -1,0 +1,460 @@
+    <string name="app_name">韩哈游</string>
+
+    <!-- 서버 -->
+    <string name="server_address">http://aimper.mintshop.com/api/v1/</string>
+    <!-- 개발용 -->
+    <!-- <string name="server_address">http://10.0.1.11:3000/api/v1/</string> -->
+
+
+    <!-- Alert Term -->
+    <string name="term_alert">提醒</string>
+    <string name="term_ok">确认</string>
+    <string name="term_cancel">取消</string>
+
+    <!-- Guide Term -->
+    <string name="term_skip">跳过</string>
+
+    <!-- MainMenu Term -->
+    <string name="term_strategy_seoul">旅游攻略</string>
+    <string name="term_famous_place">旅游景点</string>
+    <string name="term_travel_schedule">旅游行程</string>
+    <string name="term_shopping_mall">时尚韩国</string>
+    <string name="term_map">地图</string>
+    <string name="term_subway">地铁</string>
+    <string name="term_photolog">微游记</string>
+    <string name="term_ticket">"团购"</string>
+    <string name="term_coupon">"优惠券"</string>
+    <string name="term_home">首页</string>
+    <string name="term_my_page">我的信息</string>
+    <string name="term_register_photolog">上传游记</string>
+    <string name="term_wishlist">收藏夹</string>
+    <string name="term_search">搜索</string>
+    <string name="msg_download_map">贴士!你可以免费下载离线地图哟！</string>
+
+    <!-- Place activities term -->
+    <string name="term_review_best">好</string>
+    <string name="term_review_soso">一般</string>
+    <string name="term_review_worst">不怎样</string>
+
+    <!-- Mypage Term -->
+    <string name="term_setting">设定</string>
+    <string name="term_my_schedule">我的行程</string>
+    <string name="term_my_place">我的地点</string>
+    <string name="term_my_ticket_coupon">"已买团购/已收优惠券"</string>
+    <string name="term_my_bookmark">标记</string>
+    <string name="term_my_order">以买到的宝贝</string>
+    <string name="term_my_cart">"购物车"</string>
+    <string name="term_profile">个人资料</string>
+    <string name="term_save">保存</string>
+    <string name="term_logout">退出</string>
+    <string name="term_sync">同步</string>
+    <string name="term_sync_only_wifi">仅在wifi环境下同步</string>
+    <string name="term_setting_notification">提醒设置</string>
+    <string name="term_about">应用信息</string>
+    <string name="term_version_info">版本信息</string>
+    <string name="term_rating_app">评价应用</string>
+    <string name="term_notice">通知</string>
+    <string name="term_current_version">"当前版本 : "</string>
+    <string name="term_update">立即更新</string>
+    <string name="term_agreement">使用条款</string>
+    <string name="term_private_agreement">隐私条款</string>
+    <string name="term_gps_info_agreement">位置信息条款</string>
+
+    <!-- MyPage's sub activities term -->
+    <string name="term_change_background">更换背景</string>
+    <string name="term_change_profile">更换头像</string>
+    <string name="term_month">"日"</string>
+    <string name="term_product_info">商品详情</string>
+    <string name="term_publish">公开</string>
+    <string name="term_insert_title_here">请填写标题</string>
+    <string name="term_memo">记录</string>
+    <string name="term_change_location">更改定位</string>
+    <string name="term_rate">评分</string>
+    <string name="term_more_pro_guide">查看专家推荐</string>
+    <string name="term_recommend_product">推荐商品</string>
+    <string name="term_review">点评</string>
+    <string name="term_review_more">查看更多点评</string>
+    <string name="term_product_more">查看更多商品</string>
+    <string name="term_day">Day</string>
+    <string name="term_plus">+</string>
+    <string name="term_bookmark">标记</string>
+    <string name="term_like">喜欢</string>
+    <string name="term_write_review">写点评</string>
+    <string name="term_share">分享</string>
+    <!-- Menus term -->
+    <string name="term_edit">编辑</string>
+    <string name="term_close">关闭</string>
+    <string name="term_delete">删除</string>
+    <string name="term_delete_all">全部删除</string>
+    <string name="term_delete_confirm">删除吗？</string>
+    <!-- Message - Intro -->
+    <string name="message_alert_lte_mode">在3G/LTE网络下会消耗流量。确认使用吗？</string>
+    <string name="message_alert_allow_notification">"接收韩哈游的推送信息吗？"</string>
+    <string name="message_write_review">请留下点评。</string>
+    <string name="msg_empty_value">请填写所有空间。</string>
+    <!-- 검색결과 -->
+    <string name="term_search_result">搜索结果</string>
+    <string name="term_recent_search_word">搜索结果</string>
+    <string name="term_place">地点</string>
+    <string name="term_product">商品</string>
+    <string name="term_popular_recommend_product">热门推荐商品</string>
+    <string name="message_search_word_here">请输入搜索词</string>
+    <string name="term_more">"更多"</string>
+
+    <!-- 여행공략 -->
+    <string name="term_place_detail_info">地点详情</string>
+    <string name="term_address">地址</string>
+    <string name="term_phone">联系电话</string>
+    <string name="term_homepage">网址</string>
+    <string name="term_working_time">营业时间 (开放时间)</string>
+    <string name="term_price_info">价格详情</string>
+    <string name="term_traffic">交通情报</string>
+    <string name="term_description">详情</string>
+    <string name="term_all">全部删除</string>
+    <string name="term_recommend_seoul">推荐首尔</string>
+    <string name="term_popular_place">景点</string>
+    <string name="term_shopping">购物</string>
+    <string name="term_restaurant">餐馆</string>
+    <string name="msg_review_success">点评发布成功</string>
+    <string name="msg_review_fail">点评发布失败</string>
+
+    <!-- 회원가입 / 로그인 -->
+    <string name="term_login">登录</string>
+    <string name="term_join">注册</string>
+    <string name="term_email">邮箱</string>
+    <string name="term_password">密码</string>
+    <string name="term_name">姓名</string>
+    <string name="term_password_join">密码</string>
+    <string name="term_re_password_join">确认密码</string>
+    <string name="term_gender">性别</string>
+    <string name="term_gender_male">男</string>
+    <string name="term_gender_female">女</string>
+    <string name="term_date_of_birth">出生日期</string>
+    <string name="term_auto_login">下次自动登录</string>
+    <string name="term_find_password">忘记密码？</string>
+    <string name="msg_not_connect_network">请开启网络后在试</string>
+    <string name="msg_agreement">同意使用条款</string>
+    <string name="msg_private_agreement">同意隐私条款</string>
+    <string name="msg_gps_agreement">同意位置信息条款</string>
+    <string name="msg_date_of_birth">请输入出生日期</string>
+    <string name="term_send">发送</string>
+    <!-- 지하철 -->
+    <string name="term_find_start_station">搜索出发站位置</string>
+    <string name="msg_please_gps_enable">为了流畅使用，请将位置信息设为‘使用’。</string>
+    <string name="msg_find_station">搜索地铁站</string>
+    <string name="term_start">起</string>
+    <string name="term_finish">终</string>
+    <string name="msg_dont_support_outside_seoul">非首尔地区正在准备中。</string>
+    <string name="msg_near_by_station">这是最近的地铁站。</string>
+    <string name="term_exit_info_title">出口信息</string>
+
+    <!-- 맵 -->
+    <string name="map_notification">提醒</string>
+    <string name="map_confirm">确认</string>
+    <string name="map_gps_noUse">为了流畅使用，请将位置信息设为‘使用’。</string>
+    <string name="map_gps_Location_fail">定位失败</string>
+    <string name="map_gps_out_of_Seoul">非首尔地区正在准备中。</string>
+    <string name="map_subway_start">选择出发地</string>
+    <string name="map_subway_end">选择目的地</string>
+    <string name="msg_is_download_map">下载地图后可以使用，去下载地图吗?</string>
+    <string name="msg_dest_arrived">已到达目的地</string>
+    <string name="app_finish">再按一次后退键退出应用。</string>
+    <string name="msg_no_search_result">无搜索结果</string>
+    <!-- Intro -->
+    <string name="msg_map_donwload">正在下载首尔地图，请稍等。</string>
+
+    <!-- 지하철 -->
+    <string name="term_set_start_station">选为起点</string>
+    <string name="term_set_end_station">选为终点</string>
+    <!-- 내 일정 -->
+    <string name="term_recommend_travel_schedule">创建推荐行程</string>
+    <string name="term_recommend_schedule_compeleted">成功创建推荐行程</string>
+    <string name="term_select_date">选择日期</string>
+    <string name="msg_warn_empty_start_date">选择出发日期</string>
+    <string name="msg_progress_recommend_schedule">正在创建推荐行程</string>
+    <string name="term_another_recommend_schedule">接收其它推荐行程</string>
+    <string name="term_generate_new_schedule">重新创建</string>
+    <string name="term_compelete">完成</string>
+    <string name="msg_recommend_schedule_help">出游不知怎么规划?</string>
+    <string name="msg_recommend_schedule_help_1">推荐行程帮你安排最佳线路！</string>
+    <string name="msg_recommend_step_1">行程天数和出发日期搞定了吗？</string>
+    <string name="msg_recommend_step_2">本次旅游的主题是什么？</string>
+    <string name="term_select_start_date">选择出发日期</string>
+    <string name="term_select_schedule_day">选择日期</string>
+    <string name="term_next">下一步</string>
+    <string name="term_warn_limit_7_days">"最长能选7日"</string>
+    <string name="term_popular_schedule">按人气排序</string>
+    <string name="term_registered_schedule">我上传的行程</string>
+    <string name="term_bookmarked_schedule">我收藏的行程</string>
+    <string name="msg_save_my_schedule">保存到我的行程？</string>
+    <string name="msg_init_recommend_schedule">确定初始化所有设置？</string>
+    <!-- Place -->
+    <string name="term_place_description">概况</string>
+    <!-- Main -->
+    <string name="msg_dont_connect_network">连接网络后，您可以继续使用。</string>
+    <string name="msg_logout">退出吗？</string>
+
+    <!-- Mall -->
+    <string name="term_top_brand">"[TOP BRAND]"</string>
+    <string name="term_trend_korea">时尚韩国</string>
+    <string name="term_exhibitions">品牌展销</string>
+    <string name="term_price">销售价</string>
+    <string name="term_coupon_price">优惠价</string>
+    <string name="term_product_coupon">优惠券</string>
+    <string name="term_delivery_fee">运费</string>
+    <string name="msg_product_price_currency">(销售价可随着汇率变动)</string>
+    <string name="term_delivery_some_day">指定配送日期</string>
+    <string name="term_product_detail_info">商品详情</string>
+    <string name="term_product_detail_review">累计评价</string>
+    <string name="term_product_detail_delivery_info">商品参数</string>
+    <string name="term_product_detail_refund">退换商品</string>
+    <string name="term_buy">立即购买</string>
+    <string name="term_all_rate">"/5.0"</string>
+    <!-- 티켓 -->
+    <string name="term_all_tickets">所有团购</string>
+    <string name="term_bought_ticket">已购团购</string>
+    <string name="term_validity_period">有效期</string>
+    <string name="term_buy_immediately">立即购买</string>
+    <string name="term_validity_condition">使用规则</string>
+    <string name="term_refund_condition">退货规则</string>
+    <string name="term_where_use_in">使用处</string>
+    <string name="term_discount_price">优惠价</string>
+    <string name="term_show_location">商家位置</string>
+
+    <!-- 쿠폰 -->
+    <string name="term_all_coupons">所有优惠券</string>
+    <string name="term_downloaded_coupon">已收优惠券</string>
+    <string name="term_used">已使用</string>
+    <string name="term_ticket_en">"TICKET "</string>
+    <string name="term_ticket_and_coupon_buy">购买</string>
+    <string name="term_coupon_en">"COUPON "</string>
+
+    <!-- 추가 String (보냄 받아야 함) -->
+    <!-- 쿠폰 -->
+    <string name="term_quantity_unit">张</string>
+    <string name="term_download">下载</string>
+    <string name="term_order_sheet">填写订单并结算</string>
+    <string name="term_code">商品编码</string>
+    <string name="term_quantity">张数</string>
+    <string name="term_age">年龄</string>
+    <string name="term_select_age">选择年龄</string>
+
+    <string-array name="age_type">
+        <item>성인</item>
+        <item>청소년</item>
+        <item>아동</item>
+    </string-array>
+
+    <string name="term_customer_info">订单人信息</string>
+    <string name="term_customer_name">订单人</string>
+    <string name="term_english_name">英文姓名</string>
+    <string name="term_passport_number">护照号码</string>
+    <string name="term_phone_number_optional">联系电话（选项）</string>
+    <string name="term_order_info">结算信息</string>
+    <string name="term_total_price">预定结算金额</string>
+    <string name="term_total_quantity">总购买张数</string>
+    <string name="term_total_quantity_unit">张</string>
+    <string name="term_discount_by_coupon">优惠金额</string>
+    <string name="term_bill_price">最终结算金额</string>
+    <string name="msg_order_agree">确认商品信息，金额，配送信息并同意购买吗？</string>
+    <string name="term_pay_type">付款方式</string>
+    <string name="term_pay_type_unionpay">银联卡支付</string>
+    <string name="term_pay_type_alipay">支付宝支付</string>
+    <string name="msg_order_caution">• 因汇率变动发生的差额损失由顾客承担。\n• 因汇率变动订单时报的金额可能与结算时金额相异发生差额，实际结算总额能在输入信用卡信息时看到。\n• 有关付款结算的咨询请联系官方QQ：2889751559（联系时间：平日上午9点~下午6点，韩国时间为标准）。</string>
+    <string name="term_checkout">付款</string>
+    <string name="error_english_name_is_empty">填写英文姓名</string>
+    <string name="error_passport_number_is_empty">填写护照号码</string>
+    <string name="error_didnt_agree_order">同意购买</string>
+    <string name="term_order_completed">购买成功</string>
+    <string name="msg_order_completed">订单/支付成功。</string>
+    <string name="msg_order_completed_description">可以在个人信息的团购单或邮箱查看已买到的团购。</string>
+    <string name="term_order_code">订单编号</string>
+    <string name="term_paid_by">用%1$s支付</string>
+    <string name="term_go_to_main">回到首页</string>
+    <string name="term_go_to_bought_list">确认团购信息</string>
+    <string name="term_show_bought_ticket">查看团购</string>
+    <string name="term_show_coupon">查看优惠券</string>
+    <string name="term_how_to_use">使用规则</string>
+    <string name="term_instructions">购买须知</string>
+    <string name="term_already_have_coupon">已经下载的优惠券。在个人信息的团购/优惠券可以看到。去看优惠券吗？</string>
+    <string name="term_coupon_download_completed">收到了优惠券。在个人信息的团购/优惠券可以看到。去看优惠券吗？</string>
+    <string name="term_show_coupon_list">确认优惠券信息</string>
+    <string name="term_coupon_title">优惠券名</string>
+    <string name="term_coupon_number">优惠券编码</string>
+    <string name="term_use_coupon">使用（工作人员专用）</string>
+    <string name="term_confirm_use_coupon">仅限商店工作人员使用的按键。使用后不能取消或退钱。确认使用吗？</string>
+    <string name="term_conpun_used">成功使用</string>
+    <!-- 여행일정 -->
+    <string name="msg_empty_my_schedule">没有上传的行程</string>
+    <string name="term_declare">举报</string>
+    <string name="msg_empty_my_bookmark">没有标记的行程</string>
+    <string name="msg_recommend_schedule">用韩购游的行程助手\n创建旅游行程吧！</string>
+    <string name="msg_empty_search_result">未找到结果</string>
+    <string name="msg_confirm_delete">确定删除吗？</string>
+    <string name="term_declare_review">举报评论</string>
+    <string name="msg_declare_hint">详细说明会帮助我们更快地处理举报（300字以内）</string>
+    <string name="msg_review_declare_reason_1">广告</string>
+    <string name="msg_review_declare_reason_2">色情污秽</string>
+    <string name="msg_review_declare_reason_3">其它</string>
+    <string name="term_after_day">第n日</string>
+    <!-- 마이페이지 -->
+    <string name="term_change_password">修改密码</string>
+    <string name="term_withdraw">注销帐号</string>
+    <string name="msg_withdraw">注销帐号</string>
+    <string name="term_current_password">现在的密码</string>
+    <string name="msg_hint_current_password">现在的密码（密码长度6~16位）</string>
+    <string name="term_new_password">新密码</string>
+    <string name="msg_hint_new_password">新密码（密码长度6~16位）</string>
+    <string name="msg_hint_new_password_confirm">确认新密码</string>
+    <string name="term_see_agreement">查看使用条款</string>
+    <!-- 추천일정 -->
+    <string name="term_culture">韩潮</string>
+    <string name="term_tour">观光</string>
+    <string name="term_food">美食</string>
+    <string name="term_rest">休闲</string>
+    <string name="term_random">随机</string>
+    <string name="msg_warn_select_theme">请选择旅游主题</string>
+    <string name="term_order_item">已购商品</string>
+    <!-- 내 장소 -->
+    <string name="msg_empty_my_place">没有添加的地点</string>
+    <string name="term_all_check">全部删除</string>
+    <string name="term_select_delete">选中删除</string>
+    <string name="term_public">全部公开</string>
+    <string name="term_private">非公开</string>
+    <!-- 지하철 -->
+    <string name="msg_same_start_end_station">此站已被选为起点，切换成终点吗？</string>
+    <string name="msg_same_end_start_station">此站已被选为终点，切换成起点吗？</string>
+    <!-- 로그인/회원가입 -->
+    <string name="term_check_duplicate">确认是否重复</string>
+    <string name="term_get_temp_password">发临时密码</string>
+    <string name="term_auth_email">邮箱认证</string>
+    <string name="term_re_send">重新发送</string>
+    <string name="term_auth">重新发送</string>
+    <string name="term_input_auth_number">输入验证码</string>
+    <string name="msg_complete_join">注册成功！\n验证邮件已发到邮箱\n确认验证码后，\n请在页面输入验证码</string>
+    <!-- WishList -->
+    <string name="msg_empty_wish_list">没有装在收藏夹的商品。</string>
+    <string name="msg_help_wish_list">浏览韩国的热门商品\n添加到收藏夹吧！</string>
+    <string name="term_go_to_popular_product">浏览热门商品</string>
+    <string name="term_popular_wish_list">热门收藏夹</string>
+    <!-- 여행공략 -->
+    <string name="msg_rate_this_place">请在这里留下评价</string>
+    <string name="msg_how_about_this_place">这个地点怎么样？</string>
+    <!-- 트렌드한국 -->
+    <string name="term_shopping_all">全部</string>
+    <string name="term_shopping_cosmetic">化妆品/美容</string>
+    <string name="term_shopping_food">食品</string>
+    <string name="term_shopping_baby">母婴用品</string>
+    <string name="term_shopping_living">厨房/生活</string>
+    <string name="term_shopping_etc">其它</string>
+    <!-- 프로모션 -->
+    <string name="term_show_detail">查看详情</string>
+    <string name="term_dont_show_a_day">今天不再显示</string>
+
+    <!-- 추가 String (아직 안보냄) -->
+    <!-- 마이페이지 -->
+    <string name="msg_require_login">로그인이 필요합니다</string>
+    <string name="msg_only_wifi_is_disable">Only WiFi 설정을 해제 하실 경우 My plan 및 콘텐츠 정보 업데이트를 위해 데이터를 사 용하여 동기화가 진행 됩니다.\nOnly Wifi 설정을 해제하시겠습니까?</string>
+    <string name="msg_help_withdraw">원활한 회원탈퇴 처리를 위해\n상담원 연결이 필요합니다.\n\n아래 고객센터로 문의 바랍니다.</string>
+    <string name="msg_help_withdraw_qq">QQ번호 : 889751559</string>
+    <string name="msg_help_withdraw_email">이메일 문의 CS@GSSHOP.COM</string>
+    <!-- 여행일정 -->
+    <string name="term_two_days_schedule">2일 일정</string>
+    <string name="term_three_days_schedule">3일 일정</string>
+    <string name="term_four_days_schedule">4일 일정</string>
+    <!-- 여행공략 -->
+    <array name="area_array">
+        <item>전체</item>
+        <item>한류특화지역</item>
+        <item>신촌/이대/홍대</item>
+        <item>명동/동대문</item>
+        <item>압구정/청담/강남 일대</item>
+        <item>인사동/시청 (전통문화지구)</item>
+        <item>그 외 명소</item>
+    </array>
+     <array name="spot_array">
+        <item>전체</item>
+        <item>인기순</item>
+        <item>북마크한 장소</item>
+        <item>등록한 장소</item>
+    </array>
+    <!-- 북마크 -->
+    <string name="term_schedule">일정</string>
+    <string name="msg_empty_bookmark">북마크 된 정보가 없습니다</string>
+    <!-- 인트로 -->
+    <string name="msg_download_travel_cotnent">여행정보를 다운로드중입니다\n잠시만 기다려주세요</string>
+    <string name="msg_update_travel_content">업데이트 정보를 다운로드중입니다\n잠시만 기다려주세요</string>
+    <!-- 쿠폰/티켓 -->
+    <string name="term_option">옵션</string>
+    <string name="term_confirm_buy">구매내역 확인</string>
+    <string name="msg_use_coupon_only_employee">매장 담당자가 확인하는 버튼입니다. 사용후에는 취소 및 환불이 불가능합니다 쿠폰을 사용하시겠습니까?</string>
+    <string name="msg_complete_use_coupon">사용완료 확인되었습니다</string>
+    <string name="term_recommend">추천</string>
+    <string name="term_cart_with_plus">+ 장바구니 담기</string>
+    <string name="term_add_wishlist">+ 위시리스트에 추가하기</string>
+    <string name="msg_hint_add_wishlist">위시리스트 추가</string>
+    <!-- 검색 -->
+    <string name="term_search_popular_word">인기 검색어</string>
+    <!-- 리뷰 -->
+    <string name="msg_empty_rate">평가를 해주세요</string>
+    <string name="msg_string_length_less_six">최소 6글자 이상 입력해야 합니다</string>
+    <!-- 비밀번호 찾기 -->
+    <string name="msg_please_write_password">비밀번호를 입력해주세요</string>
+    <string name="msg_please_write_new_password">새로운 비밀번호를 입력해주세요</string>
+    <string name="msg_warn_password_length">비밀번호는 6\\-16글자 사이로 가능합니다</string>
+    <string name="msg_please_valid_check_password">비밀번호는 영문/숫자/특수문자만 입력가능합니다</string>
+    <string name="msg_warn_password_not_same">비밀번호가 일치하지 않습니다. 다시 입력해해주세요</string>
+    <string name="msg_empty_list">리스트가 없습니다.</string>
+    <!-- 로그인/회원가입 -->
+    <string name="msg_please_write_email">E-mail을 입력력해 주세요</string>
+    <string name="msg_please_valid_check_email">올바른 E-mail을 입력해주세요</string>
+    <string name="msg_check_duplicate_email">이메일 중복체크를 해주세요</string>
+    <string name="msg_duplicate_email">중복된 E-mail입니다</string>
+    <string name="msg_possibile_email_account">사용 가능한 메일계정입니다</string>
+    <string name="msg_please_write_name">이름 또는 별명을 입력해 주세요</string>
+    <string name="msg_please_valid_check_name">프로필 이름은 영문/숫자만 입력가능합니다.</string>
+    <string name="msg_compete_modify_name">프로필 이름이 정상적으로 변경되었습니다</string>
+    <string name="msg_check_duplicate_name">이름 중복체크를 해주세요</string>
+    <string name="msg_duplicate_name">이미 사용중인 이름입니다.</string>
+    <string name="msg_possibile_name_account">사용 가능한 이름입니다</string>
+    <string name="msg_please_write_phone_number">전화번호를 입력해주세요</string>
+    <string name="msg_please_not_match_password">비밀번호가 일치하지 않습니다.\n다시 입력해주세요</string>
+    <string name="msg_dont_same_name_and_password">이름과 동일한 비밀번호를 사용할 수 없습니다</string>
+    <string name="msg_please_write_birthday">생년월일을 입력해주세요</string>
+    <string name="msg_check_agreement">이용약관에 동의해주세요</string>
+    <string name="msg_check_private_agreement">개인정보약관에 동의해주세요</string>
+    <string name="msg_check_gps_agreement">위치정보약관에 동의해주세요</string>
+    <string name="msg_please_check_user_info">입력된 정보를 다시 확인해주세요</string>
+    <string name="msg_send_email_fail">이메일 발송에 실패했습니다</string>
+    <string name="msg_wrong_password">비밀번호가 일치하지 않습니다</string>
+    <string name="msg_send_email">E-mail 주소로 임시 비밀번호가 발송 됩니다. 로그인 후 비밀번호를 변경해주세요.</string>
+    <string name="msg_allow_receive_email">이메일을 통한 상품/이벤트 정보수신에 동의합니다. (선택)</string>
+    <string name="msg_allow_receive_phone">휴대폰/SMS 통한 상품/이벤트 정보수신에 동의합니다. (선택)</string>
+	<string name="msg_not_correct_email_auth">입력된 인증번호가 일치하지 않습니다. 확인 후 다시 입력해 주세요.</string>
+	<string name="msg_complete_auth">이메일 인증이 완료되었습니다</string>    
+	<string name="term_congratulate">Congratulation!!\n한하요우 회원이 되신 것을 축하합니다.</string> 
+	<string name="msg_success_join">회원가입이 성공적으로 완료되었습니다.\n한고우요우의 다양한 서비스를 이용해보세요.</string>
+	<string name="msg_please_error_id">등록된 계쩡이 없습니다</string>
+	<string name="msg_please_error_auth">인증되지 않은 E-mail입니다</string>
+	<string name="msg_please_error_out">탈퇴한 회원입니다</string>
+	<string name="msg_please_error_password">잘못된 비밀번호입니다</string>
+	<string name="msg_please_error_old_password">기존 비밀번호가 맞지 않습니다\n다시 입력해주세요</string>
+	<string name="term_detail">"(자세히)"</string>
+	<string name="term_qq">QQ</string>
+	<string name="term_wechat">WeChat</string>
+	<string name="term_weibo">Sina Weibo</string>
+	<!-- Trend -->
+	<string name="term_product_detail">상품보기</string>
+	<string name="term_product_description">상품설명</string>
+	<string name="term_delivery">배송</string>
+	<string name="msg_help_pic_detail">손가락을 좌우로 벌리면\n이미지를 확대하실 수 있습니다.</string>
+	<string name="term_product_review">상품평</string>
+	<string name="term_sold_out">일시품절 되었습니다</string>
+	<!-- 리뷰 -->
+	<string name="msg_review_declare_reason">신고사유 선택</string>
+
+
+    <iOS 사진관련 추가 문구>
+    <string name="msg_allowed_gallery">사진에 대한 접근을 허용해 주세요.</string>
+    <string name="msg_allowed_gallery_hanhayou">접근을 허용하려면 개인정보보호의 사진에서 '한하요우'를 켜기로 설정하세요.</string>
+    <string name="msg_allowed_access">액세스 허용</string>
