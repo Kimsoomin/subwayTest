@@ -1,12 +1,7 @@
 package com.dabeeo.hangouyou.managers.network;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -24,7 +19,6 @@ import org.apache.http.util.EntityUtils;
 import android.content.Context;
 import android.util.Log;
 
-import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")

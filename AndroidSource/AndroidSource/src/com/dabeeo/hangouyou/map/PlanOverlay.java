@@ -17,7 +17,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Cap;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 
 import com.dabeeo.hangouyou.R;
 
