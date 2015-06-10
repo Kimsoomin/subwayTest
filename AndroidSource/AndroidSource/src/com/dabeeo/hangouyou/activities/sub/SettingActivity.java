@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
+import com.dabeeo.hangouyou.map.Global;
 
 public class SettingActivity extends ActionBarActivity
 {
@@ -49,7 +50,7 @@ public class SettingActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     textName = (TextView) findViewById(R.id.text_name);
-    textName.setText("홍길동");
+    textName.setText(Global.g_strUserName);
     
     badgeNotice = (ImageView) findViewById(R.id.badge_notice);
     badgeVersionInfo = (ImageView) findViewById(R.id.badge_version_info);
@@ -70,6 +71,7 @@ public class SettingActivity extends ActionBarActivity
           public void onClick(DialogInterface dialog, int which)
           {
             finish();
+            Global.g_strUserSeq = null;
           }
         });
         dialog.setNegativeButton(android.R.string.cancel, null);

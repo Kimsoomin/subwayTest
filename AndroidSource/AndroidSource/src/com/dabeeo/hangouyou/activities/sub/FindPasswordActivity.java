@@ -90,7 +90,7 @@ public class FindPasswordActivity extends Activity
       }
       else
       {
-        alertView.setAlert(getString(R.string.msg_please_vaild_check_email));
+        alertView.setAlert(getString(R.string.msg_please_valid_check_email));
       }      
     }
   };

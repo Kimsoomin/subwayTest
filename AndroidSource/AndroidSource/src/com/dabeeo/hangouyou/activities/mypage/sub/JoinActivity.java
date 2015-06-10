@@ -126,7 +126,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           new checkDuplicatedEmailTask().execute();
         }
         else
-          alertView.setAlert(getString(R.string.msg_please_vaild_check_email));
+          alertView.setAlert(getString(R.string.msg_please_valid_check_email));
       }
     });
     btnCheckDuplicateName = (Button) findViewById(R.id.btn_check_duplicate_name);
@@ -213,7 +213,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           }
         }else
         {
-          alertView.setAlert(getString(R.string.msg_please_vaild_check_email));
+          alertView.setAlert(getString(R.string.msg_please_valid_check_email));
           return;
         }
       }
@@ -504,7 +504,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     protected NetworkResult doInBackground(Void... params)
     {
       // TODO Auto-generated method stub
-      return apiClient.userNameDuplicateCheck(editName.getText().toString());
+      return apiClient.userNameDuplicateCheck(name);
     }
     
     @Override

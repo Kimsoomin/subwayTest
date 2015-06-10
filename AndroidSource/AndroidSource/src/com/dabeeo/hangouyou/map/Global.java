@@ -82,8 +82,8 @@ public class Global
   // 로그인 상태
   static boolean g_bLoggedIn = false;
   public static String g_strUserSeq = null; // 유저 시퀀스 키...
-  public static String g_strUserName = null;
-  public static String g_strUserEmail = null;
+  public static String g_strUserName = "";
+  public static String g_strUserEmail = "";
   public static String g_strGender = null;
   public static String g_strProfile = null;
   public static String g_strMapDBFileName = "gs_seoul.mbtiles";

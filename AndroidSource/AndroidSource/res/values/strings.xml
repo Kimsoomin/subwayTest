@@ -409,12 +409,13 @@
     <string name="msg_empty_list">리스트가 없습니다.</string>
     <!-- 로그인/회원가입 -->
     <string name="msg_please_write_email">E-mail을 입력력해 주세요</string>
-    <string name="msg_please_vaild_check_email">올바른 E-mail을 입력해주세요</string>
+    <string name="msg_please_valid_check_email">올바른 E-mail을 입력해주세요</string>
     <string name="msg_check_duplicate_email">이메일 중복체크를 해주세요</string>
     <string name="msg_duplicate_email">중복된 E-mail입니다</string>
     <string name="msg_possibile_email_account">사용 가능한 메일계정입니다</string>
     <string name="msg_please_write_name">이름 또는 별명을 입력해 주세요</string>
     <string name="msg_please_valid_check_name">프로필 이름은 영문/숫자만 입력가능합니다.</string>
+    <string name="msg_compete_modify_name">프로필 이름이 정상적으로 변경되었습니다</string>
     <string name="msg_check_duplicate_name">이름 중복체크를 해주세요</string>
     <string name="msg_duplicate_name">이미 사용중인 이름입니다.</string>
     <string name="msg_possibile_name_account">사용 가능한 이름입니다</string>
@@ -439,6 +440,7 @@
 	<string name="msg_please_error_auth">인증되지 않은 E-mail입니다</string>
 	<string name="msg_please_error_out">탈퇴한 회원입니다</string>
 	<string name="msg_please_error_password">잘못된 비밀번호입니다</string>
+	<string name="msg_please_error_old_password">기존 비밀번호가 맞지 않습니다\n다시 입력해주세요</string>
 	<string name="term_detail">"(자세히)"</string>
 	<string name="term_qq">QQ</string>
 	<string name="term_wechat">WeChat</string>
