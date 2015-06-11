@@ -105,7 +105,10 @@ public class PlaceDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        startActivity(new Intent(PlaceDetailActivity.this, TravelStrategyDetailActivity.class));
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+        else
+          startActivity(new Intent(PlaceDetailActivity.this, TravelStrategyDetailActivity.class));
       }
     });
     containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);
