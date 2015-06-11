@@ -416,7 +416,7 @@
 		{
 			"id": "b4e30360-e504-80a5-a3e7-baa6c46bdb53",
 			"headers": "Content-Type: application/json\n",
-			"url": "http://gs.blinking.kr:8900/_libs/api.common.php?v=m1&mode=USER_LOGIN&userEmail=sunhee.kim@dabeeo.com&userPw=sun0228",
+			"url": "http://gs.blinking.kr:8900/_libs/api.common.php?v=m1&mode=USER_LOGIN&userEmail=mint@mint.com&userPw=123456",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -426,7 +426,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1433984096615,
+			"time": 1433987240608,
 			"name": "회원 로그인",
 			"description": "mode: \"USER_LOGIN\", userId: [회원ID(이메일)], userPw: [회원비밀번호], isMobile: 1, \"results : { status: \"\"OK\"\", userSeq: [회원고유번호(키값)] }\"",
 			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
