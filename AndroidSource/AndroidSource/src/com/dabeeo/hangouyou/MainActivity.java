@@ -168,9 +168,14 @@ public class MainActivity extends ActionBarActivity
         break;
       
       case POSITION_MY_PAGE:
-          bottomMenuMyPage.setSelected(true);
-          title.setText(getString(R.string.term_my_page));
-          fragment = new MyPageFragment();
+        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          return;
+        }
+        bottomMenuMyPage.setSelected(true);
+        title.setText(getString(R.string.term_my_page));
+        fragment = new MyPageFragment();
         break;
       
       case POSITION_SEARCH:
@@ -180,6 +185,17 @@ public class MainActivity extends ActionBarActivity
         break;
       
       case POSITION_WISHLIST:
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
+        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          return;
+        }
         bottomMenuWishList.setSelected(true);
         title.setText(getString(R.string.term_wishlist));
         fragment = new WishListFragment();
@@ -205,11 +221,6 @@ public class MainActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuMyPage.getId())
       {
-        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
-        {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
-          return;
-        }
         setFragments(POSITION_MY_PAGE);
       }
       else if (v.getId() == bottomMenuPhotolog.getId())
@@ -223,17 +234,6 @@ public class MainActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
-        
-        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
-        {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
-          return;
-        }
         setFragments(POSITION_WISHLIST);
       }
       else if (v.getId() == bottomMenuSearch.getId())
