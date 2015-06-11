@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity
   };
   
   
-  private void setFragments(int position)
+  public void setFragments(int position)
   {
     bottomMenuHome.setSelected(false);
     bottomMenuMyPage.setSelected(false);

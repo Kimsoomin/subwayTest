@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity;
@@ -39,6 +40,7 @@ import com.dabeeo.hangouyou.utils.SystemUtil;
 public class MyPageFragment extends Fragment
 {
   private final static int REQUEST_CODE = 120;
+  private final static int REQUEST_CODE_SETTING_WHEN_LOGOUT = 121;
 //  private ImageView imageCover;
   private RoundedImageView imageProfile;
   private TextView textName;
@@ -46,6 +48,7 @@ public class MyPageFragment extends Fragment
   private LinearLayout conatinerMySchedule, conatinerMyPlace, conatinerMySetting, conatinerMyBookmark, conatinerMyOrders, conatinerMyCart;
   
   private boolean isChangeBackground = false;
+  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -79,6 +82,7 @@ public class MyPageFragment extends Fragment
     
     return view;
   }
+  
   
   @Override
   public void onResume()
@@ -124,39 +128,47 @@ public class MyPageFragment extends Fragment
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode != Activity.RESULT_OK)
       return;
-    Log.w("WARN", "ActivityResult");
-    if (data != null && data.hasExtra("photos"))
+    
+    if (requestCode == REQUEST_CODE)
     {
-      String[] photos = data.getStringArrayExtra("photos");
-      if (photos.length == 0)
-        return;
-      
-      try
+      if (data != null && data.hasExtra("photos"))
       {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        InputStream is = null;
-        is = new FileInputStream(new File(photos[0]));
-        BitmapFactory.decodeStream(is, null, options);
-        is.close();
-        is = new FileInputStream(new File(photos[0]));
-        options.inSampleSize = 2;
-        Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
+        String[] photos = data.getStringArrayExtra("photos");
+        if (photos.length == 0)
+          return;
+        
+        try
+        {
+          BitmapFactory.Options options = new BitmapFactory.Options();
+          InputStream is = null;
+          is = new FileInputStream(new File(photos[0]));
+          BitmapFactory.decodeStream(is, null, options);
+          is.close();
+          is = new FileInputStream(new File(photos[0]));
+          options.inSampleSize = 2;
+          Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
 //        if (isChangeBackground)
 //          imageCover.setImageBitmap(bitmap);
 //        else
-        if (!isChangeBackground)
-          imageProfile.setImageBitmap(bitmap);
+          if (!isChangeBackground)
+            imageProfile.setImageBitmap(bitmap);
+        }
+        catch (FileNotFoundException e)
+        {
+          e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+          e.printStackTrace();
+        }
+        
+        //Network 통해 서버의 사진 변경
       }
-      catch (FileNotFoundException e)
-      {
-        e.printStackTrace();
-      }
-      catch (IOException e)
-      {
-        e.printStackTrace();
-      }
-      
-      //Network 통해 서버의 사진 변경
+    }
+    else if (requestCode == REQUEST_CODE_SETTING_WHEN_LOGOUT)
+    {
+      // 로그아웃 하면 홈 탭 선택하기
+      ((MainActivity) getActivity()).setFragments(0);
     }
   }
   
@@ -205,7 +217,6 @@ public class MyPageFragment extends Fragment
     }
   };
   
-  
   private OnClickListener clickListener = new OnClickListener()
   {
     @Override
@@ -248,7 +259,7 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == conatinerMySetting.getId())
       {
-        startActivity(new Intent(getActivity(), SettingActivity.class));
+        startActivityForResult(new Intent(getActivity(), SettingActivity.class), REQUEST_CODE_SETTING_WHEN_LOGOUT);
         getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
       }
     }

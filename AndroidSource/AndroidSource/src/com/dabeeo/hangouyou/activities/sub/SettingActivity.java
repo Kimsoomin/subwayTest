@@ -36,6 +36,7 @@ public class SettingActivity extends ActionBarActivity
   private ImageView badgeNotice, badgeVersionInfo;
   private PreferenceManager preferenceManager;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -75,6 +76,7 @@ public class SettingActivity extends ActionBarActivity
           public void onClick(DialogInterface dialog, int which)
           {
             preferenceManager.clearUserInfo();
+            setResult(RESULT_OK);
             finish();
           }
         });
