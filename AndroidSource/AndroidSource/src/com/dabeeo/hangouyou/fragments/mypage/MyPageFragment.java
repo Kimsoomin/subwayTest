@@ -34,6 +34,7 @@ import com.dabeeo.hangouyou.activities.sub.SettingActivity;
 import com.dabeeo.hangouyou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hangouyou.external.libraries.RoundedImageView;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class MyPageFragment extends Fragment
@@ -60,6 +61,7 @@ public class MyPageFragment extends Fragment
     imageProfile.setOnClickListener(clickListener);
     
     textName = (TextView) view.findViewById(R.id.text_name);
+    textName.setText(PreferenceManager.getInstance(getActivity()).getUserName());
     
     conatinerMySchedule = (LinearLayout) view.findViewById(R.id.container_my_schedule);
     conatinerMyPlace = (LinearLayout) view.findViewById(R.id.container_my_place);
@@ -223,6 +225,11 @@ public class MyPageFragment extends Fragment
     {
       if (v.getId() == imageProfile.getId())
       {
+        if (!SystemUtil.isConnectNetwork(getActivity()))
+        {
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+          return;
+        }
 //        CharSequence[] menus = new CharSequence[2];
 //        menus[0] = getString(R.string.term_change_background);
 //        menus[1] = getString(R.string.term_change_profile);
