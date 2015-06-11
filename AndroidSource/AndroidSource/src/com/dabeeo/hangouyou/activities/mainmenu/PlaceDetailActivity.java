@@ -384,6 +384,9 @@ public class PlaceDetailActivity extends ActionBarActivity
         rate = 1;
       }
       
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        return;
+      
       Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
       i.putExtra("rate", rate);
       startActivity(i);
