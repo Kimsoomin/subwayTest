@@ -434,6 +434,12 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
       else if (v.getId() == R.id.btn_write_review)
       {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
         //리뷰쓰기
         Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
         if (bean != null)
