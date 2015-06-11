@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.coupon.CouponActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
-import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
 import com.dabeeo.hangouyou.activities.ticket.TicketActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
@@ -223,20 +222,7 @@ public class MainFragment extends Fragment
         }
         else
         {
-          Builder builder = new AlertDialog.Builder(getActivity());
-          builder.setTitle(getString(R.string.term_alert));
-          builder.setMessage(getString(R.string.msg_require_login));
-          builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
-          {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1)
-            {
-              startActivity(new Intent(getActivity(), LoginActivity.class));
-              getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-            }
-          });
-          builder.setNegativeButton(getString(android.R.string.cancel), null);
-          builder.create().show();
+          new AlertDialogManager(getActivity()).showNeedLoginDialog();
         }
       }
       else if (v.getId() == containerCoupon.getId())

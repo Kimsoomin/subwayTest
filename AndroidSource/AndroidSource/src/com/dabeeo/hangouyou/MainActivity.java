@@ -81,6 +81,7 @@ public class MainActivity extends ActionBarActivity
     checkPromotion();
   }
   
+  
   @Override
   protected void onDestroy()
   {
@@ -204,12 +205,20 @@ public class MainActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuMyPage.getId())
       {
-        //로그인 체크 후 실행
+        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          return;
+        }
         setFragments(POSITION_MY_PAGE);
       }
       else if (v.getId() == bottomMenuPhotolog.getId())
       {
-        //로그인 체크 후 실행
+        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          return;
+        }
         startActivity(new Intent(getApplicationContext(), NewAndEditPhotoLogActivity.class));
       }
       else if (v.getId() == bottomMenuWishList.getId())
@@ -220,7 +229,11 @@ public class MainActivity extends ActionBarActivity
           return;
         }
         
-        //로그인 체크 후 실행
+        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          return;
+        }
         setFragments(POSITION_WISHLIST);
       }
       else if (v.getId() == bottomMenuSearch.getId())
