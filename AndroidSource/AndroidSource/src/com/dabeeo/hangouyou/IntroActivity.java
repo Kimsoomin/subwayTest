@@ -101,11 +101,12 @@ public class IntroActivity extends Activity
     super.onBackPressed();
   }
   
+  
   private void checkNetworkStatus()
   {
     if (!SystemUtil.isConnectedWiFi(IntroActivity.this))
     {
-      if(SystemUtil.isConnectNetwork(IntroActivity.this))
+      if (SystemUtil.isConnectNetwork(IntroActivity.this))
       {
         //3G or LTE Mode
         alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
@@ -116,17 +117,20 @@ public class IntroActivity extends Activity
             checkDownloadInfo();
           }
           
+          
           @Override
           public void onNegativeButtonClickListener()
           {
             checkAllowAlarm();
           }
         });
-      }else
+      }
+      else
       {
         checkAllowAlarm();
       }
-    }else
+    }
+    else
     {
       checkDownloadInfo();
     }
@@ -138,12 +142,12 @@ public class IntroActivity extends Activity
     Log.w("WARN", "다운로드 - 오프라인 컨텐츠 체크");
     //오프라인 컨텐츠 DB 있는 지 확인 
     File dir = new File(Global.GetDatabaseFilePath());
-    if(!dir.exists())
+    if (!dir.exists())
     {
       dir.mkdirs();
     }
     
-    File file = new File(Global.GetDatabaseFilePath()+ OfflineContentDatabaseManager.DB_NAME);
+    File file = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
     
     if (file.exists())
     {
@@ -170,6 +174,7 @@ public class IntroActivity extends Activity
     }
   }
   
+  
   private void upateCheckOfflineContent()
   {
     //To-do : updateContent check - 오프라인 컨텐츠 업데이트 관련(추후 동기화 시나리오 적용)
@@ -186,6 +191,7 @@ public class IntroActivity extends Activity
       alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_update_travel_content));
       super.onPreExecute();
     }
+    
     
     @Override
     protected NetworkResult doInBackground(String... params)
@@ -204,6 +210,7 @@ public class IntroActivity extends Activity
       return null;
     }
     
+    
     @Override
     protected void onPostExecute(NetworkResult result)
     {
@@ -215,6 +222,7 @@ public class IntroActivity extends Activity
     
   }
   
+  
   private void makeOfflineContentDatabase()
   {
     //오프라인 컨텐츠 database를 만듬
@@ -222,7 +230,8 @@ public class IntroActivity extends Activity
     try
     {
       contentDatabaseManager.createDataBase();
-    } catch (IOException e)
+    }
+    catch (IOException e)
     {
       e.printStackTrace();
     }
@@ -246,7 +255,7 @@ public class IntroActivity extends Activity
       Log.w("WARN", "오프라인 컨텐츠 다운로드 중");
       NetworkResult result = client.getOfflineContents();
       File dbFile = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
-      if(dbFile.exists())
+      if (dbFile.exists())
         contentDatabaseManager.writeDatabase(result.response);
       try
       {
@@ -281,10 +290,12 @@ public class IntroActivity extends Activity
             fos.write(buffer);
             fos.flush();
             fos.close();
-          } catch (FileNotFoundException e)
+          }
+          catch (FileNotFoundException e)
           {
             e.printStackTrace();
-          } catch (IOException e)
+          }
+          catch (IOException e)
           {
             e.printStackTrace();
           }
@@ -292,7 +303,8 @@ public class IntroActivity extends Activity
           
           outputFile.delete();
         }
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -344,7 +356,8 @@ public class IntroActivity extends Activity
       }
       
       zis.close();
-    } catch (IOException e)
+    }
+    catch (IOException e)
     {
       e.printStackTrace();
       return false;
@@ -442,7 +455,8 @@ public class IntroActivity extends Activity
         {
           if (!file.exists())
             file.createNewFile();
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
           e.printStackTrace();
         }
@@ -463,10 +477,12 @@ public class IntroActivity extends Activity
         output.flush();
         output.close();
         input.close();
-      } catch (InterruptedException e)
+      }
+      catch (InterruptedException e)
       {
         e.printStackTrace();
-      } catch (IOException e)
+      }
+      catch (IOException e)
       {
         e.printStackTrace();
       }
@@ -490,7 +506,8 @@ public class IntroActivity extends Activity
       checkAllowAlarm();
       super.onPostExecute(result);
     }
-  }  
+  }
+  
   
   private void checkAllowAlarm()
   {
@@ -498,23 +515,24 @@ public class IntroActivity extends Activity
     {
       alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_allow_notification), getString(R.string.term_ok), getString(R.string.term_cancel),
           new AlertListener()
-      {
-        @Override
-        public void onPositiveButtonClickListener()
-        {
-          PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
-          startGuideActivity();
-        }
-        
-        
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-          PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(false);
-          startGuideActivity();
-        }
-      });
-    }else
+          {
+            @Override
+            public void onPositiveButtonClickListener()
+            {
+              PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
+              startGuideActivity();
+            }
+            
+            
+            @Override
+            public void onNegativeButtonClickListener()
+            {
+              PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(false);
+              startGuideActivity();
+            }
+          });
+    }
+    else
     {
       startMainActivity();
     }

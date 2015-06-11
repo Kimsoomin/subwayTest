@@ -102,6 +102,7 @@ public class PreferenceManager extends BasePreferenceManager
     put(KEY_USER_NAME, null);
     put(KEY_USER_GENDER, null);
     put(KEY_USER_PROFILE, null);
+    put(KEY_AUTO_LOGIN, false);
   }
   
   

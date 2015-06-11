@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -79,6 +80,18 @@ public class MainActivity extends ActionBarActivity
     setFragments(POSITION_HOME);
     
     checkPromotion();
+  }
+  
+  @Override
+  protected void onDestroy()
+  {
+    super.onDestroy();
+    // 자동 로그인이 아니면 로그인 정보 지우기
+    PreferenceManager preferenceManager = PreferenceManager.getInstance(this);
+    if (!preferenceManager.getIsAutoLogin())
+    {
+      preferenceManager.clearUserInfo();
+    }
   }
   
   

@@ -77,10 +77,10 @@ public class ApiClient
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + (page + 1);
       
       if (!TextUtils.isEmpty(userSeq))
-        url += "&ownerUserSql=" + userSeq;
+        url += "&ownerUserSeq=" + userSeq;
       
       NetworkResult result = httpClient.requestGet(url);
       try
