@@ -5,9 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.PromotionActivity;
 import com.dabeeo.hangouyou.fragments.mainmenu.MainFragment;
@@ -168,9 +172,28 @@ public class MainActivity extends ActionBarActivity
         break;
       
       case POSITION_MY_PAGE:
-        bottomMenuMyPage.setSelected(true);
-        title.setText(getString(R.string.term_my_page));
-        fragment = new MyPageFragment();
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          bottomMenuMyPage.setSelected(true);
+          title.setText(getString(R.string.term_my_page));
+          fragment = new MyPageFragment();
+        }
+        else
+        {
+          Builder builder = new AlertDialog.Builder(getApplicationContext());
+          builder.setTitle(getString(R.string.term_alert));
+          builder.setMessage(getString(R.string.msg_require_login));
+          builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1)
+            {
+              startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            }
+          });
+          builder.setNegativeButton(getString(android.R.string.cancel), null);
+          builder.create().show();
+        }
         break;
       
       case POSITION_SEARCH:

@@ -47,7 +47,6 @@ public class MyPageFragment extends Fragment
   
   private boolean isChangeBackground = false;
   
-  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -80,7 +79,6 @@ public class MyPageFragment extends Fragment
     
     return view;
   }
-  
   
   @Override
   public void onResume()
