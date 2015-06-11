@@ -37,6 +37,7 @@
 	"remoteLink": "https://www.getpostman.com/collections/d482875815f65fea5165",
 	"public": false,
 	"write": true,
+	"hasRequests": true,
 	"requests": [
 		{
 			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
@@ -413,23 +414,24 @@
 			"synced": false
 		},
 		{
-			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
 			"id": "b4e30360-e504-80a5-a3e7-baa6c46bdb53",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://gs.blinking.kr:8900/_libs/api.common.php?v=m1&mode=USER_LOGIN&userEmail=sunhee.kim@dabeeo.com&userPw=sun0228",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1433984096615,
 			"name": "회원 로그인",
 			"description": "mode: \"USER_LOGIN\", userId: [회원ID(이메일)], userPw: [회원비밀번호], isMobile: 1, \"results : { status: \"\"OK\"\", userSeq: [회원고유번호(키값)] }\"",
-			"url": "http://gs.blinking.kr:8900/_libs/api.common.php?v=m1&mode=USER_LOGIN&userId=canuzoro@naver.com&userPw=qwerty1234&isMobile=1",
-			"method": "POST",
-			"headers": "Content-Type: application/json\n",
-			"data": [],
-			"dataMode": "raw",
-			"timestamp": 0,
+			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
 			"responses": [],
-			"version": 2,
-			"owner": 0,
-			"preRequestScript": "",
-			"tests": "",
-			"synced": false,
-			"rawModeData": ""
+			"synced": false
 		},
 		{
 			"id": "b80991a9-ff3f-0f24-9fb1-083803ff73d5",
@@ -449,7 +451,8 @@
 			"description": "    mode: \"PLACE_LSIT\",\n    category: [카테고리idx],\n    keyword: [검색어],\n    sort: [정렬기준],\n    cLat: [현재위치 위도],\n    cLng: [현재위치 경도],\n    p: [현재 페이지],\n    pn: [페이지 크기]",
 			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
 			"responses": [],
-			"synced": false
+			"synced": false,
+			"owner": 0
 		},
 		{
 			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
