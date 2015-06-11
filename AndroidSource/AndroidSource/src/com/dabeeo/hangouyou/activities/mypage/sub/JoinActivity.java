@@ -64,6 +64,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   
   private RelativeLayout progressLayout;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -121,7 +122,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           return;
         }
         
-        if(validCheckEmail(editEmail.getText().toString()))
+        if (validCheckEmail(editEmail.getText().toString()))
         {
           new checkDuplicatedEmailTask().execute();
         }
@@ -144,7 +145,8 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         if (validCheckName(editName.getText().toString()))
         {
           new checkDuplicatedNamelTask().execute();
-        }else
+        }
+        else
           alertView.setAlert(getString(R.string.msg_please_valid_check_name));
       }
     });
@@ -198,47 +200,51 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       passWordRe = editPasswordRe.getText().toString();
       mailFemail = null;
       
-      if(TextUtils.isEmpty(email))
+      if (TextUtils.isEmpty(email))
       {
         alertView.setAlert(getString(R.string.msg_please_write_email));
         return;
-      }else
+      }
+      else
       {
-        if(validCheckEmail(email))
+        if (validCheckEmail(email))
         {
-          if(!isValidEmail)
+          if (!isValidEmail)
           {
             alertView.setAlert(getString(R.string.msg_check_duplicate_email));
             return;
           }
-        }else
+        }
+        else
         {
           alertView.setAlert(getString(R.string.msg_please_valid_check_email));
           return;
         }
       }
       
-      if(TextUtils.isEmpty(name))
+      if (TextUtils.isEmpty(name))
       {
         alertView.setAlert(getString(R.string.msg_please_write_name));
         return;
-      }else
+      }
+      else
       {
-        if(validCheckName(name))
+        if (validCheckName(name))
         {
-          if(!isValidName)
+          if (!isValidName)
           {
             alertView.setAlert(getString(R.string.msg_check_duplicate_name));
             return;
           }
-        }else
+        }
+        else
         {
           alertView.setAlert(getString(R.string.msg_please_valid_check_name));
           return;
         }
       }
       
-      if(TextUtils.isEmpty(phoneNum))
+      if (TextUtils.isEmpty(phoneNum))
       {
         alertView.setAlert(getString(R.string.msg_please_write_phone_number));
         return;
@@ -249,19 +255,21 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
 //        
 //      }
       
-      if(TextUtils.isEmpty(passWord))
+      if (TextUtils.isEmpty(passWord))
       {
         alertView.setAlert(getString(R.string.msg_please_write_password));
         return;
-      }else
+      }
+      else
       {
-        if(passWord.length()<6 || passWord.length()>16)
+        if (passWord.length() < 6 || passWord.length() > 16)
         {
           alertView.setAlert(getString(R.string.msg_warn_password_length));
           return;
-        }else
+        }
+        else
         {
-          if(!validCheckPassword(passWord))
+          if (!validCheckPassword(passWord))
           {
             alertView.setAlert(getString(R.string.msg_please_valid_check_password));
             return;
@@ -269,46 +277,41 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         }
       }
       
-      if(TextUtils.isEmpty(passWordRe))
+      if (TextUtils.isEmpty(passWordRe))
       {
         alertView.setAlert(getString(R.string.msg_please_write_password));
         return;
-      }else
+      }
+      else
       {
-        if(!passWord.equals(passWordRe))
+        if (!passWord.equals(passWordRe))
         {
           alertView.setAlert(getString(R.string.msg_warn_password_not_same));
           return;
         }
       }
       
-      if(isMale == false)
-      {
-        mailFemail = "F";
-      }else
-      {
-        mailFemail = "M";
-      }
+      mailFemail = isMale ? "M" : "F";
       
-      if(birthDay == null)
+      if (birthDay == null)
       {
         alertView.setAlert(getString(R.string.msg_please_write_birthday));
         return;
       }
       
-      if(!checkAgreement.isChecked())
+      if (!checkAgreement.isChecked())
       {
         alertView.setAlert(getString(R.string.msg_check_agreement));
         return;
       }
       
-      if(!checkPrivateAgreement.isChecked())
+      if (!checkPrivateAgreement.isChecked())
       {
         alertView.setAlert(getString(R.string.msg_check_private_agreement));
         return;
       }
       
-      if(!checkGPSAgreement.isChecked())
+      if (!checkGPSAgreement.isChecked())
       {
         alertView.setAlert(getString(R.string.msg_check_gps_agreement));
         return;
@@ -355,6 +358,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     
   };
   
+  
   @SuppressLint("SimpleDateFormat")
   private void updateLabel()
   {
@@ -382,8 +386,9 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     
   }
   
+  
   public boolean validCheckEmail(String email)
-  {    
+  {
     boolean validEmail = false;
     
     String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -399,6 +404,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     return validEmail;
   }
   
+  
   public boolean validCheckName(String name)
   {
     boolean validName = false;
@@ -408,13 +414,14 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     
     Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
     Matcher matcher = pattern.matcher(inputStr);
-    if (matcher.matches()) 
+    if (matcher.matches())
     {
       validName = true;
     }
     
     return validName;
   }
+  
   
   public boolean validCheckPassword(String password)
   {
@@ -425,13 +432,14 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     
     Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
     Matcher matcher = pattern.matcher(inputStr);
-    if (matcher.matches()) 
+    if (matcher.matches())
     {
       validPassword = true;
     }
     
     return validPassword;
   }
+  
   
   public String responseParser(String response)
   {
@@ -454,7 +462,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   
   /*
    * AsyncTask
-   */  
+   */
   private class checkDuplicatedEmailTask extends AsyncTask<Void, Void, NetworkResult>
   {
     @Override
@@ -465,12 +473,14 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       super.onPreExecute();
     }
     
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       // TODO Auto-generated method stub
       return apiClient.userIdDuplicateCheck(editEmail.getText().toString());
     }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)
@@ -479,11 +489,12 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       super.onPostExecute(result);
       progressLayout.setVisibility(View.GONE);
       String status = responseParser(result.response);
-      if(status.equals("OK"))
+      if (status.equals("OK"))
       {
         isValidEmail = true;
         alertView.setAlert(getString(R.string.msg_possibile_email_account));
-      }else
+      }
+      else
       {
         alertView.setAlert(getString(R.string.msg_duplicate_email));
       }
@@ -500,25 +511,26 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       super.onPreExecute();
     }
     
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      // TODO Auto-generated method stub
-      return apiClient.userNameDuplicateCheck(name);
+      return apiClient.userNameDuplicateCheck(editName.getText().toString());
     }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      // TODO Auto-generated method stub
       super.onPostExecute(result);
       progressLayout.setVisibility(View.GONE);
       String status = responseParser(result.response);
-      if(status.equals("OK"))
+      if (status.equals("OK"))
       {
         isValidName = true;
         alertView.setAlert(getString(R.string.msg_possibile_name_account));
-      }else
+      }
+      else
       {
         alertView.setAlert(getString(R.string.msg_duplicate_name));
       }
@@ -527,7 +539,6 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   
   private class joinHanhayouTask extends AsyncTask<Void, Void, NetworkResult>
   {
-    
     @Override
     protected void onPreExecute()
     {
@@ -536,47 +547,34 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       super.onPreExecute();
     }
     
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       String allowReceiveMail = null;
       String allowReceiveSms = null;
       
-      if(checkAllowReceiveMail.isChecked())
-      {
-        allowReceiveMail = "1";
-      }else
-      {
-        allowReceiveMail = "0";
-      }
+      allowReceiveMail = checkAllowReceiveMail.isChecked() ? "1" : "0";
+      allowReceiveSms = checkAllowReceivePhone.isChecked() ? "1" : "0";
       
-      if(checkAllowReceivePhone.isChecked())
-      {
-        allowReceiveSms = "1";
-      }else
-      {
-        allowReceiveSms = "0";
-      }
-      
-      return apiClient.userJoin(email, passWord, name, phoneNum, mailFemail, btnDateOfbirth.getText().toString(), 
-          allowReceiveMail, allowReceiveSms);
+      return apiClient.userJoin(email, passWord, name, phoneNum, mailFemail, btnDateOfbirth.getText().toString(), allowReceiveMail, allowReceiveSms);
     }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      // TODO Auto-generated method stub
       super.onPostExecute(result);
       String userSeq = null;
       progressLayout.setVisibility(View.GONE);
       String status = responseParser(result.response);
       
-      if(status.equals("OK"))
+      if (status.equals("OK"))
       {
         try
         {
           JSONObject resultResponse = new JSONObject(result.response);
-          if(resultResponse.has("userSeq"))
+          if (resultResponse.has("userSeq"))
           {
             userSeq = resultResponse.getString("userSeq");
           }
@@ -589,7 +587,8 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         Intent intent = new Intent(JoinActivity.this, AuthEmailActivity.class);
         intent.putExtra("userSeq", userSeq);
         startActivity(intent);
-      }else
+      }
+      else
       {
         alertView.setAlert(getString(R.string.msg_please_check_user_info));
       }

@@ -5,20 +5,23 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.text.TextUtils;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity;
 
 public class AlertDialogManager
 {
   public AlertDialog dialog;
   private ProgressDialog progressDialog;
-  private Activity context;
+  private Activity activity;
   
   
-  public AlertDialogManager(Activity context)
+  public AlertDialogManager(Activity activity)
   {
-    this.context = context;
+    this.activity = activity;
   }
   
   
@@ -28,9 +31,37 @@ public class AlertDialogManager
   }
   
   
+  /**
+   * 네트웍 연결 시 사용이 가능합니다.
+   */
   public void showDontNetworkConnectDialog()
   {
-    new AlertDialog.Builder(context).setTitle(R.string.term_alert).setMessage(R.string.msg_dont_connect_network).setCancelable(false).setPositiveButton(android.R.string.ok, null).show();
+    showAlertDialog(activity.getString(R.string.term_alert), activity.getString(R.string.msg_dont_connect_network), activity.getString(android.R.string.ok), null, null);
+  }
+  
+  
+  /**
+   * 로그인이 필요합니다.
+   */
+  public void showNeedLoginDialog()
+  {
+    showAlertDialog(activity.getString(R.string.term_alert), activity.getString(R.string.msg_require_login), activity.getString(android.R.string.ok), activity.getString(android.R.string.cancel),
+        new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            activity.startActivity(new Intent(activity, LoginActivity.class));
+            activity.overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+          }
+          
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            
+          }
+        });
   }
   
   
@@ -43,32 +74,33 @@ public class AlertDialogManager
       
       dialog = null;
     }
-    Builder builder = new AlertDialog.Builder(context);
+    Builder builder = new AlertDialog.Builder(activity);
     builder.setTitle(title);
     builder.setMessage(message);
     builder.setCancelable(false);
-    builder.setPositiveButton(android.R.string.ok, new OnClickListener()
+    builder.setPositiveButton(okString, new OnClickListener()
     {
       @Override
       public void onClick(DialogInterface dialog, int which)
       {
         if (listener != null)
           listener.onPositiveButtonClickListener();
-        
-        dialog.dismiss();
       }
     });
-    builder.setNegativeButton(android.R.string.cancel, new OnClickListener()
+    
+    if (!TextUtils.isEmpty(cancelString))
     {
-      @Override
-      public void onClick(DialogInterface dialog, int which)
+      builder.setNegativeButton(cancelString, new OnClickListener()
       {
-        if (listener != null)
-          listener.onNegativeButtonClickListener();
-        
-        dialog.dismiss();
-      }
-    });
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          if (listener != null)
+            listener.onNegativeButtonClickListener();
+        }
+      });
+    }
+    
     dialog = builder.create();
     dialog.show();
   }
@@ -78,7 +110,7 @@ public class AlertDialogManager
   {
     if (progressDialog == null)
     {
-      progressDialog = new ProgressDialog(context);
+      progressDialog = new ProgressDialog(activity);
       progressDialog.setTitle(title);
       progressDialog.setIndeterminate(false);
       progressDialog.setCancelable(false);

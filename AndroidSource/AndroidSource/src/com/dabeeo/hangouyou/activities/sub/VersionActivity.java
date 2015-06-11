@@ -123,7 +123,7 @@ public class VersionActivity extends ActionBarActivity
     {
       if (v.getId() == btnUpdate.getId())
       {
-        if (SystemUtil.isConnectNetwork(getApplicationContext()))
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {
           new AlertDialogManager(VersionActivity.this).showDontNetworkConnectDialog();
           return;
