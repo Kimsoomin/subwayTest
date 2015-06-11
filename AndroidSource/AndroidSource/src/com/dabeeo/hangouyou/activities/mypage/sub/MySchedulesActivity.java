@@ -53,7 +53,7 @@ public class MySchedulesActivity extends ActionBarActivity
   private boolean isLoading = false;
   private boolean isLoadEnded = false;
   private ApiClient apiClient;
-  private int page = 0;
+  private int page = 1;
   
   
   @Override

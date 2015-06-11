@@ -42,7 +42,7 @@ public class TravelScheduleListFragment extends Fragment
   private ProgressBar progressBar;
   private TravelScheduleListAdapter adapter;
   private ApiClient apiClient;
-  private int page = 0;
+  private int page = 1;
   private int type = SCHEDULE_TYPE_POPULAR;
   private boolean isLoading = false;
   private boolean isLoadEnded = false;
@@ -155,7 +155,6 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      //TODO 추후 "내"일정으로 바꿔야 함
       return apiClient.getTravelSchedules(page);
     }
     

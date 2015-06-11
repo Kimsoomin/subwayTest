@@ -170,11 +170,10 @@ public class MyBookmarkPlaceListFragment extends Fragment
   
   private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
   {
-    
     @Override
     protected ArrayList<PlaceBean> doInBackground(Integer... params)
     {
-      return apiClient.getPlaceList(params[0]);
+      return apiClient.getPlaceList(params[0], -1);
     }
     
     

@@ -31,6 +31,7 @@ import com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 
 public class MyPlaceListFragment extends Fragment
@@ -164,14 +165,10 @@ public class MyPlaceListFragment extends Fragment
   
   private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
   {
-    
     @Override
     protected ArrayList<PlaceBean> doInBackground(Integer... params)
     {
-      if (categoryId == -1)
-        return apiClient.getPlaceList(params[0]);
-      else
-        return apiClient.getPlaceList(params[0], categoryId);
+      return apiClient.getPlaceList(params[0], categoryId, PreferenceManager.getInstance(getActivity()).getUserSeq());
     }
     
     

@@ -77,7 +77,7 @@ public class ApiClient
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + (page + 1);
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
       
       if (!TextUtils.isEmpty(userSeq))
         url += "&ownerUserSeq=" + userSeq;
@@ -135,43 +135,26 @@ public class ApiClient
   }
   
   
-  public ArrayList<PlaceBean> getPlaceList(int page)
+  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
   {
-    ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
-    if (SystemUtil.isConnectNetwork(context))
-    {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page);
-      try
-      {
-        JSONObject obj = new JSONObject(result.response);
-        JSONArray arr = obj.getJSONArray("place");
-        for (int i = 0; i < arr.length(); i++)
-        {
-          JSONObject objInArr = arr.getJSONObject(i);
-          PlaceBean bean = new PlaceBean();
-          bean.setJSONObject(objInArr);
-          places.add(bean);
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-    }
-    else
-    {
-      places.addAll(offlineDatabaseManager.getPlaceList(page, -1));
-    }
-    return places;
+    return getPlaceList(page, categoryId, null);
   }
   
   
-  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
+  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId, String userSeq)
   {
     ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId);
+      String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page;
+      
+      if (categoryId != -1)
+        url += "&category=" + categoryId;
+      
+      if (!TextUtils.isEmpty(userSeq))
+        url += "&ownerUserSeq=" + userSeq;
+      
+      NetworkResult result = httpClient.requestGet(url);
       try
       {
         JSONObject obj = new JSONObject(result.response);
