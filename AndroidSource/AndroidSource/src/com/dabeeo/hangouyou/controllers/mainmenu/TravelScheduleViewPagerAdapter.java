@@ -12,48 +12,38 @@ import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleListFragment;
 
 public class TravelScheduleViewPagerAdapter extends FragmentPagerAdapter
 {
-	private List<String> titles = new ArrayList<String>();
-	
-	
-	public TravelScheduleViewPagerAdapter(Context context, FragmentManager fm)
-	{
-		super(fm);
-		
-	}
-	
-	
-	public void setTitles(ArrayList<String> titles)
-	{
-		this.titles.addAll(titles);
-		notifyDataSetChanged();
-	}
-	
-	
-	@Override
-	public Fragment getItem(int position)
-	{
-		Fragment fragment = new TravelScheduleListFragment();
-		if (position == 0)
-			((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR);
-		else if (position == 1)
-			((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_MY);
-		else
-			((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_BOOKMARK);
-		return fragment;
-	}
-	
-	
-	@Override
-	public int getCount()
-	{
-		return titles.size();
-	}
-	
-	
-	@Override
-	public CharSequence getPageTitle(int position)
-	{
-		return titles.get(position);
-	}
-	
+  private List<String> titles = new ArrayList<String>();
+  
+  
+  public TravelScheduleViewPagerAdapter(Context context, FragmentManager fm)
+  {
+    super(fm);
+  }
+  
+  
+  public void add(String title)
+  {
+    titles.add(title);
+  }
+  
+  
+  @Override
+  public Fragment getItem(int position)
+  {
+    Fragment fragment = new TravelScheduleListFragment();
+    if (position == 0)
+      ((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR);
+    else if (position == 1)
+      ((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_MY);
+    else
+      ((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_BOOKMARK);
+    return fragment;
+  }
+  
+  
+  @Override
+  public int getCount()
+  {
+    return titles.size();
+  }
 }
