@@ -38,8 +38,7 @@ public class HttpClient
   public NetworkResult requestGet(String url)
   {
     NetworkResult result = new NetworkResult(false, "", 0);
-    Log.w("WARN", "------------------------");
-    Log.w("WARN", "request Url : " + url);
+    Log.w("HttpClient.java | requestGet", "-------------------------\n" + url);
     if (!SystemUtil.isConnectNetwork(context))
       return result;
     
@@ -57,9 +56,7 @@ public class HttpClient
         result = new NetworkResult(true, responseString, response.getStatusLine().getStatusCode());
       else
         result = new NetworkResult(false, responseString, response.getStatusLine().getStatusCode());
-      
-      Log.w("WARN", "responseString : " + responseString);
-      Log.w("WARN", "------------------------");
+      Log.w("HttpClient.java | requestGet", "responseString : " + responseString + "\n------------------------");
     }
     catch (Exception e)
     {
@@ -114,6 +111,7 @@ public class HttpClient
   public NetworkResult requestPost(String url)
   {
     NetworkResult result = new NetworkResult(false, "", 0);
+    Log.w("HttpClient.java | requestPost", "-------------------------\n" + url);
     
     if (!SystemUtil.isConnectNetwork(context))
       return result;
@@ -132,6 +130,7 @@ public class HttpClient
         result = new NetworkResult(true, responseString, response.getStatusLine().getStatusCode());
       else
         result = new NetworkResult(false, responseString, response.getStatusLine().getStatusCode());
+      Log.w("HttpClient.java | requestPost", "responseString : " + responseString + "\n------------------------");
     }
     catch (Exception e)
     {
