@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar.TabListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.dabeeo.hangouyou.utils.SystemUtil;
 public class TicketActivity extends BaseNavigationTabActivity
 {
   private TicketViewPagerAdapter adapter;
+  private boolean isFirstSelectAllTicketTab = true; // 오프라인일 때 탭을 생성하지마자 오프라인 팝업 뜨는 문제 회피용 
   
   
   @Override
@@ -35,6 +39,7 @@ public class TicketActivity extends BaseNavigationTabActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     adapter = new TicketViewPagerAdapter(this, getSupportFragmentManager());
+    viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setAdapter(adapter);
     
     displayTitles();
@@ -66,36 +71,50 @@ public class TicketActivity extends BaseNavigationTabActivity
     
     if (!SystemUtil.isConnectNetwork(getApplicationContext()))
       viewPager.setCurrentItem(1);
-    
-    viewPager.setOnPageChangeListener(pageChangeListener);
   }
   
-  private OnPageChangeListener pageChangeListener = new OnPageChangeListener()
+  protected TabListener tabListener = new TabListener()
   {
     @Override
-    public void onPageSelected(int position)
+    public void onTabSelected(Tab tab, FragmentTransaction ft)
     {
-      if (!SystemUtil.isConnectNetwork(getApplicationContext()) && position == 0)
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()) && tab.getPosition() == 0 && !isFirstSelectAllTicketTab)
       {
         new AlertDialogManager(TicketActivity.this).showDontNetworkConnectDialog();
-        getSupportActionBar().setSelectedNavigationItem(1);
+        
+        Runnable runn = new Runnable()
+        {
+          @Override
+          public void run()
+          {
+            getSupportActionBar().setSelectedNavigationItem(1);
+          }
+        };
+        
+        Handler handler = new Handler();
+        handler.post(runn);
       }
       else
       {
-        getSupportActionBar().setSelectedNavigationItem(position);
+        viewPager.setCurrentItem(tab.getPosition());
       }
+      
+      if (tab.getPosition() == 0)
+        isFirstSelectAllTicketTab = false;
     }
     
     
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+    public void onTabUnselected(Tab arg0, FragmentTransaction arg1)
     {
+      
     }
     
     
     @Override
-    public void onPageScrollStateChanged(int state)
+    public void onTabReselected(Tab arg0, FragmentTransaction arg1)
     {
+      
     }
   };
 }
