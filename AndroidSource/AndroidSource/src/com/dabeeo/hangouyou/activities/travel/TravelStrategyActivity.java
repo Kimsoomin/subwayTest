@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -31,6 +32,8 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.trend.TrendSearchActivity;
 import com.dabeeo.hangouyou.beans.TitleCategoryBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
 public class TravelStrategyActivity extends ActionBarActivity
@@ -44,6 +47,9 @@ public class TravelStrategyActivity extends ActionBarActivity
   private LinearLayout containerBottomTab;
   private boolean isAnimation = false;
   private float bottomTappx;
+  
+  private boolean isFirstSelectRecommendSeoulTab = true;
+  private int lastSelectedTab = 0;
   
   
   @Override
@@ -91,6 +97,9 @@ public class TravelStrategyActivity extends ActionBarActivity
     {
       getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
     }
+    
+    if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+      viewPager.setCurrentItem(1);
     
     viewPager.setOnPageChangeListener(new OnPageChangeListener()
     {
@@ -188,7 +197,30 @@ public class TravelStrategyActivity extends ActionBarActivity
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft)
     {
-      viewPager.setCurrentItem(tab.getPosition());
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()) && tab.getPosition() == 0 && !isFirstSelectRecommendSeoulTab)
+      {
+        new AlertDialogManager(TravelStrategyActivity.this).showDontNetworkConnectDialog();
+        Runnable runn = new Runnable()
+        {
+          @Override
+          public void run()
+          {
+            getSupportActionBar().setSelectedNavigationItem(lastSelectedTab);
+          }
+        };
+        
+        Handler handler = new Handler();
+        handler.post(runn);
+      }
+      else
+      {
+        viewPager.setCurrentItem(tab.getPosition());
+        lastSelectedTab = tab.getPosition();
+      }
+      
+      if (tab.getPosition() == 0)
+        isFirstSelectRecommendSeoulTab = false;
+      
     }
     
     
