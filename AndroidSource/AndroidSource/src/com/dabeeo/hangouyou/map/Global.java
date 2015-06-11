@@ -517,7 +517,7 @@ public class Global
     
     final BitmapFactory.Options options = new BitmapFactory.Options();
     options.inJustDecodeBounds = true;
-    options.inPreferredConfig = Config.ARGB_4444;
+    options.inPreferredConfig = Config.RGB_565;
     BitmapFactory.decodeResource(_context.getResources(), _res, options);
     
     int width = options.outWidth;
