@@ -68,19 +68,38 @@ public class ApiClient
   
   public ArrayList<ScheduleBean> getTravelSchedules(int page)
   {
-    return getTravelSchedules(page, null);
+    return getTravelSchedules(page, null, false);
   }
   
   
   public ArrayList<ScheduleBean> getTravelSchedules(int page, String userSeq)
   {
+    return getTravelSchedules(page, userSeq, false);
+  }
+  
+  
+  public ArrayList<ScheduleBean> getCreatedRecommendSchedules()
+  {
+    return getTravelSchedules(-1, null, true);
+  }
+  
+  
+  public ArrayList<ScheduleBean> getTravelSchedules(int page, String userSeq, boolean isRec)
+  {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST";
+      
+      if (page != -1)
+        url += "&p=" + page;
       
       if (!TextUtils.isEmpty(userSeq))
         url += "&ownerUserSeq=" + userSeq;
+      
+      // 만들어진 추천 자동일정
+      if (isRec)
+        url += "&isRec=" + 1;
       
       NetworkResult result = httpClient.requestGet(url);
       try
