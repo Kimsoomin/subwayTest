@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
-import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -35,13 +34,15 @@ public class SettingActivity extends ActionBarActivity
   
   private LinearLayout containerVersionInfo, containerRatingApp, containerNotice, containerLogout;
   private ImageView badgeNotice, badgeVersionInfo;
-  
+  private PreferenceManager preferenceManager;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_setting);
+    
+    preferenceManager = PreferenceManager.getInstance(getApplicationContext());
     
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -53,7 +54,7 @@ public class SettingActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     textName = (TextView) findViewById(R.id.text_name);
-    textName.setText(Global.g_strUserName);
+    textName.setText(preferenceManager.getUserName());
     
     badgeNotice = (ImageView) findViewById(R.id.badge_notice);
     badgeVersionInfo = (ImageView) findViewById(R.id.badge_version_info);
@@ -73,8 +74,8 @@ public class SettingActivity extends ActionBarActivity
           @Override
           public void onClick(DialogInterface dialog, int which)
           {
+            preferenceManager.clearUserInfo();
             finish();
-            Global.g_strUserSeq = null;
           }
         });
         dialog.setNegativeButton(android.R.string.cancel, null);

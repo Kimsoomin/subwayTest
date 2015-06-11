@@ -22,7 +22,6 @@ import com.dabeeo.hangouyou.activities.sub.FindPasswordActivity;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
-import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 public class LoginActivity extends Activity
@@ -34,6 +33,7 @@ public class LoginActivity extends Activity
   public RelativeLayout progressLayout;
   public ApiClient apiClient;
   public Context mContext;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -89,6 +89,7 @@ public class LoginActivity extends Activity
     }
   };
   
+  
   public void responsParser(String response)
   {
     String status = null;
@@ -101,7 +102,7 @@ public class LoginActivity extends Activity
         status = jsonObject.getString("status");
       }
       
-      if(status.equals("OK"))
+      if (status.equals("OK"))
       {
         String userSeq = "";
         String userEmail = "";
@@ -109,49 +110,45 @@ public class LoginActivity extends Activity
         String gender = "";
         String profile = "";
         
-        if(jsonObject.has("userSeq"))
+        if (jsonObject.has("userSeq"))
           userSeq = jsonObject.getString("userSeq");
-        if(jsonObject.has("userEmail"))
+        if (jsonObject.has("userEmail"))
           userEmail = jsonObject.getString("userEmail");
-        if(jsonObject.has("userName"))
+        if (jsonObject.has("userName"))
           userName = jsonObject.getString("userName");
-        if(jsonObject.has("gender"))
+        if (jsonObject.has("gender"))
           gender = jsonObject.getString("gender");
-        if(jsonObject.has("profile"))
+        if (jsonObject.has("profile"))
           profile = jsonObject.getString("profile");
         //autologin checked
-        if(autoLogin.isChecked())
-        {
-          PreferenceManager.getInstance(mContext).setUserSeq(userSeq);
-          PreferenceManager.getInstance(mContext).setUserEmail(userEmail);
-          PreferenceManager.getInstance(mContext).setUserName(userName);
-          PreferenceManager.getInstance(mContext).setUserGender(gender);
-          PreferenceManager.getInstance(mContext).setUserProfile(profile);
-        }else //autologin unchecked 상태 시 userSeq 메모리에 저장
-        {
-          Global.g_strUserSeq = userSeq;
-          Global.g_strUserEmail = userEmail;
-          Global.g_strUserName = userName;
-          Global.g_strGender = gender;
-          Global.g_strProfile = profile;
-        }
+        PreferenceManager.getInstance(mContext).setUserSeq(userSeq);
+        PreferenceManager.getInstance(mContext).setUserEmail(userEmail);
+        PreferenceManager.getInstance(mContext).setUserName(userName);
+        PreferenceManager.getInstance(mContext).setUserGender(gender);
+        PreferenceManager.getInstance(mContext).setUserProfile(profile);
+        PreferenceManager.getInstance(mContext).setIsAutoLogin(autoLogin.isChecked());
         finish();
-      }else 
+      }
+      else
       {
         String alertMessage = "";
-        if(status.equals("ERROR_ID"))
+        if (status.equals("ERROR_ID"))
         {
           alertMessage = getString(R.string.msg_please_error_id);
-        }else if(status.equals("ERROR_AUTH"))
+        }
+        else if (status.equals("ERROR_AUTH"))
         {
           alertMessage = getString(R.string.msg_please_error_auth);
-        }else if(status.equals("ERROR_OUT"))
+        }
+        else if (status.equals("ERROR_OUT"))
         {
           alertMessage = getString(R.string.msg_please_error_out);
-        }else if(status.equals("ERROR_PW"))
+        }
+        else if (status.equals("ERROR_PW"))
         {
           alertMessage = getString(R.string.msg_please_error_password);
-        }else
+        }
+        else
         {
           alertMessage = getString(R.string.msg_please_check_user_info);
         }
@@ -165,14 +162,15 @@ public class LoginActivity extends Activity
     }
   }
   
+  
   public void CreateAlert(String message)
   {
     AlertDialog.Builder ab = new AlertDialog.Builder(this);
     ab.setTitle(R.string.term_alert);
-    ab.setPositiveButton(R.string.term_ok,
-        new DialogInterface.OnClickListener() {
+    ab.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
+    {
       @Override
-      public void onClick(DialogInterface dialog, int which) 
+      public void onClick(DialogInterface dialog, int which)
       {
         dialog.dismiss();
       }
@@ -192,11 +190,13 @@ public class LoginActivity extends Activity
       super.onPreExecute();
     }
     
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       return apiClient.userLogin(editEmail.getText().toString(), editPassword.getText().toString());
     }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)

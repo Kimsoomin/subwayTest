@@ -30,6 +30,7 @@ import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
@@ -124,7 +125,7 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      return apiClient.getTravelSchedules(page);
+      return apiClient.getTravelSchedules(page, PreferenceManager.getInstance(getApplicationContext()).getUserSeq());
     }
     
     

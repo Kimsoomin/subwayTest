@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.beans.PlaceDetailBean;
@@ -67,10 +68,21 @@ public class ApiClient
   
   public ArrayList<ScheduleBean> getTravelSchedules(int page)
   {
+    return getTravelSchedules(page, null);
+  }
+  
+  
+  public ArrayList<ScheduleBean> getTravelSchedules(int page, String userSeq)
+  {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page);
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
+      
+      if (!TextUtils.isEmpty(userSeq))
+        url += "&ownerUserSql=" + userSeq;
+      
+      NetworkResult result = httpClient.requestGet(url);
       try
       {
         JSONObject obj = new JSONObject(result.response);

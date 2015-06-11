@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,10 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.sub.CongratulateJoinActivity;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
-import com.dabeeo.hangouyou.map.Global;
 import com.dabeeo.hangouyou.views.LoginBottomAlertView;
 
 @SuppressWarnings("deprecation")
@@ -38,6 +36,9 @@ public class ChangePasswordActivity extends ActionBarActivity
   public String newPassword = "";
   public String newPasswordRe = "";
   
+  private PreferenceManager preferenceManager;
+  
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -45,6 +46,7 @@ public class ChangePasswordActivity extends ActionBarActivity
     setContentView(R.layout.activity_change_password);
     
     apiClient = new ApiClient(this);
+    preferenceManager = preferenceManager.getInstance(getApplicationContext());
     
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -88,7 +90,7 @@ public class ChangePasswordActivity extends ActionBarActivity
         return true;
       }
       
-      if(currentPassword.length() < 6 || currentPassword.length() > 16)
+      if (currentPassword.length() < 6 || currentPassword.length() > 16)
       {
         alertView.setAlert(getString(R.string.msg_warn_password_length));
       }
@@ -117,6 +119,7 @@ public class ChangePasswordActivity extends ActionBarActivity
     return super.onOptionsItemSelected(item);
   }
   
+  
   public boolean validChcekPassword(String password)
   {
     //TODO password Valid Check 필요 (영문/숫자/특문/연속된 문자 3자 이상 사용불가/이름과 동일한 비번 사용불가)
@@ -124,6 +127,7 @@ public class ChangePasswordActivity extends ActionBarActivity
     
     return isValidPassword;
   }
+  
   
   public void responseParser(String response)
   {
@@ -142,26 +146,29 @@ public class ChangePasswordActivity extends ActionBarActivity
       e.printStackTrace();
     }
     
-    if(status.equals("OK"))
+    if (status.equals("OK"))
     {
       finish();
-    }else if(status.equals("ERROR_PW"))
+    }
+    else if (status.equals("ERROR_PW"))
     {
       CreateAlert(getString(R.string.msg_please_error_old_password));
-    }else
+    }
+    else
     {
       CreateAlert(getString(R.string.msg_please_check_user_info));
     }
   }
   
+  
   public void CreateAlert(String message)
   {
     AlertDialog.Builder ab = new AlertDialog.Builder(this);
     ab.setTitle(R.string.term_alert);
-    ab.setPositiveButton(R.string.term_ok,
-        new DialogInterface.OnClickListener() {
+    ab.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
+    {
       @Override
-      public void onClick(DialogInterface dialog, int which) 
+      public void onClick(DialogInterface dialog, int which)
       {
         dialog.dismiss();
       }
@@ -180,13 +187,14 @@ public class ChangePasswordActivity extends ActionBarActivity
       progressLayout.bringToFront();
       super.onPreExecute();
     }
-
+    
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      //TODO userSeq, userName 값 가져오는 위치 확인 필요
-      return apiClient.userPasswordModify(Global.g_strUserSeq, Global.g_strUserName, currentPassword, newPassword);
+      return apiClient.userPasswordModify(preferenceManager.getUserSeq(), preferenceManager.getUserName(), currentPassword, newPassword);
     }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)

@@ -40,6 +40,7 @@ public class PreferenceManager extends BasePreferenceManager
   private static final String KEY_USER_NAME = "key_user_Name";
   private static final String KEY_USER_GENDER = "key_user_gender";
   private static final String KEY_USER_PROFILE = "key_user_profile";
+  private static final String KEY_AUTO_LOGIN = "key_auto_login";
   
   private static final String KEY_DONT_SHOW_POPUP_DATE = "key_dont_show_popup_date";
   
@@ -94,10 +95,28 @@ public class PreferenceManager extends BasePreferenceManager
   }
   
   
+  public void clearUserInfo()
+  {
+    put(KEY_USER_SEQ, null);
+    put(KEY_USER_EMAIL, null);
+    put(KEY_USER_NAME, null);
+    put(KEY_USER_GENDER, null);
+    put(KEY_USER_PROFILE, null);
+  }
+  
+  
+  // 로그인이 되어 있는가
+  public boolean isLoggedIn()
+  {
+    return !TextUtils.isEmpty(getUserSeq());
+  }
+  
+  
   public void setUserSeq(String value)
   {
     put(KEY_USER_SEQ, value);
   }
+  
   
   //회원과련 정보 추가
   public void setUserEmail(String value)
@@ -105,24 +124,52 @@ public class PreferenceManager extends BasePreferenceManager
     put(KEY_USER_EMAIL, value);
   }
   
+  
+  public String getUserEmail()
+  {
+    return get(KEY_USER_EMAIL);
+  }
+  
+  
   public void setUserName(String value)
   {
     put(KEY_USER_NAME, value);
   }
+  
+  
+  public String getUserName()
+  {
+    return get(KEY_USER_NAME);
+  }
+  
   
   public void setUserGender(String value)
   {
     put(KEY_USER_GENDER, value);
   }
   
+  
   public void setUserProfile(String value)
   {
     put(KEY_USER_PROFILE, value);
   }
   
+  
   public String getUserSeq()
   {
-    return getWithNullToBlank(KEY_USER_SEQ);
+    return get(KEY_USER_SEQ);
+  }
+  
+  
+  public void setIsAutoLogin(boolean value)
+  {
+    put(KEY_AUTO_LOGIN, value);
+  }
+  
+  
+  public boolean getIsAutoLogin()
+  {
+    return get(KEY_AUTO_LOGIN, false);
   }
   
   

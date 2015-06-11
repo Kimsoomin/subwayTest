@@ -31,6 +31,7 @@ import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 
 public class MyBookmarkTravelScheduleListFragment extends Fragment
@@ -199,8 +200,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      //TODO 추후 "내"일정으로 바꿔야 함
-      return apiClient.getTravelSchedules(page);
+      return apiClient.getTravelSchedules(page, PreferenceManager.getInstance(getActivity()).getUserSeq());
     }
     
     

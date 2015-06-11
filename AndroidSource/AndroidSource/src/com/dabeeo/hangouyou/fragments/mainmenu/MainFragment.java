@@ -218,7 +218,11 @@ public class MainFragment extends Fragment
 //          return;
 //        }
         
-        if (TextUtils.isEmpty(PreferenceManager.getInstance(getActivity()).getUserSeq()))
+        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+        {
+          startActivity(new Intent(getActivity(), TicketActivity.class));
+        }
+        else
         {
           Builder builder = new AlertDialog.Builder(getActivity());
           builder.setTitle(getString(R.string.term_alert));
@@ -235,8 +239,6 @@ public class MainFragment extends Fragment
           builder.setNegativeButton(getString(android.R.string.cancel), null);
           builder.create().show();
         }
-        else
-          startActivity(new Intent(getActivity(), TicketActivity.class));
       }
       else if (v.getId() == containerCoupon.getId())
       {

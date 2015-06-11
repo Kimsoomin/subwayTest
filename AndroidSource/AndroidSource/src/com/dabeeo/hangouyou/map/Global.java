@@ -79,13 +79,6 @@ import android.widget.TextView;
 // 공통 사용 클레스
 public class Global
 {
-  // 로그인 상태
-  static boolean g_bLoggedIn = false;
-  public static String g_strUserSeq = null; // 유저 시퀀스 키...
-  public static String g_strUserName = "";
-  public static String g_strUserEmail = "";
-  public static String g_strGender = null;
-  public static String g_strProfile = null;
   public static String g_strMapDBFileName = "gs_seoul.mbtiles";
   public static String HangouyouDBFileName = "hanhayou.sqlite";
   static final String strURLPath = "http://blinkingtour.com/map_data/dabeeo_map_seoul.mbtiles";
