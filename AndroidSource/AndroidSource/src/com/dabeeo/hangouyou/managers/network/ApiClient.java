@@ -44,11 +44,13 @@ public class ApiClient
     return siteUrl;
   }
   
+  
   //오프라인 컨텐츠 
   public NetworkResult getOfflineContents()
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=OFFLINE_CONTENTS");
   }
+  
   
   //오프라인 컨텐츠 update 관련 - 추후 동기화 시나리오 적용 필요
   public NetworkResult updateOfflineContents()
@@ -61,6 +63,7 @@ public class ApiClient
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CATEGORY_LIST");
   }
+  
   
   public ArrayList<ScheduleBean> getTravelSchedules(int page)
   {
@@ -79,7 +82,8 @@ public class ApiClient
           bean.setJSONObject(beanObj);
           beans.add(bean);
         }
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -95,7 +99,7 @@ public class ApiClient
     ScheduleDetailBean bean = new ScheduleDetailBean();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result =httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx);
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx);
       if (result.isSuccess)
       {
         try
@@ -103,13 +107,16 @@ public class ApiClient
           JSONObject obj = new JSONObject(result.response);
           bean = new ScheduleDetailBean();
           bean.setJSONObject(obj.getJSONObject("plan"));
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
           e.printStackTrace();
         }
         
       }
-    }else{
+    }
+    else
+    {
       bean = offlineDatabaseManager.getTravelScheduleDetailBean(idx);
     }
     return bean;
@@ -133,7 +140,8 @@ public class ApiClient
           bean.setJSONObject(objInArr);
           places.add(bean);
         }
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -163,7 +171,8 @@ public class ApiClient
           bean.setJSONObject(objInArr);
           places.add(bean);
         }
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -172,6 +181,7 @@ public class ApiClient
       places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
     return places;
   }
+  
   
   public PlaceDetailBean getPlaceDetail(String placeIdx)
   {
@@ -184,7 +194,8 @@ public class ApiClient
         JSONObject obj = new JSONObject(result.response);
         bean = new PlaceDetailBean();
         bean.setJSONObject(obj.getJSONObject("place"));
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -212,6 +223,7 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType + "&pn=10");
   }
   
+  
   public NetworkResult postReview(int rate, String content, int placeIdx, String placeType)
   {
     JSONObject object = new JSONObject();
@@ -223,11 +235,12 @@ public class ApiClient
       object.put("parentIdx", placeIdx);
       object.put("parentType", placeType);
       
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       e.printStackTrace();
     }
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS"+object.toString());
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS" + object.toString());
   }
   
   
@@ -254,7 +267,8 @@ public class ApiClient
         JSONObject obj = new JSONObject(result.response);
         bean = new ReviewBean();
         bean.setJSONObject(obj.getJSONObject("review"));
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -283,7 +297,8 @@ public class ApiClient
           bean.setJSONObject(reviewObj);
           beans.add(bean);
         }
-      } catch (JSONException e)
+      }
+      catch (JSONException e)
       {
         e.printStackTrace();
       }
@@ -374,47 +389,56 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&isRec=1");
   }
   
+  
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USER_LOGIN&userEmail="+Email+"&userPw="+Password);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_LOGIN&userEmail=" + Email + "&userPw=" + Password);
   }
+  
   
   public NetworkResult userIdDuplicateCheck(String Email)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USER_IDCHECK&userEmail="+Email);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_IDCHECK&userEmail=" + Email);
   }
+  
   
   public NetworkResult userNameDuplicateCheck(String userName)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USER_NAMECHECK&userName="+userName);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_NAMECHECK&userName=" + userName);
   }
+  
   
   public NetworkResult userJoin(String Email, String Password, String userName, String phoneNum, String gender, String birthday, String agreeEmail, String agreeSms)
   {
-    return httpClient.requestPost(getSiteUrl()+ "?v=m1&mode=USER_INS&userEmail="+Email+"&userPw="+Password+"&userName="+userName+"&phone="+phoneNum
-                                  +"&gender="+gender+"&birthday="+birthday+"&agreeEmail="+agreeEmail+"&agreeSms="+agreeSms);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_INS&userEmail=" + Email + "&userPw=" + Password + "&userName=" + userName + "&phone=" + phoneNum + "&gender=" + gender + "&birthday="
+        + birthday + "&agreeEmail=" + agreeEmail + "&agreeSms=" + agreeSms);
   }
+  
   
   public NetworkResult userEmailKeycheck(String userSeq, String Key)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USER_EMAILKEYCHECK&userSeq="+userSeq+"&key="+Key);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEYCHECK&userSeq=" + userSeq + "&key=" + Key);
   }
+  
   
   public NetworkResult userNameModify(String userSeq, String userName)
   {
-    return httpClient.requestPost(getSiteUrl()+ "?v=m1&mode=USER_INFO_MOD&userSeq="+userSeq+"&userName="+userName);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_INFO_MOD&userSeq=" + userSeq + "&userName=" + userName);
   }
+  
   
   public NetworkResult userPasswordModify(String userSeq, String userName, String userOldPw, String userNewPw)
   {
-    return httpClient.requestPost(getSiteUrl()+ "?v=m1&mode=USER_INFO_MOD&userSeq="+userSeq+"&userName="+userName+"&userOldPw="+userOldPw+"&userNewPw="+userNewPw);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_INFO_MOD&userSeq=" + userSeq + "&userName=" + userName + "&userOldPw=" + userOldPw + "&userNewPw=" + userNewPw);
   }
+  
   
   public NetworkResult userInfoinquiry(String userSeq)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USERINFO&userSeq="+userSeq);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USERINFO&userSeq=" + userSeq);
   }
+  
   
   public NetworkResult userTempPasswordGet(String userEmail)
   {
