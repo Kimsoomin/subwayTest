@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,7 +115,6 @@ public class ChangePasswordActivity extends ActionBarActivity
       return false;
     }
     
-    Log.i("ChangePasswordActivity.java | isValidPassword", "|" + preferenceManager.getUserName() + "|" + newPassword);
     if (preferenceManager.getUserName().equals(newPassword))
     {
       alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
@@ -143,7 +141,7 @@ public class ChangePasswordActivity extends ActionBarActivity
       }
     }
     
-    return false;
+    return true;
   }
   
   
