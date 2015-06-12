@@ -358,7 +358,7 @@
     <!-- 추가 String (아직 안보냄) -->
     <!-- 마이페이지 -->
     <string name="msg_require_login">需要登录</string>
-    <string name="msg_only_wifi_is_disable">关闭‘仅WiFi设定’时消耗流量进行更新我的行程和内容信息。\n关闭‘仅WiFi'设定吗？</string>
+    <string name="msg_only_wifi_is_disable">关闭 仅WiFi设定 时消耗流量进行更新我的行程和内容信息。\n关闭 仅WiFi 设定吗？</string>
     <string name="msg_help_withdraw">为了注销会员需要进行客服连接。\n请咨询以下客服。</string>
     <string name="msg_help_withdraw_qq">官方QQ: 889751559</string>
     <string name="msg_help_withdraw_email">客服邮箱 CS@GSSHOP.COM</string>
@@ -439,6 +439,7 @@
 	<string name="term_congratulate">恭喜！\n欢迎成为‘韩哈游’的会员。</string> 
 	<string name="msg_success_join">注册成功.\n欢迎体验韩哈游的精彩服务</string>
 	<string name="msg_please_error_id">您输入的帐号不存在</string>
+	<string name="msg_now_allow_consecutive_three_letters">연속된 문자/숫자 3자리 이상은 사용하실 수 없 습니다</string>
 	<string name="msg_please_error_auth">인증되지 않은 E-mail입니다</string>
 	<string name="msg_please_error_out">该账号为已注销账号。</string>
 	<string name="msg_please_error_password">密码不正确，请重新输入。</string>
