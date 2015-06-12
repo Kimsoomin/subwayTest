@@ -50,6 +50,7 @@ import com.dabeeo.hangouyou.activities.mainmenu.SubwayStationsActivity;
 import com.dabeeo.hangouyou.beans.StationBean;
 import com.dabeeo.hangouyou.managers.SubwayManager;
 import com.dabeeo.hangouyou.map.BlinkingMap;
+import com.dabeeo.hangouyou.utils.MapCheckUtil;
 
 @SuppressWarnings("deprecation")
 @SuppressLint("SetJavaScriptEnabled")
@@ -249,7 +250,15 @@ public class SubwayFragment extends Fragment
       @Override
       public void onClick(View arg0)
       {
-        startActivity(new Intent(activity, BlinkingMap.class));
+        MapCheckUtil.checkMapExist(activity, new Runnable()
+        {
+          @Override
+          public void run()
+          {
+            Intent i = new Intent(activity, BlinkingMap.class);
+            startActivity(i);
+          }
+        });
       }
     });
     btnNearByStation.setOnClickListener(new OnClickListener()
@@ -491,11 +500,18 @@ public class SubwayFragment extends Fragment
             showDontSupportOutsideSeoul();
           else
           {
-            Intent i = new Intent(activity, BlinkingMap.class);
-            i.putExtra("lineId", stationId);
-            i.putExtra("Latitude", startStationLat);
-            i.putExtra("Longitude", startStationLong);
-            startActivity(i);
+            MapCheckUtil.checkMapExist(activity, new Runnable()
+            {
+              @Override
+              public void run()
+              {
+                Intent i = new Intent(activity, BlinkingMap.class);
+                i.putExtra("lineId", stationId);
+                i.putExtra("Latitude", startStationLat);
+                i.putExtra("Longitude", startStationLong);
+                startActivity(i);
+              }
+            });
           }
         }
         else

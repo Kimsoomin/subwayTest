@@ -1055,5 +1055,4 @@ public class Global
     
     return (int) px;
   }
-  
 }

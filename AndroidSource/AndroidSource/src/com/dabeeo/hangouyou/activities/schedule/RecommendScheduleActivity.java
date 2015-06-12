@@ -26,7 +26,6 @@ import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.views.CharacterProgressView;
 
-@SuppressWarnings("deprecation")
 public class RecommendScheduleActivity extends ActionBarActivity
 {
   private LinearLayout containerChoiceStartDate;
@@ -181,7 +180,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
     {
       if (v.getId() == btnDayUp.getId())
       {
-        if (day == 6)
+        if (day == 7)
           return;
         
         day++;

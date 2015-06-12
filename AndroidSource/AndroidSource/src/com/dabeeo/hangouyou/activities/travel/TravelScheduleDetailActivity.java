@@ -33,6 +33,7 @@ import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAd
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.map.BlinkingMap;
+import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.SharePickView;
 
@@ -51,7 +52,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   public Button btnIsPublic, btnLike, btnBookmark;
   private SharePickView sharePickView;
   private int currentPosition = 0;
-  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -202,40 +202,46 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   {
     if (item.getItemId() == R.id.map)
     {
-      Intent intent = new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class);
-      intent.putExtra("plan", bean.days);
-      SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy.MM.dd");
-      String currentDate;
-      intent.putExtra("palnDayDiff", adapter.getCount() - 1);
-      
-      try
+      MapCheckUtil.checkMapExist(TravelScheduleDetailActivity.this, new Runnable()
       {
-        if (currentPosition == 0)
+        @Override
+        public void run()
         {
-          //전체일정
-          currentDate = simpleDateformat.format(bean.startDate);
-          intent.putExtra("planDayNum", 1);
-          intent.putExtra("planDayLat", bean.days.get(0).spots.get(0).lat);
-          intent.putExtra("planDayLng", bean.days.get(0).spots.get(0).lng);
-          intent.putExtra("planYMD", currentDate);
+          Intent intent = new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class);
+          intent.putExtra("plan", bean.days);
+          SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy.MM.dd");
+          String currentDate;
+          intent.putExtra("palnDayDiff", adapter.getCount() - 1);
+          
+          try
+          {
+            if (currentPosition == 0)
+            {
+              //전체일정
+              currentDate = simpleDateformat.format(bean.startDate);
+              intent.putExtra("planDayNum", 1);
+              intent.putExtra("planDayLat", bean.days.get(0).spots.get(0).lat);
+              intent.putExtra("planDayLng", bean.days.get(0).spots.get(0).lng);
+              intent.putExtra("planYMD", currentDate);
+            }
+            else
+            {
+              //N번쨰 일정인 경우
+              Date date = calCalender(currentPosition - 1);
+              currentDate = simpleDateformat.format(date);
+              intent.putExtra("planDayNum", currentPosition);
+              intent.putExtra("planDayLat", bean.days.get(currentPosition - 1).spots.get(0).lat);
+              intent.putExtra("planDayLng", bean.days.get(currentPosition - 1).spots.get(0).lng);
+              intent.putExtra("planYMD", currentDate);
+            }
+            startActivity(intent);
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
         }
-        else
-        {
-          //N번쨰 일정인 경우
-          Date date = calCalender(currentPosition - 1);
-          currentDate = simpleDateformat.format(date);
-          intent.putExtra("planDayNum", currentPosition);
-          intent.putExtra("planDayLat", bean.days.get(currentPosition - 1).spots.get(0).lat);
-          intent.putExtra("planDayLng", bean.days.get(currentPosition - 1).spots.get(0).lng);
-          intent.putExtra("planYMD", currentDate);
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-      
-      startActivity(intent);
+      });
     }
     else if (item.getItemId() == android.R.id.home)
     {
@@ -278,7 +284,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       
     }
   };
-  @SuppressWarnings("deprecation")
+  
   protected ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {
     @Override

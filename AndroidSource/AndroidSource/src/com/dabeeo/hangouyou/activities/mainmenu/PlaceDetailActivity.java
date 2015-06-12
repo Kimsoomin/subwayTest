@@ -331,9 +331,16 @@ public class PlaceDetailActivity extends ActionBarActivity
           @Override
           public void onClick(View arg0)
           {
-            Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
-            i.putExtra("placeIdx", bean.idx);
-            startActivity(i);
+            MapCheckUtil.checkMapExist(PlaceDetailActivity.this, new Runnable()
+            {
+              @Override
+              public void run()
+              {
+                Intent i = new Intent(PlaceDetailActivity.this, BlinkingMap.class);
+                i.putExtra("placeIdx", bean.idx);
+                startActivity(i);
+              }
+            });
           }
         });
       }
@@ -452,5 +459,4 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
     }
   };
-  
 }

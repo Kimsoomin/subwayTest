@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.beans.CouponBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
+import com.dabeeo.hangouyou.utils.MapCheckUtil;
 
 @SuppressWarnings("deprecation")
 public class DownloadedCouponDetailActivity extends ActionBarActivity
@@ -105,9 +107,16 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   
   private void displayOnMap()
   {
-    Intent i = new Intent(this, BlinkingMap.class);
-    i.putExtra("idx", couponId);
-    startActivity(i);
+    MapCheckUtil.checkMapExist(this, new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        Intent i = new Intent(DownloadedCouponDetailActivity.this, BlinkingMap.class);
+        i.putExtra("idx", couponId);
+        startActivity(i);
+      }
+    });
   }
   
   
