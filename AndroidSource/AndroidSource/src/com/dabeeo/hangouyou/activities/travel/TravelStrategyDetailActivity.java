@@ -320,9 +320,16 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
           @Override
           public void onClick(View arg0)
           {
-            Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-            i.putExtra("premiumIdx", ""+placeIdx);
-            startActivity(i);
+            MapCheckUtil.checkMapExist(TravelStrategyDetailActivity.this, new Runnable()
+            {
+              @Override
+              public void run()
+              {
+                Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
+                i.putExtra("premiumIdx", ""+placeIdx);
+                startActivity(i);
+              }
+            });
           }
         });
       }

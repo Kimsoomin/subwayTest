@@ -120,7 +120,7 @@ public class LocalPhotoAdapter extends BaseAdapter
     @SuppressWarnings("deprecation")
     int width = display.getWidth();
     int photoSize = width / 4;
-    if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
+    if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.KITKAT)
       container.setLayoutParams(new AbsListView.LayoutParams(photoSize, photoSize));
     else
       container.setLayoutParams(new ViewGroup.LayoutParams(photoSize, photoSize));
