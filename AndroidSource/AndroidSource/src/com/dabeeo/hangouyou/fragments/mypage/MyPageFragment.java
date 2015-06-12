@@ -225,11 +225,11 @@ public class MyPageFragment extends Fragment
     {
       if (v.getId() == imageProfile.getId())
       {
-        if (!SystemUtil.isConnectNetwork(getActivity()))
-        {
-          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-          return;
-        }
+//        if (!SystemUtil.isConnectNetwork(getActivity()))
+//        {
+//          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+//          return;
+//        }
 //        CharSequence[] menus = new CharSequence[2];
 //        menus[0] = getString(R.string.term_change_background);
 //        menus[1] = getString(R.string.term_change_profile);

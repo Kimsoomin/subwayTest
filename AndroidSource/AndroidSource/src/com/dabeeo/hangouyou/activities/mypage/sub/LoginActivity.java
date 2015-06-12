@@ -54,8 +54,6 @@ public class LoginActivity extends Activity
     findViewById(R.id.btn_login).setOnClickListener(clickListener);
     findViewById(R.id.btn_find_password).setOnClickListener(clickListener);
     findViewById(R.id.btn_cancel).setOnClickListener(clickListener);
-    
-//    Toast.makeText(this, "화면 확인을 위해 아이디, 비밀번호 입력 후 로그인을 누르면 티켓화면으로 이동합니다.", Toast.LENGTH_LONG).show();
   }
   
   private OnClickListener clickListener = new OnClickListener()

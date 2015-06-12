@@ -245,7 +245,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     return super.onOptionsItemSelected(item);
   }
   
-  
   public Date calCalender(int calender)
   {
     Calendar cal = Calendar.getInstance();

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity;
 import com.dabeeo.hangouyou.activities.sub.PromotionActivity;
@@ -32,7 +33,6 @@ import com.dabeeo.hangouyou.managers.CategoryManager;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
-@SuppressWarnings("deprecation")
 public class MainActivity extends ActionBarActivity
 {
   public static SubwayFragment subwayFrament;
@@ -45,6 +45,8 @@ public class MainActivity extends ActionBarActivity
   private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
   private TextView title;
   
+  private long backKeyPressedTime = 0;
+  private Toast appFininshToast;  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -139,6 +141,31 @@ public class MainActivity extends ActionBarActivity
     super.onResume();
   }
   
+  @Override
+  public void onBackPressed()
+  {
+    
+    if (System.currentTimeMillis() > backKeyPressedTime + 2000) 
+    {
+      backKeyPressedTime = System.currentTimeMillis();
+      showGuide();
+      return;
+    }
+    
+    if (System.currentTimeMillis() <= backKeyPressedTime + 2000) 
+    {
+      android.os.Process.killProcess(android.os.Process.myPid());
+      appFininshToast.cancel();
+    }
+    
+  }
+  
+  public void showGuide() 
+  {
+    appFininshToast = Toast.makeText(this, R.string.app_finish, Toast.LENGTH_SHORT);
+    appFininshToast.show();
+  }
+  
   private class GetCategoryAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
     @Override
@@ -166,7 +193,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(getString(R.string.app_name));
         fragment = new MainFragment();
         break;
-      
+        
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
@@ -177,13 +204,13 @@ public class MainActivity extends ActionBarActivity
         title.setText(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
-      
+        
       case POSITION_SEARCH:
         bottomMenuSearch.setSelected(true);
         title.setText(R.string.term_search);
         fragment = new SearchFragment();
         break;
-      
+        
       case POSITION_WISHLIST:
         if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {

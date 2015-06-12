@@ -30,6 +30,7 @@ import com.dabeeo.hangouyou.controllers.mypage.LocalPhotoAdapter;
 
 public class PhotoSelectActivity extends Activity
 {
+  private GridView grid;
   private LocalPhotoAdapter photoAdapter;
   private Spinner directorySpinner;
   private String takedPhotoPath;
@@ -55,7 +56,7 @@ public class PhotoSelectActivity extends Activity
       callbackKeyCallForCustomView = getIntent().getStringExtra("callback_key_for_custom_view");
     
     photoAdapter = new LocalPhotoAdapter(this, getIntent().getBooleanExtra("can_select_multiple", false));
-    GridView grid = (GridView) findViewById(R.id.gridView);
+    grid = (GridView) findViewById(R.id.gridView);
     grid.setAdapter(photoAdapter);
     grid.setOnItemClickListener(itemClickListener);
     getPathOfAllImages();

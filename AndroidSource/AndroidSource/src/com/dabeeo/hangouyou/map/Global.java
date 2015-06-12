@@ -534,19 +534,19 @@ public class Global
     options.inJustDecodeBounds = false;
     bm = new SoftReference<Bitmap>(BitmapFactory.decodeResource(_context.getResources(), _res, options)).get();
     
-    if (width > maxWidth || height > maxHeight)
-    {
+//    if (width > maxWidth || height > maxHeight)
+//    {
       Bitmap resizebm = Bitmap.createScaledBitmap(bm, ((int) (scale * width)), ((int) (scale * height)), true);
       
       SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(resizebm);
       
       return myBitmap.get();
-    }
-    else
-    {
-      SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(bm);
-      return myBitmap.get();
-    }
+//    }
+//    else
+//    {
+//      SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(bm);
+//      return myBitmap.get();
+//    }
   }
   
   

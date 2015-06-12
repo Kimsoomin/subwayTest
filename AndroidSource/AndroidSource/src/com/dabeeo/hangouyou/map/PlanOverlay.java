@@ -75,7 +75,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     
     textpaint = new Paint(Paint.FAKE_BOLD_TEXT_FLAG);
     textpaint.setColor(Color.rgb(255, 255, 255));
-    textpaint.setTextSize(40);
+    textpaint.setTextSize(25);
     textpaint.setTextAlign(Align.CENTER);
     textpaint.setTypeface(typeface);
   }
@@ -135,7 +135,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
       
       if(overlayitem.mUid.equals(idx))
       {
-        canvas.drawBitmap(pin_map, pt1.x-offset, pt1.y - pinPlan.getHeight()-offset, null);
+        canvas.drawBitmap(pin_map, pt1.x, pt1.y - pin_map.getHeight(), null);
       }else
       {
         if(overlayitem.mDescription.equals(day))

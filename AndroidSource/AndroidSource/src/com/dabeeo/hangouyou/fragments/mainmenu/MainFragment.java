@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.coupon.CouponActivity;
@@ -165,7 +164,7 @@ public class MainFragment extends Fragment
               else
               {
                 final AlertDialogManager alertManager = new AlertDialogManager(getActivity());
-                alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_lte_mode), getString(R.string.term_ok), getString(R.string.term_cancel),
+                alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_is_download_map), getString(R.string.term_ok), getString(R.string.term_cancel),
                     new AlertListener()
                     {
                       @Override
@@ -209,13 +208,6 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerTicket.getId())
       {
-        //네트워크 연결 체크 후 연결했을 때만 실행
-//        if (!SystemUtil.isConnectNetwork(getActivity()))
-//        {
-//          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
-//          return;
-//        }
-        
         if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
         {
           startActivity(new Intent(getActivity(), TicketActivity.class));
@@ -230,10 +222,18 @@ public class MainFragment extends Fragment
         //네트워크 연결 체크 후 연결했을 때만 실행
         if (!SystemUtil.isConnectNetwork(getActivity()))
         {
-          Toast.makeText(getActivity(), getString(R.string.msg_not_connect_network), Toast.LENGTH_LONG).show();
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
           return;
         }
-        startActivity(new Intent(getActivity(), CouponActivity.class));
+        
+        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+        {
+          startActivity(new Intent(getActivity(), CouponActivity.class));
+        }
+        else
+        {
+          new AlertDialogManager(getActivity()).showNeedLoginDialog();
+        }
       }
     }
   };
