@@ -1,5 +1,7 @@
 package com.dabeeo.hangouyou.activities.mypage.sub;
 
+import java.util.regex.Pattern;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,12 +32,8 @@ public class ChangePasswordActivity extends ActionBarActivity
 {
   private EditText editCurrentPassword, editNewPassword, editNewPasswordRe;
   private LoginBottomAlertView alertView;
-  public RelativeLayout progressLayout;
-  public ApiClient apiClient;
-  
-  public String currentPassword = "";
-  public String newPassword = "";
-  public String newPasswordRe = "";
+  private RelativeLayout progressLayout;
+  private ApiClient apiClient;
   
   private PreferenceManager preferenceManager;
   
@@ -46,7 +45,7 @@ public class ChangePasswordActivity extends ActionBarActivity
     setContentView(R.layout.activity_change_password);
     
     apiClient = new ApiClient(this);
-    preferenceManager = preferenceManager.getInstance(getApplicationContext());
+    preferenceManager = PreferenceManager.getInstance(getApplicationContext());
     
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -80,52 +79,71 @@ public class ChangePasswordActivity extends ActionBarActivity
       finish();
     else if (item.getItemId() == R.id.save)
     {
-      currentPassword = editCurrentPassword.getText().toString();
-      newPassword = editNewPassword.getText().toString();
-      newPasswordRe = editNewPasswordRe.getText().toString();
-      
-      if (TextUtils.isEmpty(currentPassword))
-      {
-        alertView.setAlert(getString(R.string.msg_please_write_password));
-        return true;
-      }
-      
-      if (currentPassword.length() < 6 || currentPassword.length() > 16)
-      {
-        alertView.setAlert(getString(R.string.msg_warn_password_length));
-      }
-      
-      if (TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(newPasswordRe))
-      {
-        alertView.setAlert(getString(R.string.msg_please_write_password));
-        return true;
-      }
-      
-      if (newPassword.length() < 6 || newPassword.length() > 16)
-      {
-        alertView.setAlert(getString(R.string.msg_warn_password_length));
-        return true;
-      }
-      
-      if (!newPassword.equals(newPasswordRe.toString()))
-      {
-        alertView.setAlert(getString(R.string.msg_warn_password_not_same));
-        return true;
-      }
-      
-      new PasswordModifyTask().execute();
-      finish();
+      if (isValidPassword())
+        new PasswordModifyTask().execute();
     }
     return super.onOptionsItemSelected(item);
   }
   
   
-  public boolean validChcekPassword(String password)
+  public boolean isValidPassword()
   {
-    //TODO password Valid Check 필요 (영문/숫자/특문/연속된 문자 3자 이상 사용불가/이름과 동일한 비번 사용불가)
-    boolean isValidPassword = false;
+    String currentPassword = editCurrentPassword.getText().toString();
+    String newPassword = editNewPassword.getText().toString();
+    String newPasswordRe = editNewPasswordRe.getText().toString();
     
-    return isValidPassword;
+    if (TextUtils.isEmpty(currentPassword) || TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(newPasswordRe))
+    {
+      alertView.setAlert(getString(R.string.msg_please_write_password));
+      return false;
+    }
+    
+    if (currentPassword.length() < 6 || currentPassword.length() > 16)
+    {
+      alertView.setAlert(getString(R.string.msg_warn_password_length));
+      return false;
+    }
+    
+    if (newPassword.length() < 6 || newPassword.length() > 16)
+    {
+      alertView.setAlert(getString(R.string.msg_warn_password_length));
+      return false;
+    }
+    
+    if (!newPassword.equals(newPasswordRe.toString()))
+    {
+      alertView.setAlert(getString(R.string.msg_warn_password_not_same));
+      return false;
+    }
+    
+    Log.i("ChangePasswordActivity.java | isValidPassword", "|" + preferenceManager.getUserName() + "|" + newPassword);
+    if (preferenceManager.getUserName().equals(newPassword))
+    {
+      alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
+      return false;
+    }
+    
+    // 알파벳, 숫자, 몇몇의 특수문자만 가능
+    boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", newPassword);
+    if (!chk)
+    {
+      alertView.setAlert(getString(R.string.msg_allow_only_alphabet_number_some_special_character));
+      return false;
+    }
+    
+    // 연속된 3개의 문자/숫자 불가 
+    for (int i = 0; i < newPassword.length(); i++)
+    {
+      String character = newPassword.charAt(i) + "";
+      character = character + character + character;
+      if (newPassword.indexOf(character) >= 0)
+      {
+        alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
+        return false;
+      }
+    }
+    
+    return false;
   }
   
   
@@ -192,7 +210,7 @@ public class ChangePasswordActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.userPasswordModify(preferenceManager.getUserSeq(), preferenceManager.getUserName(), currentPassword, newPassword);
+      return apiClient.userPasswordModify(preferenceManager.getUserSeq(), preferenceManager.getUserName(), editCurrentPassword.getText().toString(), editNewPassword.getText().toString());
     }
     
     
@@ -203,6 +221,5 @@ public class ChangePasswordActivity extends ActionBarActivity
       responseParser(result.response);
       super.onPostExecute(result);
     }
-    
   }
 }
