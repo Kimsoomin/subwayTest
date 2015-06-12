@@ -34,6 +34,7 @@ import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
@@ -79,6 +80,8 @@ public class PlaceDetailActivity extends ActionBarActivity
   private SharePickView sharePickView;
   
   private ViewGroup layoutRecommendProduct;
+  
+  int rate = 3;
   
   
   @Override
@@ -374,7 +377,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
       
-      int rate = 3;
+      
       if (v.getId() == btnReviewBest.getId())
       {
         btnReviewBest.setSelected(true);
@@ -394,9 +397,22 @@ public class PlaceDetailActivity extends ActionBarActivity
       if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         return;
       
-      Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
-      i.putExtra("rate", rate);
-      startActivity(i);
+      AlertDialogManager alert = new AlertDialogManager(PlaceDetailActivity.this);
+      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_wriete_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+      {
+        
+        public void onPositiveButtonClickListener()
+        {
+          Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
+          i.putExtra("rate", rate);
+          startActivity(i);
+        }
+        
+        public void onNegativeButtonClickListener()
+        {
+          //TODO 평점 서버로 전송 - API필요
+        }
+      });
     }
   };
   

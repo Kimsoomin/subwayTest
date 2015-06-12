@@ -28,6 +28,7 @@ import com.dabeeo.hangouyou.beans.ScheduleDayBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.CustomScrollView;
 import com.dabeeo.hangouyou.views.CustomScrollView.ScrollViewListener;
@@ -59,6 +60,8 @@ public class TravelScheduleDetailFragment extends Fragment
   
   private int position;
   private boolean isMySchedule = false;
+  
+  int rate = 3;
   
   
   @Override
@@ -267,7 +270,7 @@ public class TravelScheduleDetailFragment extends Fragment
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
       
-      int rate = 3;
+      
       if (v.getId() == btnReviewBest.getId())
       {
         btnReviewBest.setSelected(true);
@@ -284,9 +287,22 @@ public class TravelScheduleDetailFragment extends Fragment
         rate = 1;
       }
       
-      Intent i = new Intent(getActivity(), WriteReviewActivity.class);
-      i.putExtra("rate", rate);
-      startActivity(i);
+      AlertDialogManager alert = new AlertDialogManager(getActivity());
+      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_wriete_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+      {
+        
+        public void onPositiveButtonClickListener()
+        {
+          Intent i = new Intent(getActivity(), WriteReviewActivity.class);
+          i.putExtra("rate", rate);
+          startActivity(i);
+        }
+        
+        public void onNegativeButtonClickListener()
+        {
+          //TODO 평점 서버로 전송 - API필요
+        }
+      });
     }
   };
   
