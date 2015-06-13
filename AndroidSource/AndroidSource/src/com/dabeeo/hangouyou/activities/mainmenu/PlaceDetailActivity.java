@@ -398,7 +398,7 @@ public class PlaceDetailActivity extends ActionBarActivity
         return;
       
       AlertDialogManager alert = new AlertDialogManager(PlaceDetailActivity.this);
-      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_wriete_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_write_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
       {
         
         public void onPositiveButtonClickListener()

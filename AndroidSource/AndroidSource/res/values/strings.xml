@@ -295,6 +295,7 @@
     <string name="msg_confirm_delete">确定删除吗？</string>
     <string name="term_declare_review">举报评论</string>
     <string name="msg_declare_hint">详细说明会帮助我们更快地处理举报（300字以内）</string>
+    <string name="msg_write_review">리뷰를 작성하시겠습니까?</string>
     <string name="msg_review_declare_reason_1">广告</string>
     <string name="msg_review_declare_reason_2">色情污秽</string>
     <string name="msg_review_declare_reason_3">其它</string>
