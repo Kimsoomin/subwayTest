@@ -107,9 +107,9 @@ public class PlaceListAdapter extends BaseAdapter
       textRanking.setText(Integer.toString(position));
     }
     
-    if (position % 2 == 1)
-      isCoupon.setVisibility(View.VISIBLE);
-    else
+//    if (position % 2 == 1)
+//      isCoupon.setVisibility(View.VISIBLE);
+//    else
       isCoupon.setVisibility(View.GONE);
     
     try

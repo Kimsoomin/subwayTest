@@ -126,7 +126,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         public void run()
         {
           Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-          i.putExtra("premiumIdx", ""+placeIdx);
+          i.putExtra("premiumIdx", placeIdx);
           startActivity(i);
         }
       });
@@ -267,14 +267,14 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       horizontalImagesView.addView(parentView);
     }
     
-//    if(bean.address != null)
-//      addDetailInfo(getString(R.string.term_address), bean.address);
-//    else
-      addDetailInfo(getString(R.string.term_address), "s");
-//    if(bean.contact != null)
-//      addDetailInfo(getString(R.string.term_phone), bean.contact);
-//    else
-      addDetailInfo(getString(R.string.term_phone), "a");
+    if(!TextUtils.isEmpty(bean.address))
+      addDetailInfo(getString(R.string.term_address), bean.address);
+    else
+      addDetailInfo(getString(R.string.term_address), "");
+    if(!TextUtils.isEmpty(bean.contact))
+      addDetailInfo(getString(R.string.term_phone), bean.contact);
+    else
+      addDetailInfo(getString(R.string.term_phone), "");
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);
     addDetailInfo(getString(R.string.term_working_time), bean.businessHours);
     addDetailInfo(getString(R.string.term_price_info), bean.priceInfo);
