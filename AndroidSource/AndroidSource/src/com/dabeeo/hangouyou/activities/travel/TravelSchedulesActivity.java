@@ -192,7 +192,6 @@ public class TravelSchedulesActivity extends ActionBarActivity
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("position", MainActivity.POSITION_SEARCH);
         startActivity(i);
-        startActivity(i);
       }
     }
   };

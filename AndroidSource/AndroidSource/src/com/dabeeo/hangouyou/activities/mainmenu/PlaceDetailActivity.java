@@ -102,7 +102,10 @@ public class PlaceDetailActivity extends ActionBarActivity
     isEnterMap = getIntent().getBooleanExtra("is_map", false);
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getStringExtra("place_idx");
-    premiumIdx = getIntent().getStringExtra("premium_Idx");
+    if(getIntent().hasExtra("premium_Idx"))
+      premiumIdx = getIntent().getStringExtra("premium_Idx");
+    else
+      premiumIdx = "null";
     
     BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
     
