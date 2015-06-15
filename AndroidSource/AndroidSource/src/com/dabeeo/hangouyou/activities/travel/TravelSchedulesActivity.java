@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.trend.TrendSearchActivity;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;

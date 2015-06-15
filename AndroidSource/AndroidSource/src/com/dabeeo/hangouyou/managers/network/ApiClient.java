@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.net.Network;
 import android.text.TextUtils;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
