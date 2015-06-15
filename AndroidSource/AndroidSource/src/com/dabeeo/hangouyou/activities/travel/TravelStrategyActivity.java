@@ -29,11 +29,11 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.trend.TrendSearchActivity;
 import com.dabeeo.hangouyou.beans.TitleCategoryBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
+import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
+import com.dabeeo.hangouyou.fragments.mainmenu.TravelStrategyListFragment;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
-import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -53,6 +53,10 @@ public class TravelStrategyActivity extends ActionBarActivity
   private int lastSelectedTab = 0;
   
   public AlertDialogManager alertDialogManager;
+  
+  private TravelStrategyListFragment recommendSeoulFragment;
+  private PlaceListFragment popularFragment, shoppingFragment, restaurantFragment;
+  
   
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -91,15 +95,26 @@ public class TravelStrategyActivity extends ActionBarActivity
     adapter = new RecommendSeoulViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
     viewPager.setAdapter(adapter);
     
-    adapter.add(new TitleCategoryBean(getString(R.string.term_recommend_seoul), -1));
-    adapter.add(new TitleCategoryBean(getString(R.string.term_popular_place), 9));
-    adapter.add(new TitleCategoryBean(getString(R.string.term_shopping), 2));
-    adapter.add(new TitleCategoryBean(getString(R.string.term_restaurant), 7));
+    recommendSeoulFragment = new TravelStrategyListFragment(-1);
+    popularFragment = new PlaceListFragment(9);
+    shoppingFragment = new PlaceListFragment(2);
+    restaurantFragment = new PlaceListFragment(7);
+    
+    adapter.add(recommendSeoulFragment);
+    adapter.add(popularFragment);
+    adapter.add(shoppingFragment);
+    adapter.add(restaurantFragment);
     adapter.notifyDataSetChanged();
     
-    for (int i = 0; i < adapter.getCount(); i++)
+    ArrayList<String> titles = new ArrayList<>();
+    titles.add(getString(R.string.term_recommend_seoul));
+    titles.add(getString(R.string.term_popular_place));
+    titles.add(getString(R.string.term_shopping));
+    titles.add(getString(R.string.term_restaurant));
+    
+    for (String str : titles)
     {
-      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(adapter.getPageTitle(i)).setTabListener(tabListener));
+      getSupportActionBar().addTab(getSupportActionBar().newTab().setText(str).setTabListener(tabListener));
     }
     
     if (!SystemUtil.isConnectNetwork(getApplicationContext()))
@@ -198,6 +213,7 @@ public class TravelStrategyActivity extends ActionBarActivity
       }
     }
   };
+  
   protected TabListener tabListener = new TabListener()
   {
     @Override
@@ -226,7 +242,6 @@ public class TravelStrategyActivity extends ActionBarActivity
       
       if (tab.getPosition() == 0)
         isFirstSelectRecommendSeoulTab = false;
-      
     }
     
     
@@ -253,74 +268,57 @@ public class TravelStrategyActivity extends ActionBarActivity
     }
   };
   
-  public void spotArrayItemClick(int which)
-  {
-    if(which == 0)
-    {
-      
-    }else
-    {
-      if(PreferenceManager.getInstance(this).isLoggedIn())
-      {
-        if(which == 1)
-        {
-          
-        }else if(which == 2)
-        {
-          
-        }else if(which == 3)
-        {
-          
-        }
-      }else
-      {
-        alertDialogManager.showNeedLoginDialog();
-      }
-    }
-  }
   
-  public void areaItemClick(int which)
+  private void spotArrayItemClick(int which)
   {
     
   }
   
+  
+  private void areaItemClick(int which)
+  {
+    recommendSeoulFragment.filtering(which);
+  }
+  
+  
   private void showSphereDialog()
   {
-    if(SystemUtil.isConnectNetwork(this))
-    {
-      ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
-      if (adapter.currentPosition != 0)
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.spot_array));
-      final ArrayAdapter<String> finalArrayAdapter = arrayAdapter;
-      AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-      builderSingle.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
-      {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-          dialog.dismiss();
-        }
-      });
-      
-      builderSingle.setAdapter(finalArrayAdapter, new DialogInterface.OnClickListener()
-      {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-          if(adapter.currentPosition != 0)
-          {
-            spotArrayItemClick(which);
-          }else
-          {
-            areaItemClick(which);
-          }
-        }
-      });
-      builderSingle.show();
-    }else
+    if (!SystemUtil.isConnectNetwork(this))
     {
       alertDialogManager.showDontNetworkConnectDialog();
+      return;
     }
+    
+    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
+    if (adapter.currentPosition != 0)
+      arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.spot_array));
+    final ArrayAdapter<String> finalArrayAdapter = arrayAdapter;
+    AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+    builderSingle.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+    {
+      @Override
+      public void onClick(DialogInterface dialog, int which)
+      {
+        dialog.dismiss();
+      }
+    });
+    
+    builderSingle.setAdapter(finalArrayAdapter, new DialogInterface.OnClickListener()
+    {
+      @Override
+      public void onClick(DialogInterface dialog, int which)
+      {
+        if (adapter.currentPosition != 0)
+        {
+          spotArrayItemClick(which);
+        }
+        else
+        {
+          areaItemClick(which);
+        }
+      }
+    });
+    builderSingle.show();
   }
   
   

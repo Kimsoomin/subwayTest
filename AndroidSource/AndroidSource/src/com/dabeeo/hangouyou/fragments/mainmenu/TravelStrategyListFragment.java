@@ -37,12 +37,14 @@ public class TravelStrategyListFragment extends Fragment
   private int page = 1;
   private boolean isLoadEnded = false;
   private ApiClient apiClient;
-  private int lastVisibleItem = 0;
+  private int area = 0; // 0전체, 1한류, 2홍대, 3압구정, 4명동, 5인사동, 6기타 
+  
   
   public TravelStrategyListFragment(int categoryId)
   {
     this.categoryId = categoryId;
   }
+  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -61,7 +63,7 @@ public class TravelStrategyListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     adapter = new RecommendSeoulListAdapter(getActivity());
-
+    
     ((TravelStrategyActivity) getActivity()).showBottomTab(true);
     ListView listView = (ListView) getView().findViewById(R.id.listview);
     listView.setOnItemClickListener(itemClickListener);
@@ -79,30 +81,41 @@ public class TravelStrategyListFragment extends Fragment
         if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
-          load(page);
+          load();
         }
       }
     });
     listView.setAdapter(adapter);
     
-    load(page);
+    load();
   }
   
   
-  private void load(int offset)
+  private void load()
   {
     progressBar.setVisibility(View.VISIBLE);
     
-    new GetStoreAsyncTask().execute(page);
+    new GetStoreAsyncTask().execute();
   }
   
-  private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, NetworkResult>
+  
+  public void filtering(int area)
   {
+    adapter.clear();
+    adapter.notifyDataSetChanged();
     
+    page = 1;
+    this.area = area;
+    
+    load();
+  }
+  
+  private class GetStoreAsyncTask extends AsyncTask<Void, Void, NetworkResult>
+  {
     @Override
-    protected NetworkResult doInBackground(Integer... params)
+    protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.getPremiumList(params[0]);
+      return apiClient.getPremiumList(page, area);
     }
     
     

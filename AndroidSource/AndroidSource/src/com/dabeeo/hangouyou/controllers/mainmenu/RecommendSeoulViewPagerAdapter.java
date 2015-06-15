@@ -7,13 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dabeeo.hangouyou.beans.TitleCategoryBean;
-import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
-import com.dabeeo.hangouyou.fragments.mainmenu.TravelStrategyListFragment;
-
 public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
 {
-  private ArrayList<TitleCategoryBean> items = new ArrayList<>();
+  private ArrayList<Fragment> items = new ArrayList<>();
   public int currentPosition = 0;
   
   
@@ -23,19 +19,20 @@ public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
-  public void add(TitleCategoryBean bean)
+  public void add(Fragment fragment)
   {
-    items.add(bean);
+    items.add(fragment);
   }
   
   
   @Override
   public Fragment getItem(int position)
   {
-    if (position == 0)
-      return new TravelStrategyListFragment(items.get(position).categoryId);
-    else
-      return new PlaceListFragment(items.get(position).categoryId);
+    return items.get(position);
+//    if (position == 0)
+//      return new TravelStrategyListFragment(items.get(position).categoryId);
+//    else
+//      return new PlaceListFragment(items.get(position).categoryId);
   }
   
   
@@ -43,12 +40,5 @@ public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
   public int getCount()
   {
     return items.size();
-  }
-  
-  
-  @Override
-  public CharSequence getPageTitle(int position)
-  {
-    return items.get(position).title;
   }
 }

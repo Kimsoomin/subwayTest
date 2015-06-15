@@ -139,7 +139,8 @@ public class ApiClient
   public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
   {
     return getPlaceList(page, categoryId, null);
-  }  
+  }
+  
   
   public ArrayList<PlaceBean> getPlaceList(int page, int categoryId, String userSeq)
   {
@@ -207,9 +208,9 @@ public class ApiClient
   }
   
   
-  public NetworkResult getPremiumList(int page)
+  public NetworkResult getPremiumList(int page, int area)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_LIST&p=" + page);
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_LIST&p=" + page + "&area=" + area);
   }
   
   
@@ -218,16 +219,19 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType + "&pn=10");
   }
   
+  
   //내 장소, 내 일정 삭제
   public NetworkResult deleteMyPlace(String idx, String ownerUserSeq)
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=PLACE_DEL&idx=" + idx + "&userSeq=" + ownerUserSeq);
   }
   
+  
   public NetworkResult deleteMyPlan(String idx, String ownerUserSeq)
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=PLAN_DEL&idx=" + idx + "&userSeq=" + ownerUserSeq);
   }
+  
   
   //review 관련 
   public NetworkResult postReviewRate(String parentType, String parentIdx, String userSeq, int rate, String regDate)
@@ -449,6 +453,7 @@ public class ApiClient
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
   }
+  
   
   public NetworkResult searchResult(String keyword, String userSeq)
   {
