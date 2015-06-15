@@ -197,7 +197,7 @@ public class MyPlaceListFragment extends Fragment
     protected NetworkResult doInBackground(Void... params)
     {
       // TODO Auto-generated method stub
-      return apiClient.deleteMyPlace(null, null);
+      return apiClient.deleteMyPlace(null, PreferenceManager.getInstance(getActivity()).getUserSeq());
     }
     
     @Override

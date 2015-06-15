@@ -47,13 +47,12 @@ public class PinchImageView extends LinearLayout
     
     final ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
     
-    Display display = context.getWindowManager().getDefaultDisplay();
-    int width = display.getWidth();
-    int height = display.getHeight();
-    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(width, height);
-    imageView.setLayoutParams(layoutParams);
+//    Display display = context.getWindowManager().getDefaultDisplay();
+//    int width = display.getWidth();
+//    int height = display.getHeight();
+//    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(width, height);
+//    imageView.setLayoutParams(layoutParams);
     
-    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 //    WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 //    Display display = wm.getDefaultDisplay();
 //    @SuppressWarnings("deprecation")

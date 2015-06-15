@@ -545,7 +545,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     parentLayout.addView(m_rotateView, LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
     
     m_mapView.setUseDataConnection(false);
-    m_mapView.setBuiltInZoomControls(false); // 줌 컨트롤 버튼 hidden
+    m_mapView.setBuiltInZoomControls(true); // 줌 컨트롤 버튼 hidden
     m_mapView.setMultiTouchControls(true); // 핀치줌 가능.
     m_mapView.setClickable(true);
     m_mapView.setBackgroundColor(Color.WHITE);
@@ -608,7 +608,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       @Override
       public boolean onTouch(View v, MotionEvent event) 
       {
-        // TODO Auto-generated method stub
         if(event.getAction() == MotionEvent.ACTION_UP)
         {
           if(!summaryviewclose)

@@ -214,7 +214,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         Display display = getWindowManager().getDefaultDisplay();
         @SuppressWarnings("deprecation")
         int width = display.getWidth();
-        Picasso.with(this).load(contentBean.imageUrl).fit().centerCrop().into(image);
+        Picasso.with(this).load(contentBean.imageUrl).fit().into(image);
         image.setVisibility(View.VISIBLE);
         final String imageUrl = contentBean.imageUrl;
         image.setOnClickListener(new OnClickListener()
@@ -236,7 +236,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     likeCount.setText(Integer.toString(bean.likeCount));
     
     //Main Image
-    Picasso.with(this).load(bean.mainImageUrl).resize(300, 300).centerCrop().into((ImageView) findViewById(R.id.imageview));
+    Picasso.with(this).load(bean.mainImageUrl).into((ImageView) findViewById(R.id.imageview));
     Log.w("WARN", "Image Url : " + bean.mainImageUrl);
     
     //Scroll small Images
@@ -249,7 +249,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
-      Picasso.with(this).load(imageUrl).resize(300, 300).centerCrop().into(view);
+      Picasso.with(this).load(imageUrl).into(view);
       final int position = i;
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
@@ -326,7 +326,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
               public void run()
               {
                 Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-                i.putExtra("premiumIdx", ""+placeIdx);
+                i.putExtra("premiumIdx", placeIdx);
                 startActivity(i);
               }
             });
