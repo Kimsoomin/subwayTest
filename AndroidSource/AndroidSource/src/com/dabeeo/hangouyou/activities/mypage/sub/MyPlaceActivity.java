@@ -42,7 +42,6 @@ public class MyPlaceActivity extends ActionBarActivity
 		getSupportActionBar().setDisplayShowCustomEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
-		
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -90,7 +89,7 @@ public class MyPlaceActivity extends ActionBarActivity
 		else if (item.getItemId() == editMenuItem.getItemId())
 		{
 			isEditMode = true;
-			
+      getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 			int index = viewPager.getCurrentItem();
 			MyPlaceListFragment fragment = adapter.getFragment(index);
 			fragment.setEditMode(isEditMode);
@@ -102,6 +101,7 @@ public class MyPlaceActivity extends ActionBarActivity
 			int index = viewPager.getCurrentItem();
 			MyPlaceListFragment fragment = adapter.getFragment(index);
 			fragment.setEditMode(isEditMode);
+			getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 			invalidateOptionsMenu();
 		}
 		return super.onOptionsItemSelected(item);
@@ -110,7 +110,6 @@ public class MyPlaceActivity extends ActionBarActivity
 	/**************************************************
 	 * listener
 	 ***************************************************/
-	@SuppressWarnings("deprecation")
 	protected TabListener tabListener = new TabListener()
 	{
 		@Override
@@ -136,7 +135,6 @@ public class MyPlaceActivity extends ActionBarActivity
 	
 	protected ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
 	{
-		@SuppressWarnings("deprecation")
 		@Override
 		public void onPageSelected(int position)
 		{

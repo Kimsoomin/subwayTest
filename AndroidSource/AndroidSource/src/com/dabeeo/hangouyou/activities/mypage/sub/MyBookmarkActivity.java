@@ -95,6 +95,7 @@ public class MyBookmarkActivity extends ActionBarActivity
         ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
       else
         ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
+      getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
       invalidateOptionsMenu();
     }
     else if (item.getItemId() == closeMenuItem.getItemId())
@@ -106,6 +107,7 @@ public class MyBookmarkActivity extends ActionBarActivity
         ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
       else
         ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
+      getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
       invalidateOptionsMenu();
     }
     return super.onOptionsItemSelected(item);
