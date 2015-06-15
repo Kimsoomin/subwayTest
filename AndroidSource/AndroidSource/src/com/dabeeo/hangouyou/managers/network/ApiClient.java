@@ -15,6 +15,7 @@ import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 public class ApiClient
@@ -211,6 +212,7 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_LIST&p=" + page);
   }
   
+  
   public NetworkResult getTravelog(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType + "&pn=10");
@@ -237,8 +239,9 @@ public class ApiClient
 //    rate: [평점],
 //    contents: [내용],
 //    regDate: [등록일자]
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=REVIEW_INS&parentType=");
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=");
   }
+  
   
   public NetworkResult postReview(int rate, String content, int placeIdx, String placeType)
   {
@@ -400,29 +403,61 @@ public class ApiClient
   }
   
   
-  public NetworkResult getRecommendSchedule(String type, int days, int year, int month, int dayOfMonth)
+  /**
+   * 추천 자동일정 만들기
+   * 
+   * @param startDate
+   *          2015-06-15
+   * @param dayCount
+   *          1, 2, 3
+   * @param theme
+   *          0: 쇼핑, 1: 한류, 2: 관광, 3: 미식, 4: 휴양, 5: 랜덤
+   * @return
+   */
+  public NetworkResult getCreateRecommendSchedule(String startDate, int dayCount, int theme)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&isRec=1");
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_SMART&startDate=" + startDate + "&dayCount=" + dayCount + "&theme=" + theme);
   }
+  
+  
+  /**
+   * 만들어진 자동추천일정을 내 일정으로 만들기
+   * 
+   * @param startDate
+   *          2015-06-20
+   * @param planIdx
+   *          279
+   * @param dayCount
+   *          2
+   * @return
+   */
+  public NetworkResult completeCreateRecommendSchedule(String startDate, String idx, int dayCount)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_SMART_SAVE&startDate=" + startDate + "&dayCount=" + dayCount + "&planIdx=" + idx + "&userSeq="
+        + PreferenceManager.getInstance(context).getUserSeq());
+  }
+  
   
   //검색관련 API
   public NetworkResult searchPopular()
   {
-    return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_POPULAR");
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_POPULAR");
   }
+  
   
   public NetworkResult searchAuto(String keyword)
   {
-    return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
   }
   
   public NetworkResult searchResult(String keyword, String userSeq)
   {
-    if(TextUtils.isEmpty(userSeq))
-      return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
+    if (TextUtils.isEmpty(userSeq))
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
     else
-      return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + userSeq);
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + userSeq);
   }
+  
   
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)
@@ -449,15 +484,18 @@ public class ApiClient
         + birthday + "&agreeEmail=" + agreeEmail + "&agreeSms=" + agreeSms);
   }
   
+  
   public NetworkResult userEmailKeycheck(String userSeq, String Key)
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEYCHECK&userSeq=" + userSeq + "&key=" + Key);
   }
   
+  
   public NetworkResult userEmailKeyResend(String userEmail)
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEY_RESEND&userEmai=" + userEmail);
   }
+  
   
   public NetworkResult userNameModify(String userSeq, String userName)
   {
@@ -479,6 +517,6 @@ public class ApiClient
   
   public NetworkResult userTempPasswordGet(String userEmail)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USER_FINDPW&userEmail="+userEmail);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_FINDPW&userEmail=" + userEmail);
   }
 }

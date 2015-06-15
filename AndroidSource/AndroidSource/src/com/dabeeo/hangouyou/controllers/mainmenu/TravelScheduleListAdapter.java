@@ -93,12 +93,14 @@ public class TravelScheduleListAdapter extends BaseAdapter
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+    ImageView iconRemommend = (ImageView) view.findViewById(R.id.icon_recommend);
     TextView startDate = (TextView) view.findViewById(R.id.start_date);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView month = (TextView) view.findViewById(R.id.month);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
+    iconRemommend.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
     startDate.setText(bean.startDateString);
     title.setText(bean.title);
     month.setText(Integer.toString(bean.dayCount) + parent.getContext().getString(R.string.term_month));

@@ -99,7 +99,13 @@ public class MySchedulesActivity extends ActionBarActivity
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
-    
+  }
+  
+  
+  @Override
+  protected void onResume()
+  {
+    super.onResume();
     loadSchedules();
   }
   
@@ -132,7 +138,6 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     protected void onPostExecute(ArrayList<ScheduleBean> result)
     {
-      
       if (result.size() == 0)
         isLoadEnded = true;
       
