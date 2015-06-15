@@ -32,8 +32,7 @@
 		"1b7d3e61-5b3e-39cd-fd30-fa868f3bf246",
 		"4f73b9de-a73f-4a34-485b-0d84faa07477",
 		"726649de-90dd-c148-e4ca-bff88b816c3e",
-		"50944aa7-d3ed-f25f-591f-080088850959",
-		"57c89c9b-c4c0-3595-fa27-357ffb646baf"
+		"50944aa7-d3ed-f25f-591f-080088850959"
 	],
 	"folders": [],
 	"timestamp": 1428458689355,
@@ -256,27 +255,6 @@
 			"tests": "",
 			"synced": false,
 			"rawModeData": ""
-		},
-		{
-			"id": "57c89c9b-c4c0-3595-fa27-357ffb646baf",
-			"headers": "Content-Type: application/json\n",
-			"url": "http://gs.blinking.kr:8900/_libs/api.common.php?v=m1&mode=PLAN_SMART_SAVE&userSeq=10031&planIdx=279&startDate=2015-06-30&dayCount=2",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1434330265931,
-			"name": "자동 추천 일정을 내 일정으로 저장 copy",
-			"description": "",
-			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
-			"responses": [],
-			"synced": false,
-			"collectionOwner": 0
 		},
 		{
 			"collectionId": "06cd0a6c-0447-4360-346d-675f733e9514",
