@@ -315,7 +315,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     if (bean == null)
       return;
     
-    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.idx);
+    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.cityIdx);
     reviewLayout.addView(reviewContainerView);
     reviewContainerView.loadMore();
     

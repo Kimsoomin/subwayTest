@@ -12,7 +12,7 @@ public class PlaceDetailBean
 {
   public String idx;
   public String seqCode;
-  public int cityIdx;
+  public String cityIdx;
   
   public int ownerUserSeq;
   public String userName;
@@ -61,7 +61,7 @@ public class PlaceDetailBean
         seqCode = obj.getString("seqCode");
       
       if (obj.has("cityIdx"))
-        cityIdx = obj.getInt("cityIdx");
+        cityIdx = obj.getString("cityIdx");
       
       if (obj.has("userName"))
         userName = obj.getString("userName");
