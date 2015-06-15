@@ -99,7 +99,13 @@ public class MySchedulesActivity extends ActionBarActivity
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
-    
+  }
+  
+  
+  @Override
+  protected void onResume()
+  {
+    super.onResume();
     loadSchedules();
   }
   

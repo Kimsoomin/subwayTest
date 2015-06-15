@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,12 +32,12 @@ public class RecommendScheduleActivity extends ActionBarActivity
   private Button btnDayUp, btnDayDown;
   private TextView textDay;
   private TextView startDate;
-  private int day = 1;
+  private int dayCount = 1;
   private String selectTheme = "";
   
   private int year = -1, month = -1, dayOfMonth = -1;
   
-  private String type = "";
+  private int theme = -1;
   private LinearLayout containerShopping, containerCulture, containerTour, containerFood, containerRest, containerRandom;
   private ApiClient apiClient;
   
@@ -98,7 +97,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
     if (arg0 == 101 && arg1 == RESULT_OK)
     {
       year = intent.getIntExtra("year", -1);
-      month = intent.getIntExtra("month", -1);
+      month = intent.getIntExtra("month", -1) + 1;
       dayOfMonth = intent.getIntExtra("dayOfMonth", -1);
       Log.w("WARN", "Activity Result:  " + year + " " + month + " " + dayOfMonth);
       
@@ -132,7 +131,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       {
         Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_empty_start_date), Toast.LENGTH_LONG).show();
       }
-      else if (TextUtils.isEmpty(type))
+      else if (theme == -1)
       {
         Toast.makeText(RecommendScheduleActivity.this, getString(R.string.msg_warn_select_theme), Toast.LENGTH_LONG).show();
       }
@@ -145,29 +144,29 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   private void findAndShowDialog()
   {
-//    new FindAsyncTask().execute();
-    Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
-    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
-    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
-    builder.setView(pView);
-    builder.setCancelable(false);
-    final AlertDialog dialog = builder.create();
-    
-    if (!dialog.isShowing())
-      dialog.show();
-    
-    Log.i("RecommendScheduleActivity.java | findAndShowDialog", "|" + year + "|" + month + "|" + dayOfMonth + "|" + day + "일 짜리|" + type + "|");
-    
-    new Handler().postDelayed(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        dialog.dismiss();
-        Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
-        startActivity(i);
-      }
-    }, 5000);
+    new CreateAsyncTask().execute();
+//    Builder builder = new AlertDialog.Builder(RecommendScheduleActivity.this);
+//    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleActivity.this);
+//    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
+//    builder.setView(pView);
+//    builder.setCancelable(false);
+//    final AlertDialog dialog = builder.create();
+//    
+//    if (!dialog.isShowing())
+//      dialog.show();
+//    
+//    Log.i("RecommendScheduleActivity.java | findAndShowDialog", "|" + year + "|" + month + "|" + dayOfMonth + "|" + day + "일 짜리|" + type + "|");
+//    
+//    new Handler().postDelayed(new Runnable()
+//    {
+//      @Override
+//      public void run()
+//      {
+//        dialog.dismiss();
+//        Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
+//        startActivity(i);
+//      }
+//    }, 5000);
   }
   
   /**************************************************
@@ -180,20 +179,20 @@ public class RecommendScheduleActivity extends ActionBarActivity
     {
       if (v.getId() == btnDayUp.getId())
       {
-        if (day == 7)
+        if (dayCount == 7)
           return;
         
-        day++;
+        dayCount++;
       }
       else
       {
-        if (day == 1)
+        if (dayCount == 1)
           return;
         
-        day--;
+        dayCount--;
       }
       
-      textDay.setText(Integer.toString(day));
+      textDay.setText(Integer.toString(dayCount));
     }
   };
   
@@ -202,7 +201,6 @@ public class RecommendScheduleActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      type = "test";
       containerShopping.setSelected(false);
       containerCulture.setSelected(false);
       containerTour.setSelected(false);
@@ -213,26 +211,32 @@ public class RecommendScheduleActivity extends ActionBarActivity
       if (v.getId() == containerShopping.getId())
       {
         containerShopping.setSelected(true);
+        theme = 0;
       }
       else if (v.getId() == containerCulture.getId())
       {
         containerCulture.setSelected(true);
+        theme = 1;
       }
       else if (v.getId() == containerTour.getId())
       {
         containerTour.setSelected(true);
+        theme = 2;
       }
       else if (v.getId() == containerFood.getId())
       {
         containerFood.setSelected(true);
+        theme = 3;
       }
       else if (v.getId() == containerRest.getId())
       {
         containerRest.setSelected(true);
+        theme = 4;
       }
       else if (v.getId() == containerRandom.getId())
       {
         containerRandom.setSelected(true);
+        theme = 5;
       }
     }
   };
@@ -240,9 +244,10 @@ public class RecommendScheduleActivity extends ActionBarActivity
   /**************************************************
    * async task
    ***************************************************/
-  private class FindAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  private class CreateAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     AlertDialog dialog;
+    String startDate;
     
     
     @Override
@@ -258,7 +263,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       if (!dialog.isShowing())
         dialog.show();
       
-      Log.i("RecommendScheduleActivity.java | onPreExecute", "|" + year + "|" + month + "|" + dayOfMonth + "|" + day + "일 짜리|" + type + "|");
+      Log.i("RecommendScheduleActivity.java | onPreExecute", "|" + year + "|" + month + "|" + dayOfMonth + "|" + dayCount + "일 짜리|" + theme + "|");
       super.onPreExecute();
     }
     
@@ -266,16 +271,22 @@ public class RecommendScheduleActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.getRecommendSchedule(type, day, year, month, dayOfMonth);
+      startDate = year + "-" + String.format("%02d", month) + "-" + dayOfMonth;
+      return apiClient.getCreateRecommendSchedule(startDate, dayCount, theme);
     }
     
     
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      
       dialog.dismiss();
+      
+      if (TextUtils.isEmpty(result.response))
+        return;
+      
       Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
+      i.putExtra("json", result.response);
+      i.putExtra("startDate", startDate);
       startActivity(i);
       super.onPostExecute(result);
     }
