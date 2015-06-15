@@ -16,6 +16,7 @@
         android:layout_height="140dip"
         android:layout_centerInParent="true"
         android:background="@drawable/btn_tutorial_start"
-        android:contentDescription="@null" />
+        android:contentDescription="@null"
+        android:clickable="true" />
 
 </RelativeLayout>

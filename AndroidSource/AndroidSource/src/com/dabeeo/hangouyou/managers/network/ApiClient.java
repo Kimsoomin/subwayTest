@@ -458,6 +458,15 @@ public class ApiClient
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + userSeq);
   }
   
+  /**
+   * 사용자 로그 등록 (좋아요, 북마크, 공유, 위시)
+   * @param parentType= "place": 장소,"plan": 일정, "review": 리뷰, "product": 상품
+   * @param usedType = "L": 좋아요, "B": 북마크, "S": 공유, "W": 위시
+   */
+  public NetworkResult setUsedLog(String ownerUserSeq, String prentIdx, int parentType, int usedType)
+  {
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&paerntIdx=" + prentIdx);
+  }
   
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)

@@ -93,6 +93,16 @@ public class GuideActivity extends Activity
       {
         image.setImageResource(R.drawable.intro_tutorial06);
         startHome.setVisibility(View.VISIBLE);
+        startHome.setOnClickListener(new OnClickListener()
+        {
+          
+          @Override
+          public void onClick(View v)
+          {
+            startActivity(new Intent(GuideActivity.this, MainActivity.class));
+            finish();
+          }
+        });
       }
       ((ViewPager) pager).addView(v, 0);
       

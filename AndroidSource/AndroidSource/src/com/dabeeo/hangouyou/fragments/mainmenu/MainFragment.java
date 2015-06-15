@@ -208,32 +208,37 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerTicket.getId())
       {
-        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
-        {
-          startActivity(new Intent(getActivity(), TicketActivity.class));
-        }
-        else
-        {
-          new AlertDialogManager(getActivity()).showNeedLoginDialog();
-        }
+        //temp
+        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
+//        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+//        {
+//          startActivity(new Intent(getActivity(), TicketActivity.class));
+//        }
+//        else
+//        {
+//          new AlertDialogManager(getActivity()).showNeedLoginDialog();
+//        }
       }
       else if (v.getId() == containerCoupon.getId())
       {
-        //네트워크 연결 체크 후 연결했을 때만 실행
-        if (!SystemUtil.isConnectNetwork(getActivity()))
-        {
-          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-          return;
-        }
         
-        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
-        {
-          startActivity(new Intent(getActivity(), CouponActivity.class));
-        }
-        else
-        {
-          new AlertDialogManager(getActivity()).showNeedLoginDialog();
-        }
+        //temp alert
+       new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
+//        //네트워크 연결 체크 후 연결했을 때만 실행
+//        if (!SystemUtil.isConnectNetwork(getActivity()))
+//        {
+//          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+//          return;
+//        }
+//        
+//        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+//        {
+//          startActivity(new Intent(getActivity(), CouponActivity.class));
+//        }
+//        else
+//        {
+//          new AlertDialogManager(getActivity()).showNeedLoginDialog();
+//        }
       }
     }
   };

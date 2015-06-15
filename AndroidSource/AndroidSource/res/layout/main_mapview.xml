@@ -517,7 +517,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_toLeftOf="@+id/subwayCenter"
-                            android:background="@color/background_light_gray"
+                            android:background="@android:color/white"
                             android:gravity="center"
                             android:orientation="horizontal" >
 
@@ -543,16 +543,17 @@
                         <ImageView
                             android:id="@+id/subwayCenter"
                             android:layout_width="1dp"
-                            android:layout_height="30dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="3dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@android:color/white" />
+                            android:src="@color/summary_center" />
 
                         <LinearLayout
                             android:id="@+id/subwayEndBtn"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_toRightOf="@+id/subwayCenter"
-                            android:background="@color/background_light_gray"
+                            android:background="@android:color/white"
                             android:gravity="center"
                             android:orientation="horizontal" >
 
