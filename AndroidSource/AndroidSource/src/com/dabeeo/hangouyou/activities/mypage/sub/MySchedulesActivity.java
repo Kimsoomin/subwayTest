@@ -138,7 +138,6 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     protected void onPostExecute(ArrayList<ScheduleBean> result)
     {
-      
       if (result.size() == 0)
         isLoadEnded = true;
       
