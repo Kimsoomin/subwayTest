@@ -30,7 +30,7 @@ public class PlaceListFragment extends Fragment
   
   private ProgressBar progressBar;
   private PlaceListAdapter adapter;
-  private int page = 0;
+  private int page = 1;
   private boolean isLoadEnded = false;
   private boolean isLoading = false;
   private ApiClient apiClient;
@@ -113,6 +113,7 @@ public class PlaceListFragment extends Fragment
       PlaceBean bean = (PlaceBean) adapter.getItem(position);
       Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
       i.putExtra("place_idx", bean.idx);
+      i.putExtra("premium_Idx", bean.premiumIdx);
       startActivity(i);
     }
   };

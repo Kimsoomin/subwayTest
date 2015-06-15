@@ -26,6 +26,7 @@ public class PlaceBean
   public int bookmarkCount = 0;
   public int shareCount = 0;
   public int userSeq;
+  public String premiumIdx;
   public String userName;
   public String gender;
   public String mfidx;
@@ -84,8 +85,16 @@ public class PlaceBean
         insertDate = format.parse(insertDateString);
       }
       
-      if (obj.has("userSeq"))
-        userSeq = obj.getInt("userSeq");
+      if (obj.has("ownerUserSeq"))
+        userSeq = obj.getInt("ownerUserSeq");
+      
+      if(obj.has("premiumIdx"))
+      {
+        premiumIdx = obj.getString("premiumIdx");
+      }else
+      {
+        premiumIdx = "null";
+      }
       
       if (obj.has("userName"))
         userName = obj.getString("userName");

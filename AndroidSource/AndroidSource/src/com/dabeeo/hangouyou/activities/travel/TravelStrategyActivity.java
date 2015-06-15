@@ -191,7 +191,7 @@ public class TravelStrategyActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuSearch.getId())
       {
-        Intent i = new Intent(TravelStrategyActivity.this, TrendSearchActivity.class);
+        Intent i = new Intent(TravelStrategyActivity.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("position", MainActivity.POSITION_SEARCH);
         startActivity(i);

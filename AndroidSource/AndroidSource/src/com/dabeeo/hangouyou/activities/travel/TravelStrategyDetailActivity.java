@@ -47,7 +47,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   private ApiClient apiClient;
   private ProgressBar progressBar;
   
-  private int placeIdx = -1;
+  private String placeIdx;
   private PremiumDetailBean bean;
   private ScrollView scrollView;
   private TextView likeCount;
@@ -69,7 +69,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
-    placeIdx = getIntent().getIntExtra("place_idx", -1);
+    placeIdx = getIntent().getStringExtra("place_idx");
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     contentContainer = (LinearLayout) findViewById(R.id.container_details);
     horizontalImagesView = (ViewGroup) findViewById(R.id.horizontal_images_view);

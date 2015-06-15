@@ -33,6 +33,7 @@ import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 
 public class MyPlaceListFragment extends Fragment
 {
@@ -116,7 +117,6 @@ public class MyPlaceListFragment extends Fragment
     }
   }
   
-  
   @Override
   public void onActivityCreated(Bundle savedInstanceState)
   {
@@ -180,6 +180,30 @@ public class MyPlaceListFragment extends Fragment
       if (result.size() == 0)
         isLoadEnded = true;
       progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class DelPlaceTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      // TODO Auto-generated method stub
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      // TODO Auto-generated method stub
+      return apiClient.deleteMyPlace(null, null);
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      // TODO Auto-generated method stub
       super.onPostExecute(result);
     }
   }

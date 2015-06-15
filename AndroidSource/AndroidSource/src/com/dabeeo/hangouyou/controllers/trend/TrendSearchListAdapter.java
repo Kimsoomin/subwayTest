@@ -17,8 +17,7 @@ public class TrendSearchListAdapter extends BaseAdapter
 {
   private ArrayList<ProductBean> beans = new ArrayList<ProductBean>();
   private Activity context;
-  
-  
+    
   public TrendSearchListAdapter(Activity context)
   {
     this.context = context;

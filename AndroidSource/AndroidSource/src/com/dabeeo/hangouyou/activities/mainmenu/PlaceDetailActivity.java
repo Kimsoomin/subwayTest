@@ -36,6 +36,7 @@ import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilde
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.utils.SystemUtil;
@@ -68,10 +69,12 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private ApiClient apiClient;
   private String placeIdx;
+  private String premiumIdx;
   private PlaceDetailBean bean;
   private ViewGroup layoutDetailPlaceInfo;
   private LinearLayout containerTicketAndCoupon;
   public LinearLayout containerWriteReview;
+  private LinearLayout layoutRecommendSeoul;
   private Button btnRecommendSeoul;
   
   private boolean isEnterMap = false;
@@ -99,6 +102,18 @@ public class PlaceDetailActivity extends ActionBarActivity
     isEnterMap = getIntent().getBooleanExtra("is_map", false);
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getStringExtra("place_idx");
+    premiumIdx = getIntent().getStringExtra("premium_Idx");
+    
+    BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
+    
+    layoutRecommendSeoul = (LinearLayout) findViewById(R.id.container_recommend_by_expect);
+    if(premiumIdx.equals("null"))
+    {
+      layoutRecommendSeoul.setVisibility(View.GONE);
+    }else
+    {
+      layoutRecommendSeoul.setVisibility(View.VISIBLE);
+    }
     
     btnRecommendSeoul = (Button) findViewById(R.id.btn_recommend_by_expert);
     btnRecommendSeoul.setOnClickListener(new OnClickListener()
@@ -109,7 +124,12 @@ public class PlaceDetailActivity extends ActionBarActivity
         if (!SystemUtil.isConnectNetwork(getApplicationContext()))
           new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
         else
-          startActivity(new Intent(PlaceDetailActivity.this, TravelStrategyDetailActivity.class));
+        {
+          Intent i = new Intent(PlaceDetailActivity.this, TravelStrategyDetailActivity.class);
+          i.putExtra("place_idx", premiumIdx);
+          BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
+          startActivity(i);
+        }
       }
     });
     containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);

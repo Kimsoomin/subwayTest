@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.net.Network;
 import android.text.TextUtils;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
@@ -139,8 +138,7 @@ public class ApiClient
   public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
   {
     return getPlaceList(page, categoryId, null);
-  }
-  
+  }  
   
   public ArrayList<PlaceBean> getPlaceList(int page, int categoryId, String userSeq)
   {
@@ -202,7 +200,7 @@ public class ApiClient
   }
   
   
-  public NetworkResult getPremiumDetail(int placeIdx)
+  public NetworkResult getPremiumDetail(String placeIdx)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_VIEW&idx=" + placeIdx);
   }
@@ -218,8 +216,18 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType + "&pn=10");
   }
   
-  //review 관련 
+  //내 장소, 내 일정 삭제
+  public NetworkResult deleteMyPlace(String idx, String ownerUserSeq)
+  {
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=PLACE_DEL&idx=" + idx + "&userSeq=" + ownerUserSeq);
+  }
   
+  public NetworkResult deleteMyPlan(String idx, String ownerUserSeq)
+  {
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=PLAN_DEL&idx=" + idx + "&userSeq=" + ownerUserSeq);
+  }
+  
+  //review 관련 
   public NetworkResult postReviewRate(String parentType, String parentIdx, String userSeq, int rate, String regDate)
   {
 //    mode: "REVIEW_INS",
@@ -408,7 +416,7 @@ public class ApiClient
     return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
   }
   
-  public NetworkResult searchResult(String keyword, String userSeq )
+  public NetworkResult searchResult(String keyword, String userSeq)
   {
     if(TextUtils.isEmpty(userSeq))
       return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
