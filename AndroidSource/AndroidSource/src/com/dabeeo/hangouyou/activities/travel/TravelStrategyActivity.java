@@ -29,7 +29,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.beans.TitleCategoryBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
 import com.dabeeo.hangouyou.fragments.mainmenu.PlaceListFragment;
 import com.dabeeo.hangouyou.fragments.mainmenu.TravelStrategyListFragment;
@@ -41,7 +40,6 @@ public class TravelStrategyActivity extends ActionBarActivity
 {
   private RecommendSeoulViewPagerAdapter adapter;
   private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
-  private ArrayList<TitleCategoryBean> spheres = new ArrayList<>();
   private MenuItem areaItem;
   private ViewPager viewPager;
   

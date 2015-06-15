@@ -29,10 +29,6 @@ public class RecommendSeoulViewPagerAdapter extends FragmentPagerAdapter
   public Fragment getItem(int position)
   {
     return items.get(position);
-//    if (position == 0)
-//      return new TravelStrategyListFragment(items.get(position).categoryId);
-//    else
-//      return new PlaceListFragment(items.get(position).categoryId);
   }
   
   
