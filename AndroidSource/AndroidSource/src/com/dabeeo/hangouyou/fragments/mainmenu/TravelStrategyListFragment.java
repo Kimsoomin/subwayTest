@@ -39,12 +39,10 @@ public class TravelStrategyListFragment extends Fragment
   private ApiClient apiClient;
   private int lastVisibleItem = 0;
   
-  
   public TravelStrategyListFragment(int categoryId)
   {
     this.categoryId = categoryId;
   }
-  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

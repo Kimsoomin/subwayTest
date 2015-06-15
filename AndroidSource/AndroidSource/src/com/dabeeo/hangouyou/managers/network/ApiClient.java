@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.net.Network;
 import android.text.TextUtils;
 
 import com.dabeeo.hangouyou.beans.PlaceBean;
@@ -212,12 +213,24 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_LIST&p=" + page);
   }
   
-  
   public NetworkResult getTravelog(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType + "&pn=10");
   }
   
+  //review 관련 
+  
+  public NetworkResult postReviewRate(String parentType, String parentIdx, String userSeq, int rate, String regDate)
+  {
+//    mode: "REVIEW_INS",
+//    parentType: [부모컨텐츠종류],
+//    parentIdx: [부모컨텐츠idx],
+//    userSeq: [회원번호],
+//    rate: [평점],
+//    contents: [내용],
+//    regDate: [등록일자]
+    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=REVIEW_INS&parentType=");
+  }
   
   public NetworkResult postReview(int rate, String content, int placeIdx, String placeType)
   {
@@ -384,6 +397,24 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_LIST&isRec=1");
   }
   
+  //검색관련 API
+  public NetworkResult searchPopular()
+  {
+    return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_POPULAR");
+  }
+  
+  public NetworkResult searchAuto(String keyword)
+  {
+    return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
+  }
+  
+  public NetworkResult searchResult(String keyword, String userSeq )
+  {
+    if(TextUtils.isEmpty(userSeq))
+      return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
+    else
+      return httpClient.requestPost(getSiteUrl() +"?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + userSeq);
+  }
   
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)
@@ -410,12 +441,15 @@ public class ApiClient
         + birthday + "&agreeEmail=" + agreeEmail + "&agreeSms=" + agreeSms);
   }
   
-  
   public NetworkResult userEmailKeycheck(String userSeq, String Key)
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEYCHECK&userSeq=" + userSeq + "&key=" + Key);
   }
   
+  public NetworkResult userEmailKeyResend(String userEmail)
+  {
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEY_RESEND&userEmai=" + userEmail);
+  }
   
   public NetworkResult userNameModify(String userSeq, String userName)
   {
@@ -437,9 +471,6 @@ public class ApiClient
   
   public NetworkResult userTempPasswordGet(String userEmail)
   {
-    //TODO Temp PassWord Get API 연동 필요
-    NetworkResult result = new NetworkResult(false, "", 0);
-//    return httpClient.requestPost(getSiteUrl()+""+userEmail);
-    return result;
+    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=USER_FINDPW&userEmail="+userEmail);
   }
 }

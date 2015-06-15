@@ -125,7 +125,7 @@ public class FindPasswordActivity extends Activity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return null;
+      return apiClient.userTempPasswordGet(email.getText().toString());
     }
     
     @Override

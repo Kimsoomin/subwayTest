@@ -31,7 +31,6 @@ import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.controllers.SearchResultAdapter;
 
-@SuppressWarnings("deprecation")
 public class SearchResultDetailActivity extends ActionBarActivity
 {
 	private EditText inputWord;

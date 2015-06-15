@@ -1,12 +1,16 @@
 package com.dabeeo.hangouyou.fragments.mainmenu;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +32,9 @@ import com.dabeeo.hangouyou.activities.sub.SearchResultDetailActivity;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.controllers.SearchResultDetailAdapter;
+import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
+import com.dabeeo.hangouyou.utils.SystemUtil;
 import com.dabeeo.hangouyou.views.PopularKeywordView;
 import com.dabeeo.hangouyou.views.ProductView;
 
@@ -41,6 +48,7 @@ public class SearchFragment extends Fragment
   private ListView searchListView;
   private ScrollView emptyContainer;
   
+  public ApiClient apiClient;
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -49,11 +57,12 @@ public class SearchFragment extends Fragment
     return inflater.inflate(resId, null);
   }
   
-  
   @Override
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    apiClient = new ApiClient(getActivity());
     
     popularKeywordOuterContainer = (LinearLayout) getView().findViewById(R.id.popular_keyword_outer_container);
     popularKeyworkdContainer = (LinearLayout) getView().findViewById(R.id.popular_keyword_container);
@@ -138,23 +147,17 @@ public class SearchFragment extends Fragment
     layoutRecommedProduct.addView(productView);
   }
   
-  
   private void loadPopularWords()
   {
     popularKeywordOuterContainer.setVisibility(View.VISIBLE);
     popularKeyworkdContainer.removeAllViews();
-    
-    PopularKeywordView view = new PopularKeywordView(getActivity());
-    view.setData(1, "다비오");
-    popularKeyworkdContainer.addView(view);
-    
-    view = new PopularKeywordView(getActivity());
-    view.setData(2, "SKII");
-    popularKeyworkdContainer.addView(view);
-    
-    view = new PopularKeywordView(getActivity());
-    view.setData(3, "아쿠아리움");
-    popularKeyworkdContainer.addView(view);
+    if(SystemUtil.isConnectNetwork(getActivity()))
+    {
+      new SearchPopularTask().execute();
+    }else
+    {
+      //TODO offline 처리 필요
+    }
   }
   
   
@@ -182,6 +185,38 @@ public class SearchFragment extends Fragment
     bean = new SearchResultBean();
     bean.text = "다비오";
     adapter.add(bean);
+  }
+  
+  private void responseParser(String response)
+  {
+    String status = "";
+    try
+    {
+      
+      JSONObject jsonObject = new JSONObject(response);
+      if (jsonObject.has("status"))
+      {
+        status = jsonObject.getString("status");
+      }
+      
+      if(status.equals("OK"))
+      {
+        JSONArray jsonArray = jsonObject.getJSONArray("keyword");
+        for(int i = 0; i<jsonArray.length();i++)
+        {
+          PopularKeywordView view = new PopularKeywordView(getActivity());
+          view.setData(i+1, jsonArray.getString(i));
+          popularKeyworkdContainer.addView(view);
+        }
+      }
+    }
+    catch (JSONException e)
+    {
+      status = "";
+      e.printStackTrace();
+    }
+    
+    
   }
   
   /**************************************************
@@ -212,4 +247,29 @@ public class SearchFragment extends Fragment
       startActivity(i);
     }
   };
+  
+  /**************************************************
+   * Search_Popular AsyncTask
+   ***************************************************/
+  private class SearchPopularTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.searchPopular();
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      responseParser(result.response);
+      super.onPostExecute(result);
+    }
+  }
 }

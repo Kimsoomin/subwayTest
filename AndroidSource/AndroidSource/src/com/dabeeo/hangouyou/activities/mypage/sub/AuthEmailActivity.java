@@ -26,7 +26,6 @@ import com.dabeeo.hangouyou.managers.network.NetworkResult;
 public class AuthEmailActivity extends Activity implements OnClickListener
 {
   private EditText editText;
-  @SuppressWarnings("unused")
   private Button btnReSend;
   private Button btnAuth;
   private Button btnAuthCancel;
@@ -51,12 +50,13 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       userSeq = intent.getStringExtra("userSeq");
     
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
-        
+    
     btnAuth = (Button) findViewById(R.id.btn_auth);
     btnAuth.setOnClickListener(this);
     btnAuthCancel = (Button) findViewById(R.id.btn_auth_cancel);
     btnAuthCancel.setOnClickListener(this);
     btnReSend = (Button) findViewById(R.id.btn_re_send);
+    btnReSend.setOnClickListener(this);
     editText = (EditText) findViewById(R.id.edit_text);
     TextWatcher watcher = new TextWatcher()
     {
@@ -89,7 +89,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     };
     editText.addTextChangedListener(watcher);
   }
-
+  
   @Override
   public void onClick(View v)
   {
@@ -101,6 +101,10 @@ public class AuthEmailActivity extends Activity implements OnClickListener
         
       case R.id.btn_auth_cancel:
         finish();
+        break;
+        
+      case R.id.btn_re_send:
+        new emailKeyResendTask().execute();
         break;
     }
   }
@@ -124,6 +128,53 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     
     ab.setMessage(message);
     ab.show();
+  }
+  
+  private class emailKeyResendTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      progressLayout.setVisibility(View.VISIBLE);
+      progressLayout.bringToFront();
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.userEmailKeyResend(editText.getText().toString());
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      progressLayout.setVisibility(View.GONE);
+      String status = null;
+      try
+      {
+        JSONObject jsonObject = new JSONObject(result.response);
+        if (jsonObject.has("status"))
+        {
+          status = jsonObject.getString("status");
+        }
+      }
+      catch (JSONException e)
+      {
+        status = "";
+        e.printStackTrace();
+      }
+      
+      if(status.equals("OK"))
+      {
+        CreateAlert(getString(R.string.msg_resend_emil_auth), true);
+      }else
+      {
+        CreateAlert(getString(R.string.msg_send_email_fail), false);
+      }      
+      super.onPostExecute(result);
+    }
+    
   }
   
   private class emailAuthCheckTask extends AsyncTask<Void, Void, NetworkResult>

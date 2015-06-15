@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.controllers.ImagePopupViewPagerAdapter;
 
-@SuppressWarnings("deprecation")
 public class ImagePopUpActivity extends ActionBarActivity
 {
   private ViewPager viewPager;

@@ -30,8 +30,6 @@ public class MyBookmarkActivity extends ActionBarActivity
   public boolean isEditMode = false;
   private MyBookmarkViewPagerAdapter adapter;
   
-  
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -57,8 +55,6 @@ public class MyBookmarkActivity extends ActionBarActivity
     displayTitles();
   }
   
-  
-  @SuppressWarnings("deprecation")
   private void displayTitles()
   {
     ArrayList<String> titles = new ArrayList<>();
@@ -83,7 +79,6 @@ public class MyBookmarkActivity extends ActionBarActivity
     closeMenuItem.setVisible(isEditMode);
     return super.onCreateOptionsMenu(menu);
   }
-  
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
@@ -143,7 +138,6 @@ public class MyBookmarkActivity extends ActionBarActivity
     }
   };
   
-  @SuppressWarnings("deprecation")
   protected ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {
     @Override

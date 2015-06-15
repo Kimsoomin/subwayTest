@@ -33,6 +33,7 @@ import com.dabeeo.hangouyou.activities.trend.TrendSearchActivity;
 import com.dabeeo.hangouyou.beans.TitleCategoryBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -51,12 +52,15 @@ public class TravelStrategyActivity extends ActionBarActivity
   private boolean isFirstSelectRecommendSeoulTab = true;
   private int lastSelectedTab = 0;
   
+  public AlertDialogManager alertDialogManager;
   
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_travel_strategy);
+    
+    alertDialogManager = new AlertDialogManager(this);
     
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -188,6 +192,8 @@ public class TravelStrategyActivity extends ActionBarActivity
       else if (v.getId() == bottomMenuSearch.getId())
       {
         Intent i = new Intent(TravelStrategyActivity.this, TrendSearchActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("position", MainActivity.POSITION_SEARCH);
         startActivity(i);
       }
     }
@@ -247,31 +253,74 @@ public class TravelStrategyActivity extends ActionBarActivity
     }
   };
   
+  public void spotArrayItemClick(int which)
+  {
+    if(which == 0)
+    {
+      
+    }else
+    {
+      if(PreferenceManager.getInstance(this).isLoggedIn())
+      {
+        if(which == 1)
+        {
+          
+        }else if(which == 2)
+        {
+          
+        }else if(which == 3)
+        {
+          
+        }
+      }else
+      {
+        alertDialogManager.showNeedLoginDialog();
+      }
+    }
+  }
+  
+  public void areaItemClick(int which)
+  {
+    
+  }
   
   private void showSphereDialog()
   {
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
-    if (adapter.currentPosition != 0)
-      arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.spot_array));
-    final ArrayAdapter<String> finalArrayAdapter = arrayAdapter;
-    AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-    builderSingle.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+    if(SystemUtil.isConnectNetwork(this))
     {
-      @Override
-      public void onClick(DialogInterface dialog, int which)
+      ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
+      if (adapter.currentPosition != 0)
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.spot_array));
+      final ArrayAdapter<String> finalArrayAdapter = arrayAdapter;
+      AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+      builderSingle.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
       {
-        dialog.dismiss();
-      }
-    });
-    
-    builderSingle.setAdapter(finalArrayAdapter, new DialogInterface.OnClickListener()
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          dialog.dismiss();
+        }
+      });
+      
+      builderSingle.setAdapter(finalArrayAdapter, new DialogInterface.OnClickListener()
+      {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          if(adapter.currentPosition != 0)
+          {
+            spotArrayItemClick(which);
+          }else
+          {
+            areaItemClick(which);
+          }
+        }
+      });
+      builderSingle.show();
+    }else
     {
-      @Override
-      public void onClick(DialogInterface dialog, int which)
-      {
-      }
-    });
-    builderSingle.show();
+      alertDialogManager.showDontNetworkConnectDialog();
+    }
   }
   
   

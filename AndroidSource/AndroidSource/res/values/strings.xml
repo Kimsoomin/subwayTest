@@ -133,7 +133,7 @@
     <string name="term_gender_female">女</string>
     <string name="term_date_of_birth">出生日期</string>
     <string name="term_auto_login">下次自动登录</string>
-    <string name="term_find_password">忘记密码？</string>
+    <string name="term_find_password">忘记密码</string>
     <string name="msg_not_connect_network">请开启网络后在试</string>
     <string name="msg_agreement">同意使用条款</string>
     <string name="msg_private_agreement">同意隐私条款</string>
@@ -435,6 +435,7 @@
     <string name="msg_send_email">我们会向您的邮箱发送临时密码。请在登录\n后更改密码。</string>
     <string name="msg_allow_receive_email">同意接收有关商品和推广活动邮件。(选项）</string>
     <string name="msg_allow_receive_phone">同意接收短信推广信息。(选项）</string>
+    <string name="msg_resend_emil_auth">验证码重新发到邮箱。请查看后输入验证码。</string>
 	<string name="msg_not_correct_email_auth">验证码不符。请确认后再试。</string>
 	<string name="msg_complete_auth">邮箱验证成功。</string>    
 	<string name="term_congratulate">恭喜！\n欢迎成为‘韩哈游’的会员。</string> 
