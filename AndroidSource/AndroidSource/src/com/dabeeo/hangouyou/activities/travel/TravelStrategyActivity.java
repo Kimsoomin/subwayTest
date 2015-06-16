@@ -269,7 +269,23 @@ public class TravelStrategyActivity extends ActionBarActivity
   
   private void spotArrayItemClick(int which)
   {
-    
+    switch (lastSelectedTab)
+    {
+      case 1:
+        popularFragment.changeFilteringMode(which);
+        break;
+      
+      case 2:
+        shoppingFragment.changeFilteringMode(which);
+        break;
+      
+      case 3:
+        restaurantFragment.changeFilteringMode(which);
+        break;
+      
+      default:
+        break;
+    }
   }
   
   

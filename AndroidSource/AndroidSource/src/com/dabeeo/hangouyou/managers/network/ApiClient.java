@@ -136,15 +136,58 @@ public class ApiClient
   }
   
   
+  /**
+   * 장소 목록 - 인기있는
+   * 
+   * @param page
+   * @param categoryId
+   * @return
+   */
+  public ArrayList<PlaceBean> getPlaceListByPopular(int page, int categoryId)
+  {
+    String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&sort=Popular&category=" + categoryId;
+    return getPlaceList(url);
+  }
+  
+  
+  /**
+   * 장소 목록 - 북마크한 장소
+   * 
+   * @param page
+   * @param categoryId
+   * @return
+   */
+  public ArrayList<PlaceBean> getPlaceListByBookmarked(int page, int categoryId)
+  {
+    String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId + "&isBookmarked=1";
+    return getPlaceList(url);
+  }
+  
+  
+  /**
+   * 장소 목록 - 내가 등록한 장소
+   * 
+   * @param page
+   * @param categoryId
+   * @return
+   */
+  public ArrayList<PlaceBean> getPlaceListByAddedByMe(int page, int categoryId)
+  {
+    String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+    return getPlaceList(url);
+  }
+  
+  
   public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
   {
     return getPlaceList(page, categoryId, null);
   }
   
   
-  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId, String userSeq)
+  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId, String ownerUserSeq)
   {
     ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+    
     if (SystemUtil.isConnectNetwork(context))
     {
       String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page;
@@ -152,29 +195,40 @@ public class ApiClient
       if (categoryId != -1)
         url += "&category=" + categoryId;
       
-      if (!TextUtils.isEmpty(userSeq))
-        url += "&ownerUserSeq=" + userSeq;
+      if (!TextUtils.isEmpty(ownerUserSeq)) // 내 장소 요청할 때
+        url += "&ownerUserSeq=" + ownerUserSeq;
       
-      NetworkResult result = httpClient.requestGet(url);
-      try
-      {
-        JSONObject obj = new JSONObject(result.response);
-        JSONArray arr = obj.getJSONArray("place");
-        for (int i = 0; i < arr.length(); i++)
-        {
-          JSONObject objInArr = arr.getJSONObject(i);
-          PlaceBean bean = new PlaceBean();
-          bean.setJSONObject(objInArr);
-          places.add(bean);
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
+      places.addAll(getPlaceList(url));
     }
     else
       places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
+    return places;
+  }
+  
+  
+  // TODO 오프라인 처리하기
+  public ArrayList<PlaceBean> getPlaceList(String url)
+  {
+    ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+    
+    NetworkResult result = httpClient.requestGet(url);
+    try
+    {
+      JSONObject obj = new JSONObject(result.response);
+      JSONArray arr = obj.getJSONArray("place");
+      for (int i = 0; i < arr.length(); i++)
+      {
+        JSONObject objInArr = arr.getJSONObject(i);
+        PlaceBean bean = new PlaceBean();
+        bean.setJSONObject(objInArr);
+        places.add(bean);
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    
     return places;
   }
   
@@ -447,15 +501,20 @@ public class ApiClient
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + userSeq);
   }
   
+  
   /**
    * 사용자 로그 등록 (좋아요, 북마크, 공유, 위시)
-   * @param parentType= "place": 장소,"plan": 일정, "review": 리뷰, "product": 상품
-   * @param usedType = "L": 좋아요, "B": 북마크, "S": 공유, "W": 위시
+   * 
+   * @param parentType
+   *          = "place": 장소,"plan": 일정, "review": 리뷰, "product": 상품
+   * @param usedType
+   *          = "L": 좋아요, "B": 북마크, "S": 공유, "W": 위시
    */
   public NetworkResult setUsedLog(String ownerUserSeq, String prentIdx, int parentType, int usedType)
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&paerntIdx=" + prentIdx);
   }
+  
   
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)

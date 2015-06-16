@@ -26,6 +26,11 @@ import com.dabeeo.hangouyou.map.BlinkingCommon;
 
 public class PlaceListFragment extends Fragment
 {
+  public static final int FILTERING_MODE_ALL = 0;
+  public static final int FILTERING_MODE_PUPOLAR = 1;
+  public static final int FILTERING_MODE_BOOKMARKED = 2;
+  public static final int FILTERING_MODE_ADDED_BY_ME = 3;
+  
   private int categoryId = -1;
   
   private ProgressBar progressBar;
@@ -35,6 +40,8 @@ public class PlaceListFragment extends Fragment
   private boolean isLoading = false;
   private ApiClient apiClient;
   private ListView listView;
+  
+  private int filteringMode = FILTERING_MODE_ALL;
   
   
   public PlaceListFragment(int categoryId)
@@ -79,20 +86,20 @@ public class PlaceListFragment extends Fragment
         {
           page++;
           BlinkingCommon.smlLibDebug("PlaceListFragment", "page : " + page);
-          load(page);
+          load();
         }
       }
     });
     listView.setAdapter(adapter);
     
-    load(page);
+    load();
   }
   
   
-  private void load(int offset)
+  private void load()
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute(page);
+    new GetAllAsyncTask().execute();
   }
   
   
@@ -100,6 +107,15 @@ public class PlaceListFragment extends Fragment
   {
     //전체, 명소, 쇼핑 등 
     this.categoryId = categoryId;
+  }
+  
+  
+  public void changeFilteringMode(int mode)
+  {
+    filteringMode = mode;
+    page = 1;
+    adapter.clear();
+    load();
   }
   
   /**************************************************
@@ -121,7 +137,7 @@ public class PlaceListFragment extends Fragment
   /**************************************************
    * async task
    ***************************************************/
-  private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
+  private class GetAllAsyncTask extends AsyncTask<Void, Integer, ArrayList<PlaceBean>>
   {
     @Override
     protected void onPreExecute()
@@ -132,9 +148,19 @@ public class PlaceListFragment extends Fragment
     
     
     @Override
-    protected ArrayList<PlaceBean> doInBackground(Integer... params)
+    protected ArrayList<PlaceBean> doInBackground(Void... params)
     {
-      return apiClient.getPlaceList(params[0], categoryId);
+      ArrayList<PlaceBean> result = null;
+      if (filteringMode == FILTERING_MODE_PUPOLAR)
+        result = apiClient.getPlaceListByPopular(page, categoryId);
+      else if (filteringMode == FILTERING_MODE_BOOKMARKED)
+        result = apiClient.getPlaceListByBookmarked(page, categoryId);
+      else if (filteringMode == FILTERING_MODE_ADDED_BY_ME)
+        result = apiClient.getPlaceListByAddedByMe(page, categoryId);
+      else
+        result = apiClient.getPlaceList(page, categoryId);
+      
+      return result;
     }
     
     

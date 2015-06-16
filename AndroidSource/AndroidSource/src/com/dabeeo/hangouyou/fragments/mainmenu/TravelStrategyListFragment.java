@@ -102,7 +102,6 @@ public class TravelStrategyListFragment extends Fragment
   public void filtering(int area)
   {
     adapter.clear();
-    adapter.notifyDataSetChanged();
     
     page = 1;
     this.area = area;
