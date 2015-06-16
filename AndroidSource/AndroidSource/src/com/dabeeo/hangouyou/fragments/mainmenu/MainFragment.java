@@ -28,16 +28,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
-import com.dabeeo.hangouyou.activities.coupon.CouponActivity;
 import com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity;
-import com.dabeeo.hangouyou.activities.ticket.TicketActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hangouyou.activities.trend.TrendActivity;
 import com.dabeeo.hangouyou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
-import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;

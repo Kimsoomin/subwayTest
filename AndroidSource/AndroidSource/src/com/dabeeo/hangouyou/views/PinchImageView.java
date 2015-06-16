@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
