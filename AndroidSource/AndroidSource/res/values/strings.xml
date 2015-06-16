@@ -171,6 +171,7 @@
     <!-- 내 일정 -->
     <string name="term_recommend_travel_schedule">创建推荐行程</string>
     <string name="term_recommend_schedule_compeleted">成功创建推荐行程</string>
+    <string name="term_recommend_schedule_save">保存到我的行程</string>
     <string name="term_select_date">选择日期</string>
     <string name="msg_warn_empty_start_date">选择出发日期</string>
     <string name="msg_progress_recommend_schedule">正在创建推荐行程</string>

@@ -119,6 +119,8 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
       {
         Intent i = new Intent(RecommendScheduleCompeletedActivity.this, TravelScheduleDetailActivity.class);
         i.putExtra("idx", bean.idx);
+        i.putExtra("startDate", bean.startDateString);
+        i.putExtra("dayCount", bean.dayCount);
         startActivity(i);
       }
     });

@@ -170,6 +170,7 @@
     <!-- 내 일정 -->
     <string name="term_recommend_travel_schedule">추천자동일정 만들기</string>
     <string name="term_recommend_schedule_compeleted">추천자동일정 완성</string>
+    <string name="term_recommend_schedule_save">내 일정으로 저장하기</string>
     <string name="term_select_date">날짜 선택하기</string>
     <string name="msg_warn_empty_start_date">출발일을 선택해주세요</string>
     <string name="msg_progress_recommend_schedule">추천일정을 생성중입니다.</string>

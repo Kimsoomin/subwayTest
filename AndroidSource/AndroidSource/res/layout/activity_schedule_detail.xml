@@ -136,6 +136,7 @@
             android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/bottom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
@@ -229,6 +230,17 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    
+    <Button
+        android:id="@+id/btn_recommend_travel_schedule_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_background_pink"
+        android:padding="8dp"
+        android:text="@string/term_recommend_schedule_save"
+        android:textColor="#ffffff"
+        android:textSize="21sp" />
 
     <com.dabeeo.hangouyou.views.SharePickView
         android:id="@+id/view_share_pick"

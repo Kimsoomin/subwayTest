@@ -28,10 +28,15 @@ import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
+import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
+import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleCompeletedActivity;
+import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.utils.SystemUtil;
@@ -47,9 +52,11 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   
   private String idx;
   private ScheduleDetailBean bean;
+  private String startDateString = "";
+  private int dayCount;
   
-  public LinearLayout containerWriteReview, containerLike, containerIsPublic;
-  public Button btnIsPublic, btnLike, btnBookmark;
+  public LinearLayout containerWriteReview, containerLike, containerIsPublic, bottomLayout;
+  public Button btnIsPublic, btnLike, btnBookmark, btnSaveSchedule;
   private SharePickView sharePickView;
   private int currentPosition = 0;
   
@@ -84,6 +91,29 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     btnIsPublic = (Button) findViewById(R.id.btn_is_public);
     btnBookmark = (Button) findViewById(R.id.btn_bookmark);
     
+    bottomLayout = (LinearLayout) findViewById(R.id.bottom_layout);
+    btnSaveSchedule = (Button) findViewById(R.id.btn_recommend_travel_schedule_save);
+    if(getIntent().hasExtra("startDate"))
+    {
+      startDateString = getIntent().getStringExtra("startDate");
+      dayCount = getIntent().getIntExtra("dayCount", 0);
+      bottomLayout.setVisibility(View.GONE);
+      btnSaveSchedule.setVisibility(View.VISIBLE);
+    }else
+    {
+      bottomLayout.setVisibility(View.VISIBLE);
+      btnSaveSchedule.setVisibility(View.GONE);
+    }
+    btnSaveSchedule.setOnClickListener(new OnClickListener()
+    {
+      
+      @Override
+      public void onClick(View v)
+      {
+        new CompleteAsyncTask().execute();
+      }
+    });
+    
     btnBookmark.setOnClickListener(clickListener);
     findViewById(R.id.btn_share).setOnClickListener(clickListener);
     btnLike.setOnClickListener(clickListener);
@@ -97,43 +127,50 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == btnBookmark.getId())
+      if (v.getId() == R.id.btn_share)
       {
         if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {
           new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
           return;
         }
-        // 북마크 토글
-        if (!btnBookmark.isActivated())
-          Toast.makeText(TravelScheduleDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
-        btnBookmark.setActivated(!btnBookmark.isActivated());
-      }
-      else if (v.getId() == R.id.btn_share)
-      {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
-        
         // 공유하기
         sharePickView.setVisibility(View.VISIBLE);
         sharePickView.view.setVisibility(View.VISIBLE);
         sharePickView.bringToFront();
       }
-      else if (v.getId() == btnLike.getId())
+      else 
       {
-        //좋아요 
-        btnLike.setActivated(!btnLike.isActivated());
-      }
-      else if (v.getId() == R.id.btn_write_review)
-      {
-        //리뷰쓰기
-        Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
-        i.putExtra("idx", idx);
-        i.putExtra("type", "plan");
-        startActivity(i);
+        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          if (v.getId() == btnBookmark.getId())
+          {
+            if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+            {
+              new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
+              return;
+            }
+            // 북마크 토글
+            if (!btnBookmark.isActivated())
+              Toast.makeText(TravelScheduleDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
+            btnBookmark.setActivated(!btnBookmark.isActivated());
+          }else if (v.getId() == btnLike.getId())
+          {
+            //좋아요 
+            btnLike.setActivated(!btnLike.isActivated());
+          }
+          else if (v.getId() == R.id.btn_write_review)
+          {
+            //리뷰쓰기
+            Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
+            i.putExtra("idx", idx);
+            i.putExtra("type", "plan");
+            startActivity(i);
+          }
+        }else
+        {
+          new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog();
+        }
       }
     }
   };
@@ -294,4 +331,26 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       currentPosition = position;
     }
   };
+  
+  /**************************************************
+   * async task
+   ***************************************************/
+  private class CompleteAsyncTask extends AsyncTask<Void, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      ApiClient apiClient = new ApiClient(getApplicationContext());
+      return apiClient.completeCreateRecommendSchedule(startDateString, idx, dayCount);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      startActivity(new Intent(TravelScheduleDetailActivity.this, MySchedulesActivity.class));
+      finish();
+    }
+  }
 }
