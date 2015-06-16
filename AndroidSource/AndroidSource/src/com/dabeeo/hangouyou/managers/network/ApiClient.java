@@ -233,39 +233,23 @@ public class ApiClient
   }
   
   
-  //review 관련 
-  public NetworkResult postReviewRate(String parentType, String parentIdx, String userSeq, int rate, String regDate)
+  //user_LOG
+  public NetworkResult postReviewRate(String parentType, String parentIdx, String ownerUserSeq, int rate, String contents)
   {
 //    mode: "REVIEW_INS",
 //    parentType: [부모컨텐츠종류],
 //    parentIdx: [부모컨텐츠idx],
 //    userSeq: [회원번호],
-//    rate: [평점],
+//    rate: [평점],1/3/5
 //    contents: [내용],
 //    regDate: [등록일자]
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=");
+    if(TextUtils.isEmpty(contents))
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq
+                                    + "&rate=" + rate);
+    else
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq
+                                    + "&rate=" + rate + "&contents=" + contents);
   }
-  
-  
-  public NetworkResult postReview(int rate, String content, int placeIdx, String placeType)
-  {
-    JSONObject object = new JSONObject();
-    try
-    {
-      object.put("userSeq", 1);
-      object.put("rate", rate);
-      object.put("contents", content);
-      object.put("parentIdx", placeIdx);
-      object.put("parentType", placeType);
-      
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS" + object.toString());
-  }
-  
   
   public NetworkResult getAllTicket(int page, String contentType)
   {
