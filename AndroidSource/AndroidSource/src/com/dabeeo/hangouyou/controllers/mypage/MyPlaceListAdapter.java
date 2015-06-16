@@ -68,6 +68,18 @@ public class MyPlaceListAdapter extends BaseAdapter
   }
   
   
+  public void removeCheckedItem()
+  {
+    for (int i = beans.size() - 1; i >= 0; i--)
+    {
+      PlaceBean bean = beans.get(i);
+      if (bean.isChecked)
+        beans.remove(i);
+    }
+    notifyDataSetChanged();
+  }
+  
+  
   public void clear()
   {
     this.beans.clear();

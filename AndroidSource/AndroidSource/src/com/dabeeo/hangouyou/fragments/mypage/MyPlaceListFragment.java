@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,64 +58,6 @@ public class MyPlaceListFragment extends Fragment
   }
   
   
-  public void setEditMode(boolean isEditMode)
-  {
-    if (adapter.getCount() == 0)
-    {
-      ((MyPlaceActivity) getActivity()).isEditMode = false;
-      ((MyPlaceActivity) getActivity()).invalidateOptionsMenu();
-      return;
-    }
-    adapter.setEditMode(isEditMode);
-    if (isEditMode)
-    {
-      allCheckContainer.setVisibility(View.VISIBLE);
-      allCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
-      {
-        @Override
-        public void onCheckedChanged(CompoundButton arg0, boolean arg1)
-        {
-          adapter.setAllCheck(arg1);
-        }
-      });
-      selectDelete.setVisibility(View.VISIBLE);
-      selectDelete.setOnClickListener(new OnClickListener()
-      {
-        @Override
-        public void onClick(View arg0)
-        {
-          Log.w("WARN", "선택된 아이템 리스트 : " + adapter.getCheckedArrayList());
-          Builder dialog = new AlertDialog.Builder(getActivity());
-          dialog.setTitle(getString(R.string.term_alert));
-          dialog.setMessage(getString(R.string.term_delete_confirm));
-          dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-          {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-              if (allCheckBox.isChecked())
-              {
-                listView.setVisibility(View.GONE);
-                emptyContainer.setVisibility(View.VISIBLE);
-                setEditMode(false);
-                ((MyPlaceActivity) getActivity()).isEditMode = false;
-                ((MyPlaceActivity) getActivity()).invalidateOptionsMenu();
-                adapter.clear();
-              }
-            }
-          });
-          dialog.setNegativeButton(android.R.string.cancel, null);
-          dialog.show();
-        }
-      });
-    }
-    else
-    {
-      allCheckContainer.setVisibility(View.GONE);
-      selectDelete.setVisibility(View.GONE);
-    }
-  }
-  
   @Override
   public void onActivityCreated(Bundle savedInstanceState)
   {
@@ -133,79 +74,43 @@ public class MyPlaceListFragment extends Fragment
     adapter = new MyPlaceListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     listView.setOnItemClickListener(itemClickListener);
+    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-        {
-          page++;
-          load(page);
-        }
-      }
-    });
-    load(page);
+    load();
   }
   
   
-  private void load(int offset)
+  public void setEditMode(boolean isEditMode)
+  {
+    adapter.setEditMode(isEditMode);
+    
+    if (isEditMode)
+    {
+      allCheckContainer.setVisibility(View.VISIBLE);
+      allCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
+      {
+        @Override
+        public void onCheckedChanged(CompoundButton arg0, boolean arg1)
+        {
+          adapter.setAllCheck(arg1);
+        }
+      });
+      selectDelete.setVisibility(View.VISIBLE);
+      selectDelete.setOnClickListener(deleteClickListener);
+    }
+    else
+    {
+      allCheckContainer.setVisibility(View.GONE);
+      selectDelete.setVisibility(View.GONE);
+    }
+  }
+  
+  
+  private void load()
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute(page);
-  }
-  
-  private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
-  {
-    @Override
-    protected ArrayList<PlaceBean> doInBackground(Integer... params)
-    {
-      return apiClient.getPlaceList(params[0], categoryId, PreferenceManager.getInstance(getActivity()).getUserSeq());
-    }
-    
-    
-    @Override
-    protected void onPostExecute(ArrayList<PlaceBean> result)
-    {
-      
-      adapter.addAll(result);
-      if (result.size() == 0)
-        isLoadEnded = true;
-      progressBar.setVisibility(View.GONE);
-      super.onPostExecute(result);
-    }
-  }
-  
-  private class DelPlaceTask extends AsyncTask<Void, Void, NetworkResult>
-  {
-    @Override
-    protected void onPreExecute()
-    {
-      // TODO Auto-generated method stub
-      super.onPreExecute();
-    }
-    
-    @Override
-    protected NetworkResult doInBackground(Void... params)
-    {
-      // TODO Auto-generated method stub
-      return apiClient.deleteMyPlace(null, PreferenceManager.getInstance(getActivity()).getUserSeq());
-    }
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      // TODO Auto-generated method stub
-      super.onPostExecute(result);
-    }
+    new GetStoreAsyncTask().execute();
   }
   
   
@@ -218,6 +123,26 @@ public class MyPlaceListFragment extends Fragment
   /**************************************************
    * listener
    ***************************************************/
+  private OnScrollListener scrollListener = new OnScrollListener()
+  {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+      
+    }
+    
+    
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+      if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        page++;
+        load();
+      }
+    }
+  };
+  
   private OnItemClickListener itemClickListener = new OnItemClickListener()
   {
     @Override
@@ -229,4 +154,97 @@ public class MyPlaceListFragment extends Fragment
       startActivity(i);
     }
   };
+  
+  private OnClickListener deleteClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      ArrayList<String> idxes = new ArrayList<>();
+      for (PlaceBean bean : adapter.getCheckedArrayList())
+      {
+        idxes.add(bean.idx);
+      }
+      
+      if (idxes.isEmpty())
+        return;
+      
+      allCheckBox.setChecked(false);
+      final String[] idxesString = idxes.toArray(new String[idxes.size()]);
+      
+      Builder dialog = new AlertDialog.Builder(getActivity());
+      dialog.setTitle(getString(R.string.term_alert));
+      dialog.setMessage(getString(R.string.term_delete_confirm));
+      dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+      {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          adapter.removeCheckedItem();
+          
+          if (adapter.getCount() == 0)
+          {
+            listView.setVisibility(View.GONE);
+            emptyContainer.setVisibility(View.VISIBLE);
+            ((MyPlaceActivity) getActivity()).toggleEditMode(false);
+          }
+          
+          new DelPlaceTask().execute(idxesString);
+        }
+      });
+      dialog.setNegativeButton(android.R.string.cancel, null);
+      dialog.show();
+    }
+  };
+  
+  /**************************************************
+   * async task
+   ***************************************************/
+  private class GetStoreAsyncTask extends AsyncTask<Void, Integer, ArrayList<PlaceBean>>
+  {
+    @Override
+    protected ArrayList<PlaceBean> doInBackground(Void... params)
+    {
+      return apiClient.getPlaceList(page, categoryId, PreferenceManager.getInstance(getActivity()).getUserSeq());
+    }
+    
+    
+    @Override
+    protected void onPostExecute(ArrayList<PlaceBean> result)
+    {
+      adapter.addAll(result);
+      if (result.size() == 0)
+        isLoadEnded = true;
+      progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class DelPlaceTask extends AsyncTask<String, Void, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      NetworkResult result = null;
+      for (String idx : params)
+      {
+        result = apiClient.deleteMyPlace(idx, PreferenceManager.getInstance(getActivity()).getUserSeq());
+      }
+      return result;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+    }
+  }
 }
