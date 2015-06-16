@@ -61,7 +61,6 @@ public class MyPageFragment extends Fragment
     imageProfile.setOnClickListener(clickListener);
     
     textName = (TextView) view.findViewById(R.id.text_name);
-    textName.setText(PreferenceManager.getInstance(getActivity()).getUserName());
     
     conatinerMySchedule = (LinearLayout) view.findViewById(R.id.container_my_schedule);
     conatinerMyPlace = (LinearLayout) view.findViewById(R.id.container_my_place);
@@ -88,6 +87,7 @@ public class MyPageFragment extends Fragment
   @Override
   public void onResume()
   {
+    textName.setText(PreferenceManager.getInstance(getActivity()).getUserName());
     setNetworkOnOffDisplay(SystemUtil.isConnectNetwork(getActivity()));
     
     IntentFilter filter = new IntentFilter(NetworkBraodCastReceiver.ACTION_NETWORK_STATUS_CHANGE);

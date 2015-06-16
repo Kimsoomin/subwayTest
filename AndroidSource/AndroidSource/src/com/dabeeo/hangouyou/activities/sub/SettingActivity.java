@@ -55,7 +55,6 @@ public class SettingActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     textName = (TextView) findViewById(R.id.text_name);
-    textName.setText(preferenceManager.getUserName());
     
     badgeNotice = (ImageView) findViewById(R.id.badge_notice);
     badgeVersionInfo = (ImageView) findViewById(R.id.badge_version_info);
@@ -143,6 +142,7 @@ public class SettingActivity extends ActionBarActivity
   @Override
   protected void onResume()
   {
+    textName.setText(preferenceManager.getUserName());
     switchNotificationOnOff.setChecked(PreferenceManager.getInstance(SettingActivity.this).getAllowPopup());
     switchSyncWifiOnly.setChecked(PreferenceManager.getInstance(SettingActivity.this).getSyncOnlyWifi());
     super.onResume();

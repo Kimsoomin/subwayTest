@@ -78,7 +78,6 @@ public class AccountSettingActivity extends ActionBarActivity
     textEmail = (TextView) findViewById(R.id.text_email);
     textEmail.setText(preferenceManager.getUserEmail());
     editName = (EditText) findViewById(R.id.edit_name);
-    editName.setText(preferenceManager.getUserName());
     checkDuplicatedBtn = (Button) findViewById(R.id.btn_check_duplicate_name);
     changePasswordContainer = (LinearLayout) findViewById(R.id.container_change_password);
     withDrawContainer = (LinearLayout) findViewById(R.id.container_withdraw);
@@ -86,6 +85,14 @@ public class AccountSettingActivity extends ActionBarActivity
     checkDuplicatedBtn.setOnClickListener(duplicatedChcek);
     changePasswordContainer.setOnClickListener(menuClickListener);
     withDrawContainer.setOnClickListener(menuClickListener);
+  }
+  
+  
+  @Override
+  protected void onResume()
+  {
+    super.onResume();
+    editName.setText(preferenceManager.getUserName());
   }
   
   private OnClickListener menuClickListener = new OnClickListener()
@@ -284,6 +291,7 @@ public class AccountSettingActivity extends ActionBarActivity
       if (status.equals("OK"))
       {
         CreateAlert(getString(R.string.msg_compete_modify_name));
+        preferenceManager.setUserName(editName.getText().toString());
       }
       else
       {
