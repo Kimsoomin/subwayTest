@@ -32,6 +32,7 @@ import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -99,14 +100,29 @@ public class MySchedulesActivity extends ActionBarActivity
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
+    
+    loadSchedules();
   }
   
   
   @Override
-  protected void onResume()
+  protected void onRestart()
   {
-    super.onResume();
+    super.onRestart();
+    
+    page = 1;
+    adapter.clear();
+    
+//    Runnable runnable = new Runnable()
+//    {
+//      @Override
+//      public void run()
+//      {
     loadSchedules();
+//      }
+//    };
+//    Handler handler = new Handler();
+//    handler.postDelayed(runnable, 100);
   }
   
   
@@ -116,6 +132,153 @@ public class MySchedulesActivity extends ActionBarActivity
       new LoadScheduleAsyncTask().execute();
   }
   
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_edit, menu);
+    editMenuItem = menu.findItem(R.id.edit);
+    closeMenuItem = menu.findItem(R.id.close);
+    if (isEditMode)
+    {
+      editMenuItem.setVisible(false);
+      closeMenuItem.setVisible(true);
+    }
+    else
+    {
+      editMenuItem.setVisible(true);
+      closeMenuItem.setVisible(false);
+    }
+    return super.onCreateOptionsMenu(menu);
+  }
+  
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    if (item.getItemId() == android.R.id.home)
+      finish();
+    else if (item.getItemId() == editMenuItem.getItemId())
+    {
+      isEditMode = true;
+      displayEditMode();
+    }
+    else if (item.getItemId() == closeMenuItem.getItemId())
+    {
+      isEditMode = false;
+      displayEditMode();
+    }
+    return super.onOptionsItemSelected(item);
+  }
+  
+  
+  private void displayEditMode()
+  {
+    btnDelete.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
+    btnRecommendSchedule.setVisibility(isEditMode ? View.GONE : View.VISIBLE);
+    deleteAllCheckbox.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
+    adapter.setEditMode(isEditMode);
+    invalidateOptionsMenu();
+  }
+  
+  /**************************************************
+   * listener
+   ***************************************************/
+  private OnClickListener buttonClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == btnRecommendScheduleInEmpty.getId() || v.getId() == btnRecommendSchedule.getId())
+      {
+        if (!SystemUtil.isConnectNetwork(MySchedulesActivity.this))
+          new AlertDialogManager(MySchedulesActivity.this).showDontNetworkConnectDialog();
+        else
+        {
+          Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
+          startActivity(i);
+        }
+      }
+      else if (v.getId() == btnDelete.getId())
+      {
+        ArrayList<String> idxes = new ArrayList<>();
+        for (ScheduleBean bean : adapter.getCheckedArrayList())
+        {
+          idxes.add(bean.idx);
+        }
+        
+        if (idxes.isEmpty())
+          return;
+        
+        final String[] idxesString = idxes.toArray(new String[idxes.size()]);
+        
+        AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
+        alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            adapter.removeCheckedItem();
+            deleteAllCheckbox.setChecked(false);
+            
+            if (adapter.getCount() == 0)
+            {
+              listView.setVisibility(View.GONE);
+              emptyContainer.setVisibility(View.VISIBLE);
+              adapter.setEditMode(false);
+              isEditMode = false;
+              displayEditMode();
+              invalidateOptionsMenu();
+            }
+            
+            new DelAsyncTask().execute(idxesString);
+          }
+          
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            
+          }
+        });
+      }
+    }
+  };
+  
+  private OnItemClickListener itemClickListener = new OnItemClickListener()
+  {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+      ScheduleBean bean = (ScheduleBean) adapter.getItem(position);
+      Intent i = new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class);
+      i.putExtra("idx", bean.idx);
+      startActivity(i);
+    }
+  };
+  
+  private OnScrollListener scrollListener = new OnScrollListener()
+  {
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+    }
+    
+    
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+      if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+      {
+        page++;
+        loadSchedules();
+      }
+    }
+  };
+  
+  /**************************************************
+   * async task
+   ***************************************************/
   private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ArrayList<ScheduleBean>>
   {
     @Override
@@ -163,148 +326,17 @@ public class MySchedulesActivity extends ActionBarActivity
     }
   }
   
-  
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu)
-  {
-    getMenuInflater().inflate(R.menu.menu_edit, menu);
-    editMenuItem = menu.findItem(R.id.edit);
-    closeMenuItem = menu.findItem(R.id.close);
-    if (isEditMode)
-    {
-      editMenuItem.setVisible(false);
-      closeMenuItem.setVisible(true);
-    }
-    else
-    {
-      editMenuItem.setVisible(true);
-      closeMenuItem.setVisible(false);
-    }
-    return super.onCreateOptionsMenu(menu);
-  }
-  
-  
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    if (item.getItemId() == android.R.id.home)
-      finish();
-    else if (item.getItemId() == editMenuItem.getItemId())
-    {
-      isEditMode = true;
-      displayEditMode();
-    }
-    else if (item.getItemId() == closeMenuItem.getItemId())
-    {
-      isEditMode = false;
-      displayEditMode();
-    }
-    return super.onOptionsItemSelected(item);
-  }
-  
-  
-  private void displayEditMode()
-  {
-    if (adapter.getCount() == 0)
-    {
-      isEditMode = false;
-      invalidateOptionsMenu();
-      return;
-    }
-    
-    if (isEditMode)
-    {
-      btnDelete.setVisibility(View.VISIBLE);
-      btnRecommendSchedule.setVisibility(View.GONE);
-      deleteAllCheckbox.setVisibility(View.VISIBLE);
-    }
-    else
-    {
-      btnDelete.setVisibility(View.GONE);
-      btnRecommendSchedule.setVisibility(View.VISIBLE);
-      deleteAllCheckbox.setVisibility(View.GONE);
-    }
-    
-    adapter.setEditMode(isEditMode);
-    invalidateOptionsMenu();
-  }
-  
-  /**************************************************
-   * listener
-   ***************************************************/
-  private OnClickListener buttonClickListener = new OnClickListener()
+  private class DelAsyncTask extends AsyncTask<String, Void, NetworkResult>
   {
     @Override
-    public void onClick(View v)
+    protected NetworkResult doInBackground(String... params)
     {
-      if (v.getId() == btnRecommendScheduleInEmpty.getId() || v.getId() == btnRecommendSchedule.getId())
+      NetworkResult result = null;
+      for (String idx : params)
       {
-        if (!SystemUtil.isConnectNetwork(MySchedulesActivity.this))
-          new AlertDialogManager(MySchedulesActivity.this).showDontNetworkConnectDialog();
-        else
-        {
-          Intent i = new Intent(MySchedulesActivity.this, RecommendScheduleActivity.class);
-          startActivity(i);
-        }
+        apiClient.deleteMyPlan(idx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq());
       }
-      else if (v.getId() == btnDelete.getId())
-      {
-        AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
-        alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), new AlertListener()
-        {
-          @Override
-          public void onPositiveButtonClickListener()
-          {
-            if (deleteAllCheckbox.isChecked())
-            {
-              listView.setVisibility(View.GONE);
-              emptyContainer.setVisibility(View.VISIBLE);
-              adapter.setEditMode(false);
-              isEditMode = false;
-              displayEditMode();
-              adapter.clear();
-            }
-          }
-          
-          
-          @Override
-          public void onNegativeButtonClickListener()
-          {
-            
-          }
-        });
-      }
+      return result;
     }
-  };
-  
-  private OnItemClickListener itemClickListener = new OnItemClickListener()
-  {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
-      ScheduleBean bean = (ScheduleBean) adapter.getItem(position);
-      Intent i = new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class);
-      i.putExtra("idx", bean.idx);
-      startActivity(i);
-    }
-  };
-  
-  private OnScrollListener scrollListener = new OnScrollListener()
-  {
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState)
-    {
-    }
-    
-    
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-    {
-      if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-      {
-        page++;
-        loadSchedules();
-      }
-    }
-  };
+  }
 }

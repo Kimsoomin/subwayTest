@@ -69,7 +69,7 @@ public class MySchedulesListAdapter extends BaseAdapter
   }
   
   
-  public void delete()
+  public void removeCheckedItem()
   {
     for (int i = beans.size() - 1; i >= 0; i--)
     {
