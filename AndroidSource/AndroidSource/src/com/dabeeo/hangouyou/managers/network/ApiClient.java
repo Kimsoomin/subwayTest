@@ -87,6 +87,9 @@ public class ApiClient
       try
       {
         JSONObject obj = new JSONObject(result.response);
+        if (!obj.has("plan"))
+          return beans;
+        
         JSONArray array = obj.getJSONArray("plan");
         for (int i = 0; i < array.length(); i++)
         {
@@ -297,13 +300,13 @@ public class ApiClient
 //    rate: [평점],1/3/5
 //    contents: [내용],
 //    regDate: [등록일자]
-    if(TextUtils.isEmpty(contents))
-      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq
-                                    + "&rate=" + rate);
+    if (TextUtils.isEmpty(contents))
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate);
     else
-      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq
-                                    + "&rate=" + rate + "&contents=" + contents);
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate + "&contents="
+          + contents);
   }
+  
   
   public NetworkResult getAllTicket(int page, String contentType)
   {

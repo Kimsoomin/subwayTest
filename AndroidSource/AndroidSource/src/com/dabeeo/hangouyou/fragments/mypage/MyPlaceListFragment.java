@@ -169,7 +169,6 @@ public class MyPlaceListFragment extends Fragment
       if (idxes.isEmpty())
         return;
       
-      allCheckBox.setChecked(false);
       final String[] idxesString = idxes.toArray(new String[idxes.size()]);
       
       Builder dialog = new AlertDialog.Builder(getActivity());
@@ -180,6 +179,7 @@ public class MyPlaceListFragment extends Fragment
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
+          allCheckBox.setChecked(false);
           adapter.removeCheckedItem();
           
           if (adapter.getCount() == 0)
@@ -223,13 +223,6 @@ public class MyPlaceListFragment extends Fragment
   private class DelPlaceTask extends AsyncTask<String, Void, NetworkResult>
   {
     @Override
-    protected void onPreExecute()
-    {
-      super.onPreExecute();
-    }
-    
-    
-    @Override
     protected NetworkResult doInBackground(String... params)
     {
       NetworkResult result = null;
@@ -238,13 +231,6 @@ public class MyPlaceListFragment extends Fragment
         result = apiClient.deleteMyPlace(idx, PreferenceManager.getInstance(getActivity()).getUserSeq());
       }
       return result;
-    }
-    
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      super.onPostExecute(result);
     }
   }
 }
