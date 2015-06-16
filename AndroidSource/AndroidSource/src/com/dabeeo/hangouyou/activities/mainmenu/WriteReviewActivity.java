@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.views.ReviewImageUploadView;
@@ -45,7 +46,7 @@ public class WriteReviewActivity extends ActionBarActivity
   private ProgressBar progressBar;
   private ApiClient apiClient;
   
-  private int parentIdx = -1;
+  private String parentIdx = "";
   private String parentType = "";
   
   private ImageView btnAddPic;
@@ -73,7 +74,8 @@ public class WriteReviewActivity extends ActionBarActivity
     
     rate = getIntent().getIntExtra("rate", -1);
     apiClient = new ApiClient(this);
-    parentIdx = getIntent().getIntExtra("idx", -1);
+    if(getIntent().hasExtra("idx"))
+      parentIdx = getIntent().getStringExtra("idx");
     parentType = getIntent().getStringExtra("type");
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -135,9 +137,8 @@ public class WriteReviewActivity extends ActionBarActivity
     protected NetworkResult doInBackground(String... params)
     {
       //TODO 이미지 업로드 hashmap 가져와서 url넣고 보내야 함 
-      return apiClient.postReview(rate, params[0], parentIdx, parentType);
-    }
-    
+      return apiClient.postReviewRate(parentType, parentIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate, params[0]);
+    }    
     
     @Override
     protected void onPostExecute(NetworkResult result)

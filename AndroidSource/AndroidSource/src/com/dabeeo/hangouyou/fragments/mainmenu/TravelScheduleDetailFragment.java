@@ -294,6 +294,8 @@ public class TravelScheduleDetailFragment extends Fragment
         public void onPositiveButtonClickListener()
         {
           Intent i = new Intent(getActivity(), WriteReviewActivity.class);
+          i.putExtra("idx", bean.idx);
+          i.putExtra("type", "plan");
           i.putExtra("rate", rate);
           startActivity(i);
         }

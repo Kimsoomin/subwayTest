@@ -131,8 +131,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       {
         //리뷰쓰기
         Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
-        i.putExtra("idx", bean.idx);
-        i.putExtra("type", "place");
+        i.putExtra("idx", idx);
+        i.putExtra("type", "plan");
         startActivity(i);
       }
     }

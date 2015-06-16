@@ -425,6 +425,8 @@ public class PlaceDetailActivity extends ActionBarActivity
         public void onPositiveButtonClickListener()
         {
           Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
+          i.putExtra("idx", bean.idx);
+          i.putExtra("type", "place");
           i.putExtra("rate", rate);
           startActivity(i);
         }

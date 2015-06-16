@@ -34,7 +34,6 @@ import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
-@SuppressWarnings("deprecation")
 public class MySchedulesActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
