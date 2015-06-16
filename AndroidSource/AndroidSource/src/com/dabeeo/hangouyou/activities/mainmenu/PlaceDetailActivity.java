@@ -1,5 +1,8 @@
 package com.dabeeo.hangouyou.activities.mainmenu;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -35,7 +38,9 @@ import com.dabeeo.hangouyou.beans.TicketBean;
 import com.dabeeo.hangouyou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingCommon;
 import com.dabeeo.hangouyou.map.BlinkingMap;
 import com.dabeeo.hangouyou.utils.MapCheckUtil;
@@ -434,6 +439,7 @@ public class PlaceDetailActivity extends ActionBarActivity
         public void onNegativeButtonClickListener()
         {
           //TODO 평점 서버로 전송 - API필요
+          new postRateTask().execute();
         }
       });
     }
@@ -498,4 +504,56 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
     }
   };
+  
+  public void responseParser(String response)
+  {
+    String status = null;
+    try
+    {
+      JSONObject jsonObject = new JSONObject(response);
+      if (jsonObject.has("status"))
+      {
+        status = jsonObject.getString("status");
+      }
+    }
+    catch (JSONException e)
+    {
+      status = "";
+      e.printStackTrace();
+    }
+    
+    if (status.equals("OK"))
+    {
+      finish();
+    }
+    else if (status.equals("ERROR_REQ"))
+    {
+      
+    }
+    else
+    {
+      
+    }
+  }
+  
+  /**
+   * post rate AsyncTask
+   */
+  private class postRateTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.postReviewRate("palce", placeIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate, null);
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      // TODO Auto-generated method stub
+      super.onPostExecute(result);
+      
+    }
+  }
 }

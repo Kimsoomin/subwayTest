@@ -1320,8 +1320,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   public void createGPSDialog(int type) 
   {
     AlertDialog.Builder ab = new AlertDialog.Builder(this);
-    ab.setTitle(R.string.map_notification);
-    ab.setPositiveButton(R.string.map_confirm,
+    ab.setTitle(R.string.term_alert);
+    ab.setPositiveButton(R.string.term_ok,
         new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) 
@@ -1502,6 +1502,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     DestinationTitle = subwayInfo.name_cn;
     mapCenterset(0);
     summaryViewVisibleSet(summaryViewVisible, 3);
+    markerSel(2);
   }
   
   public void planIntent()
@@ -1731,11 +1732,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       if(selectType == 1)
       {
         idx = arg1.mDescription;
-        markerSel(selectType);
       }else if (selectType == 3)
       {
         idx = arg1.mUid;
-        markerSel(selectType);
       }
       
       PlaceInfo info = allplaceinfo.get(idx);
@@ -1790,16 +1789,15 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       summarysubTitle.setVisibility(View.INVISIBLE);
       subwaylineNumSet(idx);
       summaryViewVisibleSet(summaryViewVisible, 2);
-      summaryDetail = false;
-      
-      markerSel(selectType);
+      summaryDetail = false;      
     }
     
     m_locMarkTarget = new Location("MarkTaget");
     m_locMarkTarget.setLatitude(place_fLatitude);
     m_locMarkTarget.setLongitude(place_fLongitute);
     summaryTitle.setText(DestinationTitle);
-    mapCenterset(0);   
+    mapCenterset(0);
+    markerSel(selectType);
   }
   
   /**

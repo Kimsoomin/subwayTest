@@ -57,6 +57,7 @@ public class TravelScheduleDetailFragment extends Fragment
   private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
   private CustomScrollView scrollView;
   private FrameLayout headerContainer;
+  private LinearLayout rateLayout;
   
   private int position;
   private boolean isMySchedule = false;
@@ -83,6 +84,7 @@ public class TravelScheduleDetailFragment extends Fragment
     reviewLayout = (RelativeLayout) getView().findViewById(R.id.review_layout);
     textRate = (TextView) getView().findViewById(R.id.text_rate);
     
+    rateLayout = (LinearLayout) getView().findViewById(R.id.rate_Layout);
     btnReviewBest = (Button) getView().findViewById(R.id.btn_review_best);
     btnReviewSoso = (Button) getView().findViewById(R.id.btn_review_soso);
     btnReviewWorst = (Button) getView().findViewById(R.id.btn_review_worst);

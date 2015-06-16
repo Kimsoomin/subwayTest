@@ -29,8 +29,6 @@ import android.widget.Toast;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity;
 import com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity;
-import com.dabeeo.hangouyou.activities.schedule.RecommendScheduleCompeletedActivity;
-import com.dabeeo.hangouyou.beans.ScheduleBean;
 import com.dabeeo.hangouyou.beans.ScheduleDetailBean;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
