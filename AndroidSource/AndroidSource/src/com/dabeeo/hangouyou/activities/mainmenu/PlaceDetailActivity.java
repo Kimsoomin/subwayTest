@@ -261,6 +261,8 @@ public class PlaceDetailActivity extends ActionBarActivity
     protected void onPostExecute(PlaceDetailBean result)
     {
       bean = result;
+      btnBookmark.setActivated(bean.isBookmarked);
+      btnLike.setActivated(bean.isLiked);
       displayContentData();
       headerView.setBean(bean);
       progressBar.setVisibility(View.GONE);
