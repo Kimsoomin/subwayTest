@@ -9,7 +9,7 @@ import android.text.TextUtils;
 
 public class PremiumDetailBean
 {
-  public int idx;
+  public String idx;
   public String seqCode;
   
   public int ownerUserSeq;
@@ -52,6 +52,8 @@ public class PremiumDetailBean
   {
     try
     {
+      if (obj.has("idx"))
+        idx = obj.getString("idx");
       if (obj.has("ownerUserSeq"))
         ownerUserSeq = obj.getInt("ownerUserSeq");
       if (obj.has("seqCode"))

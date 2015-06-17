@@ -30,6 +30,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hangouyou.beans.ContentBean;
 import com.dabeeo.hangouyou.beans.PremiumDetailBean;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
 import com.dabeeo.hangouyou.map.BlinkingCommon;
@@ -146,40 +147,6 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     new GetPlaceDetailAsyncTask().execute();
   }
   
-  private class GetPlaceDetailAsyncTask extends AsyncTask<String, Integer, NetworkResult>
-  {
-    
-    @Override
-    protected NetworkResult doInBackground(String... params)
-    {
-      BlinkingCommon.smlLibDebug("추천서울", "premiumIdx : " +placeIdx); 
-      return apiClient.getPremiumDetail(placeIdx);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      if (result.isSuccess)
-      {
-        try
-        {
-          JSONObject obj = new JSONObject(result.response);
-          bean = new PremiumDetailBean();
-          bean.setJSONObject(obj.getJSONObject("premium"));
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        displayContentData();
-      }
-      
-      progressBar.setVisibility(View.GONE);
-      super.onPostExecute(result);
-    }
-  }
-  
   
   public void displayContentData()
   {
@@ -267,11 +234,11 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       horizontalImagesView.addView(parentView);
     }
     
-    if(!TextUtils.isEmpty(bean.address))
+    if (!TextUtils.isEmpty(bean.address))
       addDetailInfo(getString(R.string.term_address), bean.address);
     else
       addDetailInfo(getString(R.string.term_address), "");
-    if(!TextUtils.isEmpty(bean.contact))
+    if (!TextUtils.isEmpty(bean.contact))
       addDetailInfo(getString(R.string.term_phone), bean.contact);
     else
       addDetailInfo(getString(R.string.term_phone), "");
@@ -366,8 +333,71 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       else if (v.getId() == R.id.btn_like)
       {
         //좋아요 
-        btnLike.setActivated(!btnLike.isActivated());
+        new ToggleLikeTask().execute();
       }
     }
   };
+  
+  /**************************************************
+   * async task
+   ***************************************************/
+  private class GetPlaceDetailAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      BlinkingCommon.smlLibDebug("추천서울", "premiumIdx : " + placeIdx);
+      return apiClient.getPremiumDetail(placeIdx);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      if (result.isSuccess)
+      {
+        try
+        {
+          JSONObject obj = new JSONObject(result.response);
+          bean = new PremiumDetailBean();
+          bean.setJSONObject(obj.getJSONObject("premium"));
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        displayContentData();
+      }
+      
+      progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class ToggleLikeTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      // TODO 아직 api없음 
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "place", "L");
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        btnLike.setActivated(obj.getString("result").equals("INS"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+  }
 }
