@@ -30,6 +30,7 @@ public class MyBookmarkActivity extends ActionBarActivity
   public boolean isEditMode = false;
   private MyBookmarkViewPagerAdapter adapter;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -54,6 +55,7 @@ public class MyBookmarkActivity extends ActionBarActivity
     
     displayTitles();
   }
+  
   
   private void displayTitles()
   {
@@ -80,6 +82,7 @@ public class MyBookmarkActivity extends ActionBarActivity
     return super.onCreateOptionsMenu(menu);
   }
   
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
@@ -87,36 +90,33 @@ public class MyBookmarkActivity extends ActionBarActivity
       finish();
     else if (item.getItemId() == editMenuItem.getItemId())
     {
-      isEditMode = true;
-      
-      int index = viewPager.getCurrentItem();
-      Fragment fragment = adapter.getFragment(index);
-      if (index == 0)
-        ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
-      else
-        ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
-      getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-      invalidateOptionsMenu();
+      toggleEditMode(true);
     }
     else if (item.getItemId() == closeMenuItem.getItemId())
     {
-      isEditMode = false;
-      int index = viewPager.getCurrentItem();
-      Fragment fragment = adapter.getFragment(index);
-      if (index == 0)
-        ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
-      else
-        ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
-      getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-      invalidateOptionsMenu();
+      toggleEditMode(false);
     }
     return super.onOptionsItemSelected(item);
+  }
+  
+  
+  public void toggleEditMode(boolean isEditMode)
+  {
+    this.isEditMode = isEditMode;
+    
+    int index = viewPager.getCurrentItem();
+    Fragment fragment = adapter.getFragment(index);
+    if (index == 0)
+      ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
+    else
+      ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
+    getSupportActionBar().setNavigationMode(isEditMode ? ActionBar.NAVIGATION_MODE_STANDARD : ActionBar.NAVIGATION_MODE_TABS);
+    invalidateOptionsMenu();
   }
   
   /**************************************************
    * listener
    ***************************************************/
-  
   protected TabListener tabListener = new TabListener()
   {
     @Override

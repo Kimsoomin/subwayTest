@@ -40,8 +40,8 @@ public class PlaceDetailBean
   public int bookmarkCount = 0;
   public int shareCount = 0;
   
-  public int isLiked;
-  public int isBookmarked;
+  public boolean isLiked;
+  public boolean isBookmarked;
   public String imageUrl;
   public ArrayList<String> imageUrls = new ArrayList<String>();
   
@@ -107,9 +107,9 @@ public class PlaceDetailBean
         reviewCount = obj.getInt("reviewCount");
       
       if (obj.has("isLiked"))
-        isLiked = obj.getInt("isLiked");
+        isLiked = obj.getInt("isLiked") != 0;
       if (obj.has("isBookmarked"))
-        isBookmarked = obj.getInt("isBookmarked");
+        isBookmarked = obj.getInt("isBookmarked") != 0;
       
       if (obj.has("updateDate"))
         updateDateString = obj.getString("updateDate");

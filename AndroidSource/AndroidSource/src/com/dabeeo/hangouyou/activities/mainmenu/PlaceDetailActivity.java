@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -90,6 +91,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   int rate = 3;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -107,7 +109,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     isEnterMap = getIntent().getBooleanExtra("is_map", false);
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getStringExtra("place_idx");
-    if(getIntent().hasExtra("premium_Idx"))
+    if (getIntent().hasExtra("premium_Idx"))
       premiumIdx = getIntent().getStringExtra("premium_Idx");
     else
       premiumIdx = "null";
@@ -115,10 +117,11 @@ public class PlaceDetailActivity extends ActionBarActivity
     BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
     
     layoutRecommendSeoul = (LinearLayout) findViewById(R.id.container_recommend_by_expect);
-    if(premiumIdx.equals("null"))
+    if (premiumIdx.equals("null"))
     {
       layoutRecommendSeoul.setVisibility(View.GONE);
-    }else
+    }
+    else
     {
       layoutRecommendSeoul.setVisibility(View.VISIBLE);
     }
@@ -258,6 +261,8 @@ public class PlaceDetailActivity extends ActionBarActivity
     protected void onPostExecute(PlaceDetailBean result)
     {
       bean = result;
+      btnBookmark.setActivated(bean.isBookmarked);
+      btnLike.setActivated(bean.isLiked);
       displayContentData();
       headerView.setBean(bean);
       progressBar.setVisibility(View.GONE);
@@ -403,7 +408,6 @@ public class PlaceDetailActivity extends ActionBarActivity
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
       
-      
       if (v.getId() == btnReviewBest.getId())
       {
         btnReviewBest.setSelected(true);
@@ -436,6 +440,7 @@ public class PlaceDetailActivity extends ActionBarActivity
           startActivity(i);
         }
         
+        
         public void onNegativeButtonClickListener()
         {
           //TODO 평점 서버로 전송 - API필요
@@ -458,10 +463,7 @@ public class PlaceDetailActivity extends ActionBarActivity
           return;
         }
         
-        // 북마크 토글
-        if (!btnBookmark.isActivated())
-          Toast.makeText(PlaceDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
-        btnBookmark.setActivated(!btnBookmark.isActivated());
+        new ToggleBookmarkTask().execute();
       }
       else if (v.getId() == R.id.btn_share)
       {
@@ -505,6 +507,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     }
   };
   
+  
   public void responseParser(String response)
   {
     String status = null;
@@ -536,23 +539,62 @@ public class PlaceDetailActivity extends ActionBarActivity
     }
   }
   
+  /**************************************************
+   * async task
+   ***************************************************/
   /**
    * post rate AsyncTask
    */
   private class postRateTask extends AsyncTask<Void, Void, NetworkResult>
   {
-
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       return apiClient.postReviewRate("palce", placeIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate, null);
     }
     
+    
     @Override
     protected void onPostExecute(NetworkResult result)
     {
       // TODO Auto-generated method stub
       super.onPostExecute(result);
+      
+    }
+  }
+  
+  private class ToggleBookmarkTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.cityIdx, "place", "B");
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        
+        if (obj.getString("result").equals("INS"))
+        {
+          btnBookmark.setActivated(true);
+          Toast.makeText(PlaceDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+          btnBookmark.setActivated(false);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
       
     }
   }
