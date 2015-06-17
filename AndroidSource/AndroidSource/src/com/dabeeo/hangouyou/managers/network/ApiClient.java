@@ -515,7 +515,7 @@ public class ApiClient
    */
   public NetworkResult setUsedLog(String ownerUserSeq, String prentIdx, String parentType, String usedType)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&paerntIdx=" + prentIdx + "&parentType=" + parentType + "&usedType=" + usedType);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&parentIdx=" + prentIdx + "&parentType=" + parentType + "&usedType=" + usedType);
   }
   
   
