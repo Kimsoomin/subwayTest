@@ -27,7 +27,10 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hangouyou.R;
+import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hangouyou.activities.sub.SearchResultDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.beans.ProductBean;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
 import com.dabeeo.hangouyou.controllers.SearchResultDetailAdapter;
@@ -113,12 +116,6 @@ public class SearchFragment extends Fragment
         if (s.length() >= 2)
         {
           search(s.toString());
-        }
-        else if (s.length() > 1)
-        {
-          searchListView.setVisibility(View.VISIBLE);
-          emptyContainer.setVisibility(View.GONE);
-          imageX.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -224,9 +221,26 @@ public class SearchFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-      Intent i = new Intent(getActivity(), SearchResultDetailActivity.class);
-      i.putExtra("keyword", ((SearchResultBean) adapter.getItem(position)).text);
-      startActivity(i);
+      Intent i = null;
+      SearchResultBean bean = (SearchResultBean) adapter.getItem(position);
+      if (bean.type == SearchResultBean.TYPE_PLACE)
+      {
+        i = new Intent(getActivity(), PlaceDetailActivity.class);
+        i.putExtra("place_idx", bean.idx);
+      }
+      else if (bean.type == SearchResultBean.TYPE_RECOMMEND_SEOUL)
+      {
+        i = new Intent(getActivity(), TravelStrategyDetailActivity.class);
+        i.putExtra("place_idx", bean.idx);
+      }
+      else if (bean.type == SearchResultBean.TYPE_SCHEDULE)
+      {
+        i = new Intent(getActivity(), TravelScheduleDetailActivity.class);
+        i.putExtra("idx", bean.idx);
+      }
+      
+      if (i != null)
+        startActivity(i);
     }
   };
   
@@ -295,6 +309,7 @@ public class SearchFragment extends Fragment
             JSONObject obj = jsonArray.getJSONObject(i);
             bean.text = obj.getString("title");
             bean.idx = obj.getString("idx");
+            bean.setLogType(obj.getString("logType"));
             adapter.add(bean);
           }
         }
@@ -307,10 +322,8 @@ public class SearchFragment extends Fragment
       
       if (adapter.getCount() == 0)
       {
-        emptyContainer.setVisibility(View.VISIBLE);
         searchListView.setVisibility(View.GONE);
-        loadPopularWords();
-        return;
+        emptyContainer.setVisibility(View.VISIBLE);
       }
       else
       {
