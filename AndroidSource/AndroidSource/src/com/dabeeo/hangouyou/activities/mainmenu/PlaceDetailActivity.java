@@ -527,7 +527,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     if (status.equals("OK"))
     {
-      finish();
+      
     }
     else if (status.equals("ERROR_REQ"))
     {

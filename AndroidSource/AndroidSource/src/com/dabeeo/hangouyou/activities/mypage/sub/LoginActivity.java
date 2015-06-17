@@ -4,9 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +17,8 @@ import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.FindPasswordActivity;
+import com.dabeeo.hangouyou.managers.AlertDialogManager;
+import com.dabeeo.hangouyou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.managers.network.NetworkResult;
@@ -33,7 +33,13 @@ public class LoginActivity extends Activity
   public RelativeLayout progressLayout;
   public ApiClient apiClient;
   public Context mContext;
+  public AlertDialogManager alertDialogManager;
   
+  public String userSeq = "";
+  public String userEmail = "";
+  public String userName = "";
+  public String gender = "";
+  public String profile = "";
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +49,7 @@ public class LoginActivity extends Activity
     
     mContext = this;
     apiClient = new ApiClient(mContext);
+    alertDialogManager = new AlertDialogManager(LoginActivity.this);
     
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
     editEmail = (EditText) findViewById(R.id.edit_email);
@@ -92,6 +99,9 @@ public class LoginActivity extends Activity
   {
     String status = null;
     JSONObject jsonObject;
+    
+    
+    
     try
     {
       jsonObject = new JSONObject(response);
@@ -101,13 +111,7 @@ public class LoginActivity extends Activity
       }
       
       if (status.equals("OK"))
-      {
-        String userSeq = "";
-        String userEmail = "";
-        String userName = "";
-        String gender = "";
-        String profile = "";
-        
+      { 
         if (jsonObject.has("userSeq"))
           userSeq = jsonObject.getString("userSeq");
         if (jsonObject.has("userEmail"))
@@ -130,52 +134,54 @@ public class LoginActivity extends Activity
       else
       {
         String alertMessage = "";
-        if (status.equals("ERROR_ID"))
+        if (status.equals("ERROR_AUTH"))
         {
-          alertMessage = getString(R.string.msg_please_error_id);
-        }
-        else if (status.equals("ERROR_AUTH"))
+          if (jsonObject.has("userSeq"))
+            userSeq = jsonObject.getString("userSeq");
+          alertDialogManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_please_error_auth), getString(R.string.term_ok), null, new AlertListener()
+          {
+            
+            @Override
+            public void onPositiveButtonClickListener()
+            {
+              Intent i = new Intent(LoginActivity.this, AuthEmailActivity.class);
+              i.putExtra("userSeq", userSeq);
+              startActivity(i);
+            }
+            @Override
+            public void onNegativeButtonClickListener()
+            {
+              
+            }
+          });
+        }else
         {
-          alertMessage = getString(R.string.msg_please_error_auth);
+          if (status.equals("ERROR_ID"))
+          {
+            alertMessage = getString(R.string.msg_please_error_id);
+          }
+          
+          else if (status.equals("ERROR_OUT"))
+          {
+            alertMessage = getString(R.string.msg_please_error_out);
+          }
+          else if (status.equals("ERROR_PW"))
+          {
+            alertMessage = getString(R.string.msg_please_error_password);
+          }
+          else
+          {
+            alertMessage = getString(R.string.msg_please_check_user_info);
+          }
+          alertDialogManager.showAlertDialog(getString(R.string.term_alert), alertMessage, getString(R.string.term_ok), null, null);
         }
-        else if (status.equals("ERROR_OUT"))
-        {
-          alertMessage = getString(R.string.msg_please_error_out);
-        }
-        else if (status.equals("ERROR_PW"))
-        {
-          alertMessage = getString(R.string.msg_please_error_password);
-        }
-        else
-        {
-          alertMessage = getString(R.string.msg_please_check_user_info);
-        }
-        CreateAlert(alertMessage);
       }
     }
     catch (JSONException e)
     {
-      CreateAlert(getString(R.string.msg_dont_connect_network));
+      alertDialogManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_dont_connect_network), getString(R.string.term_ok), null, null);
       e.printStackTrace();
     }
-  }
-  
-  
-  public void CreateAlert(String message)
-  {
-    AlertDialog.Builder ab = new AlertDialog.Builder(this);
-    ab.setTitle(R.string.term_alert);
-    ab.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
-    {
-      @Override
-      public void onClick(DialogInterface dialog, int which)
-      {
-        dialog.dismiss();
-      }
-    });
-    
-    ab.setMessage(message);
-    ab.show();
   }
   
   private class userLoginTask extends AsyncTask<Void, Void, NetworkResult>
