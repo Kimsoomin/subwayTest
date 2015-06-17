@@ -102,14 +102,14 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     {
       OverlayItem overlayitem = getItem(i);
       
-      GeoPoint geoPoint = overlayitem.getPoint();
+      GeoPoint geoPoint = (GeoPoint) overlayitem.getPoint();
       Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
       
       if(i != nSize-1)
       {
         OverlayItem nextItem = getItem(i+1);
         Point pt2 = mapView.getProjection().toPixels(nextItem.getPoint(), null);
-        if(overlayitem.mDescription.equals(nextItem.mDescription))
+        if(overlayitem.getSnippet().equals(nextItem.getSnippet()))
           canvas.drawLine(pt1.x, pt1.y, pt2.x, pt2.y, paint);
       }
     }
@@ -118,13 +118,13 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     {
       OverlayItem overlayitem = getItem(i);
       
-      GeoPoint geoPoint = overlayitem.getPoint();
+      GeoPoint geoPoint = (GeoPoint) overlayitem.getPoint();
       Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
       
       if(i > 0)
       {
         OverlayItem preItem = getItem(i-1);
-        if(overlayitem.mDescription.equals(preItem.mDescription) == false)
+        if(overlayitem.getSnippet().equals(preItem.getSnippet()) == false)
           spotNum = 0;
       }else if(i == 0)
       {
@@ -133,16 +133,16 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
       
       spotNum = spotNum + 1;
       
-      if(overlayitem.mUid.equals(idx))
+      if(overlayitem.getUid().equals(idx))
       {
         canvas.drawBitmap(pin_map, pt1.x, pt1.y - pin_map.getHeight(), null);
       }else
       {
-        if(overlayitem.mDescription.equals(day))
+        if(overlayitem.getSnippet().equals(day))
         {      
           if(spotNum == 1)
           {
-            dayStr = "第"+overlayitem.mDescription+"天";
+            dayStr = "第"+overlayitem.getSnippet()+"天";
             canvas.drawBitmap(flagPlan_on, pt1.x+pinPlan_on.getWidth()/3, pt1.y-pinPlan_on.getHeight()/7*6 ,null);
             canvas.drawText(dayStr, pt1.x+pinPlan_on.getWidth(), pt1.y-pinPlan_on.getHeight()/2, textpaint);
           }
@@ -153,7 +153,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
         {
           if(spotNum == 1)
           {
-            dayStr = "第"+overlayitem.mDescription+"天";
+            dayStr = "第"+overlayitem.getSnippet()+"天";
             canvas.drawBitmap(flagPlan, pt1.x+pinPlan_on.getWidth()/3, pt1.y-pinPlan_on.getHeight()/7*6 ,null);
             canvas.drawText(dayStr, pt1.x+pinPlan_on.getWidth(), pt1.y-pinPlan_on.getHeight()/2, textpaint);
           }

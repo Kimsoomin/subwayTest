@@ -60,7 +60,7 @@ public class CurrentPositionOverlay extends ItemizedIconOverlay<OverlayItem>
 
 		OverlayItem item = getItem(0);
 		
-		GeoPoint geoPoint = item.getPoint();
+		GeoPoint geoPoint = (GeoPoint) item.getPoint();
 		Point pt1 = new Point();
 
 		// 지리좌표를 화면상의 픽셀좌표로 변환

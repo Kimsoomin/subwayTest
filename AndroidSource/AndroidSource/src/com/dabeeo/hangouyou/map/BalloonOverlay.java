@@ -44,7 +44,7 @@ public class BalloonOverlay extends ItemizedIconOverlayEx<OverlayItem>
     if (item == null)
       return;
     
-    int nPlaceID = Integer.valueOf(item.mDescription);
+    int nPlaceID = Integer.valueOf(item.getSnippet());
     int nDrawableID = R.drawable.detail_box_re;
 //		PlaceInfo placeInfo = BlinkingSeoulActivity.g_db.GetPlaceInfo(nPlaceID);
 //		if(placeInfo != null)
@@ -82,7 +82,7 @@ public class BalloonOverlay extends ItemizedIconOverlayEx<OverlayItem>
     
     OverlayItem item = getItem(0);
     
-    GeoPoint geoPoint = item.getPoint();
+    GeoPoint geoPoint = (GeoPoint) item.getPoint();
     Point pt1 = new Point();
     
     // 지리좌표를 화면상의 픽셀좌표로 변환
@@ -95,7 +95,7 @@ public class BalloonOverlay extends ItemizedIconOverlayEx<OverlayItem>
     
     canvas.drawBitmap(m_bitmap, pt1.x - m_bitmap.getWidth() / 2, pt1.y - m_bitmap.getHeight() - nOffset, null);
     
-    String strText = (String) TextUtils.ellipsize(item.mTitle, (TextPaint) paintText, m_bitmap.getWidth() - 40, TextUtils.TruncateAt.END);
+    String strText = (String) TextUtils.ellipsize(item.getTitle(), (TextPaint) paintText, m_bitmap.getWidth() - 40, TextUtils.TruncateAt.END);
     
     canvas.drawText(strText, pt1.x, pt1.y - 76 - nOffset, paintText);
   }

@@ -112,7 +112,13 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   private Drawable noTile = null;
   
-  BoundingBoxE6 m_boundingBox = new BoundingBoxE6(37.70453488762476, 127.17361450195312, 37.43677099171195, 126.76300048828125);
+  float offsetX = 0.04f;
+  float offsetY = 0.01f;
+  BoundingBoxE6 m_boundingBox = new BoundingBoxE6(
+		  37.70453488762476 + offsetY, 
+		  127.17361450195312 + offsetX, 
+		  37.43677099171195 - offsetY, 
+		  126.76300048828125 - offsetX);
   
   // - Marker 관련.
   private NavigationOverlay navigationOverlay;
@@ -518,7 +524,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     final int nTileSize = (int)(256*1.5);
     
     final XYTileSource tileSource = new XYTileSource("My Tile Source",ResourceProxy.string.offline_mode, nMinZoomLevel,
-        nMaxZoomLevel, nTileSize, ".png");
+        nMaxZoomLevel, nTileSize, ".png",null);
     
     // MapView를 초기 설정하기 위한 함수 Context , TileSize , , Tile 이미지를 추출해 내기 위한
     // 전반적인 설정.-by 형철.
@@ -555,7 +561,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     m_mapView.setMinZoomLevel(nMinZoomLevel);
     
     m_mapView.getController().setZoom(zoomLevel); // 처음 화면에 보이는 Zoom level 16
-    m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
+    m_mapView.setScrollableAreaLimit(m_boundingBox);
     
     topLeftGpt = new GeoPoint(37604270, 126932172);
     bottomRightGpt = new GeoPoint(37522082, 127035856);
@@ -578,7 +584,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         m_mapView.getController().setZoom(zoomLevel);
         
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
-        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
+        m_mapView.setScrollableAreaLimit(m_boundingBox);
         
         if(getintent)
         {
@@ -1089,7 +1095,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         m_mapView.getController().setZoom(zoomLevel);
         
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
-        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
+        m_mapView.setScrollableAreaLimit(m_boundingBox);
         break;
         
       case R.id.zoomOutbtn:
@@ -1100,7 +1106,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         m_mapView.getController().setZoom(zoomLevel);
         
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
-        m_mapView.setScrollableAreaLimit(m_boundingBox, zoomLevel, mContext);
+        m_mapView.setScrollableAreaLimit(m_boundingBox);
         break;
         
       case R.id.summaryView:
@@ -1712,6 +1718,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
             m_mapView.getOverlays().remove(subwayOverlay);
           if(subwayExitOverlay != null)
             m_mapView.getOverlays().remove(subwayExitOverlay);
+          
           topLeftGpt = (GeoPoint) m_mapView.getProjection().fromPixels(0, 0);
           bottomRightGpt = (GeoPoint) m_mapView.getProjection().fromPixels(m_mapView.getWidth(),m_mapView.getHeight());
           
@@ -1731,10 +1738,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       if(selectType == 1)
       {
-        idx = arg1.mDescription;
+        idx = arg1.getSnippet();
       }else if (selectType == 3)
       {
-        idx = arg1.mUid;
+        idx = arg1.getUid();
       }
       
       PlaceInfo info = allplaceinfo.get(idx);
@@ -1780,7 +1787,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       }   
     }else if (selectType == 2)
     {
-      idx = arg1.mDescription;
+      idx = arg1.getSnippet();
       SubwayInfo subwayinfo = subwayInfo.get(idx);
       place_fLatitude = subwayinfo.lat;
       place_fLongitute = subwayinfo.lng;
@@ -1933,7 +1940,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
           {
             for(int i = 0; i<planItems.size(); i++)
             {
-              if(planItems.get(i).mUid.equals(info.idx))
+              if(planItems.get(i).getUid().equals(info.idx))
               {
                 planExist = true;
                 break;

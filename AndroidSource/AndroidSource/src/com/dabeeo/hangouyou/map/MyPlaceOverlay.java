@@ -36,9 +36,9 @@ public class MyPlaceOverlay extends ItemizedIconOverlay<OverlayItem>
     }
 
 	@Override
-	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords)
+	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords, float orientation)
 	{
-		super.onDrawItem(canvas, item, curScreenCoords);
+		super.onDrawItem(canvas, item, curScreenCoords, orientation);
 
 		int nOffset = 20;
 
@@ -61,7 +61,7 @@ public class MyPlaceOverlay extends ItemizedIconOverlay<OverlayItem>
 		
 		BlinkingMap parentActivity = (BlinkingMap) m_context;
 		
-		IGeoPoint igp = mapView.getProjection().fromPixels(event.getX(), event.getY());
+		IGeoPoint igp = mapView.getProjection().fromPixels((int)event.getX(), (int)event.getY());
 		
 		GeoPoint gp = new GeoPoint(igp.getLatitudeE6(), igp.getLongitudeE6());
 		

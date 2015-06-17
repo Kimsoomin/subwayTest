@@ -77,11 +77,11 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 	}
 
 	@Override
-	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords) 
+	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords, float orientation) 
 	{
-		super.onDrawItem(canvas, item, curScreenCoords);
+		super.onDrawItem(canvas, item, curScreenCoords, orientation);
 
-		category = Integer.parseInt(item.mUid);
+		category = Integer.parseInt(item.getUid());
 
 		this.d = intDrawalbe();
 
@@ -89,7 +89,7 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 			return;
 		}
 
-		if (item.mDescription.equals(idx)) 
+		if (item.getSnippet().equals(idx)) 
 		{
 			canvas.drawBitmap(pin_map, curScreenCoords.x, curScreenCoords.y - pin_map.getHeight()+2 - nOffset, null);
 		} else 

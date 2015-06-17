@@ -163,6 +163,11 @@ public class TravelScheduleDetailFragment extends Fragment
       btnReviewWorst.setVisibility(View.GONE);
     }
     
+    if(position != 0)
+    {
+      rateLayout.setVisibility(View.GONE);
+    }
+    
     if (headerView != null)
     {
       float density = getResources().getDisplayMetrics().density;

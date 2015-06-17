@@ -52,8 +52,8 @@ public class NavigationOverlay extends ItemizedIconOverlayEx<OverlayItem> {
 		OverlayItem overlayitem = getItem(0);
 		OverlayItem overlayItem2 = getItem(1);
 		
-		GeoPoint geoPoint = overlayitem.getPoint();
-		GeoPoint geoPoint2 = overlayItem2.getPoint();
+		GeoPoint geoPoint = (GeoPoint) overlayitem.getPoint();
+		GeoPoint geoPoint2 = (GeoPoint) overlayItem2.getPoint();
 		Point pt1 = mapView.getProjection().toPixels(geoPoint, null);
 		Point pt2 = mapView.getProjection().toPixels(geoPoint2, null);
 		canvas.drawLine(pt1.x, pt1.y-offset, pt2.x, pt2.y-offset, paint);
