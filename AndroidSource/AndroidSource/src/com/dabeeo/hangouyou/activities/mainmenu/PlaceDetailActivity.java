@@ -595,7 +595,6 @@ public class PlaceDetailActivity extends ActionBarActivity
       {
         e.printStackTrace();
       }
-      
     }
   }
 }
