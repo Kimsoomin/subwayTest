@@ -1,9 +1,11 @@
 package com.dabeeo.hangouyou.activities.sub;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -11,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,6 +24,7 @@ import com.dabeeo.hangouyou.external.libraries.CirclePageIndicator;
 
 public class GuideActivity extends Activity
 {
+  @SuppressLint("InlinedApi")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -29,6 +33,27 @@ public class GuideActivity extends Activity
     
     ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setAdapter(new PagerAdapterClass(getApplicationContext()));
+    
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    View decorView = getWindow().getDecorView();
+    if (Build.VERSION.SDK_INT == 14 || Build.VERSION.SDK_INT == 15)
+    {
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+    else if (Build.VERSION.SDK_INT >= 16)
+    {
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+        else
+        {
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
     
     CirclePageIndicator circleIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
     circleIndicator.setViewPager(viewPager);
