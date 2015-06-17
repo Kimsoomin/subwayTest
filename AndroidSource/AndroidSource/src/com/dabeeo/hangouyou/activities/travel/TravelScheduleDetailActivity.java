@@ -408,15 +408,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       try
       {
         JSONObject obj = new JSONObject(result.response);
-        
-        if (obj.getString("result").equals("INS"))
-        {
-          btnLike.setActivated(true);
-        }
-        else
-        {
-          btnLike.setActivated(false);
-        }
+        btnLike.setActivated(obj.getString("result").equals("INS"));
       }
       catch (Exception e)
       {

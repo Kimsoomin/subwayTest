@@ -487,7 +487,7 @@ public class PlaceDetailActivity extends ActionBarActivity
         }
         
         //좋아요 
-        btnLike.setActivated(!btnLike.isActivated());
+        new ToggleLikeTask().execute();
       }
       else if (v.getId() == R.id.btn_write_review)
       {
@@ -590,6 +590,31 @@ public class PlaceDetailActivity extends ActionBarActivity
         {
           btnBookmark.setActivated(false);
         }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+  }
+  
+  private class ToggleLikeTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.cityIdx, "place", "L");
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        btnLike.setActivated(obj.getString("result").equals("INS"));
       }
       catch (Exception e)
       {
