@@ -245,7 +245,7 @@ public class SearchFragment extends Fragment
   };
   
   /**************************************************
-   * Search_Popular AsyncTask
+   * AsyncTask
    ***************************************************/
   private class SearchPopularTask extends AsyncTask<Void, Void, NetworkResult>
   {

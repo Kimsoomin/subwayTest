@@ -524,12 +524,12 @@ public class ApiClient
   }
   
   
-  public NetworkResult searchResult(String keyword, String userSeq)
+  public NetworkResult searchResult(String keyword)
   {
-    if (TextUtils.isEmpty(userSeq))
+    if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
     else
-      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + userSeq);
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
   }
   
   
