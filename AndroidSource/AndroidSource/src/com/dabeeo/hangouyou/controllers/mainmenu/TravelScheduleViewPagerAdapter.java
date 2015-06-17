@@ -13,7 +13,7 @@ import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleListFragment;
 public class TravelScheduleViewPagerAdapter extends FragmentPagerAdapter
 {
   private List<String> titles = new ArrayList<String>();
-  
+  private ArrayList<Fragment> items = new ArrayList<>();
   
   public TravelScheduleViewPagerAdapter(Context context, FragmentManager fm)
   {
@@ -26,18 +26,22 @@ public class TravelScheduleViewPagerAdapter extends FragmentPagerAdapter
     titles.add(title);
   }
   
+  public void addFragement(Fragment fragment)
+  {
+    items.add(fragment);
+  }
   
   @Override
   public Fragment getItem(int position)
   {
-    Fragment fragment = new TravelScheduleListFragment();
+    items.get(position);
     if (position == 0)
-      ((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR);
+      ((TravelScheduleListFragment) items.get(position)).setType(TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR);
     else if (position == 1)
-      ((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_MY);
+      ((TravelScheduleListFragment) items.get(position)).setType(TravelScheduleListFragment.SCHEDULE_TYPE_MY);
     else
-      ((TravelScheduleListFragment) fragment).setType(TravelScheduleListFragment.SCHEDULE_TYPE_BOOKMARK);
-    return fragment;
+      ((TravelScheduleListFragment) items.get(position)).setType(TravelScheduleListFragment.SCHEDULE_TYPE_BOOKMARK);
+    return items.get(position);
   }
   
   

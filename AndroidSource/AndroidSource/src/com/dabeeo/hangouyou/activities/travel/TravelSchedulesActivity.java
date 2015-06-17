@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.MainActivity;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
+import com.dabeeo.hangouyou.fragments.mainmenu.TravelScheduleListFragment;
 import com.dabeeo.hangouyou.managers.AlertDialogManager;
 import com.dabeeo.hangouyou.utils.SystemUtil;
 
@@ -43,7 +44,9 @@ public class TravelSchedulesActivity extends ActionBarActivity
   private float bottomTappx;
   private int lastSelectedTab = 0;
   
-  
+  public TravelScheduleListFragment scheduleListFragment;
+  public TravelScheduleListFragment myScheduleListFragment;
+  public TravelScheduleListFragment myBookMarkscheduleListFragment;
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -72,11 +75,21 @@ public class TravelSchedulesActivity extends ActionBarActivity
     bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
     bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
     
+    
     viewPager = (ViewPager) findViewById(R.id.viewpager);
     viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setOffscreenPageLimit(100);
     adapter = new TravelScheduleViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);
+    
+    scheduleListFragment = new TravelScheduleListFragment(0);
+    myScheduleListFragment = new TravelScheduleListFragment(1);
+    myBookMarkscheduleListFragment = new TravelScheduleListFragment(2);
+    
+    adapter.addFragement(scheduleListFragment);
+    adapter.addFragement(myScheduleListFragment);
+    adapter.addFragement(myBookMarkscheduleListFragment);
+    adapter.notifyDataSetChanged();
     
     displayTitles();
   }
@@ -155,6 +168,19 @@ public class TravelSchedulesActivity extends ActionBarActivity
       @Override
       public void onClick(DialogInterface dialog, int which)
       {
+        if(which == 0)
+        {
+          scheduleListFragment.setDayCount(0);
+        }else if(which == 1)
+        {
+          scheduleListFragment.setDayCount(2);
+        }else if(which == 2)
+        {
+          scheduleListFragment.setDayCount(3);
+        }else
+        {
+          scheduleListFragment.setDayCount(4);
+        }
       }
     });
     builderSingle.show();

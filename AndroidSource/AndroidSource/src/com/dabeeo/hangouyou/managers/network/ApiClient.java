@@ -66,22 +66,12 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CATEGORY_LIST");
   }
   
-  
-  public ArrayList<ScheduleBean> getTravelSchedules(int page)
-  {
-    return getTravelSchedules(page, null);
-  }
-  
-  
-  public ArrayList<ScheduleBean> getTravelSchedules(int page, String userSeq)
+  public ArrayList<ScheduleBean> getTravelSchedules(int page, int daycount)
   {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
-      
-      if (!TextUtils.isEmpty(userSeq))
-        url += "&ownerUserSeq=" + userSeq;
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page + "&dayCount=" + daycount;
       
       NetworkResult result = httpClient.requestGet(url);
       try
@@ -106,6 +96,39 @@ public class ApiClient
     }
     else
       beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
+    return beans;
+  }
+  
+  public ArrayList<ScheduleBean> getMyTravelSchedules(String ownerUserSeq)
+  {
+    ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      String url = getSiteUrl() + "?v=m1&mode=";
+      
+      NetworkResult result = httpClient.requestGet(url);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if (!obj.has("plan"))
+          return beans;
+        
+        JSONArray array = obj.getJSONArray("plan");
+        for (int i = 0; i < array.length(); i++)
+        {
+          JSONObject beanObj = array.getJSONObject(i);
+          ScheduleBean bean = new ScheduleBean();
+          bean.setJSONObject(beanObj);
+          beans.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+//    else
+//      beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
     return beans;
   }
   

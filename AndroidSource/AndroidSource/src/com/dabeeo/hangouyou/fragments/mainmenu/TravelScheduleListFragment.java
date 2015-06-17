@@ -53,13 +53,19 @@ public class TravelScheduleListFragment extends Fragment
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
   
+  public int dayCount = 0;
+  
+  public TravelScheduleListFragment(int type)
+  {
+    this.type = type;
+  }
+  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_list;
     return inflater.inflate(resId, null);
   }
-  
   
   @Override
   public void onActivityCreated(Bundle savedInstanceState)
@@ -100,6 +106,13 @@ public class TravelScheduleListFragment extends Fragment
     this.type = type;
   }
   
+  public void setDayCount(int daycount)
+  {
+    adapter.clear();
+    this.dayCount = daycount;
+    page = 1;
+    loadSchedules();
+  }
   
   private void loadSchedules()
   {
@@ -147,7 +160,7 @@ public class TravelScheduleListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
-      progressBar.setVisibility(View.VISIBLE);
+//      progressBar.setVisibility(View.VISIBLE);
       super.onPreExecute();
     }
     
@@ -155,7 +168,7 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      return apiClient.getTravelSchedules(page);
+      return apiClient.getTravelSchedules(page, dayCount);
     }
     
     

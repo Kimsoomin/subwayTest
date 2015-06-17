@@ -293,7 +293,8 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      return apiClient.getTravelSchedules(page, PreferenceManager.getInstance(getApplicationContext()).getUserSeq());
+      //TODO 내 일정 API 변경으로 작업
+      return apiClient.getMyTravelSchedules(PreferenceManager.getInstance(getApplicationContext()).getUserSeq());
     }
     
     
