@@ -124,59 +124,6 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     loadScheduleDetail();
   }
   
-  private OnClickListener clickListener = new OnClickListener()
-  {
-    @Override
-    public void onClick(View v)
-    {
-      if (v.getId() == R.id.btn_share)
-      {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
-        // 공유하기
-        sharePickView.setVisibility(View.VISIBLE);
-        sharePickView.view.setVisibility(View.VISIBLE);
-        sharePickView.bringToFront();
-      }
-      else
-      {
-        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
-        {
-          if (v.getId() == btnBookmark.getId())
-          {
-            if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-            {
-              new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
-              return;
-            }
-            
-            new ToggleBookmarkTask().execute();
-          }
-          else if (v.getId() == btnLike.getId())
-          {
-            //좋아요 
-            btnLike.setActivated(!btnLike.isActivated());
-          }
-          else if (v.getId() == R.id.btn_write_review)
-          {
-            //리뷰쓰기
-            Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
-            i.putExtra("idx", idx);
-            i.putExtra("type", "plan");
-            startActivity(i);
-          }
-        }
-        else
-        {
-          new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog();
-        }
-      }
-    }
-  };
-  
   
   private void loadScheduleDetail()
   {
@@ -308,6 +255,58 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     }
   };
   
+  private OnClickListener clickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == R.id.btn_share)
+      {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        // 공유하기
+        sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.view.setVisibility(View.VISIBLE);
+        sharePickView.bringToFront();
+      }
+      else
+      {
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          if (v.getId() == btnBookmark.getId())
+          {
+            if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+            {
+              new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
+              return;
+            }
+            
+            new ToggleBookmarkTask().execute();
+          }
+          else if (v.getId() == btnLike.getId())
+          {
+            new ToggleLikeTask().execute();
+          }
+          else if (v.getId() == R.id.btn_write_review)
+          {
+            //리뷰쓰기
+            Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
+            i.putExtra("idx", idx);
+            i.putExtra("type", "plan");
+            startActivity(i);
+          }
+        }
+        else
+        {
+          new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog();
+        }
+      }
+    }
+  };
+  
   /**************************************************
    * async task
    ***************************************************/
@@ -392,4 +391,38 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       }
     }
   }
+  
+  private class ToggleLikeTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "plan", "L");
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        
+        if (obj.getString("result").equals("INS"))
+        {
+          btnLike.setActivated(true);
+        }
+        else
+        {
+          btnLike.setActivated(false);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+  }
+  
 }
