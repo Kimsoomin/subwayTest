@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -50,12 +49,14 @@ public class SearchFragment extends Fragment
   
   public ApiClient apiClient;
   
+  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_search;
     return inflater.inflate(resId, null);
   }
+  
   
   @Override
   public void onActivityCreated(Bundle savedInstanceState)
@@ -147,14 +148,16 @@ public class SearchFragment extends Fragment
     layoutRecommedProduct.addView(productView);
   }
   
+  
   private void loadPopularWords()
   {
     popularKeywordOuterContainer.setVisibility(View.VISIBLE);
     popularKeyworkdContainer.removeAllViews();
-    if(SystemUtil.isConnectNetwork(getActivity()))
+    if (SystemUtil.isConnectNetwork(getActivity()))
     {
       new SearchPopularTask().execute();
-    }else
+    }
+    else
     {
       //TODO offline 처리 필요
     }
@@ -163,29 +166,9 @@ public class SearchFragment extends Fragment
   
   private void search(String text)
   {
-    if (TextUtils.isEmpty(text))
-    {
-      emptyContainer.setVisibility(View.VISIBLE);
-      searchListView.setVisibility(View.GONE);
-      loadPopularWords();
-      return;
-    }
-    else
-    {
-      searchListView.setVisibility(View.VISIBLE);
-      emptyContainer.setVisibility(View.GONE);
-    }
-    
-    //TEST Beans
-    adapter.clear();
-    
-    SearchResultBean bean = new SearchResultBean();
-    bean.text = "테스트";
-    adapter.add(bean);
-    bean = new SearchResultBean();
-    bean.text = "다비오";
-    adapter.add(bean);
+    new SearchTask().execute(text);
   }
+  
   
   private void responseParser(String response)
   {
@@ -199,13 +182,13 @@ public class SearchFragment extends Fragment
         status = jsonObject.getString("status");
       }
       
-      if(status.equals("OK"))
+      if (status.equals("OK"))
       {
         JSONArray jsonArray = jsonObject.getJSONArray("keyword");
-        for(int i = 0; i<jsonArray.length();i++)
+        for (int i = 0; i < jsonArray.length(); i++)
         {
           PopularKeywordView view = new PopularKeywordView(getActivity());
-          view.setData(i+1, jsonArray.getString(i));
+          view.setData(i + 1, jsonArray.getString(i));
           popularKeyworkdContainer.addView(view);
         }
       }
@@ -215,7 +198,6 @@ public class SearchFragment extends Fragment
       status = "";
       e.printStackTrace();
     }
-    
     
   }
   
@@ -259,16 +241,82 @@ public class SearchFragment extends Fragment
       super.onPreExecute();
     }
     
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       return apiClient.searchPopular();
     }
     
+    
     @Override
     protected void onPostExecute(NetworkResult result)
     {
       responseParser(result.response);
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class SearchTask extends AsyncTask<String, Void, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      adapter.clear();
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.searchAuto(params[0]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      String status = "";
+      try
+      {
+        JSONObject jsonObject = new JSONObject(result.response);
+        if (jsonObject.has("status"))
+        {
+          status = jsonObject.getString("status");
+        }
+        
+        if (status.equals("OK"))
+        {
+          JSONArray jsonArray = jsonObject.getJSONArray("data");
+          for (int i = 0; i < jsonArray.length(); i++)
+          {
+            SearchResultBean bean = new SearchResultBean();
+            JSONObject obj = jsonArray.getJSONObject(i);
+            bean.text = obj.getString("title");
+            bean.idx = obj.getString("idx");
+            adapter.add(bean);
+          }
+        }
+      }
+      catch (JSONException e)
+      {
+        status = "";
+        e.printStackTrace();
+      }
+      
+      if (adapter.getCount() == 0)
+      {
+        emptyContainer.setVisibility(View.VISIBLE);
+        searchListView.setVisibility(View.GONE);
+        loadPopularWords();
+        return;
+      }
+      else
+      {
+        searchListView.setVisibility(View.VISIBLE);
+        emptyContainer.setVisibility(View.GONE);
+      }
       super.onPostExecute(result);
     }
   }

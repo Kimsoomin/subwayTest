@@ -14,7 +14,7 @@ public class SearchResultBean
 	public boolean isTitle = false;
 	public int moreCount = 0;
 	public int type = TYPE_NORMAL;
-	
+	public String idx;
 	
 	public SearchResultBean()
 	{

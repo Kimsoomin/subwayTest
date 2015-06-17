@@ -66,6 +66,7 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CATEGORY_LIST");
   }
   
+  
   public ArrayList<ScheduleBean> getTravelSchedules(int page, int daycount)
   {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
@@ -98,6 +99,7 @@ public class ApiClient
       beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
     return beans;
   }
+  
   
   public ArrayList<ScheduleBean> getMyTravelSchedules(String ownerUserSeq)
   {
@@ -264,7 +266,10 @@ public class ApiClient
     PlaceDetailBean bean = new PlaceDetailBean();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLACE_VIEW&idx=" + placeIdx);
+      String url = getSiteUrl() + "?v=m1&mode=PLACE_VIEW&idx=" + placeIdx;
+      if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        url += "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+      NetworkResult result = httpClient.requestGet(url);
       try
       {
         JSONObject obj = new JSONObject(result.response);
