@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +30,7 @@ import com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity;
 import com.dabeeo.hangouyou.beans.PlaceBean;
 import com.dabeeo.hangouyou.controllers.mypage.MyPlaceListAdapter;
 import com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 
 public class MyBookmarkPlaceListFragment extends Fragment
@@ -45,11 +45,6 @@ public class MyBookmarkPlaceListFragment extends Fragment
   private CheckBox allCheckBox;
   private TextView selectDelete;
   private boolean isLoadEnded = false;
-  
-  
-  public MyBookmarkPlaceListFragment()
-  {
-  }
   
   
   @Override
@@ -69,7 +64,9 @@ public class MyBookmarkPlaceListFragment extends Fragment
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     allCheckContainer = (LinearLayout) getView().findViewById(R.id.container_all_checking);
     allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
+    allCheckBox.setOnCheckedChangeListener(checkedChangeListener);
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
+    selectDelete.setOnClickListener(deleteButtonClickListener);
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     
     adapter = new MyPlaceListAdapter(getActivity());
@@ -102,73 +99,89 @@ public class MyBookmarkPlaceListFragment extends Fragment
   
   public void setEditMode(boolean isEditMode)
   {
-    if (adapter.getCount() == 0)
-    {
-      ((MyBookmarkActivity) getActivity()).isEditMode = false;
-      ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
-      return;
-    }
-    else
-    {
-      adapter.setEditMode(isEditMode);
-      if (isEditMode)
-      {
-        allCheckContainer.setVisibility(View.VISIBLE);
-        allCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
-        {
-          @Override
-          public void onCheckedChanged(CompoundButton arg0, boolean arg1)
-          {
-            adapter.setAllCheck(arg1);
-          }
-        });
-        selectDelete.setVisibility(View.VISIBLE);
-        selectDelete.setOnClickListener(new OnClickListener()
-        {
-          @Override
-          public void onClick(View arg0)
-          {
-            Log.w("WARN", "선택된 아이템 리스트 : " + adapter.getCheckedArrayList());
-            Builder dialog = new AlertDialog.Builder(getActivity());
-            dialog.setTitle(getString(R.string.term_alert));
-            dialog.setMessage(getString(R.string.term_delete_confirm));
-            dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-            {
-              @Override
-              public void onClick(DialogInterface dialog, int which)
-              {
-                if (allCheckBox.isChecked())
-                {
-                  listView.setVisibility(View.GONE);
-                  emptyContainer.setVisibility(View.VISIBLE);
-                  setEditMode(false);
-                  ((MyBookmarkActivity) getActivity()).isEditMode = false;
-                  ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
-                  adapter.clear();
-                }
-              }
-            });
-            dialog.setNegativeButton(android.R.string.cancel, null);
-            dialog.show();
-          }
-        });
-      }
-      else
-      {
-        allCheckContainer.setVisibility(View.GONE);
-        selectDelete.setVisibility(View.GONE);
-      }
-    }
+    adapter.setEditMode(isEditMode);
+    allCheckContainer.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
+    selectDelete.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
   }
   
   
   private void load(int offset)
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute(page);
+    new GetAsyncTask().execute(page);
   }
   
-  private class GetStoreAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
+  /**************************************************
+   * listener
+   ***************************************************/
+  private OnItemClickListener itemClickListener = new OnItemClickListener()
+  {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+      PlaceBean bean = (PlaceBean) adapter.getItem(position);
+      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
+      i.putExtra("place_idx", bean.idx);
+      startActivity(i);
+    }
+  };
+  
+  private OnCheckedChangeListener checkedChangeListener = new OnCheckedChangeListener()
+  {
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+    {
+      adapter.setAllCheck(isChecked);
+    }
+  };
+  
+  private OnClickListener deleteButtonClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      ArrayList<String> idxes = new ArrayList<>();
+      for (PlaceBean bean : adapter.getCheckedArrayList())
+      {
+        idxes.add(bean.cityIdx);
+      }
+      
+      if (idxes.isEmpty())
+        return;
+      
+      final String[] idxesString = idxes.toArray(new String[idxes.size()]);
+      
+      Builder dialog = new AlertDialog.Builder(getActivity());
+      dialog.setTitle(getString(R.string.term_alert));
+      dialog.setMessage(getString(R.string.term_delete_confirm));
+      dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+      {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          adapter.removeCheckedItem();
+          allCheckBox.setChecked(false);
+          
+          if (adapter.getCount() == 0)
+          {
+            listView.setVisibility(View.GONE);
+            emptyContainer.setVisibility(View.VISIBLE);
+            setEditMode(false);
+            ((MyBookmarkActivity) getActivity()).toggleEditMode(false);
+          }
+          
+          new DelAsyncTask().execute(idxesString);
+        }
+      });
+      dialog.setNegativeButton(android.R.string.cancel, null);
+      dialog.show();
+    }
+  };
+  
+  /**************************************************
+   * async task
+   ***************************************************/
+  private class GetAsyncTask extends AsyncTask<Integer, Integer, ArrayList<PlaceBean>>
   {
     @Override
     protected ArrayList<PlaceBean> doInBackground(Integer... params)
@@ -180,7 +193,6 @@ public class MyBookmarkPlaceListFragment extends Fragment
     @Override
     protected void onPostExecute(ArrayList<PlaceBean> result)
     {
-      
       if (result.size() == 0)
         isLoadEnded = true;
       adapter.addAll(result);
@@ -195,20 +207,16 @@ public class MyBookmarkPlaceListFragment extends Fragment
     }
   }
   
-  /**************************************************
-   * listener
-   ***************************************************/
-  private OnItemClickListener itemClickListener = new OnItemClickListener()
+  private class DelAsyncTask extends AsyncTask<String, Void, Void>
   {
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    protected Void doInBackground(String... params)
     {
-      //
-      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
-      i.putExtra("place_idx", bean.idx);
-      startActivity(i);
+      for (String idx : params)
+      {
+        apiClient.setUsedLog(PreferenceManager.getInstance(getActivity()).getUserSeq(), idx, "place", "B");
+      }
+      return null;
     }
-  };
-  
+  }
 }

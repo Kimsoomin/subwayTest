@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,7 +130,6 @@ public class MyPlaceListAdapter extends BaseAdapter
     CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
     if (isEditMode)
     {
-      Log.w("WARN", "EditMode checkbox visible");
       checkBox.setVisibility(View.VISIBLE);
       checkBox.bringToFront();
     }

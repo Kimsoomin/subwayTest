@@ -513,9 +513,9 @@ public class ApiClient
    * @param usedType
    *          = "L": 좋아요, "B": 북마크, "S": 공유, "W": 위시
    */
-  public NetworkResult setUsedLog(String ownerUserSeq, String prentIdx, int parentType, int usedType)
+  public NetworkResult setUsedLog(String ownerUserSeq, String prentIdx, String parentType, String usedType)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&paerntIdx=" + prentIdx);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&paerntIdx=" + prentIdx + "&parentType=" + parentType + "&usedType=" + usedType);
   }
   
   
