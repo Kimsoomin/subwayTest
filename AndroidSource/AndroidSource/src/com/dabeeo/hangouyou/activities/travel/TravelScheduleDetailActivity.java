@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -58,6 +60,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   private SharePickView sharePickView;
   private int currentPosition = 0;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -91,13 +94,14 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     
     bottomLayout = (LinearLayout) findViewById(R.id.bottom_layout);
     btnSaveSchedule = (Button) findViewById(R.id.btn_recommend_travel_schedule_save);
-    if(getIntent().hasExtra("startDate"))
+    if (getIntent().hasExtra("startDate"))
     {
       startDateString = getIntent().getStringExtra("startDate");
       dayCount = getIntent().getIntExtra("dayCount", 0);
       bottomLayout.setVisibility(View.GONE);
       btnSaveSchedule.setVisibility(View.VISIBLE);
-    }else
+    }
+    else
     {
       bottomLayout.setVisibility(View.VISIBLE);
       btnSaveSchedule.setVisibility(View.GONE);
@@ -120,90 +124,10 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     loadScheduleDetail();
   }
   
-  private OnClickListener clickListener = new OnClickListener()
-  {
-    @Override
-    public void onClick(View v)
-    {
-      if (v.getId() == R.id.btn_share)
-      {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
-        // 공유하기
-        sharePickView.setVisibility(View.VISIBLE);
-        sharePickView.view.setVisibility(View.VISIBLE);
-        sharePickView.bringToFront();
-      }
-      else 
-      {
-        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
-        {
-          if (v.getId() == btnBookmark.getId())
-          {
-            if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-            {
-              new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
-              return;
-            }
-            // 북마크 토글
-            if (!btnBookmark.isActivated())
-              Toast.makeText(TravelScheduleDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
-            btnBookmark.setActivated(!btnBookmark.isActivated());
-          }else if (v.getId() == btnLike.getId())
-          {
-            //좋아요 
-            btnLike.setActivated(!btnLike.isActivated());
-          }
-          else if (v.getId() == R.id.btn_write_review)
-          {
-            //리뷰쓰기
-            Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
-            i.putExtra("idx", idx);
-            i.putExtra("type", "plan");
-            startActivity(i);
-          }
-        }else
-        {
-          new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog();
-        }
-      }
-    }
-  };
-  
   
   private void loadScheduleDetail()
   {
     new LoadScheduleAsyncTask().execute();
-  }
-  
-  private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ScheduleDetailBean>
-  {
-    @Override
-    protected void onPreExecute()
-    {
-      progressBar.setVisibility(View.VISIBLE);
-      super.onPreExecute();
-    }
-    
-    
-    @Override
-    protected ScheduleDetailBean doInBackground(String... params)
-    {
-      return apiClient.getTravelScheduleDetail(idx);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(ScheduleDetailBean result)
-    {
-      bean = result;
-      progressBar.setVisibility(View.GONE);
-      displayContent();
-      super.onPostExecute(result);
-    }
   }
   
   
@@ -286,6 +210,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     return super.onOptionsItemSelected(item);
   }
   
+  
   public Date calCalender(int calender)
   {
     Calendar cal = Calendar.getInstance();
@@ -330,9 +255,90 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     }
   };
   
+  private OnClickListener clickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == R.id.btn_share)
+      {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        // 공유하기
+        sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.view.setVisibility(View.VISIBLE);
+        sharePickView.bringToFront();
+      }
+      else
+      {
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          if (v.getId() == btnBookmark.getId())
+          {
+            if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+            {
+              new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
+              return;
+            }
+            
+            new ToggleBookmarkTask().execute();
+          }
+          else if (v.getId() == btnLike.getId())
+          {
+            new ToggleLikeTask().execute();
+          }
+          else if (v.getId() == R.id.btn_write_review)
+          {
+            //리뷰쓰기
+            Intent i = new Intent(TravelScheduleDetailActivity.this, WriteReviewActivity.class);
+            i.putExtra("idx", idx);
+            i.putExtra("type", "plan");
+            startActivity(i);
+          }
+        }
+        else
+        {
+          new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog();
+        }
+      }
+    }
+  };
+  
   /**************************************************
    * async task
    ***************************************************/
+  private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ScheduleDetailBean>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      progressBar.setVisibility(View.VISIBLE);
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected ScheduleDetailBean doInBackground(String... params)
+    {
+      return apiClient.getTravelScheduleDetail(idx);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(ScheduleDetailBean result)
+    {
+      bean = result;
+      btnLike.setActivated(bean.isLiked);
+      btnBookmark.setActivated(bean.isBookmarked);
+      progressBar.setVisibility(View.GONE);
+      displayContent();
+      super.onPostExecute(result);
+    }
+  }
+  
   private class CompleteAsyncTask extends AsyncTask<Void, Integer, NetworkResult>
   {
     @Override
@@ -351,4 +357,64 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       finish();
     }
   }
+  
+  private class ToggleBookmarkTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "plan", "B");
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        
+        if (obj.getString("result").equals("INS"))
+        {
+          btnBookmark.setActivated(true);
+          Toast.makeText(TravelScheduleDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+          btnBookmark.setActivated(false);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+  }
+  
+  private class ToggleLikeTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "plan", "L");
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        btnLike.setActivated(obj.getString("result").equals("INS"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+  }
+  
 }
