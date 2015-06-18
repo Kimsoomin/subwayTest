@@ -106,7 +106,7 @@ public class ApiClient
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=MY_PLAN_LIST&ownerUserSeq="+PreferenceManager.getInstance(context).getUserSeq();
+      String url = getSiteUrl() + "?v=m1&mode=MY_PLAN_LIST&ownerUserSeq=" + PreferenceManager.getInstance(context).getUserSeq();
       
       NetworkResult result = httpClient.requestGet(url);
       try
@@ -407,6 +407,24 @@ public class ApiClient
     else
       beans.addAll(offlineDatabaseManager.getReviews(page, parentIdx));
     return beans;
+  }
+  
+  
+  public boolean removeReview(String idx)
+  {
+    NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_DEL&idx=" + idx);
+    boolean isSuccess = false;
+    try
+    {
+      JSONObject obj = new JSONObject(result.response);
+      if (obj.getString("status").equals("OK"))
+        isSuccess = true;
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    return isSuccess;
   }
   
   

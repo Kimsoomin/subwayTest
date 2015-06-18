@@ -1,6 +1,7 @@
 package com.dabeeo.hangouyou.views;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ReviewDetailActivity;
 import com.dabeeo.hangouyou.beans.ReviewBean;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
+import com.dabeeo.hangouyou.views.ReviewView.DeleteListener;
 
 public class ReviewContainerView extends LinearLayout
 {
@@ -28,6 +30,7 @@ public class ReviewContainerView extends LinearLayout
   private boolean isLoading = false;
   
   private RelativeLayout progressLayout;
+  private HashMap<String, ReviewView> reviewViews = new HashMap<String, ReviewView>();
   
   
   public ReviewContainerView(Activity context, String parentType, String parentIdx)
@@ -121,7 +124,14 @@ public class ReviewContainerView extends LinearLayout
   private void addReviewView(final ReviewBean bean)
   {
     ReviewView reviewView = new ReviewView(context);
-    reviewView.setBean(bean);
+    reviewView.setBean(bean, new DeleteListener()
+    {
+      @Override
+      public void onDelete(String idx)
+      {
+        new DeleteAsyncTask().execute(idx);
+      }
+    });
     reviewView.setOnClickListener(new OnClickListener()
     {
       @Override
@@ -132,11 +142,45 @@ public class ReviewContainerView extends LinearLayout
         context.startActivity(i);
       }
     });
+    reviewViews.put(bean.idx, reviewView);
     container.addView(reviewView);
     
     View line = new View(context);
     line.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 1));
     line.setBackgroundColor(Color.parseColor("#c3c3c3"));
     container.addView(line);
+  }
+  
+  /**************************************************
+   * async task
+   ***************************************************/
+  private class DeleteAsyncTask extends AsyncTask<String, Integer, Boolean>
+  {
+    public String reviewIdx;
+    
+    
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      reviewIdx = params[0];
+      return apiClient.removeReview(params[0]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Boolean result)
+    {
+      if (result)
+        if (reviewViews.get(reviewIdx) != null)
+          container.removeView(reviewViews.get(reviewIdx));
+      super.onPostExecute(result);
+    }
   }
 }

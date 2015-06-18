@@ -3,7 +3,9 @@ package com.dabeeo.hangouyou.views;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hangouyou.beans.ReviewBean;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 
 public class ReviewView extends RelativeLayout
@@ -37,6 +40,7 @@ public class ReviewView extends RelativeLayout
   
   private ListPopupWindow listPopupWindow;
   private LinearLayout imageContainer;
+  private DeleteListener deleteListener;
   
   
   public ReviewView(Context context)
@@ -59,10 +63,16 @@ public class ReviewView extends RelativeLayout
     this.context = context;
   }
   
+  public interface DeleteListener
+  {
+    public void onDelete(String idx);
+  }
   
-  public void setBean(final ReviewBean bean)
+  
+  public void setBean(final ReviewBean bean, final DeleteListener deleteListener)
   {
     this.bean = bean;
+    this.deleteListener = deleteListener;
     init();
     
     name.setText(bean.userName);
@@ -94,23 +104,6 @@ public class ReviewView extends RelativeLayout
       ImageDownloader.displayImage(context, bean.imageUrls.get(i), imageView, null);
       imageContainer.addView(imageView);
     }
-  }
-  
-  
-  public void init()
-  {
-    int resId = R.layout.view_place_review;
-    View view = LayoutInflater.from(context).inflate(resId, null);
-    view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-    
-    imageContainer = (LinearLayout) view.findViewById(R.id.image_container);
-    
-    icon = (ImageView) view.findViewById(R.id.icon);
-    name = (TextView) view.findViewById(R.id.name);
-    time = (TextView) view.findViewById(R.id.time);
-    content = (TextView) view.findViewById(R.id.content);
-    reviewScore = (TextView) view.findViewById(R.id.text_review_score);
-    btnMore = (ImageView) view.findViewById(R.id.btn_review_list_more);
     
     btnMore.setOnClickListener(new OnClickListener()
     {
@@ -119,10 +112,19 @@ public class ReviewView extends RelativeLayout
       {
         Log.w("WARN", "Click!");
         listPopupWindow = new ListPopupWindow(context);
-        String[] listPopupArray = new String[2];
-        listPopupArray[0] = context.getString(R.string.term_delete);
-        listPopupArray[1] = context.getString(R.string.term_declare);
+        String[] listPopupArray = new String[1];
         
+        if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+          listPopupArray[0] = context.getString(R.string.term_declare);
+        else
+        {
+          if (PreferenceManager.getInstance(context).getUserSeq().equals(bean.ownerUserSeq))
+            listPopupArray[0] = context.getString(R.string.term_delete);
+          else
+            listPopupArray[0] = context.getString(R.string.term_declare);
+        }
+        
+        final String[] finalListPopupArray = listPopupArray;
         listPopupWindow.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, listPopupArray));
         listPopupWindow.setAnchorView(btnMore);
         listPopupWindow.setWidth(300);
@@ -131,13 +133,21 @@ public class ReviewView extends RelativeLayout
           @Override
           public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
           {
-            if (position == 0)
+            if (finalListPopupArray[position].equals(context.getString(R.string.term_delete)))
             {
               //삭제
               Builder builder = new AlertDialog.Builder(context);
               builder.setTitle(context.getString(R.string.app_name));
               builder.setMessage(context.getString(R.string.msg_confirm_delete));
-              builder.setPositiveButton(android.R.string.ok, null);
+              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                  if (deleteListener != null)
+                    deleteListener.onDelete(bean.idx);
+                }
+              });
               builder.setNegativeButton(android.R.string.cancel, null);
               builder.show();
             }
@@ -160,6 +170,25 @@ public class ReviewView extends RelativeLayout
         listPopupWindow.show();
       }
     });
+  }
+  
+  
+  public void init()
+  {
+    int resId = R.layout.view_place_review;
+    View view = LayoutInflater.from(context).inflate(resId, null);
+    view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+    
+    imageContainer = (LinearLayout) view.findViewById(R.id.image_container);
+    
+    icon = (ImageView) view.findViewById(R.id.icon);
+    name = (TextView) view.findViewById(R.id.name);
+    time = (TextView) view.findViewById(R.id.time);
+    content = (TextView) view.findViewById(R.id.content);
+    reviewScore = (TextView) view.findViewById(R.id.text_review_score);
+    btnMore = (ImageView) view.findViewById(R.id.btn_review_list_more);
+    
     addView(view);
   }
+  
 }

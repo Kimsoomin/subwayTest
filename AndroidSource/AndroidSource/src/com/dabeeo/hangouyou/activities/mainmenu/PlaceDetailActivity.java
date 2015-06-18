@@ -573,7 +573,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.cityIdx, "place", "B");
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "place", "B");
     }
     
     
@@ -607,7 +607,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.cityIdx, "place", "L");
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "place", "L");
     }
     
     

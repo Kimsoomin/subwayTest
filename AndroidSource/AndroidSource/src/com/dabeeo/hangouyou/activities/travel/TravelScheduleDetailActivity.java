@@ -397,7 +397,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "plan", "L");
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "premium", "L");
     }
     
     

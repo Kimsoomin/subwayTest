@@ -3,10 +3,12 @@ package com.dabeeo.hangouyou.activities.sub;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.beans.ReviewBean;
+import com.dabeeo.hangouyou.managers.PreferenceManager;
 import com.dabeeo.hangouyou.managers.network.ApiClient;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
 import com.dabeeo.hangouyou.views.DeclareReviewView;
@@ -84,10 +87,19 @@ public class ReviewDetailActivity extends ActionBarActivity
       {
         Log.w("WARN", "Click!");
         listPopupWindow = new ListPopupWindow(ReviewDetailActivity.this);
-        String[] listPopupArray = new String[2];
-        listPopupArray[0] = ReviewDetailActivity.this.getString(R.string.term_delete);
-        listPopupArray[1] = ReviewDetailActivity.this.getString(R.string.term_declare);
+        String[] listPopupArray = new String[1];
         
+        if (TextUtils.isEmpty(PreferenceManager.getInstance(ReviewDetailActivity.this).getUserSeq()))
+          listPopupArray[0] = getString(R.string.term_declare);
+        else
+        {
+          if (PreferenceManager.getInstance(ReviewDetailActivity.this).getUserSeq().equals(bean.ownerUserSeq))
+            listPopupArray[0] = getString(R.string.term_delete);
+          else
+            listPopupArray[0] = getString(R.string.term_declare);
+        }
+        
+        final String[] finalListPopupArray = listPopupArray;
         listPopupWindow.setAdapter(new ArrayAdapter<String>(ReviewDetailActivity.this, android.R.layout.simple_list_item_1, listPopupArray));
         listPopupWindow.setAnchorView(btnMore);
         listPopupWindow.setWidth(300);
@@ -96,13 +108,20 @@ public class ReviewDetailActivity extends ActionBarActivity
           @Override
           public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
           {
-            if (position == 0)
+            if (finalListPopupArray[position].equals(getString(R.string.term_delete)))
             {
               //삭제
               Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
               builder.setTitle(ReviewDetailActivity.this.getString(R.string.app_name));
               builder.setMessage(ReviewDetailActivity.this.getString(R.string.msg_confirm_delete));
-              builder.setPositiveButton(android.R.string.ok, null);
+              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                  new DeleteAsyncTask().execute(bean.idx);
+                }
+              });
               builder.setNegativeButton(android.R.string.cancel, null);
               builder.show();
             }
@@ -241,4 +260,35 @@ public class ReviewDetailActivity extends ActionBarActivity
     return super.onOptionsItemSelected(item);
   }
   
+  /**************************************************
+   * async task
+   ***************************************************/
+  private class DeleteAsyncTask extends AsyncTask<String, Integer, Boolean>
+  {
+    public String reviewIdx;
+    
+    
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      reviewIdx = params[0];
+      return apiClient.removeReview(params[0]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Boolean result)
+    {
+      if (result)
+        finish();
+      super.onPostExecute(result);
+    }
+  }
 }
