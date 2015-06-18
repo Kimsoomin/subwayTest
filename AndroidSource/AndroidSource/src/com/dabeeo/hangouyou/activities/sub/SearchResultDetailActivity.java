@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -50,6 +52,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
   private LinearLayout emptyContainer;
   private ApiClient apiClient;
   private Handler handler = new Handler();
+  private ProgressBar progressBar;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -65,6 +69,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    progressBar = (ProgressBar) findViewById(R.id.progressbar);
     apiClient = new ApiClient(this);
     searchListView = (ListView) findViewById(R.id.search_list);
     emptyContainer = (LinearLayout) findViewById(R.id.empty_container);
@@ -157,9 +162,10 @@ public class SearchResultDetailActivity extends ActionBarActivity
     @Override
     public void run()
     {
-      new SearchTask().execute(inputWord.getText().toString());      
+      new SearchTask().execute(inputWord.getText().toString());
     }
   };
+  
   
   private void detail(SearchResultBean searchResultBean)
   {
@@ -168,7 +174,10 @@ public class SearchResultDetailActivity extends ActionBarActivity
       //more 인 경우 
       Intent intent = new Intent(SearchResultDetailActivity.this, SearchResultJustOneCategoryListActivity.class);
       intent.putExtra("title", searchResultBean.text + " " + getString(R.string.term_search_result));
-      intent.putExtra("results", adapter.getJsonStringForParameter(searchResultBean.type));
+      intent.putExtra("more_count", searchResultBean.moreCount);
+      Log.w("WARN", "more 의 Search Type : " + searchResultBean.type);
+      intent.putExtra("search_type", searchResultBean.type);
+      intent.putExtra("search_text", inputWord.getText().toString());
       startActivity(intent);
     }
     else
@@ -232,6 +241,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
     protected void onPreExecute()
     {
       adapter.clear();
+      progressBar.setVisibility(View.VISIBLE);
+      progressBar.bringToFront();
       super.onPreExecute();
     }
     
@@ -281,6 +292,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
           
           SearchResultBean titleBean = new SearchResultBean();
           titleBean.addPlaceTitle(getString(R.string.term_place), jsonObject.getInt("placeCount"));
+          titleBean.type = SearchResultBean.TYPE_PLACE;
           adapter.add(titleBean);
           
           if (placeList.size() > 0)
@@ -302,6 +314,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
           
           titleBean = new SearchResultBean();
           titleBean.addPlaceTitle(getString(R.string.term_strategy_seoul), jsonObject.getInt("premiumCount"));
+          titleBean.type = SearchResultBean.TYPE_RECOMMEND_SEOUL;
           adapter.add(titleBean);
           
           if (premiumList.size() > 0)
@@ -323,6 +336,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
           
           titleBean = new SearchResultBean();
           titleBean.addPlaceTitle(getString(R.string.term_travel_schedule), jsonObject.getInt("planCount"));
+          titleBean.type = SearchResultBean.TYPE_SCHEDULE;
           adapter.add(titleBean);
           
           if (planList.size() > 0)
@@ -361,6 +375,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
         searchListView.setVisibility(View.VISIBLE);
         emptyContainer.setVisibility(View.GONE);
       }
+      
+      progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
     }
   }
