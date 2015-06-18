@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.utils.ImageDownloader;
@@ -45,66 +48,14 @@ public class PinchImageView extends LinearLayout
     
     final ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
     
-//    Display display = context.getWindowManager().getDefaultDisplay();
-//    int width = display.getWidth();
-//    int height = display.getHeight();
-//    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(width, height);
-//    imageView.setLayoutParams(layoutParams);
+    Display display = context.getWindowManager().getDefaultDisplay();
+    int width = display.getWidth();
+    int height = display.getHeight();
+    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(width, height);
+    imageView.setLayoutParams(layoutParams);
     
-//    WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-//    Display display = wm.getDefaultDisplay();
-//    @SuppressWarnings("deprecation")
-//    int width = display.getWidth();
-//    
-//    int imageHeight = (int) (width * 0.75);
-//    ((RelativeLayout) view.findViewById(R.id.container)).getLayoutParams().height = imageHeight;
-    
-    ImageDownloader.displayImage(context, url, imageView, new ImageLoadingListener()
-    {
-      @Override
-      public void onLoadingStarted(String arg0, View arg1)
-      {
-      }
-      
-      
-      @Override
-      public void onLoadingFailed(String arg0, View arg1, FailReason arg2)
-      {
-      }
-      
-      
-      @Override
-      public void onLoadingComplete(String arg0, View arg1, Bitmap arg2)
-      {
-        usingSimpleImage(imageView);
-      }
-      
-      
-      @Override
-      public void onLoadingCancelled(String arg0, View arg1)
-      {
-      }
-    });
+    ImageDownloader.displayImagePinchZoom(context, url, imageView, null);
     addView(view);
-  }
-  
-  
-  public void usingSimpleImage(ImageView imageView)
-  {
-    ImageAttacher attacher = new ImageAttacher(imageView);
-    ImageAttacher.MAX_ZOOM = 4.0f;
-    ImageAttacher.MIN_ZOOM = 1.0f;
-    MatrixChangeListener matrixListener = new MatrixChangeListener();
-    attacher.setOnMatrixChangeListener(matrixListener);
-  }
-  
-  private class MatrixChangeListener implements OnMatrixChangedListener
-  {
-    @Override
-    public void onMatrixChanged(RectF rect)
-    {
-      
-    }
   }
   
 }

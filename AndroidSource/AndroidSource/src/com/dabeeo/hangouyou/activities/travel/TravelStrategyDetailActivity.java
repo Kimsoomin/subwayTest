@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -178,10 +177,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       }
       else
       {
-        Display display = getWindowManager().getDefaultDisplay();
-        @SuppressWarnings("deprecation")
-        int width = display.getWidth();
-        Picasso.with(this).load(contentBean.imageUrl).fit().into(image);
+        Picasso.with(this).load(contentBean.imageUrl).fit().centerCrop().into(image);
         image.setVisibility(View.VISIBLE);
         final String imageUrl = contentBean.imageUrl;
         image.setOnClickListener(new OnClickListener()
