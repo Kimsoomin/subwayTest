@@ -38,7 +38,6 @@ import com.dabeeo.hangouyou.utils.MapCheckUtil;
 import com.dabeeo.hangouyou.views.SharePickView;
 import com.squareup.picasso.Picasso;
 
-@SuppressWarnings("deprecation")
 public class TravelStrategyDetailActivity extends ActionBarActivity
 {
   private LinearLayout contentContainer;
@@ -54,6 +53,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   private ImageView btnLike;
   private SharePickView sharePickView;
   
+  private boolean isMap = false;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -70,6 +70,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     placeIdx = getIntent().getStringExtra("place_idx");
+    isMap = getIntent().getBooleanExtra("is_map", false);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     contentContainer = (LinearLayout) findViewById(R.id.container_details);
     horizontalImagesView = (ViewGroup) findViewById(R.id.horizontal_images_view);
@@ -107,7 +108,10 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-    getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
+    if(!isMap)
+      getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
+    else
+      getMenuInflater().inflate(R.menu.menu_empty, menu);
     return true;
   }
   
@@ -127,6 +131,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         {
           Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
           i.putExtra("premiumIdx", placeIdx);
+          i.putExtra("isPremium", true);
           startActivity(i);
         }
       });
@@ -213,7 +218,6 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
       Picasso.with(this).load(imageUrl).into(view);
-      final int position = i;
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {
@@ -276,25 +280,28 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       else if (title.equals(getString(R.string.term_address)))
       {
         imageCall.setVisibility(View.GONE);
-        imageAddress.setVisibility(View.VISIBLE);
-        
-        imageAddress.setOnClickListener(new OnClickListener()
+        if(!isMap)
         {
-          @Override
-          public void onClick(View arg0)
+          imageAddress.setVisibility(View.VISIBLE);
+          
+          imageAddress.setOnClickListener(new OnClickListener()
           {
-            MapCheckUtil.checkMapExist(TravelStrategyDetailActivity.this, new Runnable()
+            @Override
+            public void onClick(View arg0)
             {
-              @Override
-              public void run()
+              MapCheckUtil.checkMapExist(TravelStrategyDetailActivity.this, new Runnable()
               {
-                Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
-                i.putExtra("premiumIdx", placeIdx);
-                startActivity(i);
-              }
-            });
-          }
-        });
+                @Override
+                public void run()
+                {
+                  Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
+                  i.putExtra("premiumIdx", placeIdx);
+                  startActivity(i);
+                }
+              });
+            }
+          });
+        }
       }
       else
       {

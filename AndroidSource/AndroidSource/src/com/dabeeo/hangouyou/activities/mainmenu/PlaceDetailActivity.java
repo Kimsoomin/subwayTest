@@ -3,6 +3,7 @@ package com.dabeeo.hangouyou.activities.mainmenu;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.bool;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -84,6 +85,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private Button btnRecommendSeoul;
   
   private boolean isEnterMap = false;
+  private boolean isPremium = false;
   private Button btnLike, btnBookmark;
   private SharePickView sharePickView;
   
@@ -107,6 +109,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     isEnterMap = getIntent().getBooleanExtra("is_map", false);
+    isPremium = getIntent().getBooleanExtra("isPremium", false);
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getStringExtra("place_idx");
     if (getIntent().hasExtra("premium_Idx"))
@@ -121,7 +124,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
     
     layoutRecommendSeoul = (LinearLayout) findViewById(R.id.container_recommend_by_expect);
-    if (premiumIdx.equals("null"))
+    if (premiumIdx.equals("null")||isPremium)
     {
       layoutRecommendSeoul.setVisibility(View.GONE);
     }
@@ -142,6 +145,7 @@ public class PlaceDetailActivity extends ActionBarActivity
         {
           Intent i = new Intent(PlaceDetailActivity.this, TravelStrategyDetailActivity.class);
           i.putExtra("place_idx", premiumIdx);
+          i.putExtra("is_map", isEnterMap);
           BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
           startActivity(i);
         }

@@ -203,6 +203,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   // - Class 간 전달할 데이터
   public String idx;
+  public String preimumIdx;
   public String lineId = "";
   public int placeType = 0;
   public boolean planIntentget = false;;
@@ -242,6 +243,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   public int selectItem = -1;
   public boolean getintent = false;
+  public boolean isPremium = false;
   
   /**
    * =====================================================================================
@@ -641,6 +643,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     });
     
     g_sensorcallback = this;
+    
+    allIntent();
   } // - onCreate end..
   
   private OnItemClickListener onClickListItem = new OnItemClickListener() 
@@ -1114,7 +1118,9 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         {
           Intent detailPlaceIntent = new Intent(this, PlaceDetailActivity.class);
           detailPlaceIntent.putExtra("place_idx", idx);
+          detailPlaceIntent.putExtra("premium_Idx", preimumIdx);
           detailPlaceIntent.putExtra("is_map", true);
+          detailPlaceIntent.putExtra("isPremium", isPremium);
           startActivity(detailPlaceIntent);
           Log.i("INFO", "place_idx : " + idx);
         }
@@ -1416,6 +1422,29 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       navigationCal(m_locMarkTarget);
   }
   
+  public void allIntent()
+  {
+    Intent intent = getIntent();
+    if (intent.hasExtra("lineId"))
+    {
+      subwayIntnet(intent);
+      selectItem = 2;
+    }else if (intent.hasExtra("placeIdx"))
+    {
+      idx = intent.getStringExtra("placeIdx");
+      BlinkingCommon.smlLibDebug("BlinkingMap", "idx : " +idx );
+      selectItem = 1;
+      selectMarker(null, 4);
+    }else if(intent.hasExtra("premiumIdx"))
+    {      
+      preimumIdx = intent.getStringExtra("premiumIdx");
+      isPremium = intent.getBooleanExtra("isPremium", false);
+      idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
+      selectItem = 1;
+      selectMarker(null, 4);
+    }
+  }
+  
   @Override
   protected void onNewIntent(Intent intent) 
   {
@@ -1433,8 +1462,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         selectMarker(null, 4);
       }else if(intent.hasExtra("premiumIdx"))
       {      
-        idx = intent.getStringExtra("premiumIdx");
-        idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(idx);
+        preimumIdx = intent.getStringExtra("premiumIdx");
+        idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
         selectItem = 1;
         selectMarker(null, 4);
       }
@@ -1451,25 +1480,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   protected void onResume() 
   {
     super.onResume();
-    
-    Intent intent = getIntent();
-    if (intent.hasExtra("lineId"))
-    {
-      subwayIntnet(intent);
-      selectItem = 2;
-    }else if (intent.hasExtra("placeIdx"))
-    {
-      idx = intent.getStringExtra("placeIdx");
-      BlinkingCommon.smlLibDebug("BlinkingMap", "idx : " +idx );
-      selectItem = 1;
-      selectMarker(null, 4);
-    }else if(intent.hasExtra("premiumIdx"))
-    {      
-      idx = intent.getStringExtra("premiumIdx");
-      idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(idx);
-      selectItem = 1;
-      selectMarker(null, 4);
-    }
     
     mapCenterset(0);
   }
@@ -1745,6 +1755,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       }
       
       PlaceInfo info = allplaceinfo.get(idx);
+      preimumIdx = info.premiumIdx;
       place_fLatitude = info.lat;
       place_fLongitute = info.lng;
       DestinationTitle = info.title;
