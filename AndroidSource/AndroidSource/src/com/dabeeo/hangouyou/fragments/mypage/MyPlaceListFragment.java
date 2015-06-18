@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,6 +82,15 @@ public class MyPlaceListFragment extends Fragment
   }
   
   
+  public void refresh()
+  {
+    page = 1;
+    isLoadEnded = false;
+    adapter.clear();
+    load();
+  }
+  
+  
   public void setEditMode(boolean isEditMode)
   {
     adapter.setEditMode(isEditMode);
@@ -135,11 +145,6 @@ public class MyPlaceListFragment extends Fragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-      if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-      {
-        page++;
-        load();
-      }
     }
   };
   
@@ -151,6 +156,7 @@ public class MyPlaceListFragment extends Fragment
       PlaceBean bean = (PlaceBean) adapter.getItem(position);
       Intent i = new Intent(getActivity(), MyPlaceDetailActivity.class);
       i.putExtra("place_idx", bean.idx);
+      i.putExtra("premium_idx", bean.premiumIdx);
       startActivity(i);
     }
   };
@@ -169,8 +175,7 @@ public class MyPlaceListFragment extends Fragment
       if (idxes.isEmpty())
         return;
       
-      final String[] idxesString = idxes.toArray(new String[idxes.size()]);
-      
+      final ArrayList<String> finalIdxs = idxes;
       Builder dialog = new AlertDialog.Builder(getActivity());
       dialog.setTitle(getString(R.string.term_alert));
       dialog.setMessage(getString(R.string.term_delete_confirm));
@@ -189,7 +194,30 @@ public class MyPlaceListFragment extends Fragment
             ((MyPlaceActivity) getActivity()).toggleEditMode(false);
           }
           
-          new DelPlaceTask().execute(idxesString);
+          String deleteIdxs = "";
+          if (finalIdxs.size() > 1)
+          {
+            for (int i = 0; i < finalIdxs.size(); i++)
+            {
+              deleteIdxs += finalIdxs.get(i);
+              if (i != finalIdxs.size() - 1)
+                deleteIdxs += ",";
+            }
+          }
+          else
+          {
+            try
+            {
+              deleteIdxs = finalIdxs.get(0);
+            }
+            catch (Exception e)
+            {
+              e.printStackTrace();
+            }
+          }
+          
+          if (!TextUtils.isEmpty(deleteIdxs))
+            new DelPlaceTask().execute(deleteIdxs);
         }
       });
       dialog.setNegativeButton(android.R.string.cancel, null);
@@ -205,16 +233,35 @@ public class MyPlaceListFragment extends Fragment
     @Override
     protected ArrayList<PlaceBean> doInBackground(Void... params)
     {
-      return apiClient.getPlaceList(page, categoryId, PreferenceManager.getInstance(getActivity()).getUserSeq());
+      return apiClient.getMyPlaceList();
     }
     
     
     @Override
     protected void onPostExecute(ArrayList<PlaceBean> result)
     {
-      adapter.addAll(result);
       if (result.size() == 0)
+      {
         isLoadEnded = true;
+        listView.setVisibility(View.GONE);
+        emptyContainer.setVisibility(View.VISIBLE);
+      }
+      else
+      {
+        ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
+        tempArray.addAll(result);
+        
+        if (categoryId == -1)
+          adapter.addAll(tempArray);
+        else
+        {
+          for (int i = 0; i < tempArray.size(); i++)
+          {
+            if (tempArray.get(i).categoryId == categoryId)
+              adapter.add(tempArray.get(i));
+          }
+        }
+      }
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
     }
@@ -226,10 +273,8 @@ public class MyPlaceListFragment extends Fragment
     protected NetworkResult doInBackground(String... params)
     {
       NetworkResult result = null;
-      for (String idx : params)
-      {
-        result = apiClient.deleteMyPlace(idx, PreferenceManager.getInstance(getActivity()).getUserSeq());
-      }
+      result = apiClient.deleteMyPlace(params[0], PreferenceManager.getInstance(getActivity()).getUserSeq());
+      
       return result;
     }
   }

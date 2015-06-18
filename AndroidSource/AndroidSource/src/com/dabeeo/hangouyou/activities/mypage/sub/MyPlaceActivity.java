@@ -93,6 +93,7 @@ public class MyPlaceActivity extends ActionBarActivity
     else if (item.getItemId() == closeMenuItem.getItemId())
     {
       toggleEditMode(false);
+      adapter.refreshItems();
     }
     return super.onOptionsItemSelected(item);
   }

@@ -208,12 +208,6 @@ public class ApiClient
   
   public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
   {
-    return getPlaceList(page, categoryId, null);
-  }
-  
-  
-  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId, String ownerUserSeq)
-  {
     ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
     
     if (SystemUtil.isConnectNetwork(context))
@@ -223,13 +217,27 @@ public class ApiClient
       if (categoryId != -1)
         url += "&category=" + categoryId;
       
-      if (!TextUtils.isEmpty(ownerUserSeq)) // 내 장소 요청할 때
-        url += "&ownerUserSeq=" + ownerUserSeq;
-      
       places.addAll(getPlaceList(url));
     }
     else
       places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
+    return places;
+  }
+  
+  
+  public ArrayList<PlaceBean> getMyPlaceList()
+  {
+    ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+    
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      String url = getSiteUrl() + "?v=m1&mode=MY_PLACE_LIST";
+      url += "&ownerUserSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+      
+      places.addAll(getPlaceList(url));
+    }
+//    else
+//      places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
     return places;
   }
   
@@ -240,6 +248,7 @@ public class ApiClient
     ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
     
     NetworkResult result = httpClient.requestGet(url);
+    
     try
     {
       JSONObject obj = new JSONObject(result.response);

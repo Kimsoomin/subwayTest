@@ -110,7 +110,11 @@ public class PlaceDetailActivity extends ActionBarActivity
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getStringExtra("place_idx");
     if (getIntent().hasExtra("premium_Idx"))
+    {
       premiumIdx = getIntent().getStringExtra("premium_Idx");
+      if (TextUtils.isEmpty(premiumIdx))
+        premiumIdx = "null";
+    }
     else
       premiumIdx = "null";
     

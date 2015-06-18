@@ -24,6 +24,21 @@ public class MyPlaceViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
+  public void clear()
+  {
+    pageReferenceMap.clear();
+  }
+  
+  
+  public void refreshItems()
+  {
+    for (int i = 0; i < pageReferenceMap.size(); i++)
+    {
+      pageReferenceMap.get(i).refresh();
+    }
+  }
+  
+  
   public void add(TitleCategoryBean bean)
   {
     items.add(bean);

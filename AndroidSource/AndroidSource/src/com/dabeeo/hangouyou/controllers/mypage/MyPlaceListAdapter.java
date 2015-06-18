@@ -187,10 +187,11 @@ public class MyPlaceListAdapter extends BaseAdapter
       }
     });
     
-    if (position % 2 == 1)
-      imagePrivate.setVisibility(View.VISIBLE);
-    else
-      imagePrivate.setVisibility(View.GONE);
+//    if (position % 2 == 1)
+//      imagePrivate.setVisibility(View.VISIBLE);
+//    else
+//      imagePrivate.setVisibility(View.GONE);
+    
     try
     {
       SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
