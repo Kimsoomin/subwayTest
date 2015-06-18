@@ -11,6 +11,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +42,8 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
   private RelativeLayout containerRecommendSchedule;
   private Button btnAnotherSchedule, btnNewSchedule;
   private ScheduleBean bean;
+  private ApiClient apiClient;
+  private int theme = 0;
   
   
   @Override
@@ -57,6 +61,8 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    theme = getIntent().getIntExtra("theme", 1);
+    apiClient = new ApiClient(getApplicationContext());
     profileImage = (RoundedImageView) findViewById(R.id.profile_image);
     textCompelete = (TextView) findViewById(R.id.text_compelete);
     containerRecommendSchedule = (RelativeLayout) findViewById(R.id.container_recommend_schedule);
@@ -184,35 +190,60 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
   
   private void generateNewSchedule()
   {
-    Builder builder = new AlertDialog.Builder(RecommendScheduleCompeletedActivity.this);
-    CharacterProgressView pView = new CharacterProgressView(RecommendScheduleCompeletedActivity.this);
-    pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
-    builder.setView(pView);
-    builder.setCancelable(false);
-    final AlertDialog dialog = builder.create();
-    
-    if (!dialog.isShowing())
-      dialog.show();
-    
-    new Handler().postDelayed(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        dialog.dismiss();
-      }
-    }, 1500);
+    new CreateAsyncTask().execute();
   }
   
   /**************************************************
    * async task
    ***************************************************/
+  private class CreateAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    AlertDialog dialog;
+    String startDate;
+    
+    
+    @Override
+    protected void onPreExecute()
+    {
+      Builder builder = new AlertDialog.Builder(RecommendScheduleCompeletedActivity.this);
+      CharacterProgressView pView = new CharacterProgressView(RecommendScheduleCompeletedActivity.this);
+      pView.title.setText(getString(R.string.msg_progress_recommend_schedule));
+      builder.setView(pView);
+      builder.setCancelable(false);
+      dialog = builder.create();
+      
+      if (!dialog.isShowing())
+        dialog.show();
+      
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.getCreateRecommendSchedule(startDate, bean.dayCount, theme);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      dialog.dismiss();
+      
+      if (TextUtils.isEmpty(result.response))
+        return;
+      
+      displayRecommendScheduleView(result.response, startDate);
+      super.onPostExecute(result);
+    }
+  }
+  
   private class CompleteAsyncTask extends AsyncTask<ScheduleBean, Integer, NetworkResult>
   {
     @Override
     protected NetworkResult doInBackground(ScheduleBean... params)
     {
-      ApiClient apiClient = new ApiClient(getApplicationContext());
       return apiClient.completeCreateRecommendSchedule(bean.startDateString, bean.idx, bean.dayCount);
     }
     

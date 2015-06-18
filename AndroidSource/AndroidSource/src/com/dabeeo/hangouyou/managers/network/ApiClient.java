@@ -101,12 +101,12 @@ public class ApiClient
   }
   
   
-  public ArrayList<ScheduleBean> getMyTravelSchedules(String ownerUserSeq)
+  public ArrayList<ScheduleBean> getMyTravelSchedules()
   {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=";
+      String url = getSiteUrl() + "?v=m1&mode=MY_PLAN_LIST&ownerUserSeq="+PreferenceManager.getInstance(context).getUserSeq();
       
       NetworkResult result = httpClient.requestGet(url);
       try

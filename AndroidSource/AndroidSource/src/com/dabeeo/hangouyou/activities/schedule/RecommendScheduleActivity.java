@@ -264,6 +264,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       
       Intent i = new Intent(RecommendScheduleActivity.this, RecommendScheduleCompeletedActivity.class);
       i.putExtra("json", result.response);
+      i.putExtra("theme", theme);
       i.putExtra("startDate", startDate);
       startActivity(i);
       super.onPostExecute(result);

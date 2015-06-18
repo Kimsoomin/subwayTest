@@ -200,9 +200,10 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-    //TODO 내 일정 API 변경으로 작업
-      return apiClient.getMyTravelSchedules(PreferenceManager.getInstance(getActivity()).getUserSeq());
+      //TODO 내 일정 API 변경으로 작업
+      return apiClient.getMyTravelSchedules();
     }
+    
     
     @Override
     protected void onPostExecute(ArrayList<ScheduleBean> result)

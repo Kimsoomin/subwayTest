@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -112,16 +113,7 @@ public class MySchedulesActivity extends ActionBarActivity
     page = 1;
     adapter.clear();
     
-//    Runnable runnable = new Runnable()
-//    {
-//      @Override
-//      public void run()
-//      {
     loadSchedules();
-//      }
-//    };
-//    Handler handler = new Handler();
-//    handler.postDelayed(runnable, 100);
   }
   
   
@@ -209,8 +201,7 @@ public class MySchedulesActivity extends ActionBarActivity
         if (idxes.isEmpty())
           return;
         
-        final String[] idxesString = idxes.toArray(new String[idxes.size()]);
-        
+        final ArrayList<String> finalIdxs = idxes;
         AlertDialogManager alert = new AlertDialogManager(MySchedulesActivity.this);
         alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.term_delete_confirm), getString(android.R.string.ok), getString(android.R.string.cancel), new AlertListener()
         {
@@ -230,7 +221,30 @@ public class MySchedulesActivity extends ActionBarActivity
               invalidateOptionsMenu();
             }
             
-            new DelAsyncTask().execute(idxesString);
+            String deleteIdxs = "";
+            if (finalIdxs.size() > 1)
+            {
+              for (int i = 0; i < finalIdxs.size(); i++)
+              {
+                deleteIdxs += finalIdxs.get(i);
+                if (i != finalIdxs.size() - 1)
+                  deleteIdxs += ",";
+              }
+            }
+            else
+            {
+              try
+              {
+                deleteIdxs = finalIdxs.get(0);
+              }
+              catch (Exception e)
+              {
+                e.printStackTrace();
+              }
+            }
+            
+            if (!TextUtils.isEmpty(deleteIdxs))
+              new DelAsyncTask().execute(deleteIdxs);
           }
           
           
@@ -267,11 +281,11 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-      if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-      {
-        page++;
-        loadSchedules();
-      }
+//      if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+//      {
+//        page++;
+//        loadSchedules();
+//      }
     }
   };
   
@@ -293,8 +307,7 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      //TODO 내 일정 API 변경으로 작업
-      return apiClient.getMyTravelSchedules(PreferenceManager.getInstance(getApplicationContext()).getUserSeq());
+      return apiClient.getMyTravelSchedules();
     }
     
     
@@ -332,10 +345,7 @@ public class MySchedulesActivity extends ActionBarActivity
     protected NetworkResult doInBackground(String... params)
     {
       NetworkResult result = null;
-      for (String idx : params)
-      {
-        apiClient.deleteMyPlan(idx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq());
-      }
+      apiClient.deleteMyPlan(params[0], PreferenceManager.getInstance(getApplicationContext()).getUserSeq());
       return result;
     }
   }
