@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -32,7 +33,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hangouyou.R;
 import com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity;
+import com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hangouyou.beans.SearchResultBean;
@@ -48,7 +49,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
   private ListView searchListView;
   private LinearLayout emptyContainer;
   private ApiClient apiClient;
-  
+  private Handler handler = new Handler();
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -147,14 +148,24 @@ public class SearchResultDetailActivity extends ActionBarActivity
       emptyContainer.setVisibility(View.GONE);
     }
     
-    new SearchTask().execute(text);
+    handler.removeCallbacks(searchRunnable);
+    handler.postDelayed(searchRunnable, 500);
   }
   
+  Runnable searchRunnable = new Runnable()
+  {
+    @Override
+    public void run()
+    {
+      new SearchTask().execute(inputWord.getText().toString());      
+    }
+  };
   
   private void detail(SearchResultBean searchResultBean)
   {
     if (searchResultBean.isTitle)
     {
+      //more 인 경우 
       Intent intent = new Intent(SearchResultDetailActivity.this, SearchResultJustOneCategoryListActivity.class);
       intent.putExtra("title", searchResultBean.text + " " + getString(R.string.term_search_result));
       intent.putExtra("results", adapter.getJsonStringForParameter(searchResultBean.type));
@@ -162,10 +173,13 @@ public class SearchResultDetailActivity extends ActionBarActivity
     }
     else
     {
+      Intent i = new Intent(SearchResultDetailActivity.this, PlaceDetailActivity.class);
       switch (searchResultBean.type)
       {
         case SearchResultBean.TYPE_PLACE:
-          startActivity(new Intent(SearchResultDetailActivity.this, PlaceDetailActivity.class));
+          i = new Intent(SearchResultDetailActivity.this, PlaceDetailActivity.class);
+          i.putExtra("place_idx", searchResultBean.idx);
+          startActivity(i);
           break;
         
         case SearchResultBean.TYPE_PRODUCT:
@@ -173,11 +187,15 @@ public class SearchResultDetailActivity extends ActionBarActivity
           break;
         
         case SearchResultBean.TYPE_RECOMMEND_SEOUL:
-          startActivity(new Intent(SearchResultDetailActivity.this, TravelStrategyDetailActivity.class));
+          i = new Intent(SearchResultDetailActivity.this, TravelStrategyDetailActivity.class);
+          i.putExtra("place_idx", searchResultBean.idx);
+          startActivity(i);
           break;
         
         case SearchResultBean.TYPE_SCHEDULE:
-          startActivity(new Intent(SearchResultDetailActivity.this, MyScheduleDetailActivity.class));
+          i = new Intent(SearchResultDetailActivity.this, TravelScheduleDetailActivity.class);
+          i.putExtra("idx", searchResultBean.idx);
+          startActivity(i);
           break;
         
         default:
