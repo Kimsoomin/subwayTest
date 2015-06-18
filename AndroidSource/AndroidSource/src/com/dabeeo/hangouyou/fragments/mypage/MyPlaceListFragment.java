@@ -240,27 +240,25 @@ public class MyPlaceListFragment extends Fragment
     @Override
     protected void onPostExecute(ArrayList<PlaceBean> result)
     {
-      if (result.size() == 0)
+      ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
+      tempArray.addAll(result);
+      
+      if (categoryId == -1)
+        adapter.addAll(tempArray);
+      else
+      {
+        for (int i = 0; i < tempArray.size(); i++)
+        {
+          if (tempArray.get(i).categoryId == categoryId)
+            adapter.add(tempArray.get(i));
+        }
+      }
+      
+      if (adapter.getCount() == 0)
       {
         isLoadEnded = true;
         listView.setVisibility(View.GONE);
         emptyContainer.setVisibility(View.VISIBLE);
-      }
-      else
-      {
-        ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
-        tempArray.addAll(result);
-        
-        if (categoryId == -1)
-          adapter.addAll(tempArray);
-        else
-        {
-          for (int i = 0; i < tempArray.size(); i++)
-          {
-            if (tempArray.get(i).categoryId == categoryId)
-              adapter.add(tempArray.get(i));
-          }
-        }
       }
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
