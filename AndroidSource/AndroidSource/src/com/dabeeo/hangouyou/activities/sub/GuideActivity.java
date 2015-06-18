@@ -24,6 +24,8 @@ import com.dabeeo.hangouyou.external.libraries.CirclePageIndicator;
 
 public class GuideActivity extends Activity
 {
+  
+  public Button skipBtn;
   @SuppressLint("InlinedApi")
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -59,7 +61,8 @@ public class GuideActivity extends Activity
     circleIndicator.setViewPager(viewPager);
     circleIndicator.setFillColor(Color.WHITE);
     circleIndicator.setPageColor(Color.argb(50, 255, 255, 255));
-    ((Button) findViewById(R.id.btn_skip)).setOnClickListener(new OnClickListener()
+    skipBtn = (Button) findViewById(R.id.btn_skip);
+    skipBtn.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View arg0)
@@ -116,6 +119,7 @@ public class GuideActivity extends Activity
         startHome.setVisibility(View.INVISIBLE);
       }else
       {
+        skipBtn.setVisibility(View.INVISIBLE);
         image.setImageResource(R.drawable.intro_tutorial06);
         startHome.setVisibility(View.VISIBLE);
         startHome.setOnClickListener(new OnClickListener()

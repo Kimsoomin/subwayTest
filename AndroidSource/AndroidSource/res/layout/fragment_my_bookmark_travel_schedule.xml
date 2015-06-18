@@ -27,7 +27,10 @@
                 android:id="@+id/all_check_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/term_all_check" />
+                android:text="@string/term_all_check"
+                android:textColor="@color/darker_gray"
+                android:button="@drawable/check_background"
+                android:padding="4dip" />
         </LinearLayout>
 
         <RelativeLayout

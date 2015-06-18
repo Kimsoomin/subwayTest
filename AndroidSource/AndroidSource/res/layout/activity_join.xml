@@ -78,7 +78,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/msg_allow_receive_email"
                     android:textColor="@color/light_gray"
-                    android:textSize="12sp" />
+                    android:button="@drawable/check_background"
+                    android:padding="4dip"
+                    android:textSize="14sp" />
 
                 <!-- 이름 -->
 
@@ -122,7 +124,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/msg_allow_receive_phone"
                     android:textColor="@color/light_gray"
-                    android:textSize="12sp" />
+                    android:button="@drawable/check_background"
+                    android:padding="4dip"
+                    android:textSize="14sp" />
 
                 <!-- 비밀번호 -->
 
@@ -218,7 +222,8 @@
                     <CheckBox
                         android:id="@+id/chk_agreement"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/check_background" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -268,7 +273,8 @@
                     <CheckBox
                         android:id="@+id/chk_private_agreement"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/check_background" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -318,7 +324,8 @@
                     <CheckBox
                         android:id="@+id/chk_gps_agreement"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/check_background" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

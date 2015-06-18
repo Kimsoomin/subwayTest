@@ -240,7 +240,8 @@
         android:padding="8dp"
         android:text="@string/term_recommend_schedule_save"
         android:textColor="#ffffff"
-        android:textSize="21sp" />
+        android:textSize="21sp"
+        android:visibility="invisible" />
 
     <com.dabeeo.hangouyou.views.SharePickView
         android:id="@+id/view_share_pick"

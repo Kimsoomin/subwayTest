@@ -70,7 +70,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_auto_login" />
+                    android:text="@string/term_auto_login"
+                    android:textColor="@color/light_gray"
+                    android:textSize="16sp"
+                    android:button="@drawable/check_background"
+                    android:padding="4dip" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -81,12 +85,14 @@
                         android:id="@+id/btn_find_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/term_find_password" />
+                        android:text="@string/term_find_password"
+                        android:textColor="@color/light_gray"
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/darker_gray" />
+                        android:background="@color/light_gray" />
                 </LinearLayout>
             </LinearLayout>
 
