@@ -296,6 +296,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
                 {
                   Intent i = new Intent(TravelStrategyDetailActivity.this, BlinkingMap.class);
                   i.putExtra("premiumIdx", placeIdx);
+                  i.putExtra("isPremium", true);
                   startActivity(i);
                 }
               });
