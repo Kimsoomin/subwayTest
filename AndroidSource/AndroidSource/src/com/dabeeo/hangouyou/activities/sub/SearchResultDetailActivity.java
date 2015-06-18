@@ -94,18 +94,6 @@ public class SearchResultDetailActivity extends ActionBarActivity
       @Override
       public void afterTextChanged(Editable s)
       {
-      }
-      
-      
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after)
-      {
-      }
-      
-      
-      @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count)
-      {
         if (inputWord.getText().toString().length() > 1)
         {
           searchListView.setVisibility(View.VISIBLE);
@@ -119,6 +107,18 @@ public class SearchResultDetailActivity extends ActionBarActivity
           searchListView.setVisibility(View.GONE);
           emptyContainer.setVisibility(View.VISIBLE);
         }
+      }
+      
+      
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after)
+      {
+      }
+      
+      
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count)
+      {
       }
       
     };

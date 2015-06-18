@@ -101,6 +101,16 @@ public class SearchFragment extends Fragment
       @Override
       public void afterTextChanged(Editable s)
       {
+        if (s.length() >= 2)
+        {
+          search(s.toString());
+        }
+        else
+        {
+          imageX.setVisibility(View.GONE);
+          searchListView.setVisibility(View.GONE);
+          emptyContainer.setVisibility(View.VISIBLE);
+        }
       }
       
       
@@ -113,16 +123,6 @@ public class SearchFragment extends Fragment
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count)
       {
-        if (s.length() >= 2)
-        {
-          search(s.toString());
-        }
-        else
-        {
-          imageX.setVisibility(View.GONE);
-          searchListView.setVisibility(View.GONE);
-          emptyContainer.setVisibility(View.VISIBLE);
-        }
       }
       
     };
