@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white" >
 
-    <com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter
+    <com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

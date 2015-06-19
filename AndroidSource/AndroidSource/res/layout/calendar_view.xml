@@ -55,7 +55,7 @@
             android:numColumns="7"
             android:stretchMode="columnWidth" />
 
-        <com.dabeeo.hangouyou.external.library.calendar.InfiniteViewPager
+        <com.dabeeo.hanhayou.external.library.calendar.InfiniteViewPager
             android:id="@+id/months_infinite_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

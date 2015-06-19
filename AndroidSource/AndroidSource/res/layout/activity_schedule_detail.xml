@@ -243,7 +243,7 @@
         android:textSize="21sp"
         android:visibility="invisible" />
 
-    <com.dabeeo.hangouyou.views.SharePickView
+    <com.dabeeo.hanhayou.views.SharePickView
         android:id="@+id/view_share_pick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

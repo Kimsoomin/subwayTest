@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dabeeo.hangouyou"
+    package="com.dabeeo.hanhayou"
     android:versionCode="22"
     android:versionName="1.2.10" >
 
@@ -26,7 +26,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.dabeeo.hangouyou.IntroActivity"
+            android:name="com.dabeeo.hanhayou.IntroActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" >
@@ -37,274 +37,274 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dabeeo.hangouyou.MainActivity"
+            android:name="com.dabeeo.hanhayou.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- MainMenu Activities -->
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.SubwayActivity"
+            android:name="com.dabeeo.hanhayou.activities.mainmenu.SubwayActivity"
             android:label="@string/term_famous_place"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.SubwayStationsActivity"
+            android:name="com.dabeeo.hanhayou.activities.mainmenu.SubwayStationsActivity"
             android:label="@string/term_famous_place"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.FamousPlaceActivity"
+            android:name="com.dabeeo.hanhayou.activities.mainmenu.FamousPlaceActivity"
             android:label="@string/term_famous_place"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.PlaceDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mainmenu.WriteReviewActivity"
+            android:name="com.dabeeo.hanhayou.activities.mainmenu.WriteReviewActivity"
             android:label="@string/term_write_review"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyActivity"
+            android:name="com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity"
             android:label="@string/term_strategy_seoul"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.travel.TravelSchedulesActivity"
+            android:name="com.dabeeo.hanhayou.activities.travel.TravelSchedulesActivity"
             android:label="@string/term_travel_schedule"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.travel.TravelScheduleDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity"
             android:label="@string/term_travel_schedule"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendActivity"
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendActivity"
             android:label="@string/term_trend_korea"
             android:screenOrientation="portrait" />
         <!-- Recommend Schedule -->
         <activity
-            android:name="com.dabeeo.hangouyou.activities.schedule.RecommendScheduleActivity"
+            android:name="com.dabeeo.hanhayou.activities.schedule.RecommendScheduleActivity"
             android:label="@string/term_recommend_travel_schedule"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.schedule.RecommendScheduleCompeletedActivity"
+            android:name="com.dabeeo.hanhayou.activities.schedule.RecommendScheduleCompeletedActivity"
             android:label="@string/term_recommend_schedule_compeleted"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.schedule.CalendarActivity"
+            android:name="com.dabeeo.hanhayou.activities.schedule.CalendarActivity"
             android:label="@string/term_select_date"
             android:screenOrientation="portrait" />
         <!-- Trend -->
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductWithCategoryActivity"
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendProductWithCategoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductPopupActivity"
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendProductPopupActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductImagePopupActivity"
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendProductImagePopupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendExhibitionActivity"
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendExhibitionActivity"
             android:label="@string/term_exhibitions"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendSearchActivity"
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendSearchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.trend.TrendProductDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity"
             android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.PromotionActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.PromotionActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.WishListSearchActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.WishListSearchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.ReviewDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.ReviewDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.AccountSettingActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.AccountSettingActivity"
             android:label="@string/term_profile"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.LoginActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.LoginActivity"
             android:label="@string/term_login"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.ChangePasswordActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.ChangePasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.FindPasswordActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.FindPasswordActivity"
             android:label="@string/term_find_password"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.JoinActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.JoinActivity"
             android:label="@string/term_join"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.CongratulateJoinActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.CongratulateJoinActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MySchedulesActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity"
             android:label="@string/term_my_schedule"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyScheduleDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.MyScheduleDetailActivity"
             android:label="@string/term_my_schedule"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.MyPlaceActivity"
             android:label="@string/term_my_place"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPlaceDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.MyPlaceDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.AuthEmailActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.AuthEmailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!--
              <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogListActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.sub.MyPhotoLogListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         -->
         <!--
              <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyPhotoLogDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.sub.MyPhotoLogDetailActivity"
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         -->
         <!--
              <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.NewAndEditPhotoLogActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.sub.NewAndEditPhotoLogActivity"
             android:label="@string/term_my_photolog"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         -->
         <activity
-            android:name="com.dabeeo.hangouyou.activities.mypage.sub.MyBookmarkActivity"
+            android:name="com.dabeeo.hanhayou.activities.mypage.MyBookmarkActivity"
             android:label="@string/term_my_bookmark"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- Sub Activities -->
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.ImagePopUpActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.ImagePopUpJustOneActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpJustOneActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.GuideActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.GuideActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.AgreementActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.AgreementActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.SettingActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.SettingActivity"
             android:label="@string/term_setting"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.VersionActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.VersionActivity"
             android:label="@string/term_version_info"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.NoticeActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.NoticeActivity"
             android:label="@string/term_notice"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.PhotoSelectActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.PhotoSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.SearchResultDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.SearchResultDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.sub.SearchResultJustOneCategoryListActivity"
+            android:name="com.dabeeo.hanhayou.activities.sub.SearchResultJustOneCategoryListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.travel.TravelStrategyDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.ticket.TicketActivity"
+            android:name="com.dabeeo.hanhayou.activities.ticket.TicketActivity"
             android:label="@string/term_ticket"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.ticket.TicketDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.ticket.TicketDetailActivity"
             android:label="@string/term_ticket"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.ticket.BoughtTicketDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.ticket.BoughtTicketDetailActivity"
             android:label="@string/term_show_bought_ticket"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.ticket.TicketCheckoutActivity"
+            android:name="com.dabeeo.hanhayou.activities.ticket.TicketCheckoutActivity"
             android:label="@string/term_order_sheet"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.ticket.TicketOrderCompleteActivity"
+            android:name="com.dabeeo.hanhayou.activities.ticket.TicketOrderCompleteActivity"
             android:label="@string/term_order_completed"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.coupon.CouponActivity"
+            android:name="com.dabeeo.hanhayou.activities.coupon.CouponActivity"
             android:label="@string/term_coupon"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.coupon.CouponDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity"
             android:label="@string/term_show_coupon"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.activities.coupon.DownloadedCouponDetailActivity"
+            android:name="com.dabeeo.hanhayou.activities.coupon.DownloadedCouponDetailActivity"
             android:label="@string/term_show_coupon"
             android:screenOrientation="portrait" />
 
         <!-- Map -->
         <activity
-            android:name="com.dabeeo.hangouyou.map.BlinkingMap"
+            android:name="com.dabeeo.hanhayou.map.BlinkingMap"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dabeeo.hangouyou.map.PremiumdetailTemp"
+            android:name="com.dabeeo.hanhayou.map.PremiumdetailTemp"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- Receiver -->
-        <receiver android:name="com.dabeeo.hangouyou.controllers.NetworkBraodCastReceiver" >
+        <receiver android:name="com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />

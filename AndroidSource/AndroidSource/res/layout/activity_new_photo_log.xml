@@ -13,7 +13,7 @@
         android:padding="8dp"
         android:text="@string/term_publish" />
 
-    <com.dabeeo.hangouyou.external.libraries.DragSortListView
+    <com.dabeeo.hanhayou.external.libraries.DragSortListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

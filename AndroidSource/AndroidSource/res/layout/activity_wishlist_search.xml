@@ -93,7 +93,7 @@
 
         <!-- 검색화면 -->
 
-        <com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter
+        <com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

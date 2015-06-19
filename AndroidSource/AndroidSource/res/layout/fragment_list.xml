@@ -62,7 +62,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.dabeeo.hangouyou.external.libraries.GridViewWithHeaderAndFooter
+    <com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

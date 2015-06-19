@@ -300,13 +300,13 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.dabeeo.hangouyou.views.SharePickView
+    <com.dabeeo.hanhayou.views.SharePickView
         android:id="@+id/view_share_pick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <com.dabeeo.hangouyou.views.TrendOptionAndAmountPickView
+    <com.dabeeo.hanhayou.views.TrendOptionAndAmountPickView
         android:id="@+id/option_picker_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

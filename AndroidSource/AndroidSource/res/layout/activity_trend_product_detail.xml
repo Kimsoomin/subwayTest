@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <com.dabeeo.hangouyou.views.CustomScrollView
+        <com.dabeeo.hanhayou.views.CustomScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -454,17 +454,17 @@
                     android:layout_marginTop="8dp"
                     android:orientation="vertical" />
             </LinearLayout>
-        </com.dabeeo.hangouyou.views.CustomScrollView>
+        </com.dabeeo.hanhayou.views.CustomScrollView>
     </LinearLayout>
 
-    <com.dabeeo.hangouyou.views.TrendOptionAndAmountPickView
+    <com.dabeeo.hanhayou.views.TrendOptionAndAmountPickView
         android:id="@+id/option_picker_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
         android:visibility="gone" />
 
-    <com.dabeeo.hangouyou.views.SharePickView
+    <com.dabeeo.hanhayou.views.SharePickView
         android:id="@+id/view_share_pick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

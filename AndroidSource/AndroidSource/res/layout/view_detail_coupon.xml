@@ -31,7 +31,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
-            <com.dabeeo.hangouyou.external.libraries.RoundedImageView
+            <com.dabeeo.hanhayou.external.libraries.RoundedImageView
                 android:id="@+id/image_view"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

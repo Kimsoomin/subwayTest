@@ -27,7 +27,7 @@
                 android:layout_gravity="bottom"
                 android:src="@drawable/deco_color_dot_l" />
 
-            <com.dabeeo.hangouyou.external.libraries.RoundedImageView
+            <com.dabeeo.hanhayou.external.libraries.RoundedImageView
                 android:id="@+id/profile_image"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
