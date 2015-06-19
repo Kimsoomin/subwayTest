@@ -55,6 +55,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   
   private boolean isMap = false;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -108,7 +109,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-    if(!isMap)
+    if (!isMap)
       getMenuInflater().inflate(R.menu.menu_my_place_detail, menu);
     else
       getMenuInflater().inflate(R.menu.menu_empty, menu);
@@ -217,7 +218,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
-      Picasso.with(this).load(imageUrl).into(view);
+      Picasso.with(this).load(imageUrl).resize(150, 150).centerCrop().into(view);
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {
@@ -280,7 +281,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       else if (title.equals(getString(R.string.term_address)))
       {
         imageCall.setVisibility(View.GONE);
-        if(!isMap)
+        if (!isMap)
         {
           imageAddress.setVisibility(View.VISIBLE);
           
