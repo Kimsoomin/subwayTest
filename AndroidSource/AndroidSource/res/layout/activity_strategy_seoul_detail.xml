@@ -45,60 +45,58 @@
                         android:layout_height="match_parent"
                         android:background="#66000000" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/text_title"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dip"
+                        android:ellipsize="end"
+                        android:maxLines="4"
+                        android:maxWidth="270dip"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_above="@+id/text_desciption_layout" />
+
+                    <RelativeLayout
+                        android:id="@+id/text_desciption_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:orientation="horizontal" >
+                        android:gravity="bottom|center_vertical"
+                        android:layout_alignParentBottom="true" >
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/text_description"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:padding="8dp" >
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginBottom="18dip"
+                            android:layout_marginLeft="16dip"
+                            android:maxWidth="270dip"
+                            android:text="다비오 힘내!!"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
 
-                            <TextView
-                                android:id="@+id/text_title"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="4"
-                                android:paddingRight="30dp"
-                                android:textColor="@android:color/white"
-                                android:textStyle="bold" />
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_marginTop="3dip"
+                            android:layout_marginLeft="10dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_toLeftOf="@+id/like_count"
+                            android:src="@drawable/ic_heart" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="bottom|center_vertical"
-                                android:orientation="horizontal"
-                                android:padding="8dp" >
-
-                                <TextView
-                                    android:id="@+id/text_description"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:textColor="@android:color/white" />
-
-                                <ImageView
-                                    android:layout_width="14dp"
-                                    android:layout_height="14dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:src="@drawable/ic_heart" />
-
-                                <TextView
-                                    android:id="@+id/like_count"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="8dp"
-                                    android:textColor="@android:color/white" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/like_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="16dip"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <LinearLayout
