@@ -251,7 +251,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.SearchResultDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.SearchResultJustOneCategoryListActivity"
             android:screenOrientation="portrait" />
