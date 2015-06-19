@@ -45,16 +45,16 @@ public class ScheduleDetailHeaderView extends RelativeLayout
 	public void setData(final String imageUrl, String title, int dayCount, String budget)
 	{
 		ImageDownloader.displayImage(context, imageUrl, imageView, null);
-		imageView.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent i = new Intent(context, ImagePopUpJustOneActivity.class);
-				i.putExtra("image_url", imageUrl);
-				context.startActivity(i);
-			}
-		});
+//		imageView.setOnClickListener(new OnClickListener()
+//		{
+//			@Override
+//			public void onClick(View v)
+//			{
+//				Intent i = new Intent(context, ImagePopUpJustOneActivity.class);
+//				i.putExtra("image_url", imageUrl);
+//				context.startActivity(i);
+//			}
+//		});
 		
 		ImageDownloader.displayImage(context, imageUrl, imageView, null);
 	}
