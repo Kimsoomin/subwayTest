@@ -168,9 +168,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   private TextWatcher placewatcher;
   
   // - summary view
-  private LinearLayout summaryView;
-  private ImageButton summaryCloseBtn;
-  private ImageButton summaryCloseBtn2;
+  private FrameLayout summaryView;
   private ImageView summaryImage;
 //	private LinearLayout summaryTextView;
   private TextView summaryTitle;
@@ -196,7 +194,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   public String DestinationTitle;
   
   // - navigation view
-  public RelativeLayout navigationView;
+  public FrameLayout navigationView;
   public TextView naviInfo01;
   public TextView naviInfo02;
   public TextView naviSubInfo;
@@ -887,9 +885,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   public void summaryViewSetting() 
   {
-    summaryView = (LinearLayout) findViewById(R.id.summaryView);
-    summaryCloseBtn = (ImageButton) findViewById(R.id.summaryCloseBtn);
-    summaryCloseBtn2 = (ImageButton) findViewById(R.id.summaryCloseBtn2);
+    summaryView = (FrameLayout) findViewById(R.id.summaryView);
     summaryImage = (ImageView) findViewById(R.id.summaryImage);
     summaryTitle = (TextView) findViewById(R.id.summaryTitle);
     summarysubTitle = (TextView) findViewById(R.id.summarySubTitle);
@@ -904,8 +900,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     subwayStartBtn.setClickable(true);
     subwayEndBtn.setClickable(true);
     summaryView.setOnClickListener(this);
-    summaryCloseBtn.setOnClickListener(this);
-    summaryCloseBtn2.setOnClickListener(this);
     subwayStartBtn.setOnClickListener(this);
     subwayEndBtn.setOnClickListener(this);
     naviBtn.setOnClickListener(this);
@@ -980,7 +974,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   public void navigationViewSetting() 
   {
-    navigationView = (RelativeLayout) findViewById(R.id.navigationView);
+    navigationView = (FrameLayout) findViewById(R.id.navigationView);
     naviInfo01 = (TextView) findViewById(R.id.naviInfo01);
     naviInfo02 = (TextView) findViewById(R.id.naviInfo02);
     naviSubInfo = (TextView) findViewById(R.id.naviSubInfo);
@@ -1126,15 +1120,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
           startActivity(detailPlaceIntent);
           Log.i("INFO", "place_idx : " + idx);
         }
-        break;
-        
-      case R.id.summaryCloseBtn:
-      case R.id.summaryCloseBtn2:
-        summaryViewVisibleSet(summaryViewInVisible, 0);
-        lineId = "";
-        idx = null;
-        selectItem = -1;
-        markerSel(selectItem);
         break;
         
       case R.id.subwayStartBtn:

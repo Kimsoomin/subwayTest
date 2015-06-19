@@ -17,6 +17,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class MainActivity extends ActionBarActivity
   private FragmentManager fragmentManager;
   private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
   private TextView title;
+  private ImageView titleImage;
   
   private long backKeyPressedTime = 0;
   private Toast appFininshToast;  
@@ -59,6 +61,7 @@ public class MainActivity extends ActionBarActivity
     
     title = (TextView) customActionBar.findViewById(R.id.title);
     title.setText(getString(R.string.app_name));
+    titleImage = (ImageView) customActionBar.findViewById(R.id.titleImage);
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -190,7 +193,8 @@ public class MainActivity extends ActionBarActivity
     {
       case POSITION_HOME:
         bottomMenuHome.setSelected(true);
-        title.setText(getString(R.string.app_name));
+        title.setVisibility(View.INVISIBLE);
+        titleImage.setVisibility(View.VISIBLE);
         fragment = new MainFragment();
         break;
         
@@ -201,12 +205,16 @@ public class MainActivity extends ActionBarActivity
           return;
         }
         bottomMenuMyPage.setSelected(true);
+        title.setVisibility(View.VISIBLE);
+        titleImage.setVisibility(View.INVISIBLE);
         title.setText(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
         
       case POSITION_SEARCH:
         bottomMenuSearch.setSelected(true);
+        title.setVisibility(View.VISIBLE);
+        titleImage.setVisibility(View.INVISIBLE);
         title.setText(R.string.term_search);
         fragment = new SearchFragment();
         break;
@@ -224,6 +232,8 @@ public class MainActivity extends ActionBarActivity
           return;
         }
         bottomMenuWishList.setSelected(true);
+        title.setVisibility(View.VISIBLE);
+        titleImage.setVisibility(View.INVISIBLE);
         title.setText(getString(R.string.term_wishlist));
         fragment = new WishListFragment();
         break;

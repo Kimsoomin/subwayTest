@@ -160,7 +160,6 @@ public class TravelStrategyActivity extends ActionBarActivity
     return super.onCreateOptionsMenu(menu);
   }
   
-  
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {

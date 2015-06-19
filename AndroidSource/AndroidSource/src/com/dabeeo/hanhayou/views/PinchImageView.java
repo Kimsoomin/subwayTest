@@ -1,10 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +11,6 @@ import android.widget.RelativeLayout;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
-import com.imagezoom.ImageAttacher;
-import com.imagezoom.ImageAttacher.OnMatrixChangedListener;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class PinchImageView extends LinearLayout
 {

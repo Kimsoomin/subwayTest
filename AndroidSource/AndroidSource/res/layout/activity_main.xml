@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="@drawable/buttom_navigation_bar"
+        android:background="@drawable/bottom_navigation_bar"
         android:orientation="horizontal"
         android:paddingTop="2dp" >
 

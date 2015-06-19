@@ -18,11 +18,11 @@
 
             <ImageButton
                 android:id="@+id/back_btn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/ic_back_arrow"
+                android:background="@drawable/btn_title_back_state"
                 android:visibility="visible" />
 
             <RelativeLayout
@@ -154,186 +154,171 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/btn_map_subway_state" />
             </FrameLayout>
-            
-            <LinearLayout 
+
+            <LinearLayout
                 android:id="@+id/planDay"
                 android:layout_width="200dip"
                 android:layout_height="60dip"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="10dp"
-                android:gravity="center"
                 android:background="@drawable/btn_plan_day_change"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:visibility="gone">
-                
-                <ImageButton 
+                android:visibility="gone" >
+
+                <ImageButton
                     android:id="@+id/dayLeft"
                     android:layout_width="20dip"
                     android:layout_height="20dip"
-                    android:background="@drawable/btn_plan_day_left"/>
-                
+                    android:background="@drawable/btn_plan_day_left" />
+
                 <LinearLayout
-                    android:id="@+id/dayLayout" 
+                    android:id="@+id/dayLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dip"
                     android:layout_marginRight="30dip"
-                    android:orientation="vertical">
-                    
-                    <TextView 
-                        android:id="@+id/dayText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1day"
-                        android:layout_gravity="center"
-                        android:textColor="@color/darker_gray"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textAlignment="center"/>
-                    
-                    <TextView 
-                        android:id="@+id/ymdText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2015.07.05"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-                
-                <ImageButton 
-                    android:id="@+id/dayRight"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:background="@drawable/btn_plan_day_right"/>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/navigationView"
-                android:layout_width="match_parent"
-                android:layout_height="85dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/white"
-                android:visibility="invisible"
-                android:clickable="true" >
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-4dp"
-                    android:background="@drawable/box_map_detail" />
-
-                <ImageView
-                    android:id="@+id/naviImage"
-                    android:layout_width="25dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="18dp"
-                    android:layout_marginTop="28dp"
-                    android:background="@drawable/icon_navigation_on" />
-
-                <RelativeLayout
-                    android:id="@+id/naviTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_toLeftOf="@+id/naviStopBtn"
-                    android:layout_toRightOf="@+id/naviImage"
                     android:orientation="vertical" >
 
                     <TextView
-                        android:id="@+id/naviSubInfo"
+                        android:id="@+id/dayText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:singleLine="true"
-                        android:text="test"
+                        android:layout_gravity="center"
+                        android:text="1day"
+                        android:textAlignment="center"
                         android:textColor="@color/darker_gray"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/naviInfo01"
+                        android:id="@+id/ymdText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/naviSubInfo"
-                        android:text="test"
+                        android:text="2015.07.05"
+                        android:textAlignment="center"
                         android:textColor="@color/gray"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:id="@+id/naviInfoCenter"
-                        android:layout_width="2dp"
-                        android:layout_height="20dp"
-                        android:layout_below="@+id/naviSubInfo"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_toRightOf="@+id/naviInfo01"
-                        android:background="@color/navi_center" />
-
-                    <TextView
-                        android:id="@+id/naviInfo02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/naviSubInfo"
-                        android:layout_marginLeft="6dp"
-                        android:layout_toRightOf="@+id/naviInfoCenter"
-                        android:text="test"
-                        android:textColor="@color/gray"
-                        android:textSize="20sp" />
-                </RelativeLayout>
+                        android:textSize="12sp" />
+                </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/naviStopBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/btn_close" />
-            </RelativeLayout>
+                    android:id="@+id/dayRight"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:background="@drawable/btn_plan_day_right" />
+            </LinearLayout>
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/navigationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:visibility="invisible" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/box_map_detail" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="15dip"
+                    android:background="@android:color/white" >
+
+                    <ImageView
+                        android:id="@+id/naviImage"
+                        android:layout_width="25dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginTop="28dp"
+                        android:background="@drawable/icon_navigation_on" />
+
+                    <RelativeLayout
+                        android:id="@+id/naviTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toLeftOf="@+id/naviStopBtn"
+                        android:layout_toRightOf="@+id/naviImage"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/naviSubInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:singleLine="true"
+                            android:text="test"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/naviInfo01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/naviSubInfo"
+                            android:text="test"
+                            android:textColor="@color/gray"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/naviInfoCenter"
+                            android:layout_width="2dp"
+                            android:layout_height="20dp"
+                            android:layout_below="@+id/naviSubInfo"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toRightOf="@+id/naviInfo01"
+                            android:background="@color/navi_center" />
+
+                        <TextView
+                            android:id="@+id/naviInfo02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/naviSubInfo"
+                            android:layout_marginLeft="6dp"
+                            android:layout_toRightOf="@+id/naviInfoCenter"
+                            android:text="test"
+                            android:textColor="@color/gray"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+
+                    <ImageButton
+                        android:id="@+id/naviStopBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/btn_close" />
+                </RelativeLayout>
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/summaryView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@drawable/transparent"
-                android:orientation="vertical"
+                android:background="@android:color/transparent"
                 android:visibility="invisible" >
 
-                <ImageButton
-                    android:id="@+id/summaryCloseBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="-15dp"
-                    android:background="@drawable/btn_box_close"
-                    android:visibility="gone" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/box_map_detail" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_marginTop="15dip"
                     android:background="@android:color/white"
-                    android:orientation="vertical"
-                    android:visibility="visible" >
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-4dp"
-                        android:background="@drawable/box_map_detail" />
-
-                    <ImageButton
-                        android:id="@+id/summaryCloseBtn2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="-15dp"
-                        android:background="@drawable/btn_box_close"
-                        android:visibility="gone" />
+                    android:orientation="vertical" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -497,11 +482,11 @@
 
                         <ImageButton
                             android:id="@+id/naviBtn"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="50dip"
+                            android:layout_height="50dip"
                             android:layout_alignParentRight="true"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="8dip"
+                            android:layout_marginRight="10dip"
                             android:layout_marginTop="12dp"
                             android:layout_weight="0"
                             android:background="@drawable/btn_map_navi_state" />
@@ -512,7 +497,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginTop="10dp" >
+                        android:layout_marginBottom="8dip"
+                        android:layout_marginTop="10dip" >
 
                         <LinearLayout
                             android:id="@+id/subwayStartBtn"
@@ -546,8 +532,8 @@
                             android:id="@+id/subwayCenter"
                             android:layout_width="1dp"
                             android:layout_height="25dp"
-                            android:layout_marginTop="3dp"
                             android:layout_centerHorizontal="true"
+                            android:layout_marginTop="3dp"
                             android:src="@color/summary_center" />
 
                         <LinearLayout
@@ -579,7 +565,7 @@
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </FrameLayout>
             <!--
         <TextView
             android:layout_width="wrap_content"
@@ -590,7 +576,7 @@
             android:alpha="0.2"
             android:text="ⓒOpenStreetMap contributors(CC-BY-SA)"
             android:textColor="#515151"
-            android:textSize="10sp" />
+            android:textSize="10sp" />
             -->
         </FrameLayout>
     </LinearLayout>
