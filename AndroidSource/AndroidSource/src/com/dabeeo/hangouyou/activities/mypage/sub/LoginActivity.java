@@ -56,6 +56,7 @@ public class LoginActivity extends Activity
     editPassword = (EditText) findViewById(R.id.edit_password);
     alertView = (LoginBottomAlertView) findViewById(R.id.alert_view);
     autoLogin = (CheckBox) findViewById(R.id.checkbox_auto_login);
+    autoLogin.setChecked(true);
     
     findViewById(R.id.btn_join).setOnClickListener(clickListener);
     findViewById(R.id.btn_login).setOnClickListener(clickListener);

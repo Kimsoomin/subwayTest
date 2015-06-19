@@ -3,7 +3,6 @@ package com.dabeeo.hangouyou.activities.mainmenu;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.bool;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -12,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;

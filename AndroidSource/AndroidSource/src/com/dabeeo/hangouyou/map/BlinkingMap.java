@@ -127,11 +127,13 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   private PlaceOverlay subwayOverlay;
   private SubwayExitOverlay subwayExitOverlay;
   private PlanOverlay planOverlay;
+  private OnePlaceOverlay onePlaceOverlay;
   
   private ArrayList<OverlayItem> allPlaceInfoItems;
   private ArrayList<OverlayItem> subwayItems;
   private ArrayList<OverlayItem> exitItems;
   private ArrayList<OverlayItem> planItems;
+  private ArrayList<OverlayItem> onePlaceItems;
   
   private Map<String,PlaceInfo> allplaceinfo;
   private Map<String, SubwayInfo> subwayInfo;
@@ -1671,6 +1673,11 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   public void markerSel(int select)
   {
+    if(onePlaceOverlay != null)
+    {
+      m_mapView.getOverlays().remove(onePlaceOverlay);
+    }
+    
     if(select==1)
     {
       if(allplaceOverlay != null)
@@ -1835,8 +1842,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     
     if (Build.VERSION_CODES.GINGERBREAD_MR1 >= Build.VERSION.SDK_INT) 
     {
-      RotateAnimation r = new RotateAnimation(fAngle, fAngle,Animation.RELATIVE_TO_SELF, 0.5f,
-          Animation.RELATIVE_TO_SELF, 0.5f);
+      RotateAnimation r = new RotateAnimation(fAngle, fAngle,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
       r.setDuration(duration);
       r.setFillAfter(true);
       
@@ -1852,8 +1858,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   
   public int DpToPixel(int DP) 
   {
-    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DP,
-        getResources().getDisplayMetrics());
+    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DP, getResources().getDisplayMetrics());
     
     return (int) px;
   }
@@ -1929,7 +1934,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     int attractionCount = 0;
     int shoppingCount = 0;
     int restaurantCount = 0;
-    
     
     @Override
     protected Void doInBackground(Void... params) 
@@ -2075,6 +2079,14 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         }
       }
       
+      if(selectItem != -1)
+      {
+        BlinkingCommon.smlLibDebug("BlinkingMap", "place_fLatitude : " + place_fLatitude + "place_fLongitute : " +place_fLongitute);
+        onePlaceItems = new ArrayList<OverlayItem>();
+        OverlayItem item = new OverlayItem("","","",new GeoPoint(place_fLatitude, place_fLongitute));
+        onePlaceItems.add(item);
+      }
+      
       return null;
     }
     
@@ -2136,6 +2148,12 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         }
       }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
       m_mapView.getOverlays().add(subwayOverlay);
+    }
+    
+    if(selectItem != -1)
+    {
+      onePlaceOverlay = new OnePlaceOverlay(onePlaceItems, null, new DefaultResourceProxyImpl(mContext), mContext);
+      m_mapView.getOverlays().add(onePlaceOverlay);
     }
     
     runOnUiThread(new Runnable() 

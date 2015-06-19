@@ -99,7 +99,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="70dip"
                     android:text="@string/msg_no_search_result"
-                    android:textColor="#969b9c" />
+                    android:textColor="@color/light_gray" />
             </RelativeLayout>
 
             <ImageButton
@@ -214,7 +214,8 @@
                 android:layout_height="85dp"
                 android:layout_gravity="bottom"
                 android:background="@android:color/white"
-                android:visibility="invisible" >
+                android:visibility="invisible"
+                android:clickable="true" >
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -480,7 +481,7 @@
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
                                     android:layout_gravity="center_vertical"
-                                    android:background="@drawable/icon_like_s" />
+                                    android:background="@drawable/icon_like_s"
                                     android:visibility="invisible" />
 
                                 <TextView
