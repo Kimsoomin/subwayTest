@@ -150,8 +150,6 @@
     <string name="msg_near_by_station">가장 가까운 역입니다.</string>
     <string name="term_exit_info_title">출구정보</string>
     <!-- 맵 -->
-    <string name="map_notification">알림</string>
-    <string name="map_confirm">확인</string>
     <string name="map_gps_noUse">원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요.</string>
     <string name="map_gps_Location_fail">위치를 찾을 수 없습니다.</string>
     <string name="map_gps_out_of_Seoul">서울외 지역은 서비스 준비중입니다.</string>

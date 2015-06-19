@@ -32,11 +32,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:ellipsize="end"
-                android:background="@android:color/white"
-                android:maxLines="2"
-                android:maxWidth="780px"
-                android:padding="2dp"
-                android:textColor="#444a4b" />
+                android:maxLines="3"
+                android:maxWidth="520dip"
+                android:padding="4dip"
+                android:textColor="@color/darker_gray" />
 
             <View
                 android:layout_width="0dp"

@@ -2,8 +2,14 @@ package com.dabeeo.hanhayou.controllers.mainmenu;
 
 import java.util.ArrayList;
 
+import android.R.color;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -83,10 +90,11 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
-    TextView category = (TextView) view.findViewById(R.id.category);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     
-    title.setText(bean.title);
+    SpannableStringBuilder style = new SpannableStringBuilder(bean.title);
+    style.setSpan(new BackgroundColorSpan(Color.parseColor("#ffffff")), 0, bean.title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    title.setText(style);
 //    category.setText(bean.category);
     likeCount.setText(Integer.toString(bean.likeCount));
     

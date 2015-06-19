@@ -354,6 +354,7 @@
     <!-- 프로모션 -->
     <string name="term_show_detail">查看详情</string>
     <string name="term_dont_show_a_day">今天不再显示</string>
+    <string name="term_go">바로가기</string>
 
     <!-- 추가 String (아직 안보냄) -->
     <!-- 마이페이지 -->
