@@ -25,7 +25,6 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
-@SuppressWarnings("deprecation")
 public class SettingActivity extends ActionBarActivity
 {
   private TextView textName;

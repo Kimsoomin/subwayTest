@@ -197,7 +197,7 @@
                         android:layout_height="wrap_content"
                         android:text="2015.07.05"
                         android:textAlignment="center"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/light_gray"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -263,7 +263,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/naviSubInfo"
                             android:text="test"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/light_gray"
                             android:textSize="20sp" />
 
                         <ImageView
@@ -284,7 +284,7 @@
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@+id/naviInfoCenter"
                             android:text="test"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/light_gray"
                             android:textSize="20sp" />
                     </RelativeLayout>
 
@@ -370,7 +370,7 @@
                                     android:layout_height="wrap_content"
                                     android:singleLine="true"
                                     android:text="test"
-                                    android:textColor="@color/gray"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="14sp" />
 
                                 <ImageView
@@ -387,7 +387,7 @@
                                     android:layout_toRightOf="@+id/lineNumImage1"
                                     android:singleLine="true"
                                     android:text="test"
-                                    android:textColor="@color/gray"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
 
@@ -408,7 +408,7 @@
                                     android:layout_toRightOf="@+id/lineNumImage2"
                                     android:singleLine="true"
                                     android:text="test"
-                                    android:textColor="@color/gray"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
 
@@ -429,7 +429,7 @@
                                     android:layout_toRightOf="@+id/lineNumImage3"
                                     android:singleLine="true"
                                     android:text="test"
-                                    android:textColor="@color/gray"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
 
@@ -450,7 +450,7 @@
                                     android:layout_toRightOf="@+id/lineNumImage4"
                                     android:singleLine="true"
                                     android:text="test"
-                                    android:textColor="@color/gray"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
                             </RelativeLayout>

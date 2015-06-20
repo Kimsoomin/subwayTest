@@ -10,14 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical" >
+        android:gravity="center">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_margin="4dp"
-            android:background="@color/gray" />
+            android:background="@color/light_gray"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/title"

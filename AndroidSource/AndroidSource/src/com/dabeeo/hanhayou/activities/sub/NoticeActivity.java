@@ -21,7 +21,6 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.NoticeBean;
 import com.dabeeo.hanhayou.controllers.mypage.NoticeAdapter;
 
-@SuppressWarnings("deprecation")
 public class NoticeActivity extends ActionBarActivity
 {
   private ExpandableListView listView;
@@ -33,8 +32,6 @@ public class NoticeActivity extends ActionBarActivity
   private ProgressBar progressBar;
   private int limit = 20, offset = 0;
   
-  
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {

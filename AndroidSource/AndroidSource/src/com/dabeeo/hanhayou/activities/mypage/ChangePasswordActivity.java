@@ -26,7 +26,6 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.views.LoginBottomAlertView;
 
-@SuppressWarnings("deprecation")
 public class ChangePasswordActivity extends ActionBarActivity
 {
   private EditText editCurrentPassword, editNewPassword, editNewPasswordRe;

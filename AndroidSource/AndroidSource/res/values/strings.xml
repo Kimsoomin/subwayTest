@@ -328,7 +328,7 @@
     <string name="msg_same_start_end_station">此站已被选为起点，切换成终点吗？</string>
     <string name="msg_same_end_start_station">此站已被选为终点，切换成起点吗？</string>
     <!-- 로그인/회원가입 -->
-    <string name="term_check_duplicate">确认是否重复</string>
+    <string name="term_check_duplicate">检查重复</string>
     <string name="term_get_temp_password">发临时密码</string>
     <string name="term_auth_email">邮箱认证</string>
     <string name="term_re_send">重新发送</string>
@@ -406,8 +406,9 @@
     <!-- 비밀번호 찾기 -->
     <string name="msg_please_write_password">请输入密码。</string>
     <string name="msg_please_write_new_password">请输入新密码。</string>
-    <string name="msg_warn_password_length">비밀번호는 6\\-16글자 사이로 가능합니다</string>
-    <string name="msg_please_valid_check_password">只能输入英文/数字/特殊符号。</string>
+    <string name="msg_warn_password_length">密码为6~16个字符。</string>
+    <string name="msg_please_valid_check_password">密码只能输入英文字符/数字/特殊符号。</string>
+    <string name="msg_valid_password">只能输入英文/数字/特殊符号。</string>
     <string name="msg_warn_password_not_same">密码不正确，请重新输入。</string>
     <string name="msg_empty_list">리스트가 없습니다.</string>
     <!-- 로그인/회원가입 -->

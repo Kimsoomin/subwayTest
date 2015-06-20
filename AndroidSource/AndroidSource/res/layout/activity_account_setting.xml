@@ -39,27 +39,22 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginTop="20dip"
                     android:text="@string/term_email"
                     android:textColor="@color/darker_gray"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/text_email"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:orientation="horizontal"
-                    android:padding="8dp" >
-
-                    <TextView
-                        android:id="@+id/text_email"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="dabeeo@email.com"
-                        android:textColor="@color/light_gray" />
-                </LinearLayout>
+                    android:layout_marginLeft="18dip"
+                    android:layout_marginTop="5dip"
+                    android:text=""
+                    android:textColor="@color/light_gray"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- 이름 -->
@@ -72,7 +67,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginTop="12dip"
                     android:text="@string/term_name"
                     android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
@@ -80,36 +76,40 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
                     android:gravity="center_vertical"
-                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:orientation="horizontal"
-                    android:padding="8dp" >
+                    android:orientation="horizontal" >
 
                     <EditText
                         android:id="@+id/edit_name"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dip"
+                        android:layout_marginLeft="8dip"
                         android:layout_weight="1"
-                        android:background="@android:color/white"
+                        android:background="@drawable/shape_text_input"
                         android:inputType="text"
-                        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                        android:singleLine="true" />
+                        android:padding="5dip"
+                        android:singleLine="true"
+                        android:textColor="@color/darker_gray" />
 
                     <Button
                         android:id="@+id/btn_check_duplicate_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_height="40dip"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dip"
                         android:background="@drawable/app_button"
-                        android:padding="2dp"
+                        android:padding="2dip"
                         android:text="@string/term_check_duplicate"
-                        android:textColor="@color/color_normal_appcolor_select_white" />
+                        android:textColor="@color/color_normal_appcolor_select_white"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="5dip"
                     android:text="@string/msg_please_valid_check_name"
                     android:textColor="@color/appcolor"
                     android:textStyle="bold" />
@@ -120,13 +120,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dip"
                 android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:padding="8dp"
+                    android:layout_marginLeft="8dip"
                     android:text="@string/term_password"
                     android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
@@ -134,8 +134,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#c8c7cc" />
+                    android:layout_marginTop="5dip"
+                    android:background="@color/setting_cell_color" />
 
                 <LinearLayout
                     android:id="@+id/container_change_password"
@@ -144,18 +144,20 @@
                     android:background="@drawable/list_item_white_background"
                     android:gravity="center_vertical"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:orientation="horizontal"
-                    android:padding="8dp" >
+                    android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dip"
                         android:layout_weight="1"
-                        android:text="@string/term_change_password" />
+                        android:text="@string/term_change_password"
+                        android:textColor="@color/darker_gray" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_marginRight="8dip"
                         android:contentDescription="@null"
                         android:src="@drawable/icon_arrow_g_next" />
                 </LinearLayout>
@@ -163,7 +165,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#c8c7cc" />
+                    android:background="@color/setting_cell_color" />
             </LinearLayout>
 
             <!-- 회원탈퇴 -->
@@ -171,22 +173,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dip"
                 android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:padding="8dp"
+                    android:layout_marginLeft="8dip"
                     android:text="@string/term_withdraw"
                     android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#c8c7cc" />
+                    android:layout_height="1dip"
+                    android:layout_marginTop="5dip"
+                    android:background="@color/setting_cell_color" />
 
                 <LinearLayout
                     android:id="@+id/container_withdraw"
@@ -195,18 +197,20 @@
                     android:background="@drawable/list_item_white_background"
                     android:gravity="center_vertical"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                    android:orientation="horizontal"
-                    android:padding="8dp" >
+                    android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dip"
                         android:layout_weight="1"
-                        android:text="@string/msg_withdraw" />
+                        android:text="@string/msg_withdraw"
+                        android:textColor="@color/darker_gray" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_marginRight="8dip"
                         android:contentDescription="@null"
                         android:src="@drawable/icon_arrow_g_next" />
                 </LinearLayout>
@@ -214,7 +218,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#c8c7cc" />
+                    android:background="@color/setting_cell_color" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

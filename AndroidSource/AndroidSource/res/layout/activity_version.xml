@@ -11,13 +11,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:layout_marginTop="20dip"
+                android:layout_marginLeft="8dip"
                 android:text="@string/term_version_info"
                 android:textStyle="bold" />
 
@@ -29,33 +30,32 @@
                 android:gravity="center"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textColor="@color/appcolor"
-                    android:textSize="30sp" />
+                <ImageView
+                    android:layout_width="90dip"
+                    android:layout_height="33dip"
+                    android:background="@drawable/bi_app_info"
+                    android:contentDescription="@null" />
 
                 <TextView
                     android:id="@+id/text_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginTop="5dip"
                     android:gravity="center"
-                    android:textColor="#444a4b" />
+                    android:textSize="17sp"
+                    android:textColor="@color/darker_gray" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/normal_appcolor_select_white"
-                android:padding="8dp"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_marginTop="16dip"
+                android:background="@drawable/normal_appcolor_select_dark"
                 android:text="@string/term_update"
-                android:textColor="@color/color_normal_white_select_appcolor" />
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_test_notification"
@@ -67,21 +67,22 @@
                 android:background="@drawable/normal_appcolor_select_white"
                 android:padding="8dp"
                 android:text="Test Notification"
-                android:textColor="@color/color_normal_white_select_appcolor" />
+                android:textColor="@color/color_normal_white_select_appcolor"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:padding="8dp"
+                android:layout_marginTop="40dip"
+                android:layout_marginLeft="8dip"
                 android:text="@string/term_see_agreement"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#CECECE" />
+                android:layout_marginTop="5dip"
+                android:background="@color/setting_cell_color" />
             <!-- 이용약관 -->
 
             <LinearLayout
@@ -98,11 +99,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_agreement" />
+                    android:text="@string/term_agreement"
+                    android:textColor="@color/darker_gray" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_marginRight="8dip"
                     android:contentDescription="@null"
                     android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
@@ -110,7 +113,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#CECECE" />
+                android:background="@color/setting_cell_color" />
 
             <!-- 개인정보 약관 -->
 
@@ -128,11 +131,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_private_agreement" />
+                    android:text="@string/term_private_agreement"
+                    android:textColor="@color/darker_gray" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_marginRight="8dip"
                     android:contentDescription="@null"
                     android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
@@ -140,7 +145,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#CECECE" />
+                android:background="@color/setting_cell_color" />
 
             <!-- 위치정보 약관 -->
 
@@ -158,11 +163,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_gps_info_agreement" />
+                    android:text="@string/term_gps_info_agreement"
+                    android:textColor="@color/darker_gray" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_marginRight="8dip"
                     android:contentDescription="@null"
                     android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
@@ -170,7 +177,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#CECECE" />
+                android:background="@color/setting_cell_color" />
         </LinearLayout>
     </ScrollView>
 

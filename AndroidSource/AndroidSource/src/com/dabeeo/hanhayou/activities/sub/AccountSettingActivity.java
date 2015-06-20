@@ -37,7 +37,6 @@ import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.LoginBottomAlertView;
 
-@SuppressWarnings("deprecation")
 public class AccountSettingActivity extends ActionBarActivity
 {
   private TextView textEmail;

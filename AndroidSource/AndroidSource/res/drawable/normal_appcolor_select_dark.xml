@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:drawable="@drawable/round_app_color_dark_box" android:state_pressed="true"/>
+    <item android:drawable="@drawable/round_app_color_dark_box" android:state_activated="true"/>
+    <item android:drawable="@drawable/shape_app_button_pressed"/>
+
+</selector>

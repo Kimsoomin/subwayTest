@@ -24,15 +24,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:layout_marginTop="20dip"
+                    android:layout_marginLeft="8dip"
                     android:text="@string/term_profile"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/darker_gray" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#c8c7cc" />
+                    android:layout_height="1dip"
+                    android:layout_marginTop="5dip"
+                    android:background="@color/setting_cell_color" />
 
                 <LinearLayout
                     android:id="@+id/container_edit_profile"
@@ -43,24 +45,34 @@
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:orientation="horizontal"
                     android:padding="8dp" >
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/light_gray"
+                        android:text="@string/term_name"/>
 
                     <TextView
                         android:id="@+id/text_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_marginLeft="5dip"
+                        android:layout_weight="1"
+                        android:textColor="@color/darker_gray" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
                         android:layout_gravity="center"
-                        android:src="@drawable/icon_arrow_g_next" />
+                        android:src="@drawable/icon_arrow_g_next"
+                        android:layout_marginRight="5dip"
+                        android:contentDescription="@null" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#c8c7cc" />
+                    android:background="@color/setting_cell_color" />
             </LinearLayout>
 
             <!-- 동기화 -->
@@ -68,16 +80,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:padding="8dp"
+                android:layout_marginTop="16dip"
+                android:layout_marginLeft="8dip"
                 android:text="@string/term_sync"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/darker_gray" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#c8c7cc" />
+                android:layout_marginTop="5dip"
+                android:background="@color/setting_cell_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,7 +105,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_sync_only_wifi" />
+                    android:text="@string/term_sync_only_wifi"
+                    android:textColor="@color/darker_gray" />
 
                 <Switch
                     android:id="@+id/switch_sync_only_wifi"
@@ -103,7 +117,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#c8c7cc" />
+                android:background="@color/setting_cell_color" />
             <!-- 알림설정 -->
 
             <LinearLayout
@@ -119,7 +133,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_setting_notification" />
+                    android:text="@string/term_setting_notification"
+                    android:textColor="@color/darker_gray" />
 
                 <Switch
                     android:id="@+id/switch_notification_on_off"
@@ -130,23 +145,24 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#c8c7cc" />
+                android:background="@color/setting_cell_color" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:padding="8dp"
+                android:layout_marginTop="16dip"
+                android:layout_marginLeft="8dip"
                 android:text="@string/term_about"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/darker_gray" />
 
             <!-- 버전 정보 -->
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#c8c7cc" />
+                android:layout_height="1dip"
+                android:layout_marginTop="5dip"
+                android:background="@color/setting_cell_color" />
 
             <LinearLayout
                 android:id="@+id/container_version_info"
@@ -156,7 +172,7 @@
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:orientation="horizontal"
-                android:padding="8dp" >
+                android:padding="8dip" >
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -168,7 +184,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/term_version_info" />
+                        android:text="@string/term_version_info"
+                        android:textColor="@color/darker_gray" />
 
                     <ImageView
                         android:id="@+id/badge_version_info"
@@ -179,8 +196,9 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_marginRight="5dip"
                     android:contentDescription="@null"
                     android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
@@ -188,7 +206,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#c8c7cc" />
+                android:background="@color/setting_cell_color" />
 
             <!-- 앱 평가하기 -->
 
@@ -200,17 +218,19 @@
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:orientation="horizontal"
-                android:padding="8dp" >
+                android:padding="8dip" >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_rating_app" />
+                    android:text="@string/term_rating_app"
+                    android:textColor="@color/darker_gray" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_marginRight="5dip"
                     android:contentDescription="@null"
                     android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
@@ -218,7 +238,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#c8c7cc" />
+                android:background="@color/setting_cell_color" />
 
             <!-- 공지사항 -->
 
@@ -242,7 +262,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/term_notice" />
+                        android:text="@string/term_notice"
+                        android:textColor="@color/darker_gray" />
 
                     <ImageView
                         android:id="@+id/badge_notice"
@@ -253,8 +274,9 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_marginRight="5dip"
                     android:contentDescription="@null"
                     android:src="@drawable/icon_arrow_g_next" />
             </LinearLayout>
@@ -262,14 +284,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#c8c7cc" />
+                android:background="@color/setting_cell_color" />
             <!-- 로그아웃 -->
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="#c8c7cc" />
+                android:layout_height="1dip"
+                android:layout_marginTop="16dip"
+                android:background="@color/setting_cell_color" />
 
             <LinearLayout
                 android:id="@+id/container_logout"
@@ -279,20 +301,21 @@
                 android:gravity="center_vertical"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:orientation="horizontal"
-                android:padding="8dp" >
+                android:padding="8dip" >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/term_logout" />
+                    android:text="@string/term_logout"
+                    android:textColor="@color/darker_gray" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="16dp"
-                android:background="#c8c7cc" />
+                android:background="@color/setting_cell_color" />
         </LinearLayout>
     </ScrollView>
 

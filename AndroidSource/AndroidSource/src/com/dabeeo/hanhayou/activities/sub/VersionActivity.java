@@ -27,7 +27,6 @@ import com.dabeeo.hanhayou.activities.trend.TrendProductPopupActivity;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
-@SuppressWarnings("deprecation")
 public class VersionActivity extends ActionBarActivity
 {
   private TextView textVersion;

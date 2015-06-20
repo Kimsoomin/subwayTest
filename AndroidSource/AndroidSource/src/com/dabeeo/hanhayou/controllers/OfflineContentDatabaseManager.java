@@ -28,7 +28,6 @@ import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.StationBean;
-import com.dabeeo.hanhayou.managers.SubwayManager;
 import com.dabeeo.hanhayou.map.Global;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
@@ -371,26 +370,26 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   }
   
   
-  private void putSubwayStationDatas()
-  {
-    SubwayManager.getInstance(context).loadAllStations(context);
-    ArrayList<StationBean> stations = SubwayManager.getInstance(context).stations;
-    for (int i = 0; i < stations.size(); i++)
-    {
-      StationBean bean = stations.get(i);
-      if (!bean.isDuplicate)
-      {
-        try
-        {
-          insertSubwayStation(bean);
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-      }
-    }
-  }
+//  private void putSubwayStationDatas()
+//  {
+//    SubwayManager.getInstance(context).loadAllStations(context);
+//    ArrayList<StationBean> stations = SubwayManager.getInstance(context).stations;
+//    for (int i = 0; i < stations.size(); i++)
+//    {
+//      StationBean bean = stations.get(i);
+//      if (!bean.isDuplicate)
+//      {
+//        try
+//        {
+//          insertSubwayStation(bean);
+//        }
+//        catch (Exception e)
+//        {
+//          e.printStackTrace();
+//        }
+//      }
+//    }
+//  }
   
   
   /**

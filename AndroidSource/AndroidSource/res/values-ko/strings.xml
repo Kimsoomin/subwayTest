@@ -303,9 +303,9 @@
     <string name="term_withdraw">회원탈퇴</string>
     <string name="msg_withdraw">회원 탈퇴하기</string>
     <string name="term_current_password">현재 비밀번호</string>
-    <string name="msg_hint_current_password">현재 비밀번호 (6-16자)</string>
+    <string name="msg_hint_current_password">현재 비밀번호 (6~16자)</string>
     <string name="term_new_password">새 비밀번호</string>
-    <string name="msg_hint_new_password">새 비밀번호 (6-16자)</string>
+    <string name="msg_hint_new_password">새 비밀번호 (6~16)</string>
     <string name="msg_hint_new_password_confirm">새 비밀번호 확인</string>
     <string name="term_see_agreement">약관보기</string>
     <!-- 추천일정 -->

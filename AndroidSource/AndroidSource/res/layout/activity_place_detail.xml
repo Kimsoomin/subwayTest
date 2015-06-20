@@ -63,7 +63,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/term_all_rate"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/gray" />
+                            android:textColor="@color/light_gray" />
 
                         <Button
                             android:id="@+id/btn_review_best"

@@ -35,7 +35,7 @@
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/gray" />
+            android:background="@color/light_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,7 +75,7 @@
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/gray" />
+            android:background="@color/light_gray" />
 
         <TextView
             android:id="@+id/text_validity_period"
@@ -88,7 +88,7 @@
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/gray" />
+            android:background="@color/light_gray" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/gray" />
+            android:background="@color/light_gray" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/gray" />
+            android:background="@color/light_gray" />
 
         <TextView
             android:layout_width="wrap_content"
