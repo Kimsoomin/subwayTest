@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp" >
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         android:id="@+id/progressLayout"
@@ -23,13 +22,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="14dip"
+        android:layout_marginRight="14dip"
         android:orientation="vertical" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="20dip"
             android:text="@string/term_auth_email"
             android:textColor="@color/appcolor"
             android:textSize="21sp"
@@ -41,12 +42,13 @@
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="@string/msg_complete_join"
-            android:textColor="@color/light_gray" />
+            android:textColor="@color/light_gray"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dip"
             android:orientation="horizontal" >
 
             <EditText
@@ -55,12 +57,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/term_input_auth_number"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/darker_gray"
+                android:textColorHint="@color/light_gray" />
 
             <Button
                 android:id="@+id/btn_re_send"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
+                android:layout_marginLeft="4dip"
                 android:background="@drawable/gray_fill_round_button"
                 android:text="@string/term_re_send"
                 android:textColor="@color/color_normal_gray_select_white" />
@@ -70,7 +75,7 @@
             android:id="@+id/btn_auth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dip"
             android:background="@drawable/normal_gray_select_appcolor"
             android:text="@string/term_auth"
             android:textColor="@android:color/white" />
@@ -80,9 +85,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/normal_gray_select_appcolor"
+            android:background="@drawable/gray_fill_round_button"
             android:text="@string/term_cancel"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/color_normal_gray_select_white" />
     </LinearLayout>
 
 </FrameLayout>

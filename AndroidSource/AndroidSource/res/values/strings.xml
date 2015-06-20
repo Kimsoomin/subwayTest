@@ -335,6 +335,7 @@
     <string name="term_auth">重新发送</string>
     <string name="term_input_auth_number">输入验证码</string>
     <string name="msg_complete_join">注册成功！\n验证邮件已发到邮箱\n确认验证码后，\n请在页面输入验证码</string>
+    <string name="term_cell_phone">输入手机号码（只写数字）</string>
     <!-- WishList -->
     <string name="msg_empty_wish_list">没有装在收藏夹的商品。</string>
     <string name="msg_help_wish_list">浏览韩国的热门商品\n添加到收藏夹吧！</string>
@@ -447,7 +448,7 @@
 	<string name="msg_please_error_out">该账号为已注销账号。</string>
 	<string name="msg_please_error_password">密码不正确，请重新输入。</string>
 	<string name="msg_please_error_old_password">原先的密码不正确，请重新输入。</string>
-	<string name="term_detail">"查看详情"</string>
+	<string name="term_detail">(查看详情)</string>
 	<string name="term_qq">QQ</string>
 	<string name="term_wechat">微信</string>
 	<string name="term_weibo">新浪微博</string>

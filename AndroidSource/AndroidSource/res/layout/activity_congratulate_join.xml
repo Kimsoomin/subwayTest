@@ -3,22 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp" >
+    android:layout_marginLeft="14dip"
+    android:layout_marginRight="14dip" >
+    
+    <ImageView
+        android:layout_width="90dip"
+        android:layout_height="33dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/bi_app_info"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@null" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="12dip"
+        android:gravity="center"
         android:text="@string/term_congratulate"
-        android:textColor="@color/appcolor"
+        android:textColor="@color/darker_gray"
         android:textSize="21sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dip"
         android:gravity="center"
         android:text="@string/msg_success_join"
         android:textColor="@color/light_gray" />
@@ -27,20 +36,16 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/normal_appcolor_select_white"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/normal_appcolor_select_dark"
         android:text="@string/term_login"
-        android:textColor="@color/color_normal_white_select_appcolor" />
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/btn_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="5dip"
         android:background="@drawable/gray_fill_round_button"
         android:text="@string/term_home"
         android:textColor="@color/color_normal_gray_select_white" />

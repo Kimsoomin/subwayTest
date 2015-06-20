@@ -6,6 +6,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -27,7 +28,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp" >
+            android:layout_marginLeft="14dip"
+            android:layout_marginRight="14dip" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,8 +39,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginTop="12dip"
                     android:text="@string/term_join"
                     android:textColor="@color/appcolor"
                     android:textSize="21sp"
@@ -57,17 +59,16 @@
                         android:ems="10"
                         android:hint="@string/term_email"
                         android:inputType="textEmailAddress"
-                        android:singleLine="true" >
-
-                        <requestFocus />
-                    </EditText>
+                        android:singleLine="true"
+                        android:textColor="@color/darker_gray"
+                        android:textColorHint="@color/light_gray" />
 
                     <Button
                         android:id="@+id/btn_check_duplicate_email"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dip"
                         android:background="@drawable/app_button"
-                        android:padding="2dp"
+                        android:padding="2dip"
                         android:text="@string/term_check_duplicate"
                         android:textColor="@color/color_normal_appcolor_select_white" />
                 </LinearLayout>
@@ -76,6 +77,8 @@
                     android:id="@+id/checkbox_allow_receive_ads"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dip"
+                    android:layout_marginLeft="3dip"
                     android:text="@string/msg_allow_receive_email"
                     android:textColor="@color/light_gray"
                     android:button="@drawable/check_background"
@@ -95,33 +98,46 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="@string/term_name"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textColor="@color/darker_gray"
+                        android:textColorHint="@color/light_gray" />
 
                     <Button
                         android:id="@+id/btn_check_duplicate_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dip"
                         android:background="@drawable/app_button"
                         android:padding="2dp"
                         android:text="@string/term_check_duplicate"
                         android:textColor="@color/color_normal_appcolor_select_white" />
                 </LinearLayout>
+                
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dip"
+                    android:text="@string/msg_please_valid_check_name"
+                    android:textColor="@color/appcolor"
+                    android:textSize="14sp"/>
 
                 <!-- 휴대폰번호 -->
 
                 <EditText
                     android:id="@+id/edit_phone_number"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dip"
                     android:layout_weight="1"
-                    android:hint="@string/term_phone"
+                    android:hint="@string/term_cell_phone"
                     android:inputType="text|phone"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textColorHint="@color/light_gray" />
 
                 <CheckBox
                     android:id="@+id/checkbox_allow_receive_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dip"
                     android:text="@string/msg_allow_receive_phone"
                     android:textColor="@color/light_gray"
                     android:button="@drawable/check_background"
@@ -136,7 +152,17 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/term_password_join"
                     android:inputType="textPassword"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textColorHint="@color/light_gray" />
+                
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dip"
+                    android:text="@string/msg_valid_password"
+                    android:textColor="@color/appcolor"
+                    android:textSize="14sp"/>
 
                 <EditText
                     android:id="@+id/edit_re_password"
@@ -144,7 +170,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/term_re_password_join"
                     android:inputType="textPassword"
-                    android:singleLine="true" />
+                    android:singleLine="true" 
+                    android:textColor="@color/darker_gray"
+                    android:textColorHint="@color/light_gray"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -159,12 +187,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="@string/term_gender" />
+                        android:text="@string/term_gender"
+                        android:textColor="@color/light_gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="5dip"
                         android:gravity="center_vertical"
                         android:orientation="horizontal" >
 
@@ -191,33 +220,52 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:layout_marginTop="10dip"
                     android:text="@string/term_date_of_birth" />
 
-                <Button
-                    android:id="@+id/btn_date"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/round_gray_box"
+                    android:orientation="horizontal" >
+                    
+                <Button
+                    android:id="@+id/btn_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="left|center_vertical"
+                    android:background="@android:color/transparent"
                     android:paddingLeft="8dp"
-                    android:text="@string/msg_date_of_birth" />
+                    android:text="@string/msg_date_of_birth"
+                    android:textColor="@color/color_normal_light_gray_select_darker_gray" />
+                
+                <ImageView 
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toRightOf="@+id/btn_date"
+                    android:layout_marginRight="15dip"
+                    android:background="@drawable/icon_arrow_g_close"
+                    android:contentDescription="@null"/>
+                
+                </LinearLayout>
 
                 <!-- 약관 -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#CECECE"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:layout_marginTop="16dip"
+                    android:background="@color/box_stroke"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="8dp" >
+                    android:padding="8dip" >
 
                     <CheckBox
                         android:id="@+id/chk_agreement"
@@ -249,6 +297,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/term_detail"
+                                android:textStyle="bold"
                                 android:textColor="@color/light_gray" />
 
                             <View
@@ -265,7 +314,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="1dp"
-                    android:background="#CECECE"
+                    android:background="@color/box_stroke"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="8dp" >
@@ -300,6 +349,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/term_detail"
+                                android:textStyle="bold"
                                 android:textColor="@color/light_gray" />
 
                             <View
@@ -316,7 +366,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="1dp"
-                    android:background="#CECECE"
+                    android:background="@color/box_stroke"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="8dp" >
@@ -351,6 +401,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/term_detail"
+                                android:textStyle="bold"
                                 android:textColor="@color/light_gray" />
 
                             <View
@@ -365,7 +416,7 @@
                     android:id="@+id/btn_join"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dip"
                     android:background="@drawable/normal_appcolor_select_white"
                     android:text="@string/term_join"
                     android:textColor="@color/color_normal_white_select_appcolor" />
@@ -374,7 +425,8 @@
                     android:id="@+id/btn_cancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="8dip"
+                    android:layout_marginBottom="20dip"
                     android:background="@drawable/gray_fill_round_button"
                     android:text="@string/term_cancel"
                     android:textColor="@color/color_normal_gray_select_white" />

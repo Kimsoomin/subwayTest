@@ -25,43 +25,43 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp" >
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="70dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/bi_app_info" />
-            </RelativeLayout>
+            <ImageView
+                android:layout_width="90dip"
+                android:layout_height="33dip"
+                android:layout_marginTop="25dip"
+                android:src="@drawable/bi_app_info"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@null" />
 
             <EditText
                 android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="8dip"
                 android:hint="@string/term_email"
                 android:inputType="textEmailAddress"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/darker_gray"
+                android:textColorHint="@color/gray" />
 
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="8dip"
                 android:hint="@string/term_password"
                 android:inputType="textPassword"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/darker_gray"
+                android:textColorHint="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="8dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -70,11 +70,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:button="@drawable/check_background"
+                    android:padding="4dip"
                     android:text="@string/term_auto_login"
                     android:textColor="@color/light_gray"
-                    android:textSize="16sp"
-                    android:button="@drawable/check_background"
-                    android:padding="4dip" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -103,9 +103,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/normal_appcolor_select_white"
+                android:background="@drawable/normal_appcolor_select_dark"
                 android:text="@string/term_login"
-                android:textColor="@color/color_normal_white_select_appcolor" />
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_join"
