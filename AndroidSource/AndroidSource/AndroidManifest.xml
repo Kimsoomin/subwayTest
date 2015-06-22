@@ -65,7 +65,7 @@
             android:name="com.dabeeo.hanhayou.activities.mainmenu.WriteReviewActivity"
             android:label="@string/term_write_review"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity"
             android:label="@string/term_strategy_seoul"
