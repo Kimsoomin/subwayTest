@@ -438,7 +438,7 @@ public class IntroActivity extends Activity
       if (tempdialog.isShowing())
         tempdialog.cancel();
       
-      pView = new MapdownloadProgressView(IntroActivity.this, getString(R.string.msg_is_download_map));
+      pView = new MapdownloadProgressView(IntroActivity.this, getString(R.string.msg_map_donwload));
       pView.setCanceledOnTouchOutside(false);
       pView.setCancelable(false);
       pView.show();
