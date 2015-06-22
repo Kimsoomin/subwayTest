@@ -134,11 +134,13 @@ public class MySchedulesActivity extends ActionBarActivity
     {
       editMenuItem.setVisible(false);
       closeMenuItem.setVisible(true);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
     else
     {
       editMenuItem.setVisible(true);
       closeMenuItem.setVisible(false);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     return super.onCreateOptionsMenu(menu);
   }
