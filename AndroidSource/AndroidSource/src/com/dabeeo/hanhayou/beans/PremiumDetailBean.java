@@ -17,15 +17,7 @@ public class PremiumDetailBean
   public String gender;
   public String mfidx;
   
-  public int categoryId;
-  
   public String title;
-  public String address;
-  public String businessHours;
-  public String priceInfo;
-  public String trafficInfo;
-  public String homepage;
-  public String contact;
   
   public double lat, lng;
   public String tag;
@@ -47,6 +39,7 @@ public class PremiumDetailBean
   public ArrayList<String> smallImages = new ArrayList<String>();
   public ArrayList<String> allImages = new ArrayList<String>();
   
+  public PlaceDetailBean placeDetail;  
   
   public void setJSONObject(JSONObject obj)
   {
@@ -66,24 +59,8 @@ public class PremiumDetailBean
       if (obj.has("mfidx"))
         mfidx = obj.getString("mfidx");
       
-      if (obj.has("category"))
-        categoryId = obj.getInt("category");
-      
       if (obj.has("title"))
         title = obj.getString("title");
-      
-      if (obj.has("address"))
-        address = obj.getString("address");
-      if (obj.has("businessHours"))
-        businessHours = obj.getString("businessHours");
-      if (obj.has("priceInfo"))
-        priceInfo = obj.getString("priceInfo");
-      if (obj.has("trafficInfo"))
-        trafficInfo = obj.getString("trafficInfo");
-      if (obj.has("homepage"))
-        homepage = obj.getString("homepage");
-      if (obj.has("contact"))
-        contact = obj.getString("contact");
       
       if (obj.has("lat"))
         lat = obj.getDouble("lat");
@@ -138,6 +115,12 @@ public class PremiumDetailBean
           smallImages.add(contentObj.getString("url"));
           allImages.add(contentObj.getString("url"));
         }
+      }
+      
+      if(obj.has("place"))
+      {
+        placeDetail = new PlaceDetailBean();
+        placeDetail.setJSONObject(obj.getJSONObject("place"));
       }
     }
     catch (Exception e)

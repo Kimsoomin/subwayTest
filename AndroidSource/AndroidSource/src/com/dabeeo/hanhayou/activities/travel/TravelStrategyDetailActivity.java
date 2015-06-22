@@ -160,7 +160,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     
     setTitle("");
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
-    ((TextView) findViewById(R.id.text_description)).setText(bean.address);
+    ((TextView) findViewById(R.id.text_description)).setText(bean.placeDetail.title);
     
     //Contents
     if (bean.contents.size() > 0)
@@ -235,19 +235,14 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       horizontalImagesView.addView(parentView);
     }
     
-    if (!TextUtils.isEmpty(bean.address))
-      addDetailInfo(getString(R.string.term_address), bean.address);
-    else
-      addDetailInfo(getString(R.string.term_address), "");
-    if (!TextUtils.isEmpty(bean.contact))
-      addDetailInfo(getString(R.string.term_phone), bean.contact);
-    else
-      addDetailInfo(getString(R.string.term_phone), "");
-    addDetailInfo(getString(R.string.term_homepage), bean.homepage);
-    addDetailInfo(getString(R.string.term_working_time), bean.businessHours);
-    addDetailInfo(getString(R.string.term_price_info), bean.priceInfo);
-    addDetailInfo(getString(R.string.term_traffic), bean.trafficInfo);
-    addDetailInfo(getString(R.string.term_description), bean.tag);
+    addDetailInfo(getString(R.string.term_place_detail_info), bean.placeDetail.contents);
+    addDetailInfo(getString(R.string.term_address), bean.placeDetail.address);
+    addDetailInfo(getString(R.string.term_phone), bean.placeDetail.contact);
+    addDetailInfo(getString(R.string.term_homepage), bean.placeDetail.homepage);
+    addDetailInfo(getString(R.string.term_working_time), bean.placeDetail.businessHours);
+    addDetailInfo(getString(R.string.term_price_info), bean.placeDetail.priceInfo);
+    addDetailInfo(getString(R.string.term_traffic), bean.placeDetail.trafficInfo);
+//    addDetailInfo(getString(R.string.term_description), bean.placeDetail.); //이용 시간
   }
   
   
