@@ -168,7 +168,7 @@ public class TravelScheduleDetailFragment extends Fragment
     
     if (isRecommendSchedule)
     {
-      rateTextLayout.setVisibility(View.GONE);
+      rateLayout.setVisibility(View.GONE);
       titleView.likeAndBookmarkContainer.setVisibility(View.GONE);
     }
     
