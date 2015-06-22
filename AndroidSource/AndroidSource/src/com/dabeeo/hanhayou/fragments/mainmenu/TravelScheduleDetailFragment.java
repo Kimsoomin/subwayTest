@@ -135,6 +135,15 @@ public class TravelScheduleDetailFragment extends Fragment
   }
   
   
+  @Override
+  public void onResume()
+  {
+    if (reviewContainerView != null)
+      reviewContainerView.reload();
+    super.onResume();
+  }
+  
+  
   public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule)
   {
     this.position = position;
