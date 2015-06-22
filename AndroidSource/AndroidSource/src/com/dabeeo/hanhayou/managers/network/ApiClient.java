@@ -542,6 +542,18 @@ public class ApiClient
   
   
   /**
+   * 일정 비공개 / 공개로 변경하기
+   * 
+   * @param isOpen
+   *          0 : 비공개, 1 : 공개
+   */
+  public NetworkResult requestOpenMySchedule(String idx, String isOpen)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_OPEN&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&idx=" + idx + "&isOpen=" + isOpen);
+  }
+  
+  
+  /**
    * 만들어진 자동추천일정을 내 일정으로 만들기
    * 
    * @param startDate

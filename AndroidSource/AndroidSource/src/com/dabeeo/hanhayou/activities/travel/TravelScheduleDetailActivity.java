@@ -51,7 +51,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   private ApiClient apiClient;
   
   private String idx;
-  private ScheduleDetailBean bean;
+  public ScheduleDetailBean bean;
   private String startDateString = "";
   private int dayCount;
   

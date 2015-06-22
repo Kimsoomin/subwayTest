@@ -7,12 +7,12 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
@@ -22,6 +22,7 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
   private View background;
   private TextView btnCancelIsPublic;
   private ApiClient apiClient;
+  private String idx;
   
   
   @Override
@@ -30,6 +31,7 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
     super.onCreate(savedInstanceState);
 //		adapter.setIsMySchedule(true);
     
+    apiClient = new ApiClient(this);
     containerIsPublicPopup = (LinearLayout) findViewById(R.id.container_set_public);
     containerPublic = (RelativeLayout) findViewById(R.id.container_public);
     containerPrivate = (RelativeLayout) findViewById(R.id.container_private);
@@ -67,6 +69,8 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
             containerPublic.setActivated(true);
             containerPrivate.setActivated(false);
             btnIsPublic.setActivated(true);
+            //공개로
+            new OpenAsyncTask().execute("1");
           }
         });
         containerPrivate.setOnClickListener(new OnClickListener()
@@ -78,6 +82,8 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
             containerPublic.setActivated(false);
             containerPrivate.setActivated(true);
             btnIsPublic.setActivated(false);
+            //비공개로
+            new OpenAsyncTask().execute("0");
           }
         });
         background.setOnClickListener(new OnClickListener()
@@ -104,21 +110,12 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
   /**
    * AsyncTask
    */
-  private class OpenAsyncTask extends AsyncTask<String, Integer, Boolean>
+  private class OpenAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     @Override
-    protected Boolean doInBackground(String... params)
+    protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.declareReview(params[0], params[1]);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(Boolean result)
-    {
-      super.onPostExecute(result);
+      return apiClient.requestOpenMySchedule(bean.idx, params[0]);
     }
   }
-  
-//  http://gs2.blinking.kr:8900/_libs/api.common.php?v=m1&mode=PLAN_OPEN&userSeq=1&idx=353&isOpen=1
 }
