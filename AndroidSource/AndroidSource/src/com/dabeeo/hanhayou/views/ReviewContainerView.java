@@ -73,6 +73,22 @@ public class ReviewContainerView extends LinearLayout
   }
   
   
+  public void reload()
+  {
+    try
+    {
+      page = 0;
+      isLoading = false;
+      container.removeAllViews();
+      loadMore();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
   public void loadMore()
   {
     if (isLoading)
@@ -188,6 +204,8 @@ public class ReviewContainerView extends LinearLayout
       if (result)
         if (reviewViews.get(reviewIdx) != null)
           container.removeView(reviewViews.get(reviewIdx));
+      
+      reload();
       super.onPostExecute(result);
     }
   }

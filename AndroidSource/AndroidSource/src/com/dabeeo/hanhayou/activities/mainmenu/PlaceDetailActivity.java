@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,8 +38,8 @@ import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.TicketBean;
 import com.dabeeo.hanhayou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
@@ -46,6 +47,7 @@ import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.CustomScrollView;
+import com.dabeeo.hanhayou.views.CustomScrollView.ScrollViewListener;
 import com.dabeeo.hanhayou.views.DetailCouponView;
 import com.dabeeo.hanhayou.views.DetailTicketView;
 import com.dabeeo.hanhayou.views.PlaceDetailHeaderView;
@@ -53,7 +55,6 @@ import com.dabeeo.hanhayou.views.PlaceDetailTitleView;
 import com.dabeeo.hanhayou.views.ProductView;
 import com.dabeeo.hanhayou.views.ReviewContainerView;
 import com.dabeeo.hanhayou.views.SharePickView;
-import com.dabeeo.hanhayou.views.CustomScrollView.ScrollViewListener;
 
 public class PlaceDetailActivity extends ActionBarActivity
 {
@@ -122,7 +123,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
     
     layoutRecommendSeoul = (LinearLayout) findViewById(R.id.container_recommend_by_expect);
-    if (premiumIdx.equals("null")||isPremium)
+    if (premiumIdx.equals("null") || isPremium)
     {
       layoutRecommendSeoul.setVisibility(View.GONE);
     }
@@ -209,6 +210,15 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     layoutRecommendProduct = (ViewGroup) findViewById(R.id.layout_recommend_product);
     loadPlaceDetail();
+  }
+  
+  
+  @Override
+  protected void onResume()
+  {
+    if (reviewContainerView != null)
+      reviewContainerView.reload();
+    super.onResume();
   }
   
   
@@ -449,7 +459,6 @@ public class PlaceDetailActivity extends ActionBarActivity
         
         public void onNegativeButtonClickListener()
         {
-          //TODO 평점 서버로 전송 - API필요
           new postRateTask().execute();
         }
       });

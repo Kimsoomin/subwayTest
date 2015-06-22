@@ -29,19 +29,26 @@
                 android:orientation="horizontal"
                 android:padding="8dp" >
 
-                <TextView
-                    android:id="@+id/text_rate"
+                <LinearLayout
+                    android:id="@+id/rate_text_container"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/appcolor" />
+                    android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/term_all_rate"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/light_gray" />
+                    <TextView
+                        android:id="@+id/text_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/appcolor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/term_all_rate"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/light_gray" />
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_review_best"
@@ -84,8 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:padding="8dp"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:padding="8dp" />
 
             <RelativeLayout
                 android:id="@+id/review_layout"

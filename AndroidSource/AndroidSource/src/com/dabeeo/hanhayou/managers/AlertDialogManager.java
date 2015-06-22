@@ -43,7 +43,7 @@ public class AlertDialogManager
   /**
    * 로그인이 필요합니다.
    */
-  public void showNeedLoginDialog()
+  public void showNeedLoginDialog(final int mainFragmentPosition)
   {
     showAlertDialog(activity.getString(R.string.term_alert), activity.getString(R.string.msg_require_login), activity.getString(android.R.string.ok), activity.getString(android.R.string.cancel),
         new AlertListener()
@@ -51,7 +51,9 @@ public class AlertDialogManager
           @Override
           public void onPositiveButtonClickListener()
           {
-            activity.startActivity(new Intent(activity, LoginActivity.class));
+            Intent i = new Intent(activity, LoginActivity.class);
+            i.putExtra("mainFragmentPostion", mainFragmentPosition);
+            activity.startActivity(i);
             activity.overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
           }
           

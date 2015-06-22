@@ -73,7 +73,7 @@ public class WriteReviewActivity extends ActionBarActivity
     
     rate = getIntent().getIntExtra("rate", -1);
     apiClient = new ApiClient(this);
-    if(getIntent().hasExtra("idx"))
+    if (getIntent().hasExtra("idx"))
       parentIdx = getIntent().getStringExtra("idx");
     parentType = getIntent().getStringExtra("type");
     
@@ -137,7 +137,8 @@ public class WriteReviewActivity extends ActionBarActivity
     {
       //TODO 이미지 업로드 hashmap 가져와서 url넣고 보내야 함 
       return apiClient.postReviewRate(parentType, parentIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate, params[0]);
-    }    
+    }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)

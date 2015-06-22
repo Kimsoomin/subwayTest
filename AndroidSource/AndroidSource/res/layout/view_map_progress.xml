@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:padding="20dip"
+        android:padding="15dip"
         android:orientation="vertical" >
 
         <TextView

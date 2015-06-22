@@ -89,10 +89,12 @@ public class MyPlaceActivity extends ActionBarActivity
     else if (item.getItemId() == editMenuItem.getItemId())
     {
       toggleEditMode(true);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
     else if (item.getItemId() == closeMenuItem.getItemId())
     {
       toggleEditMode(false);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       adapter.refreshItems();
     }
     return super.onOptionsItemSelected(item);

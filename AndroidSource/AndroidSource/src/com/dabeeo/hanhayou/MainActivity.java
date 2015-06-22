@@ -48,7 +48,9 @@ public class MainActivity extends ActionBarActivity
   private ImageView titleImage;
   
   private long backKeyPressedTime = 0;
-  private Toast appFininshToast;  
+  private Toast appFininshToast;
+  private int currentFragmentPosition = POSITION_HOME;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -144,18 +146,24 @@ public class MainActivity extends ActionBarActivity
     super.onResume();
   }
   
+  
   @Override
   public void onBackPressed()
   {
+    if (currentFragmentPosition != POSITION_HOME)
+    {
+      setFragments(POSITION_HOME);
+      return;
+    }
     
-    if (System.currentTimeMillis() > backKeyPressedTime + 2000) 
+    if (System.currentTimeMillis() > backKeyPressedTime + 2000)
     {
       backKeyPressedTime = System.currentTimeMillis();
       showGuide();
       return;
     }
     
-    if (System.currentTimeMillis() <= backKeyPressedTime + 2000) 
+    if (System.currentTimeMillis() <= backKeyPressedTime + 2000)
     {
       android.os.Process.killProcess(android.os.Process.myPid());
       appFininshToast.cancel();
@@ -163,7 +171,8 @@ public class MainActivity extends ActionBarActivity
     
   }
   
-  public void showGuide() 
+  
+  public void showGuide()
   {
     appFininshToast = Toast.makeText(this, R.string.app_finish, Toast.LENGTH_SHORT);
     appFininshToast.show();
@@ -188,7 +197,7 @@ public class MainActivity extends ActionBarActivity
     bottomMenuSearch.setSelected(false);
     
     Fragment fragment = null;
-    
+    currentFragmentPosition = position;
     switch (position)
     {
       case POSITION_HOME:
@@ -197,11 +206,11 @@ public class MainActivity extends ActionBarActivity
         titleImage.setVisibility(View.VISIBLE);
         fragment = new MainFragment();
         break;
-        
+      
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
           return;
         }
         bottomMenuMyPage.setSelected(true);
@@ -210,7 +219,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
-        
+      
       case POSITION_SEARCH:
         bottomMenuSearch.setSelected(true);
         title.setVisibility(View.VISIBLE);
@@ -218,7 +227,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(R.string.term_search);
         fragment = new SearchFragment();
         break;
-        
+      
       case POSITION_WISHLIST:
         if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {
@@ -228,7 +237,7 @@ public class MainActivity extends ActionBarActivity
         
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
           return;
         }
         bottomMenuWishList.setSelected(true);
@@ -259,15 +268,6 @@ public class MainActivity extends ActionBarActivity
       else if (v.getId() == bottomMenuMyPage.getId())
       {
         setFragments(POSITION_MY_PAGE);
-      }
-      else if (v.getId() == bottomMenuPhotolog.getId())
-      {
-        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
-        {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
-          return;
-        }
-        startActivity(new Intent(getApplicationContext(), NewAndEditPhotoLogActivity.class));
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {

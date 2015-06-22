@@ -35,8 +35,8 @@ import android.widget.ProgressBar;
 import com.dabeeo.hanhayou.activities.sub.GuideActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.Global;
@@ -187,7 +187,6 @@ public class IntroActivity extends Activity
     @Override
     protected void onPreExecute()
     {
-      // TODO Auto-generated method stub
       alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_update_travel_content));
       super.onPreExecute();
     }
@@ -196,7 +195,6 @@ public class IntroActivity extends Activity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      // TODO Auto-generated method stub
       NetworkResult result = client.updateOfflineContents();
       try
       {
@@ -204,7 +202,6 @@ public class IntroActivity extends Activity
       }
       catch (InterruptedException e)
       {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
       return null;
@@ -214,7 +211,6 @@ public class IntroActivity extends Activity
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      // TODO Auto-generated method stub
       super.onPostExecute(result);
       alertManager.hideProgressDialog();
       checkAllowAlarm();
@@ -241,10 +237,23 @@ public class IntroActivity extends Activity
   
   private class GetOfflineContentAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
+    private Dialog dialog;
+    private CharacterProgressView pView;
+    
+    
     @Override
     protected void onPreExecute()
     {
-      alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_download_travel_cotnent));
+      Builder builder = new AlertDialog.Builder(IntroActivity.this);
+      pView = new CharacterProgressView(IntroActivity.this);
+      pView.title.setText(getString(R.string.msg_map_donwload));
+      pView.setCircleProgressVisible(true);
+      pView.setDownloadOfflinePopup();
+      builder.setView(pView);
+      builder.setCancelable(false);
+      dialog = builder.create();
+      dialog.show();
+      
       super.onPreExecute();
     }
     
@@ -257,6 +266,8 @@ public class IntroActivity extends Activity
       File dbFile = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
       if (dbFile.exists())
         contentDatabaseManager.writeDatabase(result.response);
+      
+      publishProgress(10);
       try
       {
         File directory = new File(Global.GetImageFilePath());
@@ -266,8 +277,6 @@ public class IntroActivity extends Activity
         
         JSONObject obj = new JSONObject(result.response);
         File outputFile = new File(Global.GetImageFilePath() + "place_image.zip");
-//				if (outputFile.exists())
-//					outputFile.delete();
         
         if (!outputFile.exists())
         {
@@ -284,6 +293,7 @@ public class IntroActivity extends Activity
             byte[] buffer = new byte[contentLength];
             stream.readFully(buffer);
             stream.close();
+            publishProgress(40);
             
             Log.w("WARN", "이미지 압축파일 다운로드 중");
             DataOutputStream fos = new DataOutputStream(new FileOutputStream(outputFile));
@@ -299,6 +309,8 @@ public class IntroActivity extends Activity
           {
             e.printStackTrace();
           }
+          
+          publishProgress(80);
           unpackZip(outputFile.getAbsolutePath());
           
           outputFile.delete();
@@ -313,10 +325,19 @@ public class IntroActivity extends Activity
     
     
     @Override
+    protected void onProgressUpdate(Integer... progress)
+    {
+      pView.setProgress(progress[0]);
+      super.onProgressUpdate(progress);
+    }
+    
+    
+    @Override
     protected void onPostExecute(NetworkResult result)
     {
       Log.w("WARN", "오프라인 컨텐츠 DB화 완료");
-      alertManager.hideProgressDialog();
+      if (dialog.isShowing())
+        dialog.dismiss();
       checkMapDownload();
       super.onPostExecute(result);
     }

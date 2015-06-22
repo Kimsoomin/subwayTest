@@ -217,11 +217,9 @@
         <!-- Sub Activities -->
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity"
-            android:configChanges="orientation|screenSize"
             android:launchMode="singleTask" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpJustOneActivity"
-            android:configChanges="orientation|screenSize"
             android:launchMode="singleTask" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.GuideActivity"
