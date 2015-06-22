@@ -66,7 +66,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_attraction_btn_state" />
 
                     <TextView
@@ -101,7 +101,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_shopping_btn_state" />
 
                     <TextView
@@ -136,7 +136,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_restaurant_btn_state" />
 
                     <TextView
@@ -171,7 +171,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_subway_btn_state" />
 
                     <TextView
@@ -208,7 +208,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_cosmetic_btn_state" />
 
                     <TextView
@@ -244,7 +244,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_tourinfo_btn_state" />
 
                     <TextView
@@ -279,7 +279,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_drugstore_btn_state" />
 
                     <TextView
@@ -316,7 +316,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_mcdonalds_btn_state" />
 
                     <TextView
@@ -353,7 +353,7 @@
 
                     <ImageView
                         android:layout_width="30dip"
-                        android:layout_height="30dip"
+                        android:layout_height="27dip"
                         android:background="@drawable/nearby_starbucks_btn_state" />
 
                     <TextView

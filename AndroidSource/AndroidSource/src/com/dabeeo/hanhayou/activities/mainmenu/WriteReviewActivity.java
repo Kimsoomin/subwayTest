@@ -33,7 +33,6 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.views.ReviewImageUploadView;
 
-@SuppressWarnings("deprecation")
 public class WriteReviewActivity extends ActionBarActivity
 {
   private final static int REQUEST_CODE = 120;

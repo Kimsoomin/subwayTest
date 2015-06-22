@@ -252,7 +252,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:singleLine="true"
-                            android:text="test"
+                            android:text=""
                             android:textColor="@color/darker_gray"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -262,7 +262,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/naviSubInfo"
-                            android:text="test"
+                            android:text=""
                             android:textColor="@color/light_gray"
                             android:textSize="20sp" />
 
@@ -283,7 +283,7 @@
                             android:layout_below="@+id/naviSubInfo"
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@+id/naviInfoCenter"
-                            android:text="test"
+                            android:text=""
                             android:textColor="@color/light_gray"
                             android:textSize="20sp" />
                     </RelativeLayout>
@@ -340,7 +340,8 @@
                             android:layout_marginRight="8dp"
                             android:layout_marginTop="12dp"
                             android:background="@drawable/default_map_detail"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            android:contentDescription="@null" />
 
                         <LinearLayout
                             android:id="@+id/summaryTextView"
@@ -355,7 +356,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                android:text="test"
+                                android:text=""
                                 android:textColor="@android:color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -369,7 +370,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:singleLine="true"
-                                    android:text="test"
+                                    android:ellipsize="end"
+                                    android:text=""
                                     android:textColor="@color/light_gray"
                                     android:textSize="14sp" />
 
@@ -377,7 +379,8 @@
                                     android:id="@+id/lineNumImage1"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:background="@drawable/icon_subway_line1" />
+                                    android:background="@drawable/icon_subway_line1"
+                                    android:contentDescription="@null" />
 
                                 <TextView
                                     android:id="@+id/lineNumText1"
@@ -386,7 +389,7 @@
                                     android:layout_marginLeft="2dp"
                                     android:layout_toRightOf="@+id/lineNumImage1"
                                     android:singleLine="true"
-                                    android:text="test"
+                                    android:text=""
                                     android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
@@ -398,7 +401,8 @@
                                     android:layout_marginLeft="4dp"
                                     android:layout_toRightOf="@+id/lineNumText1"
                                     android:background="@drawable/icon_subway_line2"
-                                    android:visibility="invisible" />
+                                    android:visibility="invisible"
+                                    android:contentDescription="@null" />
 
                                 <TextView
                                     android:id="@+id/lineNumText2"
@@ -407,7 +411,7 @@
                                     android:layout_marginLeft="2dp"
                                     android:layout_toRightOf="@+id/lineNumImage2"
                                     android:singleLine="true"
-                                    android:text="test"
+                                    android:text=""
                                     android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
@@ -419,7 +423,8 @@
                                     android:layout_marginLeft="4dp"
                                     android:layout_toRightOf="@+id/lineNumText2"
                                     android:background="@drawable/icon_subway_line3"
-                                    android:visibility="invisible" />
+                                    android:visibility="invisible"
+                                    android:contentDescription="@null" />
 
                                 <TextView
                                     android:id="@+id/lineNumText3"
@@ -428,7 +433,7 @@
                                     android:layout_marginLeft="2dp"
                                     android:layout_toRightOf="@+id/lineNumImage3"
                                     android:singleLine="true"
-                                    android:text="test"
+                                    android:text=""
                                     android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
@@ -440,7 +445,8 @@
                                     android:layout_marginLeft="4dp"
                                     android:layout_toRightOf="@+id/lineNumText3"
                                     android:background="@drawable/icon_subway_line4"
-                                    android:visibility="invisible" />
+                                    android:visibility="invisible"
+                                    android:contentDescription="@null" />
 
                                 <TextView
                                     android:id="@+id/lineNumText4"
@@ -449,7 +455,7 @@
                                     android:layout_marginLeft="2dp"
                                     android:layout_toRightOf="@+id/lineNumImage4"
                                     android:singleLine="true"
-                                    android:text="test"
+                                    android:text=""
                                     android:textColor="@color/light_gray"
                                     android:textSize="14sp"
                                     android:visibility="invisible" />
@@ -459,7 +465,8 @@
                                 android:id="@+id/summarylikeLayout"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal"
+                                android:visibility="invisible" >
 
                                 <ImageView
                                     android:id="@+id/summarylikeImage"
@@ -467,7 +474,7 @@
                                     android:layout_height="12dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/icon_like_s"
-                                    android:visibility="invisible" />
+                                    android:contentDescription="@null" />
 
                                 <TextView
                                     android:id="@+id/summarylikecount"
@@ -475,8 +482,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="2dp"
-                                    android:text="0"
-                                    android:visibility="invisible" />
+                                    android:text="" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -510,10 +516,11 @@
                             android:orientation="horizontal" >
 
                             <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="17dip"
+                                android:layout_height="20dip"
                                 android:layout_gravity="center"
-                                android:background="@drawable/icon_place_subway_select" />
+                                android:background="@drawable/icon_place_subway_select"
+                                android:contentDescription="@null" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -528,13 +535,13 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
 
-                        <ImageView
+                        <View
                             android:id="@+id/subwayCenter"
                             android:layout_width="1dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="3dp"
-                            android:src="@color/summary_center" />
+                            android:background="@color/summary_center" />
 
                         <LinearLayout
                             android:id="@+id/subwayEndBtn"
@@ -546,10 +553,11 @@
                             android:orientation="horizontal" >
 
                             <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="17dip"
+                                android:layout_height="20dip"
                                 android:layout_gravity="center"
-                                android:background="@drawable/icon_place_subway_select" />
+                                android:background="@drawable/icon_place_subway_select"
+                                android:contentDescription="@null" />
 
                             <TextView
                                 android:layout_width="wrap_content"

@@ -100,7 +100,7 @@ public class ScheduleBean
         try
         {
           startDateString = obj.getString("startDate");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+          SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
           startDate = format.parse(startDateString);
         }
         catch (Exception e)
@@ -114,7 +114,7 @@ public class ScheduleBean
         try
         {
           endDateString = obj.getString("endDate");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+          SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
           endDate = format.parse(endDateString);
         }
         catch (Exception e)
