@@ -98,29 +98,35 @@ public class GuideActivity extends Activity
       {
         image.setImageResource(R.drawable.intro_tutorial01);
         startHome.setVisibility(View.INVISIBLE);
+        skipBtn.setVisibility(View.VISIBLE);
       }
       else if (position == 1)
       {
         image.setImageResource(R.drawable.intro_tutorial02);
         startHome.setVisibility(View.INVISIBLE);
+        skipBtn.setVisibility(View.VISIBLE);
       }
       else if(position == 2)
       {
         image.setImageResource(R.drawable.intro_tutorial03);
         startHome.setVisibility(View.INVISIBLE);
+        skipBtn.setVisibility(View.VISIBLE);
       }else if(position == 3)
       {
         image.setImageResource(R.drawable.intro_tutorial04);
         startHome.setVisibility(View.INVISIBLE);
+        skipBtn.setVisibility(View.VISIBLE);
       }else if(position == 4)
       {
         image.setImageResource(R.drawable.intro_tutorial05);
         startHome.setVisibility(View.INVISIBLE);
+        skipBtn.setVisibility(View.VISIBLE);
       }else
       {
         skipBtn.setVisibility(View.INVISIBLE);
         image.setImageResource(R.drawable.intro_tutorial06);
         startHome.setVisibility(View.VISIBLE);
+        startHome.bringToFront();
         startHome.setOnClickListener(new OnClickListener()
         {
           
