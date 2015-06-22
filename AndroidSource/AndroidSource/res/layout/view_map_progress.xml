@@ -42,6 +42,7 @@
             android:progressDrawable="@drawable/circle_progress_download_shape" />
 
         <TextView
+            android:id="@+id/msg_alert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dip"
@@ -49,7 +50,7 @@
             android:layout_marginRight="10dip"
             android:layout_marginTop="9dip"
             android:gravity="center"
-            android:text="@string/msg_map_donwload" />
+            android:text="" />
     </LinearLayout>
 
 </RelativeLayout>

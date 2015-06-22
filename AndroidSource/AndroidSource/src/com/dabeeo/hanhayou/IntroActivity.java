@@ -21,8 +21,6 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -41,7 +39,6 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.SystemUtil;
-import com.dabeeo.hanhayou.views.CharacterProgressView;
 import com.dabeeo.hanhayou.views.MapdownloadProgressView;
 
 public class IntroActivity extends Activity
@@ -184,10 +181,15 @@ public class IntroActivity extends Activity
   private class UpdateCheckOfflineContentAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     
+    private MapdownloadProgressView pView;
+    
     @Override
     protected void onPreExecute()
     {
-      alertManager.showProgressDialog(getString(R.string.term_alert), getString(R.string.msg_update_travel_content));
+      pView = new MapdownloadProgressView(IntroActivity.this, getString(R.string.msg_update_travel_content));
+      pView.setCanceledOnTouchOutside(false);
+      pView.setCancelable(false);
+      pView.show();
       super.onPreExecute();
     }
     
@@ -196,6 +198,7 @@ public class IntroActivity extends Activity
     protected NetworkResult doInBackground(String... params)
     {
       NetworkResult result = client.updateOfflineContents();
+      publishProgress(50);
       try
       {
         Thread.sleep(2000);
@@ -204,6 +207,7 @@ public class IntroActivity extends Activity
       {
         e.printStackTrace();
       }
+      publishProgress(100);
       return null;
     }
     
@@ -212,7 +216,8 @@ public class IntroActivity extends Activity
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      alertManager.hideProgressDialog();
+      if(pView.isShowing())
+        pView.dismiss();
       checkAllowAlarm();
     }
     
@@ -237,23 +242,16 @@ public class IntroActivity extends Activity
   
   private class GetOfflineContentAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
-    private Dialog dialog;
-    private CharacterProgressView pView;
+    private MapdownloadProgressView pView;
     
     
     @Override
     protected void onPreExecute()
     {
-      Builder builder = new AlertDialog.Builder(IntroActivity.this);
-      pView = new CharacterProgressView(IntroActivity.this);
-      pView.title.setText(getString(R.string.msg_map_donwload));
-      pView.setCircleProgressVisible(true);
-      pView.setDownloadOfflinePopup();
-      builder.setView(pView);
-      builder.setCancelable(false);
-      dialog = builder.create();
-      dialog.show();
-      
+      pView = new MapdownloadProgressView(IntroActivity.this, getString(R.string.msg_download_travel_cotnent));
+      pView.setCanceledOnTouchOutside(false);
+      pView.setCancelable(false);
+      pView.show();
       super.onPreExecute();
     }
     
@@ -336,8 +334,8 @@ public class IntroActivity extends Activity
     protected void onPostExecute(NetworkResult result)
     {
       Log.w("WARN", "오프라인 컨텐츠 DB화 완료");
-      if (dialog.isShowing())
-        dialog.dismiss();
+      if (pView.isShowing())
+        pView.dismiss();
       checkMapDownload();
       super.onPostExecute(result);
     }
@@ -440,8 +438,9 @@ public class IntroActivity extends Activity
       if (tempdialog.isShowing())
         tempdialog.cancel();
       
-      pView = new MapdownloadProgressView(IntroActivity.this);
+      pView = new MapdownloadProgressView(IntroActivity.this, getString(R.string.msg_is_download_map));
       pView.setCanceledOnTouchOutside(false);
+      pView.setCancelable(false);
       pView.show();
       
       super.onPreExecute();

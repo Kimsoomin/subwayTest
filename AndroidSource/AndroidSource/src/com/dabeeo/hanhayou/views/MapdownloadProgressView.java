@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 
@@ -12,8 +13,9 @@ public class MapdownloadProgressView extends Dialog
 {
   public Context context;
   private ProgressBar circleProgressBar;
+  private TextView msg_alert;
   
-  public MapdownloadProgressView(Context context)
+  public MapdownloadProgressView(Context context, String message)
   {
     super(context);
     this.context = context;
@@ -25,6 +27,8 @@ public class MapdownloadProgressView extends Dialog
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.view_map_progress);
     circleProgressBar = (ProgressBar) findViewById(R.id.circle_progress);
+    msg_alert = (TextView) findViewById(R.id.msg_alert);
+    msg_alert.setText(message);
   }
   
   public void setProgress(int progress)
