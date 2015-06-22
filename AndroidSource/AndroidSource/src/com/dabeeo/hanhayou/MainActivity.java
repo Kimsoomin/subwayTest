@@ -210,7 +210,7 @@ public class MainActivity extends ActionBarActivity
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
           return;
         }
         bottomMenuMyPage.setSelected(true);
@@ -237,7 +237,7 @@ public class MainActivity extends ActionBarActivity
         
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
+          new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
           return;
         }
         bottomMenuWishList.setSelected(true);
@@ -268,15 +268,6 @@ public class MainActivity extends ActionBarActivity
       else if (v.getId() == bottomMenuMyPage.getId())
       {
         setFragments(POSITION_MY_PAGE);
-      }
-      else if (v.getId() == bottomMenuPhotolog.getId())
-      {
-        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
-        {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog();
-          return;
-        }
-        startActivity(new Intent(getApplicationContext(), NewAndEditPhotoLogActivity.class));
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {

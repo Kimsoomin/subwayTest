@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.FindPasswordActivity;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
@@ -41,6 +42,9 @@ public class LoginActivity extends Activity
   public String gender = "";
   public String profile = "";
   
+  private int mainActivityPosition = -1;
+  
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -51,6 +55,7 @@ public class LoginActivity extends Activity
     apiClient = new ApiClient(mContext);
     alertDialogManager = new AlertDialogManager(LoginActivity.this);
     
+    mainActivityPosition = getIntent().getIntExtra("mainFragmentPostion", -1);
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
     editEmail = (EditText) findViewById(R.id.edit_email);
     editPassword = (EditText) findViewById(R.id.edit_password);
@@ -101,8 +106,6 @@ public class LoginActivity extends Activity
     String status = null;
     JSONObject jsonObject;
     
-    
-    
     try
     {
       jsonObject = new JSONObject(response);
@@ -112,7 +115,7 @@ public class LoginActivity extends Activity
       }
       
       if (status.equals("OK"))
-      { 
+      {
         if (jsonObject.has("userSeq"))
           userSeq = jsonObject.getString("userSeq");
         if (jsonObject.has("userEmail"))
@@ -130,6 +133,14 @@ public class LoginActivity extends Activity
         PreferenceManager.getInstance(mContext).setUserGender(gender);
         PreferenceManager.getInstance(mContext).setUserProfile(profile);
         PreferenceManager.getInstance(mContext).setIsAutoLogin(autoLogin.isChecked());
+        
+        if (mainActivityPosition != -1)
+        {
+          Intent i = new Intent(LoginActivity.this, MainActivity.class);
+          i.putExtra("position", mainActivityPosition);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          startActivity(i);
+        }
         finish();
       }
       else
@@ -149,13 +160,16 @@ public class LoginActivity extends Activity
               i.putExtra("userSeq", userSeq);
               startActivity(i);
             }
+            
+            
             @Override
             public void onNegativeButtonClickListener()
             {
               
             }
           });
-        }else
+        }
+        else
         {
           if (status.equals("ERROR_ID"))
           {

@@ -301,7 +301,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
         }
         else
         {
-          new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog();
+          new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog(-1);
         }
       }
     }
