@@ -42,6 +42,7 @@ import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.CharacterProgressView;
+import com.dabeeo.hanhayou.views.MapdownloadProgressView;
 
 public class IntroActivity extends Activity
 {
@@ -71,7 +72,6 @@ public class IntroActivity extends Activity
     
     checkNetworkStatus();
   }
-  
   
   @Override
   protected void onDestroy()
@@ -410,8 +410,7 @@ public class IntroActivity extends Activity
   
   private class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
-    private Dialog dialog;
-    private CharacterProgressView pView;
+    private MapdownloadProgressView pView;
     
     
     @Override
@@ -420,15 +419,9 @@ public class IntroActivity extends Activity
       if (tempdialog.isShowing())
         tempdialog.cancel();
       
-      Builder builder = new AlertDialog.Builder(IntroActivity.this);
-      pView = new CharacterProgressView(IntroActivity.this);
-      pView.title.setText(getString(R.string.msg_map_donwload));
-      pView.setCircleProgressVisible(true);
-      pView.setCircleProgressVisible(true);
-      builder.setView(pView);
-      builder.setCancelable(false);
-      dialog = builder.create();
-      dialog.show();
+      pView = new MapdownloadProgressView(IntroActivity.this);
+      pView.setCanceledOnTouchOutside(false);
+      pView.show();
       
       super.onPreExecute();
     }
@@ -501,8 +494,8 @@ public class IntroActivity extends Activity
     @Override
     protected void onPostExecute(Boolean result)
     {
-      if (dialog.isShowing())
-        dialog.dismiss();
+      if (pView.isShowing())
+        pView.dismiss();
       checkAllowAlarm();
       super.onPostExecute(result);
     }

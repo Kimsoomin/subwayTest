@@ -87,12 +87,13 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
+    TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     
     SpannableStringBuilder style = new SpannableStringBuilder(bean.title);
     style.setSpan(new BackgroundColorSpan(Color.parseColor("#ffffff")), 0, bean.title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     title.setText(style);
-//    category.setText(bean.category);
+//    subtitle.setText(bean.);
     likeCount.setText(Integer.toString(bean.likeCount));
     
     Log.w("WARN", "bean.imageUrl : " + bean.imageUrl);

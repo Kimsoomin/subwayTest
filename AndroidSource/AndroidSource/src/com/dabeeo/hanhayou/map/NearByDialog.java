@@ -33,7 +33,6 @@ public class NearByDialog extends Dialog implements android.view.View.OnClickLis
 	public NearByDialog(Context context, int categoryType) 
 	{
 		super(context);
-		// TODO Auto-generated constructor stub
 		WindowManager.LayoutParams lpWindow = new WindowManager.LayoutParams();    
 		lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 		lpWindow.dimAmount = 0.4f;
@@ -45,8 +44,8 @@ public class NearByDialog extends Dialog implements android.view.View.OnClickLis
 	}
 
 	@Override
-	public void dismiss() {
-		// TODO Auto-generated method stub
+	public void dismiss() 
+	{
 		super.dismiss();
 	}
 

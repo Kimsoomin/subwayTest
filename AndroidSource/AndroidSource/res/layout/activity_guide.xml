@@ -28,6 +28,6 @@
         android:background="@android:color/transparent"
         android:padding="8dp"
         android:text="@string/term_skip"
-        android:textColor="@color/tutorial_skip" />
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

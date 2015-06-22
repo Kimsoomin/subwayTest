@@ -13,8 +13,10 @@
     <ImageButton
         android:id="@+id/start_home"
         android:layout_width="200dip"
-        android:layout_height="140dip"
+        android:layout_height="42dip"
+        android:layout_marginBottom="100dip"
         android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/btn_tutorial_start"
         android:contentDescription="@null"
         android:clickable="true" />

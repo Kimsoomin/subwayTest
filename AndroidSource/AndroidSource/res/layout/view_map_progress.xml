@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="20dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dip"
+            android:text="@string/term_alert"
+            android:textColor="@color/darker_gray"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/character_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="7dip"
+            android:layout_marginLeft="5dip"
+            android:contentDescription="@null"
+            android:src="@drawable/icon_popup_download" />
+
+        <ProgressBar
+            android:id="@+id/circle_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="-6dip"
+            android:background="@drawable/circle_progress_shape"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/circle_progress_download_shape" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="9dip"
+            android:gravity="center"
+            android:text="@string/msg_map_donwload" />
+    </LinearLayout>
+
+</RelativeLayout>
