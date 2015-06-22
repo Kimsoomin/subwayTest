@@ -461,4 +461,7 @@
 	<string name="term_sold_out">此商品暂时缺货</string>
 	<!-- 리뷰 -->
 	<string name="msg_review_declare_reason">选择举报原因</string>
+	
+	<!-- 번역안됨 -->
+	<string name="msg_declare_compelete">신고되었습니다</string>
 </resources>

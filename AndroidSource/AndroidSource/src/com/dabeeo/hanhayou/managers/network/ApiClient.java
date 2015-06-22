@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.managers.network;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -421,6 +422,26 @@ public class ApiClient
         isSuccess = true;
     }
     catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    return isSuccess;
+  }
+  
+  
+  public boolean declareReview(String idx, String reason)
+  {
+    boolean isSuccess = false;
+    try
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "v=m1&mode=CLAIM_INS&parentType=review&parentIdx=" + idx + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq()
+          + "&reason=" + URLEncoder.encode(reason, "utf-8"));
+      
+      JSONObject obj = new JSONObject(result.response);
+      if (obj.getString("status").equals("OK"))
+        isSuccess = true;
+    }
+    catch (Exception e)
     {
       e.printStackTrace();
     }

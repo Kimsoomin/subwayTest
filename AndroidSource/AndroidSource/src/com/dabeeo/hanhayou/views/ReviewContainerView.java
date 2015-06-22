@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.ReviewDetailActivity;
@@ -131,6 +132,13 @@ public class ReviewContainerView extends LinearLayout
       {
         new DeleteAsyncTask().execute(idx);
       }
+      
+      
+      @Override
+      public void onDeclare(String idx, String reason)
+      {
+        new DeclareAsyncTask().execute(idx, reason);
+      }
     });
     reviewView.setOnClickListener(new OnClickListener()
     {
@@ -180,6 +188,31 @@ public class ReviewContainerView extends LinearLayout
       if (result)
         if (reviewViews.get(reviewIdx) != null)
           container.removeView(reviewViews.get(reviewIdx));
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class DeclareAsyncTask extends AsyncTask<String, Integer, Boolean>
+  {
+    
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      return apiClient.declareReview(params[0], params[1]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Boolean result)
+    {
+      Toast.makeText(context, context.getString(R.string.msg_declare_compelete), Toast.LENGTH_SHORT).show();
       super.onPostExecute(result);
     }
   }

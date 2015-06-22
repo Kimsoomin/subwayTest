@@ -1,15 +1,18 @@
 package com.dabeeo.hanhayou.activities.mypage;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
@@ -18,6 +21,7 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
   private RelativeLayout containerPublic, containerPrivate;
   private View background;
   private TextView btnCancelIsPublic;
+  private ApiClient apiClient;
   
   
   @Override
@@ -46,7 +50,7 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
       @Override
       public void onClick(View arg0)
       {
-        if(!SystemUtil.isConnectNetwork(getApplicationContext()))
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {
           new AlertDialogManager(MyScheduleDetailActivity.this).showDontNetworkConnectDialog();
           return;
@@ -97,4 +101,24 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
     super.onResume();
   }
   
+  /**
+   * AsyncTask
+   */
+  private class OpenAsyncTask extends AsyncTask<String, Integer, Boolean>
+  {
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      return apiClient.declareReview(params[0], params[1]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Boolean result)
+    {
+      super.onPostExecute(result);
+    }
+  }
+  
+//  http://gs2.blinking.kr:8900/_libs/api.common.php?v=m1&mode=PLAN_OPEN&userSeq=1&idx=353&isOpen=1
 }

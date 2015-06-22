@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
@@ -66,6 +65,9 @@ public class ReviewView extends RelativeLayout
   public interface DeleteListener
   {
     public void onDelete(String idx);
+    
+    
+    public void onDeclare(String idx, String reason);
   }
   
   
@@ -156,11 +158,18 @@ public class ReviewView extends RelativeLayout
               //신고
               Builder builder = new AlertDialog.Builder(context);
               builder.setTitle(context.getString(R.string.term_declare_review));
-              DeclareReviewView declareView = new DeclareReviewView(context);
+              final DeclareReviewView declareView = new DeclareReviewView(context);
               declareView.init();
-              final EditText editReasonText = (EditText) declareView.findViewById(R.id.edit_review_declare);
               builder.setView(declareView);
-              builder.setPositiveButton(android.R.string.ok, null);
+              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                  if (deleteListener != null)
+                    deleteListener.onDeclare(bean.idx, declareView.getReason());
+                }
+              });
               builder.setNegativeButton(android.R.string.cancel, null);
               builder.show();
             }

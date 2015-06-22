@@ -18,12 +18,12 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ReviewBean;
@@ -32,7 +32,6 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.views.DeclareReviewView;
 
-@SuppressWarnings("deprecation")
 public class ReviewDetailActivity extends ActionBarActivity
 {
   private ImageView icon;
@@ -130,11 +129,17 @@ public class ReviewDetailActivity extends ActionBarActivity
               //신고
               Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
               builder.setTitle(ReviewDetailActivity.this.getString(R.string.term_declare_review));
-              DeclareReviewView declareView = new DeclareReviewView(ReviewDetailActivity.this);
+              final DeclareReviewView declareView = new DeclareReviewView(ReviewDetailActivity.this);
               declareView.init();
-              final EditText editReasonText = (EditText) declareView.findViewById(R.id.edit_review_declare);
               builder.setView(declareView);
-              builder.setPositiveButton(android.R.string.ok, null);
+              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                  new DeclareAsyncTask().execute(bean.idx, declareView.getReason());
+                }
+              });
               builder.setNegativeButton(android.R.string.cancel, null);
               builder.show();
             }
@@ -288,6 +293,31 @@ public class ReviewDetailActivity extends ActionBarActivity
     {
       if (result)
         finish();
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class DeclareAsyncTask extends AsyncTask<String, Integer, Boolean>
+  {
+    
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected Boolean doInBackground(String... params)
+    {
+      return apiClient.declareReview(params[0], params[1]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Boolean result)
+    {
+      Toast.makeText(ReviewDetailActivity.this, getString(R.string.msg_declare_compelete), Toast.LENGTH_SHORT).show();
       super.onPostExecute(result);
     }
   }
