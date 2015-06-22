@@ -136,12 +136,49 @@ public class ApiClient
   }
   
   
+  public ArrayList<ScheduleBean> getBookmarkedSchedules()
+  {
+    ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&isBookmark=1&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+      
+      NetworkResult result = httpClient.requestGet(url);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if (!obj.has("plan"))
+          return beans;
+        
+        JSONArray array = obj.getJSONArray("plan");
+        for (int i = 0; i < array.length(); i++)
+        {
+          JSONObject beanObj = array.getJSONObject(i);
+          ScheduleBean bean = new ScheduleBean();
+          bean.setJSONObject(beanObj);
+          beans.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+//    else
+//      beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
+    return beans;
+  }
+  
+  
   public ScheduleDetailBean getTravelScheduleDetail(String idx)
   {
     ScheduleDetailBean bean = new ScheduleDetailBean();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx);
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx;
+      if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        url += "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+      NetworkResult result = httpClient.requestGet(url);
       if (result.isSuccess)
       {
         try
@@ -235,6 +272,21 @@ public class ApiClient
       String url = getSiteUrl() + "?v=m1&mode=MY_PLACE_LIST";
       url += "&ownerUserSeq=" + PreferenceManager.getInstance(context).getUserSeq();
       
+      places.addAll(getPlaceList(url));
+    }
+//    else
+//      places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
+    return places;
+  }
+  
+  
+  public ArrayList<PlaceBean> getBookmarkedPlaceList()
+  {
+    ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
+    
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&isBookmark=1&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
       places.addAll(getPlaceList(url));
     }
 //    else

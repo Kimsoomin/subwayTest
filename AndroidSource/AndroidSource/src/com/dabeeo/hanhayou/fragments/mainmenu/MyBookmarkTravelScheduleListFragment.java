@@ -31,7 +31,6 @@ import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
-import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 
 public class MyBookmarkTravelScheduleListFragment extends Fragment
@@ -87,7 +86,6 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
 //    listView.addHeaderView(view);
     
     listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     listView.setOnScrollListener(new OnScrollListener()
     {
@@ -100,11 +98,11 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-        {
-          page++;
-          loadSchedules();
-        }
+//        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+//        {
+//          page++;
+//          loadSchedules();
+//        }
       }
     });
     loadSchedules();
@@ -181,9 +179,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   private void loadSchedules()
   {
     progressBar.setVisibility(View.VISIBLE);
-    
-    if (type == SCHEDULE_TYPE_POPULAR)
-      new LoadScheduleAsyncTask().execute();
+    new LoadScheduleAsyncTask().execute();
   }
   
   private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ArrayList<ScheduleBean>>
@@ -200,8 +196,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      //TODO 내 일정 API 변경으로 작업
-      return apiClient.getMyTravelSchedules();
+      return apiClient.getBookmarkedSchedules();
     }
     
     
@@ -241,22 +236,4 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     }
   };
   
-  private OnScrollListener scrollListener = new OnScrollListener()
-  {
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState)
-    {
-    }
-    
-    
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-    {
-      if (!isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-      {
-        page++;
-        loadSchedules();
-      }
-    }
-  };
 }
