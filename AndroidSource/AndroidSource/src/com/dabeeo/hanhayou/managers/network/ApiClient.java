@@ -538,6 +538,13 @@ public class ApiClient
   }
   
   
+  //공지사항
+  public NetworkResult getNotices()
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=NOTICE_LIST");
+  }
+  
+  
   //검색관련 API
   public NetworkResult searchPopular()
   {

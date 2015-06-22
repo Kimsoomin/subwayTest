@@ -1,29 +1,37 @@
 package com.dabeeo.hanhayou.controllers.mypage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.sub.ImagePopUpJustOneActivity;
+import com.dabeeo.hanhayou.beans.NoticeBean.NoticeContentBean;
+import com.dabeeo.hanhayou.utils.ImageDownloader;
 
 public class NoticeAdapter extends BaseExpandableListAdapter
 {
   private List<String> titles;
-  private HashMap<String, List<String>> childs;
+  private HashMap<String, List<ArrayList<NoticeContentBean>>> childs;
   private Context context;
   
   
-  public NoticeAdapter(Context context, List<String> titles, HashMap<String, List<String>> childs)
+  public NoticeAdapter(Context context, List<String> titles, HashMap<String, List<ArrayList<NoticeContentBean>>> childs)
   {
     this.context = context;
     this.titles = titles;
@@ -49,14 +57,44 @@ public class NoticeAdapter extends BaseExpandableListAdapter
   @Override
   public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
   {
-    final String childText = (String) getChild(groupPosition, childPosition);
+    @SuppressWarnings("unchecked")
+    final ArrayList<NoticeContentBean> childBean = (ArrayList<NoticeContentBean>) getChild(groupPosition, childPosition);
     
-    convertView = new TextView(parent.getContext());
-    ((TextView) convertView).setPadding(32, 32, 32, 32);
-    ((TextView) convertView).setTextSize(16);
-    ((TextView) convertView).setTextColor(Color.parseColor("#444a4b"));
-    ((TextView) convertView).setMovementMethod(LinkMovementMethod.getInstance());
-    ((TextView) convertView).setText(childText);
+    convertView = new LinearLayout(parent.getContext());
+    ((LinearLayout) convertView).setOrientation(LinearLayout.VERTICAL);
+    for (int i = 0; i < childBean.size(); i++)
+    {
+      if (childBean.get(i).isText)
+      {
+        TextView textView = new TextView(parent.getContext());
+        textView.setPadding(32, 32, 32, 32);
+        textView.setTextSize(16);
+        textView.setTextColor(Color.parseColor("#444a4b"));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(childBean.get(i).text);
+        ((LinearLayout) convertView).addView(textView);
+      }
+      else
+      {
+        ImageView imageView = new ImageView(parent.getContext());
+        imageView.setPadding(32, 32, 32, 32);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        final String imageUrl = childBean.get(i).text;
+        imageView.setOnClickListener(new OnClickListener()
+        {
+          @Override
+          public void onClick(View arg0)
+          {
+            Intent i = new Intent(context, ImagePopUpJustOneActivity.class);
+            i.putExtra("image_url", imageUrl);
+            context.startActivity(i);
+          }
+        });
+        ImageDownloader.displayImage(parent.getContext(), childBean.get(i).text, imageView, null);
+        ((LinearLayout) convertView).addView(imageView);
+      }
+    }
+    
     return convertView;
   }
   
@@ -100,8 +138,9 @@ public class NoticeAdapter extends BaseExpandableListAdapter
     TextView date = (TextView) convertView.findViewById(R.id.date);
     ImageView btnOpener = (ImageView) convertView.findViewById(R.id.btn_opener);
     
-    title.setText(headerTitle);
-    date.setText("2015-01-01");
+    String[] splits = headerTitle.split("&&&");
+    title.setText(splits[0]);
+    date.setText(splits[1]);
     
     if (isExpanded)
       btnOpener.setImageResource(R.drawable.icon_arrow_g_open);

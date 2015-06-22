@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -19,7 +23,10 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.NoticeBean;
+import com.dabeeo.hanhayou.beans.NoticeBean.NoticeContentBean;
 import com.dabeeo.hanhayou.controllers.mypage.NoticeAdapter;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 
 public class NoticeActivity extends ActionBarActivity
 {
@@ -27,10 +34,11 @@ public class NoticeActivity extends ActionBarActivity
   private NoticeAdapter adapter;
   
   private ArrayList<String> titles = new ArrayList<String>();
-  private HashMap<String, List<String>> contents = new HashMap<String, List<String>>();
+  private HashMap<String, List<ArrayList<NoticeContentBean>>> contents = new HashMap<String, List<ArrayList<NoticeContentBean>>>();
   
   private ProgressBar progressBar;
-  private int limit = 20, offset = 0;
+  private ApiClient apiClient;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +54,7 @@ public class NoticeActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    apiClient = new ApiClient(this);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     
     listView = (ExpandableListView) findViewById(android.R.id.list);
@@ -58,12 +67,14 @@ public class NoticeActivity extends ActionBarActivity
     loadNotices();
   }
   
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
     getMenuInflater().inflate(R.menu.menu_empty, menu);
     return super.onCreateOptionsMenu(menu);
   }
+  
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
@@ -76,24 +87,7 @@ public class NoticeActivity extends ActionBarActivity
   
   private void loadNotices()
   {
-    progressBar.setVisibility(View.VISIBLE);
-    //가데이터
-    NoticeBean bean = new NoticeBean();
-    bean.title = "hanhayou가 오픈했습니다.";
-    bean.content = "hanhayou가 오픈했습니다. 축하드립니다!";
-    titles.add(bean.title);
-    if (contents.get(bean.title) == null)
-      contents.put(bean.title, new ArrayList<String>());
-    contents.get(bean.title).add(bean.content);
-    
-    bean.title = "hanhayou 점검시간 공지입니다.";
-    bean.content = "3월 30일 2시부터 4시까지 점검이 있을 예정입니다.";
-    titles.add(bean.title);
-    if (contents.get(bean.title) == null)
-      contents.put(bean.title, new ArrayList<String>());
-    contents.get(bean.title).add(bean.content);
-    
-    progressBar.setVisibility(View.GONE);
+    new NoticeAsyncTask().execute();
   }
   
   /**************************************************
@@ -110,11 +104,62 @@ public class NoticeActivity extends ActionBarActivity
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
-      {
+//      if (totalItemCount > 0 && totalItemCount > offset && totalItemCount <= firstVisibleItem + visibleItemCount)
+//      {
 //        offset += limit;
 //        load(offset);
-      }
+//      }
     }
   };
+  
+  /**************************************************
+   * AsyncTask
+   ***************************************************/
+  private class NoticeAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    
+    @Override
+    protected void onPreExecute()
+    {
+      progressBar.setVisibility(View.VISIBLE);
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.getNotices();
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        JSONArray arr = obj.getJSONArray("notice");
+        for (int i = 0; i < arr.length(); i++)
+        {
+          NoticeBean bean = new NoticeBean();
+          bean.setJSONObject(arr.getJSONObject(i));
+          
+          String title = bean.title + "&&&"+bean.insertDateString;
+          titles.add(title);
+          if (contents.get(title) == null)
+            contents.put(title, new ArrayList<ArrayList<NoticeContentBean>>());
+          contents.get(title).add(bean.contents);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      adapter.notifyDataSetChanged();
+      progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
+    
+  }
 }
