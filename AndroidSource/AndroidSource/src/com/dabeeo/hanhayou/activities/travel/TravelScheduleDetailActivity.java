@@ -49,6 +49,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   public TravelScheduleDetailViewPagerAdapter adapter;
   private ProgressBar progressBar;
   private ApiClient apiClient;
+  private TextView title;
   
   private String idx;
   public ScheduleDetailBean bean;
@@ -59,6 +60,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   public Button btnIsPublic, btnLike, btnBookmark, btnSaveSchedule;
   private SharePickView sharePickView;
   private int currentPosition = 0;
+  private boolean isRecommendSchedule = false;
   
   
   @Override
@@ -68,7 +70,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     setContentView(R.layout.activity_schedule_detail);
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
-    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title = (TextView) customActionBar.findViewById(R.id.title);
     title.setText(getString(R.string.term_travel_schedule));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -76,6 +78,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    
+    isRecommendSchedule = getIntent().getBooleanExtra("isRecommend", false);
     
     idx = getIntent().getStringExtra("idx");
     apiClient = new ApiClient(this);
@@ -105,6 +109,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     {
       bottomLayout.setVisibility(View.VISIBLE);
       btnSaveSchedule.setVisibility(View.GONE);
+      
     }
     btnSaveSchedule.setOnClickListener(new OnClickListener()
     {
@@ -134,8 +139,10 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   private void displayContent()
   {
     Log.w("WARN", "Bean : " + bean.title);
+    title.setText(bean.title);
     adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
     adapter.setBean(bean);
+    adapter.setIsRecommendSchedule(isRecommendSchedule);
     viewPager.setAdapter(adapter);
     
     adapter.notifyDataSetChanged();

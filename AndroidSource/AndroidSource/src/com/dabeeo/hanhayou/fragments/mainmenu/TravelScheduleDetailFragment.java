@@ -57,10 +57,11 @@ public class TravelScheduleDetailFragment extends Fragment
   private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
   private CustomScrollView scrollView;
   private FrameLayout headerContainer;
-  private LinearLayout rateLayout;
+  private LinearLayout rateLayout, rateTextLayout;
   
   private int position;
   private boolean isMySchedule = false;
+  private boolean isRecommendSchedule = false;
   
   int rate = 3;
   
@@ -85,6 +86,7 @@ public class TravelScheduleDetailFragment extends Fragment
     textRate = (TextView) getView().findViewById(R.id.text_rate);
     
     rateLayout = (LinearLayout) getView().findViewById(R.id.rate_Layout);
+    rateTextLayout = (LinearLayout) getView().findViewById(R.id.rate_text_container);
     btnReviewBest = (Button) getView().findViewById(R.id.btn_review_best);
     btnReviewSoso = (Button) getView().findViewById(R.id.btn_review_soso);
     btnReviewWorst = (Button) getView().findViewById(R.id.btn_review_worst);
@@ -133,12 +135,13 @@ public class TravelScheduleDetailFragment extends Fragment
   }
   
   
-  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule)
+  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule)
   {
     this.position = position;
     this.bean = bean;
     this.dayBean = dayBean;
     this.isMySchedule = isMySchedule;
+    this.isRecommendSchedule = isRecommendSchedule;
   }
   
   
@@ -163,7 +166,13 @@ public class TravelScheduleDetailFragment extends Fragment
       btnReviewWorst.setVisibility(View.GONE);
     }
     
-    if(position != 0)
+    if (isRecommendSchedule)
+    {
+      rateTextLayout.setVisibility(View.GONE);
+      titleView.likeAndBookmarkContainer.setVisibility(View.GONE);
+    }
+    
+    if (position != 0)
     {
       rateLayout.setVisibility(View.GONE);
     }
@@ -277,7 +286,6 @@ public class TravelScheduleDetailFragment extends Fragment
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
       
-      
       if (v.getId() == btnReviewBest.getId())
       {
         btnReviewBest.setSelected(true);
@@ -306,6 +314,7 @@ public class TravelScheduleDetailFragment extends Fragment
           i.putExtra("rate", rate);
           startActivity(i);
         }
+        
         
         public void onNegativeButtonClickListener()
         {

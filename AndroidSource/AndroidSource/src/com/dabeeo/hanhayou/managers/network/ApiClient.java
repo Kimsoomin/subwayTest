@@ -454,7 +454,6 @@ public class ApiClient
       }
       catch (JSONException e)
       {
-        e.printStackTrace();
       }
     }
     else

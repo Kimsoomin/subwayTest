@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.mypage.MyScheduleDetailActivity;
 import com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
@@ -125,6 +126,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
       {
         Intent i = new Intent(RecommendScheduleCompeletedActivity.this, TravelScheduleDetailActivity.class);
         i.putExtra("idx", bean.idx);
+        i.putExtra("isRecommend", true);
         i.putExtra("startDate", bean.startDateString);
         i.putExtra("dayCount", bean.dayCount);
         startActivity(i);
