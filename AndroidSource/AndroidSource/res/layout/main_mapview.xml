@@ -566,8 +566,8 @@
                     </RelativeLayout>
                 </LinearLayout>
             </FrameLayout>
-            <!--
-        <TextView
+            
+        <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -576,8 +576,7 @@
             android:alpha="0.2"
             android:text="ⓒOpenStreetMap contributors(CC-BY-SA)"
             android:textColor="#515151"
-            android:textSize="10sp" />
-            -->
+            android:textSize="10sp" />-->
         </FrameLayout>
     </LinearLayout>
 
