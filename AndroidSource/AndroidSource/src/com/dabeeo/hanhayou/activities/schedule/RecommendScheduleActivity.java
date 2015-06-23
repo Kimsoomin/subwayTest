@@ -92,6 +92,22 @@ public class RecommendScheduleActivity extends ActionBarActivity
   
   
   @Override
+  protected void onNewIntent(Intent intent)
+  {
+    containerShopping.setSelected(false);
+    containerCulture.setSelected(false);
+    containerTour.setSelected(false);
+    containerFood.setSelected(false);
+    containerRest.setSelected(false);
+    containerRandom.setSelected(false);
+    
+    startDate.setTextColor(getResources().getColor(R.color.darker_gray));
+    startDate.setText(getString(R.string.term_select_start_date));
+    super.onNewIntent(intent);
+  }
+  
+  
+  @Override
   protected void onActivityResult(int arg0, int arg1, Intent intent)
   {
     if (arg0 == 101 && arg1 == RESULT_OK)

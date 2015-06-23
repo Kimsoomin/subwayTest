@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,6 +88,18 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     
     // TODO http 결과에서 startDate가 넘어오면 stardDate 관련 부분은 지우기  
     displayRecommendScheduleView(getIntent().getStringExtra("json"), getIntent().getStringExtra("startDate"));
+  }
+  
+  
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event)
+  {
+    if (keyCode == KeyEvent.KEYCODE_BACK)
+    {
+      showFinishDialog();
+      return true;
+    }
+    return false;
   }
   
   
@@ -179,6 +192,9 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
       @Override
       public void onClick(DialogInterface dialog, int which)
       {
+        Intent i = new Intent(RecommendScheduleCompeletedActivity.this, RecommendScheduleActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
         finish();
       }
     });
