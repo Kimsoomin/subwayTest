@@ -189,6 +189,7 @@ public class IntroActivity extends Activity
       pView = new MapdownloadProgressView(IntroActivity.this, getString(R.string.msg_update_travel_content));
       pView.setCanceledOnTouchOutside(false);
       pView.setCancelable(false);
+      pView.progressActive();
       pView.show();
       super.onPreExecute();
     }
@@ -250,6 +251,7 @@ public class IntroActivity extends Activity
     {
       pView = new MapdownloadProgressView(IntroActivity.this, getString(R.string.msg_download_travel_cotnent));
       pView.setCanceledOnTouchOutside(false);
+      pView.progressActive();
       pView.setCancelable(false);
       pView.show();
       super.onPreExecute();

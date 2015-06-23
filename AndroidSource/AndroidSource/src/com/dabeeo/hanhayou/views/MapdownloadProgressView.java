@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.map.Global;
 
 public class MapdownloadProgressView extends Dialog
 {
@@ -29,6 +30,12 @@ public class MapdownloadProgressView extends Dialog
     circleProgressBar = (ProgressBar) findViewById(R.id.circle_progress);
     msg_alert = (TextView) findViewById(R.id.msg_alert);
     msg_alert.setText(message);
+  }
+  
+  public void progressActive()
+  {
+    circleProgressBar.setIndeterminateDrawable(Global.GetDrawable(context, R.drawable.circle_progress_download_shape));
+    circleProgressBar.setIndeterminate(true);
   }
   
   public void setProgress(int progress)

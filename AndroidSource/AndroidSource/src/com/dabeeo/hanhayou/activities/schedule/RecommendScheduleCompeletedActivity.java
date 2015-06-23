@@ -9,10 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.activities.mypage.MyScheduleDetailActivity;
 import com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.beans.ScheduleBean;

@@ -1,6 +1,5 @@
 package com.dabeeo.hanhayou.external.libraries.stikkylistview;
 
-import com.dabeeo.hanhayou.external.libraries.stikkylistview.HeaderAnimator;
 
 
 public class BaseStickyHeaderAnimator extends HeaderAnimator {

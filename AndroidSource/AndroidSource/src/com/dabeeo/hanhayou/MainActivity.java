@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dabeeo.hanhayou.activities.mypage.NewAndEditPhotoLogActivity;
 import com.dabeeo.hanhayou.activities.sub.PromotionActivity;
 import com.dabeeo.hanhayou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hanhayou.fragments.mainmenu.SearchFragment;
