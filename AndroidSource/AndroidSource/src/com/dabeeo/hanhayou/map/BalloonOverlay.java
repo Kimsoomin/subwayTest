@@ -44,7 +44,7 @@ public class BalloonOverlay extends ItemizedIconOverlayEx<OverlayItem>
     if (item == null)
       return;
     
-    int nPlaceID = Integer.valueOf(item.getSnippet());
+//    int nPlaceID = Integer.valueOf(item.getSnippet());
     int nDrawableID = R.drawable.detail_box_re;
 //		PlaceInfo placeInfo = BlinkingSeoulActivity.g_db.GetPlaceInfo(nPlaceID);
 //		if(placeInfo != null)

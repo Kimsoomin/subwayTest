@@ -4,22 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="3dip"
-            android:background="@drawable/sub_bar_bg"
-            android:contentDescription="@null" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <!-- 하단 탭바 -->
 
@@ -28,141 +16,133 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        android:orientation="vertical" >
+        android:background="@drawable/bottom_navigation_bar"
+        android:orientation="horizontal" >
+
+        <!-- 홈 -->
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:background="@drawable/bottom_navigation_bar"
-            android:orientation="horizontal"
-            android:paddingTop="2dp" >
+            android:id="@+id/container_menu_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-            <!-- 홈 -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/btn_background_main_home" />
 
-            <LinearLayout
-                android:id="@+id/container_menu_home"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:text="@string/term_home"
+                android:textColor="@drawable/btn_background_text_color" />
+        </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/btn_background_main_home" />
+        <!-- 마이페이지 -->
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/term_home"
-                    android:textColor="@drawable/btn_background_text_color" />
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/container_menu_mypage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-            <!-- 마이페이지 -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/btn_background_main_mypage" />
 
-            <LinearLayout
-                android:id="@+id/container_menu_mypage"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:text="@string/term_my_page"
+                android:textColor="@drawable/btn_background_text_color" />
+        </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/btn_background_main_mypage" />
+        <!-- 포토로그 등록 -->
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/term_my_page"
-                    android:textColor="@drawable/btn_background_text_color" />
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/container_menu_photolog"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" >
 
-            <!-- 포토로그 등록 -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_bottom_menu_photolog" />
 
-            <LinearLayout
-                android:id="@+id/container_menu_photolog"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:text="@string/term_register_photolog"
+                android:textColor="@drawable/btn_background_text_color" />
+        </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_bottom_menu_photolog" />
+        <!-- 위시리스트 -->
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/term_register_photolog"
-                    android:textColor="@drawable/btn_background_text_color" />
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/container_menu_wishlist"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-            <!-- 위시리스트 -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/btn_background_main_wishlist" />
 
-            <LinearLayout
-                android:id="@+id/container_menu_wishlist"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:text="@string/term_wishlist"
+                android:textColor="@drawable/btn_background_text_color" />
+        </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/btn_background_main_wishlist" />
+        <!-- 검색 -->
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/term_wishlist"
-                    android:textColor="@drawable/btn_background_text_color" />
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/container_menu_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-            <!-- 검색 -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/btn_background_main_search" />
 
-            <LinearLayout
-                android:id="@+id/container_menu_search"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/btn_background_main_search" />
-
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/term_search"
-                    android:textColor="@drawable/btn_background_text_color" />
-            </LinearLayout>
+                android:text="@string/term_search"
+                android:textColor="@drawable/btn_background_text_color" />
         </LinearLayout>
     </LinearLayout>
 

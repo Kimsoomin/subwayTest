@@ -1,17 +1,25 @@
 package com.dabeeo.hanhayou.utils;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
@@ -24,7 +32,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.Global;
-import com.dabeeo.hanhayou.views.CharacterProgressView;
+import com.dabeeo.hanhayou.views.MapdownloadProgressView;
 
 public class MapCheckUtil
 {
@@ -51,28 +59,37 @@ public class MapCheckUtil
         public void onClick(DialogInterface dialog, int whichButton)
         {
           dialog.cancel();
-          if (SystemUtil.isConnectedWiFi(context))
-            new GetMapAsyncTask().execute();
-          else
+          if(SystemUtil.isConnectNetwork(context))
+          {
+            if (SystemUtil.isConnectedWiFi(context))
+            {
+              new GetMapAsyncTask().execute();
+            }
+            else
+            {
+              final AlertDialogManager alertManager = new AlertDialogManager(context);
+              alertManager.showAlertDialog(context.getString(R.string.term_alert), context.getString(R.string.message_alert_lte_mode), context.getString(R.string.term_ok),
+                  context.getString(R.string.term_cancel), new AlertListener()
+              {
+                @Override
+                public void onPositiveButtonClickListener()
+                {
+                  alertManager.dismiss();
+                  new GetMapAsyncTask().execute();
+                }
+                
+                
+                @Override
+                public void onNegativeButtonClickListener()
+                {
+                  alertManager.dismiss();
+                }
+              });
+            }
+          }else
           {
             final AlertDialogManager alertManager = new AlertDialogManager(context);
-            alertManager.showAlertDialog(context.getString(R.string.term_alert), context.getString(R.string.message_alert_lte_mode), context.getString(R.string.term_ok),
-                context.getString(R.string.term_cancel), new AlertListener()
-                {
-                  @Override
-                  public void onPositiveButtonClickListener()
-                  {
-                    alertManager.dismiss();
-                    new GetMapAsyncTask().execute();
-                  }
-                  
-                  
-                  @Override
-                  public void onNegativeButtonClickListener()
-                  {
-                    alertManager.dismiss();
-                  }
-                });
+            alertManager.showDontNetworkConnectDialog();
           }
         }
       }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
@@ -95,21 +112,16 @@ public class MapCheckUtil
   
   private static class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
-    private AlertDialog dialog;
-    private CharacterProgressView pView;
-    
+    private MapdownloadProgressView pView;
     
     @Override
     protected void onPreExecute()
     {
-      Builder builder = new AlertDialog.Builder(context);
-      pView = new CharacterProgressView(context);
-      pView.title.setText(context.getString(R.string.msg_map_donwload));
-      pView.setCircleProgressVisible(true);
-      builder.setView(pView);
-      builder.setCancelable(false);
-      dialog = builder.create();
-      dialog.show();
+      pView = new MapdownloadProgressView(context, context.getString(R.string.msg_update_travel_content));
+      pView.setCanceledOnTouchOutside(false);
+      pView.progressActive();
+      pView.setCancelable(false);
+      pView.show();
       
       super.onPreExecute();
     }
@@ -124,6 +136,8 @@ public class MapCheckUtil
         makeOfflineContentDatabase();
       
       int count = 0;
+      
+      pView.progressStop();
       
       try
       {
@@ -188,14 +202,13 @@ public class MapCheckUtil
     @Override
     protected void onPostExecute(Boolean result)
     {
-      if (dialog.isShowing())
-        dialog.dismiss();
+      if (pView.isShowing())
+        pView.dismiss();
       
       checkMapPlaceData();
       super.onPostExecute(result);
     }
   }
-  
   
   private static void makeOfflineContentDatabase()
   {
@@ -211,9 +224,104 @@ public class MapCheckUtil
     }
     
     NetworkResult result = new ApiClient(context).getOfflineContents();
-    contentDatabaseManager.writeDatabase(result.response);
+    
+    File dbFile = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
+    if (dbFile.exists())
+      contentDatabaseManager.writeDatabase(result.response);
+    try
+    {
+      File directory = new File(Global.GetImageFilePath());
+      
+      if (!directory.exists())
+        directory.mkdirs();
+      
+      JSONObject obj = new JSONObject(result.response);
+      File outputFile = new File(Global.GetImageFilePath() + "place_image.zip");
+      
+      if (!outputFile.exists())
+      {
+        outputFile.createNewFile();
+        
+        try
+        {
+          URL u = new URL(obj.getString("zip"));
+          URLConnection conn = u.openConnection();
+          int contentLength = conn.getContentLength();
+          
+          DataInputStream stream = new DataInputStream(u.openStream());
+          
+          byte[] buffer = new byte[contentLength];
+          stream.readFully(buffer);
+          stream.close();
+          
+          Log.w("WARN", "이미지 압축파일 다운로드 중");
+          DataOutputStream fos = new DataOutputStream(new FileOutputStream(outputFile));
+          fos.write(buffer);
+          fos.flush();
+          fos.close();
+        }
+        catch (FileNotFoundException e)
+        {
+          e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+          e.printStackTrace();
+        }
+        
+        unpackZip(outputFile.getAbsolutePath());
+        
+        outputFile.delete();
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
   
+  private static boolean unpackZip(String path)
+  {
+    InputStream is;
+    ZipInputStream zis;
+    try
+    {
+      is = new FileInputStream(path);
+      zis = new ZipInputStream(new BufferedInputStream(is));
+      ZipEntry ze;
+      
+      while ((ze = zis.getNextEntry()) != null)
+      {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int count;
+        
+        String filename = Global.MD5Encoding(ze.getName());
+        FileOutputStream fout = new FileOutputStream(Global.GetImageFilePath() + filename);
+        
+        // reading and writing
+        while ((count = zis.read(buffer)) != -1)
+        {
+          baos.write(buffer, 0, count);
+          byte[] bytes = baos.toByteArray();
+          fout.write(bytes);
+          baos.reset();
+        }
+        
+        fout.close();
+        zis.closeEntry();
+      }
+      
+      zis.close();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+      return false;
+    }
+    
+    return true;
+  }
   
   private static void checkMapPlaceData()
   {

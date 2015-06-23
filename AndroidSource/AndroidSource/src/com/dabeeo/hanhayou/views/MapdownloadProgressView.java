@@ -38,6 +38,11 @@ public class MapdownloadProgressView extends Dialog
     circleProgressBar.setIndeterminate(true);
   }
   
+  public void progressStop()
+  {
+    circleProgressBar.setIndeterminate(false);
+  }
+  
   public void setProgress(int progress)
   {
     circleProgressBar.setProgress(progress);

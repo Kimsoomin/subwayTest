@@ -173,10 +173,10 @@ public class TravelSchedulesActivity extends ActionBarActivity
           scheduleListFragment.setDayCount(0);
         }else if(which == 1)
         {
-          scheduleListFragment.setDayCount(2);
+          scheduleListFragment.setDayCount(1);
         }else if(which == 2)
         {
-          scheduleListFragment.setDayCount(3);
+          scheduleListFragment.setDayCount(2);
         }else
         {
           scheduleListFragment.setDayCount(4);
