@@ -88,19 +88,6 @@ public class MainActivity extends ActionBarActivity
   }
   
   
-  @Override
-  protected void onDestroy()
-  {
-    super.onDestroy();
-    // 자동 로그인이 아니면 로그인 정보 지우기
-    PreferenceManager preferenceManager = PreferenceManager.getInstance(this);
-    if (!preferenceManager.getIsAutoLogin())
-    {
-      preferenceManager.clearUserInfo();
-    }
-  }
-  
-  
   private void checkPromotion()
   {
     if (TextUtils.isEmpty(PreferenceManager.getInstance(this).getDontShowPopupDate()))

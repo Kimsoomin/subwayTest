@@ -97,11 +97,11 @@ public class PreferenceManager extends BasePreferenceManager
   
   public void clearUserInfo()
   {
-    put(KEY_USER_SEQ, null);
-    put(KEY_USER_EMAIL, null);
-    put(KEY_USER_NAME, null);
-    put(KEY_USER_GENDER, null);
-    put(KEY_USER_PROFILE, null);
+    put(KEY_USER_SEQ, "");
+    put(KEY_USER_EMAIL, "");
+    put(KEY_USER_NAME, "");
+    put(KEY_USER_GENDER, "");
+    put(KEY_USER_PROFILE, "");
     put(KEY_AUTO_LOGIN, false);
   }
   

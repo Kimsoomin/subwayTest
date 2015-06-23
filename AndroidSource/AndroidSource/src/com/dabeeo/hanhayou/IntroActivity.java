@@ -61,6 +61,10 @@ public class IntroActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_intro);
     
+    PreferenceManager preferenceManager = PreferenceManager.getInstance(this);
+    if (!preferenceManager.getIsAutoLogin())
+      preferenceManager.clearUserInfo();
+    
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     alertManager = new AlertDialogManager(this);
     client = new ApiClient(this);
