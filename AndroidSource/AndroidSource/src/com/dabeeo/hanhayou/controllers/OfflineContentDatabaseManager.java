@@ -391,7 +391,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
 //    }
 //  }
   
-  
   /**
    * Get Data
    */

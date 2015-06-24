@@ -88,7 +88,7 @@ public class LoginActivity extends Activity
           return;
         }
         
-        new userLoginTask().execute();
+        new UserLoginTask().execute();
         
       }
       else if (v.getId() == R.id.btn_find_password)
@@ -134,14 +134,7 @@ public class LoginActivity extends Activity
         PreferenceManager.getInstance(mContext).setUserProfile(profile);
         PreferenceManager.getInstance(mContext).setIsAutoLogin(autoLogin.isChecked());
         
-        if (mainActivityPosition != -1)
-        {
-          Intent i = new Intent(LoginActivity.this, MainActivity.class);
-          i.putExtra("position", mainActivityPosition);
-          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          startActivity(i);
-        }
-        finish();
+        new SyncMyPlanAndShceduleTask().execute();
       }
       else
       {
@@ -152,7 +145,6 @@ public class LoginActivity extends Activity
             userSeq = jsonObject.getString("userSeq");
           alertDialogManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_please_error_auth), getString(R.string.term_ok), null, new AlertListener()
           {
-            
             @Override
             public void onPositiveButtonClickListener()
             {
@@ -199,7 +191,7 @@ public class LoginActivity extends Activity
     }
   }
   
-  private class userLoginTask extends AsyncTask<Void, Void, NetworkResult>
+  private class UserLoginTask extends AsyncTask<Void, Void, NetworkResult>
   {
     @Override
     protected void onPreExecute()
@@ -222,6 +214,42 @@ public class LoginActivity extends Activity
     {
       progressLayout.setVisibility(View.GONE);
       responsParser(result.response);
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class SyncMyPlanAndShceduleTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      progressLayout.setVisibility(View.VISIBLE);
+      progressLayout.bringToFront();
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      apiClient.getMyPlaceList();
+      apiClient.getMyTravelSchedules();
+      return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      progressLayout.setVisibility(View.GONE);
+      if (mainActivityPosition != -1)
+      {
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        i.putExtra("position", mainActivityPosition);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+      }
+      finish();
       super.onPostExecute(result);
     }
   }

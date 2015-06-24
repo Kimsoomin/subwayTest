@@ -10,7 +10,7 @@ import android.text.TextUtils;
 public class PreferenceManager extends BasePreferenceManager
 {
   private static PreferenceManager instance;
-  
+  private Context context;
   
   public static PreferenceManager getInstance(Context context)
   {
@@ -29,6 +29,7 @@ public class PreferenceManager extends BasePreferenceManager
   private PreferenceManager(Context context)
   {
     super(context);
+    this.context = context;
   }
   
   private static final String KEY_IS_FIRST = "key_is_first";
@@ -103,6 +104,7 @@ public class PreferenceManager extends BasePreferenceManager
     put(KEY_USER_GENDER, "");
     put(KEY_USER_PROFILE, "");
     put(KEY_AUTO_LOGIN, false);
+    FileManager.getInstance(context).clear();
   }
   
   

@@ -16,6 +16,7 @@ import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
+import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
@@ -108,8 +109,8 @@ public class ApiClient
     if (SystemUtil.isConnectNetwork(context))
     {
       String url = getSiteUrl() + "?v=m1&mode=MY_PLAN_LIST&ownerUserSeq=" + PreferenceManager.getInstance(context).getUserSeq();
-      
       NetworkResult result = httpClient.requestGet(url);
+      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLAN, result.response);
       try
       {
         JSONObject obj = new JSONObject(result.response);
@@ -130,8 +131,28 @@ public class ApiClient
         e.printStackTrace();
       }
     }
-//    else
-//      beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
+    else
+    {
+      try
+      {
+        JSONObject obj = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN));
+        if (!obj.has("plan"))
+          return beans;
+        
+        JSONArray array = obj.getJSONArray("plan");
+        for (int i = 0; i < array.length(); i++)
+        {
+          JSONObject beanObj = array.getJSONObject(i);
+          ScheduleBean bean = new ScheduleBean();
+          bean.setJSONObject(beanObj);
+          beans.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
     return beans;
   }
   
@@ -274,8 +295,27 @@ public class ApiClient
       
       places.addAll(getPlaceList(url));
     }
-//    else
-//      places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
+    else
+    {
+      String localMyPlacesString = FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLACE);
+      try
+      {
+        JSONObject obj = new JSONObject(localMyPlacesString);
+        JSONArray arr = obj.getJSONArray("place");
+        for (int i = 0; i < arr.length(); i++)
+        {
+          JSONObject objInArr = arr.getJSONObject(i);
+          PlaceBean bean = new PlaceBean();
+          bean.setJSONObject(objInArr);
+          places.add(bean);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    
     return places;
   }
   
@@ -301,7 +341,8 @@ public class ApiClient
     ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
     
     NetworkResult result = httpClient.requestGet(url);
-    
+    if (url.contains("MY"))
+      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLACE, result.response);
     try
     {
       JSONObject obj = new JSONObject(result.response);
