@@ -201,7 +201,13 @@ public class SettingActivity extends ActionBarActivity
       }
       else if (v.getId() == containerNotice.getId())
       {
-        startActivity(new Intent(SettingActivity.this, NoticeActivity.class));
+        
+        if (!SystemUtil.isConnectNetwork(SettingActivity.this))
+          new AlertDialogManager(SettingActivity.this).showDontNetworkConnectDialog();
+        else
+        {
+          startActivity(new Intent(SettingActivity.this, NoticeActivity.class));
+        }
       }
       
     }

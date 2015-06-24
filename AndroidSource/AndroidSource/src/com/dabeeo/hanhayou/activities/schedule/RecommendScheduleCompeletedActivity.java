@@ -174,7 +174,15 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
           new CompleteAsyncTask().execute(bean);
         }
       });
-      dialog.setNegativeButton(android.R.string.cancel, null);
+      dialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+      {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          startActivity(new Intent(RecommendScheduleCompeletedActivity.this, MySchedulesActivity.class));
+          finish();
+        }
+      });
       dialog.show();
     }
     

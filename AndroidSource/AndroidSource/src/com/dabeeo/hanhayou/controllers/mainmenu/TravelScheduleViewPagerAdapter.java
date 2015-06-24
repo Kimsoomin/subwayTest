@@ -15,9 +15,17 @@ public class TravelScheduleViewPagerAdapter extends FragmentPagerAdapter
   private List<String> titles = new ArrayList<String>();
   private ArrayList<Fragment> items = new ArrayList<>();
   
+  
   public TravelScheduleViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
+  }
+  
+  
+  public void clear()
+  {
+    titles.clear();
+    notifyDataSetChanged();
   }
   
   
@@ -26,10 +34,12 @@ public class TravelScheduleViewPagerAdapter extends FragmentPagerAdapter
     titles.add(title);
   }
   
+  
   public void addFragement(Fragment fragment)
   {
     items.add(fragment);
   }
+  
   
   @Override
   public Fragment getItem(int position)
