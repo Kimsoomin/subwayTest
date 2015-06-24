@@ -20,6 +20,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
@@ -74,7 +75,9 @@ public class SettingActivity extends ActionBarActivity
           public void onClick(DialogInterface dialog, int which)
           {
             preferenceManager.clearUserInfo();
-            setResult(RESULT_OK);
+            Intent i = new Intent(SettingActivity.this, MainActivity.class);
+            i.putExtra("position", MainActivity.POSITION_HOME);
+            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             finish();
           }
         });

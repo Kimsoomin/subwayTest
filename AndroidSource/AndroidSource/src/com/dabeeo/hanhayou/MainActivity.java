@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -114,6 +115,7 @@ public class MainActivity extends ActionBarActivity
   @Override
   protected void onNewIntent(Intent intent)
   {
+    Log.w("WARN", "OnNewIntent");
     int position = intent.getIntExtra("position", POSITION_HOME);
     setFragments(position);
     super.onNewIntent(intent);
@@ -129,6 +131,13 @@ public class MainActivity extends ActionBarActivity
       subwayFrament.viewClear();
       subwayFrament = new SubwayFragment();
     }
+    
+    if (currentFragmentPosition == POSITION_MY_PAGE)
+    {
+      if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        setFragments(POSITION_HOME);
+    }
+    
     super.onResume();
   }
   
