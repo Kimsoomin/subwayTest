@@ -36,6 +36,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
   
   public Context mContext;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -46,7 +47,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     apiClient = new ApiClient(mContext);
     
     Intent intent = getIntent();
-    if(intent.hasExtra("userSeq"))
+    if (intent.hasExtra("userSeq"))
       userSeq = intent.getStringExtra("userSeq");
     
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
@@ -90,36 +91,38 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     editText.addTextChangedListener(watcher);
   }
   
+  
   @Override
   public void onClick(View v)
   {
-    switch (v.getId()) 
+    switch (v.getId())
     {
       case R.id.btn_auth:
         new emailAuthCheckTask().execute();
         break;
-        
+      
       case R.id.btn_auth_cancel:
         finish();
         break;
-        
+      
       case R.id.btn_re_send:
         new emailKeyResendTask().execute();
         break;
     }
   }
   
+  
   public void CreateAlert(String message, final boolean isSuccess)
   {
     AlertDialog.Builder ab = new AlertDialog.Builder(this);
     ab.setTitle(R.string.term_alert);
-    ab.setPositiveButton(R.string.term_ok,
-        new DialogInterface.OnClickListener() {
+    ab.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
+    {
       @Override
-      public void onClick(DialogInterface dialog, int which) 
+      public void onClick(DialogInterface dialog, int which)
       {
         dialog.dismiss();
-        if(isSuccess)
+        if (isSuccess)
         {
           startActivity(new Intent(mContext, CongratulateJoinActivity.class));
         }
@@ -140,11 +143,13 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       super.onPreExecute();
     }
     
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       return apiClient.userEmailKeyResend(editText.getText().toString());
     }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)
@@ -165,13 +170,14 @@ public class AuthEmailActivity extends Activity implements OnClickListener
         e.printStackTrace();
       }
       
-      if(status.equals("OK"))
+      if (status.equals("OK"))
       {
         CreateAlert(getString(R.string.msg_resend_emil_auth), true);
-      }else
+      }
+      else
       {
         CreateAlert(getString(R.string.msg_send_email_fail), false);
-      }      
+      }
       super.onPostExecute(result);
     }
     
@@ -188,12 +194,14 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       super.onPreExecute();
     }
     
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       
       return apiClient.userEmailKeycheck(userSeq, editText.getText().toString());
     }
+    
     
     @Override
     protected void onPostExecute(NetworkResult result)
@@ -214,10 +222,11 @@ public class AuthEmailActivity extends Activity implements OnClickListener
         e.printStackTrace();
       }
       
-      if(status.equals("OK"))
+      if (status.equals("OK"))
       {
         CreateAlert(getString(R.string.msg_complete_auth), true);
-      }else
+      }
+      else
       {
         CreateAlert(getString(R.string.msg_not_correct_email_auth), false);
       }

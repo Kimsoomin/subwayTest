@@ -11,7 +11,9 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -317,7 +319,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
-      new joinHanhayouTask().execute();
+      new JoinHanhayouTask().execute();
     }
   };
   
@@ -537,7 +539,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     }
   }
   
-  private class joinHanhayouTask extends AsyncTask<Void, Void, NetworkResult>
+  private class JoinHanhayouTask extends AsyncTask<Void, Void, NetworkResult>
   {
     @Override
     protected void onPreExecute()
@@ -584,9 +586,22 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           e.printStackTrace();
         }
         
-        Intent intent = new Intent(JoinActivity.this, AuthEmailActivity.class);
-        intent.putExtra("userSeq", userSeq);
-        startActivity(intent);
+        final String finalUserSeq = userSeq;
+        AlertDialog.Builder ab = new AlertDialog.Builder(JoinActivity.this);
+        ab.setTitle(R.string.term_alert);
+        ab.setMessage(R.string.msg_send_auth_number);
+        ab.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
+        {
+          @Override
+          public void onClick(DialogInterface dialog, int which)
+          {
+            Intent intent = new Intent(JoinActivity.this, AuthEmailActivity.class);
+            intent.putExtra("userSeq", finalUserSeq);
+            startActivity(intent);
+          }
+        });
+        ab.show();
+        
       }
       else
       {

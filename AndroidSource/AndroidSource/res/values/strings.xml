@@ -378,7 +378,7 @@
         <item>仁寺洞/市厅(传统文化地区)</item>
         <item>其他</item>
     </array>
-     <array name="spot_array">
+    <array name="spot_array">
         <item>全部</item>
         <item>按人气排序</item>
         <item>加到书签夹的地点</item>
@@ -438,31 +438,33 @@
     <string name="msg_allow_receive_email">同意接收有关商品和推广活动邮件。(选项）</string>
     <string name="msg_allow_receive_phone">同意接收短信推广信息。(选项）</string>
     <string name="msg_resend_emil_auth">验证码重新发到邮箱。请查看后输入验证码。</string>
-	<string name="msg_not_correct_email_auth">验证码不符。请确认后再试。</string>
-	<string name="msg_complete_auth">邮箱验证成功。</string>    
-	<string name="term_congratulate">恭喜！\n欢迎成为‘韩哈游’的会员。</string> 
-	<string name="msg_success_join">注册成功.\n欢迎体验韩哈游的精彩服务</string>
-	<string name="msg_please_error_id">您输入的帐号不存在</string>
-	<string name="msg_now_allow_consecutive_three_letters">연속된 문자/숫자 3자리 이상은 사용하실 수 없 습니다</string>
-	<string name="msg_please_error_auth">인증되지 않은 E-mail입니다</string>
-	<string name="msg_please_error_out">该账号为已注销账号。</string>
-	<string name="msg_please_error_password">密码不正确，请重新输入。</string>
-	<string name="msg_please_error_old_password">原先的密码不正确，请重新输入。</string>
-	<string name="term_detail">(查看详情)</string>
-	<string name="term_qq">QQ</string>
-	<string name="term_wechat">微信</string>
-	<string name="term_weibo">新浪微博</string>
-	<!-- Trend -->
-	<string name="term_product_detail">查看商品</string>
-	<string name="term_product_description">商品介绍</string>
-	<string name="term_delivery">配送</string>
-	<string name="msg_help_pic_detail">手指滑动可以放大图片</string>
-	<string name="term_product_review">商品点评</string>
-	<string name="term_sold_out">此商品暂时缺货</string>
-	<!-- 리뷰 -->
-	<string name="msg_review_declare_reason">选择举报原因</string>
-	
-	<!-- 번역안됨 -->
-	<string name="msg_declare_compelete">신고되었습니다</string>
-	<string name="msg_send_temp_password">임시 비밀번호를 발급했습니다.</string>
+    <string name="msg_not_correct_email_auth">验证码不符。请确认后再试。</string>
+    <string name="msg_complete_auth">邮箱验证成功。</string>
+    <string name="term_congratulate">恭喜！\n欢迎成为‘韩哈游’的会员。</string>
+    <string name="msg_success_join">注册成功.\n欢迎体验韩哈游的精彩服务</string>
+    <string name="msg_please_error_id">您输入的帐号不存在</string>
+    <string name="msg_now_allow_consecutive_three_letters">연속된 문자/숫자 3자리 이상은 사용하실 수 없 습니다</string>
+    <string name="msg_please_error_auth">인증되지 않은 E-mail입니다</string>
+    <string name="msg_please_error_out">该账号为已注销账号。</string>
+    <string name="msg_please_error_password">密码不正确，请重新输入。</string>
+    <string name="msg_please_error_old_password">原先的密码不正确，请重新输入。</string>
+    <string name="term_detail">(查看详情)</string>
+    <string name="term_qq">QQ</string>
+    <string name="term_wechat">微信</string>
+    <string name="term_weibo">新浪微博</string>
+    <!-- Trend -->
+    <string name="term_product_detail">查看商品</string>
+    <string name="term_product_description">商品介绍</string>
+    <string name="term_delivery">配送</string>
+    <string name="msg_help_pic_detail">手指滑动可以放大图片</string>
+    <string name="term_product_review">商品点评</string>
+    <string name="term_sold_out">此商品暂时缺货</string>
+    <!-- 리뷰 -->
+    <string name="msg_review_declare_reason">选择举报原因</string>
+
+    <!-- 번역안됨 -->
+    <string name="msg_declare_compelete">신고되었습니다</string>
+    <string name="msg_send_temp_password">임시 비밀번호를 발급했습니다.</string>
+    <string name="msg_send_auth_number">가입하신 이메일로 인증번호를 발송하였습니다. 인증번호를 확인 후, 인증번호 입력창에 입력해주세요</string>
+
 </resources>
