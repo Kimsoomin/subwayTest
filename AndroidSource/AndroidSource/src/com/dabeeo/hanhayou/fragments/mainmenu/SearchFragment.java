@@ -103,6 +103,7 @@ public class SearchFragment extends Fragment
       {
         if (s.length() >= 2)
         {
+          imageX.setVisibility(View.VISIBLE);
           search(s.toString());
         }
         else
@@ -219,6 +220,7 @@ public class SearchFragment extends Fragment
         Intent i = new Intent(getActivity(), SearchResultDetailActivity.class);
         i.putExtra("keyword", inputWord.getText().toString());
         startActivity(i);
+        inputWord.setText("");
       }
       return false;
     }
