@@ -8,6 +8,6 @@ public class SubwayInfo
 	public String name_en;
 	public String name_cn;
 	public int category;
-	public float lat;
-	public float lng;
+	public double lat;
+	public double lng;
 }

@@ -160,7 +160,10 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     
     setTitle("");
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
-    ((TextView) findViewById(R.id.text_description)).setText(bean.placeDetail.title);
+    if(bean.placeDetail != null)
+      ((TextView) findViewById(R.id.text_description)).setText(bean.placeDetail.title);
+    else
+      ((TextView) findViewById(R.id.text_description)).setText("");
     
     //Contents
     if (bean.contents.size() > 0)
@@ -235,14 +238,17 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       horizontalImagesView.addView(parentView);
     }
     
-    addDetailInfo(getString(R.string.term_place_detail_info), bean.placeDetail.contents);
-    addDetailInfo(getString(R.string.term_address), bean.placeDetail.address);
-    addDetailInfo(getString(R.string.term_phone), bean.placeDetail.contact);
-    addDetailInfo(getString(R.string.term_homepage), bean.placeDetail.homepage);
-    addDetailInfo(getString(R.string.term_working_time), bean.placeDetail.businessHours);
-    addDetailInfo(getString(R.string.term_price_info), bean.placeDetail.priceInfo);
-    addDetailInfo(getString(R.string.term_traffic), bean.placeDetail.trafficInfo);
+    if(bean.placeDetail != null)
+    {
+      addDetailInfo(getString(R.string.term_place_detail_info), bean.placeDetail.contents);
+      addDetailInfo(getString(R.string.term_address), bean.placeDetail.address);
+      addDetailInfo(getString(R.string.term_phone), bean.placeDetail.contact);
+      addDetailInfo(getString(R.string.term_homepage), bean.placeDetail.homepage);
+      addDetailInfo(getString(R.string.term_working_time), bean.placeDetail.businessHours);
+      addDetailInfo(getString(R.string.term_price_info), bean.placeDetail.priceInfo);
+      addDetailInfo(getString(R.string.term_traffic), bean.placeDetail.trafficInfo);
 //    addDetailInfo(getString(R.string.term_description), bean.placeDetail.); //이용 시간
+    }
   }
   
   
@@ -381,7 +387,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     protected NetworkResult doInBackground(Void... params)
     {
       // TODO 아직 api없음 
-      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "place", "L");
+      return apiClient.setUsedLog(PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), bean.idx, "premium", "L");
     }
     
     

@@ -23,8 +23,8 @@ public class SubwayExitInfo
 				ExitInfo exitInfo = new ExitInfo();
 				exitInfo.exit = key;
 				JSONObject data = new JSONObject(object.getString(key));
-				exitInfo.lat = Float.parseFloat(data.getString("latitude"));
-				exitInfo.lng = Float.parseFloat(data.getString("longitude"));
+				exitInfo.lat = Double.parseDouble(data.getString("latitude"));
+				exitInfo.lng = Double.parseDouble(data.getString("longitude"));
 				exitList.put(exitInfo.exit, exitInfo);
 			}
 		} catch (Exception e) 
@@ -36,6 +36,6 @@ public class SubwayExitInfo
 	public class ExitInfo
 	{
 		public String exit;
-		public float lat, lng;
+		public double lat, lng;
 	}
 }

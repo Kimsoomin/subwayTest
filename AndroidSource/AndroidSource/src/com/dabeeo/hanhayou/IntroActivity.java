@@ -541,8 +541,7 @@ public class IntroActivity extends Activity
               PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
               startGuideActivity();
             }
-            
-            
+                        
             @Override
             public void onNegativeButtonClickListener()
             {

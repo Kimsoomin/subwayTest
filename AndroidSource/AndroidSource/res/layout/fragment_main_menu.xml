@@ -224,8 +224,8 @@
 
                         <LinearLayout
                             android:id="@+id/container_download_map"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                            android:layout_width="141dip"
+                            android:layout_height="150dip"
                             android:background="@drawable/btn_main_map_down"
                             android:gravity="center"
                             android:orientation="vertical" >

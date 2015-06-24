@@ -68,6 +68,31 @@
             </RelativeLayout>
         </LinearLayout>
 
+        <ListView
+            android:id="@+id/search_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/empty_search_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dip"
+                android:text="@string/msg_no_search_result"
+                android:textColor="@color/light_gray" />
+        </RelativeLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
@@ -78,29 +103,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
             </LinearLayout>
-
-            <ListView
-                android:id="@+id/search_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:visibility="gone" />
-
-            <RelativeLayout
-                android:id="@+id/empty_search_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:visibility="gone" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="70dip"
-                    android:text="@string/msg_no_search_result"
-                    android:textColor="@color/light_gray" />
-            </RelativeLayout>
 
             <ImageButton
                 android:id="@+id/zoomInbtn"
@@ -185,8 +187,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="1day"
-                        android:textAlignment="center"
+                        android:gravity="center"
                         android:textColor="@color/darker_gray"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -195,8 +196,7 @@
                         android:id="@+id/ymdText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2015.07.05"
-                        android:textAlignment="center"
+                        android:gravity="center"
                         android:textColor="@color/light_gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -205,7 +205,8 @@
                     android:id="@+id/dayRight"
                     android:layout_width="20dip"
                     android:layout_height="20dip"
-                    android:background="@drawable/btn_plan_day_right" />
+                    android:background="@drawable/btn_plan_day_right"
+                    android:contentDescription="@null" />
             </LinearLayout>
 
             <FrameLayout
@@ -220,7 +221,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/box_map_detail" />
+                    android:background="@drawable/box_map_detail"
+                    android:contentDescription="@null" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -234,7 +236,8 @@
                         android:layout_height="30dp"
                         android:layout_marginLeft="18dp"
                         android:layout_marginTop="28dp"
-                        android:background="@drawable/icon_navigation_on" />
+                        android:background="@drawable/icon_navigation_on"
+                        android:contentDescription="@null" />
 
                     <RelativeLayout
                         android:id="@+id/naviTextView"
@@ -340,8 +343,8 @@
                             android:layout_marginRight="8dp"
                             android:layout_marginTop="12dp"
                             android:background="@drawable/default_map_detail"
-                            android:visibility="visible"
-                            android:contentDescription="@null" />
+                            android:contentDescription="@null"
+                            android:visibility="visible" />
 
                         <LinearLayout
                             android:id="@+id/summaryTextView"
@@ -369,8 +372,8 @@
                                     android:id="@+id/summarySubTitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:singleLine="true"
                                     android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text=""
                                     android:textColor="@color/light_gray"
                                     android:textSize="14sp" />
@@ -401,8 +404,8 @@
                                     android:layout_marginLeft="4dp"
                                     android:layout_toRightOf="@+id/lineNumText1"
                                     android:background="@drawable/icon_subway_line2"
-                                    android:visibility="invisible"
-                                    android:contentDescription="@null" />
+                                    android:contentDescription="@null"
+                                    android:visibility="invisible" />
 
                                 <TextView
                                     android:id="@+id/lineNumText2"
@@ -423,8 +426,8 @@
                                     android:layout_marginLeft="4dp"
                                     android:layout_toRightOf="@+id/lineNumText2"
                                     android:background="@drawable/icon_subway_line3"
-                                    android:visibility="invisible"
-                                    android:contentDescription="@null" />
+                                    android:contentDescription="@null"
+                                    android:visibility="invisible" />
 
                                 <TextView
                                     android:id="@+id/lineNumText3"
@@ -445,8 +448,8 @@
                                     android:layout_marginLeft="4dp"
                                     android:layout_toRightOf="@+id/lineNumText3"
                                     android:background="@drawable/icon_subway_line4"
-                                    android:visibility="invisible"
-                                    android:contentDescription="@null" />
+                                    android:contentDescription="@null"
+                                    android:visibility="invisible" />
 
                                 <TextView
                                     android:id="@+id/lineNumText4"
@@ -574,8 +577,9 @@
                     </RelativeLayout>
                 </LinearLayout>
             </FrameLayout>
-            
-        <!--<TextView
+
+            <!--
+            <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -584,7 +588,8 @@
             android:alpha="0.2"
             android:text="ⓒOpenStreetMap contributors(CC-BY-SA)"
             android:textColor="#515151"
-            android:textSize="10sp" />-->
+            android:textSize="10sp" />
+            -->
         </FrameLayout>
     </LinearLayout>
 

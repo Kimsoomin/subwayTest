@@ -93,7 +93,6 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
   @Override
   public void draw(Canvas canvas, MapView mapView, boolean shadow) 
   {
-    // TODO Auto-generated method stub
     super.draw(canvas, mapView, shadow);
     
     nSize = size();
@@ -135,7 +134,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
       
       if(overlayitem.getUid().equals(idx))
       {
-        canvas.drawBitmap(pin_map, pt1.x, pt1.y - pin_map.getHeight(), null);
+        canvas.drawBitmap(pin_map, pt1.x-5, pt1.y - pin_map.getHeight(), null);
       }else
       {
         if(overlayitem.getSnippet().equals(day))

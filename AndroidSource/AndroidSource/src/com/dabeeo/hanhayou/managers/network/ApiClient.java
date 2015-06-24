@@ -649,8 +649,6 @@ public class ApiClient
     else
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
   }
-  
-  
   /**
    * 사용자 로그 등록 (좋아요, 북마크, 공유, 위시)
    * 

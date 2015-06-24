@@ -115,10 +115,10 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   float offsetX = 0.04f;
   float offsetY = 0.01f;
   BoundingBoxE6 m_boundingBox = new BoundingBoxE6(
-		  37.70453488762476 + offsetY, 
-		  127.17361450195312 + offsetX, 
-		  37.43677099171195 - offsetY, 
-		  126.76300048828125 - offsetX);
+      37.70453488762476 + offsetY, 
+      127.17361450195312 + offsetX, 
+      37.43677099171195 - offsetY, 
+      126.76300048828125 - offsetX);
   
   // - Marker 관련.
   private NavigationOverlay navigationOverlay;
@@ -650,36 +650,22 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   private OnItemClickListener onClickListItem = new OnItemClickListener() 
   {
     boolean allplace = false;
-    int summaryId = 0;
+    
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
     {
-      ListViewVisibleSetting(1);
+      ListViewVisibleSetting(2);
       m_mapView.getController().setZoom(17);
-      Log.i("INFO", "m_listview Visible : "+m_ListView.getVisibility());
       for(Entry<String, PlaceInfo> itemInfo : allplaceinfo.entrySet())
       {
         PlaceInfo info = itemInfo.getValue();
         if(info.title.equals(m_Adapter.getItem(arg2)))
         {
-          idx = info.idx;
-          place_fLatitude = info.lat;
-          place_fLongitute = info.lng;
-          m_locMarkTarget = new Location("MarkTaget");
-          m_locMarkTarget.setLatitude(place_fLatitude);
-          m_locMarkTarget.setLongitude(place_fLongitute);
-          DestinationTitle = info.title;
-          summaryTitle.setText(DestinationTitle);
-          summaryAddressInit();
-          summarysubTitle.setVisibility(View.VISIBLE);
-          summarysubTitle.setText(info.address);
-          summaryId = 2;
           selectItem = 1;
-          if(info.category == 40 || info.category == 50 || info.category == 60 || info.category == 70 || info.category == 80)
-            summaryDetail = false;
-          else
-            summaryDetail = true;
+          selectMarker(info.idx, selectItem);
+          BlinkingCommon.smlLibDebug("BlinkingMap", "placeLat : " + info.lat +" placeLng : " + info.lng );
           allplace = true;
+          break;
         }
       }
       
@@ -690,29 +676,16 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
           SubwayInfo subway = subInfo.getValue();
           if(subway.name_cn.equals(m_Adapter.getItem(arg2)))
           {
-            idx = subway.idx;
-            place_fLatitude = subway.lat;
-            place_fLongitute = subway.lng;
-            m_locMarkTarget = new Location("MarkTaget");
-            m_locMarkTarget.setLatitude(place_fLatitude);
-            m_locMarkTarget.setLongitude(place_fLongitute);
-            DestinationTitle = subway.name_cn;
-            summaryAddressInit();
-            subwaylineNumSet(idx);
-            summaryTitle.setText(DestinationTitle);
-            summarysubTitle.setVisibility(View.INVISIBLE);
-            summaryViewVisibleSet(summaryViewVisible, 2);
-            summaryDetail = false;
             selectItem = 2;
-            summaryId = 2;
+            BlinkingCommon.smlLibDebug("BlinkingMap", "placeLat : " + subway.lat +" placeLng : " + subway.lng );
+            BlinkingCommon.smlLibDebug("BlinkingMap", "idx : "+ subway.idx);
+            selectMarker(subway.idx, selectItem);
+            break;
           }
         }
       }
       
       categoryType = -1;
-      summaryViewVisibleSet(summaryViewVisible, summaryId);
-      mapCenterset(0);
-      markerSel(selectItem);
       allplace = false;
       searchEditText.setText("");
       searchEditText.setHint(R.string.message_search_word_here);
@@ -738,7 +711,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       searchEditText.setText("");
       searchEditText.setHint(R.string.message_search_word_here);
-      ListViewVisibleSetting(1);
+      ListViewVisibleSetting(2);
     }else
     {
       goHome();
@@ -799,18 +772,19 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) 
       {
-        // TODO Auto-generated method stub
+        
       }
       
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count,
-          int after) {
-        // TODO Auto-generated method stub
+          int after) 
+      {
+        
       }
       
       @Override
-      public void afterTextChanged(Editable s) {
-        // TODO Auto-generated method stub   
+      public void afterTextChanged(Editable s) 
+      {
         searchList();
       }
     };
@@ -865,20 +839,11 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       }
       
       if(m_Adapter.getCount() > 0)
-      {
-        if(m_ListView.getVisibility() == View.GONE)
-          ListViewVisibleSetting(0);
-        if(emptysearchList.getVisibility() == View.VISIBLE)
-          emptysearchList.setVisibility(View.GONE);
+      { 
+        ListViewVisibleSetting(0);
       }else
       {
-        if(m_ListView.getVisibility() == View.VISIBLE)
-          ListViewVisibleSetting(1);
-        if(emptysearchList.getVisibility() == View.GONE)
-        {
-          emptysearchList.bringToFront();
-          emptysearchList.setVisibility(View.VISIBLE);
-        }
+        ListViewVisibleSetting(1);
       }
     }    
   }
@@ -930,8 +895,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     FrameLayout.LayoutParams btnLayoutParams = new FrameLayout.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     btnLayoutParams.gravity = Gravity.BOTTOM;
-//		Animation summaryIn = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom);
-//		Animation summaryOut = AnimationUtils.loadAnimation(this, R.anim.abc_slide_out_bottom);
     if (type == summaryViewVisible) 
     {
       if(summaryViewID == 1)
@@ -950,21 +913,11 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         summaryLikeLayout.setVisibility(View.INVISIBLE);
         subwayLayout.setVisibility(View.GONE);
       }
-      
-      //			if(summaryView.getVisibility() == View.INVISIBLE)
-      //			{
-      //				summaryView.startAnimation(summaryIn);
-      //				btnlayout.startAnimation(summaryIn);
-      //			}
       summaryView.setVisibility(View.VISIBLE);
       summaryView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
       btnLayoutParams.bottomMargin = summaryView.getMeasuredHeight() + 5;
     } else 
     {
-      //			if(summaryView.getVisibility() == View.VISIBLE)
-      //			{
-      //				summaryView.startAnimation(summaryOut);
-      //			}
       summaryView.setVisibility(View.INVISIBLE);
       btnLayoutParams.bottomMargin = 0;
     }
@@ -1006,12 +959,21 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   {
     if(visible == 0)
     {
+      m_mapView.setVisibility(View.GONE);
       m_ListView.setVisibility(View.VISIBLE);
       searchCancel.setVisibility(View.VISIBLE);
-      m_ListView.bringToFront();
+      emptysearchList.setVisibility(View.GONE);
+    }else if(visible == 1)
+    {
+      m_mapView.setVisibility(View.GONE);
+      m_ListView.setVisibility(View.GONE);
+      emptysearchList.setVisibility(View.VISIBLE);
+      searchCancel.setVisibility(View.INVISIBLE);
     }else
     {
+      m_mapView.setVisibility(View.VISIBLE);
       m_ListView.setVisibility(View.GONE);
+      emptysearchList.setVisibility(View.GONE);
       searchCancel.setVisibility(View.INVISIBLE);
     }
   }
@@ -1415,20 +1377,18 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     if (intent.hasExtra("lineId"))
     {
       subwayIntnet(intent);
-      selectItem = 2;
     }else if (intent.hasExtra("placeIdx"))
     {
       idx = intent.getStringExtra("placeIdx");
-      BlinkingCommon.smlLibDebug("BlinkingMap", "idx : " +idx );
       selectItem = 1;
-      selectMarker(null, 4);
+      selectMarker(idx, selectItem);
     }else if(intent.hasExtra("premiumIdx"))
     {      
       preimumIdx = intent.getStringExtra("premiumIdx");
       isPremium = intent.getBooleanExtra("isPremium", false);
       idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
       selectItem = 1;
-      selectMarker(null, 4);
+      selectMarker(idx, selectItem);
     }
   }
   
@@ -1440,21 +1400,19 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     {
       if (intent.hasExtra("lineId"))
       {
-        selectItem = 2; 
         subwayIntnet(intent);
       } else if(intent.hasExtra("placeIdx"))
       {
         idx = intent.getStringExtra("placeIdx");
         selectItem = 1;
-        selectMarker(null, 4);
+        selectMarker(idx, selectItem);
       }else if(intent.hasExtra("premiumIdx"))
       {      
         preimumIdx = intent.getStringExtra("premiumIdx");
         idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
         selectItem = 1;
-        selectMarker(null, 4);
+        selectMarker(idx, selectItem);
       }
-      mapCenterset(0);
     }else
     {
       lineId = "";
@@ -1481,31 +1439,12 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       {
         place_fLongitute = subwayIntent.getDoubleExtra("Longitude", 0);
         m_mapView.getController().setZoom(17);
-        mapCenterset(0);
       }
     }
     getintent = true;
     planIntentget = false;
-    getStartSubway();
-  }
-  
-  public void getStartSubway()
-  {
-    SubwayInfo subwayInfo = new SubwayInfo();
-    subwayInfo = MapPlaceDataManager.getInstance(mContext).getSubwayfromIdx(lineId);
-    idx = subwayInfo.idx;
-    place_fLatitude = subwayInfo.lat;
-    place_fLongitute = subwayInfo.lng;
-    summaryTitle.setText(subwayInfo.name_cn);
-    summaryAddressInit();
-    subwaylineNumSet(idx);
-    m_locMarkTarget = new Location("MarkTaget");
-    m_locMarkTarget.setLatitude(place_fLatitude);
-    m_locMarkTarget.setLongitude(place_fLongitute);
-    DestinationTitle = subwayInfo.name_cn;
-    mapCenterset(0);
-    summaryViewVisibleSet(summaryViewVisible, 3);
-    markerSel(2);
+    selectItem = 2;
+    selectMarker(lineId, selectItem);
   }
   
   public void planIntent()
@@ -1663,7 +1602,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       m_mapView.getOverlays().remove(onePlaceOverlay);
     }
     
-    if(select==1)
+    if(select == 1)
     {
       if(allplaceOverlay != null)
         allplaceOverlay.changeMethod(idx);
@@ -1733,23 +1672,33 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
     }
   }
   
-  public void selectMarker(OverlayItem arg1, int selectType)
+  public void selectMarker(String indnex, int selectType)
   {
     summaryAddressInit();
-    if(selectType == 1 || selectType == 3 || selectType == 4)
+    
+    idx = indnex;
+    
+    if (selectType == 2)
     {
-      if(selectType == 1)
-      {
-        idx = arg1.getSnippet();
-      }else if (selectType == 3)
-      {
-        idx = arg1.getUid();
-      }
-      
+      SubwayInfo subwayinfo = subwayInfo.get(idx);
+      place_fLatitude = subwayinfo.lat;
+      place_fLongitute = subwayinfo.lng;
+      mapCenterset(0);
+      BlinkingCommon.smlLibDebug("BlinkingMap", "placeLat : " + place_fLatitude + " placeLng : " +place_fLongitute);
+      DestinationTitle = subwayinfo.name_cn;
+      summaryTitle.setText(DestinationTitle);
+      summarysubTitle.setVisibility(View.INVISIBLE);
+      subwaylineNumSet(idx);
+      summaryViewVisibleSet(summaryViewVisible, 2);
+      summaryDetail = false;      
+    } else
+    { 
       PlaceInfo info = allplaceinfo.get(idx);
       preimumIdx = info.premiumIdx;
       place_fLatitude = info.lat;
       place_fLongitute = info.lng;
+      mapCenterset(0);
+      BlinkingCommon.smlLibDebug("BlinkingMap", "placeLat : " + place_fLatitude + " placeLng : " +place_fLongitute);
       DestinationTitle = info.title;
       summarysubTitle.setVisibility(View.VISIBLE);
       if(info.address != null)
@@ -1788,25 +1737,12 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
           summaryViewVisibleSet(summaryViewVisible, 2);
         }
       }   
-    }else if (selectType == 2)
-    {
-      idx = arg1.getSnippet();
-      SubwayInfo subwayinfo = subwayInfo.get(idx);
-      place_fLatitude = subwayinfo.lat;
-      place_fLongitute = subwayinfo.lng;
-      DestinationTitle = subwayinfo.name_cn;
-      summaryTitle.setText(DestinationTitle);
-      summarysubTitle.setVisibility(View.INVISIBLE);
-      subwaylineNumSet(idx);
-      summaryViewVisibleSet(summaryViewVisible, 2);
-      summaryDetail = false;      
-    }
+    }    
     
     m_locMarkTarget = new Location("MarkTaget");
     m_locMarkTarget.setLatitude(place_fLatitude);
     m_locMarkTarget.setLongitude(place_fLongitute);
     summaryTitle.setText(DestinationTitle);
-    mapCenterset(0);
     markerSel(selectType);
   }
   
@@ -1885,15 +1821,14 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         @Override
         public boolean onItemLongPress(int arg0, OverlayItem arg1) 
         {
-          // TODO Auto-generated method stub
           return false;
         }
         
         @Override
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) 
         {
-          // TODO Auto-generated method stub
-          selectMarker(arg1, 3);
+          selectItem = 3;
+          selectMarker(arg1.getUid(), selectItem);
           return false;
         }
       }, new DefaultResourceProxyImpl(mContext), mContext , ""+planDayNum);
@@ -2066,7 +2001,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       
       if(selectItem != -1)
       {
-        BlinkingCommon.smlLibDebug("BlinkingMap", "place_fLatitude : " + place_fLatitude + "place_fLongitute : " +place_fLongitute);
         onePlaceItems = new ArrayList<OverlayItem>();
         OverlayItem item = new OverlayItem("","","",new GeoPoint(place_fLatitude, place_fLongitute));
         onePlaceItems.add(item);
@@ -2108,7 +2042,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) 
         {
           selectItem = 1;
-          selectMarker(arg1, selectItem);
+          selectMarker(arg1.getSnippet(), selectItem);
           return false;
         }
       }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
@@ -2128,14 +2062,14 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) 
         {
           selectItem = 2;
-          selectMarker(arg1, selectItem);
+          selectMarker(arg1.getSnippet(), selectItem);
           return false;
         }
       }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
       m_mapView.getOverlays().add(subwayOverlay);
     }
     
-    if(selectItem != -1)
+    if(selectItem != -1 && selectItem != 3)
     {
       onePlaceOverlay = new OnePlaceOverlay(onePlaceItems, null, new DefaultResourceProxyImpl(mContext), mContext);
       m_mapView.getOverlays().add(onePlaceOverlay);
@@ -2149,10 +2083,12 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         if(selectItem == 1)
         {
           allplaceOverlay.changeMethod(idx);
+          subwayOverlay.changeMethod(null);
         }
         else if(selectItem == 2)
         {
           subwayOverlay.changeMethod(idx);
+          allplaceOverlay.changeMethod(null);
         }
         m_mapView.invalidate();
       }
