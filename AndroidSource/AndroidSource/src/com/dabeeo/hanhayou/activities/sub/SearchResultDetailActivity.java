@@ -257,6 +257,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
     @Override
     protected void onPostExecute(NetworkResult result)
     {
+      adapter.clear();
       String status = "";
       try
       {
@@ -278,9 +279,9 @@ public class SearchResultDetailActivity extends ActionBarActivity
           {
             SearchResultBean bean = new SearchResultBean();
             JSONObject obj = jsonArray.getJSONObject(i);
+            bean.setLogType(obj.getString("logType"));
             bean.text = obj.getString("title");
             bean.idx = obj.getString("idx");
-            bean.setLogType(obj.getString("logType"));
             
             if (bean.type == SearchResultBean.TYPE_PLACE)
               placeList.add(bean);
@@ -290,68 +291,82 @@ public class SearchResultDetailActivity extends ActionBarActivity
               premiumList.add(bean);
           }
           
-          SearchResultBean titleBean = new SearchResultBean();
-          titleBean.addPlaceTitle(getString(R.string.term_place), jsonObject.getInt("placeCount"));
-          titleBean.type = SearchResultBean.TYPE_PLACE;
-          adapter.add(titleBean);
+          Log.w("WARN","검색결과 장소 사이즈 : "+placeList.size());
+          Log.w("WARN","검색결과 일정 사이즈 : "+planList.size());
+          Log.w("WARN","검색결과 추천서울 사이즈 : "+premiumList.size());
           
+          SearchResultBean titleBean = new SearchResultBean();
           if (placeList.size() > 0)
           {
-            for (int i = 0; i < 3; i++)
+            titleBean = new SearchResultBean();
+            titleBean.addPlaceTitle(getString(R.string.term_place), jsonObject.getInt("placeCount"));
+            titleBean.type = SearchResultBean.TYPE_PLACE;
+            adapter.add(titleBean);
+            
+            if (placeList.size() > 0)
             {
-              try
+              for (int i = 0; i < 3; i++)
               {
-                SearchResultBean listBean = new SearchResultBean();
-                listBean.idx = placeList.get(i).idx;
-                listBean.addText(placeList.get(i).text, placeList.get(i).type);
-                adapter.add(listBean);
-              }
-              catch (Exception e)
-              {
+                try
+                {
+                  SearchResultBean listBean = new SearchResultBean();
+                  listBean.idx = placeList.get(i).idx;
+                  listBean.addText(placeList.get(i).text, placeList.get(i).type);
+                  adapter.add(listBean);
+                }
+                catch (Exception e)
+                {
+                }
               }
             }
           }
-          
-          titleBean = new SearchResultBean();
-          titleBean.addPlaceTitle(getString(R.string.term_strategy_seoul), jsonObject.getInt("premiumCount"));
-          titleBean.type = SearchResultBean.TYPE_RECOMMEND_SEOUL;
-          adapter.add(titleBean);
           
           if (premiumList.size() > 0)
           {
-            for (int i = 0; i < 3; i++)
+            titleBean = new SearchResultBean();
+            titleBean.addPlaceTitle(getString(R.string.term_strategy_seoul), jsonObject.getInt("premiumCount"));
+            titleBean.type = SearchResultBean.TYPE_RECOMMEND_SEOUL;
+            adapter.add(titleBean);
+            
+            if (premiumList.size() > 0)
             {
-              try
+              for (int i = 0; i < 3; i++)
               {
-                SearchResultBean listBean = new SearchResultBean();
-                listBean.idx = premiumList.get(i).idx;
-                listBean.addText(premiumList.get(i).text, premiumList.get(i).type);
-                adapter.add(listBean);
-              }
-              catch (Exception e)
-              {
+                try
+                {
+                  SearchResultBean listBean = new SearchResultBean();
+                  listBean.idx = premiumList.get(i).idx;
+                  listBean.addText(premiumList.get(i).text, premiumList.get(i).type);
+                  adapter.add(listBean);
+                }
+                catch (Exception e)
+                {
+                }
               }
             }
           }
           
-          titleBean = new SearchResultBean();
-          titleBean.addPlaceTitle(getString(R.string.term_travel_schedule), jsonObject.getInt("planCount"));
-          titleBean.type = SearchResultBean.TYPE_SCHEDULE;
-          adapter.add(titleBean);
-          
           if (planList.size() > 0)
           {
-            for (int i = 0; i < 3; i++)
+            titleBean = new SearchResultBean();
+            titleBean.addPlaceTitle(getString(R.string.term_travel_schedule), jsonObject.getInt("planCount"));
+            titleBean.type = SearchResultBean.TYPE_SCHEDULE;
+            adapter.add(titleBean);
+            
+            if (planList.size() > 0)
             {
-              try
+              for (int i = 0; i < 3; i++)
               {
-                SearchResultBean listBean = new SearchResultBean();
-                listBean.idx = planList.get(i).idx;
-                listBean.addText(planList.get(i).text, planList.get(i).type);
-                adapter.add(listBean);
-              }
-              catch (Exception e)
-              {
+                try
+                {
+                  SearchResultBean listBean = new SearchResultBean();
+                  listBean.idx = planList.get(i).idx;
+                  listBean.addText(planList.get(i).text, planList.get(i).type);
+                  adapter.add(listBean);
+                }
+                catch (Exception e)
+                {
+                }
               }
             }
           }
