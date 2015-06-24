@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -279,6 +280,26 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         }
       }
       
+      //이름과 같은 지 
+      if (passWord.equals(name))
+      {
+        Log.w("WARN", "이름과 같음");
+        alertView.setAlert(getString(R.string.msg_warn_password_not_same));
+        return;
+      }
+      
+      // 연속된 3개의 문자/숫자 불가 
+      for (int i = 0; i < passWord.length(); i++)
+      {
+        String character = passWord.charAt(i) + "";
+        character = character + character + character;
+        if (passWord.indexOf(character) >= 0)
+        {
+          alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
+          return;
+        }
+      }
+      
       if (TextUtils.isEmpty(passWordRe))
       {
         alertView.setAlert(getString(R.string.msg_please_write_password));
@@ -319,7 +340,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
-      new JoinHanhayouTask().execute();
+//      new JoinHanhayouTask().execute();
     }
   };
   
