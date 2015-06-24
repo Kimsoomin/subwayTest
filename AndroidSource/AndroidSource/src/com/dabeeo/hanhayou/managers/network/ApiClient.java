@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
@@ -98,7 +99,9 @@ public class ApiClient
       }
     }
     else
-      beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
+    {
+      beans.addAll(offlineDatabaseManager.getTravelSchedules(page - 1));
+    }
     return beans;
   }
   
@@ -690,6 +693,8 @@ public class ApiClient
     else
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
   }
+  
+  
   /**
    * 사용자 로그 등록 (좋아요, 북마크, 공유, 위시)
    * 

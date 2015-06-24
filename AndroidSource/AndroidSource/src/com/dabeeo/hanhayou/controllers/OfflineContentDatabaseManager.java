@@ -448,7 +448,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   {
     this.openDataBase();
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " LIMIT 10 OFFSET " + (10 * page), null);
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN+ " LIMIT 10 OFFSET " + (10 * page), null);
     if (c.moveToFirst())
     {
       do

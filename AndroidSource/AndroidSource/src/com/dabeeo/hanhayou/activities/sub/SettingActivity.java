@@ -172,12 +172,6 @@ public class SettingActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-      {
-        new AlertDialogManager(SettingActivity.this).showDontNetworkConnectDialog();
-        return;
-      }
-      
       Intent i = new Intent(SettingActivity.this, AccountSettingActivity.class);
       startActivity(i);
     }

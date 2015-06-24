@@ -194,10 +194,6 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
     });
     
-    FrameLayout header = (FrameLayout) findViewById(R.id.header);
-    Resources r = getResources();
-    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, r.getDisplayMetrics());
-    
     btnBookmark = (Button) findViewById(R.id.btn_bookmark);
     btnBookmark.setOnClickListener(clickListener);
     findViewById(R.id.btn_share).setOnClickListener(clickListener);
@@ -205,8 +201,16 @@ public class PlaceDetailActivity extends ActionBarActivity
     btnLike.setOnClickListener(clickListener);
     findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
     
+    FrameLayout header = (FrameLayout) findViewById(R.id.header);
+    Resources r = getResources();
+    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, r.getDisplayMetrics());
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
     
+    if (!SystemUtil.isConnectNetwork(this))
+    {
+      headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
+      header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics())));
+    }
     layoutRecommendProduct = (ViewGroup) findViewById(R.id.layout_recommend_product);
     loadPlaceDetail();
   }

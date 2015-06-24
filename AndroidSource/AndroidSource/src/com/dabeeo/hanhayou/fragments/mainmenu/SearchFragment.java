@@ -128,8 +128,16 @@ public class SearchFragment extends Fragment
     };
     inputWord.addTextChangedListener(watcher);
     
-    loadPopularWords();
-    loadRecommendProduct();
+    if (SystemUtil.isConnectNetwork(getActivity()))
+    {
+      loadPopularWords();
+      loadRecommendProduct();
+    }
+    else
+    {
+      layoutRecommedProductParent.setVisibility(View.GONE);
+      popularKeywordOuterContainer.setVisibility(View.GONE);
+    }
   }
   
   
