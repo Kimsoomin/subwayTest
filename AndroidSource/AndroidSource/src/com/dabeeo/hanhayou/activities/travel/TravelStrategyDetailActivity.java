@@ -221,7 +221,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
-      Picasso.with(this).load(imageUrl).resize(150, 150).centerCrop().into(view);
+      Picasso.with(this).load(imageUrl).resize(300, 223).centerCrop().into(view);
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {
