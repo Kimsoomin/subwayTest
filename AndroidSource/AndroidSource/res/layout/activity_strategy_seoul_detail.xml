@@ -74,7 +74,6 @@
                             android:layout_marginBottom="18dip"
                             android:layout_marginLeft="16dip"
                             android:maxWidth="270dip"
-                            android:text="다비오 힘내!!"
                             android:textColor="@android:color/white"
                             android:textSize="14sp" />
 
