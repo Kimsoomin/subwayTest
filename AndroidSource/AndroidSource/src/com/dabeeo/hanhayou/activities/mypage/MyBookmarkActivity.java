@@ -90,10 +90,12 @@ public class MyBookmarkActivity extends ActionBarActivity
       finish();
     else if (item.getItemId() == editMenuItem.getItemId())
     {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(false);
       toggleEditMode(true);
     }
     else if (item.getItemId() == closeMenuItem.getItemId())
     {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       toggleEditMode(false);
     }
     return super.onOptionsItemSelected(item);
