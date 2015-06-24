@@ -25,7 +25,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   public RelativeLayout container;
   public TextView title, textMoney, textDays;
   public LinearLayout infoContainer;
-  public LinearLayout likeAndBookmarkContainer;
+  public LinearLayout likeAndBookmarkContainer, userContainer;
   
   
   public ScheduleDetailTitleView(Context context)
@@ -77,6 +77,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     int resId = R.layout.view_schedule_detail_title;
     View view = LayoutInflater.from(context).inflate(resId, null);
     
+    userContainer = (LinearLayout) view.findViewById(R.id.user_container);
     likeAndBookmarkContainer = (LinearLayout) view.findViewById(R.id.like_and_bookmark_count_container);
     container = (RelativeLayout) view.findViewById(R.id.container);
     infoContainer = (LinearLayout) view.findViewById(R.id.total_container);

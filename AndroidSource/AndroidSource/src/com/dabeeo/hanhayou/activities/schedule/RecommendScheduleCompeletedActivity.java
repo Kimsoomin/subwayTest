@@ -33,7 +33,6 @@ import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.views.CharacterProgressView;
 
-@SuppressWarnings("deprecation")
 public class RecommendScheduleCompeletedActivity extends ActionBarActivity
 {
   private RoundedImageView profileImage;
@@ -135,6 +134,11 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
       public void onClick(View arg0)
       {
         Intent i = new Intent(RecommendScheduleCompeletedActivity.this, TravelScheduleDetailActivity.class);
+        String myScheduleTitle = getString(R.string.msg_recommend_schedule_title);
+        myScheduleTitle = myScheduleTitle.replaceAll("#1", PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserName());
+        myScheduleTitle = myScheduleTitle.replaceAll("#2", Integer.toString(bean.dayCount));
+        i.putExtra("title", myScheduleTitle);
+        
         i.putExtra("idx", bean.idx);
         i.putExtra("isRecommend", true);
         i.putExtra("startDate", bean.startDateString);
@@ -179,7 +183,8 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-          startActivity(new Intent(RecommendScheduleCompeletedActivity.this, MySchedulesActivity.class));
+          Intent i = new Intent(RecommendScheduleCompeletedActivity.this, MySchedulesActivity.class);
+          startActivity(i);
           finish();
         }
       });

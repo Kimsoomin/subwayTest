@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -58,6 +59,7 @@ public class TravelScheduleDetailFragment extends Fragment
   private Button btnReviewBest, btnReviewSoso, btnReviewWorst;
   private CustomScrollView scrollView;
   private FrameLayout headerContainer;
+  @SuppressWarnings("unused")
   private LinearLayout rateLayout, rateTextLayout;
   
   private int position;
@@ -112,17 +114,20 @@ public class TravelScheduleDetailFragment extends Fragment
       @Override
       public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
       {
-        if (scrollView.getScrollY() > 300 * density)
+        if (!isRecommendSchedule)
         {
-          titleView.title.setVisibility(View.INVISIBLE);
-          titleView.infoContainer.setVisibility(View.INVISIBLE);
-          titleView.title.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-          titleView.title.setVisibility(View.VISIBLE);
-          titleView.infoContainer.setVisibility(View.VISIBLE);
-          titleView.title.setVisibility(View.VISIBLE);
+          if (scrollView.getScrollY() > 300 * density)
+          {
+            titleView.title.setVisibility(View.INVISIBLE);
+            titleView.infoContainer.setVisibility(View.INVISIBLE);
+            titleView.title.setVisibility(View.INVISIBLE);
+          }
+          else
+          {
+            titleView.title.setVisibility(View.VISIBLE);
+            titleView.infoContainer.setVisibility(View.VISIBLE);
+            titleView.title.setVisibility(View.VISIBLE);
+          }
         }
         
         View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
@@ -174,10 +179,15 @@ public class TravelScheduleDetailFragment extends Fragment
       rateLayout.setVisibility(View.GONE);
     }
     
+    float density = getResources().getDisplayMetrics().density;
     if (isRecommendSchedule)
     {
       rateLayout.setVisibility(View.GONE);
       titleView.likeAndBookmarkContainer.setVisibility(View.GONE);
+      titleView.userContainer.setVisibility(View.GONE);
+      FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (60 * density));
+      params.gravity = Gravity.BOTTOM;
+      titleView.setLayoutParams(params);
     }
     
     if (position != 0)
@@ -187,7 +197,6 @@ public class TravelScheduleDetailFragment extends Fragment
     
     if (headerView != null)
     {
-      float density = getResources().getDisplayMetrics().density;
       if (dayBean == null)
       {
         headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
@@ -197,7 +206,10 @@ public class TravelScheduleDetailFragment extends Fragment
       else
       {
         headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
-        headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (100 * density)));
+        if (!isRecommendSchedule)
+          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (100 * density)));
+        else
+          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (60 * density)));
         scrollView.setPadding(0, 0, 0, 0);
         reviewContainerView.setVisibility(View.GONE);
       }

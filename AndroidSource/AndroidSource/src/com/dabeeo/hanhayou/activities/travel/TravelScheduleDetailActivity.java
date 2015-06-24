@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,6 +63,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   private int currentPosition = 0;
   private boolean isRecommendSchedule = false;
   public boolean isMySchedule = false;
+  private String titleFromOutSide;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -76,9 +79,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
-    
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
+    titleFromOutSide = getIntent().getStringExtra("title");
     isRecommendSchedule = getIntent().getBooleanExtra("isRecommend", false);
     
     idx = getIntent().getStringExtra("idx");
@@ -138,8 +141,10 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   
   private void displayContent()
   {
-    Log.w("WARN", "Bean : " + bean.title);
-    title.setText(bean.title);
+    if (TextUtils.isEmpty(titleFromOutSide))
+      title.setText(bean.title);
+    else
+      title.setText(titleFromOutSide);
     adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
     adapter.setBean(bean);
     adapter.setIsRecommendSchedule(isRecommendSchedule);

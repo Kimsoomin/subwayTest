@@ -466,5 +466,5 @@
     <string name="msg_declare_compelete">신고되었습니다</string>
     <string name="msg_send_temp_password">임시 비밀번호를 발급했습니다.</string>
     <string name="msg_send_auth_number">가입하신 이메일로 인증번호를 발송하였습니다. 인증번호를 확인 후, 인증번호 입력창에 입력해주세요</string>
-
+	<string name="msg_recommend_schedule_title">#1님에게 딱 맞는 #2일 맞춤일정</string>
 </resources>
