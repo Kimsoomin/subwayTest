@@ -4,11 +4,8 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -31,7 +28,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.TravelScheduleListFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;

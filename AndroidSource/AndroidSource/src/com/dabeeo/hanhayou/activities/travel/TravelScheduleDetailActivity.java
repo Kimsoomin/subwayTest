@@ -281,16 +281,16 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       }
       else
       {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
+        
         if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
           if (v.getId() == btnBookmark.getId())
           {
-            if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-            {
-              new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
-              return;
-            }
-            
             new ToggleBookmarkTask().execute();
           }
           else if (v.getId() == btnLike.getId())
@@ -308,6 +308,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
         }
         else
         {
+          
           new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog(-1);
         }
       }

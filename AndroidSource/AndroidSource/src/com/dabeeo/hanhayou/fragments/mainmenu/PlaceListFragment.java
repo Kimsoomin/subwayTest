@@ -85,7 +85,6 @@ public class PlaceListFragment extends Fragment
         if (!isLoading && !isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
-          BlinkingCommon.smlLibDebug("PlaceListFragment", "page : " + page);
           load();
         }
       }

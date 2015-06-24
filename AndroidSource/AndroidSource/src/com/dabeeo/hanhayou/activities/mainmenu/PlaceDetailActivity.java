@@ -427,6 +427,15 @@ public class PlaceDetailActivity extends ActionBarActivity
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
       
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        return;
+      
+      if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+      {
+        new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
+        return;
+      }
+      
       if (v.getId() == btnReviewBest.getId())
       {
         btnReviewBest.setSelected(true);
@@ -442,9 +451,6 @@ public class PlaceDetailActivity extends ActionBarActivity
         btnReviewWorst.setSelected(true);
         rate = 1;
       }
-      
-      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        return;
       
       AlertDialogManager alert = new AlertDialogManager(PlaceDetailActivity.this);
       alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_write_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
@@ -473,55 +479,42 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == R.id.btn_bookmark)
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
       {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
-        
-        new ToggleBookmarkTask().execute();
+        new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+        return;
       }
-      else if (v.getId() == R.id.btn_share)
+      
+      if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
       {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        if (v.getId() == R.id.btn_bookmark)
         {
-          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-          return;
+          new ToggleBookmarkTask().execute();
         }
-        
-        // 공유하기
-        sharePickView.setVisibility(View.VISIBLE);
-        sharePickView.view.setVisibility(View.VISIBLE);
-        sharePickView.bringToFront();
-      }
-      else if (v.getId() == R.id.btn_like)
-      {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        else if (v.getId() == R.id.btn_share)
         {
-          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-          return;
+          // 공유하기
+          sharePickView.setVisibility(View.VISIBLE);
+          sharePickView.view.setVisibility(View.VISIBLE);
+          sharePickView.bringToFront();
         }
-        
-        //좋아요 
-        new ToggleLikeTask().execute();
-      }
-      else if (v.getId() == R.id.btn_write_review)
-      {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+        else if (v.getId() == R.id.btn_like)
         {
-          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-          return;
+          //좋아요 
+          new ToggleLikeTask().execute();
         }
-        
-        //리뷰쓰기
-        Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
-        if (bean != null)
-          i.putExtra("idx", bean.idx);
-        i.putExtra("type", "place");
-        startActivity(i);
+        else if (v.getId() == R.id.btn_write_review)
+        {
+          //리뷰쓰기
+          Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
+          if (bean != null)
+            i.putExtra("idx", bean.idx);
+          i.putExtra("type", "place");
+          startActivity(i);
+        }
       }
+      else
+        new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
     }
   };
   

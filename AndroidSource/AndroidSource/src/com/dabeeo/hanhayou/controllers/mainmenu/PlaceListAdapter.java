@@ -95,23 +95,9 @@ public class PlaceListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     TextView textRanking = (TextView) view.findViewById(R.id.text_ranking);
     RelativeLayout recommendRanking = (RelativeLayout) view.findViewById(R.id.recommend_container);
-    if (position == 0)
-    {
-      recommendRanking.setVisibility(View.VISIBLE);
-      textRanking.setVisibility(View.GONE);
-    }
-    else
-    {
-      recommendRanking.setVisibility(View.GONE);
-      textRanking.setVisibility(View.GONE);
-//      textRanking.setText(Integer.toString(position));
-    }
     
-//    if (position % 2 == 1)
-//      isCoupon.setVisibility(View.VISIBLE);
-//    else
-      isCoupon.setVisibility(View.GONE);
     
+    isCoupon.setVisibility(View.GONE);
     try
     {
       SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
@@ -146,6 +132,19 @@ public class PlaceListAdapter extends BaseAdapter
       Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
       view.startAnimation(animation);
       lastPosition = position;
+    }
+    
+    if (position == 0)
+    {
+      recommendRanking.setVisibility(View.VISIBLE);
+      recommendRanking.bringToFront();
+      textRanking.setVisibility(View.GONE);
+    }
+    else
+    {
+      recommendRanking.setVisibility(View.GONE);
+      textRanking.setVisibility(View.GONE);
+//      textRanking.setText(Integer.toString(position));
     }
     return view;
   }

@@ -29,15 +29,16 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.CustomScrollView;
+import com.dabeeo.hanhayou.views.CustomScrollView.ScrollViewListener;
 import com.dabeeo.hanhayou.views.ProductRecommendScheduleView;
 import com.dabeeo.hanhayou.views.ReviewContainerView;
 import com.dabeeo.hanhayou.views.ScheduleDetailHeaderView;
 import com.dabeeo.hanhayou.views.ScheduleDetailTitleView;
 import com.dabeeo.hanhayou.views.ScheduleTitleView;
 import com.dabeeo.hanhayou.views.ScheduleView;
-import com.dabeeo.hanhayou.views.CustomScrollView.ScrollViewListener;
 
 public class TravelScheduleDetailFragment extends Fragment
 {
@@ -294,6 +295,15 @@ public class TravelScheduleDetailFragment extends Fragment
       btnReviewBest.setSelected(false);
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
+      
+      if (!SystemUtil.isConnectNetwork(getActivity()))
+        return;
+      
+      if (!PreferenceManager.getInstance(getActivity()).isLoggedIn())
+      {
+        new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
+        return;
+      }
       
       if (v.getId() == btnReviewBest.getId())
       {
