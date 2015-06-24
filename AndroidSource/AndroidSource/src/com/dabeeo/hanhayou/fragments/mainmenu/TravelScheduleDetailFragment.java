@@ -171,9 +171,7 @@ public class TravelScheduleDetailFragment extends Fragment
     
     if (isMySchedule)
     {
-      btnReviewBest.setVisibility(View.GONE);
-      btnReviewSoso.setVisibility(View.GONE);
-      btnReviewWorst.setVisibility(View.GONE);
+      rateLayout.setVisibility(View.GONE);
     }
     
     if (isRecommendSchedule)

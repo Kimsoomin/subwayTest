@@ -22,7 +22,6 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
   private View background;
   private TextView btnCancelIsPublic;
   private ApiClient apiClient;
-  private String idx;
   
   
   @Override
@@ -31,6 +30,7 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
     super.onCreate(savedInstanceState);
 //		adapter.setIsMySchedule(true);
     
+    super.isMySchedule = true;
     apiClient = new ApiClient(this);
     containerIsPublicPopup = (LinearLayout) findViewById(R.id.container_set_public);
     containerPublic = (RelativeLayout) findViewById(R.id.container_public);

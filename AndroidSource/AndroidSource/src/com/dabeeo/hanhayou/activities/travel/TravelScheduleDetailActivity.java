@@ -61,7 +61,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   private SharePickView sharePickView;
   private int currentPosition = 0;
   private boolean isRecommendSchedule = false;
-  
+  public boolean isMySchedule = false;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -143,8 +143,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
     adapter.setBean(bean);
     adapter.setIsRecommendSchedule(isRecommendSchedule);
-    viewPager.setAdapter(adapter);
+    adapter.setIsMySchedule(isMySchedule);
     
+    viewPager.setAdapter(adapter);
     adapter.notifyDataSetChanged();
     viewPager.invalidate();
     
