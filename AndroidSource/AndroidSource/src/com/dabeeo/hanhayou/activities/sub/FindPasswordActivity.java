@@ -3,10 +3,15 @@ package com.dabeeo.hanhayou.activities.sub;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +31,8 @@ public class FindPasswordActivity extends Activity
   private LoginBottomAlertView alertView;
   public RelativeLayout progressLayout;
   
-  public ApiClient apiClient; 
+  public ApiClient apiClient;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -51,32 +57,6 @@ public class FindPasswordActivity extends Activity
         finish();
       }
     });
-    
-    TextWatcher watcher = new TextWatcher()
-    {
-      @Override
-      public void afterTextChanged(Editable s)
-      {
-      }
-      
-      
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after)
-      {
-      }
-      
-      
-      @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count)
-      {
-        if (email.getText().toString().length() > 1)
-          btnGetTempPassword.setEnabled(true);
-        else
-          btnGetTempPassword.setEnabled(false);
-      }
-    };
-    email.addTextChangedListener(watcher);
-    btnGetTempPassword.setEnabled(false);
   }
   
   private OnClickListener tempBtnClickListener = new OnClickListener()
@@ -84,19 +64,25 @@ public class FindPasswordActivity extends Activity
     @Override
     public void onClick(View v)
     {
-      if (validCheckEmail(email.getText().toString()))
+      if (TextUtils.isEmpty(email.getText().toString()))
       {
-        new GetTempPasswordTask().execute();
+        AlertDialog.Builder builder = new AlertDialog.Builder(FindPasswordActivity.this);
+        builder.setTitle(R.string.term_alert);
+        builder.setMessage(R.string.msg_please_write_email);
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.create().show();
+        return;
       }
+      if (validCheckEmail(email.getText().toString()))
+        new GetTempPasswordTask().execute();
       else
-      {
         alertView.setAlert(getString(R.string.msg_please_valid_check_email));
-      }      
     }
   };
   
+  
   public boolean validCheckEmail(String email)
-  {    
+  {
     boolean validEmail = false;
     
     String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -121,19 +107,53 @@ public class FindPasswordActivity extends Activity
       progressLayout.bringToFront();
       super.onPreExecute();
     }
-
+    
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       return apiClient.userTempPasswordGet(email.getText().toString());
     }
     
+    
     @Override
     protected void onPostExecute(NetworkResult result)
     {
       progressLayout.setVisibility(View.GONE);
       //TODO response 처리 필요
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if (obj.getString("status").equals("OK"))
+        {
+          AlertDialog.Builder builder = new AlertDialog.Builder(FindPasswordActivity.this);
+          builder.setTitle(R.string.term_alert);
+          builder.setMessage(R.string.msg_send_temp_password);
+          builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+              finish();
+            }
+          });
+          builder.create().show();
+        }
+        else
+        {
+          AlertDialog.Builder builder = new AlertDialog.Builder(FindPasswordActivity.this);
+          builder.setTitle(R.string.term_alert);
+          builder.setMessage(obj.getString("message"));
+          builder.setPositiveButton(android.R.string.ok, null);
+          builder.create().show();
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
       super.onPostExecute(result);
-    }    
+    }
   }
 }
