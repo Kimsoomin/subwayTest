@@ -103,8 +103,8 @@ public class PlaceListAdapter extends BaseAdapter
     else
     {
       recommendRanking.setVisibility(View.GONE);
-      textRanking.setVisibility(View.VISIBLE);
-      textRanking.setText(Integer.toString(position));
+      textRanking.setVisibility(View.GONE);
+//      textRanking.setText(Integer.toString(position));
     }
     
 //    if (position % 2 == 1)
