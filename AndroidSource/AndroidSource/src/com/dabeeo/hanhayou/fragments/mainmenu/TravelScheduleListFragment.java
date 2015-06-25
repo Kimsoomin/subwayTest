@@ -55,10 +55,12 @@ public class TravelScheduleListFragment extends Fragment
   
   public int dayCount = 0;
   
+  
   public TravelScheduleListFragment(int type)
   {
     this.type = type;
   }
+  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -66,6 +68,7 @@ public class TravelScheduleListFragment extends Fragment
     int resId = R.layout.fragment_list;
     return inflater.inflate(resId, null);
   }
+  
   
   @Override
   public void onActivityCreated(Bundle savedInstanceState)
@@ -106,6 +109,7 @@ public class TravelScheduleListFragment extends Fragment
     this.type = type;
   }
   
+  
   public void setDayCount(int daycount)
   {
     adapter.clear();
@@ -114,44 +118,11 @@ public class TravelScheduleListFragment extends Fragment
     loadSchedules();
   }
   
+  
   private void loadSchedules()
   {
     progressBar.setVisibility(View.VISIBLE);
-    
-    if (type == SCHEDULE_TYPE_POPULAR)
-      new LoadScheduleAsyncTask().execute();
-    else if (type == SCHEDULE_TYPE_MY)
-    {
-      progressBar.setVisibility(View.GONE);
-      listView.setVisibility(View.GONE);
-      emptyContainer.setVisibility(View.VISIBLE);
-      emptyText.setText(getString(R.string.msg_empty_my_schedule));
-      
-      recommendContainer.setVisibility(View.VISIBLE);
-      Button btnRecommendSchedule = (Button) getView().findViewById(R.id.recommend_button);
-      btnRecommendSchedule.setOnClickListener(new OnClickListener()
-      {
-        @Override
-        public void onClick(View arg0)
-        {
-          if (!SystemUtil.isConnectNetwork(getActivity()))
-            new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-          else
-          {
-            Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
-            startActivity(i);
-          }
-        }
-      });
-    }
-    else if (type == SCHEDULE_TYPE_BOOKMARK)
-    {
-      progressBar.setVisibility(View.GONE);
-      listView.setVisibility(View.GONE);
-      emptyContainer.setVisibility(View.VISIBLE);
-      emptyText.setText(getString(R.string.msg_empty_my_bookmark));
-      recommendContainer.setVisibility(View.GONE);
-    }
+    new LoadScheduleAsyncTask().execute();
   }
   
   private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ArrayList<ScheduleBean>>
@@ -168,7 +139,12 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      return apiClient.getTravelSchedules(page, dayCount);
+      if (type == SCHEDULE_TYPE_MY)
+        return apiClient.getMyTravelSchedules();
+      else if (type == SCHEDULE_TYPE_BOOKMARK)
+        return apiClient.getBookmarkedSchedules();
+      else
+        return apiClient.getTravelSchedules(page, dayCount);
     }
     
     
@@ -184,7 +160,35 @@ public class TravelScheduleListFragment extends Fragment
       {
         listView.setVisibility(View.GONE);
         emptyContainer.setVisibility(View.VISIBLE);
-        emptyText.setText(getString(R.string.msg_empty_my_schedule));
+        if (type == SCHEDULE_TYPE_POPULAR)
+        {
+          emptyText.setText(getString(R.string.msg_empty_my_schedule));
+        }
+        else if (type == SCHEDULE_TYPE_MY)
+        {
+          emptyText.setText(getString(R.string.msg_empty_my_schedule));
+          recommendContainer.setVisibility(View.VISIBLE);
+          Button btnRecommendSchedule = (Button) getView().findViewById(R.id.recommend_button);
+          btnRecommendSchedule.setOnClickListener(new OnClickListener()
+          {
+            @Override
+            public void onClick(View arg0)
+            {
+              if (!SystemUtil.isConnectNetwork(getActivity()))
+                new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+              else
+              {
+                Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
+                startActivity(i);
+              }
+            }
+          });
+        }
+        else
+        {
+          emptyText.setText(getString(R.string.msg_empty_my_bookmark));
+          recommendContainer.setVisibility(View.GONE);
+        }
       }
       progressBar.setVisibility(View.GONE);
       isLoading = false;

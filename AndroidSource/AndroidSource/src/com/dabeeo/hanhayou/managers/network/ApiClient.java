@@ -188,8 +188,6 @@ public class ApiClient
         e.printStackTrace();
       }
     }
-//    else
-//      beans.addAll(offlineDatabaseManager.getTravelSchedules(page));
     return beans;
   }
   
