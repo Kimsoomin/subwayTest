@@ -131,7 +131,6 @@ public class TravelScheduleListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
-//      progressBar.setVisibility(View.VISIBLE);
       super.onPreExecute();
     }
     

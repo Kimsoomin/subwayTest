@@ -217,9 +217,7 @@ public class ApiClient
       }
     }
     else
-    {
       bean = offlineDatabaseManager.getTravelScheduleDetailBean(idx);
-    }
     return bean;
   }
   

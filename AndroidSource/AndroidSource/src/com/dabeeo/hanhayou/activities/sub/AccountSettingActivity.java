@@ -151,6 +151,12 @@ public class AccountSettingActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
+      if (!SystemUtil.isConnectNetwork(AccountSettingActivity.this))
+      {
+        new AlertDialogManager(AccountSettingActivity.this).showDontNetworkConnectDialog();
+        return;
+      }
+      
       userName = editName.getText().toString();
       if (TextUtils.isEmpty(userName))
       {

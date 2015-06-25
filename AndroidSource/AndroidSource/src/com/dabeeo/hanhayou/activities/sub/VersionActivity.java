@@ -120,14 +120,14 @@ public class VersionActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
+      if (!SystemUtil.isConnectNetwork(VersionActivity.this))
+      {
+        new AlertDialogManager(VersionActivity.this).showDontNetworkConnectDialog();
+        return;
+      }
+      
       if (v.getId() == btnUpdate.getId())
       {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(VersionActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
-        
         Toast.makeText(VersionActivity.this, "준비 중입니다", Toast.LENGTH_LONG).show();
       }
       else if (v.getId() == containerAgreement.getId())

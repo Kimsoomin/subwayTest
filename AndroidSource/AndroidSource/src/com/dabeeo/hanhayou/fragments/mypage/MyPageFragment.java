@@ -29,6 +29,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mypage.MyBookmarkActivity;
 import com.dabeeo.hanhayou.activities.mypage.MyPlaceActivity;
 import com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity;
+import com.dabeeo.hanhayou.activities.sub.AccountSettingActivity;
 import com.dabeeo.hanhayou.activities.sub.PhotoSelectActivity;
 import com.dabeeo.hanhayou.activities.sub.SettingActivity;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
@@ -223,6 +224,7 @@ public class MyPageFragment extends Fragment
     @Override
     public void onClick(View v)
     {
+      
       if (v.getId() == imageProfile.getId())
       {
 //        if (!SystemUtil.isConnectNetwork(getActivity()))
@@ -258,6 +260,13 @@ public class MyPageFragment extends Fragment
 //          }
 //        });
 //        builder.create().show();
+        
+        if (!SystemUtil.isConnectNetwork(getActivity()))
+        {
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+          return;
+        }
+        
         isChangeBackground = false;
         Intent intent = new Intent(getActivity(), PhotoSelectActivity.class);
         intent.putExtra("can_select_multiple", false);

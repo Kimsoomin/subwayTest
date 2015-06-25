@@ -284,7 +284,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       if (passWord.equals(name))
       {
         Log.w("WARN", "이름과 같음");
-        alertView.setAlert(getString(R.string.msg_warn_password_not_same));
+        alertView.setAlert(getString(R.string.msg_warn_password_not_same_name));
         return;
       }
       

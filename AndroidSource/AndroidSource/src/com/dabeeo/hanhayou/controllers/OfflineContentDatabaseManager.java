@@ -165,7 +165,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     
   }
   
-
+  
   public void insert(String tableName, JSONObject obj)
   {
     if (myDataBase == null)
@@ -488,6 +488,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   {
     this.openDataBase();
     ScheduleDetailBean bean = new ScheduleDetailBean();
+    Log.w("WARN", "SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx);
     Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx, null);
     c.moveToFirst();
     try

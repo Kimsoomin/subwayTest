@@ -22,6 +22,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MySchedulesListAdapter extends BaseAdapter
 {
@@ -179,7 +180,10 @@ public class MySchedulesListAdapter extends BaseAdapter
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     
-    ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
+    if (!SystemUtil.isConnectNetwork(context))
+      imageView.setVisibility(View.GONE);
+    else
+      ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
     return view;
   }
 }

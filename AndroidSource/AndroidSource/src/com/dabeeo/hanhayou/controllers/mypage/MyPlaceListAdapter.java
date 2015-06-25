@@ -21,10 +21,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.sub.AccountSettingActivity;
 import com.dabeeo.hanhayou.beans.PlaceBean;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.CategoryManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
@@ -175,39 +178,43 @@ public class MyPlaceListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     ImageView imagePrivate = (ImageView) view.findViewById(R.id.image_private);
     
-    ImageDownloader.displayImage(context, bean.imageUrl, imageView, new ImageLoadingListener()
+    if (!SystemUtil.isConnectNetwork(context))
+      imageView.setVisibility(View.GONE);
+    else
     {
-      @Override
-      public void onLoadingStarted(String arg0, View arg1)
+      ImageDownloader.displayImage(context, bean.imageUrl, imageView, new ImageLoadingListener()
       {
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-      }
-      
-      
-      @Override
-      public void onLoadingFailed(String arg0, View arg1, FailReason arg2)
-      {
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-      }
-      
-      
-      @Override
-      public void onLoadingComplete(String arg0, View arg1, Bitmap bitmap)
-      {
-        if (bitmap == null)
+        @Override
+        public void onLoadingStarted(String arg0, View arg1)
+        {
           imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        else
-          imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-      }
-      
-      
-      @Override
-      public void onLoadingCancelled(String arg0, View arg1)
-      {
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-      }
-    });
-    
+        }
+        
+        
+        @Override
+        public void onLoadingFailed(String arg0, View arg1, FailReason arg2)
+        {
+          imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+        
+        
+        @Override
+        public void onLoadingComplete(String arg0, View arg1, Bitmap bitmap)
+        {
+          if (bitmap == null)
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+          else
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+        
+        
+        @Override
+        public void onLoadingCancelled(String arg0, View arg1)
+        {
+          imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+      });
+    }
 //    if (position % 2 == 1)
 //      imagePrivate.setVisibility(View.VISIBLE);
 //    else
