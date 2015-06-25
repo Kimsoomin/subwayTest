@@ -124,7 +124,11 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     TextView title = (TextView) findViewById(R.id.title);
     TextView month = (TextView) findViewById(R.id.month);
     
-    title.setText(bean.title);
+    String myScheduleTitle = getString(R.string.msg_recommend_schedule_title);
+    myScheduleTitle = myScheduleTitle.replaceAll("#1", PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserName());
+    myScheduleTitle = myScheduleTitle.replaceAll("#2", Integer.toString(bean.dayCount));
+    final String finalMyScheduleTitle = myScheduleTitle;
+    title.setText(myScheduleTitle);
     month.setText(Integer.toString(bean.dayCount) + getString(R.string.term_month));
     ImageDownloader.displayImage(RecommendScheduleCompeletedActivity.this, bean.imageUrl, imageView, null);
     
@@ -134,10 +138,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
       public void onClick(View arg0)
       {
         Intent i = new Intent(RecommendScheduleCompeletedActivity.this, TravelScheduleDetailActivity.class);
-        String myScheduleTitle = getString(R.string.msg_recommend_schedule_title);
-        myScheduleTitle = myScheduleTitle.replaceAll("#1", PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserName());
-        myScheduleTitle = myScheduleTitle.replaceAll("#2", Integer.toString(bean.dayCount));
-        i.putExtra("title", myScheduleTitle);
+        i.putExtra("title", finalMyScheduleTitle);
         
         i.putExtra("idx", bean.idx);
         i.putExtra("isRecommend", true);
