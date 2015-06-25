@@ -18,6 +18,7 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.map.DatabaseManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
@@ -493,6 +494,7 @@ public class ApiClient
           ReviewBean bean = new ReviewBean();
           bean.setJSONObject(reviewObj);
           beans.add(bean);
+          offlineDatabaseManager.insert(OfflineContentDatabaseManager.TABLE_NAME_REVIEW, reviewObj);
         }
       }
       catch (JSONException e)

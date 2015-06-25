@@ -38,6 +38,7 @@ import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.Global;
+import com.dabeeo.hanhayou.services.BackService;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.MapdownloadProgressView;
 
@@ -71,8 +72,10 @@ public class IntroActivity extends Activity
     
     progressBar.bringToFront();
     
+    startService(new Intent(IntroActivity.this, BackService.class));
     checkNetworkStatus();
   }
+  
   
   @Override
   protected void onDestroy()
@@ -187,6 +190,7 @@ public class IntroActivity extends Activity
     
     private MapdownloadProgressView pView;
     
+    
     @Override
     protected void onPreExecute()
     {
@@ -221,7 +225,7 @@ public class IntroActivity extends Activity
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      if(pView.isShowing())
+      if (pView.isShowing())
         pView.dismiss();
       checkAllowAlarm();
     }
@@ -541,7 +545,8 @@ public class IntroActivity extends Activity
               PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
               startGuideActivity();
             }
-                        
+            
+            
             @Override
             public void onNegativeButtonClickListener()
             {

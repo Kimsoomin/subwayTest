@@ -42,6 +42,41 @@ public class ScheduleBean
   public boolean isChecked = false;
   
   
+  public JSONObject getJSONObject()
+  {
+    JSONObject obj = new JSONObject();
+    
+    try
+    {
+      obj.put("idx", idx);
+      obj.put("planCode", planCode);
+      obj.put("title", title);
+      obj.put("startDate", startDateString);
+      obj.put("endDate", endDateString);
+      obj.put("insertDate", insertDateString);
+      obj.put("updateDate", updateDateString);
+      obj.put("likeCount", likeCount);
+      obj.put("reviewCount", reviewCount);
+      obj.put("bookmarkCount", bookmarkCount);
+      obj.put("shareCount", shareCount);
+      obj.put("rate", rate);
+      obj.put("ownerUserSeq", ownerUserSeq);
+      obj.put("userName", userName);
+      obj.put("gender", gender);
+      obj.put("mfidx", mfidx);
+      obj.put("dayCount", dayCount);
+      obj.put("distance", distance);
+      obj.put("budgetTotal", budgetTotal);
+      obj.put("imageUrl", imageUrl);
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    return obj;
+  }
+  
+  
   @SuppressLint("SimpleDateFormat")
   public void setJSONObject(JSONObject obj)
   {
@@ -89,6 +124,10 @@ public class ScheduleBean
         distance = obj.getString("distance");
       if (obj.has("budgetTotal"))
         budgetTotal = obj.getString("budgetTotal");
+      
+      if(obj.has("imageUrl"))
+        imageUrl = obj.getString("imageUrl");
+      
       if (obj.has("image"))
       {
         JSONObject imageObj = obj.getJSONObject("image");

@@ -3,6 +3,10 @@ package com.dabeeo.hanhayou.controllers.mypage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,6 +23,7 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.managers.CategoryManager;
+import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -74,6 +79,22 @@ public class MyPlaceListAdapter extends BaseAdapter
       PlaceBean bean = beans.get(i);
       if (bean.isChecked)
         beans.remove(i);
+    }
+    
+    JSONArray array = new JSONArray();
+    for (int i = 0; i < beans.size(); i++)
+    {
+      array.put(beans.get(i).getJSONObject());
+    }
+    JSONObject object = new JSONObject();
+    try
+    {
+      object.put("place", array);
+      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLACE, object.toString());
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
     }
     notifyDataSetChanged();
   }

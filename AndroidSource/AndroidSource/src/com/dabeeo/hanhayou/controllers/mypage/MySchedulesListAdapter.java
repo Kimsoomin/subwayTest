@@ -2,6 +2,10 @@ package com.dabeeo.hanhayou.controllers.mypage;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,11 +20,12 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
+import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 
 public class MySchedulesListAdapter extends BaseAdapter
 {
-  private ArrayList<ScheduleBean> beans = new ArrayList<>();
+  public ArrayList<ScheduleBean> beans = new ArrayList<>();
   private boolean isEditMode = false;
   private Context context;
   
@@ -78,6 +83,21 @@ public class MySchedulesListAdapter extends BaseAdapter
         beans.remove(i);
     }
     
+    JSONArray array = new JSONArray();
+    for (int i = 0; i < beans.size(); i++)
+    {
+      array.put(beans.get(i).getJSONObject());
+    }
+    JSONObject object = new JSONObject();
+    try
+    {
+      object.put("plan", array);
+      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLAN, object.toString());
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
     notifyDataSetChanged();
   }
   

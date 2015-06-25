@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,12 +29,15 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mypage.MyPlaceActivity;
 import com.dabeeo.hanhayou.activities.mypage.MyPlaceDetailActivity;
+import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
 import com.dabeeo.hanhayou.beans.PlaceBean;
+import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.controllers.mypage.MyPlaceListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MyPlaceListFragment extends Fragment
 {
@@ -216,8 +220,22 @@ public class MyPlaceListFragment extends Fragment
             }
           }
           
-          if (!TextUtils.isEmpty(deleteIdxs))
-            new DelPlaceTask().execute(deleteIdxs);
+          if (SystemUtil.isConnectNetwork(getActivity()))
+          {
+            if (!TextUtils.isEmpty(deleteIdxs))
+              new DelPlaceTask().execute(deleteIdxs);
+          }
+          else
+          {
+            Log.w("WARN", "내 일정 삭제 오프라인 처리 ");
+            OfflineDeleteManager manager = new OfflineDeleteManager(getActivity());
+            for (int i = 0; i < finalIdxs.size(); i++)
+            {
+              OfflineBehaviorBean bean = new OfflineBehaviorBean();
+              bean.setDeleteMyPlace(getActivity(), finalIdxs.get(i));
+              manager.addBehavior(bean);
+            }
+          }
         }
       });
       dialog.setNegativeButton(android.R.string.cancel, null);

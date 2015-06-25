@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,9 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.schedule.RecommendScheduleActivity;
+import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
+import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
@@ -245,8 +248,22 @@ public class MySchedulesActivity extends ActionBarActivity
               }
             }
             
-            if (!TextUtils.isEmpty(deleteIdxs))
-              new DelAsyncTask().execute(deleteIdxs);
+            if (SystemUtil.isConnectNetwork(MySchedulesActivity.this))
+            {
+              if (!TextUtils.isEmpty(deleteIdxs))
+                new DelAsyncTask().execute(deleteIdxs);
+            }
+            else
+            {
+              Log.w("WARN", "내 일정 삭제 오프라인 처리 ");
+              OfflineDeleteManager manager = new OfflineDeleteManager(MySchedulesActivity.this);
+              for (int i = 0; i < finalIdxs.size(); i++)
+              {
+                OfflineBehaviorBean bean = new OfflineBehaviorBean();
+                bean.setDeleteMyPlan(MySchedulesActivity.this, finalIdxs.get(i));
+                manager.addBehavior(bean);
+              }
+            }
           }
           
           

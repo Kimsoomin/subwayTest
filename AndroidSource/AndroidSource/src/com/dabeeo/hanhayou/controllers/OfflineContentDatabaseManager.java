@@ -40,7 +40,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   private static String TABLE_NAME_SUBWAY_EXITS = "SubwayExit";
   private static String TABLE_NAME_PLACE = "place";
   private static String TABLE_NAME_PLAN = "plan";
-  private static String TABLE_NAME_REVIEW = "review";
+  public static String TABLE_NAME_REVIEW = "review";
   
   private SQLiteDatabase myDataBase;
   
@@ -165,9 +165,11 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     
   }
   
-  
+
   public void insert(String tableName, JSONObject obj)
   {
+    if (myDataBase == null)
+      openDataBase();
     ContentValues insertValues = new ContentValues();
     try
     {
@@ -255,7 +257,8 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
       }
       else if (tableName.equals(TABLE_NAME_REVIEW))
       {
-        insertValues.put("parentType", obj.getString("parentType"));
+        if (obj.has("parentType"))
+          insertValues.put("parentType", obj.getString("parentType"));
         insertValues.put("idx", obj.getString("idx"));
         insertValues.put("seqCode", obj.getString("seqCode"));
         insertValues.put("reviewSeqCode", obj.getString("reviewSeqCode"));
@@ -269,10 +272,13 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         insertValues.put("mfidx", obj.getString("mfidx"));
         insertValues.put("insertDate", obj.getString("insertDate"));
         insertValues.put("updateDate", obj.getString("updateDate"));
-        JSONObject parentObj = new JSONObject(obj.getString("parent"));
-        if (parentObj.has("idx"))
+        if (obj.has("parent"))
         {
-          insertValues.put("parentIdx", parentObj.getString("idx"));
+          JSONObject parentObj = new JSONObject(obj.getString("parent"));
+          if (parentObj.has("idx"))
+          {
+            insertValues.put("parentIdx", parentObj.getString("idx"));
+          }
         }
       }
     }
@@ -280,7 +286,15 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     {
       e.printStackTrace();
     }
-    myDataBase.insert(tableName, null, insertValues);
+    
+    try
+    {
+      myDataBase.insert(tableName, null, insertValues);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
   
   
@@ -448,7 +462,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   {
     this.openDataBase();
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN+ " LIMIT 10 OFFSET " + (10 * page), null);
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " LIMIT 10 OFFSET " + (10 * page), null);
     if (c.moveToFirst())
     {
       do

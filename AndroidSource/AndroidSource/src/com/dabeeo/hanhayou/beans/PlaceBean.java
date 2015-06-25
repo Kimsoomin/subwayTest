@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -37,6 +38,41 @@ public class PlaceBean
   public String imageUrl;
   
   public boolean isChecked = false;
+  
+  
+  public JSONObject getJSONObject()
+  {
+    JSONObject obj = new JSONObject();
+    
+    try
+    {
+      obj.put("idx", idx);
+      obj.put("seqCode", seqCode);
+      obj.put("cityIdx", cityIdx);
+      obj.put("title", title);
+      obj.put("lat", lat);
+      obj.put("lng", lng);
+      obj.put("categoryId", categoryId);
+      obj.put("insertDate", insertDateString);
+      obj.put("popularCount", popularCount);
+      obj.put("likeCount", likeCount);
+      obj.put("reviewCount", reviewCount);
+      obj.put("bookmarkCount", bookmarkCount);
+      obj.put("shareCount", shareCount);
+      obj.put("rate", rate);
+      obj.put("ownerUserSeq", userSeq);
+      obj.put("userName", userName);
+      obj.put("gender", gender);
+      obj.put("mfidx", mfidx);
+      obj.put("premiumIdx", premiumIdx);
+      obj.put("imageUrl", imageUrl);
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    return obj;
+  }
   
   
   @SuppressLint("SimpleDateFormat")
@@ -88,10 +124,11 @@ public class PlaceBean
       if (obj.has("ownerUserSeq"))
         userSeq = obj.getInt("ownerUserSeq");
       
-      if(obj.has("premiumIdx"))
+      if (obj.has("premiumIdx"))
       {
         premiumIdx = obj.getString("premiumIdx");
-      }else
+      }
+      else
       {
         premiumIdx = "null";
       }
@@ -105,6 +142,9 @@ public class PlaceBean
       
       if (obj.has("area"))
         area = obj.getDouble("area");
+      
+      if (obj.has("imageUrl"))
+        imageUrl = obj.getString("imageUrl");
       
       if (obj.has("image"))
       {
