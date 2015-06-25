@@ -10,13 +10,20 @@
         android:layout_height="match_parent" />
 
     <!-- 하단 탭바 -->
+    
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="15dip"
+        android:layout_above="@+id/container_bottom_tab"
+        android:background="@drawable/bottom_bar_shadow"
+        android:contentDescription="@null"/>
 
     <LinearLayout
         android:id="@+id/container_bottom_tab"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="50dip"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom_navigation_bar"
+        android:background="@android:color/white"
         android:orientation="horizontal" >
 
         <!-- 홈 -->

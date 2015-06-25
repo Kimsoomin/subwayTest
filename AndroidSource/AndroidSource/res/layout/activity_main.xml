@@ -23,11 +23,17 @@
     </RelativeLayout>
 
     <!-- 하단 탭바 -->
+    
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="15dip"
+        android:background="@drawable/bottom_bar_shadow"
+        android:contentDescription="@null"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@drawable/bottom_navigation_bar"
+        android:layout_height="50dip"
+        android:background="@android:color/white"
         android:orientation="horizontal"
         android:paddingTop="2dp" >
 

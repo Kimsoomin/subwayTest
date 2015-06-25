@@ -10,7 +10,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -161,7 +163,12 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     setTitle("");
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
     if(bean.placeDetail != null)
-      ((TextView) findViewById(R.id.text_description)).setText(bean.placeDetail.title);
+    {
+      TextView description = (TextView) findViewById(R.id.text_description);
+      SpannableString content = new SpannableString(bean.placeDetail.title);
+      content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+      description.setText(content);
+    }
     else
       ((TextView) findViewById(R.id.text_description)).setText("");
     
