@@ -1999,12 +1999,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         }
       }
       
-      if(selectItem != -1)
-      {
-        onePlaceItems = new ArrayList<OverlayItem>();
-        OverlayItem item = new OverlayItem("","","",new GeoPoint(place_fLatitude, place_fLongitute));
-        onePlaceItems.add(item);
-      }
       
       return null;
     }
@@ -2067,12 +2061,6 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         }
       }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
       m_mapView.getOverlays().add(subwayOverlay);
-    }
-    
-    if(selectItem != -1 && selectItem != 3)
-    {
-      onePlaceOverlay = new OnePlaceOverlay(onePlaceItems, null, new DefaultResourceProxyImpl(mContext), mContext);
-      m_mapView.getOverlays().add(onePlaceOverlay);
     }
     
     runOnUiThread(new Runnable() 

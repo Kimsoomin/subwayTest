@@ -68,6 +68,7 @@ public class TravelScheduleDetailFragment extends Fragment
   
   int rate = 3;
   
+  int spotNum = 0;
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -260,13 +261,11 @@ public class TravelScheduleDetailFragment extends Fragment
         {
           ScheduleView view = new ScheduleView(getActivity());
           view.setThumbnailInvisible();
-          view.setData(j, bean.days.get(i).spots.get(j));
-          
-          String planMemoTimeAndMoney = "";
-          planMemoTimeAndMoney += "여행시간 " + bean.days.get(i).dayDist + " 비용 " + bean.days.get(i).dayTime;
-          String planMemo = "";
+          if(bean.days.get(i).spots.get(j).type != 3)
+            spotNum += 1;
+          view.setData(spotNum, bean.days.get(i).spots.get(j));
           if (j == bean.days.get(i).spots.size() - 1)
-            view.setFinalView(planMemoTimeAndMoney, planMemo);
+            view.setFinalView();
           contentContainer.addView(view);
         }
       }
@@ -284,13 +283,12 @@ public class TravelScheduleDetailFragment extends Fragment
       for (int i = 0; i < dayBean.spots.size(); i++)
       {
         ScheduleView view = new ScheduleView(getActivity());
-        view.setData(i, dayBean.spots.get(i));
+        if(dayBean.spots.get(i).type != 3)
+          spotNum += 1;
+        view.setData(spotNum, dayBean.spots.get(i));
         
-        String planMemoTimeAndMoney = "";
-        planMemoTimeAndMoney += "여행시간 " + dayBean.dayDist + " 비용 " + dayBean.dayTime;
-        String planMemo = "";
         if (i == dayBean.spots.size() - 1)
-          view.setFinalView(planMemoTimeAndMoney, planMemo);
+          view.setFinalView();
         contentContainer.addView(view);
       }
     }
