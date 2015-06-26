@@ -31,9 +31,9 @@
 
                 <LinearLayout
                     android:id="@+id/rate_text_container"
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
 
                     <TextView
                         android:id="@+id/text_rate"
@@ -50,38 +50,46 @@
                         android:textColor="@color/light_gray" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_review_best"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/circle_button"
-                    android:padding="4dp"
-                    android:text="@string/term_review_best"
-                    android:textColor="@color/color_normal_gray_select_white"
-                    android:textSize="12sp" />
+                <LinearLayout
+                    android:id="@+id/rate_button_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
 
-                <Button
-                    android:id="@+id/btn_review_soso"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/circle_button"
-                    android:padding="4dp"
-                    android:text="@string/term_review_soso"
-                    android:textColor="@color/color_normal_gray_select_white"
-                    android:textSize="12sp" />
+                    <Button
+                        android:id="@+id/btn_review_best"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/circle_button"
+                        android:padding="4dp"
+                        android:text="@string/term_review_best"
+                        android:textColor="@color/color_normal_gray_select_white"
+                        android:textSize="12sp" />
 
-                <Button
-                    android:id="@+id/btn_review_worst"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/circle_button"
-                    android:padding="4dp"
-                    android:text="@string/term_review_worst"
-                    android:textColor="@color/color_normal_gray_select_white"
-                    android:textSize="12sp" />
+                    <Button
+                        android:id="@+id/btn_review_soso"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/circle_button"
+                        android:padding="4dp"
+                        android:text="@string/term_review_soso"
+                        android:textColor="@color/color_normal_gray_select_white"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_review_worst"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/circle_button"
+                        android:padding="4dp"
+                        android:text="@string/term_review_worst"
+                        android:textColor="@color/color_normal_gray_select_white"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <!-- 내용 -->

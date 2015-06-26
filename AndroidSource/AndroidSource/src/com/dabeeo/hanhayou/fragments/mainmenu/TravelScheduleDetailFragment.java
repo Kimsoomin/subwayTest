@@ -60,7 +60,7 @@ public class TravelScheduleDetailFragment extends Fragment
   private CustomScrollView scrollView;
   private FrameLayout headerContainer;
   @SuppressWarnings("unused")
-  private LinearLayout rateLayout, rateTextLayout;
+  private LinearLayout rateLayout, rateTextLayout, rateButtonLayout;
   
   private int position;
   private boolean isMySchedule = false;
@@ -69,6 +69,7 @@ public class TravelScheduleDetailFragment extends Fragment
   int rate = 3;
   
   int spotNum = 0;
+  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -91,6 +92,8 @@ public class TravelScheduleDetailFragment extends Fragment
     
     rateLayout = (LinearLayout) getView().findViewById(R.id.rate_Layout);
     rateTextLayout = (LinearLayout) getView().findViewById(R.id.rate_text_container);
+    rateButtonLayout = (LinearLayout) getView().findViewById(R.id.rate_button_container);
+    
     btnReviewBest = (Button) getView().findViewById(R.id.btn_review_best);
     btnReviewSoso = (Button) getView().findViewById(R.id.btn_review_soso);
     btnReviewWorst = (Button) getView().findViewById(R.id.btn_review_worst);
@@ -177,7 +180,7 @@ public class TravelScheduleDetailFragment extends Fragment
     
     if (isMySchedule)
     {
-      rateLayout.setVisibility(View.GONE);
+      rateButtonLayout.setVisibility(View.GONE);
     }
     
     float density = getResources().getDisplayMetrics().density;
@@ -261,7 +264,7 @@ public class TravelScheduleDetailFragment extends Fragment
         {
           ScheduleView view = new ScheduleView(getActivity());
           view.setThumbnailInvisible();
-          if(bean.days.get(i).spots.get(j).type != 3)
+          if (bean.days.get(i).spots.get(j).type != 3)
             spotNum += 1;
           view.setData(spotNum, bean.days.get(i).spots.get(j));
           if (j == bean.days.get(i).spots.size() - 1)
@@ -283,7 +286,7 @@ public class TravelScheduleDetailFragment extends Fragment
       for (int i = 0; i < dayBean.spots.size(); i++)
       {
         ScheduleView view = new ScheduleView(getActivity());
-        if(dayBean.spots.get(i).type != 3)
+        if (dayBean.spots.get(i).type != 3)
           spotNum += 1;
         view.setData(spotNum, dayBean.spots.get(i));
         
