@@ -95,11 +95,16 @@ public class PlaceBean
       if (obj.has("category"))
         categoryId = obj.getInt("category");
       
-      if (obj.has("lat"))
-        lat = obj.getDouble("lat");
-      if (obj.has("lng"))
-        lng = obj.getDouble("lng");
-      
+      try
+      {
+        if (obj.has("lat"))
+          lat = obj.getDouble("lat");
+        if (obj.has("lng"))
+          lng = obj.getDouble("lng");
+      }
+      catch (Exception e)
+      {
+      }
       if (obj.has("popular"))
         popularCount = obj.getInt("popular");
       
@@ -140,9 +145,15 @@ public class PlaceBean
       if (obj.has("mfidx"))
         mfidx = obj.getString("mfidx");
       
-      if (obj.has("area"))
-        area = obj.getDouble("area");
-      
+      try
+      {
+        if (obj.has("area"))
+          area = obj.getDouble("area");
+      }
+      catch (Exception e)
+      {
+        
+      }
       if (obj.has("imageUrl"))
         imageUrl = obj.getString("imageUrl");
       

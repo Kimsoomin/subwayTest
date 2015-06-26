@@ -74,8 +74,9 @@ public class ApiClient
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page + "&dayCount=" + dayCount;
-      
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
+      if (dayCount != -1)
+        url += "&dayCount=" + dayCount;
       NetworkResult result = httpClient.requestGet(url);
       try
       {

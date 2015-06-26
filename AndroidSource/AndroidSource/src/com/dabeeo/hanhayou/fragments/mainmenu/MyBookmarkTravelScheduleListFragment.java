@@ -31,6 +31,7 @@ import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 
 public class MyBookmarkTravelScheduleListFragment extends Fragment
@@ -75,6 +76,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     allCheckContainer = (LinearLayout) getView().findViewById(R.id.container_all_checking);
     allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
+    selectDelete.setOnClickListener(deleteButtonClickListener);
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     emptyText = (TextView) getView().findViewById(R.id.text_empty);
     recommendContainer = (LinearLayout) getView().findViewById(R.id.recommend_container);
@@ -98,11 +100,6 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-//        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-//        {
-//          page++;
-//          loadSchedules();
-//        }
       }
     });
     loadSchedules();
@@ -111,62 +108,9 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   
   public void setEditMode(boolean isEditMode)
   {
-    if (adapter.getCount() == 0)
-    {
-      ((MyBookmarkActivity) getActivity()).isEditMode = false;
-      ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
-    }
-    else
-    {
-      adapter.setEditMode(isEditMode);
-      if (isEditMode)
-      {
-        allCheckContainer.setVisibility(View.VISIBLE);
-        allCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
-        {
-          @Override
-          public void onCheckedChanged(CompoundButton arg0, boolean arg1)
-          {
-            adapter.setAllCheck(arg1);
-          }
-        });
-        selectDelete.setVisibility(View.VISIBLE);
-        selectDelete.setOnClickListener(new OnClickListener()
-        {
-          @Override
-          public void onClick(View arg0)
-          {
-            Log.w("WARN", "선택된 아이템 리스트 : " + adapter.getCheckedArrayList());
-            Builder dialog = new AlertDialog.Builder(getActivity());
-            dialog.setTitle(getString(R.string.term_alert));
-            dialog.setMessage(getString(R.string.term_delete_confirm));
-            dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-            {
-              @Override
-              public void onClick(DialogInterface dialog, int which)
-              {
-                if (allCheckBox.isChecked())
-                {
-                  listView.setVisibility(View.GONE);
-                  emptyContainer.setVisibility(View.VISIBLE);
-                  setEditMode(false);
-                  ((MyBookmarkActivity) getActivity()).isEditMode = false;
-                  ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
-                  adapter.clear();
-                }
-              }
-            });
-            dialog.setNegativeButton(android.R.string.cancel, null);
-            dialog.show();
-          }
-        });
-      }
-      else
-      {
-        allCheckContainer.setVisibility(View.GONE);
-        selectDelete.setVisibility(View.GONE);
-      }
-    }
+    adapter.setEditMode(isEditMode);
+    allCheckContainer.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
+    selectDelete.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
   }
   
   
@@ -218,6 +162,62 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       progressBar.setVisibility(View.GONE);
       isLoading = false;
       super.onPostExecute(result);
+    }
+  }
+  
+  private OnClickListener deleteButtonClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      ArrayList<String> idxes = new ArrayList<>();
+      for (ScheduleBean bean : adapter.getCheckedArrayList())
+      {
+        idxes.add(bean.idx);
+      }
+      
+      if (idxes.isEmpty())
+        return;
+      
+      final String[] idxesString = idxes.toArray(new String[idxes.size()]);
+      
+      Builder dialog = new AlertDialog.Builder(getActivity());
+      dialog.setTitle(getString(R.string.term_alert));
+      dialog.setMessage(getString(R.string.term_delete_confirm));
+      dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+      {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+          adapter.removeCheckedItem();
+          allCheckBox.setChecked(false);
+          
+          if (adapter.getCount() == 0)
+          {
+            listView.setVisibility(View.GONE);
+            emptyContainer.setVisibility(View.VISIBLE);
+            setEditMode(false);
+            ((MyBookmarkActivity) getActivity()).toggleEditMode(false);
+          }
+          
+          new DelAsyncTask().execute(idxesString);
+        }
+      });
+      dialog.setNegativeButton(android.R.string.cancel, null);
+      dialog.show();
+    }
+  };
+  
+  private class DelAsyncTask extends AsyncTask<String, Void, Void>
+  {
+    @Override
+    protected Void doInBackground(String... params)
+    {
+      for (String idx : params)
+      {
+        apiClient.setUsedLog(PreferenceManager.getInstance(getActivity()).getUserSeq(), idx, "plan", "B");
+      }
+      return null;
     }
   }
   

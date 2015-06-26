@@ -361,5 +361,6 @@
     <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
     <string name="term_go">바로가기</string>
     <string name="msg_resend_emil_auth">가입하신 이메일로 인증번호를 발송하였습니다. 인증번호를 확인 후, 인증번호 입력창에 입력해주세요</string>
+    <string name="msg_warn_password_not_same_name">不能使用与昵称相同的密码。프로필이름과 동일한 비밀번호를 사용할 수 없습니다.</string>
 
 </resources>

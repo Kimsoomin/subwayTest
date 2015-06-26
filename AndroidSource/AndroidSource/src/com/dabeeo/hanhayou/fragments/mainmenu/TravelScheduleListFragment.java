@@ -84,19 +84,21 @@ public class TravelScheduleListFragment extends Fragment
     
     adapter = new TravelScheduleListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
-    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
-    view.setBean(null);
-    view.setOnClickListener(new OnClickListener()
+    if (SystemUtil.isConnectNetwork(getActivity()))
     {
-      @Override
-      public void onClick(View arg0)
+      ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
+      view.setBean(null);
+      view.setOnClickListener(new OnClickListener()
       {
-        Intent i = new Intent(getActivity(), TrendExhibitionActivity.class);
-        startActivity(i);
-      }
-    });
-    listView.addHeaderView(view);
-    
+        @Override
+        public void onClick(View arg0)
+        {
+          Intent i = new Intent(getActivity(), TrendExhibitionActivity.class);
+          startActivity(i);
+        }
+      });
+      listView.addHeaderView(view);
+    }
 //    listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);

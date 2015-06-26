@@ -84,11 +84,6 @@ public class MyBookmarkPlaceListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-//        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-//        {
-//          page++;
-//          load(page);
-//        }
       }
     });
     listView.setAdapter(adapter);
@@ -143,7 +138,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
       ArrayList<String> idxes = new ArrayList<>();
       for (PlaceBean bean : adapter.getCheckedArrayList())
       {
-        idxes.add(bean.cityIdx);
+        idxes.add(bean.idx);
       }
       
       if (idxes.isEmpty())

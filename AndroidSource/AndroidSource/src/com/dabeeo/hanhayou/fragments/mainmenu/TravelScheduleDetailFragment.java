@@ -91,6 +91,7 @@ public class TravelScheduleDetailFragment extends Fragment
     textRate = (TextView) getView().findViewById(R.id.text_rate);
     
     rateLayout = (LinearLayout) getView().findViewById(R.id.rate_Layout);
+    rateLayout.setOnClickListener(rateClickListener);
     rateTextLayout = (LinearLayout) getView().findViewById(R.id.rate_text_container);
     rateButtonLayout = (LinearLayout) getView().findViewById(R.id.rate_button_container);
     
