@@ -94,6 +94,8 @@ public class RecommendScheduleActivity extends ActionBarActivity
   @Override
   protected void onNewIntent(Intent intent)
   {
+    theme = -1;
+    
     containerShopping.setSelected(false);
     containerCulture.setSelected(false);
     containerTour.setSelected(false);
@@ -101,8 +103,15 @@ public class RecommendScheduleActivity extends ActionBarActivity
     containerRest.setSelected(false);
     containerRandom.setSelected(false);
     
+    year = -1;
+    month = -1;
+    dayOfMonth = -1;
+    
     startDate.setTextColor(getResources().getColor(R.color.darker_gray));
     startDate.setText(getString(R.string.term_select_start_date));
+    
+    dayCount = 1;
+    textDay.setText(Integer.toString(dayCount));
     super.onNewIntent(intent);
   }
   
