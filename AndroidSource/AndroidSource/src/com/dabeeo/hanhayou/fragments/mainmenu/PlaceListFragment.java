@@ -112,7 +112,7 @@ public class PlaceListFragment extends Fragment
   public void changeFilteringMode(int mode)
   {
     filteringMode = mode;
-    page = 1;
+    page = 0;
     adapter.clear();
     load();
   }
@@ -158,7 +158,6 @@ public class PlaceListFragment extends Fragment
         result = apiClient.getPlaceListByAddedByMe(page, categoryId);
       else
         result = apiClient.getPlaceList(page, categoryId);
-      
       return result;
     }
     
@@ -171,9 +170,9 @@ public class PlaceListFragment extends Fragment
         isLoadEnded = true;
       
       if (adapter.getCount() == 0)
-      {
         listView.setVisibility(View.GONE);
-      }
+      else
+        listView.setVisibility(View.VISIBLE);
       isLoading = false;
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);

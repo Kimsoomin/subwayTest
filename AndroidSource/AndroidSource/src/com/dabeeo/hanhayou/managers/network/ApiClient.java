@@ -231,8 +231,13 @@ public class ApiClient
    */
   public ArrayList<PlaceBean> getPlaceListByPopular(int page, int categoryId)
   {
-    String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&sort=Popular&category=" + categoryId;
-    return getPlaceList(url);
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&sort=Popular&category=" + categoryId;
+      return getPlaceList(url);
+    }
+    else
+      return offlineDatabaseManager.getPlaceList(categoryId, true);
   }
   
   
@@ -245,8 +250,14 @@ public class ApiClient
    */
   public ArrayList<PlaceBean> getPlaceListByBookmarked(int page, int categoryId)
   {
-    String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId + "&isBookmarked=1";
-    return getPlaceList(url);
+    ArrayList<PlaceBean> bookmarkArray = getBookmarkedPlaceList();
+    ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
+    for (int i = 0; i < bookmarkArray.size(); i++)
+    {
+      if (bookmarkArray.get(i).categoryId == categoryId)
+        tempArray.add(bookmarkArray.get(i));
+    }
+    return tempArray;
   }
   
   
@@ -259,8 +270,14 @@ public class ApiClient
    */
   public ArrayList<PlaceBean> getPlaceListByAddedByMe(int page, int categoryId)
   {
-    String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&p=" + page + "&category=" + categoryId + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
-    return getPlaceList(url);
+    ArrayList<PlaceBean> lists = getMyPlaceList();
+    ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
+    for (int i = 0; i < lists.size(); i++)
+    {
+      if (lists.get(i).categoryId == categoryId)
+        tempArray.add(lists.get(i));
+    }
+    return tempArray;
   }
   
   
@@ -278,7 +295,7 @@ public class ApiClient
       places.addAll(getPlaceList(url));
     }
     else
-      places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
+      places.addAll(offlineDatabaseManager.getPlaceList(categoryId));
     return places;
   }
   
@@ -328,8 +345,6 @@ public class ApiClient
       String url = getSiteUrl() + "?v=m1&mode=PLACE_LIST&isBookmark=1&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
       places.addAll(getPlaceList(url));
     }
-//    else
-//      places.addAll(offlineDatabaseManager.getPlaceList(page, categoryId));
     return places;
   }
   

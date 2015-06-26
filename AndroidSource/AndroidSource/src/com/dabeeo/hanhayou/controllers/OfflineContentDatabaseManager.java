@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,7 @@ import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.StationBean;
+import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.map.Global;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
@@ -408,11 +411,16 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   /**
    * Get Data
    */
-  public ArrayList<PlaceBean> getPlaceList(int page, int categoryId)
+  public ArrayList<PlaceBean> getPlaceList(int categoryId)
+  {
+    return getPlaceList(categoryId, false);
+  }
+  
+  
+  public ArrayList<PlaceBean> getPlaceList(int categoryId, boolean isSortPopular)
   {
     this.openDataBase();
     ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
-//    " LIMIT 10 OFFSET " + (10 * page)
     Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
     if (categoryId == -1)
       c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE, null);
@@ -424,13 +432,28 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         {
           PlaceBean bean = new PlaceBean();
           bean.setCursor(c);
-          beans.add(bean);
+          if (!bean.premiumIdx.equals("null"))
+            beans.add(bean);
         }
         catch (Exception e)
         {
         }
       } while (c.moveToNext());
     }
+    
+    if (isSortPopular)
+    {
+      Comparator<PlaceBean> compare = new Comparator<PlaceBean>()
+      {
+        @Override
+        public int compare(PlaceBean lhs, PlaceBean rhs)
+        {
+          return rhs.likeCount - lhs.likeCount;
+        }
+      };
+      Collections.sort(beans, compare);
+    }
+    
     c.close();
     myDataBase.close();
     return beans;
@@ -488,17 +511,34 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   {
     this.openDataBase();
     ScheduleDetailBean bean = new ScheduleDetailBean();
-    Log.w("WARN", "SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx);
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx, null);
-    c.moveToFirst();
+    
+    JSONArray array;
     try
     {
-      bean.setCursor(c);
+      array = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN)).getJSONArray("plan");
+      for (int i = 0; i < array.length(); i++)
+      {
+        JSONObject obj = array.getJSONObject(i);
+        if (obj.getString("idx").equals(idx))
+          bean.setJSONObject(obj);
+      }
     }
-    catch (Exception e)
+    catch (JSONException e)
     {
+      e.printStackTrace();
     }
-    c.close();
+    
+//    Log.w("WARN", "SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx);
+//    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx, null);
+//    c.moveToFirst();
+//    try
+//    {
+//      bean.setCursor(c);
+//    }
+//    catch (Exception e)
+//    {
+//    }
+//    c.close();
     myDataBase.close();
     return bean;
   }

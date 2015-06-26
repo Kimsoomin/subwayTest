@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -160,6 +161,7 @@ public class TravelStrategyActivity extends ActionBarActivity
     return super.onCreateOptionsMenu(menu);
   }
   
+  
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
@@ -268,22 +270,14 @@ public class TravelStrategyActivity extends ActionBarActivity
   
   private void spotArrayItemClick(int which)
   {
-    switch (lastSelectedTab)
+    Log.w("WARN", "filtering mode : " + which);
+    if (which == 2 && !SystemUtil.isConnectNetwork(getApplicationContext()))
+      new AlertDialogManager(TravelStrategyActivity.this).showDontNetworkConnectDialog();
+    else
     {
-      case 1:
-        popularFragment.changeFilteringMode(which);
-        break;
-      
-      case 2:
-        shoppingFragment.changeFilteringMode(which);
-        break;
-      
-      case 3:
-        restaurantFragment.changeFilteringMode(which);
-        break;
-      
-      default:
-        break;
+      popularFragment.changeFilteringMode(which);
+      shoppingFragment.changeFilteringMode(which);
+      restaurantFragment.changeFilteringMode(which);
     }
   }
   
@@ -296,12 +290,6 @@ public class TravelStrategyActivity extends ActionBarActivity
   
   private void showSphereDialog()
   {
-    if (!SystemUtil.isConnectNetwork(this))
-    {
-      alertDialogManager.showDontNetworkConnectDialog();
-      return;
-    }
-    
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.area_array));
     if (adapter.currentPosition != 0)
       arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, getResources().getStringArray(R.array.spot_array));
