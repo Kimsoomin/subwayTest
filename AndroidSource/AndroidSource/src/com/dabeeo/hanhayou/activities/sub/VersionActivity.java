@@ -56,30 +56,6 @@ public class VersionActivity extends ActionBarActivity
     containerPrivateAgreement = (LinearLayout) findViewById(R.id.container_private_agreement);
     containerGpsInfoAgreement = (LinearLayout) findViewById(R.id.container_gps_agreement);
     btnNotification = (Button) findViewById(R.id.btn_test_notification);
-    btnNotification.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View v)
-      {
-        final Intent emptyIntent = new Intent(VersionActivity.this, TrendProductDetailActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(VersionActivity.this, 101, emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(VersionActivity.this).setSmallIcon(R.drawable.ic_launcher).setContentTitle("피테라 에센스 핑크 리미티드 에디션").setContentText(
-            "[무료배송] 32,000원").setContentIntent(pendingIntent);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(101, mBuilder.build());
-        
-        new Handler().postDelayed(new Runnable()
-        {
-          @Override
-          public void run()
-          {
-            Intent i = new Intent(VersionActivity.this, TrendProductPopupActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
-          }
-        }, 3000);
-      }
-    });
     
     try
     {
