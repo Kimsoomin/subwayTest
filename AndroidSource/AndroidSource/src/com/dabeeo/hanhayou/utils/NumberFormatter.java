@@ -14,9 +14,13 @@ public class NumberFormatter
       int hours = (time / 60);
       int minutes = (time % 60);
       
-      timeString = Integer.toString(hours) + "hour ";
+      if(hours != 0)
+        timeString = Integer.toString(hours) + "hour ";
       if (minutes != 0)
         timeString = timeString + Integer.toString(minutes) + "min";
+      
+      if(timeString.length() == 0)
+        timeString = "0hour";
     }
     catch (Exception e)
     {

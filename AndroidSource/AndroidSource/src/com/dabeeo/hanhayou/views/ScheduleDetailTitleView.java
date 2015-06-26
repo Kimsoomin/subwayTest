@@ -61,7 +61,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     title.setText(bean.title);
     try
     {
-      textMoney.setText(context.getString(R.string.term_yuan) + NumberFormatter.addComma(bean.budgetTotal));
+      textMoney.setText(NumberFormatter.addComma(bean.budgetTotal));
     }
     catch (Exception e)
     {

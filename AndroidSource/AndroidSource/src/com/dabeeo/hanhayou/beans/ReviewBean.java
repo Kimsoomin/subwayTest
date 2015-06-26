@@ -68,14 +68,14 @@ public class ReviewBean
 			if (obj.has("insertDate"))
 			{
 				insertDateString = obj.getString("insertDate");
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
 				insertDate = format.parse(insertDateString);
 			}
 			
 			if (obj.has("updateDate"))
 			{
 				updateDateString = obj.getString("updateDate");
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
 				updateDate = format.parse(updateDateString);
 			}
 			
@@ -112,11 +112,11 @@ public class ReviewBean
 			mfidx = c.getString(c.getColumnIndex("mfidx"));
 			
 			insertDateString = c.getString(c.getColumnIndex("insertDate"));
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
 			insertDate = format.parse(insertDateString);
 			
 			updateDateString = c.getString(c.getColumnIndex("updateDate"));
-			format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
 			updateDate = format.parse(updateDateString);
 			
 			parentIdx = c.getString(c.getColumnIndex("parentIdx"));

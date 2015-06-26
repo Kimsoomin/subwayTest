@@ -63,7 +63,7 @@ public class PromotionActivity extends Activity
 			public void onClick(View v)
 			{
 				Date date = new Date();
-				SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
+				SimpleDateFormat formatter = new SimpleDateFormat("yyy.MM.dd");
 				PreferenceManager.getInstance(PromotionActivity.this).setDontShowPopupDate(formatter.format(date));
 				finish();
 			}

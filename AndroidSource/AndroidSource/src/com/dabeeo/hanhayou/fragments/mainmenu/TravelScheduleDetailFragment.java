@@ -120,17 +120,19 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         if (!isRecommendSchedule)
         {
-          if (scrollView.getScrollY() > 300 * density)
+          if (scrollView.getScrollY() > 150 * density)
           {
             titleView.title.setVisibility(View.INVISIBLE);
             titleView.infoContainer.setVisibility(View.INVISIBLE);
             titleView.title.setVisibility(View.INVISIBLE);
+            titleView.setAlpha(50);
           }
           else
           {
             titleView.title.setVisibility(View.VISIBLE);
             titleView.infoContainer.setVisibility(View.VISIBLE);
             titleView.title.setVisibility(View.VISIBLE);
+            titleView.setAlpha(100);
           }
         }
         
@@ -344,7 +346,6 @@ public class TravelScheduleDetailFragment extends Fragment
           i.putExtra("rate", rate);
           startActivity(i);
         }
-        
         
         public void onNegativeButtonClickListener()
         {

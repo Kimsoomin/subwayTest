@@ -54,7 +54,7 @@ public class ScheduleDetailHeaderView extends RelativeLayout
 //			}
 //		});
 		
-		ImageDownloader.displayImage(context, imageUrl, imageView, null);
+//		ImageDownloader.displayImage(context, imageUrl, imageView, null);
 	}
 	
 	

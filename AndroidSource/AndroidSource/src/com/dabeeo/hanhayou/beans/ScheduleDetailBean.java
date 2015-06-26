@@ -166,7 +166,7 @@ public class ScheduleDetailBean
         try
         {
           updateDateString = obj.getString("updateDate");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+          SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
           updateDate = format.parse(updateDateString);
         }
         catch (Exception e)
@@ -206,7 +206,7 @@ public class ScheduleDetailBean
       startDateString = c.getString(c.getColumnIndex("startDate"));
       try
       {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         startDate = format.parse(startDateString);
       }
       catch (Exception e)
@@ -216,7 +216,7 @@ public class ScheduleDetailBean
       endDateString = c.getString(c.getColumnIndex("endDate"));
       try
       {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         endDate = format.parse(endDateString);
       }
       catch (Exception e)
@@ -226,7 +226,7 @@ public class ScheduleDetailBean
       insertDateString = c.getString(c.getColumnIndex("insertDate"));
       try
       {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
         insertDate = format.parse(insertDateString);
       }
       catch (Exception e)
@@ -236,7 +236,7 @@ public class ScheduleDetailBean
       updateDateString = c.getString(c.getColumnIndex("updateDate"));
       try
       {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
         updateDate = format.parse(updateDateString);
       }
       catch (Exception e)
