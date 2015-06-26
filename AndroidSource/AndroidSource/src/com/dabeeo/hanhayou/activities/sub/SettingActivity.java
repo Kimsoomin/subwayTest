@@ -58,6 +58,8 @@ public class SettingActivity extends ActionBarActivity
     
     badgeNotice = (ImageView) findViewById(R.id.badge_notice);
     badgeVersionInfo = (ImageView) findViewById(R.id.badge_version_info);
+    badgeNotice.setVisibility(View.GONE);
+    badgeVersionInfo.setVisibility(View.GONE);
     containerLogout = (LinearLayout) findViewById(R.id.container_logout);
     containerEditProfile = (LinearLayout) findViewById(R.id.container_edit_profile);
     containerEditProfile.setOnClickListener(nameSaveListener);

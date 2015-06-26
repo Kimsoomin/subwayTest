@@ -55,7 +55,6 @@ public class MainFragment extends Fragment
     
     badgeStrategySeoul = (ImageView) view.findViewById(R.id.badge_main_place);
     badgeTravelSchedule = (ImageView) view.findViewById(R.id.badge_main_plan);
-    badgeTravelSchedule.setVisibility(View.VISIBLE);
     badgeTrend = (ImageView) view.findViewById(R.id.badge_main_trend);
     badgeSubway = (ImageView) view.findViewById(R.id.badge_main_subway);
     badgeTicket = (ImageView) view.findViewById(R.id.badge_main_ticket);
