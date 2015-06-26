@@ -162,7 +162,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     
     setTitle("");
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
-    if(bean.placeDetail != null)
+    if (bean.placeDetail != null)
     {
       TextView description = (TextView) findViewById(R.id.text_description);
       SpannableString content = new SpannableString(bean.placeDetail.title);
@@ -228,7 +228,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
-      Picasso.with(this).load(imageUrl).resize(300, 223).centerCrop().into(view);
+      Picasso.with(this).load(imageUrl).resize(550, 410).centerCrop().into(view);
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {
@@ -245,7 +245,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       horizontalImagesView.addView(parentView);
     }
     
-    if(bean.placeDetail != null)
+    if (bean.placeDetail != null)
     {
       addDetailInfo(getString(R.string.term_place_detail_info), bean.placeDetail.contents);
       addDetailInfo(getString(R.string.term_address), bean.placeDetail.address);
