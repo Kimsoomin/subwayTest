@@ -86,6 +86,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private boolean isPremium = false;
   private Button btnLike, btnBookmark;
   private SharePickView sharePickView;
+  private LinearLayout rateLayout;
   
   private ViewGroup layoutRecommendProduct;
   
@@ -131,6 +132,8 @@ public class PlaceDetailActivity extends ActionBarActivity
       layoutRecommendSeoul.setVisibility(View.VISIBLE);
     }
     
+    rateLayout = (LinearLayout) findViewById(R.id.rate_layout);
+    rateLayout.setOnClickListener(rateClickListener);
     btnRecommendSeoul = (Button) findViewById(R.id.btn_recommend_by_expert);
     btnRecommendSeoul.setOnClickListener(new OnClickListener()
     {
