@@ -6,6 +6,7 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -121,19 +122,19 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         if (!isRecommendSchedule)
         {
-          if (scrollView.getScrollY() > 150 * density)
+          if (scrollView.getScrollY() > 120 * density)
           {
             titleView.title.setVisibility(View.INVISIBLE);
             titleView.infoContainer.setVisibility(View.INVISIBLE);
             titleView.title.setVisibility(View.INVISIBLE);
-            titleView.setAlpha(50);
+            titleView.setBackgroundColor(Color.argb(80, 223, 223, 223));
           }
           else
           {
             titleView.title.setVisibility(View.VISIBLE);
             titleView.infoContainer.setVisibility(View.VISIBLE);
             titleView.title.setVisibility(View.VISIBLE);
-            titleView.setAlpha(100);
+            titleView.setBackgroundColor(Color.argb(100, 255, 255, 255));
           }
         }
         

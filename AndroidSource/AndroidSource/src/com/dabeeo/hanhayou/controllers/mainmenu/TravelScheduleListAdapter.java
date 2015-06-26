@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.controllers.mainmenu;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -101,9 +102,11 @@ public class TravelScheduleListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
     iconRemommend.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
-    startDate.setText(bean.startDateString);
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+    if(bean.startDate != null)
+      startDate.setText(format.format(bean.startDate));
     title.setText(bean.title);
-    month.setText(Integer.toString(bean.dayCount) + parent.getContext().getString(R.string.term_month));
+    month.setText(Integer.toString(bean.dayCount) + "天");
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     

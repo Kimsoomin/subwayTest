@@ -122,7 +122,7 @@ public class PlaceBean
       if (obj.has("insertDate"))
       {
         insertDateString = obj.getString("insertDate");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         insertDate = format.parse(insertDateString);
       }
       
@@ -189,7 +189,7 @@ public class PlaceBean
       shareCount = c.getInt(c.getColumnIndex("shareCount"));
       reviewCount = c.getInt(c.getColumnIndex("reviewCount"));
       insertDateString = c.getString(c.getColumnIndex("insertDate"));
-      SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
       insertDate = format.parse(insertDateString);
       premiumIdx = c.getString(c.getColumnIndex("premiumIdx"));
       

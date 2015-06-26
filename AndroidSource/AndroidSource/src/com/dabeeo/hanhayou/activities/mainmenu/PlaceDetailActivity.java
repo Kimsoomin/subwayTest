@@ -184,7 +184,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       @Override
       public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
       {
-        if (scrollView.getScrollY() > 300 * density)
+        if (scrollView.getScrollY() > 150 * density)
           titleView.title.setVisibility(View.INVISIBLE);
         else
           titleView.title.setVisibility(View.VISIBLE);

@@ -66,12 +66,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Debug;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
@@ -1048,6 +1050,18 @@ public class Global
     return MD5;
   }
   
+  public static int getDip(Window window, int dip)
+  {
+    DisplayMetrics displayMetrics = new DisplayMetrics();
+
+    window.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics); 
+    
+    BlinkingCommon.smlLibDebug("GLOBAL", "density : " + displayMetrics.densityDpi);
+
+    int dipWidth = (int) (dip *(160/displayMetrics.densityDpi));
+    BlinkingCommon.smlLibDebug("GLOBAL", "dipWidth : " + dipWidth);
+    return dipWidth;
+  }
   
   public static int DpToPixel(Context context, int DP)
   {

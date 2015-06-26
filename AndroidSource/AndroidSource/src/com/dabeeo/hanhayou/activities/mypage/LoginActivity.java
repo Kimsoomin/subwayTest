@@ -153,7 +153,6 @@ public class LoginActivity extends Activity
               startActivity(i);
             }
             
-            
             @Override
             public void onNegativeButtonClickListener()
             {

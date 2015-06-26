@@ -22,7 +22,6 @@ import com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.PlaceListAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 
 public class PlaceListFragment extends Fragment
 {

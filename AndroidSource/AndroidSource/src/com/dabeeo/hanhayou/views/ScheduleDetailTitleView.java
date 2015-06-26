@@ -1,5 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
+import java.text.SimpleDateFormat;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -55,7 +57,8 @@ public class ScheduleDetailTitleView extends RelativeLayout
   public void setBean(ScheduleDetailBean bean)
   {
     name.setText(bean.userName);
-    time.setText(bean.updateDateString);
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+    time.setText(format.format(bean.updateDate));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     title.setText(bean.title);

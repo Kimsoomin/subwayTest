@@ -1,6 +1,8 @@
 package com.dabeeo.hanhayou.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,6 +48,7 @@ public class PlaceDetailBean
   public ArrayList<String> imageUrls = new ArrayList<String>();
   
   public String updateDateString;
+  public Date updateDate;
   
   
   public void setJSONObject(JSONObject obj)
@@ -112,7 +115,11 @@ public class PlaceDetailBean
         isBookmarked = obj.getInt("isBookmarked") != 0;
       
       if (obj.has("updateDate"))
+      {
         updateDateString = obj.getString("updateDate");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        updateDate = format.parse(updateDateString);
+      }
       
       if (obj.has("image"))
       {

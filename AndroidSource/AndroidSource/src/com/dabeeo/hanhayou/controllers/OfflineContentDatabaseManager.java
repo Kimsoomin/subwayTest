@@ -421,8 +421,13 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   {
     this.openDataBase();
     ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
-    if (categoryId == -1)
+    Cursor c;
+    if(categoryId == 1)
+    {
+      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + "1 or 3 or 4 or 5 or 6", null);
+    }else
+      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
+    if (categoryId == 0)
       c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE, null);
     if (c.moveToFirst())
     {

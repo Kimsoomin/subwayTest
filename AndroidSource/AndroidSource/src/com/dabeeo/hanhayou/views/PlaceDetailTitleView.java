@@ -1,5 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
+import java.text.SimpleDateFormat;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -50,7 +52,9 @@ public class PlaceDetailTitleView extends RelativeLayout
   {
     title.setText(bean.title);
     name.setText(bean.userName);
-    time.setText(bean.updateDateString);
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+    if(bean.updateDate !=null)
+      time.setText(format.format(bean.updateDate));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     ImageDownloader.displayProfileImage(context, "", imageView);

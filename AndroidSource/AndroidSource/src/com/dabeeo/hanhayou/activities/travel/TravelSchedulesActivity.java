@@ -150,6 +150,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
   {
     final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
     arrayAdapter.add(getString(R.string.term_all));
+    arrayAdapter.add(getString(R.string.term_one_days_schedule));
     arrayAdapter.add(getString(R.string.term_two_days_schedule));
     arrayAdapter.add(getString(R.string.term_three_days_schedule));
     arrayAdapter.add(getString(R.string.term_four_days_schedule));
@@ -171,15 +172,15 @@ public class TravelSchedulesActivity extends ActionBarActivity
       {
         if (which == 0)
         {
-          scheduleListFragment.setDayCount(-1);
-          myScheduleListFragment.setDayCount(-1);
-          myBookMarkscheduleListFragment.setDayCount(-1);
+          scheduleListFragment.setDayCount(0);
+          myScheduleListFragment.setDayCount(0);
+          myBookMarkscheduleListFragment.setDayCount(0);
         }
         else
         {
-          scheduleListFragment.setDayCount(which + 1);
-          myScheduleListFragment.setDayCount(which + 1);
-          myBookMarkscheduleListFragment.setDayCount(which + 1);
+          scheduleListFragment.setDayCount(which);
+          myScheduleListFragment.setDayCount(which);
+          myBookMarkscheduleListFragment.setDayCount(which);
         }
       }
     });

@@ -365,6 +365,7 @@
     <string name="msg_help_withdraw_qq">官方QQ: 889751559</string>
     <string name="msg_help_withdraw_email">客服邮箱 CS@GSSHOP.COM</string>
     <!-- 여행일정 -->
+    <string name="term_one_days_schedule">1日游</string>
     <string name="term_two_days_schedule">2日游</string>
     <string name="term_three_days_schedule">3日游</string>
     <string name="term_four_days_schedule">4日游</string>
@@ -444,7 +445,7 @@
     <string name="msg_success_join">注册成功.\n欢迎体验韩哈游的精彩服务</string>
     <string name="msg_please_error_id">您输入的帐号不存在</string>
     <string name="msg_now_allow_consecutive_three_letters">연속된 문자/숫자 3자리 이상은 사용하실 수 없 습니다</string>
-    <string name="msg_please_error_auth">인증되지 않은 E-mail입니다</string>
+    <string name="msg_please_error_auth">正在等待认证</string>
     <string name="msg_please_error_out">该账号为已注销账号。</string>
     <string name="msg_please_error_password">密码不正确，请重新输入。</string>
     <string name="msg_please_error_old_password">原先的密码不正确，请重新输入。</string>

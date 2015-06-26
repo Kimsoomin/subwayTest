@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@null"
-                android:textColor="#444a4b"
+                android:textColor="@color/darker_gray"
                 android:textStyle="bold" />
 
             <TextView
@@ -31,25 +31,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@null"
-                android:textColor="#969b9c" />
+                android:textColor="@color/light_gray" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/btn_call"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="75dip"
+            android:layout_height="75dip"
             android:layout_gravity="center"
             android:padding="16dp"
             android:src="@drawable/btn_direct_call"
+            android:contentDescription="@null"
             android:visibility="gone" />
 
         <ImageView
             android:id="@+id/btn_address"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="75dip"
+            android:layout_height="75dip"
             android:layout_gravity="center"
             android:padding="16dp"
             android:src="@drawable/btn_address_map"
+            android:contentDescription="@null"
             android:visibility="gone" />
     </LinearLayout>
 
