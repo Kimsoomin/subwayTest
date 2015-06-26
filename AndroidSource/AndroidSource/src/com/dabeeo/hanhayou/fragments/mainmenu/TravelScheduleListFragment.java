@@ -53,7 +53,7 @@ public class TravelScheduleListFragment extends Fragment
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
   
-  public int dayCount = 0;
+  public int dayCount = -1;
   
   
   public TravelScheduleListFragment(int type)
@@ -139,9 +139,9 @@ public class TravelScheduleListFragment extends Fragment
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
       if (type == SCHEDULE_TYPE_MY)
-        return apiClient.getMyTravelSchedules();
+        return apiClient.getMyTravelSchedules(dayCount);
       else if (type == SCHEDULE_TYPE_BOOKMARK)
-        return apiClient.getBookmarkedSchedules();
+        return apiClient.getBookmarkedSchedules(dayCount);
       else
         return apiClient.getTravelSchedules(page, dayCount);
     }
@@ -188,6 +188,11 @@ public class TravelScheduleListFragment extends Fragment
           emptyText.setText(getString(R.string.msg_empty_my_bookmark));
           recommendContainer.setVisibility(View.GONE);
         }
+      }
+      else
+      {
+        listView.setVisibility(View.VISIBLE);
+        emptyContainer.setVisibility(View.GONE);
       }
       progressBar.setVisibility(View.GONE);
       isLoading = false;

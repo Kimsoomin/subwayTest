@@ -18,7 +18,6 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
-import com.dabeeo.hanhayou.map.DatabaseManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
@@ -70,12 +69,12 @@ public class ApiClient
   }
   
   
-  public ArrayList<ScheduleBean> getTravelSchedules(int page, int daycount)
+  public ArrayList<ScheduleBean> getTravelSchedules(int page, int dayCount)
   {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page + "&dayCount=" + daycount;
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page + "&dayCount=" + dayCount;
       
       NetworkResult result = httpClient.requestGet(url);
       try
@@ -90,7 +89,13 @@ public class ApiClient
           JSONObject beanObj = array.getJSONObject(i);
           ScheduleBean bean = new ScheduleBean();
           bean.setJSONObject(beanObj);
-          beans.add(bean);
+          if (dayCount == -1)
+            beans.add(bean);
+          else
+          {
+            if (bean.dayCount == dayCount)
+              beans.add(bean);
+          }
         }
       }
       catch (Exception e)
@@ -100,13 +105,24 @@ public class ApiClient
     }
     else
     {
-      beans.addAll(offlineDatabaseManager.getTravelSchedules(page - 1));
+      ArrayList<ScheduleBean> tempArray = offlineDatabaseManager.getTravelSchedules(page - 1);
+      for (int i = 0; i < tempArray.size(); i++)
+      {
+        ScheduleBean bean = tempArray.get(i);
+        if (dayCount == -1)
+          beans.add(bean);
+        else
+        {
+          if (bean.dayCount == dayCount)
+            beans.add(bean);
+        }
+      }
     }
     return beans;
   }
   
   
-  public ArrayList<ScheduleBean> getMyTravelSchedules()
+  public ArrayList<ScheduleBean> getMyTravelSchedules(int dayCount)
   {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
@@ -126,7 +142,13 @@ public class ApiClient
           JSONObject beanObj = array.getJSONObject(i);
           ScheduleBean bean = new ScheduleBean();
           bean.setJSONObject(beanObj);
-          beans.add(bean);
+          if (dayCount == -1)
+            beans.add(bean);
+          else
+          {
+            if (bean.dayCount == dayCount)
+              beans.add(bean);
+          }
         }
       }
       catch (Exception e)
@@ -148,7 +170,13 @@ public class ApiClient
           JSONObject beanObj = array.getJSONObject(i);
           ScheduleBean bean = new ScheduleBean();
           bean.setJSONObject(beanObj);
-          beans.add(bean);
+          if (dayCount == -1)
+            beans.add(bean);
+          else
+          {
+            if (bean.dayCount == dayCount)
+              beans.add(bean);
+          }
         }
       }
       catch (Exception e)
@@ -160,7 +188,7 @@ public class ApiClient
   }
   
   
-  public ArrayList<ScheduleBean> getBookmarkedSchedules()
+  public ArrayList<ScheduleBean> getBookmarkedSchedules(int dayCount)
   {
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
     if (SystemUtil.isConnectNetwork(context))
@@ -180,7 +208,13 @@ public class ApiClient
           JSONObject beanObj = array.getJSONObject(i);
           ScheduleBean bean = new ScheduleBean();
           bean.setJSONObject(beanObj);
-          beans.add(bean);
+          if (dayCount == -1)
+            beans.add(bean);
+          else
+          {
+            if (bean.dayCount == dayCount)
+              beans.add(bean);
+          }
         }
       }
       catch (Exception e)

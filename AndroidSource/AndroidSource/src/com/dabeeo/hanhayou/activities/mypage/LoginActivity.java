@@ -233,7 +233,7 @@ public class LoginActivity extends Activity
     protected NetworkResult doInBackground(Void... params)
     {
       apiClient.getMyPlaceList();
-      apiClient.getMyTravelSchedules();
+      apiClient.getMyTravelSchedules(-1);
       return null;
     }
     

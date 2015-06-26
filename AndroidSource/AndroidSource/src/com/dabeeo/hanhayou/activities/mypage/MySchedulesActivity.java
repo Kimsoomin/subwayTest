@@ -326,7 +326,7 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      return apiClient.getMyTravelSchedules();
+      return apiClient.getMyTravelSchedules(-1);
     }
     
     

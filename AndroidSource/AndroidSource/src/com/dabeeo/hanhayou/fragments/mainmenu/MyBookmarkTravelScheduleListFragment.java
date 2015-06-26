@@ -196,7 +196,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     @Override
     protected ArrayList<ScheduleBean> doInBackground(String... params)
     {
-      return apiClient.getBookmarkedSchedules();
+      return apiClient.getBookmarkedSchedules(-1);
     }
     
     
