@@ -191,12 +191,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:background="@color/gray" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:background="#c3c3c3"
                         android:orientation="horizontal" >
 
                         <LinearLayout
@@ -268,7 +268,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:background="#c3c3c3"
                         android:orientation="horizontal"
                         android:paddingTop="1dp" >
 

@@ -145,14 +145,15 @@
                         android:background="@android:color/white"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp" >
+                        android:paddingBottom="18dip"
+                        android:paddingTop="18dip" >
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="bottom"
-                            android:src="@drawable/deco_color_dot_l" />
+                            android:src="@drawable/deco_color_dot_l"
+                            android:contentDescription="@null" />
 
                         <Button
                             android:id="@+id/btn_recommend_by_expert"

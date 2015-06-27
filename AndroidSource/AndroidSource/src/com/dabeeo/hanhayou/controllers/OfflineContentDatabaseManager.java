@@ -424,7 +424,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     Cursor c;
     if(categoryId == 1)
     {
-      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + "1 or 3 or 4 or 5 or 6", null);
+      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + "1 or category = 3 or category = 4 or category = 5 or category = 6", null);
     }else
       c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
     if (categoryId == 0)

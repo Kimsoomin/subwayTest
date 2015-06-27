@@ -900,17 +900,14 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       if(summaryViewID == 1)
       {
         summaryImage.setVisibility(View.VISIBLE);
-        summaryLikeLayout.setVisibility(View.INVISIBLE);
         subwayLayout.setVisibility(View.VISIBLE);
       }else if(summaryViewID == 2)
       {
         summaryImage.setVisibility(View.GONE);
-        summaryLikeLayout.setVisibility(View.INVISIBLE);
         subwayLayout.setVisibility(View.VISIBLE);
       }else if(summaryViewID == 3)
       {
         summaryImage.setVisibility(View.GONE);
-        summaryLikeLayout.setVisibility(View.INVISIBLE);
         subwayLayout.setVisibility(View.GONE);
       }
       summaryView.setVisibility(View.VISIBLE);
@@ -1690,7 +1687,8 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
       summarysubTitle.setVisibility(View.INVISIBLE);
       subwaylineNumSet(idx);
       summaryViewVisibleSet(summaryViewVisible, 2);
-      summaryDetail = false;      
+      summaryDetail = false;
+      summaryLikeLayout.setVisibility(View.INVISIBLE);
     } else
     { 
       PlaceInfo info = allplaceinfo.get(idx);
@@ -1707,9 +1705,16 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
         summarysubTitle.setText("");
       
       if(info.category == 40 || info.category == 50 || info.category == 60 || info.category == 70 || info.category == 80)
+      {
+        summaryLikeLayout.setVisibility(View.INVISIBLE);
         summaryDetail = false;
+      }
       else
+      {
+        summarylikeCount.setText(""+info.likeCount);
+        summaryLikeLayout.setVisibility(View.VISIBLE);
         summaryDetail = true;
+      }
       
       if(info.offlineimage != null)
       {

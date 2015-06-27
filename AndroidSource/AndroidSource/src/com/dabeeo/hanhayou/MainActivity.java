@@ -93,6 +93,7 @@ public class MainActivity extends ActionBarActivity
   {
     if(SystemUtil.isConnectNetwork(getApplicationContext()))
     {
+      new GetCategoryAsyncTask().execute();
       if (TextUtils.isEmpty(PreferenceManager.getInstance(this).getDontShowPopupDate()))
         startActivity(new Intent(MainActivity.this, PromotionActivity.class));
       else
