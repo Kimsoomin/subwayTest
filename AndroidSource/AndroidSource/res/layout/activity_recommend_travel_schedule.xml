@@ -210,9 +210,9 @@
                             android:orientation="vertical" >
 
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/btn_background_theme_shopping" />
+                                android:layout_width="75dip"
+                                android:layout_height="75dip"
+                                android:background="@drawable/btn_background_theme_shopping" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -232,9 +232,9 @@
                             android:orientation="vertical" >
 
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/btn_background_theme_culture" />
+                                android:layout_width="75dip"
+                                android:layout_height="75dip"
+                                android:background="@drawable/btn_background_theme_culture" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -253,9 +253,9 @@
                             android:orientation="vertical" >
 
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/btn_background_theme_tour" />
+                                android:layout_width="75dip"
+                                android:layout_height="75dp"
+                                android:background="@drawable/btn_background_theme_tour" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -283,9 +283,9 @@
                             android:orientation="vertical" >
 
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/btn_background_theme_food" />
+                                android:layout_width="75dip"
+                                android:layout_height="75dp"
+                                android:background="@drawable/btn_background_theme_food" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -305,9 +305,9 @@
                             android:orientation="vertical" >
 
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/btn_background_theme_rest" />
+                                android:layout_width="75dip"
+                                android:layout_height="75dip"
+                                android:background="@drawable/btn_background_theme_rest" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -326,9 +326,9 @@
                             android:orientation="vertical" >
 
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/btn_background_theme_random" />
+                                android:layout_width="75dip"
+                                android:layout_height="75dip"
+                                android:background="@drawable/btn_background_theme_random" />
 
                             <TextView
                                 android:layout_width="wrap_content"

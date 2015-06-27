@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,13 +26,13 @@ public class PromotionActivity extends Activity
 	private TextView textCloseAday;
 	private ImageView btnClose;
 	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_promotion);
 		
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		imageView = (ImageView) findViewById(R.id.imageview);
 		btnShowDetail = (Button) findViewById(R.id.btn_show_detail);
 		btnShowDetail.setOnClickListener(new OnClickListener()

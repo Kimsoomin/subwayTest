@@ -350,17 +350,19 @@ public class PlaceDetailActivity extends ActionBarActivity
     if (bean == null)
       return;
     
-    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.cityIdx);
+    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.idx);
     reviewLayout.addView(reviewContainerView);
     reviewContainerView.loadMore();
     
-    textRate.setText(Integer.toString(bean.rate));
+    textRate.setText(Float.toString(bean.rate/2));
     textDetail.setText(bean.contents);
     
     addDetailInfo(getString(R.string.term_address), bean.address);
     addDetailInfo(getString(R.string.term_phone), bean.contact);
-//    addDetailInfo(getString(R.string.term_phone), "02-000-0000");
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);
+    addDetailInfo(getString(R.string.term_working_time), bean.businessHours);
+    addDetailInfo(getString(R.string.term_price_info), bean.priceInfo);
+    addDetailInfo(getString(R.string.term_traffic), bean.trafficInfo);
     
     titleView.setBean(bean);
   }

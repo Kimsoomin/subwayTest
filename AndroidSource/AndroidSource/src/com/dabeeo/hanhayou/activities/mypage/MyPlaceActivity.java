@@ -27,7 +27,6 @@ public class MyPlaceActivity extends ActionBarActivity
   public boolean isEditMode = false;
   private MyPlaceViewPagerAdapter adapter;
   
-  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -107,7 +106,6 @@ public class MyPlaceActivity extends ActionBarActivity
     MyPlaceListFragment fragment = adapter.getFragment(viewPager.getCurrentItem());
     fragment.setEditMode(isEditMode);
     getSupportActionBar().setNavigationMode(isEditMode ? ActionBar.NAVIGATION_MODE_STANDARD : ActionBar.NAVIGATION_MODE_TABS);
-    
     invalidateOptionsMenu();
   }
   

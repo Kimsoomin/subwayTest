@@ -31,7 +31,9 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/search_round_temp" >
+                android:background="@drawable/search_round_temp"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
 
                 <ImageView
                     android:id="@+id/ic_search"
@@ -588,8 +590,7 @@
             android:alpha="0.2"
             android:text="ⓒOpenStreetMap contributors(CC-BY-SA)"
             android:textColor="#515151"
-            android:textSize="10sp" />
-            -->
+            android:textSize="10sp" />-->
         </FrameLayout>
     </LinearLayout>
 

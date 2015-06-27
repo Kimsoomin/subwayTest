@@ -55,7 +55,7 @@
                         android:maxLines="4"
                         android:maxWidth="270dip"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_above="@+id/text_desciption_layout" />
 

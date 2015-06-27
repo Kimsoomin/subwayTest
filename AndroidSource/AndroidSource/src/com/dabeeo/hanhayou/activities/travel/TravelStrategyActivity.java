@@ -34,6 +34,7 @@ import com.dabeeo.hanhayou.controllers.mainmenu.RecommendSeoulViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.PlaceListFragment;
 import com.dabeeo.hanhayou.fragments.mainmenu.TravelStrategyListFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -191,17 +192,29 @@ public class TravelStrategyActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuMyPage.getId())
       {
-        Intent i = new Intent(TravelStrategyActivity.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("position", MainActivity.POSITION_MY_PAGE);
-        startActivity(i);
+        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          Intent i = new Intent(TravelStrategyActivity.this, MainActivity.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra("position", MainActivity.POSITION_MY_PAGE);
+          startActivity(i);
+        }else
+        {
+          alertDialogManager.showNeedLoginDialog(1);
+        }
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {
-        Intent i = new Intent(TravelStrategyActivity.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("position", MainActivity.POSITION_WISHLIST);
-        startActivity(i);
+        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          Intent i = new Intent(TravelStrategyActivity.this, MainActivity.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra("position", MainActivity.POSITION_WISHLIST);
+          startActivity(i);
+        }else
+        {
+          alertDialogManager.showNeedLoginDialog(2);
+        }
       }
       else if (v.getId() == bottomMenuSearch.getId())
       {

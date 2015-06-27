@@ -91,22 +91,25 @@ public class MainActivity extends ActionBarActivity
   
   private void checkPromotion()
   {
-    if (TextUtils.isEmpty(PreferenceManager.getInstance(this).getDontShowPopupDate()))
-      startActivity(new Intent(MainActivity.this, PromotionActivity.class));
-    else
+    if(SystemUtil.isConnectNetwork(getApplicationContext()))
     {
-      String dateString = PreferenceManager.getInstance(this).getDontShowPopupDate();
-      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-      Date date;
-      try
+      if (TextUtils.isEmpty(PreferenceManager.getInstance(this).getDontShowPopupDate()))
+        startActivity(new Intent(MainActivity.this, PromotionActivity.class));
+      else
       {
-        date = format.parse(dateString);
-        if (!DateUtils.isToday(date.getTime()))
-          startActivity(new Intent(MainActivity.this, PromotionActivity.class));
-      }
-      catch (ParseException e)
-      {
-        e.printStackTrace();
+        String dateString = PreferenceManager.getInstance(this).getDontShowPopupDate();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        Date date;
+        try
+        {
+          date = format.parse(dateString);
+          if (!DateUtils.isToday(date.getTime()))
+            startActivity(new Intent(MainActivity.this, PromotionActivity.class));
+        }
+        catch (ParseException e)
+        {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -201,7 +204,7 @@ public class MainActivity extends ActionBarActivity
         titleImage.setVisibility(View.VISIBLE);
         fragment = new MainFragment();
         break;
-      
+        
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
@@ -219,7 +222,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
-      
+        
       case POSITION_SEARCH:
         bottomMenuSearch.setSelected(true);
         title.setVisibility(View.VISIBLE);
@@ -227,7 +230,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(R.string.term_search);
         fragment = new SearchFragment();
         break;
-      
+        
       case POSITION_WISHLIST:
         if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {

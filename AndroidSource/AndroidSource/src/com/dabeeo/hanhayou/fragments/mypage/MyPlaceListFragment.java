@@ -85,6 +85,10 @@ public class MyPlaceListFragment extends Fragment
     load();
   }
   
+  public int listCount()
+  {
+    return adapter.getCount();
+  }
   
   public void refresh()
   {

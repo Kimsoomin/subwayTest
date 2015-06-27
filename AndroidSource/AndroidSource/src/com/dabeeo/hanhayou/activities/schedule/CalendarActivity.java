@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,7 +19,6 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.external.library.calendar.CaldroidFragment;
 import com.dabeeo.hanhayou.external.library.calendar.CaldroidListener;
 
-@SuppressWarnings("deprecation")
 public class CalendarActivity extends ActionBarActivity
 {
 	private CaldroidFragment calFragment;
@@ -101,6 +101,12 @@ public class CalendarActivity extends ActionBarActivity
 		calFragment.setCaldroidListener(listener);
 	}
 	
+	@Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_confirm, menu);
+    return super.onCreateOptionsMenu(menu);
+  }	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)

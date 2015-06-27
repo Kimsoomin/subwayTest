@@ -31,6 +31,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.TravelScheduleListFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -201,17 +202,29 @@ public class TravelSchedulesActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuMyPage.getId())
       {
-        Intent i = new Intent(TravelSchedulesActivity.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("position", MainActivity.POSITION_MY_PAGE);
-        startActivity(i);
+        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          Intent i = new Intent(TravelSchedulesActivity.this, MainActivity.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra("position", MainActivity.POSITION_MY_PAGE);
+          startActivity(i);
+        }else
+        {
+          new AlertDialogManager(TravelSchedulesActivity.this).showNeedLoginDialog(1);
+        }
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {
-        Intent i = new Intent(TravelSchedulesActivity.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("position", MainActivity.POSITION_WISHLIST);
-        startActivity(i);
+        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          Intent i = new Intent(TravelSchedulesActivity.this, MainActivity.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra("position", MainActivity.POSITION_WISHLIST);
+          startActivity(i);
+        }else
+        {
+          new AlertDialogManager(TravelSchedulesActivity.this).showNeedLoginDialog(2);
+        }        
       }
       else if (v.getId() == bottomMenuSearch.getId())
       {

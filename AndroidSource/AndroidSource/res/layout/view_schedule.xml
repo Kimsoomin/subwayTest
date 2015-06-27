@@ -63,8 +63,7 @@
                             android:singleLine="true"
                             android:text="test"
                             android:textColor="@color/darker_gray"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/text_hours"

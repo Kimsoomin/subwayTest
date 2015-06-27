@@ -21,9 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.activities.sub.AccountSettingActivity;
 import com.dabeeo.hanhayou.beans.PlaceBean;
-import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.CategoryManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;

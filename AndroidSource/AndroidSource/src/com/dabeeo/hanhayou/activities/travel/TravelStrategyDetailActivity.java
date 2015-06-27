@@ -229,8 +229,8 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
-//      int width = Global.getDip(TravelStrategyDetailActivity.this.getWindow(), 603);
-//      int height = Global.getDip(TravelStrategyDetailActivity.this.getWindow(), 450);
+      int width = Global.getDip(TravelStrategyDetailActivity.this.getWindow(), 603);
+      int height = Global.getDip(TravelStrategyDetailActivity.this.getWindow(), 450);
       Picasso.with(this).load(imageUrl).resize(300, 223).centerCrop().into(view);
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
@@ -257,7 +257,6 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       addDetailInfo(getString(R.string.term_working_time), bean.placeDetail.businessHours);
       addDetailInfo(getString(R.string.term_price_info), bean.placeDetail.priceInfo);
       addDetailInfo(getString(R.string.term_traffic), bean.placeDetail.trafficInfo);
-//    addDetailInfo(getString(R.string.term_description), bean.placeDetail.); //이용 시간
     }
   }
   

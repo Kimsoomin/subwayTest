@@ -20,10 +20,9 @@
 
             <ImageView
                 android:id="@+id/imageview"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="166dip"
+                android:layout_height="120dip"
                 android:layout_centerInParent="true"
-                android:layout_margin="8dp"
                 android:contentDescription="@null"
                 android:src="@drawable/default_thumbnail_s" />
 

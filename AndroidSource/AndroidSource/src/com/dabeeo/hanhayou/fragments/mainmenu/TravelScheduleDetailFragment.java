@@ -148,7 +148,6 @@ public class TravelScheduleDetailFragment extends Fragment
     displayContentData();
   }
   
-  
   @Override
   public void onResume()
   {
@@ -166,7 +165,6 @@ public class TravelScheduleDetailFragment extends Fragment
     this.isMySchedule = isMySchedule;
     this.isRecommendSchedule = isRecommendSchedule;
   }
-  
   
   private void displayContentData()
   {
