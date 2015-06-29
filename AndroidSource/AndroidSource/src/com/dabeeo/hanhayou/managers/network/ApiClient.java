@@ -56,7 +56,7 @@ public class ApiClient
   }
   
   
-  //오프라인 컨텐츠 update 관련 - 추후 동기화 시나리오 적용 필요
+  //오프라인 컨텐츠 update 관련 - updateDate 로 판별 
   public NetworkResult updateOfflineContents()
   {
     return httpClient.requestGet(getSiteUrl() + "v=m1&mode=OFFLINE_CONTENTS");

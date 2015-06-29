@@ -16,6 +16,7 @@ import java.net.URLConnection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -181,7 +182,6 @@ public class IntroActivity extends Activity
   
   private void upateCheckOfflineContent()
   {
-    //To-do : updateContent check - 오프라인 컨텐츠 업데이트 관련(추후 동기화 시나리오 적용)
     new UpdateCheckOfflineContentAsyncTask().execute();
   }
   
@@ -207,6 +207,17 @@ public class IntroActivity extends Activity
     protected NetworkResult doInBackground(String... params)
     {
       NetworkResult result = client.updateOfflineContents();
+      
+      try
+      {
+        JSONObject object = new JSONObject(result.response);
+        Log.w("WARN", "오프라인 컨텐츠 updateDate : " + object.getString("updateDate"));
+      }
+      catch (JSONException e1)
+      {
+        e1.printStackTrace();
+      }
+      
       publishProgress(50);
       try
       {
@@ -284,6 +295,7 @@ public class IntroActivity extends Activity
           directory.mkdirs();
         
         JSONObject obj = new JSONObject(result.response);
+        Log.w("WARN", "오프라인 컨텐츠 updateDate : " + obj.getString("updateDate"));
         File outputFile = new File(Global.GetImageFilePath() + "place_image.zip");
         
         if (!outputFile.exists())
