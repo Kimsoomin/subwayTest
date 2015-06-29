@@ -77,9 +77,9 @@ public class PlaceOverlay extends ItemizedIconOverlay<OverlayItem> {
 	}
 
 	@Override
-	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords, float orientation) 
+	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords) 
 	{
-		super.onDrawItem(canvas, item, curScreenCoords, orientation);
+		super.onDrawItem(canvas, item, curScreenCoords);
 
 		category = Integer.parseInt(item.getUid());
 

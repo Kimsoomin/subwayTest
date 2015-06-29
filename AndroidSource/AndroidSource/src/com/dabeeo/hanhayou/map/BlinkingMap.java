@@ -115,7 +115,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   float offsetX = 0.04f;
   float offsetY = 0.01f;
   BoundingBoxE6 m_boundingBox = new BoundingBoxE6(37.70453488762476 + offsetY, 127.17361450195312 + offsetX, 
-                                                  37.43677099171195 - offsetY, 126.76300048828125 - offsetX);
+      37.43677099171195 - offsetY, 126.76300048828125 - offsetX);
   
   // - Marker 관련.
   private NavigationOverlay navigationOverlay;
@@ -1042,7 +1042,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
           m_mapView.invalidate();
         }
         break;
-      
+        
       case R.id.nearbyBtn:
         nearbydialog = new NearByDialog(mContext, categoryType);
         nearbydialog.show();
@@ -1062,12 +1062,12 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
           }
         });
         break;
-      
+        
       case R.id.subwayBtn:
         destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
         startActivity(destSubwayIntent);
         break;
-      
+        
       case R.id.zoomInbtn:
         if (zoomLevel < nMaxZoomLevel)
           zoomLevel = zoomLevel + 1;
@@ -1078,7 +1078,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
         m_mapView.setScrollableAreaLimit(m_boundingBox);
         break;
-      
+        
       case R.id.zoomOutbtn:
         if (zoomLevel > nMinZoomLevel)
           zoomLevel = zoomLevel - 1;
@@ -1089,7 +1089,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         // 제한된 맵 범위 설정 및 Scroll시 이동 반경 제한 세팅.
         m_mapView.setScrollableAreaLimit(m_boundingBox);
         break;
-      
+        
       case R.id.summaryView:
         if (summaryDetail == true)
         {
@@ -1102,7 +1102,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
           Log.i("INFO", "place_idx : " + idx);
         }
         break;
-      
+        
       case R.id.subwayStartBtn:
         destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
         double[] latLon = new double[3];
@@ -1112,7 +1112,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         destSubwayIntent.putExtra("set_dest_station_lat_lon", latLon);
         startActivity(destSubwayIntent);
         break;
-      
+        
       case R.id.subwayEndBtn:
         destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
         double[] destLatLong = new double[3];
@@ -1123,28 +1123,28 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         destSubwayIntent.putExtra("dest_name", summaryTitle.getText().toString());
         startActivity(destSubwayIntent);
         break;
-      
+        
       case R.id.naviBtn:
         if (myLocation() == true)
         {
           navigationStart();
         }
         break;
-      
+        
       case R.id.naviStopBtn:
         navigationStop();
         break;
-      
+        
       case R.id.back_btn:
         goHome();
         break;
-      
+        
       case R.id.search_cancel:
         ListViewVisibleSetting(1);
         searchEditText.setText("");
         searchEditText.setHint(R.string.message_search_word_here);
         break;
-      
+        
       case R.id.dayLeft:
       case R.id.dayRight:
         if (v.getId() == R.id.dayLeft)
@@ -1162,7 +1162,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         mapCenterset(0);
         
         break;
-    
+        
     }
   }
   
@@ -1647,10 +1647,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   public void markerSel(int select)
   {
-    if (onePlaceOverlay != null)
-    {
-      m_mapView.getOverlays().remove(onePlaceOverlay);
-    }
+//    if (onePlaceOverlay != null)
+//    {
+//      m_mapView.getOverlays().remove(onePlaceOverlay);
+//    }
     
     if (select == 1)
     {
@@ -1727,11 +1727,11 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   }
   
   
-  public void selectMarker(String indnex, int selectType)
+  public void selectMarker(String index, int selectType)
   {
     summaryAddressInit();
     
-    idx = indnex;
+    idx = index;
     
     if (selectType == 2)
     {
@@ -1897,7 +1897,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       planItems = localPlanItem;
       super.onPostExecute(result);
       planOverlay = new PlanOverlay(planItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
-      {
+          {
         @Override
         public boolean onItemLongPress(int arg0, OverlayItem arg1)
         {
@@ -1912,7 +1912,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
           selectMarker(arg1.getUid(), selectItem);
           return false;
         }
-      }, new DefaultResourceProxyImpl(mContext), mContext, "" + planDayNum);
+          }, new DefaultResourceProxyImpl(mContext), mContext, "" + planDayNum);
       
       m_mapView.getOverlays().add(planOverlay);
       runOnUiThread(new Runnable()
@@ -2114,7 +2114,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     if (allPlaceInfoItems != null && lineId.equals(""))
     {
       allplaceOverlay = new PlaceOverlay(allPlaceInfoItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
-      {
+          {
         @Override
         public boolean onItemLongPress(int arg0, OverlayItem arg1)
         {
@@ -2125,18 +2125,19 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         @Override
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1)
         {
+          BlinkingCommon.smlLibDebug("Blinkingmap", "touch me allplaceOverlay");
           selectItem = 1;
           selectMarker(arg1.getSnippet(), selectItem);
           return false;
         }
-      }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
+          }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
       m_mapView.getOverlays().add(allplaceOverlay);
     }
     
     if (subwayItems != null)
     {
       subwayOverlay = new PlaceOverlay(subwayItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
-      {
+          {
         @Override
         public boolean onItemLongPress(int arg0, OverlayItem arg1)
         {
@@ -2147,11 +2148,12 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         @Override
         public boolean onItemSingleTapUp(int arg0, OverlayItem arg1)
         {
+          BlinkingCommon.smlLibDebug("Blinkingmap", "touch me subway");
           selectItem = 2;
           selectMarker(arg1.getSnippet(), selectItem);
           return false;
         }
-      }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
+          }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
       m_mapView.getOverlays().add(subwayOverlay);
     }
     
@@ -2162,13 +2164,18 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       {
         if (selectItem == 1)
         {
-          allplaceOverlay.changeMethod(idx);
-          subwayOverlay.changeMethod(null);
+          if(allplaceOverlay != null)
+            allplaceOverlay.changeMethod(idx);
+          if(subwayOverlay != null)
+            subwayOverlay.changeMethod(null);
         }
         else if (selectItem == 2)
         {
-          subwayOverlay.changeMethod(idx);
-          allplaceOverlay.changeMethod(null);
+          
+          if(subwayOverlay != null)
+            subwayOverlay.changeMethod(idx);
+          if(allplaceOverlay != null)
+            allplaceOverlay.changeMethod(null);
         }
         m_mapView.invalidate();
       }

@@ -75,7 +75,7 @@ public class ApiClient
     if (SystemUtil.isConnectNetwork(context))
     {
       String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
-      if (dayCount != 0)
+      if (dayCount != -1)
         url += "&dayCount=" + dayCount;
       NetworkResult result = httpClient.requestGet(url);
       try
@@ -471,13 +471,13 @@ public class ApiClient
   
   public NetworkResult getPremiumDetail(String placeIdx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_VIEW&idx=" + placeIdx);
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_VIEW&lang=zh_cn&idx=" + placeIdx);
   }
   
   
   public NetworkResult getPremiumList(int page, int area)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_LIST&p=" + page + "&area=" + area);
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_LIST&lang=zh_cn&p=" + page + "&area=" + area);
   }
   
   
