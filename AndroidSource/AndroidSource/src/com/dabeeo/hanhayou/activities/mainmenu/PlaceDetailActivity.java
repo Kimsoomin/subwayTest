@@ -158,7 +158,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     containerTicketAndCoupon = (LinearLayout) findViewById(R.id.container_coupon_and_ticket);
     
-    textDetail = (TextView) findViewById(R.id.text_detail);
+//    textDetail = (TextView) findViewById(R.id.text_detail);
     textRate = (TextView) findViewById(R.id.text_rate);
     sharePickView = (SharePickView) findViewById(R.id.view_share_pick);
     
@@ -355,8 +355,9 @@ public class PlaceDetailActivity extends ActionBarActivity
     reviewContainerView.loadMore();
     
     textRate.setText(Float.toString(bean.rate/2));
-    textDetail.setText(bean.contents);
+//    textDetail.setText(bean.contents);
     
+    addDetailInfo(getString(R.string.term_place_detail_info), bean.contents);
     addDetailInfo(getString(R.string.term_address), bean.address);
     addDetailInfo(getString(R.string.term_phone), bean.contact);
     addDetailInfo(getString(R.string.term_homepage), bean.homepage);

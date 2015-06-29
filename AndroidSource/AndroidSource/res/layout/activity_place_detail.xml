@@ -46,11 +46,12 @@
                         android:id="@+id/rate_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="5dip"
+                        android:layout_marginBottom="8dip"
                         android:background="@android:color/white"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:padding="16dp" >
+                        android:padding="16dip" >
 
                         <TextView
                             android:id="@+id/text_rate"
@@ -100,7 +101,8 @@
                             android:textSize="11sp" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    
+                   <!--   <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
@@ -112,7 +114,7 @@
                             android:layout_height="wrap_content"
                             android:background="@android:color/white"
                             android:text="@string/term_place_description"
-                            android:textColor="#444a4b"
+                            android:textColor="@color/darker_gray"
                             android:textStyle="bold" />
 
                         <TextView
@@ -120,8 +122,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/white"
-                            android:textColor="#969b9c" />
-                    </LinearLayout>
+                            android:textColor="@color/light_gray" />
+                    </LinearLayout>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -152,8 +154,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="bottom"
-                            android:src="@drawable/deco_color_dot_l"
-                            android:contentDescription="@null" />
+                            android:contentDescription="@null"
+                            android:src="@drawable/deco_color_dot_l" />
 
                         <Button
                             android:id="@+id/btn_recommend_by_expert"

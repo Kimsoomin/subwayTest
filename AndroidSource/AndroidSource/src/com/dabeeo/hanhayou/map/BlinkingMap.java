@@ -755,7 +755,7 @@ public class BlinkingMap extends Activity implements OnClickListener,SensorUpdat
   {
     m_ListView = (ListView) findViewById(R.id.search_list);
     emptysearchList = (RelativeLayout) findViewById(R.id.empty_search_container);
-    m_Adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1);
+    m_Adapter = new ArrayAdapter<String>(mContext, R.layout.list_item_map_search);
     m_ListView.setAdapter(m_Adapter);
     m_ListView.setOnItemClickListener(onClickListItem);
     

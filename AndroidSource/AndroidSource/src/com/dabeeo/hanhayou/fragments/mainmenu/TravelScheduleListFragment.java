@@ -59,7 +59,7 @@ public class TravelScheduleListFragment extends Fragment
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
   
-  public int dayCount = -1;
+  public int dayCount = 0;
   
   
   public TravelScheduleListFragment(int type)
