@@ -36,6 +36,7 @@ public class PlaceBean
   public String insertDateString;
   public Date insertDate;
   public String imageUrl;
+  public boolean isOpen = true;
   
   public boolean isChecked = false;
   
@@ -161,6 +162,13 @@ public class PlaceBean
       {
         JSONArray arr = obj.getJSONArray("image");
         imageUrl = arr.getJSONObject(0).getString("url");
+      }
+      
+      if (obj.has("isOpen"))
+      {
+        int isOpenInt = obj.getInt("isOpen");
+        if (isOpenInt != 1)
+          isOpen = false;
       }
     }
     catch (Exception e)

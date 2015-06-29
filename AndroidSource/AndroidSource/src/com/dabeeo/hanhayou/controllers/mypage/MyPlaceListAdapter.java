@@ -176,6 +176,11 @@ public class MyPlaceListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     ImageView imagePrivate = (ImageView) view.findViewById(R.id.image_private);
     
+    if (bean.isOpen)
+      imagePrivate.setVisibility(View.GONE);
+    else
+      imagePrivate.setVisibility(View.VISIBLE);
+    
     if (!SystemUtil.isConnectNetwork(context))
       imageView.setVisibility(View.GONE);
     else

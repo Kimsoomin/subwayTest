@@ -59,7 +59,7 @@ public class TravelScheduleListFragment extends Fragment
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
   
-  public int dayCount = 0;
+  public int dayCount = -1;
   
   
   public TravelScheduleListFragment(int type)
@@ -183,6 +183,7 @@ public class TravelScheduleListFragment extends Fragment
     @Override
     protected void onPostExecute(ArrayList<ScheduleBean> result)
     {
+      Log.w("WARN", "result getCount : " + result.size());
       if (result.size() == 0)
         isLoadEnded = true;
       

@@ -75,7 +75,7 @@ public class ApiClient
     if (SystemUtil.isConnectNetwork(context))
     {
       String url = getSiteUrl() + "?v=m1&mode=PLAN_LIST&p=" + page;
-      if (dayCount != 0)
+      if (dayCount != -1)
         url += "&dayCount=" + dayCount;
       NetworkResult result = httpClient.requestGet(url);
       try

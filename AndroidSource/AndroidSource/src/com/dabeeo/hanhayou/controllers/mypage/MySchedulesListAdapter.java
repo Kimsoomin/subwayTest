@@ -165,13 +165,15 @@ public class MySchedulesListAdapter extends BaseAdapter
         ((ScheduleBean) beans.get(position)).isChecked = isChecked;
       }
     });
+    
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView month = (TextView) view.findViewById(R.id.month);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     ImageView imagePrivate = (ImageView) view.findViewById(R.id.image_private);
-    if (position % 2 == 1)
+    
+    if (!bean.isOpen)
       imagePrivate.setVisibility(View.VISIBLE);
     else
       imagePrivate.setVisibility(View.GONE);

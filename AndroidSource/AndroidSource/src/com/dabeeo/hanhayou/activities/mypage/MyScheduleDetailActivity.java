@@ -23,12 +23,16 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
   private TextView btnCancelIsPublic;
   private ApiClient apiClient;
   
+  private boolean isOpen = false;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
 //		adapter.setIsMySchedule(true);
+    
+    isOpen = getIntent().getBooleanExtra("isOpen", true);
     
     super.isMySchedule = true;
     apiClient = new ApiClient(this);
@@ -47,6 +51,19 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
     super.containerWriteReview.setVisibility(View.GONE);
     super.containerLike.setVisibility(View.GONE);
     super.containerIsPublic.setVisibility(View.VISIBLE);
+    if (isOpen)
+    {
+      containerPublic.setActivated(true);
+      containerPrivate.setActivated(false);
+      btnIsPublic.setActivated(true);
+    }
+    else
+    {
+      containerPublic.setActivated(false);
+      containerPrivate.setActivated(true);
+      btnIsPublic.setActivated(false);
+    }
+    
     super.btnIsPublic.setOnClickListener(new OnClickListener()
     {
       @Override
