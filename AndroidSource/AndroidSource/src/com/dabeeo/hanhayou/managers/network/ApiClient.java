@@ -820,7 +820,7 @@ public class ApiClient
   
   public NetworkResult userEmailKeyResend(String userEmail)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEY_RESEND&userEmai=" + userEmail);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEY_RESEND&userEmail=" + userEmail);
   }
   
   
