@@ -119,7 +119,8 @@ public class TravelSchedulesActivity extends ActionBarActivity
     }
     adapter.notifyDataSetChanged();
     
-    viewPager.setCurrentItem(1);
+    if (PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn())
+      viewPager.setCurrentItem(1);
   }
   
   
@@ -202,29 +203,31 @@ public class TravelSchedulesActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuMyPage.getId())
       {
-        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
           Intent i = new Intent(TravelSchedulesActivity.this, MainActivity.class);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           i.putExtra("position", MainActivity.POSITION_MY_PAGE);
           startActivity(i);
-        }else
+        }
+        else
         {
           new AlertDialogManager(TravelSchedulesActivity.this).showNeedLoginDialog(1);
         }
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {
-        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
           Intent i = new Intent(TravelSchedulesActivity.this, MainActivity.class);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           i.putExtra("position", MainActivity.POSITION_WISHLIST);
           startActivity(i);
-        }else
+        }
+        else
         {
           new AlertDialogManager(TravelSchedulesActivity.this).showNeedLoginDialog(2);
-        }        
+        }
       }
       else if (v.getId() == bottomMenuSearch.getId())
       {
@@ -257,8 +260,21 @@ public class TravelSchedulesActivity extends ActionBarActivity
       }
       else
       {
-        viewPager.setCurrentItem(tab.getPosition());
-        lastSelectedTab = tab.getPosition();
+        if (tab.getPosition() == 1 || tab.getPosition() == 2)
+        {
+          if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn())
+          {
+            new AlertDialogManager(TravelSchedulesActivity.this).showNeedLoginDialog(-1);
+            return;
+          }
+          viewPager.setCurrentItem(tab.getPosition());
+          lastSelectedTab = tab.getPosition();
+        }
+        else
+        {
+          viewPager.setCurrentItem(tab.getPosition());
+          lastSelectedTab = tab.getPosition();
+        }
       }
     }
     

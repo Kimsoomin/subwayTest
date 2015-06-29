@@ -9,6 +9,7 @@ import com.dabeeo.hanhayou.utils.SystemUtil;
 public class NetworkBraodCastReceiver extends BroadcastReceiver
 {
   public final static String ACTION_NETWORK_STATUS_CHANGE = "action_network_status_change";
+  public final static String ACTION_LOGIN = "action_login";
   
   
   /*

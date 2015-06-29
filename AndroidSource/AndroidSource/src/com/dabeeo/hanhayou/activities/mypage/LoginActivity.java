@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.FindPasswordActivity;
+import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
@@ -243,6 +244,7 @@ public class LoginActivity extends Activity
     protected void onPostExecute(NetworkResult result)
     {
       progressLayout.setVisibility(View.GONE);
+      sendBroadcast(new Intent(NetworkBraodCastReceiver.ACTION_LOGIN));
       if (mainActivityPosition != -1)
       {
         Intent i = new Intent(LoginActivity.this, MainActivity.class);

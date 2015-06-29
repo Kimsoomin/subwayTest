@@ -2,7 +2,10 @@ package com.dabeeo.hanhayou.fragments.mainmenu;
 
 import java.util.ArrayList;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,9 +29,11 @@ import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendExhibitionActivity;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
+import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.ScheduleListHeaderMallView;
@@ -78,6 +83,9 @@ public class TravelScheduleListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
+    IntentFilter filter = new IntentFilter(NetworkBraodCastReceiver.ACTION_LOGIN);
+    getActivity().registerReceiver(receiver, filter);
+    
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     emptyText = (TextView) getView().findViewById(R.id.text_empty);
     recommendContainer = (LinearLayout) getView().findViewById(R.id.recommend_container);
@@ -101,11 +109,32 @@ public class TravelScheduleListFragment extends Fragment
       });
       listView.addHeaderView(view);
     }
-//    listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     loadSchedules();
   }
+  
+  
+  @Override
+  public void onDestroy()
+  {
+    getActivity().unregisterReceiver(receiver);
+    super.onDestroy();
+  }
+  
+  //Login change receiver
+  private BroadcastReceiver receiver = new BroadcastReceiver()
+  {
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+      Log.w("WARN", "TravelScheduleListFragment receive action login");
+      isLoadEnded = false;
+      adapter.clear();
+      page = 1;
+      loadSchedules();
+    }
+  };
   
   
   public void setType(int type)
@@ -181,6 +210,11 @@ public class TravelScheduleListFragment extends Fragment
                 new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
               else
               {
+                if (!PreferenceManager.getInstance(getActivity()).isLoggedIn())
+                {
+                  new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
+                  return;
+                }
                 Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
                 startActivity(i);
               }
