@@ -845,7 +845,7 @@ public class ApiClient
   
   public NetworkResult userInfoinquiry(String userSeq)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USERINFO&userSeq=" + userSeq);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_INFO&userSeq=" + userSeq);
   }
   
   
@@ -858,5 +858,11 @@ public class ApiClient
   public NetworkResult uploadReviewImage(String idx, String filePath)
   {
     return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD", idx, filePath, HttpClient.UPLOAD_IMAGE_TYPE_REVIEW);
+  }
+  
+  
+  public NetworkResult uploadProfileImage(String filePath)
+  {
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD", PreferenceManager.getInstance(context).getUserSeq(), filePath, HttpClient.UPLOAD_IMAGE_TYPE_PROFILE);
   }
 }

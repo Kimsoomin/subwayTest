@@ -18,6 +18,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.LocalPhotoBean;
@@ -127,7 +128,7 @@ public class LocalPhotoAdapter extends BaseAdapter
     
     SquareImageView photo = (SquareImageView) convertView.findViewById(R.id.photo);
     final View imageSelection = (View) convertView.findViewById(R.id.image_selection);
-    final View textSelection = (View) convertView.findViewById(R.id.text_selection);
+    final TextView textSelection = (TextView) convertView.findViewById(R.id.text_selection);
     
     if (position == 0)
     {
@@ -200,10 +201,8 @@ public class LocalPhotoAdapter extends BaseAdapter
       imageSelection.setVisibility(View.VISIBLE);
       textSelection.setVisibility(View.VISIBLE);
       
-//      if (canSelectMultiple)
-//        textSelection.setText(bean.selectIndex + "");
-//      else
-//        textSelection.setText("V");
+      if (canSelectMultiple)
+        textSelection.setText(bean.selectIndex + "");
     }
     
     return convertView;

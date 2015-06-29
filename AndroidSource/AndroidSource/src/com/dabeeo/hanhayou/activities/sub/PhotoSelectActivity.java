@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -25,7 +26,7 @@ import android.widget.GridView;
 import android.widget.Spinner;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.controllers.SpinnerAdapter;
+import com.dabeeo.hanhayou.controllers.GallerySpinnerAdapter;
 import com.dabeeo.hanhayou.controllers.mypage.LocalPhotoAdapter;
 
 public class PhotoSelectActivity extends Activity
@@ -73,18 +74,28 @@ public class PhotoSelectActivity extends Activity
     int columnDisplayname = cursor.getColumnIndexOrThrow(MediaColumns.DISPLAY_NAME);
     
     int lastIndex;
+    cursor.moveToFirst();
     while (cursor.moveToNext())
     {
-      String absolutePathOfImage = cursor.getString(columnIndex);
-      String nameOfFile = cursor.getString(columnDisplayname);
-      lastIndex = absolutePathOfImage.lastIndexOf(nameOfFile);
-      lastIndex = lastIndex >= 0 ? lastIndex : nameOfFile.length() - 1;
-      
-      if (!TextUtils.isEmpty(absolutePathOfImage))
+      try
       {
-        allImages.add(absolutePathOfImage);
+        String absolutePathOfImage = cursor.getString(columnIndex);
+        String nameOfFile = cursor.getString(columnDisplayname);
+        lastIndex = absolutePathOfImage.lastIndexOf(nameOfFile);
+        lastIndex = lastIndex >= 0 ? lastIndex : nameOfFile.length() - 1;
+        
+        if (!TextUtils.isEmpty(absolutePathOfImage))
+        {
+          allImages.add(absolutePathOfImage);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
       }
     }
+    
+    Log.w("WARN", "이미지 갯수 : " + allImages.size());
     
     loadDirectories();
   }
@@ -109,8 +120,9 @@ public class PhotoSelectActivity extends Activity
         directories.add(pathname);
     }
     
-    SpinnerAdapter spinnerArrayAdapter = new SpinnerAdapter(PhotoSelectActivity.this, android.R.layout.simple_list_item_1, directories);
+//    SpinnerAdapter spinnerArrayAdapter = new SpinnerAdapter(PhotoSelectActivity.this, android.R.layout.simple_list_item_1, directories);
 //    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    GallerySpinnerAdapter spinnerArrayAdapter = new GallerySpinnerAdapter(this, R.layout.view_gallery_spinner, directories);
     directorySpinner.setAdapter(spinnerArrayAdapter);
     directorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
     {

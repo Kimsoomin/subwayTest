@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -14,7 +17,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,13 +34,15 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mypage.MyBookmarkActivity;
 import com.dabeeo.hanhayou.activities.mypage.MyPlaceActivity;
 import com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity;
-import com.dabeeo.hanhayou.activities.sub.AccountSettingActivity;
 import com.dabeeo.hanhayou.activities.sub.PhotoSelectActivity;
 import com.dabeeo.hanhayou.activities.sub.SettingActivity;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.external.libraries.RoundedImageView;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MyPageFragment extends Fragment
@@ -49,6 +56,7 @@ public class MyPageFragment extends Fragment
   private LinearLayout conatinerMySchedule, conatinerMyPlace, conatinerMySetting, conatinerMyBookmark, conatinerMyOrders, conatinerMyCart;
   
   private boolean isChangeBackground = false;
+  private ApiClient apiClient;
   
   
   @Override
@@ -57,6 +65,7 @@ public class MyPageFragment extends Fragment
     int resId = R.layout.fragment_my_page;
     View view = inflater.inflate(resId, null);
     
+    apiClient = new ApiClient(getActivity());
 //    imageCover = (ImageView) view.findViewById(R.id.image_cover);
     imageProfile = (RoundedImageView) view.findViewById(R.id.image_profile);
     imageProfile.setOnClickListener(clickListener);
@@ -90,6 +99,9 @@ public class MyPageFragment extends Fragment
   {
     textName.setText(PreferenceManager.getInstance(getActivity()).getUserName());
     setNetworkOnOffDisplay(SystemUtil.isConnectNetwork(getActivity()));
+    
+    if (SystemUtil.isConnectNetwork(getActivity()))
+      new GetProfileImageAsyncTask().execute();
     
     IntentFilter filter = new IntentFilter(NetworkBraodCastReceiver.ACTION_NETWORK_STATUS_CHANGE);
     getActivity().registerReceiver(receiver, filter);
@@ -149,9 +161,6 @@ public class MyPageFragment extends Fragment
           is = new FileInputStream(new File(photos[0]));
           options.inSampleSize = 2;
           Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
-//        if (isChangeBackground)
-//          imageCover.setImageBitmap(bitmap);
-//        else
           if (!isChangeBackground)
             imageProfile.setImageBitmap(bitmap);
         }
@@ -165,6 +174,7 @@ public class MyPageFragment extends Fragment
         }
         
         //Network 통해 서버의 사진 변경
+        new ImageUploadAsyncTask().execute(photos[0]);
       }
     }
     else if (requestCode == REQUEST_CODE_SETTING_WHEN_LOGOUT)
@@ -279,4 +289,57 @@ public class MyPageFragment extends Fragment
       }
     }
   };
+  
+  //AsyncTask
+  private class GetProfileImageAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.userInfoinquiry(PreferenceManager.getInstance(getActivity()).getUserSeq());
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        ImageDownloader.displayProfileImage(getActivity(), obj.getString("mfidx"), imageProfile);
+      }
+      catch (JSONException e)
+      {
+        e.printStackTrace();
+      }
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class ImageUploadAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.uploadProfileImage(params[0]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if (obj.getString("status").equals("OK"))
+          Log.w("WARN", "Image Upload OK!\n" + result.response);
+      }
+      catch (JSONException e)
+      {
+        e.printStackTrace();
+      }
+      super.onPostExecute(result);
+    }
+  }
+  
 }

@@ -140,6 +140,7 @@ public class ImageDownloader
   public static void usingSimpleImage(ImageView imageView)
   {
     Log.w("WARN", "Use Image Attacher");
+    @SuppressWarnings("unused")
     ImageAttacher attacher = new ImageAttacher(imageView);
     ImageAttacher.MAX_ZOOM = 4.0f;
     ImageAttacher.MIN_ZOOM = 1.0f;
