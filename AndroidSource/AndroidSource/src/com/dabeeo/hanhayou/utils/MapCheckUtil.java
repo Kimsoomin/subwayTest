@@ -23,6 +23,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 
 import com.dabeeo.hanhayou.R;
@@ -59,7 +60,7 @@ public class MapCheckUtil
         public void onClick(DialogInterface dialog, int whichButton)
         {
           dialog.cancel();
-          if(SystemUtil.isConnectNetwork(context))
+          if (SystemUtil.isConnectNetwork(context))
           {
             if (SystemUtil.isConnectedWiFi(context))
             {
@@ -70,23 +71,24 @@ public class MapCheckUtil
               final AlertDialogManager alertManager = new AlertDialogManager(context);
               alertManager.showAlertDialog(context.getString(R.string.term_alert), context.getString(R.string.message_alert_lte_mode), context.getString(R.string.term_ok),
                   context.getString(R.string.term_cancel), new AlertListener()
-              {
-                @Override
-                public void onPositiveButtonClickListener()
-                {
-                  alertManager.dismiss();
-                  new GetMapAsyncTask().execute();
-                }
-                
-                
-                @Override
-                public void onNegativeButtonClickListener()
-                {
-                  alertManager.dismiss();
-                }
-              });
+                  {
+                    @Override
+                    public void onPositiveButtonClickListener()
+                    {
+                      alertManager.dismiss();
+                      new GetMapAsyncTask().execute();
+                    }
+                    
+                    
+                    @Override
+                    public void onNegativeButtonClickListener()
+                    {
+                      alertManager.dismiss();
+                    }
+                  });
             }
-          }else
+          }
+          else
           {
             final AlertDialogManager alertManager = new AlertDialogManager(context);
             alertManager.showDontNetworkConnectDialog();
@@ -113,6 +115,7 @@ public class MapCheckUtil
   private static class GetMapAsyncTask extends AsyncTask<String, Integer, Boolean>
   {
     private MapdownloadProgressView pView;
+    
     
     @Override
     protected void onPreExecute()
@@ -210,6 +213,7 @@ public class MapCheckUtil
     }
   }
   
+  
   private static void makeOfflineContentDatabase()
   {
     //오프라인 컨텐츠 database를 만듬
@@ -280,6 +284,7 @@ public class MapCheckUtil
     }
   }
   
+  
   private static boolean unpackZip(String path)
   {
     InputStream is;
@@ -323,6 +328,7 @@ public class MapCheckUtil
     return true;
   }
   
+  
   private static void checkMapPlaceData()
   {
     AssetManager assetManager = context.getAssets();
@@ -356,8 +362,15 @@ public class MapCheckUtil
       }
     }
     
-    if (run != null)
-      run.run();
+    new Handler().postDelayed(new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        if (run != null)
+          run.run();
+      }
+    }, 1500);
   }
   
 }
