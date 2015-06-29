@@ -18,7 +18,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -138,10 +137,17 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   }
   
   
-  public void openDataBase() throws SQLException
+  public void openDataBase()
   {
-    String myPath = Global.GetDatabaseFilePath() + DB_NAME;
-    myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    try
+    {
+      String myPath = Global.GetDatabaseFilePath() + DB_NAME;
+      myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
   
   
@@ -419,49 +425,57 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   
   public ArrayList<PlaceBean> getPlaceList(int categoryId, boolean isSortPopular)
   {
-    this.openDataBase();
     ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
-    Cursor c;
-    if (categoryId == 1)
+    try
     {
-      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + "1 or category = 3 or category = 4 or category = 5 or category = 6", null);
-    }
-    else
-      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
-    if (categoryId == 0)
-      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE, null);
-    if (c.moveToFirst())
-    {
-      do
+      this.openDataBase();
+      
+      Cursor c;
+      if (categoryId == 1)
       {
-        try
-        {
-          PlaceBean bean = new PlaceBean();
-          bean.setCursor(c);
-          if (!bean.premiumIdx.equals("null"))
-            beans.add(bean);
-        }
-        catch (Exception e)
-        {
-        }
-      } while (c.moveToNext());
-    }
-    
-    if (isSortPopular)
-    {
-      Comparator<PlaceBean> compare = new Comparator<PlaceBean>()
+        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + "1 or category = 3 or category = 4 or category = 5 or category = 6", null);
+      }
+      else
+        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
+      if (categoryId == 0)
+        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE, null);
+      if (c.moveToFirst())
       {
-        @Override
-        public int compare(PlaceBean lhs, PlaceBean rhs)
+        do
         {
-          return rhs.likeCount - lhs.likeCount;
-        }
-      };
-      Collections.sort(beans, compare);
+          try
+          {
+            PlaceBean bean = new PlaceBean();
+            bean.setCursor(c);
+            if (!bean.premiumIdx.equals("null"))
+              beans.add(bean);
+          }
+          catch (Exception e)
+          {
+          }
+        } while (c.moveToNext());
+      }
+      
+      if (isSortPopular)
+      {
+        Comparator<PlaceBean> compare = new Comparator<PlaceBean>()
+        {
+          @Override
+          public int compare(PlaceBean lhs, PlaceBean rhs)
+          {
+            return rhs.likeCount - lhs.likeCount;
+          }
+        };
+        Collections.sort(beans, compare);
+      }
+      
+      c.close();
+      myDataBase.close();
     }
-    
-    c.close();
-    myDataBase.close();
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
     return beans;
   }
   
@@ -489,32 +503,40 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   
   public ArrayList<ScheduleBean> getTravelSchedules(int page)
   {
-    this.openDataBase();
     ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " LIMIT 10 OFFSET " + (10 * page), null);
-    if (c.moveToFirst())
+    try
     {
-      do
+      this.openDataBase();
+      Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " LIMIT 10 OFFSET " + (10 * page), null);
+      if (c.moveToFirst())
       {
-        try
+        do
         {
-          ScheduleBean bean = new ScheduleBean();
-          bean.setCursor(c);
-          beans.add(bean);
-        }
-        catch (Exception e)
-        {
-        }
-      } while (c.moveToNext());
+          try
+          {
+            ScheduleBean bean = new ScheduleBean();
+            bean.setCursor(c);
+            beans.add(bean);
+          }
+          catch (Exception e)
+          {
+          }
+        } while (c.moveToNext());
+      }
+      c.close();
+      myDataBase.close();
     }
-    c.close();
-    myDataBase.close();
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
     return beans;
   }
   
   
   public ScheduleDetailBean getTravelScheduleDetailBean(String idx)
   {
+    
     this.openDataBase();
     ScheduleDetailBean bean = new ScheduleDetailBean();
     Log.w("WARN", "SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx);
