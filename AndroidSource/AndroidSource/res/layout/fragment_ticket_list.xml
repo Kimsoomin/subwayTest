@@ -36,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textColor="#444a4b"
-            android:text="@string/msg_empty_list"
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
