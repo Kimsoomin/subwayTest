@@ -85,7 +85,8 @@ public class MainActivity extends ActionBarActivity
     bottomMenuHome.setSelected(true);
     setFragments(POSITION_HOME);
     
-    checkPromotion();
+    // promotion 실제 동작하기전에 임시로 히든 처리
+//    checkPromotion();
   }
   
   

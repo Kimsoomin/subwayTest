@@ -114,7 +114,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   float offsetX = 0.04f;
   float offsetY = 0.01f;
-  BoundingBoxE6 m_boundingBox = new BoundingBoxE6(37.70453488762476 + offsetY, 127.17361450195312 + offsetX, 37.43677099171195 - offsetY, 126.76300048828125 - offsetX);
+  BoundingBoxE6 m_boundingBox = new BoundingBoxE6(37.70453488762476 + offsetY, 127.17361450195312 + offsetX, 
+                                                  37.43677099171195 - offsetY, 126.76300048828125 - offsetX);
   
   // - Marker 관련.
   private NavigationOverlay navigationOverlay;
@@ -242,10 +243,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public boolean isPremium = false;
   
   /**
-   * ==========================================================================
-   * =========== 단말기의 방향을 감지. - 네비게이션에 필요.
-   * ======================================
-   * ===============================================
+   * ===================================================================================== 
+   * 단말기의 방향을 감지. - 네비게이션에 필요.
+   * =====================================================================================
    */
   private SensorManager m_sensorManager;
   private LocationManager m_locManager;
@@ -391,12 +391,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     }
   };
   
-  
   /**
-   * ==========================================================================
-   * =========== GPS init
-   * ========================================================
-   * =============================
+   * =====================================================================================
+   * GPS init
+   * =====================================================================================
    */
   public void userLocationInit()
   {
@@ -426,7 +424,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       e.printStackTrace();
     }
   }
-  
   
   public boolean myLocation()
   {
@@ -484,10 +481,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ==========================================================================
-   * =========== Called when the activity is first created.
-   * ======================
-   * ===============================================================
+   * =====================================================================================
+   * Called when the activity is first created.
+   * =====================================================================================
    */
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -509,25 +505,22 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     blinkingactivity = BlinkingMap.this;
     
     /*
-     * ==========================================================================
-     * =========== 맵 타일 다운로드 구문.
-     * ================================================
-     * =====================================
+     * =====================================================================================
+     * 맵 타일 다운로드 구문.
+     * =====================================================================================
      */
     noTile = getResources().getDrawable(R.drawable.no_tile);
     Global.strMapDBFilePath = Global.GetDatabaseFilePath() + Global.g_strMapDBFileName;
     
     /*
-     * ==========================================================================
-     * =========== 오픈 스트리트 맵 API 참고 http://wiki.openstreetmap.org/wiki/API_v0.6
+     * =====================================================================================
+     * 오픈 스트리트 맵 API 참고 http://wiki.openstreetmap.org/wiki/API_v0.6
      * osmdroid의 class 타일 생성을 위한 정보의 초기화 상속 범위 : XYTileSource >
      * OnlineTileSourceBase >BitmapTileSourceBase
      * ("이름","네트워크 모드","맵 이미지 최소 범위",맵 이미지 최대 범위,"타일 사이즈","이미지 파일 종류","생략된듯.")
      * String aName, string aResourceId, int aZoomMinLevel, int aZoomMaxLevel,
      * int aTileSizePixels, String aImageFilenameEnding, String aBaseUrl
-     * ========
-     * ==================================================================
-     * ===========
+     * =====================================================================================
      */
     
     // final float scale =
@@ -544,10 +537,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     TileSystem.setTileSize(nTileSize);
     
     /*
-     * ==========================================================================
-     * =========== 지도 회전을 위해서..
-     * ==================================================
-     * ===================================
+     * =====================================================================================
+     *  지도 회전을 위해서..
+     * =====================================================================================
      */
     m_mapLayout = new LinearLayout(this);
     
@@ -734,10 +726,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ==========================================================================
-   * =========== 버튼 세팅
-   * ==========================================================
-   * ===========================
+   * =====================================================================================
+   *  버튼 세팅
+   * =====================================================================================
    */
   
   public void databaseRead()
@@ -750,7 +741,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     subwayInfo = MapPlaceDataManager.getInstance(this).getallSubwayInfo();
     subwayExitInfo = MapPlaceDataManager.getInstance(this).getallSubwayExitInfo();
   }
-  
   
   public void MapButtonSetting()
   {
@@ -767,7 +757,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     zoomInBtn.setOnClickListener(this);
     zoomOutBtn.setOnClickListener(this);
   }
-  
   
   public void SearchSetting()
   {
@@ -810,7 +799,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     searchEditText.addTextChangedListener(placewatcher);
   }
   
-  
   @Override
   public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
   {
@@ -827,7 +815,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     
     return false;
   }
-  
   
   public void searchList()
   {
@@ -869,7 +856,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     }
   }
   
-  
   public void summaryViewSetting()
   {
     summaryView = (FrameLayout) findViewById(R.id.summaryView);
@@ -910,7 +896,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     linenum[2] = lineNumImage3;
     linenum[3] = lineNumImage4;
   }
-  
   
   public void summaryViewVisibleSet(int type, int summaryViewID)
   {
@@ -1035,7 +1020,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
             ShowCurrentPosition(myLocationState, 0);
             
             // - 센서 매니저 등록 (gSensorEventListner,gSensorType,gDelay)
-            m_sensorManager.registerListener(m_sensorListener, m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
+            m_sensorManager.registerListener(m_sensorListener, m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), 
+                SensorManager.SENSOR_DELAY_UI);
             
             MoveToCurrentPosition();
             
@@ -1182,10 +1168,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ==========================================================================
-   * ============= navigation btn 관련
-   * ============================================
-   * ===========================================
+   * =======================================================================================
+   *  navigation btn 관련
+   * =======================================================================================
    */
   public void viewSetForNavigation()
   {
@@ -1342,12 +1327,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     ab.show();
   }
   
-  
   /**
-   * ==========================================================================
-   * =========== 현재 위치 관련 로직.(마커 x, 원 표시)
-   * ========================================
-   * =============================================
+   * =====================================================================================
+   *  현재 위치 관련 로직.(마커 x, 원 표시)
+   * =====================================================================================
    */
   private void ShowCurrentPosition(int mylocationstate, float fAngle)
   {
@@ -1385,10 +1368,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ==========================================================================
-   * =========== Interface Callback Part!
-   * ========================================
-   * =============================================
+   * =====================================================================================
+   *  Interface Callback Part!
+   * =====================================================================================
    */
   
   @Override
@@ -1839,10 +1821,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   
   /**
-   * ==========================================================================
-   * =========== 단순 계산...
-   * ========================================================
-   * =============================
+   * =====================================================================================
+   *  단순 계산...
+   * =====================================================================================
    */
   
   @SuppressLint("NewApi")
@@ -2369,7 +2350,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       }
       catch (JSONException e)
       {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
       return null;
@@ -2379,7 +2359,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     @Override
     protected void onPostExecute(Boolean result)
     {
-      // TODO Auto-generated method stub
       super.onPostExecute(result);
       
       if (summaryUrl != null)

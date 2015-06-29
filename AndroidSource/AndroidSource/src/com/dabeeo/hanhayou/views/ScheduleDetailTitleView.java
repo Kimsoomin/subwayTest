@@ -77,7 +77,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
       e.printStackTrace();
     }
     textDays.setText(Integer.toString(bean.dayCount));
-    ImageDownloader.displayProfileImage(context, "", imageView);
+    ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
   }
   
   

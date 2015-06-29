@@ -57,9 +57,8 @@ public class PlaceDetailTitleView extends RelativeLayout
       time.setText(format.format(bean.updateDate));
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
-    ImageDownloader.displayProfileImage(context, "", imageView);
+    ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
   }
-  
   
   public void init()
   {
