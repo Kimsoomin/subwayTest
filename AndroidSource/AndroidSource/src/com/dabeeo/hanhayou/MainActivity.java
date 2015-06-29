@@ -94,7 +94,6 @@ public class MainActivity extends ActionBarActivity
   {
     if(SystemUtil.isConnectNetwork(getApplicationContext()))
     {
-      new GetCategoryAsyncTask().execute();
       if (TextUtils.isEmpty(PreferenceManager.getInstance(this).getDontShowPopupDate()))
         startActivity(new Intent(MainActivity.this, PromotionActivity.class));
       else
@@ -177,17 +176,6 @@ public class MainActivity extends ActionBarActivity
     appFininshToast = Toast.makeText(this, R.string.app_finish, Toast.LENGTH_SHORT);
     appFininshToast.show();
   }
-  
-  private class GetCategoryAsyncTask extends AsyncTask<String, Integer, Boolean>
-  {
-    @Override
-    protected Boolean doInBackground(String... params)
-    {
-      CategoryManager.getInstance(MainActivity.this).getCategories();
-      return null;
-    }
-  };
-  
   
   public void setFragments(int position)
   {
