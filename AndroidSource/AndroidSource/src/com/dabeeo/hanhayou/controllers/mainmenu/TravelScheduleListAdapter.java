@@ -16,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.mypage.MyScheduleDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
+import com.dabeeo.hanhayou.fragments.mainmenu.TravelScheduleListFragment;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
@@ -27,7 +29,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
   LayoutInflater inflater;
   int layoutResourceId;
   float imageWidth;
-  
+  private int type = TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR;
   private ArrayList<ScheduleBean> beans = new ArrayList<>();
   
   
@@ -39,6 +41,12 @@ public class TravelScheduleListAdapter extends BaseAdapter
     float margin = (int) SystemUtil.convertDpToPixel(10f, (Activity) context);
     // two images, three margins of 10dips
     imageWidth = ((width - (3 * margin)) / 2);
+  }
+  
+  
+  public void setType(int type)
+  {
+    this.type = type;
   }
   
   
@@ -84,7 +92,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
   }
   
   
-  @SuppressLint("ViewHolder")
+  @SuppressLint({ "ViewHolder", "SimpleDateFormat" })
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
@@ -103,7 +111,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
     
     iconRemommend.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-    if(bean.startDate != null)
+    if (bean.startDate != null)
       startDate.setText(format.format(bean.startDate));
     title.setText(bean.title);
     month.setText(Integer.toString(bean.dayCount) + "天");
@@ -118,6 +126,8 @@ public class TravelScheduleListAdapter extends BaseAdapter
       public void onClick(View arg0)
       {
         Intent i = new Intent(context, TravelScheduleDetailActivity.class);
+        if (type == TravelScheduleListFragment.SCHEDULE_TYPE_MY)
+          i = new Intent(context, MyScheduleDetailActivity.class);
         i.putExtra("idx", bean.idx);
         context.startActivity(i);
       }

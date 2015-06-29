@@ -46,6 +46,7 @@ public class TravelScheduleListFragment extends Fragment
   private int type = SCHEDULE_TYPE_POPULAR;
   private boolean isLoading = false;
   private boolean isLoadEnded = false;
+  @SuppressWarnings("unused")
   private int lastVisibleItem = 0;
   
   private LinearLayout emptyContainer;
@@ -83,6 +84,7 @@ public class TravelScheduleListFragment extends Fragment
     ((TravelSchedulesActivity) getActivity()).showBottomTab(true);
     
     adapter = new TravelScheduleListAdapter(getActivity());
+    adapter.setType(type);
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     if (SystemUtil.isConnectNetwork(getActivity()))
     {
