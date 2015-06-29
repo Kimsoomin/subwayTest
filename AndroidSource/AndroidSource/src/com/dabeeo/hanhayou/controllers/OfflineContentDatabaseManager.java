@@ -422,10 +422,11 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     this.openDataBase();
     ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
     Cursor c;
-    if(categoryId == 1)
+    if (categoryId == 1)
     {
       c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + "1 or category = 3 or category = 4 or category = 5 or category = 6", null);
-    }else
+    }
+    else
       c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE category = " + categoryId, null);
     if (categoryId == 0)
       c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE, null);
@@ -516,6 +517,25 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   {
     this.openDataBase();
     ScheduleDetailBean bean = new ScheduleDetailBean();
+    Log.w("WARN", "SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx);
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx, null);
+    c.moveToFirst();
+    try
+    {
+      bean.setCursor(c);
+    }
+    catch (Exception e)
+    {
+    }
+    c.close();
+    myDataBase.close();
+    return bean;
+  }
+  
+  
+  public ScheduleDetailBean getMYTravelScheduleDetailBean(String idx)
+  {
+    ScheduleDetailBean bean = new ScheduleDetailBean();
     
     JSONArray array;
     try
@@ -532,19 +552,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     {
       e.printStackTrace();
     }
-    
-//    Log.w("WARN", "SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx);
-//    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " WHERE idx = " + idx, null);
-//    c.moveToFirst();
-//    try
-//    {
-//      bean.setCursor(c);
-//    }
-//    catch (Exception e)
-//    {
-//    }
-//    c.close();
-    myDataBase.close();
     return bean;
   }
   

@@ -257,6 +257,36 @@ public class ApiClient
   }
   
   
+  public ScheduleDetailBean getMyTravelScheduleDetail(String idx)
+  {
+    ScheduleDetailBean bean = new ScheduleDetailBean();
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      String url = getSiteUrl() + "?v=m1&mode=PLAN_VIEW&idx=" + idx;
+      if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        url += "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+      NetworkResult result = httpClient.requestGet(url);
+      if (result.isSuccess)
+      {
+        try
+        {
+          JSONObject obj = new JSONObject(result.response);
+          bean = new ScheduleDetailBean();
+          bean.setJSONObject(obj.getJSONObject("plan"));
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        
+      }
+    }
+    else
+      bean = offlineDatabaseManager.getMYTravelScheduleDetailBean(idx);
+    return bean;
+  }
+  
+  
   /**
    * 장소 목록 - 인기있는
    * 

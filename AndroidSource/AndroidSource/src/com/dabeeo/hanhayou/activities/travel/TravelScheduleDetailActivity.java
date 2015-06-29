@@ -336,7 +336,10 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     @Override
     protected ScheduleDetailBean doInBackground(String... params)
     {
-      return apiClient.getTravelScheduleDetail(idx);
+      if (isMySchedule)
+        return apiClient.getMyTravelScheduleDetail(idx);
+      else
+        return apiClient.getTravelScheduleDetail(idx);
     }
     
     

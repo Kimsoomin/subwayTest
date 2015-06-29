@@ -15,6 +15,7 @@ import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.beans.SpotBean;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ScheduleView extends RelativeLayout
 {
@@ -47,10 +48,11 @@ public class ScheduleView extends RelativeLayout
     isThumbnailInvisible = true;
   }
   
+  
   public void setData(int position, SpotBean bean)
   {
     this.bean = bean;
-    if(bean.type == 3)
+    if (bean.type == 3)
     {
       nextDistanceLayout.setVisibility(View.GONE);
       planTitleLayout.setVisibility(View.GONE);
@@ -58,34 +60,38 @@ public class ScheduleView extends RelativeLayout
       memoLine.setVisibility(View.VISIBLE);
       line.setVisibility(View.GONE);
       
-      if(TextUtils.isEmpty(bean.memo))
+      if (TextUtils.isEmpty(bean.memo))
       {
         memo.setVisibility(View.GONE);
-      }else
+      }
+      else
       {
         memo.setVisibility(View.VISIBLE);
         memo.setText(bean.memo);
       }
       
-      if(bean.time != 0)
+      if (bean.time != 0)
       {
         memoTime.setVisibility(View.VISIBLE);
         memoTime.setText(NumberFormatter.getTimeString(bean.time));
-      }else
+      }
+      else
       {
         memoTime.setVisibility(View.GONE);
       }
       
-      if(bean.budget != 0)
+      if (bean.budget != 0)
       {
         String mBudget = bean.currency + bean.budget;
         memoBudget.setVisibility(View.VISIBLE);
         memoBudget.setText(mBudget);
-      }else
+      }
+      else
       {
         memoBudget.setVisibility(View.GONE);
       }
-    }else
+    }
+    else
     {
       planTitleLayout.setVisibility(View.VISIBLE);
       memoContainer.setVisibility(View.GONE);
@@ -104,6 +110,8 @@ public class ScheduleView extends RelativeLayout
           imageView.setVisibility(View.GONE);
       }
       
+      if (!SystemUtil.isConnectNetwork(context))
+        imageView.setVisibility(View.GONE);
       
       if (!TextUtils.isEmpty(bean.distance))
       {
@@ -119,7 +127,7 @@ public class ScheduleView extends RelativeLayout
       
       if (TextUtils.isEmpty(bean.memo))
       {
-        if(bean.budget == 0)
+        if (bean.budget == 0)
         {
           planMemoConatiner.setVisibility(View.GONE);
           memoLine.setVisibility(View.GONE);
@@ -129,12 +137,13 @@ public class ScheduleView extends RelativeLayout
       {
         planMemoConatiner.setVisibility(View.VISIBLE);
         planMemoText.setText(bean.memo);
-        if(bean.budget != 0)
+        if (bean.budget != 0)
         {
           String budget = bean.currency + bean.budget;
           planMemoTextMoneyAndTime.setVisibility(View.VISIBLE);
           planMemoTextMoneyAndTime.setText(budget);
-        }else
+        }
+        else
           planMemoTextMoneyAndTime.setVisibility(View.GONE);
         memoLine.setVisibility(View.VISIBLE);
       }

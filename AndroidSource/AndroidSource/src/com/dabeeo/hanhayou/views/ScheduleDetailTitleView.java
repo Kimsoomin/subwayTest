@@ -1,7 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
 import java.text.SimpleDateFormat;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.external.libraries.RoundedImageView;
@@ -54,11 +53,18 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
+  @SuppressLint("SimpleDateFormat")
   public void setBean(ScheduleDetailBean bean)
   {
     name.setText(bean.userName);
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
-    time.setText(format.format(bean.updateDate));
+    try
+    {
+      time.setText(format.format(bean.updateDate));
+    }
+    catch (Exception e)
+    {
+    }
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     title.setText(bean.title);
