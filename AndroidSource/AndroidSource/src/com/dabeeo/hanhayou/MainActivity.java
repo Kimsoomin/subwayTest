@@ -4,6 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -32,7 +36,10 @@ import com.dabeeo.hanhayou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.CategoryManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.dabeeo.hanhayou.views.MapdownloadProgressView;
 
 public class MainActivity extends ActionBarActivity
 {
@@ -50,6 +57,7 @@ public class MainActivity extends ActionBarActivity
   private long backKeyPressedTime = 0;
   private Toast appFininshToast;
   private int currentFragmentPosition = POSITION_HOME;
+  private ApiClient client;
   
   
   @Override
@@ -69,6 +77,7 @@ public class MainActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowHomeEnabled(false);
     getSupportActionBar().setDisplayShowTitleEnabled(false);
     
+    client = new ApiClient(this);
     fragmentManager = getFragmentManager();
     
     bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
@@ -86,16 +95,17 @@ public class MainActivity extends ActionBarActivity
     setFragments(POSITION_HOME);
     
     // promotion 실제 동작하기전에 임시로 히든 처리
-//    checkPromotion();
+    checkPromotion();
   }
   
   
+  @SuppressLint("SimpleDateFormat")
   private void checkPromotion()
   {
-    if(SystemUtil.isConnectNetwork(getApplicationContext()))
+    if (SystemUtil.isConnectNetwork(getApplicationContext()))
     {
       if (TextUtils.isEmpty(PreferenceManager.getInstance(this).getDontShowPopupDate()))
-        startActivity(new Intent(MainActivity.this, PromotionActivity.class));
+        loadPromotion();
       else
       {
         String dateString = PreferenceManager.getInstance(this).getDontShowPopupDate();
@@ -105,7 +115,7 @@ public class MainActivity extends ActionBarActivity
         {
           date = format.parse(dateString);
           if (!DateUtils.isToday(date.getTime()))
-            startActivity(new Intent(MainActivity.this, PromotionActivity.class));
+            loadPromotion();
         }
         catch (ParseException e)
         {
@@ -113,6 +123,12 @@ public class MainActivity extends ActionBarActivity
         }
       }
     }
+  }
+  
+  
+  private void loadPromotion()
+  {
+    new CheckPromotionAsyncTask().execute();
   }
   
   
@@ -194,7 +210,7 @@ public class MainActivity extends ActionBarActivity
         titleImage.setVisibility(View.VISIBLE);
         fragment = new MainFragment();
         break;
-        
+      
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
@@ -212,7 +228,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
-        
+      
       case POSITION_SEARCH:
         bottomMenuSearch.setSelected(true);
         title.setVisibility(View.VISIBLE);
@@ -220,7 +236,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(R.string.term_search);
         fragment = new SearchFragment();
         break;
-        
+      
       case POSITION_WISHLIST:
         if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {
@@ -272,4 +288,37 @@ public class MainActivity extends ActionBarActivity
       }
     }
   };
+  
+  //AsyncTask
+  private class CheckPromotionAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return client.getPoromotion();
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        JSONArray arr = obj.getJSONArray("promotion");
+        if (arr.length() > 0)
+        {
+          Intent i = new Intent(MainActivity.this, PromotionActivity.class);
+          i.putExtra("jsonArrString", arr.toString());
+          startActivity(i);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
+    
+  }
 }

@@ -63,6 +63,13 @@ public class ApiClient
   }
   
   
+  //프로모션 
+  public NetworkResult getPoromotion()
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PROMOTION_LIST");
+  }
+  
+  
   public NetworkResult getCategories()
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CATEGORY_LIST");

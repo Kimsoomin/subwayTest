@@ -295,7 +295,15 @@ public class IntroActivity extends Activity
           directory.mkdirs();
         
         JSONObject obj = new JSONObject(result.response);
-        Log.w("WARN", "오프라인 컨텐츠 updateDate : " + obj.getString("updateDate"));
+        try
+        {
+          //테스트 중
+          Log.w("WARN", "오프라인 컨텐츠 updateDate : " + obj.getString("updateDate"));
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
         File outputFile = new File(Global.GetImageFilePath() + "place_image.zip");
         
         if (!outputFile.exists())
