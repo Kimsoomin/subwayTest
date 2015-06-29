@@ -285,6 +285,7 @@ public class MySchedulesActivity extends ActionBarActivity
       ScheduleBean bean = (ScheduleBean) adapter.getItem(position);
       Intent i = new Intent(MySchedulesActivity.this, MyScheduleDetailActivity.class);
       i.putExtra("idx", bean.idx);
+      i.putExtra("isOpen", bean.isOpen);
       startActivity(i);
     }
   };

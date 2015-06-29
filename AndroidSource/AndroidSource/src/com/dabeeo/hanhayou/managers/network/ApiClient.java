@@ -56,7 +56,7 @@ public class ApiClient
   }
   
   
-  //오프라인 컨텐츠 update 관련 - 추후 동기화 시나리오 적용 필요
+  //오프라인 컨텐츠 update 관련 - updateDate 로 판별 
   public NetworkResult updateOfflineContents()
   {
     return httpClient.requestGet(getSiteUrl() + "v=m1&mode=OFFLINE_CONTENTS");
@@ -820,7 +820,7 @@ public class ApiClient
   
   public NetworkResult userEmailKeyResend(String userEmail)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEY_RESEND&userEmai=" + userEmail);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEY_RESEND&userEmail=" + userEmail);
   }
   
   
@@ -845,5 +845,11 @@ public class ApiClient
   public NetworkResult userTempPasswordGet(String userEmail)
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_FINDPW&userEmail=" + userEmail);
+  }
+  
+  
+  public NetworkResult uploadReviewImage(String idx, String filePath)
+  {
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD", idx, filePath, HttpClient.UPLOAD_IMAGE_TYPE_REVIEW);
   }
 }

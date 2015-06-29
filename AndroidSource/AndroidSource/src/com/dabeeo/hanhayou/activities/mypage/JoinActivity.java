@@ -617,6 +617,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           public void onClick(DialogInterface dialog, int which)
           {
             Intent intent = new Intent(JoinActivity.this, AuthEmailActivity.class);
+            intent.putExtra("email", editEmail.getText().toString());
             intent.putExtra("userSeq", finalUserSeq);
             startActivity(intent);
           }

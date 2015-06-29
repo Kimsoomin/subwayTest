@@ -151,6 +151,7 @@ public class LoginActivity extends Activity
             public void onPositiveButtonClickListener()
             {
               Intent i = new Intent(LoginActivity.this, AuthEmailActivity.class);
+              i.putExtra("email", editEmail.getText().toString());
               i.putExtra("userSeq", userSeq);
               startActivity(i);
             }

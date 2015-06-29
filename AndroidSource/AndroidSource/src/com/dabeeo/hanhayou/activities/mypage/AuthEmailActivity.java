@@ -35,6 +35,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
   private ApiClient apiClient;
   
   public Context mContext;
+  private String emailAddress;
   
   
   @Override
@@ -49,6 +50,9 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     Intent intent = getIntent();
     if (intent.hasExtra("userSeq"))
       userSeq = intent.getStringExtra("userSeq");
+    
+    if (intent.hasExtra("email"))
+      emailAddress = intent.getStringExtra("email");
     
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
     
@@ -147,7 +151,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.userEmailKeyResend(editText.getText().toString());
+      return apiClient.userEmailKeyResend(emailAddress);
     }
     
     
@@ -156,12 +160,14 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     {
       progressLayout.setVisibility(View.GONE);
       String status = null;
+      String message = null;
       try
       {
         JSONObject jsonObject = new JSONObject(result.response);
         if (jsonObject.has("status"))
         {
           status = jsonObject.getString("status");
+          message = jsonObject.getString("message");
         }
       }
       catch (JSONException e)
@@ -176,7 +182,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       }
       else
       {
-        CreateAlert(getString(R.string.msg_send_email_fail), false);
+        CreateAlert(message, false);
       }
       super.onPostExecute(result);
     }

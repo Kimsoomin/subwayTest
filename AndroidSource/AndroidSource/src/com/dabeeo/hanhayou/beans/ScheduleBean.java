@@ -37,6 +37,7 @@ public class ScheduleBean
   public String distance;
   public String budgetTotal;
   public String imageUrl;
+  public boolean isOpen = true;
   
   //로컬에 저장하지 않아도 됨 삭제를 위한 임시 flag 
   public boolean isChecked = false;
@@ -125,7 +126,7 @@ public class ScheduleBean
       if (obj.has("budgetTotal"))
         budgetTotal = obj.getString("budgetTotal");
       
-      if(obj.has("imageUrl"))
+      if (obj.has("imageUrl"))
         imageUrl = obj.getString("imageUrl");
       
       if (obj.has("image"))
@@ -188,6 +189,13 @@ public class ScheduleBean
         {
           e.printStackTrace();
         }
+      }
+      
+      if (obj.has("isOpen"))
+      {
+        int isOpenInt = obj.getInt("isOpen");
+        if (isOpenInt != 1)
+          isOpen = false;
       }
       
     }
