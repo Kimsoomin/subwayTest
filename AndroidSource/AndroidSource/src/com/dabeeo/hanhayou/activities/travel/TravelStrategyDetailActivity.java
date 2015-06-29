@@ -36,7 +36,6 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.BlinkingMap;
-import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
 import com.dabeeo.hanhayou.views.SharePickView;
 import com.squareup.picasso.Picasso;
@@ -229,9 +228,8 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
-      int width = Global.getDip(TravelStrategyDetailActivity.this.getWindow(), 603);
-      int height = Global.getDip(TravelStrategyDetailActivity.this.getWindow(), 450);
-      Picasso.with(this).load(imageUrl).resize(300, 223).centerCrop().into(view);
+      float density = getResources().getDisplayMetrics().density;
+      Picasso.with(this).load(imageUrl).resize((int) (300 * density), (int) (223 * density)).centerCrop().into(view);
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {
