@@ -846,4 +846,10 @@ public class ApiClient
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_FINDPW&userEmail=" + userEmail);
   }
+  
+  
+  public NetworkResult uploadReviewImage(String idx, String filePath)
+  {
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD", idx, filePath, HttpClient.UPLOAD_IMAGE_TYPE_REVIEW);
+  }
 }

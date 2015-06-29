@@ -26,6 +26,7 @@ public class ReviewImageUploadView extends RelativeLayout
   public ImageView imageX;
   public RelativeLayout container;
   public String fileUrl;
+  public String idx;
   public ImageView addImage;
   
   private RelativeLayout imageContainer, addImageContainer;
@@ -67,7 +68,6 @@ public class ReviewImageUploadView extends RelativeLayout
       imageContainer.setVisibility(View.VISIBLE);
       addImageContainer.setVisibility(View.GONE);
       this.fileUrl = fileUrl;
-      
       BitmapFactory.Options options = new BitmapFactory.Options();
       InputStream is = null;
       try

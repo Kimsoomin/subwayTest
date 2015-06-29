@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.activities.mainmenu;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,7 +136,6 @@ public class WriteReviewActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      //TODO 이미지 업로드 hashmap 가져와서 url넣고 보내야 함 
       return apiClient.postReviewRate(parentType, parentIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate, params[0]);
     }
     
@@ -149,13 +149,67 @@ public class WriteReviewActivity extends ActionBarActivity
         JSONObject obj = new JSONObject(result.response);
         if (obj.getString("status").equals("OK"))
         {
-          Toast.makeText(WriteReviewActivity.this, getString(R.string.msg_review_success), Toast.LENGTH_LONG).show();
-          finish();
+          if (fileViewWithUrl.keySet().size() == 0)
+          {
+            //이미지 없이 리뷰만 업로드할 경우
+            Toast.makeText(WriteReviewActivity.this, getString(R.string.msg_review_success), Toast.LENGTH_LONG).show();
+            finish();
+          }
+          else
+          {
+            //업로드할 이미지가 있는 경우
+            Iterator<String> iter = fileViewWithUrl.keySet().iterator();
+            while (iter.hasNext())
+            {
+              String key = iter.next();
+              Log.w("fureun", "image filePath : " + key);
+              Log.w("WARN", "image review idx : " + obj.getString("idx"));
+              new ImageUploadAsyncTask().execute(obj.getString("idx"), key);
+            }
+            
+            Toast.makeText(WriteReviewActivity.this, getString(R.string.msg_review_success), Toast.LENGTH_LONG).show();
+            finish();
+          }
         }
         else
         {
           Toast.makeText(WriteReviewActivity.this, getString(R.string.msg_review_fail), Toast.LENGTH_LONG).show();
         }
+      }
+      catch (JSONException e)
+      {
+        e.printStackTrace();
+      }
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class ImageUploadAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      progressBar.setVisibility(View.VISIBLE);
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.uploadReviewImage(params[0], params[1]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      progressBar.setVisibility(View.GONE);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if (obj.getString("status").equals("OK"))
+          Log.w("WARN", "Image Upload OK!");
       }
       catch (JSONException e)
       {

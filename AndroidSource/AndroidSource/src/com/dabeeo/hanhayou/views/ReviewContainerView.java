@@ -27,7 +27,7 @@ public class ReviewContainerView extends LinearLayout
   private ApiClient apiClient;
   
   private String parentType, parentIdx;
-  private int page = 0;
+  private int page = 1;
   private boolean isLoading = false;
   
   private RelativeLayout progressLayout;
@@ -77,7 +77,7 @@ public class ReviewContainerView extends LinearLayout
   {
     try
     {
-      page = 0;
+      page = 1;
       isLoading = false;
       container.removeAllViews();
       loadMore();

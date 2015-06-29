@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import android.content.Context;
 import android.util.Log;
 
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -65,8 +66,12 @@ public class HttpClient
     return result;
   }
   
+  public final static String UPLOAD_IMAGE_TYPE_PROFILE = "profile";
+  public final static String UPLOAD_IMAGE_TYPE_PLACE = "place";
+  public final static String UPLOAD_IMAGE_TYPE_REVIEW = "review";
   
-  private NetworkResult requestPostWithFile(String siteUrl, String storeId, String filePath, boolean isShown)
+  
+  public NetworkResult requestPostWithFile(String siteUrl, String idx, String filePath, String uploadType)
   {
     NetworkResult result = new NetworkResult(false, "", 0);
     
@@ -78,18 +83,14 @@ public class HttpClient
       requestBase = new HttpPost(siteUrl);
       
       MultipartEntity multipartEntity = new MultipartEntity();
-      if (filePath.contains("zip"))
-        multipartEntity.addPart("store_picture[zip]", new FileBody(new File(filePath), "application/zip"));
-      else
-        multipartEntity.addPart("store_picture[picture]", new FileBody(new File(filePath), "image/jpeg"));
-      multipartEntity.addPart("store_picture[shown]", new StringBody(Boolean.toString(isShown)));
-      multipartEntity.addPart("store_id", new StringBody(storeId));
-      Log.w("WARN", "HttpRequestHandler storeId::: " + storeId);
+      multipartEntity.addPart("seqSeq", new StringBody(idx));
+      multipartEntity.addPart("folderName", new StringBody(uploadType));
+      multipartEntity.addPart("userSeq", new StringBody(PreferenceManager.getInstance(context).getUserSeq()));
+      multipartEntity.addPart("uploaded_file", new FileBody(new File(filePath), "image/jpeg"));
+      Log.w("WARN", "HttpRequestHandler idx ::: " + idx);
       
       ((HttpPost) requestBase).setEntity(multipartEntity);
-      
       HttpResponse response = client.execute(requestBase);
-      
       String responseString = EntityUtils.toString(response.getEntity());
       
       Log.w("WARN", "HttpRequestHandler responseCode::: " + response.getStatusLine().getStatusCode());
@@ -196,4 +197,5 @@ public class HttpClient
     }
     return result;
   }
+  
 }
