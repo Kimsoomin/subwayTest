@@ -229,7 +229,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       final String imageUrl = bean.smallImages.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
       float density = getResources().getDisplayMetrics().density;
-      Picasso.with(this).load(imageUrl).resize((int) (300 * density), (int) (223 * density)).centerCrop().into(view);
+      Picasso.with(this).load(imageUrl).resize((int) (150 * density), (int) (112 * density)).centerCrop().into(view);
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {
