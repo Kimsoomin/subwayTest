@@ -143,7 +143,8 @@ public class LoginActivity extends Activity
         {
           if (jsonObject.has("userSeq"))
             userSeq = jsonObject.getString("userSeq");
-          alertDialogManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_please_error_auth), getString(R.string.term_ok), null, new AlertListener()
+          //getString(R.string.msg_please_error_auth)
+          alertDialogManager.showAlertDialog(getString(R.string.term_alert), jsonObject.getString("message"), getString(R.string.term_ok), null, new AlertListener()
           {
             @Override
             public void onPositiveButtonClickListener()
@@ -152,6 +153,7 @@ public class LoginActivity extends Activity
               i.putExtra("userSeq", userSeq);
               startActivity(i);
             }
+            
             
             @Override
             public void onNegativeButtonClickListener()

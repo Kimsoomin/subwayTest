@@ -340,7 +340,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
-//      new JoinHanhayouTask().execute();
+      new JoinHanhayouTask().execute();
     }
   };
   
