@@ -95,7 +95,7 @@ public class MainActivity extends ActionBarActivity
     setFragments(POSITION_HOME);
     
     // promotion 실제 동작하기전에 임시로 히든 처리
-    checkPromotion();
+//    checkPromotion();
   }
   
   
