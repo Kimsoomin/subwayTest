@@ -319,7 +319,7 @@
     <string name="term_order_item">已购商品</string>
     <!-- 내 장소 -->
     <string name="msg_empty_my_place">没有添加的地点</string>
-    <string name="term_all_check">全部删除</string>
+    <string name="term_all_check">全部选择</string>
     <string name="term_select_delete">选中删除</string>
     <string name="term_public">全部公开</string>
     <string name="term_private">非公开</string>
