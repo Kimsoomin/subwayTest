@@ -114,11 +114,17 @@ public class TravelScheduleDetailFragment extends Fragment
     int tempPx = 0;
     if (dayBean == null)
     {
-      tempPx = 51;
+      if (isRecommendSchedule)
+        tempPx = 75;
+      else
+        tempPx = 51;
     }
     else
     {
-      tempPx = 91;
+      if (isRecommendSchedule)
+        tempPx = 75;
+      else
+        tempPx = 91;
     }
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tempPx, r.getDisplayMetrics());
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
@@ -206,7 +212,7 @@ public class TravelScheduleDetailFragment extends Fragment
       rateLayout.setVisibility(View.GONE);
       titleView.likeAndBookmarkContainer.setVisibility(View.GONE);
       titleView.userContainer.setVisibility(View.GONE);
-      FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (60 * density));
+      FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (75 * density));
       params.gravity = Gravity.BOTTOM;
       titleView.setLayoutParams(params);
     }
@@ -220,17 +226,27 @@ public class TravelScheduleDetailFragment extends Fragment
     {
       if (dayBean == null)
       {
-        headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
-        headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+        //전체
+        if (!isRecommendSchedule)
+        {
+          headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+        }
+        else
+        {
+          headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (225 * density)));
+        }
         scrollView.setPadding(0, 0, 0, 0);
       }
       else
       {
-        headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
+        //일정일 때 (1일 ..)
+        headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (0 * density)));
         if (!isRecommendSchedule)
           headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (100 * density)));
         else
-          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (60 * density)));
+          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (0 * density)));
         scrollView.setPadding(0, 0, 0, 0);
         reviewContainerView.setVisibility(View.GONE);
       }

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -98,7 +98,8 @@ public class CalendarActivity extends ActionBarActivity
     else
     {
       Calendar calendar = Calendar.getInstance();
-      if (selectedCalendar.getTimeInMillis() > calendar.getTimeInMillis())
+      
+      if (DateUtils.isToday(selectedCalendar.getTimeInMillis()) || selectedCalendar.getTimeInMillis() > calendar.getTimeInMillis())
       {
         int year = selectedCalendar.get(Calendar.YEAR);
         int month = selectedCalendar.get(Calendar.MONTH);
