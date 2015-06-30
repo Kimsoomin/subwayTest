@@ -14,7 +14,6 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ProductView extends RelativeLayout
@@ -49,19 +48,22 @@ public class ProductView extends RelativeLayout
     TextView firstTitle = (TextView) view.findViewById(R.id.product_title);
     TextView firstOriginalPrice = (TextView) view.findViewById(R.id.original_price);
     TextView firstDiscountPrice = (TextView) view.findViewById(R.id.discount_price);
+    TextView firstDiscountPriceCn = (TextView) view.findViewById(R.id.discount_price_cn);
     
     LinearLayout secondContainer = (LinearLayout) view.findViewById(R.id.conatiner_second_bean);
     ImageView secondImageView = (ImageView) view.findViewById(R.id.imageview_second);
     TextView secondTitle = (TextView) view.findViewById(R.id.product_title_second);
     TextView secondOriginalPrice = (TextView) view.findViewById(R.id.original_price_second);
     TextView secondDiscountPrice = (TextView) view.findViewById(R.id.discount_price_second);
-    
+    TextView secondDiscountPirceCn = (TextView) view.findViewById(R.id.discount_price_second_cn);
     //가데이터
-    ImageDownloader.displayImage(context, "", firstImageView, null);
+//    ImageDownloader.displayImage(context, "", firstImageView, null);
+    firstImageView.setImageResource(R.drawable.sample_place_detail_shopping_list1);
     firstContainer.setVisibility(View.VISIBLE);
-    firstTitle.setText("수분크림");
-    firstOriginalPrice.setText("¥ 150.00");
-    firstDiscountPrice.setText("¥ 93.00");
+    firstTitle.setText("IOPE/亦博 气垫BB霜粉底霜 气垫粉饼保湿美白遮瑕SPF50+/PA+++");
+    firstOriginalPrice.setText("₩ 77,000");
+    firstDiscountPrice.setText("₩ 49,500");
+    firstDiscountPriceCn.setText("(￥275)");
     firstOriginalPrice.setPaintFlags(firstOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     firstContainer.setOnClickListener(new OnClickListener()
     {
@@ -75,10 +77,12 @@ public class ProductView extends RelativeLayout
       }
     });
     secondContainer.setVisibility(View.VISIBLE);
-    ImageDownloader.displayImage(context, "", secondImageView, null);
-    secondTitle.setText("수분크림");
-    secondOriginalPrice.setText("¥ 150.00");
-    secondDiscountPrice.setText("¥ 93.00");
+//    ImageDownloader.displayImage(context, "", secondImageView, null);
+    secondImageView.setImageResource(R.drawable.sample_place_detail_shopping_list2);
+    secondTitle.setText("[ISA KNOX伊诺姿]365长效防晒隔离霜70ml");
+    secondOriginalPrice.setText("₩ 91,000");
+    secondDiscountPrice.setText("₩ 87,000");
+    secondDiscountPirceCn.setText("(￥485)");
     secondOriginalPrice.setPaintFlags(secondOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     secondContainer.setOnClickListener(new OnClickListener()
     {

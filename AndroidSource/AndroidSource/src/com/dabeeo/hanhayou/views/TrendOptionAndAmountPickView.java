@@ -167,9 +167,9 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
     boolean found = false;
     Intent intent = new Intent(android.content.Intent.ACTION_SEND);
     
-    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou);
     String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-    File file = new File(extStorageDirectory, "ic_launcher.png");
+    File file = new File(extStorageDirectory, "hanhayou.png");
     
     try
     {

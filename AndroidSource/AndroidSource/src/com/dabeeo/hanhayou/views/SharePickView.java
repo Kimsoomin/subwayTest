@@ -181,9 +181,9 @@ public class SharePickView extends RelativeLayout
     else
     {
       
-      Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+      Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou);
       String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-      File file = new File(extStorageDirectory, "ic_launcher.png");
+      File file = new File(extStorageDirectory, "hanhayou.png");
       
       try
       {

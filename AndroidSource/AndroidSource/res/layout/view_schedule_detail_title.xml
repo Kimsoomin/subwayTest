@@ -137,7 +137,7 @@
                         android:layout_height="10dip"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_heart" />
+                        android:src="@drawable/icon_like_s" />
 
                     <TextView
                         android:id="@+id/like_count"
@@ -153,10 +153,10 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dip"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_review" />
+                        android:src="@drawable/icon_bookmark_s" />
 
                     <TextView
-                        android:id="@+id/review_count"
+                        android:id="@+id/bookmark_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

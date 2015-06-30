@@ -21,7 +21,7 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/hanhayou"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme" >

@@ -71,9 +71,8 @@
                             android:id="@+id/price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="original"
-                            android:textColor="#969b9c"
-                            android:textSize="10sp" />
+                            android:textColor="@color/light_gray"
+                            android:textSize="12sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -86,8 +85,7 @@
                                 android:id="@+id/discount_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="discount"
-                                android:textColor="#444a4b"
+                                android:textColor="@color/darker_gray"
                                 android:textSize="17sp"
                                 android:textStyle="bold" />
 
@@ -98,9 +96,8 @@
                                 android:layout_gravity="bottom"
                                 android:layout_marginLeft="2dp"
                                 android:layout_weight="1"
-                                android:text="(50y)"
                                 android:textColor="@color/light_gray"
-                                android:textSize="11sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -122,8 +119,7 @@
             android:id="@+id/imageview"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:background="@color/appcolor" />
+            android:layout_gravity="center" />
     </LinearLayout>
 
 </RelativeLayout>

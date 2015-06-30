@@ -84,8 +84,8 @@ public class BackService extends Service
         {
           final Intent emptyIntent = new Intent(BackService.this, TrendProductDetailActivity.class);
           PendingIntent pendingIntent = PendingIntent.getActivity(BackService.this, notificationId, emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-          NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(BackService.this).setSmallIcon(R.drawable.ic_launcher).setLargeIcon(
-              BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher)).setContentTitle("피테라 에센스 핑크 리미티드 에디션").setContentText("[무료배송] 32,000원").setContentIntent(pendingIntent);
+          NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(BackService.this).setSmallIcon(R.drawable.hanhayou).setLargeIcon(
+              BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou)).setContentTitle("피테라 에센스 핑크 리미티드 에디션").setContentText("[무료배송] 32,000원").setContentIntent(pendingIntent);
           NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
           notificationManager.notify(101, mBuilder.build());
           

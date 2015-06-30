@@ -6,7 +6,6 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -111,7 +110,15 @@ public class TravelScheduleDetailFragment extends Fragment
     
     FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
     Resources r = getResources();
-    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 51, r.getDisplayMetrics());
+    int tempPx = 0;
+    if(dayBean == null)
+    {
+      tempPx = 51;
+    }else
+    {
+      tempPx = 91;
+    }
+    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tempPx, r.getDisplayMetrics());
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
     final float density = getResources().getDisplayMetrics().density;
     
@@ -122,7 +129,7 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         if (!isRecommendSchedule)
         {
-          if (scrollView.getScrollY() > 120 * density)
+          if (scrollView.getScrollY() > 250 * density)
           {
             if(dayBean == null)
             {
@@ -176,7 +183,7 @@ public class TravelScheduleDetailFragment extends Fragment
     
     displayDayView();
     
-    textRate.setText(Integer.toString(bean.rate));
+    textRate.setText(Float.toString(bean.rate));
     headerView.setData(bean.imageUrl, bean.title, bean.days.size(), bean.budgetTotal);
     titleView.setBean(bean);
     
@@ -210,7 +217,7 @@ public class TravelScheduleDetailFragment extends Fragment
       if (dayBean == null)
       {
         headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
-        headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (200 * density)));
+        headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
         scrollView.setPadding(0, 0, 0, 0);
       }
       else
@@ -247,9 +254,9 @@ public class TravelScheduleDetailFragment extends Fragment
         {
           //TEST ADD RECOMMEND PRODUCT VIEW
           ProductBean bean = new ProductBean();
-          bean.title = "IOPE 화장품";
-          bean.originalPrice = 4000;
-          bean.discountPrice = 3000;
+          bean.title = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
+          bean.originalPrice = 109000;
+          bean.discountPrice = 90000;
           
           ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
           productRecommendView.setBean(bean);
@@ -293,7 +300,7 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         //TEST ADD RECOMMEND PRODUCT VIEW
         ProductBean bean = new ProductBean();
-        bean.title = "IOPE 화장품";
+        bean.title = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
         bean.originalPrice = 4000;
         bean.discountPrice = 3000;
         

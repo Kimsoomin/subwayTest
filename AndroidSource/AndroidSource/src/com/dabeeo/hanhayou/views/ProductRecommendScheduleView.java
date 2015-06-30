@@ -48,9 +48,11 @@ public class ProductRecommendScheduleView extends RelativeLayout
 	public void setBean(ProductBean bean)
 	{
 		this.bean = bean;
+		imageView.setImageResource(R.drawable.sample_plan_detail_shopping_list3);
 		title.setText(bean.title);
 		price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.originalPrice));
 		discountPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.discountPrice));
+		discountPriceCn.setText("("+context.getString(R.string.term_yuan)+"500"+")");
 		price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 		btnWishList.setOnClickListener(new OnClickListener()
 		{

@@ -24,7 +24,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   private TextView name;
   private TextView time;
   private TextView likeCount;
-  private TextView reviewCount;
+  private TextView bookmarkCount;
   public RelativeLayout container;
   public TextView title, textMoney, textDays;
   public LinearLayout infoContainer;
@@ -69,7 +69,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     {
     }
     likeCount.setText(Integer.toString(bean.likeCount));
-    reviewCount.setText(Integer.toString(bean.reviewCount));
+    bookmarkCount.setText(Integer.toString(bean.bookmarkCount));
     title.setText(bean.title);
     try
     {
@@ -97,7 +97,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     name = (TextView) view.findViewById(R.id.name);
     time = (TextView) view.findViewById(R.id.time);
     likeCount = (TextView) view.findViewById(R.id.like_count);
-    reviewCount = (TextView) view.findViewById(R.id.review_count);
+    bookmarkCount = (TextView) view.findViewById(R.id.bookmark_count);
     title = (TextView) view.findViewById(R.id.text_title);
     textMoney = (TextView) view.findViewById(R.id.text_money);
     textDays = (TextView) view.findViewById(R.id.text_days);
