@@ -187,6 +187,9 @@ public class ScheduleDetailBean
           detailBean.setJSONObject(daysJSONArray.getJSONObject(i));
           days.add(detailBean);
         }
+        
+        if (dayCount == 0)
+          dayCount = days.size();
       }
     }
     catch (JSONException e)

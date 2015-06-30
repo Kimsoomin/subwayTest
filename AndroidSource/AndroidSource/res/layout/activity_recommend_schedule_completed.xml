@@ -61,7 +61,7 @@
         android:id="@+id/container_recommend_schedule"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical" >
@@ -83,15 +83,15 @@
 
             <ImageView
                 android:id="@+id/imageview"
-                android:layout_width="150dp"
-                android:layout_height="110dp"
-                android:background="@color/appcolor"
+                android:layout_width="230dp"
+                android:layout_height="166dp"
                 android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="2015.01.01"
                 android:textColor="@color/light_gray"
@@ -104,13 +104,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Title"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/month"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="month"
@@ -131,7 +132,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/dark_pink"
+            android:background="@color/darker_gray"
             android:text="@string/term_generate_new_schedule"
             android:textColor="@android:color/white" />
 
@@ -140,7 +141,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/darker_gray"
+            android:background="@color/dark_pink"
             android:text="@string/term_another_recommend_schedule"
             android:textColor="@android:color/white" />
     </LinearLayout>

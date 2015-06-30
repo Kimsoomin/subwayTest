@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:visibility="invisible"
-            android:clickable="true" >
+            android:clickable="true"
+            android:visibility="invisible" >
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -77,12 +77,12 @@
                     android:id="@+id/checkbox_allow_receive_ads"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dip"
                     android:layout_marginLeft="3dip"
-                    android:text="@string/msg_allow_receive_email"
-                    android:textColor="@color/light_gray"
+                    android:layout_marginTop="2dip"
                     android:button="@drawable/check_background"
                     android:padding="4dip"
+                    android:text="@string/msg_allow_receive_email"
+                    android:textColor="@color/light_gray"
                     android:textSize="14sp" />
 
                 <!-- 이름 -->
@@ -111,14 +111,14 @@
                         android:text="@string/term_check_duplicate"
                         android:textColor="@color/color_normal_appcolor_select_white" />
                 </LinearLayout>
-                
-                <TextView 
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dip"
                     android:text="@string/msg_please_valid_check_name"
                     android:textColor="@color/appcolor"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <!-- 휴대폰번호 -->
 
@@ -138,10 +138,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dip"
-                    android:text="@string/msg_allow_receive_phone"
-                    android:textColor="@color/light_gray"
                     android:button="@drawable/check_background"
                     android:padding="4dip"
+                    android:text="@string/msg_allow_receive_phone"
+                    android:textColor="@color/light_gray"
                     android:textSize="14sp" />
 
                 <!-- 비밀번호 -->
@@ -155,14 +155,14 @@
                     android:singleLine="true"
                     android:textColor="@color/darker_gray"
                     android:textColorHint="@color/light_gray" />
-                
-                <TextView 
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dip"
                     android:text="@string/msg_valid_password"
                     android:textColor="@color/appcolor"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/edit_re_password"
@@ -170,9 +170,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/term_re_password_join"
                     android:inputType="textPassword"
-                    android:singleLine="true" 
+                    android:singleLine="true"
                     android:textColor="@color/darker_gray"
-                    android:textColorHint="@color/light_gray"/>
+                    android:textColorHint="@color/light_gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -231,27 +231,26 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/round_gray_box"
                     android:orientation="horizontal" >
-                    
-                <Button
-                    android:id="@+id/btn_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:background="@android:color/transparent"
-                    android:paddingLeft="8dp"
-                    android:text="@string/msg_date_of_birth"
-                    android:textColor="@color/color_normal_light_gray_select_darker_gray" />
-                
-                <ImageView 
-                    android:layout_width="15dip"
-                    android:layout_height="15dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_toRightOf="@+id/btn_date"
-                    android:layout_marginRight="15dip"
-                    android:background="@drawable/icon_arrow_g_close"
-                    android:contentDescription="@null"/>
-                
+
+                    <Button
+                        android:id="@+id/btn_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="8dp"
+                        android:text="@string/msg_date_of_birth"
+                        android:textColor="@color/color_normal_light_gray_select_darker_gray" />
+
+                    <ImageView
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="15dip"
+                        android:layout_toRightOf="@+id/btn_date"
+                        android:background="@drawable/icon_arrow_g_close"
+                        android:contentDescription="@null" />
                 </LinearLayout>
 
                 <!-- 약관 -->
@@ -297,8 +296,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/term_detail"
-                                android:textStyle="bold"
-                                android:textColor="@color/light_gray" />
+                                android:textColor="@color/light_gray"
+                                android:textStyle="bold" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -349,8 +348,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/term_detail"
-                                android:textStyle="bold"
-                                android:textColor="@color/light_gray" />
+                                android:textColor="@color/light_gray"
+                                android:textStyle="bold" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -401,8 +400,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/term_detail"
-                                android:textStyle="bold"
-                                android:textColor="@color/light_gray" />
+                                android:textColor="@color/light_gray"
+                                android:textStyle="bold" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -416,6 +415,8 @@
                     android:id="@+id/btn_join"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="24dip"
                     android:background="@drawable/normal_appcolor_select_white"
                     android:text="@string/term_join"
@@ -425,8 +426,10 @@
                     android:id="@+id/btn_cancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dip"
                     android:layout_marginBottom="20dip"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dip"
                     android:background="@drawable/gray_fill_round_button"
                     android:text="@string/term_cancel"
                     android:textColor="@color/color_normal_gray_select_white" />

@@ -24,11 +24,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dip"
                     android:layout_marginLeft="8dip"
+                    android:layout_marginTop="20dip"
                     android:text="@string/term_profile"
-                    android:textStyle="bold"
-                    android:textColor="@color/darker_gray" />
+                    android:textColor="@color/darker_gray"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
@@ -45,12 +45,14 @@
                     android:minHeight="?android:attr/listPreferredItemHeightSmall"
                     android:orientation="horizontal"
                     android:padding="8dp" >
-                    
-                    <TextView 
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/light_gray"
-                        android:text="@string/term_name"/>
+                        android:background="@drawable/square_dark_gray_stroke_box"
+                        android:padding="8dp"
+                        android:text="@string/term_name"
+                        android:textColor="#969b9c" />
 
                     <TextView
                         android:id="@+id/text_name"
@@ -64,9 +66,9 @@
                         android:layout_width="15dip"
                         android:layout_height="15dip"
                         android:layout_gravity="center"
-                        android:src="@drawable/icon_arrow_g_next"
                         android:layout_marginRight="5dip"
-                        android:contentDescription="@null" />
+                        android:contentDescription="@null"
+                        android:src="@drawable/icon_arrow_g_next" />
                 </LinearLayout>
 
                 <View
@@ -80,11 +82,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dip"
                 android:layout_marginLeft="8dip"
+                android:layout_marginTop="24dp"
                 android:text="@string/term_sync"
-                android:textStyle="bold"
-                android:textColor="@color/darker_gray" />
+                android:textColor="@color/darker_gray"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
@@ -150,11 +152,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dip"
                 android:layout_marginLeft="8dip"
+                android:layout_marginTop="24dp"
                 android:text="@string/term_about"
-                android:textStyle="bold"
-                android:textColor="@color/darker_gray" />
+                android:textColor="@color/darker_gray"
+                android:textStyle="bold" />
 
             <!-- 버전 정보 -->
 
@@ -290,7 +292,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_marginTop="16dip"
+                android:layout_marginTop="24dp"
                 android:background="@color/setting_cell_color" />
 
             <LinearLayout

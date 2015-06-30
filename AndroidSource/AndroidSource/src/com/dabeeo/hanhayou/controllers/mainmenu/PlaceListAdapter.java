@@ -96,7 +96,6 @@ public class PlaceListAdapter extends BaseAdapter
     TextView textRanking = (TextView) view.findViewById(R.id.text_ranking);
     RelativeLayout recommendRanking = (RelativeLayout) view.findViewById(R.id.recommend_container);
     
-    
     isCoupon.setVisibility(View.GONE);
     try
     {
@@ -136,8 +135,13 @@ public class PlaceListAdapter extends BaseAdapter
     
     if (position == 0)
     {
-      recommendRanking.setVisibility(View.VISIBLE);
-      recommendRanking.bringToFront();
+      if (SystemUtil.isConnectNetwork(context))
+      {
+        recommendRanking.setVisibility(View.VISIBLE);
+        recommendRanking.bringToFront();
+      }
+      else
+        recommendRanking.setVisibility(View.GONE);
       textRanking.setVisibility(View.GONE);
     }
     else
