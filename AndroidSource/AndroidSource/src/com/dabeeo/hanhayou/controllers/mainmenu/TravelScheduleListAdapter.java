@@ -109,7 +109,6 @@ public class TravelScheduleListAdapter extends BaseAdapter
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
-    iconRemommend.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
     if (bean.startDate != null)
       startDate.setText(format.format(bean.startDate));
@@ -118,19 +117,15 @@ public class TravelScheduleListAdapter extends BaseAdapter
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     
-    if (type == TravelScheduleListFragment.SCHEDULE_TYPE_MY)
-    {
-      if (!SystemUtil.isConnectNetwork(context))
-      {
-        iconRemommend.setVisibility(View.GONE);
-        imageView.setVisibility(View.GONE);
-      }
-      else
-      {
-        imageView.setVisibility(View.VISIBLE);
-        iconRemommend.setVisibility(View.VISIBLE);
-      }
-    }
+    if (!SystemUtil.isConnectNetwork(context))
+      imageView.setVisibility(View.GONE);
+    else
+      imageView.setVisibility(View.VISIBLE);
+    
+    if (SystemUtil.isConnectNetwork(context))
+      iconRemommend.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+    else
+      iconRemommend.setVisibility(View.GONE);
     
     if (imageView.getVisibility() == View.VISIBLE)
       ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
