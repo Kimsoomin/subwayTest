@@ -112,10 +112,11 @@ public class TravelScheduleDetailFragment extends Fragment
     FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
     Resources r = getResources();
     int tempPx = 0;
-    if(dayBean == null)
+    if (dayBean == null)
     {
       tempPx = 51;
-    }else
+    }
+    else
     {
       tempPx = 91;
     }
@@ -254,8 +255,7 @@ public class TravelScheduleDetailFragment extends Fragment
           tView.setData("Day" + Integer.toString(i + 1), new Date(c.getTimeInMillis()));
         else
         {
-          String dayString = getString(R.string.term_after_day);
-          dayString = dayString.replace("#1", Integer.toString(i + 1));
+          String dayString = "第" + Integer.toString(i + 1) + "天";
           tView.setData(dayString, new Date(c.getTimeInMillis()));
         }
         contentContainer.addView(tView);
