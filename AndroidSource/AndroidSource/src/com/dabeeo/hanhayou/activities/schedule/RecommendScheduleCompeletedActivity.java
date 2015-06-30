@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -104,7 +105,9 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
   
   private void displayRecommendScheduleView(String json, String startDate)
   {
-    textCompelete.setText(PreferenceManager.getInstance(getApplicationContext()).getUserName() + " 님의 추천일정이 완성되었습니다!");
+    String text = "<font color='#444a4b'>" + PreferenceManager.getInstance(getApplicationContext()).getUserName() + "</font><font color='#969b9c'>"
+        + getString(R.string.msg_comeplete_recommend_schedule) + "</font>";
+    textCompelete.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
     
     bean = new ScheduleBean();
     try

@@ -468,5 +468,6 @@
     <string name="msg_send_auth_number">验证邮件已发到邮箱\n确认验证码后，\n请在页面输入验证码</string>
     <string name="msg_recommend_schedule_title">#1님에게 딱 맞는 #2일 맞춤일정</string>
     <string name="msg_warn_password_not_same_name">不能使用与昵称相同的密码。</string>
+    <string name="msg_comeplete_recommend_schedule">님의\n추천일정이 완성되었습니다!</string>
 
 </resources>
