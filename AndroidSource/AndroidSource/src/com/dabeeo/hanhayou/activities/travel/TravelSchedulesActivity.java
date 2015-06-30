@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.mypage.LoginActivity;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.TravelScheduleListFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
@@ -241,7 +243,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
   protected TabListener tabListener = new TabListener()
   {
     @Override
-    public void onTabSelected(Tab tab, FragmentTransaction ft)
+    public void onTabSelected(final Tab tab, FragmentTransaction ft)
     {
       if (!SystemUtil.isConnectNetwork(getApplicationContext()) && tab.getPosition() == 2)
       {
@@ -264,7 +266,31 @@ public class TravelSchedulesActivity extends ActionBarActivity
         {
           if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn())
           {
-            new AlertDialogManager(TravelSchedulesActivity.this).showNeedLoginDialog(-1);
+            Builder builder = new AlertDialog.Builder(TravelSchedulesActivity.this);
+            builder.setTitle(getString(R.string.term_alert));
+            builder.setMessage(getString(R.string.msg_require_login));
+            builder.setCancelable(false);
+            builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
+            {
+              @Override
+              public void onClick(DialogInterface dialog, int which)
+              {
+                Intent i = new Intent(TravelSchedulesActivity.this, LoginActivity.class);
+                i.putExtra("mainFragmentPostion", -1);
+                startActivity(i);
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+              }
+            });
+            builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener()
+            {
+              @Override
+              public void onClick(DialogInterface dialog, int which)
+              {
+                viewPager.setCurrentItem(0);
+                lastSelectedTab = tab.getPosition();
+              }
+            });
+            builder.create().show();
             return;
           }
           viewPager.setCurrentItem(tab.getPosition());
