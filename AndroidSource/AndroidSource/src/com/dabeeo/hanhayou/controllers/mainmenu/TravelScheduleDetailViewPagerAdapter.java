@@ -1,5 +1,7 @@
 package com.dabeeo.hanhayou.controllers.mainmenu;
 
+import java.util.Locale;
+
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -75,6 +77,16 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
     if (position == 0)
       return context.getString(R.string.term_all);
     else
-      return Integer.toString(position) + context.getString(R.string.term_after_day);
+    {
+      if (Locale.getDefault().getLanguage().contains("ko"))
+        return Integer.toString(position) + context.getString(R.string.term_after_day);
+      else
+      {
+        String dayString = context.getString(R.string.term_after_day);
+        dayString = dayString.replace("#1", Integer.toString(position));
+        return dayString;
+      }
+      
+    }
   }
 }

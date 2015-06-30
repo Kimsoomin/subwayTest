@@ -2,6 +2,7 @@ package com.dabeeo.hanhayou.fragments.mainmenu;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -124,7 +125,7 @@ public class TravelScheduleDetailFragment extends Fragment
         {
           if (scrollView.getScrollY() > 120 * density)
           {
-            if(dayBean == null)
+            if (dayBean == null)
             {
               titleView.title.setVisibility(View.INVISIBLE);
               titleView.infoContainer.setVisibility(View.INVISIBLE);
@@ -133,7 +134,7 @@ public class TravelScheduleDetailFragment extends Fragment
           }
           else
           {
-            if(dayBean == null)
+            if (dayBean == null)
             {
               titleView.title.setVisibility(View.VISIBLE);
               titleView.infoContainer.setVisibility(View.VISIBLE);
@@ -152,6 +153,7 @@ public class TravelScheduleDetailFragment extends Fragment
     displayContentData();
   }
   
+  
   @Override
   public void onResume()
   {
@@ -169,6 +171,7 @@ public class TravelScheduleDetailFragment extends Fragment
     this.isMySchedule = isMySchedule;
     this.isRecommendSchedule = isRecommendSchedule;
   }
+  
   
   private void displayContentData()
   {
@@ -240,7 +243,14 @@ public class TravelScheduleDetailFragment extends Fragment
         Calendar c = Calendar.getInstance();
         c.setTime(bean.startDate);
         c.add(Calendar.DATE, i);
-        tView.setData("Day" + Integer.toString(i + 1), new Date(c.getTimeInMillis()));
+        if (Locale.getDefault().getLanguage().contains("ko"))
+          tView.setData("Day" + Integer.toString(i + 1), new Date(c.getTimeInMillis()));
+        else
+        {
+          String dayString = getString(R.string.term_after_day);
+          dayString = dayString.replace("#1", Integer.toString(position));
+          tView.setData(dayString, new Date(c.getTimeInMillis()));
+        }
         contentContainer.addView(tView);
         
         if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
@@ -385,6 +395,7 @@ public class TravelScheduleDetailFragment extends Fragment
           i.putExtra("rate", rate);
           startActivity(i);
         }
+        
         
         public void onNegativeButtonClickListener()
         {

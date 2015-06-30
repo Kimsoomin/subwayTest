@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -79,7 +80,13 @@ public class ScheduleDetailTitleView extends RelativeLayout
     {
       e.printStackTrace();
     }
-    textDays.setText(Integer.toString(bean.dayCount));
+    if (Locale.getDefault().getLanguage().contains("ko"))
+      textDays.setText(Integer.toString(bean.dayCount) + "일");
+    else
+    {
+      textDays.setText(Integer.toString(bean.dayCount) + "日游");
+    }
+    
     ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
   }
   
@@ -105,11 +112,11 @@ public class ScheduleDetailTitleView extends RelativeLayout
     addView(view);
   }
   
+  
   public void initDayTitle()
   {
     title.setVisibility(View.GONE);
     infoContainer.setVisibility(View.GONE);
   }
-  
   
 }
