@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp" >
+    android:layout_height="160dip" >
 
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="160dip"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="160dip"
         android:contentDescription="@null"
         android:scaleType="fitXY"
         android:background="@drawable/sample_shopping_theme" />

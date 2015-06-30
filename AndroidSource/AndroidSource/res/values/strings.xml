@@ -298,7 +298,7 @@
     <string name="msg_review_declare_reason_1">广告</string>
     <string name="msg_review_declare_reason_2">色情污秽</string>
     <string name="msg_review_declare_reason_3">其它</string>
-    <string name="term_after_day">第#1日</string>
+    <string name="term_after_day">第#1天</string>
     <!-- 마이페이지 -->
     <string name="term_change_password">修改密码</string>
     <string name="term_withdraw">注销帐号</string>
@@ -368,7 +368,7 @@
     <string name="term_one_days_schedule">1日游</string>
     <string name="term_two_days_schedule">2日游</string>
     <string name="term_three_days_schedule">3日游</string>
-    <string name="term_four_days_schedule">4日游</string>
+    <string name="term_four_days_schedule">4天以上</string>
     <!-- 여행공략 -->
     <array name="area_array">
         <item>全部</item>
@@ -468,6 +468,7 @@
     <string name="msg_send_auth_number">验证邮件已发到邮箱\n确认验证码后，\n请在页面输入验证码</string>
     <string name="msg_recommend_schedule_title">适合“#1”用户的#2天定制行程</string>
     <string name="msg_warn_password_not_same_name">不能使用与昵称相同的密码。</string>
-    <string name="msg_comeplete_recommend_schedule">님의\n추천일정이 완성되었습니다!</string>
+    <string name="msg_comeplete_recommend_schedule1">成功创建</string>
+    <string name="msg_comeplete_recommend_schedule2">用户的推荐行程。</string>
 
 </resources>

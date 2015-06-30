@@ -105,8 +105,9 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
   
   private void displayRecommendScheduleView(String json, String startDate)
   {
-    String text = "<font color='#444a4b'>" + PreferenceManager.getInstance(getApplicationContext()).getUserName() + "</font><font color='#969b9c'>"
-        + getString(R.string.msg_comeplete_recommend_schedule) + "</font>";
+    String text = "<font color='#969b9c'>"+ getString(R.string.msg_comeplete_recommend_schedule1) + "</font>"
+        +"<font color='#444a4b'>" + PreferenceManager.getInstance(getApplicationContext()).getUserName() + "</font><font color='#969b9c'>"
+        + getString(R.string.msg_comeplete_recommend_schedule2) + "</font>";
     textCompelete.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
     
     bean = new ScheduleBean();
@@ -132,7 +133,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     myScheduleTitle = myScheduleTitle.replaceAll("#2", Integer.toString(bean.dayCount));
     final String finalMyScheduleTitle = myScheduleTitle;
     title.setText(myScheduleTitle);
-    month.setText(Integer.toString(bean.dayCount) + getString(R.string.term_month));
+    month.setText(Integer.toString(bean.dayCount) + "天");
     ImageDownloader.displayImage(RecommendScheduleCompeletedActivity.this, bean.imageUrl, imageView, null);
     
     containerRecommendSchedule.setOnClickListener(new OnClickListener()
