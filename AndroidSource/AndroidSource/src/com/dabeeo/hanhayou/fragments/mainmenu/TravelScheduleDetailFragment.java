@@ -248,7 +248,7 @@ public class TravelScheduleDetailFragment extends Fragment
         else
         {
           String dayString = getString(R.string.term_after_day);
-          dayString = dayString.replace("#1", Integer.toString(position));
+          dayString = dayString.replace("#1", Integer.toString(i + 1));
           tView.setData(dayString, new Date(c.getTimeInMillis()));
         }
         contentContainer.addView(tView);
