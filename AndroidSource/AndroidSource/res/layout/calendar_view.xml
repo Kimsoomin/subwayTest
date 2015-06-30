@@ -13,12 +13,13 @@
             android:id="@+id/calendar_title_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:padding="8dp" >
 
             <Button
                 android:id="@+id/calendar_left_arrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="14dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
@@ -28,29 +29,34 @@
                 android:id="@+id/calendar_month_year_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/calendar_right_arrow"
                 android:layout_toRightOf="@+id/calendar_left_arrow"
                 android:gravity="center_horizontal"
                 android:textColor="@color/appcolor"
                 android:textIsSelectable="true"
-                android:textSize="21sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/calendar_right_arrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="14dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"
                 android:background="@drawable/icon_arrow_b_next" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#f2f2f2" />
+
         <GridView
             android:id="@+id/weekday_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-10dp"
             android:numColumns="7"
             android:stretchMode="columnWidth" />
 

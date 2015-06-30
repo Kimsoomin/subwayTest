@@ -134,7 +134,7 @@ public class LocalPhotoAdapter extends BaseAdapter
     {
       photo.setImageResource(R.drawable.btn_gallery_camera);
       photo.setBackgroundColor(Color.parseColor("#969b9c"));
-      photo.setScaleType(ScaleType.CENTER_INSIDE);
+      photo.setScaleType(ScaleType.FIT_CENTER);
     }
     else
     {
@@ -203,6 +203,8 @@ public class LocalPhotoAdapter extends BaseAdapter
       
       if (canSelectMultiple)
         textSelection.setText(bean.selectIndex + "");
+      else
+        textSelection.setVisibility(View.GONE);
     }
     
     return convertView;

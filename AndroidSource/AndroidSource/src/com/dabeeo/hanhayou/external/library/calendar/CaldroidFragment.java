@@ -113,7 +113,7 @@ public class CaldroidFragment extends DialogFragment
    * To customize the disabled background drawable and text color
    */
   public static int disabledBackgroundDrawable = -1;
-  public static int disabledTextColor = Color.GRAY;
+  public static int disabledTextColor = Color.parseColor("#c3c3c3");
   
   /**
    * Caldroid view components
@@ -761,16 +761,21 @@ public class CaldroidFragment extends DialogFragment
   }
   
   
-  /**
-   * Select the dates from fromDate to toDate. By default the background color
-   * is holo_blue_light, and the text color is black. You can customize the
-   * background by changing CaldroidFragment.selectedBackgroundDrawable, and
-   * change the text color CaldroidFragment.selectedTextColor before call this
-   * method. This method does not refresh view, need to call refreshView()
-   *
-   * @param fromDate
-   * @param toDate
-   */
+  public void setSelectedDate(Date fromDate)
+  {
+    if (fromDate == null)
+    {
+      return;
+    }
+    
+    DateTime fromDateTime = CalendarHelper.convertDateToDateTime(fromDate);
+    for (CaldroidGridAdapter adapter : datePagerAdapters)
+    {
+      adapter.setSelectedDate(fromDateTime);
+    }
+  }
+  
+  
   public void setSelectedDates(Date fromDate, Date toDate)
   {
     // Ensure fromDate is before toDate
@@ -832,8 +837,8 @@ public class CaldroidFragment extends DialogFragment
     this.showNavigationArrows = showNavigationArrows;
 //    if (showNavigationArrows)
 //    {
-      leftArrowButton.setVisibility(View.VISIBLE);
-      rightArrowButton.setVisibility(View.VISIBLE);
+    leftArrowButton.setVisibility(View.VISIBLE);
+    rightArrowButton.setVisibility(View.VISIBLE);
 //    }
 //    else
 //    {
@@ -990,6 +995,7 @@ public class CaldroidFragment extends DialogFragment
             }
             
             Date date = CalendarHelper.convertDateTimeToDate(dateTime);
+            setSelectedDate(date);
             caldroidListener.onSelectDate(date, view);
           }
         }
@@ -1278,7 +1284,6 @@ public class CaldroidFragment extends DialogFragment
     // Navigate to previous month when user click
     leftArrowButton.setOnClickListener(new OnClickListener()
     {
-      
       @Override
       public void onClick(View v)
       {
@@ -1289,7 +1294,6 @@ public class CaldroidFragment extends DialogFragment
     // Navigate to next month when user click
     rightArrowButton.setOnClickListener(new OnClickListener()
     {
-      
       @Override
       public void onClick(View v)
       {
