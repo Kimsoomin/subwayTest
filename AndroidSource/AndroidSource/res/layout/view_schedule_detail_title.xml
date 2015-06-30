@@ -6,6 +6,7 @@
     android:background="@android:color/white" >
 
     <LinearLayout
+        android:id="@+id/title_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -42,19 +43,20 @@
                     android:background="@drawable/rectangle_appcolor_box"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="2dp" >
+                    android:padding="4dip" >
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/icon_plan_day" />
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:background="@drawable/icon_plan_day"
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:id="@+id/text_days"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/light_gray"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -65,19 +67,20 @@
                     android:background="@drawable/rectangle_appcolor_box"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="2dp" >
+                    android:padding="4dip" >
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/icon_budget_cn" />
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:background="@drawable/icon_budget_cn"
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:id="@+id/text_money"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/light_gray"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
@@ -91,10 +94,10 @@
 
                 <com.dabeeo.hanhayou.external.libraries.RoundedImageView
                     android:id="@+id/imageview"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="33dip"
+                    android:layout_height="33dip"
                     android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="4dip"
                     android:contentDescription="@null"
                     android:src="@drawable/default_profile_s" />
 
@@ -118,21 +121,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:textColor="#c3c3c3" />
+                        android:textColor="@color/gray" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/like_and_bookmark_count_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="10dip"
+                        android:layout_height="10dip"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_heart" />
@@ -142,14 +144,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="2dip"
                         android:textColor="@color/darker_gray" />
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="10dip"
+                        android:layout_height="10dip"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="6dip"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_review" />
 
@@ -158,11 +160,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="2dip"
                         android:textColor="@color/darker_gray" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:id="@+id/schedule_title_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/title_header"
+        android:background="@color/lighter_gray"
+        android:visibility="gone" />
 
 </RelativeLayout>

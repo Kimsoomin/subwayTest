@@ -107,7 +107,7 @@ public class TravelScheduleDetailFragment extends Fragment
     headerView = (ScheduleDetailHeaderView) getView().findViewById(R.id.header_view);
     titleView = (ScheduleDetailTitleView) getView().findViewById(R.id.title_view);
     headerView.init();
-    titleView.init();
+//    titleView.init();
     
     FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
     Resources r = getResources();
@@ -124,17 +124,21 @@ public class TravelScheduleDetailFragment extends Fragment
         {
           if (scrollView.getScrollY() > 120 * density)
           {
-            titleView.title.setVisibility(View.INVISIBLE);
-            titleView.infoContainer.setVisibility(View.INVISIBLE);
-            titleView.title.setVisibility(View.INVISIBLE);
-            titleView.setBackgroundColor(Color.argb(80, 223, 223, 223));
+            if(dayBean == null)
+            {
+              titleView.title.setVisibility(View.INVISIBLE);
+              titleView.infoContainer.setVisibility(View.INVISIBLE);
+              titleView.titleDivider.setVisibility(View.VISIBLE);
+            }
           }
           else
           {
-            titleView.title.setVisibility(View.VISIBLE);
-            titleView.infoContainer.setVisibility(View.VISIBLE);
-            titleView.title.setVisibility(View.VISIBLE);
-            titleView.setBackgroundColor(Color.argb(100, 255, 255, 255));
+            if(dayBean == null)
+            {
+              titleView.title.setVisibility(View.VISIBLE);
+              titleView.infoContainer.setVisibility(View.VISIBLE);
+              titleView.titleDivider.setVisibility(View.GONE);
+            }
           }
         }
         
@@ -227,6 +231,7 @@ public class TravelScheduleDetailFragment extends Fragment
   {
     if (dayBean == null)
     {
+      titleView.init();
       Log.w("WARN", "전체에 대한 뷰 " + bean.days.size());
       //전체에 대한 내용
       for (int i = 0; i < bean.days.size(); i++)
@@ -238,7 +243,7 @@ public class TravelScheduleDetailFragment extends Fragment
         tView.setData("Day" + Integer.toString(i + 1), new Date(c.getTimeInMillis()));
         contentContainer.addView(tView);
         
-        if (i == 0 && SystemUtil.isConnectNetwork(getActivity()))
+        if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
         {
           //TEST ADD RECOMMEND PRODUCT VIEW
           ProductBean bean = new ProductBean();
@@ -270,19 +275,50 @@ public class TravelScheduleDetailFragment extends Fragment
             spotNum += 1;
           view.setData(spotNum, bean.days.get(i).spots.get(j));
           if (j == bean.days.get(i).spots.size() - 1)
+          {
             view.setFinalView();
+            spotNum = 0;
+          }
           contentContainer.addView(view);
         }
       }
     }
     else
     {
-      Log.w("WARN", "일정에 대한 뷰");
-      ScheduleTitleView tView = new ScheduleTitleView(getActivity());
-      Calendar c = Calendar.getInstance();
-      c.setTime(bean.startDate);
-      tView.setData("Day" + Integer.toString(position), new Date(c.getTimeInMillis()));
-      contentContainer.addView(tView);
+      FrameLayout.LayoutParams btnLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+      btnLayoutParams.gravity = Gravity.TOP;
+      titleView.setLayoutParams(btnLayoutParams);
+      titleView.initDayTitle();
+      if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
+      {
+        //TEST ADD RECOMMEND PRODUCT VIEW
+        ProductBean bean = new ProductBean();
+        bean.title = "IOPE 화장품";
+        bean.originalPrice = 4000;
+        bean.discountPrice = 3000;
+        
+        ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
+        productRecommendView.setBean(bean);
+        productRecommendView.setOnClickListener(new OnClickListener()
+        {
+          @Override
+          public void onClick(View v)
+          {
+            if (!SystemUtil.isConnectNetwork(getActivity()))
+              new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+            else
+              getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
+          }
+        });
+        contentContainer.addView(productRecommendView);
+      }
+      
+//      Log.w("WARN", "일정에 대한 뷰");
+//      ScheduleTitleView tView = new ScheduleTitleView(getActivity());
+//      Calendar c = Calendar.getInstance();
+//      c.setTime(bean.startDate);
+//      tView.setData("Day" + Integer.toString(position), new Date(c.getTimeInMillis()));
+//      contentContainer.addView(tView);
       
       //하루에 대한 내용
       for (int i = 0; i < dayBean.spots.size(); i++)
@@ -293,7 +329,10 @@ public class TravelScheduleDetailFragment extends Fragment
         view.setData(spotNum, dayBean.spots.get(i));
         
         if (i == dayBean.spots.size() - 1)
+        {
           view.setFinalView();
+          spotNum = 0;
+        }
         contentContainer.addView(view);
       }
     }

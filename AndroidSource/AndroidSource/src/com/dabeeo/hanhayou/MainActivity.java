@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -34,12 +33,10 @@ import com.dabeeo.hanhayou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hanhayou.fragments.mainmenu.WishListFragment;
 import com.dabeeo.hanhayou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.managers.CategoryManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.SystemUtil;
-import com.dabeeo.hanhayou.views.MapdownloadProgressView;
 
 public class MainActivity extends ActionBarActivity
 {

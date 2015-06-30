@@ -15,7 +15,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="bottom"
-            android:src="@drawable/deco_color_dot_l" />
+            android:src="@drawable/deco_color_dot_l"
+            android:contentDescription="@null" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,23 +29,24 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#444a4b"
+                android:textColor="@color/darker_gray"
                 android:textSize="21sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/date"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#969b9c" />
+                android:textColor="@color/light_gray" />
         </LinearLayout>
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="bottom"
-            android:src="@drawable/deco_color_dot_r" />
+            android:src="@drawable/deco_color_dot_r"
+            android:contentDescription="@null" />
     </LinearLayout>
 
 </RelativeLayout>

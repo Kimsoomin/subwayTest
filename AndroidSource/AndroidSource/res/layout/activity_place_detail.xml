@@ -76,7 +76,7 @@
                             android:padding="4dp"
                             android:text="@string/term_review_best"
                             android:textColor="@color/color_normal_gray_select_white"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <Button
                             android:id="@+id/btn_review_soso"
@@ -87,7 +87,7 @@
                             android:padding="4dp"
                             android:text="@string/term_review_soso"
                             android:textColor="@color/color_normal_gray_select_white"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <Button
                             android:id="@+id/btn_review_worst"
@@ -98,7 +98,7 @@
                             android:padding="4dp"
                             android:text="@string/term_review_worst"
                             android:textColor="@color/color_normal_gray_select_white"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     

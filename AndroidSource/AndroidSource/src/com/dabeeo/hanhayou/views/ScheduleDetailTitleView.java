@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
 import java.text.SimpleDateFormat;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.external.libraries.RoundedImageView;
@@ -27,6 +29,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   public TextView title, textMoney, textDays;
   public LinearLayout infoContainer;
   public LinearLayout likeAndBookmarkContainer, userContainer;
+  public View titleDivider;
   
   
   public ScheduleDetailTitleView(Context context)
@@ -98,6 +101,15 @@ public class ScheduleDetailTitleView extends RelativeLayout
     title = (TextView) view.findViewById(R.id.text_title);
     textMoney = (TextView) view.findViewById(R.id.text_money);
     textDays = (TextView) view.findViewById(R.id.text_days);
+    titleDivider = (View) view.findViewById(R.id.schedule_title_divider);
     addView(view);
   }
+  
+  public void initDayTitle()
+  {
+    title.setVisibility(View.GONE);
+    infoContainer.setVisibility(View.GONE);
+  }
+  
+  
 }

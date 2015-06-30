@@ -123,7 +123,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="90dip" />
-
         <!-- 중간 유저에 대한 내용 박스 -->
 
         <com.dabeeo.hanhayou.views.ScheduleDetailTitleView
