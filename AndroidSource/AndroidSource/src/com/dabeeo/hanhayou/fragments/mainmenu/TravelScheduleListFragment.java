@@ -94,7 +94,7 @@ public class TravelScheduleListFragment extends Fragment
     adapter = new TravelScheduleListAdapter(getActivity());
     adapter.setType(type);
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
-    if (SystemUtil.isConnectNetwork(getActivity()))
+    if (SystemUtil.isConnectNetwork(getActivity()) && (type == SCHEDULE_TYPE_POPULAR))
     {
       ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
       view.setBean(null);
