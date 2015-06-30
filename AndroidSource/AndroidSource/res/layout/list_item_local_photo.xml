@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="4dp" >
 
     <com.dabeeo.hanhayou.views.SquareImageView
         android:id="@+id/photo"
