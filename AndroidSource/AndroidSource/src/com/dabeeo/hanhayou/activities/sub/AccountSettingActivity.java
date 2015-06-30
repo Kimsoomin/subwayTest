@@ -16,7 +16,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,6 +52,7 @@ public class AccountSettingActivity extends ActionBarActivity
   public RelativeLayout progressLayout;
   public ApiClient apiClient;
   public boolean isValidName = false;
+  private ImageView typingCancel;
   
   private PreferenceManager preferenceManager;
   
@@ -71,6 +75,7 @@ public class AccountSettingActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    typingCancel = (ImageView) findViewById(R.id.image_name_typing_cancel);
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
     alertView = (LoginBottomAlertView) findViewById(R.id.alert_view);
     
@@ -80,6 +85,40 @@ public class AccountSettingActivity extends ActionBarActivity
     checkDuplicatedBtn = (Button) findViewById(R.id.btn_check_duplicate_name);
     changePasswordContainer = (LinearLayout) findViewById(R.id.container_change_password);
     withDrawContainer = (LinearLayout) findViewById(R.id.container_withdraw);
+    
+    typingCancel.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        editName.setText("");
+      }
+    });
+    
+    TextWatcher watcher = new TextWatcher()
+    {
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count)
+      {
+      }
+      
+      
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after)
+      {
+      }
+      
+      
+      @Override
+      public void afterTextChanged(Editable s)
+      {
+        if (s.length() > 0)
+          typingCancel.setVisibility(View.VISIBLE);
+        else
+          typingCancel.setVisibility(View.GONE);
+      }
+    };
+    editName.addTextChangedListener(watcher);
     
     checkDuplicatedBtn.setOnClickListener(duplicatedChcek);
     changePasswordContainer.setOnClickListener(menuClickListener);

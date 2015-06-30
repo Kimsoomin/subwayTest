@@ -59,7 +59,7 @@
     <string name="term_sync_only_wifi">Wi-Fi에서만 동기화 처리</string>
     <string name="term_setting_notification">알림설정</string>
     <string name="term_about">About</string>
-    <string name="term_version_info">앱 정보</string>
+    <string name="term_version_info">버전 정보</string>
     <string name="term_rating_app">앱 평가하기</string>
     <string name="term_notice">공지사항</string>
     <string name="term_current_version">"현재버전 : "</string>
@@ -129,9 +129,9 @@
     <!-- 회원가입 / 로그인 -->
     <string name="term_login">로그인</string>
     <string name="term_join">회원가입</string>
-    <string name="term_email">E-mail</string>
-    <string name="term_password">Password</string>
-    <string name="term_name">Name</string>
+    <string name="term_email">이메일</string>
+    <string name="term_password">비밀번호</string>
+    <string name="term_name">프로필 이름</string>
     <string name="term_password_join">Password(User 6&#8211;16)</string>
     <string name="term_re_password_join">Re-Password</string>
     <string name="term_gender">Gender</string>
@@ -146,6 +146,8 @@
     <string name="msg_gps_agreement">위치정보약관 동의</string>
     <string name="msg_date_of_birth">생일을 입력해주세요</string>
     <string name="term_send">보내기</string>
+    <string name="msg_please_valid_check_name">영문/숫자만 입력가능합니다.</string>
+    <string name="msg_valid_password">영문/숫자/특수문자로 입력가능합니다.</string>
     <!-- 지하철 -->
     <string name="term_find_start_station">출발역 찾기</string>
     <string name="msg_please_gps_enable">"원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요"</string>
