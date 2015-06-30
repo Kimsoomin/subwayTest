@@ -132,7 +132,7 @@
     <string name="term_email">이메일</string>
     <string name="term_password">비밀번호</string>
     <string name="term_name">프로필 이름</string>
-    <string name="term_password_join">Password(User 6&#8211;16)</string>
+    <string name="term_password_join">Password (6&#8211;16)</string>
     <string name="term_re_password_join">Re-Password</string>
     <string name="term_gender">Gender</string>
     <string name="term_gender_male">Male</string>
@@ -316,6 +316,7 @@
     <string name="msg_hint_new_password">새 비밀번호 (6~16)</string>
     <string name="msg_hint_new_password_confirm">새 비밀번호 확인</string>
     <string name="term_see_agreement">약관보기</string>
+    <string name="term_detail">(자세히)</string>
     <!-- 추천일정 -->
     <string name="term_culture">한류</string>
     <string name="term_tour">관광</string>
@@ -342,6 +343,9 @@
     <string name="term_auth">인증하기</string>
     <string name="term_input_auth_number">인증번호 입력</string>
     <string name="msg_complete_join">회원가입 완료!\n가입하신 이메일로 인증번호를 발송하였습니다.\n인증번호를 확인한 후,\n입력창에 인증번호를 입력해주세요</string>
+    <string name="msg_allow_receive_email">이메일을 통한 상품/이벤트 정보 수신에 동의합니다. (선택)</string>
+    <string name="term_cell_phone">휴대폰 번호 (-없이 입력)</string>
+    <string name="msg_allow_receive_phone">휴대폰/SMS 통한 상품/이벤트 정보수신에 동의합니다. (선택)</string>
     <!-- WishList -->
     <string name="msg_empty_wish_list">위시 리스트가 없습니다</string>
     <string name="msg_help_wish_list">한국의 인기 상품들을 둘러보고\n위시리스트를 채워보세요!</string>
