@@ -118,7 +118,22 @@ public class TravelScheduleListAdapter extends BaseAdapter
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     
-    ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
+    if (type == TravelScheduleListFragment.SCHEDULE_TYPE_MY)
+    {
+      if (!SystemUtil.isConnectNetwork(context))
+      {
+        iconRemommend.setVisibility(View.GONE);
+        imageView.setVisibility(View.GONE);
+      }
+      else
+      {
+        imageView.setVisibility(View.VISIBLE);
+        iconRemommend.setVisibility(View.VISIBLE);
+      }
+    }
+    
+    if (imageView.getVisibility() == View.VISIBLE)
+      ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
     
     view.setOnClickListener(new OnClickListener()
     {

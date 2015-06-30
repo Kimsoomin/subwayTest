@@ -268,8 +268,11 @@ public class TravelScheduleListFragment extends Fragment
       if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
       {
         Log.w("WARN", "isLoad ended:" + isLoadEnded);
-        page++;
-        loadSchedules();
+        if (type == SCHEDULE_TYPE_POPULAR)
+        {
+          page++;
+          loadSchedules();
+        }
       }
     }
   };
