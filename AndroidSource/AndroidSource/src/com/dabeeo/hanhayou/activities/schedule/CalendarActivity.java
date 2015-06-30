@@ -21,99 +21,96 @@ import com.dabeeo.hanhayou.external.library.calendar.CaldroidListener;
 
 public class CalendarActivity extends ActionBarActivity
 {
-	private CaldroidFragment calFragment;
-	
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_calendar);
-		@SuppressLint("InflateParams")
-		View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
-		TextView title = (TextView) customActionBar.findViewById(R.id.title);
-		title.setText(getString(R.string.term_select_date));
-		getSupportActionBar().setCustomView(customActionBar);
-		getSupportActionBar().setDisplayShowCustomEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		
-		calFragment = new CaldroidFragment();
-		calFragment.setMinDate(new Date());
-		if (calFragment != null)
-		{
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			ft.replace(R.id.content, calFragment);
-			ft.commit();
-		}
-		
-		final CaldroidListener listener = new CaldroidListener()
-		{
-			
-			@Override
-			public void onSelectDate(Date date, View view)
-			{
-				Calendar calendar = Calendar.getInstance();
-				int cYear = calendar.get(Calendar.YEAR);
-				int cMonth = calendar.get(Calendar.MONTH);
-				int cDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-				
-				Calendar selectCalendar = Calendar.getInstance();
-				selectCalendar.setTime(date);
-				
-				int year = selectCalendar.get(Calendar.YEAR);
-				int month = selectCalendar.get(Calendar.MONTH);
-				int dayOfMonth = selectCalendar.get(Calendar.DAY_OF_MONTH);
-				
-				Log.w("WARN", " " + year + " " + month + " " + dayOfMonth);
-				if (year >= cYear && month >= cMonth && dayOfMonth >= cDayOfMonth)
-				{
-					Intent i = new Intent();
-					i.putExtra("year", year);
-					i.putExtra("month", month);
-					i.putExtra("dayOfMonth", dayOfMonth);
-					setResult(RESULT_OK, i);
-					finish();
-				}
-			}
-			
-			
-			@Override
-			public void onChangeMonth(int month, int year)
-			{
-			}
-			
-			
-			@Override
-			public void onLongClickDate(Date date, View view)
-			{
-			}
-			
-			
-			@Override
-			public void onCaldroidViewCreated()
-			{
-				
-			}
-			
-		};
-		
-		calFragment.setCaldroidListener(listener);
-	}
-	
-	@Override
+  private CaldroidFragment calFragment;
+  private Calendar selectedCalendar = Calendar.getInstance();
+  
+  
+  @Override
+  protected void onCreate(Bundle savedInstanceState)
+  {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_calendar);
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    title.setText(getString(R.string.term_select_date));
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
+    
+    calFragment = new CaldroidFragment();
+    calFragment.setMinDate(new Date());
+    if (calFragment != null)
+    {
+      FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+      ft.replace(R.id.content, calFragment);
+      ft.commit();
+    }
+    
+    final CaldroidListener listener = new CaldroidListener()
+    {
+      @Override
+      public void onSelectDate(Date date, View view)
+      {
+        selectedCalendar.setTime(date);
+      }
+      
+      
+      @Override
+      public void onChangeMonth(int month, int year)
+      {
+      }
+      
+      
+      @Override
+      public void onLongClickDate(Date date, View view)
+      {
+      }
+      
+      
+      @Override
+      public void onCaldroidViewCreated()
+      {
+        
+      }
+      
+    };
+    
+    calFragment.setCaldroidListener(listener);
+  }
+  
+  
+  @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
     getMenuInflater().inflate(R.menu.menu_confirm, menu);
     return super.onCreateOptionsMenu(menu);
-  }	
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		int id = item.getItemId();
-		if (id == android.R.id.home)
-			finish();
-		return super.onOptionsItemSelected(item);
-	}
+  }
+  
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    int id = item.getItemId();
+    if (id == android.R.id.home)
+      finish();
+    else
+    {
+      Calendar calendar = Calendar.getInstance();
+      if (selectedCalendar.getTimeInMillis() > calendar.getTimeInMillis())
+      {
+        int year = selectedCalendar.get(Calendar.YEAR);
+        int month = selectedCalendar.get(Calendar.MONTH);
+        int dayOfMonth = selectedCalendar.get(Calendar.DAY_OF_MONTH);
+        Intent i = new Intent();
+        i.putExtra("year", year);
+        i.putExtra("month", month);
+        i.putExtra("dayOfMonth", dayOfMonth);
+        setResult(RESULT_OK, i);
+        finish();
+      }
+    }
+    return super.onOptionsItemSelected(item);
+  }
 }
