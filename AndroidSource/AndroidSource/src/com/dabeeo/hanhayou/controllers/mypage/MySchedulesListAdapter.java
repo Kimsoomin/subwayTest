@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -29,11 +31,17 @@ public class MySchedulesListAdapter extends BaseAdapter
   public ArrayList<ScheduleBean> beans = new ArrayList<>();
   private boolean isEditMode = false;
   private Context context;
+  private float imageWidth;
   
   
   public MySchedulesListAdapter(Context context)
   {
     this.context = context;
+    @SuppressWarnings("deprecation")
+    float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
+    float margin = (int) SystemUtil.convertDpToPixel(10f, (Activity) context);
+    // two images, three margins of 10dips
+    imageWidth = ((width - (3 * margin)) / 2);
   }
   
   
@@ -172,6 +180,10 @@ public class MySchedulesListAdapter extends BaseAdapter
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     ImageView imagePrivate = (ImageView) view.findViewById(R.id.image_private);
+    
+    int height = (int) ((imageWidth / 3) * 2);
+    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) imageWidth, height);
+    imageView.setLayoutParams(params);
     
     if (!bean.isOpen)
       imagePrivate.setVisibility(View.VISIBLE);

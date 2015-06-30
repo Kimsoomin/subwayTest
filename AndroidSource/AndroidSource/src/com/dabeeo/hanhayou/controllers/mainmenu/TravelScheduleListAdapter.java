@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -28,7 +29,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
   Context context;
   LayoutInflater inflater;
   int layoutResourceId;
-  float imageWidth;
+  private float imageWidth;
   private int type = TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR;
   private ArrayList<ScheduleBean> beans = new ArrayList<>();
   
@@ -109,6 +110,10 @@ public class TravelScheduleListAdapter extends BaseAdapter
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
+    int height = (int) ((imageWidth / 3) * 2);
+    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) imageWidth, height);
+    imageView.setLayoutParams(params);
+    
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
     if (bean.startDate != null)
       startDate.setText(format.format(bean.startDate));
@@ -144,5 +149,4 @@ public class TravelScheduleListAdapter extends BaseAdapter
     });
     return view;
   }
-  
 }
