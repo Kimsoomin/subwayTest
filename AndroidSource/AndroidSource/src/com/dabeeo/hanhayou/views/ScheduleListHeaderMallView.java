@@ -51,6 +51,7 @@ public class ScheduleListHeaderMallView extends RelativeLayout
     
     ImageView imageview = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
+    title.setVisibility(View.GONE);
     
     title.setText("서울 현지인이 추천하는\n여행선물 TOP");
     addView(view);

@@ -33,6 +33,8 @@ public class TravelScheduleListAdapter extends BaseAdapter
   private int type = TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR;
   private ArrayList<ScheduleBean> beans = new ArrayList<>();
   
+  public RelativeLayout layoutRecommend;
+  
   
   public TravelScheduleListAdapter(Context context)
   {
@@ -92,6 +94,10 @@ public class TravelScheduleListAdapter extends BaseAdapter
     return position;
   }
   
+  public void setVisibleRecommend()
+  {
+    layoutRecommend.setVisibility(View.VISIBLE);
+  }
   
   @SuppressLint({ "ViewHolder", "SimpleDateFormat" })
   @Override
@@ -103,7 +109,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    ImageView iconRemommend = (ImageView) view.findViewById(R.id.icon_recommend);
+    layoutRecommend = (RelativeLayout) view.findViewById(R.id.recommend_container);
     TextView startDate = (TextView) view.findViewById(R.id.start_date);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView month = (TextView) view.findViewById(R.id.month);
@@ -128,9 +134,12 @@ public class TravelScheduleListAdapter extends BaseAdapter
       imageView.setVisibility(View.VISIBLE);
     
     if (SystemUtil.isConnectNetwork(context))
-      iconRemommend.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+    {
+      if(type == TravelScheduleListFragment.SCHEDULE_TYPE_POPULAR)
+        layoutRecommend.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+    }
     else
-      iconRemommend.setVisibility(View.GONE);
+      layoutRecommend.setVisibility(View.GONE);
     
     if (imageView.getVisibility() == View.VISIBLE)
       ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);

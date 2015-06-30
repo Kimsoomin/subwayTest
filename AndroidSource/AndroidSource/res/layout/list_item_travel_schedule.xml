@@ -26,16 +26,31 @@
                 android:contentDescription="@null"
                 android:src="@drawable/default_thumbnail_s" />
 
-            <ImageView
-                android:id="@+id/icon_recommend"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <RelativeLayout
+                android:id="@+id/recommend_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="7dp"
-                android:contentDescription="@null"
-                android:src="@drawable/icon_list_recommend" />
+                android:layout_marginLeft="8dip"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="35dip"
+                    android:layout_height="45dip"
+                    android:background="@drawable/icon_list_recommend"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="4dp"
+                    android:text="@string/term_recommend"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <LinearLayout

@@ -75,7 +75,7 @@ public class PlanOverlay  extends ItemizedIconOverlay<OverlayItem>
     
     textpaint = new Paint(Paint.FAKE_BOLD_TEXT_FLAG);
     textpaint.setColor(Color.rgb(255, 255, 255));
-    textpaint.setTextSize(25);
+    textpaint.setTextSize(30);
     textpaint.setTextAlign(Align.CENTER);
     textpaint.setTypeface(typeface);
   }
