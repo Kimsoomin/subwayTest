@@ -21,7 +21,7 @@ public class PlaceDetailTitleView extends RelativeLayout
   public LinearLayout container;
   private ImageView imageView;
   public TextView title;
-  private TextView name, time, likeCount, reviewCount;
+  private TextView name, time, likeCount, bookmarkCount;
   
   
   public PlaceDetailTitleView(Context context)
@@ -56,7 +56,7 @@ public class PlaceDetailTitleView extends RelativeLayout
     if(bean.updateDate !=null)
       time.setText(format.format(bean.updateDate));
     likeCount.setText(Integer.toString(bean.likeCount));
-    reviewCount.setText(Integer.toString(bean.reviewCount));
+    bookmarkCount.setText(Integer.toString(bean.bookmarkCount));
     ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
   }
   
@@ -72,7 +72,7 @@ public class PlaceDetailTitleView extends RelativeLayout
     name = (TextView) view.findViewById(R.id.name);
     time = (TextView) view.findViewById(R.id.time);
     likeCount = (TextView) view.findViewById(R.id.like_count);
-    reviewCount = (TextView) view.findViewById(R.id.review_count);
+    bookmarkCount = (TextView) view.findViewById(R.id.bookmark_count);
     
     addView(view);
   }

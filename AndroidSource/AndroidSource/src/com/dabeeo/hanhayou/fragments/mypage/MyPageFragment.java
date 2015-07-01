@@ -53,6 +53,7 @@ public class MyPageFragment extends Fragment
   private RoundedImageView imageProfile;
   private TextView textName;
   private ImageView imageBookmark, imageOrder, imageCart;
+  private TextView textBookmark, textOrder, textCart;
   private LinearLayout conatinerMySchedule, conatinerMyPlace, conatinerMySetting, conatinerMyBookmark, conatinerMyOrders, conatinerMyCart;
   
   private boolean isChangeBackground = false;
@@ -82,6 +83,10 @@ public class MyPageFragment extends Fragment
     imageBookmark = (ImageView) view.findViewById(R.id.image_my_bookmark);
     imageOrder = (ImageView) view.findViewById(R.id.image_my_order);
     imageCart = (ImageView) view.findViewById(R.id.image_my_cart);
+    
+    textBookmark = (TextView) view.findViewById(R.id.text_my_bookmark);
+    textOrder = (TextView) view.findViewById(R.id.text_my_order);
+    textCart = (TextView) view.findViewById(R.id.text_my_cart);
     
     conatinerMySetting.setOnClickListener(clickListener);
     conatinerMySchedule.setOnClickListener(menuClickListener);
@@ -133,6 +138,10 @@ public class MyPageFragment extends Fragment
     imageBookmark.setImageResource(isConnected ? R.drawable.btn_mypage_bookmark : R.drawable.btn_mypage_bookmark_offline);
     imageOrder.setImageResource(isConnected ? R.drawable.btn_mypage_buylist : R.drawable.btn_mypage_buylist_offline);
     imageCart.setImageResource(isConnected ? R.drawable.btn_mypage_cart : R.drawable.btn_mypage_cart_offline);
+    
+    textBookmark.setTextColor(getResources().getColor(R.color.lighter_gray));
+    textOrder.setTextColor(getResources().getColor(R.color.lighter_gray));
+    textCart.setTextColor(getResources().getColor(R.color.lighter_gray));
   }
   
   

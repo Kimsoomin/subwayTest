@@ -47,7 +47,7 @@ public class MapCheckUtil
     context = contextp;
     run = runp;
     
-    File directory = new File(Global.GetPathWithSDCard());
+    File directory = new File(Global.GetDatabaseFilePath());
     if (!directory.exists())
       directory.mkdirs();
     

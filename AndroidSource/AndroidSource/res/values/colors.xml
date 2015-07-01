@@ -15,10 +15,10 @@
     <color name="darker_gray">#444a4b</color>
     <color name="gray">#c3c3c3</color>
     <color name="darker_gray_transparent">#90444a4b</color>
-    <color name="light_pink">#f0ff6262</color>
+    <color name="light_pink">#d0ff6262</color>
     <color name="dark_pink">#ff6262</color>
     <color name="dark_pink_transparent">#90ff6262</color>
-    <color name="light_blue">#70697577</color>
+    <color name="light_blue">#d0697577</color>
     <color name="dark_blue">#697577</color>
     <color name="summary_center">#dddddd</color>
     <color name="navi_center">#a3a3a3</color>

@@ -105,12 +105,11 @@
                             android:textColor="@color/darker_gray"
                             android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=">"
-                            android:textColor="@color/light_gray"
-                            android:textSize="16sp" />
+                        <ImageView 
+                            android:layout_width="11dip"
+                            android:layout_height="15dip"
+                            android:background="@drawable/icon_arrow_g_next"
+                            android:contentDescription="@null"/>
                     </LinearLayout>
 
                     <View
@@ -190,7 +189,7 @@
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="16dip"
                     android:gravity="center"
                     android:text="@string/msg_recommend_step_2"
                     android:textSize="16sp" />
@@ -200,7 +199,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dip"
                     android:layout_weight="1"
                     android:background="@color/gray"
                     android:orientation="vertical" >

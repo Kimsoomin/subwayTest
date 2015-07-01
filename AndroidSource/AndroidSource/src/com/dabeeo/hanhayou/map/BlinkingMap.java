@@ -270,7 +270,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       
     }
     
-    
     /** 130416 공식과 동작이 정확하지 않다. 다시 분석 요망 */
     public void onSensorChanged(SensorEvent event)
     {

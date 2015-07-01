@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
@@ -52,6 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines="2"
+                    android:ellipsize="end"
                     android:textStyle="bold" />
 
                 <LinearLayout
