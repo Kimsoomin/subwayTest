@@ -96,7 +96,7 @@ public class TravelStrategyActivity extends ActionBarActivity
     viewPager.setAdapter(adapter);
     
     recommendSeoulFragment = new TravelStrategyListFragment(-1);
-    popularFragment = new PlaceListFragment(1);
+    popularFragment = new PlaceListFragment(9);
     shoppingFragment = new PlaceListFragment(2);
     restaurantFragment = new PlaceListFragment(7);
     

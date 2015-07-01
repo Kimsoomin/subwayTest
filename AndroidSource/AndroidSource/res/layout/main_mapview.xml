@@ -311,7 +311,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:background="@android:color/transparent"
-                android:visibility="visible" >
+                android:visibility="invisible" >
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -344,7 +344,7 @@
                             android:layout_height="55dip"
                             android:layout_marginRight="8dip"
                             android:layout_marginTop="12dip"
-                            android:background="@drawable/default_thumbnail_s"
+                            android:background="@drawable/thumbnail_map_default"
                             android:contentDescription="@null"
                             android:visibility="visible" />
 
