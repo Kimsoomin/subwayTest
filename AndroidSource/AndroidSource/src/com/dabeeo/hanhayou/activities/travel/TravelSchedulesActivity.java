@@ -33,6 +33,7 @@ import com.dabeeo.hanhayou.activities.mypage.LoginActivity;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.TravelScheduleListFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
@@ -51,6 +52,9 @@ public class TravelSchedulesActivity extends ActionBarActivity
   public TravelScheduleListFragment myScheduleListFragment;
   public TravelScheduleListFragment myBookMarkscheduleListFragment;
   
+  private boolean isFirstSelectTravelSchedules = true;
+  
+  private AlertDialogManager alertManager;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -95,6 +99,8 @@ public class TravelSchedulesActivity extends ActionBarActivity
     adapter.addFragement(myBookMarkscheduleListFragment);
     adapter.notifyDataSetChanged();
     
+    alertManager = new AlertDialogManager(this);
+    
     displayTitles();
   }
   
@@ -123,6 +129,8 @@ public class TravelSchedulesActivity extends ActionBarActivity
     
     if (PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn())
       viewPager.setCurrentItem(1);
+    else
+      isFirstSelectTravelSchedules = false;
   }
   
   
@@ -245,11 +253,37 @@ public class TravelSchedulesActivity extends ActionBarActivity
     @Override
     public void onTabSelected(final Tab tab, FragmentTransaction ft)
     {
-      if (!SystemUtil.isConnectNetwork(getApplicationContext()) && tab.getPosition() == 2)
+      
+      if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn() 
+          && (tab.getPosition() != 0) && !isFirstSelectTravelSchedules)
       {
-        new AlertDialogManager(TravelSchedulesActivity.this).showDontNetworkConnectDialog();
+        alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_require_login), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+        {
+          
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            if(SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
+            {
+              alertManager.dismiss();
+              Intent i = new Intent(TravelSchedulesActivity.this, LoginActivity.class);
+              i.putExtra("mainFragmentPostion", -1);
+              startActivity(i);
+              overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+            }else
+            {
+              alertManager.showDontNetworkConnectDialog();
+            }
+          }          
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            lastSelectedTab = 0;            
+          }
+        });
         
-        Runnable runnable = new Runnable()
+        Runnable runn = new Runnable()
         {
           @Override
           public void run()
@@ -257,51 +291,18 @@ public class TravelSchedulesActivity extends ActionBarActivity
             getSupportActionBar().setSelectedNavigationItem(lastSelectedTab);
           }
         };
+        
         Handler handler = new Handler();
-        handler.post(runnable);
+        handler.post(runn);
       }
       else
       {
-        if (tab.getPosition() == 1 || tab.getPosition() == 2)
-        {
-          if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn())
-          {
-            Builder builder = new AlertDialog.Builder(TravelSchedulesActivity.this);
-            builder.setTitle(getString(R.string.term_alert));
-            builder.setMessage(getString(R.string.msg_require_login));
-            builder.setCancelable(false);
-            builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener()
-            {
-              @Override
-              public void onClick(DialogInterface dialog, int which)
-              {
-                Intent i = new Intent(TravelSchedulesActivity.this, LoginActivity.class);
-                i.putExtra("mainFragmentPostion", -1);
-                startActivity(i);
-                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-              }
-            });
-            builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener()
-            {
-              @Override
-              public void onClick(DialogInterface dialog, int which)
-              {
-                viewPager.setCurrentItem(0);
-                lastSelectedTab = tab.getPosition();
-              }
-            });
-            builder.create().show();
-            return;
-          }
-          viewPager.setCurrentItem(tab.getPosition());
-          lastSelectedTab = tab.getPosition();
-        }
-        else
-        {
-          viewPager.setCurrentItem(tab.getPosition());
-          lastSelectedTab = tab.getPosition();
-        }
+        viewPager.setCurrentItem(tab.getPosition());
+        lastSelectedTab = tab.getPosition();
       }
+      
+      if (tab.getPosition() == 1 || tab.getPosition() == 2)
+        isFirstSelectTravelSchedules = false;
     }
     
     
