@@ -8,6 +8,7 @@ public class PremiumBean
   public String seqCode;
   public int cityIdx;
   public String title;
+  public String placeTitle;
   public String categoryId;
   public double lat, lng;
   public int popularCount = 0;
@@ -87,6 +88,14 @@ public class PremiumBean
       {
         JSONObject mainImageObj = obj.getJSONObject("mainImage");
         imageUrl = mainImageObj.getString("url");
+      }
+      
+      if (obj.has("placeTitle"))
+      {
+        placeTitle = obj.getString("placeTitle");
+      }else
+      {
+        placeTitle = "";
       }
       
     }

@@ -82,7 +82,6 @@
                     android:layout_height="50dip"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dip"
-                    android:background="@color/appcolor"
                     android:contentDescription="@null" />
             </LinearLayout>
 

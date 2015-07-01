@@ -255,7 +255,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
     {
       
       if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn() 
-          && (tab.getPosition() != 0) && !isFirstSelectTravelSchedules)
+          && tab.getPosition() != 0 && !isFirstSelectTravelSchedules)
       {
         alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_require_login), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
         {

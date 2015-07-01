@@ -743,10 +743,10 @@ public class ApiClient
    *          2
    * @return
    */
-  public NetworkResult completeCreateRecommendSchedule(String startDate, String idx, int dayCount)
+  public NetworkResult completeCreateRecommendSchedule(String startDate, String idx, int dayCount, String title)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_SMART_SAVE&startDate=" + startDate + "&dayCount=" + dayCount + "&planIdx=" + idx + "&userSeq="
-        + PreferenceManager.getInstance(context).getUserSeq());
+        + PreferenceManager.getInstance(context).getUserSeq()+"&title="+title);
   }
   
   

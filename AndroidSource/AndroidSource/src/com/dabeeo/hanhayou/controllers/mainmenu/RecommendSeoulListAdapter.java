@@ -93,7 +93,7 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     SpannableStringBuilder style = new SpannableStringBuilder(bean.title);
     style.setSpan(new BackgroundColorSpan(Color.parseColor("#ffffff")), 0, bean.title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     title.setText(style);
-//    subtitle.setText(bean.);
+    subtitle.setText(bean.placeTitle);
     likeCount.setText(Integer.toString(bean.likeCount));
     
     Log.w("WARN", "bean.imageUrl : " + bean.imageUrl);

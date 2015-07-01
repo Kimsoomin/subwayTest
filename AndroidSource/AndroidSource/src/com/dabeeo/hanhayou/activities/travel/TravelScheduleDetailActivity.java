@@ -361,7 +361,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     protected NetworkResult doInBackground(Void... params)
     {
       ApiClient apiClient = new ApiClient(getApplicationContext());
-      return apiClient.completeCreateRecommendSchedule(startDateString, idx, dayCount);
+      return apiClient.completeCreateRecommendSchedule(startDateString, idx, dayCount, titleFromOutSide);
     }
     
     

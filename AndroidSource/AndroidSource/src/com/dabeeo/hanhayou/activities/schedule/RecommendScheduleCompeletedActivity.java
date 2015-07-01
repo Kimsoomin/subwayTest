@@ -44,6 +44,8 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
   private ApiClient apiClient;
   private int theme = 0;
   
+  public String myScheduleTitle;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -128,7 +130,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     TextView title = (TextView) findViewById(R.id.title);
     TextView month = (TextView) findViewById(R.id.month);
     
-    String myScheduleTitle = getString(R.string.msg_recommend_schedule_title);
+    myScheduleTitle = getString(R.string.msg_recommend_schedule_title);
     myScheduleTitle = myScheduleTitle.replaceAll("#1", PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserName());
     myScheduleTitle = myScheduleTitle.replaceAll("#2", Integer.toString(bean.dayCount));
     final String finalMyScheduleTitle = myScheduleTitle;
@@ -277,7 +279,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(ScheduleBean... params)
     {
-      return apiClient.completeCreateRecommendSchedule(bean.startDateString, bean.idx, bean.dayCount);
+      return apiClient.completeCreateRecommendSchedule(bean.startDateString, bean.idx, bean.dayCount, myScheduleTitle);
     }
     
     
