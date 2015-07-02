@@ -385,6 +385,13 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
         return;
+      }else
+      {
+        if(!SystemUtil.isConnectNetwork(getActivity()))
+        {
+          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+          return;
+        }
       }
       
       if (v.getId() == btnReviewBest.getId())

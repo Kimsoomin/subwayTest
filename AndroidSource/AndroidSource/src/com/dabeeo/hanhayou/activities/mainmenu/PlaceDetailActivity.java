@@ -437,6 +437,13 @@ public class PlaceDetailActivity extends ActionBarActivity
       {
         new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
         return;
+      }else
+      {
+        if(!SystemUtil.isConnectNetwork(getApplicationContext()))
+        {
+          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+          return;
+        }
       }
       
       if (v.getId() == btnReviewBest.getId())
