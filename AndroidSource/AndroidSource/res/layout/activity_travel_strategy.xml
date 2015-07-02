@@ -7,16 +7,17 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp" />
 
     <!-- 하단 탭바 -->
-    
-    <ImageView 
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="15dip"
         android:layout_above="@+id/container_bottom_tab"
         android:background="@drawable/bottom_bar_shadow"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null" />
 
     <LinearLayout
         android:id="@+id/container_bottom_tab"
