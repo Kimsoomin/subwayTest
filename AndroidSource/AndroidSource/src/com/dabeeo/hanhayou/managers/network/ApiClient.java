@@ -613,7 +613,7 @@ public class ApiClient
     boolean isSuccess = false;
     try
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "v=m1&mode=CLAIM_INS&parentType=review&parentIdx=" + idx + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq()
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=CLAIM_INS&parentType=review&parentIdx=" + idx + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq()
           + "&reason=" + URLEncoder.encode(reason, "utf-8"));
       
       JSONObject obj = new JSONObject(result.response);
