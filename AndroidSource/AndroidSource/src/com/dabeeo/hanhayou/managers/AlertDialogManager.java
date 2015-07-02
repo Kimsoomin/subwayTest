@@ -11,6 +11,7 @@ import android.text.TextUtils;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mypage.LoginActivity;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class AlertDialogManager
 {
@@ -47,23 +48,29 @@ public class AlertDialogManager
   {
     showAlertDialog(activity.getString(R.string.term_alert), activity.getString(R.string.msg_require_login), activity.getString(android.R.string.ok), activity.getString(android.R.string.cancel),
         new AlertListener()
+    {
+      @Override
+      public void onPositiveButtonClickListener()
+      {
+        if(SystemUtil.isConnectNetwork(activity))
         {
-          @Override
-          public void onPositiveButtonClickListener()
-          {
-            Intent i = new Intent(activity, LoginActivity.class);
-            i.putExtra("mainFragmentPostion", mainFragmentPosition);
-            activity.startActivity(i);
-            activity.overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-          }
-          
-          
-          @Override
-          public void onNegativeButtonClickListener()
-          {
-            
-          }
-        });
+          Intent i = new Intent(activity, LoginActivity.class);
+          i.putExtra("mainFragmentPostion", mainFragmentPosition);
+          activity.startActivity(i);
+          activity.overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }else
+        {
+          showDontNetworkConnectDialog();
+        }
+      }
+      
+      
+      @Override
+      public void onNegativeButtonClickListener()
+      {
+        
+      }
+    });
   }
   
   

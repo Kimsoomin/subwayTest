@@ -207,15 +207,11 @@ public class TravelScheduleListFragment extends Fragment
             @Override
             public void onClick(View arg0)
             {
-              if (!SystemUtil.isConnectNetwork(getActivity()))
-                new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-              else
+              if (!PreferenceManager.getInstance(getActivity()).isLoggedIn())
               {
-                if (!PreferenceManager.getInstance(getActivity()).isLoggedIn())
-                {
-                  new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
-                  return;
-                }
+                new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
+              }else
+              {
                 Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
                 startActivity(i);
               }

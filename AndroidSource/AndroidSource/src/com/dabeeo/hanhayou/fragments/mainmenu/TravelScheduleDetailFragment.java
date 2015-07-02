@@ -381,9 +381,6 @@ public class TravelScheduleDetailFragment extends Fragment
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
       
-      if (!SystemUtil.isConnectNetwork(getActivity()))
-        return;
-      
       if (!PreferenceManager.getInstance(getActivity()).isLoggedIn())
       {
         new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);

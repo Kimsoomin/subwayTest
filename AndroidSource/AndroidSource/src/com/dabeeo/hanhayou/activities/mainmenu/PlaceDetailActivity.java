@@ -432,10 +432,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       btnReviewBest.setSelected(false);
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
-      
-      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        return;
-      
+           
       if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
       {
         new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
@@ -485,12 +482,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-      {
-        new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-        return;
-      }
-      
       if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
       {
         if (v.getId() == R.id.btn_bookmark)

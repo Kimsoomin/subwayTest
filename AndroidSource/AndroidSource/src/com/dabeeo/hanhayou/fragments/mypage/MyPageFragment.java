@@ -139,9 +139,9 @@ public class MyPageFragment extends Fragment
     imageOrder.setImageResource(isConnected ? R.drawable.btn_mypage_buylist : R.drawable.btn_mypage_buylist_offline);
     imageCart.setImageResource(isConnected ? R.drawable.btn_mypage_cart : R.drawable.btn_mypage_cart_offline);
     
-    textBookmark.setTextColor(getResources().getColor(R.color.lighter_gray));
-    textOrder.setTextColor(getResources().getColor(R.color.lighter_gray));
-    textCart.setTextColor(getResources().getColor(R.color.lighter_gray));
+    textBookmark.setTextColor(isConnected ? getResources().getColor(R.color.darker_gray) : getResources().getColor(R.color.lighter_gray));
+    textOrder.setTextColor(isConnected ? getResources().getColor(R.color.darker_gray) : getResources().getColor(R.color.lighter_gray));
+    textCart.setTextColor(isConnected ? getResources().getColor(R.color.darker_gray) : getResources().getColor(R.color.lighter_gray));
   }
   
   

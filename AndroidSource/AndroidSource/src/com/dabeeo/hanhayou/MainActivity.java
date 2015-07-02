@@ -211,11 +211,6 @@ public class MainActivity extends ActionBarActivity
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
-          if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-          {
-            new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
-            return;
-          }
           new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
           return;
         }
@@ -235,12 +230,6 @@ public class MainActivity extends ActionBarActivity
         break;
       
       case POSITION_WISHLIST:
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
-        
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
           new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
