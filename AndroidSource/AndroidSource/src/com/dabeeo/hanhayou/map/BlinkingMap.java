@@ -2302,7 +2302,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       categorys = new LinkedList<>();
     }
     
-    int reSize = DpToPixel(20);
+    int reSize = DpToPixel(22);
     
     for (int resourceId : categoryResource)
     {

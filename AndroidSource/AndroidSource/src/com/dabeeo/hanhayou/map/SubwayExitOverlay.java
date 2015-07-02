@@ -44,7 +44,7 @@ public class SubwayExitOverlay extends ItemizedIconOverlayEx<OverlayItem>
 	}
 	
 	@Override
-	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords) 
+	protected void onDrawItem(Canvas canvas, OverlayItem item, Point curScreenCoords, float orientation) 
 	{
 		
 		exit = item.getTitle();

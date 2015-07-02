@@ -1,5 +1,8 @@
 package com.dabeeo.hanhayou.activities.mypage;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,6 +92,12 @@ public class LoginActivity extends Activity
           return;
         }
         
+        if (!validCheckEmail(editEmail.getText().toString()))
+        {
+          alertView.setAlert(getString(R.string.msg_please_valid_check_email));
+          return;
+        }
+        
         new UserLoginTask().execute();
         
       }
@@ -100,6 +109,23 @@ public class LoginActivity extends Activity
         finish();
     }
   };
+  
+  public boolean validCheckEmail(String email)
+  {
+    boolean validEmail = false;
+    
+    String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+    CharSequence inputStr = email;
+    
+    Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher(inputStr);
+    if (matcher.matches())
+    {
+      validEmail = true;
+    }
+    
+    return validEmail;
+  }
   
   
   public void responsParser(String response)

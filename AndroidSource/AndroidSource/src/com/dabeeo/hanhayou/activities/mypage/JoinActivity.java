@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,10 +24,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -66,7 +69,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   public String mailFemail;
   
   private RelativeLayout progressLayout;
-  
+  private FrameLayout joinLayout;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -104,6 +107,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     checkPrivateAgreement = (CheckBox) findViewById(R.id.chk_private_agreement);
     checkGPSAgreement = (CheckBox) findViewById(R.id.chk_gps_agreement);
     
+    joinLayout = (FrameLayout) findViewById(R.id.join_frame_layout);
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
     
     checkAllowReceiveMail = (CheckBox) findViewById(R.id.checkbox_allow_receive_ads);
@@ -349,6 +353,8 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     @Override
     public void onClick(View v)
     {
+      InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+      mgr.hideSoftInputFromWindow(joinLayout.getWindowToken(), 0);
       if (btnGenderMale.isActivated())
       {
         isMale = false;
