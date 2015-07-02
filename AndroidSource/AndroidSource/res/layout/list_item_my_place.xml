@@ -56,7 +56,10 @@
                     <TextView
                         android:id="@+id/created_at"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/light_gray" />
 
                     <ImageView
                         android:id="@+id/image_private"
@@ -69,10 +72,10 @@
 
                 <TextView
                     android:id="@+id/title"
-                    style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="2"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textStyle="bold" />
 
                 <TextView

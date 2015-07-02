@@ -45,15 +45,6 @@
                 android:orientation="vertical"
                 android:padding="8dp" >
 
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="2"
-                    android:ellipsize="end"
-                    android:textStyle="bold" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -61,10 +52,12 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/month"
+                        android:id="@+id/created_at"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/light_gray" />
 
                     <ImageView
                         android:id="@+id/image_private"
@@ -72,8 +65,24 @@
                         android:layout_height="15dp"
                         android:layout_marginLeft="4dp"
                         android:src="@drawable/icon_list_private_on"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/appcolor" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

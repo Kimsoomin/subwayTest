@@ -57,6 +57,7 @@
                 android:background="@android:color/white"
                 android:padding="2dp"
                 android:singleLine="true"
+                android:ellipsize="end"
                 android:textColor="@color/appcolor"
                 android:textStyle="bold" />
 

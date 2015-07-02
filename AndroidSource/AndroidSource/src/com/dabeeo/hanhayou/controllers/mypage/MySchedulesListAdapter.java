@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.controllers.mypage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -175,6 +176,7 @@ public class MySchedulesListAdapter extends BaseAdapter
     });
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+    TextView createdAt = (TextView) view.findViewById(R.id.created_at);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView month = (TextView) view.findViewById(R.id.month);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
@@ -190,7 +192,7 @@ public class MySchedulesListAdapter extends BaseAdapter
     else
       imagePrivate.setVisibility(View.GONE);
     title.setText(bean.title);
-    month.setText(Integer.toString(bean.dayCount) + parent.getContext().getString(R.string.term_month));
+    month.setText(Integer.toString(bean.dayCount) + "天");
     likeCount.setText(Integer.toString(bean.likeCount));
     reviewCount.setText(Integer.toString(bean.reviewCount));
     
@@ -198,6 +200,18 @@ public class MySchedulesListAdapter extends BaseAdapter
       imageView.setVisibility(View.GONE);
     else
       ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
+    
+    try
+    {
+      SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+      String insertDateString = format.format(bean.insertDate);
+      createdAt.setText(insertDateString);
+    }
+    catch (Exception e)
+    {
+      createdAt.setVisibility(View.GONE);
+    }
+    
     return view;
   }
 }
