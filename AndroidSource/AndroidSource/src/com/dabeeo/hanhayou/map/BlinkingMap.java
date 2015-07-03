@@ -1135,13 +1135,23 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         break;
         
       case R.id.back_btn:
-        goHome();
+        if (m_ListView.getVisibility() == View.VISIBLE)
+        {
+          searchEditText.setText("");
+          searchEditText.setHint(R.string.message_search_word_here);
+          ListViewVisibleSetting(2);
+        }
+        else
+        {
+          goHome();
+        }
         break;
         
       case R.id.search_cancel:
-        ListViewVisibleSetting(1);
+        ListViewVisibleSetting(2);
         searchEditText.setText("");
         searchEditText.setHint(R.string.message_search_word_here);
+        HideKeyboard(m_mapView);
         break;
         
       case R.id.dayLeft:
