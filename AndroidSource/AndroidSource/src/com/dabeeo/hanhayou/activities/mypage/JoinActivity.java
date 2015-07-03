@@ -626,6 +626,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
             intent.putExtra("email", editEmail.getText().toString());
             intent.putExtra("userSeq", finalUserSeq);
             startActivity(intent);
+            finish();
           }
         });
         ab.show();
