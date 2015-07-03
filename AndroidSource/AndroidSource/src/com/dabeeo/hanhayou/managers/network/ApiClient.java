@@ -18,6 +18,7 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
@@ -857,12 +858,14 @@ public class ApiClient
   
   public NetworkResult uploadReviewImage(String idx, String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD", idx, filePath, HttpClient.UPLOAD_IMAGE_TYPE_REVIEW);
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + idx
+        + "&userSeq="+PreferenceManager.getInstance(context).getUserSeq(), filePath);
   }
   
   
   public NetworkResult uploadProfileImage(String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD", PreferenceManager.getInstance(context).getUserSeq(), filePath, HttpClient.UPLOAD_IMAGE_TYPE_PROFILE);
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + PreferenceManager.getInstance(context).getUserSeq()
+        +"&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(), filePath);
   }
 }

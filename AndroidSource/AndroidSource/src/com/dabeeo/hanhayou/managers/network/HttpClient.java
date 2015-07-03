@@ -1,6 +1,13 @@
 package com.dabeeo.hanhayou.managers.network;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -11,15 +18,15 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -70,8 +77,7 @@ public class HttpClient
   public final static String UPLOAD_IMAGE_TYPE_PLACE = "place";
   public final static String UPLOAD_IMAGE_TYPE_REVIEW = "review";
   
-  
-  public NetworkResult requestPostWithFile(String siteUrl, String idx, String filePath, String uploadType)
+  public NetworkResult requestPostWithFile(String siteUrl, String filePath)
   {
     NetworkResult result = new NetworkResult(false, "", 0);
     
@@ -83,11 +89,8 @@ public class HttpClient
       requestBase = new HttpPost(siteUrl);
       
       MultipartEntity multipartEntity = new MultipartEntity();
-      multipartEntity.addPart("seqSeq", new StringBody(idx));
-      multipartEntity.addPart("folderName", new StringBody(uploadType));
-      multipartEntity.addPart("userSeq", new StringBody(PreferenceManager.getInstance(context).getUserSeq()));
-      multipartEntity.addPart("uploaded_file", new FileBody(new File(filePath), "image/jpeg"));
-      Log.w("WARN", "HttpRequestHandler idx ::: " + idx);
+      multipartEntity.addPart("uploaded_file", new FileBody(new File(filePath)));
+      Log.w("WARN", "HttpRequestHandler multipartEntity ::: " + multipartEntity.getContentLength());
       
       ((HttpPost) requestBase).setEntity(multipartEntity);
       HttpResponse response = client.execute(requestBase);
