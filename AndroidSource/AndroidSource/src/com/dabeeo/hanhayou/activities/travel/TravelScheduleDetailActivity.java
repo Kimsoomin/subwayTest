@@ -56,7 +56,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   private String startDateString = "";
   private int dayCount;
   
-  public LinearLayout containerWriteReview, containerLike, containerIsPublic, bottomLayout;
+  public LinearLayout containerWriteReview, containerLike, containerBookmark, containerIsPublic, bottomLayout;
   public Button btnIsPublic, btnLike, btnBookmark, btnSaveSchedule;
   private SharePickView sharePickView;
   private int currentPosition = 0;
@@ -93,6 +93,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     
     btnLike = (Button) findViewById(R.id.btn_like);
     containerLike = (LinearLayout) findViewById(R.id.container_like);
+    containerBookmark = (LinearLayout) findViewById(R.id.container_boomark);
     containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);
     containerIsPublic = (LinearLayout) findViewById(R.id.container_is_public);
     btnIsPublic = (Button) findViewById(R.id.btn_is_public);
