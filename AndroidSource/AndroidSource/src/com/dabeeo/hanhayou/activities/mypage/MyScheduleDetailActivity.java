@@ -49,7 +49,8 @@ public class MyScheduleDetailActivity extends TravelScheduleDetailActivity
   protected void onResume()
   {
     super.containerWriteReview.setVisibility(View.GONE);
-    super.containerLike.setVisibility(View.GONE);
+    super.containerLike.setVisibility(View.VISIBLE);
+    super.containerBookmark.setVisibility(View.GONE);
     super.containerIsPublic.setVisibility(View.VISIBLE);
     if (isOpen)
     {
