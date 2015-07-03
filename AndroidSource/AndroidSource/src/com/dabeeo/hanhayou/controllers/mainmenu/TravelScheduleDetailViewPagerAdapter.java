@@ -1,6 +1,8 @@
 package com.dabeeo.hanhayou.controllers.mainmenu;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map.Entry;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -18,11 +20,29 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   private boolean isMySchedule = false;
   private boolean isRecommendSchedule = false;
   
+  private HashMap<Integer, Fragment> framgents = new HashMap<Integer, Fragment>();
+  
   
   public TravelScheduleDetailViewPagerAdapter(Context context, FragmentManager fm)
   {
     super(fm);
     this.context = context;
+  }
+  
+  
+  public void setLikeCountUpAndDown(boolean isUp)
+  {
+    if (isUp)
+      this.bean.likeCount++;
+    else
+      this.bean.likeCount--;
+    
+    for (Entry<Integer, Fragment> entry : framgents.entrySet())
+    {
+      Fragment value = entry.getValue();
+      ((TravelScheduleDetailFragment) value).titleView.reloadLikeCount(this.bean.likeCount);
+    }
+    notifyDataSetChanged();
   }
   
   
@@ -53,6 +73,8 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
       ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, null, isMySchedule, isRecommendSchedule);
     else
       ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, bean.days.get(position - 1), isMySchedule, isRecommendSchedule);
+    
+    framgents.put(position, fragment);
     return fragment;
   }
   

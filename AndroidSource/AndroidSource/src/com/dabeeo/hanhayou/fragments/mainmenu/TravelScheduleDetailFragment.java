@@ -50,7 +50,7 @@ public class TravelScheduleDetailFragment extends Fragment
   private ReviewContainerView reviewContainerView;
   
   private ScheduleDetailHeaderView headerView;
-  private ScheduleDetailTitleView titleView;
+  public ScheduleDetailTitleView titleView;
   
   private TextView textRate;
   

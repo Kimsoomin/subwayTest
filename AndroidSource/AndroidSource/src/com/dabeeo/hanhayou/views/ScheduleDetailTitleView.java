@@ -57,6 +57,13 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
+  public void reloadLikeCount(int count)
+  {
+    if (count != -1)
+      likeCount.setText(Integer.toString(count));
+  }
+  
+  
   @SuppressLint("SimpleDateFormat")
   public void setBean(ScheduleDetailBean bean)
   {

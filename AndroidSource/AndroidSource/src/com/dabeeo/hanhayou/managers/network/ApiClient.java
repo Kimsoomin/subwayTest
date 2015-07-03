@@ -478,7 +478,10 @@ public class ApiClient
   
   public NetworkResult getPremiumDetail(String placeIdx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PREMIUM_VIEW&lang=zh_cn&idx=" + placeIdx);
+    String url = getSiteUrl() + "?v=m1&mode=PREMIUM_VIEW&lang=zh_cn&idx=" + placeIdx;
+    if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+      url += "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+    return httpClient.requestGet(url);
   }
   
   
@@ -746,7 +749,7 @@ public class ApiClient
   public NetworkResult completeCreateRecommendSchedule(String startDate, String idx, int dayCount, String title)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_SMART_SAVE&startDate=" + startDate + "&dayCount=" + dayCount + "&planIdx=" + idx + "&userSeq="
-        + PreferenceManager.getInstance(context).getUserSeq()+"&title="+title);
+        + PreferenceManager.getInstance(context).getUserSeq() + "&title=" + title);
   }
   
   

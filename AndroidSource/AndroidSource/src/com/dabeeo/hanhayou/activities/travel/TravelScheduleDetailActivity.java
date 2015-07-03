@@ -304,7 +304,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
             i.putExtra("type", "plan");
             startActivity(i);
           }
-        }else
+        }
+        else
         {
           new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog(-1);
         }
@@ -417,6 +418,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       {
         JSONObject obj = new JSONObject(result.response);
         btnLike.setActivated(obj.getString("result").equals("INS"));
+        adapter.setLikeCountUpAndDown(obj.getString("result").equals("INS"));
       }
       catch (Exception e)
       {

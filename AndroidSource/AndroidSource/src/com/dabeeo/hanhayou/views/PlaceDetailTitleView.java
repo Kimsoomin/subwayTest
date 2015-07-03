@@ -48,17 +48,25 @@ public class PlaceDetailTitleView extends RelativeLayout
   }
   
   
+  public void reloadLikeCount(int count)
+  {
+    if (count != -1)
+      likeCount.setText(Integer.toString(count));
+  }
+  
+  
   public void setBean(PlaceDetailBean bean)
   {
     title.setText(bean.title);
     name.setText(bean.userName);
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
-    if(bean.updateDate !=null)
+    if (bean.updateDate != null)
       time.setText(format.format(bean.updateDate));
     likeCount.setText(Integer.toString(bean.likeCount));
     bookmarkCount.setText(Integer.toString(bean.bookmarkCount));
     ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
   }
+  
   
   public void init()
   {

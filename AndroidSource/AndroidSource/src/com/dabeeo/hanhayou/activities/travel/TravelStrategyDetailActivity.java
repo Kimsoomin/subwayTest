@@ -406,6 +406,16 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       {
         JSONObject obj = new JSONObject(result.response);
         btnLike.setActivated(obj.getString("result").equals("INS"));
+        if (obj.getString("result").equals("INS"))
+        {
+          bean.likeCount++;
+          likeCount.setText(Integer.toString(bean.likeCount));
+        }
+        else
+        {
+          bean.likeCount--;
+          likeCount.setText(Integer.toString(bean.likeCount));
+        }
       }
       catch (Exception e)
       {

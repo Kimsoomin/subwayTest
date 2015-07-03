@@ -630,6 +630,11 @@ public class PlaceDetailActivity extends ActionBarActivity
       {
         JSONObject obj = new JSONObject(result.response);
         btnLike.setActivated(obj.getString("result").equals("INS"));
+        if (obj.getString("result").equals("INS"))
+          bean.likeCount++;
+        else
+          bean.likeCount--;
+        titleView.reloadLikeCount(bean.likeCount);
       }
       catch (Exception e)
       {
