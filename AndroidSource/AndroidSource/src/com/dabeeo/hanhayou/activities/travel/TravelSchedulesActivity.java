@@ -54,6 +54,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
   private boolean isFirstSelectTravelSchedules = true;
   
   private AlertDialogManager alertManager;
+  private MenuItem sortItem;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -137,6 +138,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
   public boolean onCreateOptionsMenu(Menu menu)
   {
     getMenuInflater().inflate(R.menu.menu_travel_schedules, menu);
+    sortItem = menu.findItem(R.id.my_schedule);
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -181,6 +183,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
       @Override
       public void onClick(DialogInterface dialog, int which)
       {
+        sortItem.setTitle(arrayAdapter.getItem(which));
         if (which == 0)
         {
           scheduleListFragment.setDayCount(-1);
