@@ -90,52 +90,62 @@ public class ChangePasswordActivity extends ActionBarActivity
     String newPassword = editNewPassword.getText().toString();
     String newPasswordRe = editNewPasswordRe.getText().toString();
     
-    if (TextUtils.isEmpty(currentPassword) || TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(newPasswordRe))
+    if (TextUtils.isEmpty(currentPassword))
     {
       alertView.setAlert(getString(R.string.msg_please_write_password));
       return false;
-    }
-    
-    if (currentPassword.length() < 6 || currentPassword.length() > 16)
+    }else
     {
-      alertView.setAlert(getString(R.string.msg_warn_password_length));
-      return false;
-    }
-    
-    if (newPassword.length() < 6 || newPassword.length() > 16)
-    {
-      alertView.setAlert(getString(R.string.msg_warn_password_length));
-      return false;
-    }
-    
-    if (!newPassword.equals(newPasswordRe.toString()))
-    {
-      alertView.setAlert(getString(R.string.msg_warn_password_not_same));
-      return false;
-    }
-    
-    if (preferenceManager.getUserName().equals(newPassword))
-    {
-      alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
-      return false;
-    }
-    
-    // 알파벳, 숫자, 몇몇의 특수문자만 가능
-    boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", newPassword);
-    if (!chk)
-    {
-      alertView.setAlert(getString(R.string.msg_please_valid_check_password));
-      return false;
-    }
-    
-    // 연속된 3개의 문자/숫자 불가 
-    for (int i = 0; i < newPassword.length(); i++)
-    {
-      String character = newPassword.charAt(i) + "";
-      character = character + character + character;
-      if (newPassword.indexOf(character) >= 0)
+      if (currentPassword.length() < 6 || currentPassword.length() > 16)
       {
-        alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
+        alertView.setAlert(getString(R.string.msg_warn_password_length));
+        return false;
+      }else
+      {
+        // 알파벳, 숫자, 몇몇의 특수문자만 가능
+        boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", newPassword);
+        if (!chk)
+        {
+          alertView.setAlert(getString(R.string.msg_please_valid_check_password));
+          return false;
+        }
+        
+        // 연속된 3개의 문자/숫자 불가 
+        for (int i = 0; i < newPassword.length(); i++)
+        {
+          String character = newPassword.charAt(i) + "";
+          character = character + character + character;
+          if (newPassword.indexOf(character) >= 0)
+          {
+            alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
+            return false;
+          }
+        }
+      }
+    }
+    
+    if(TextUtils.isEmpty(newPassword))
+    {
+      alertView.setAlert(getString(R.string.msg_please_write_new_password));
+      return false;
+    }else
+    {
+      if (preferenceManager.getUserName().equals(newPassword))
+      {
+        alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
+        return false;
+      }
+    }
+    
+    if(TextUtils.isEmpty(newPasswordRe))
+    {
+      alertView.setAlert(getString(R.string.msg_please_write_new_password));
+      return false;
+    }else
+    {
+      if (!newPassword.equals(newPasswordRe.toString()))
+      {
+        alertView.setAlert(getString(R.string.msg_warn_password_not_same));
         return false;
       }
     }
