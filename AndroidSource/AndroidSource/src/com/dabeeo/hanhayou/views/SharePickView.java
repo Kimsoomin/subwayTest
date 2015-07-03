@@ -176,43 +176,16 @@ public class SharePickView extends RelativeLayout
     intent.putExtra(Intent.EXTRA_TEXT, "[Hanhayou] Download Hanhayou! http://dabeeo.com");
     
     //Weibo는 Image+Text가능, WeChat/QQ는 Text만 가능 
-    if (sharePackageName.equals("com.tencent.mobileqq"))
-      intent.setType("text/plain");
+    if (sharePackageName.equals("com.sina.weibo"))
+    {
+      Uri imageUri = Uri.parse("android.resource://" + context.getPackageName() + "/drawable/" + "ic_launcher");
+      intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+      intent.setType("*/*");
+    }
     else
     {
-      
-      Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou);
-      String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-      File file = new File(extStorageDirectory, "hanhayou.png");
-      
-      try
-      {
-        if (!file.exists())
-          file.createNewFile();
-      }
-      catch (IOException e1)
-      {
-        e1.printStackTrace();
-      }
-      FileOutputStream outStream;
-      try
-      {
-        outStream = new FileOutputStream(file);
-        bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-        outStream.flush();
-        outStream.close();
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-      
-      intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getPath()));
-      intent.setType("*/*");
-      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+      intent.setType("text/plain");
     }
-    
-//    intent.setType("text/plain");
     
     List<ResolveInfo> resInfo = context.getPackageManager().queryIntentActivities(intent, 0);
     if (!resInfo.isEmpty())
