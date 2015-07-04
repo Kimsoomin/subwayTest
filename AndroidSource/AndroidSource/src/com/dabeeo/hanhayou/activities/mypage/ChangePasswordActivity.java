@@ -94,14 +94,21 @@ public class ChangePasswordActivity extends ActionBarActivity
     {
       alertView.setAlert(getString(R.string.msg_please_write_password));
       return false;
+    }
+    
+    if(TextUtils.isEmpty(newPassword))
+    {
+      alertView.setAlert(getString(R.string.msg_please_write_new_password));
+      return false;
     }else
     {
-      if (currentPassword.length() < 6 || currentPassword.length() > 16)
+      if (newPassword.length() < 6 || newPassword.length() > 16)
       {
         alertView.setAlert(getString(R.string.msg_warn_password_length));
         return false;
       }else
       {
+        
         // 알파벳, 숫자, 몇몇의 특수문자만 가능
         boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", newPassword);
         if (!chk)
@@ -121,19 +128,12 @@ public class ChangePasswordActivity extends ActionBarActivity
             return false;
           }
         }
-      }
-    }
-    
-    if(TextUtils.isEmpty(newPassword))
-    {
-      alertView.setAlert(getString(R.string.msg_please_write_new_password));
-      return false;
-    }else
-    {
-      if (preferenceManager.getUserName().equals(newPassword))
-      {
-        alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
-        return false;
+        
+        if (preferenceManager.getUserName().equals(newPassword))
+        {
+          alertView.setAlert(getString(R.string.msg_dont_same_name_and_password));
+          return false;
+        }
       }
     }
     

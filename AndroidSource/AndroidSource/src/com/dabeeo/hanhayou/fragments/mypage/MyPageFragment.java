@@ -44,6 +44,8 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.squareup.picasso.Picasso;
 
 public class MyPageFragment extends Fragment
 {
@@ -315,7 +317,7 @@ public class MyPageFragment extends Fragment
       try
       {
         JSONObject obj = new JSONObject(result.response);
-        ImageDownloader.displayProfileImage(getActivity(), obj.getString("mfidx"), imageProfile);
+        Picasso.with(getActivity()).load(obj.getString("mfidx")).fit().centerCrop().into(imageProfile);
       }
       catch (JSONException e)
       {

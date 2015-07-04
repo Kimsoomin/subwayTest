@@ -273,13 +273,14 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
+      if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+      {
+        new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
+        return;
+      }
+      
       if (v.getId() == R.id.btn_share)
       {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-        {
-          new AlertDialogManager(TravelScheduleDetailActivity.this).showDontNetworkConnectDialog();
-          return;
-        }
         // 공유하기
         sharePickView.setVisibility(View.VISIBLE);
         sharePickView.view.setVisibility(View.VISIBLE);
@@ -305,8 +306,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
             i.putExtra("type", "plan");
             startActivity(i);
           }
-        }
-        else
+        }else
         {
           new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog(-1);
         }

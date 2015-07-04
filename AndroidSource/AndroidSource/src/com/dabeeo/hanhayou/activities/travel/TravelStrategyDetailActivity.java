@@ -28,15 +28,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hanhayou.beans.ContentBean;
 import com.dabeeo.hanhayou.beans.PremiumDetailBean;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.SharePickView;
 import com.squareup.picasso.Picasso;
 
@@ -332,21 +335,33 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == R.id.btn_share)
+      if(PreferenceManager.getInstance(TravelStrategyDetailActivity.this).isLoggedIn())
       {
-        // 공유하기
+        if(SystemUtil.isConnectNetwork(TravelStrategyDetailActivity.this))
+        {
+          if (v.getId() == R.id.btn_share)
+          {
+            // 공유하기
 //        Intent sendIntent = new Intent(Intent.ACTION_SEND);
 //        sendIntent.putExtra(Intent.EXTRA_TEXT, "공유테스트");
 //        sendIntent.setType("text/plain");
 //        startActivity(Intent.createChooser(sendIntent, null));
-        sharePickView.setVisibility(View.VISIBLE);
-        sharePickView.view.setVisibility(View.VISIBLE);
-        sharePickView.bringToFront();
-      }
-      else if (v.getId() == R.id.btn_like)
+            sharePickView.setVisibility(View.VISIBLE);
+            sharePickView.view.setVisibility(View.VISIBLE);
+            sharePickView.bringToFront();
+          }
+          else if (v.getId() == R.id.btn_like)
+          {
+            //좋아요 
+            new ToggleLikeTask().execute();
+          }
+        }else
+        {
+          new AlertDialogManager(TravelStrategyDetailActivity.this).showDontNetworkConnectDialog();
+        }
+      }else
       {
-        //좋아요 
-        new ToggleLikeTask().execute();
+        new AlertDialogManager(TravelStrategyDetailActivity.this).showNeedLoginDialog(-1);
       }
     }
   };

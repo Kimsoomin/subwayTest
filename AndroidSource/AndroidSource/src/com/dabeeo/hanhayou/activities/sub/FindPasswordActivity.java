@@ -127,7 +127,7 @@ public class FindPasswordActivity extends Activity
           AlertDialog.Builder builder = new AlertDialog.Builder(FindPasswordActivity.this);
           builder.setTitle(R.string.term_alert);
           builder.setMessage(R.string.msg_send_temp_password);
-          builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+          builder.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
           {
             @Override
             public void onClick(DialogInterface dialog, int which)
@@ -142,7 +142,7 @@ public class FindPasswordActivity extends Activity
           AlertDialog.Builder builder = new AlertDialog.Builder(FindPasswordActivity.this);
           builder.setTitle(R.string.term_alert);
           builder.setMessage(obj.getString("message"));
-          builder.setPositiveButton(android.R.string.ok, null);
+          builder.setPositiveButton(R.string.term_ok, null);
           builder.create().show();
         }
       }

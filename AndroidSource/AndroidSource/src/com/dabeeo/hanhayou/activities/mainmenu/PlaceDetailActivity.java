@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hanhayou.activities.ticket.TicketDetailActivity;
+import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
@@ -432,7 +433,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       btnReviewBest.setSelected(false);
       btnReviewSoso.setSelected(false);
       btnReviewWorst.setSelected(false);
-           
+      
       if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
       {
         new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
@@ -489,36 +490,44 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+      if(!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
       {
-        if (v.getId() == R.id.btn_bookmark)
-        {
-          new ToggleBookmarkTask().execute();
-        }
-        else if (v.getId() == R.id.btn_share)
-        {
-          // 공유하기
-          sharePickView.setVisibility(View.VISIBLE);
-          sharePickView.view.setVisibility(View.VISIBLE);
-          sharePickView.bringToFront();
-        }
-        else if (v.getId() == R.id.btn_like)
-        {
-          //좋아요 
-          new ToggleLikeTask().execute();
-        }
-        else if (v.getId() == R.id.btn_write_review)
-        {
-          //리뷰쓰기
-          Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
-          if (bean != null)
-            i.putExtra("idx", bean.idx);
-          i.putExtra("type", "place");
-          startActivity(i);
-        }
+        new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+        return;
       }
-      else
-        new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
+      if (v.getId() == R.id.btn_share)
+      {
+        // 공유하기
+        sharePickView.setVisibility(View.VISIBLE);
+        sharePickView.view.setVisibility(View.VISIBLE);
+        sharePickView.bringToFront();
+      }
+      else 
+      {
+        if (PreferenceManager.getInstance(PlaceDetailActivity.this).isLoggedIn())
+        {
+          if (v.getId() == R.id.btn_bookmark)
+          {
+            new ToggleBookmarkTask().execute();
+          }
+          else if (v.getId() == R.id.btn_like)
+          {
+            //좋아요 
+            new ToggleLikeTask().execute();
+          }
+          else if (v.getId() == R.id.btn_write_review)
+          {
+            //리뷰쓰기
+            Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
+            if (bean != null)
+              i.putExtra("idx", bean.idx);
+            i.putExtra("type", "place");
+            startActivity(i);
+          }
+        }
+        else
+          new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
+      }
     }
   };
   
