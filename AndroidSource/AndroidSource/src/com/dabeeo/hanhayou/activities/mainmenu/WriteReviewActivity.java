@@ -163,8 +163,8 @@ public class WriteReviewActivity extends ActionBarActivity
             {
               String key = iter.next();
               Log.w("fureun", "image filePath : " + key);
-              Log.w("WARN", "image review idx : " + obj.getString("idx"));
-              new ImageUploadAsyncTask().execute(obj.getString("idx"), key);
+              Log.w("WARN", "image review idx : " + obj.getString("seqCode"));
+              new ImageUploadAsyncTask().execute(obj.getString("seqCode"), key);
             }
             
             Toast.makeText(WriteReviewActivity.this, getString(R.string.msg_review_success), Toast.LENGTH_LONG).show();
