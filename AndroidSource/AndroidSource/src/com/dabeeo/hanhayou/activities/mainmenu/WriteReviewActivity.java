@@ -197,7 +197,7 @@ public class WriteReviewActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.uploadReviewImage(parentType, params[0], params[1]);
+      return apiClient.uploadReviewImage(params[0], params[1]);
     }
     
     

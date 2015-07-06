@@ -1067,9 +1067,9 @@ public class ApiClient
   }
   
   
-  public NetworkResult uploadReviewImage(String folderName, String idx, String filePath)
+  public NetworkResult uploadReviewImage(String seqCode, String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName="+ folderName +"&seqCode=" + idx + 
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=review" +"&seqCode=" + seqCode + 
         "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(), filePath);
   }
   
