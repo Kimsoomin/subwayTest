@@ -1067,15 +1067,16 @@ public class ApiClient
   }
   
   
-  public NetworkResult uploadReviewImage(String idx, String filePath)
+  public NetworkResult uploadReviewImage(String folderName, String idx, String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + idx + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(), filePath);
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName="+ folderName +"&seqCode=" + idx + 
+        "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(), filePath);
   }
   
   
   public NetworkResult uploadProfileImage(String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + PreferenceManager.getInstance(context).getUserSeq() + "&userSeq="
-        + PreferenceManager.getInstance(context).getUserSeq(), filePath);
+    String userSeq =  PreferenceManager.getInstance(context).getUserSeq();
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + userSeq + "&userSeq=" + userSeq, filePath);
   }
 }

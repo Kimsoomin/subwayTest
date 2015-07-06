@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.activities.sub;
 
-import org.json.JSONException;
+import java.text.SimpleDateFormat;
+
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -195,7 +196,9 @@ public class ReviewDetailActivity extends ActionBarActivity
     if (bean != null)
     {
       name.setText(bean.userName);
-      time.setText(bean.insertDateString);
+      SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+      if(bean.insertDate != null)
+        time.setText(format.format(bean.insertDate));
       reviewScore.setText(Integer.toString(bean.rate));
       content.setText(bean.content);
       
@@ -248,7 +251,7 @@ public class ReviewDetailActivity extends ActionBarActivity
       imageContainer.addView(imageView);
     }
     
-    ImageDownloader.displayProfileImage(ReviewDetailActivity.this, "", icon);
+    ImageDownloader.displayProfileImage(ReviewDetailActivity.this, bean.mfidx, icon);
   }
   
   

@@ -1,5 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
+import java.text.SimpleDateFormat;
+
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -78,11 +80,15 @@ public class ReviewView extends RelativeLayout
     init();
     
     name.setText(bean.userName);
-    time.setText(bean.insertDateString);
+    
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+    if (bean.insertDate != null)
+      time.setText(format.format(bean.insertDate));
+    
     reviewScore.setText(Integer.toString(bean.rate));
     content.setText(bean.content);
     
-    ImageDownloader.displayProfileImage(context, "", icon);
+    ImageDownloader.displayProfileImage(context, bean.mfidx, icon);
     
     for (int i = 0; i < bean.imageUrls.size(); i++)
     {

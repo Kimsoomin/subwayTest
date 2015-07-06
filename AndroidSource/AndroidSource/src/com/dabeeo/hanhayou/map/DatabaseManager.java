@@ -15,7 +15,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.dabeeo.hanhayou.beans.PlaceBean;
-import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.StationBean;
 
 public class DatabaseManager
