@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.managers.network;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -779,7 +780,16 @@ public class ApiClient
     if (SystemUtil.isConnectNetwork(context))
     {
       String status = "";
-      NetworkResult result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
+      NetworkResult result = null;
+      try
+      {
+        result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_AUTO&keyword=" + URLEncoder.encode(keyword, "utf-8"));
+      }
+      catch (UnsupportedEncodingException e1)
+      {
+        e1.printStackTrace();
+      }
+      
       try
       {
         JSONObject jsonObject = new JSONObject(result.response);
@@ -830,10 +840,18 @@ public class ApiClient
     if (SystemUtil.isConnectNetwork(context))
     {
       NetworkResult result = null;
-      if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-        result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
-      else
-        result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+      try
+      {
+        if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+          result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + URLEncoder.encode(keyword, "utf-8"));
+        else
+          result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + URLEncoder.encode(keyword, "utf-8") + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+        
+      }
+      catch (UnsupportedEncodingException e1)
+      {
+        e1.printStackTrace();
+      }
       
       String status = "";
       try

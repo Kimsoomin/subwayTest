@@ -2,11 +2,8 @@ package com.dabeeo.hanhayou.activities.sub;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -30,7 +28,6 @@ import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.SearchResultDetailAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
-import com.dabeeo.hanhayou.managers.network.NetworkResult;
 
 public class SearchResultJustOneCategoryListActivity extends ActionBarActivity
 {
@@ -66,6 +63,15 @@ public class SearchResultJustOneCategoryListActivity extends ActionBarActivity
     searchTitle.setText(getIntent().getStringExtra("title"));
     moreCount.setText(" (" + getIntent().getIntExtra("more_count", 0) + ")");
     
+    try
+    {
+      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
     searchType = getIntent().getIntExtra("search_type", SearchResultBean.TYPE_PLACE);
     String searchText = getIntent().getStringExtra("search_text");
     Log.w("WARN", "Search Type : " + searchType);

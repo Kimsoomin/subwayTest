@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -29,10 +33,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.sub.SearchResultDetailActivity;
-import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
-import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.SearchResultDetailAdapter;
@@ -96,6 +97,20 @@ public class SearchFragment extends Fragment
     adapter = new SearchResultDetailAdapter();
     searchListView = (ListView) getView().findViewById(R.id.search_list);
     searchListView.setOnItemClickListener(itemClickListener);
+    searchListView.setOnScrollListener(new OnScrollListener()
+    {
+      @Override
+      public void onScrollStateChanged(AbsListView view, int scrollState)
+      {
+        hideKeyboard();
+      }
+      
+      
+      @Override
+      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+      {
+      }
+    });
     searchListView.setAdapter(adapter);
     
     TextWatcher watcher = new TextWatcher()
@@ -165,10 +180,6 @@ public class SearchFragment extends Fragment
     {
       new SearchPopularTask().execute();
     }
-    else
-    {
-      //TODO offline 처리 필요
-    }
   }
   
   
@@ -209,6 +220,20 @@ public class SearchFragment extends Fragment
     
   }
   
+  
+  private void hideKeyboard()
+  {
+    try
+    {
+      InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
   /**************************************************
    * listener
    ***************************************************/
@@ -235,21 +260,24 @@ public class SearchFragment extends Fragment
     {
       Intent i = null;
       SearchResultBean bean = (SearchResultBean) adapter.getItem(position);
-      if (bean.type == SearchResultBean.TYPE_PLACE)
-      {
-        i = new Intent(getActivity(), PlaceDetailActivity.class);
-        i.putExtra("place_idx", bean.idx);
-      }
-      else if (bean.type == SearchResultBean.TYPE_RECOMMEND_SEOUL)
-      {
-        i = new Intent(getActivity(), TravelStrategyDetailActivity.class);
-        i.putExtra("place_idx", bean.idx);
-      }
-      else if (bean.type == SearchResultBean.TYPE_SCHEDULE)
-      {
-        i = new Intent(getActivity(), TravelScheduleDetailActivity.class);
-        i.putExtra("idx", bean.idx);
-      }
+//      if (bean.type == SearchResultBean.TYPE_PLACE)
+//      {
+//        i = new Intent(getActivity(), PlaceDetailActivity.class);
+//        i.putExtra("place_idx", bean.idx);
+//      }
+//      else if (bean.type == SearchResultBean.TYPE_RECOMMEND_SEOUL)
+//      {
+//        i = new Intent(getActivity(), TravelStrategyDetailActivity.class);
+//        i.putExtra("place_idx", bean.idx);
+//      }
+//      else if (bean.type == SearchResultBean.TYPE_SCHEDULE)
+//      {
+//        i = new Intent(getActivity(), TravelScheduleDetailActivity.class);
+//        i.putExtra("idx", bean.idx);
+//      }
+      
+      i = new Intent(getActivity(), SearchResultDetailActivity.class);
+      i.putExtra("keyword", bean.text);
       
       if (i != null)
         startActivity(i);

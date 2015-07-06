@@ -2,11 +2,8 @@ package com.dabeeo.hanhayou.activities.sub;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -41,7 +41,6 @@ import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.SearchResultAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
-import com.dabeeo.hanhayou.managers.network.NetworkResult;
 
 public class SearchResultDetailActivity extends ActionBarActivity
 {
@@ -93,6 +92,20 @@ public class SearchResultDetailActivity extends ActionBarActivity
     adapter = new SearchResultAdapter();
     searchListView = (ListView) findViewById(R.id.search_list);
     searchListView.setOnItemClickListener(itemClickListener);
+    searchListView.setOnScrollListener(new OnScrollListener()
+    {
+      @Override
+      public void onScrollStateChanged(AbsListView view, int scrollState)
+      {
+        hideKeyboard();
+      }
+      
+      
+      @Override
+      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+      {
+      }
+    });
     searchListView.setAdapter(adapter);
     
     TextWatcher watcher = new TextWatcher()
@@ -135,6 +148,21 @@ public class SearchResultDetailActivity extends ActionBarActivity
       imageX.setVisibility(View.VISIBLE);
       inputWord.setSelection(inputWord.getText().toString().length());
       search(inputWord.getText().toString());
+    }
+    
+  }
+  
+  
+  private void hideKeyboard()
+  {
+    try
+    {
+      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
     }
   }
   
@@ -285,7 +313,10 @@ public class SearchResultDetailActivity extends ActionBarActivity
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
     {
       if (actionId == EditorInfo.IME_ACTION_SEARCH)
+      {
         search(v.getText().toString());
+        hideKeyboard();
+      }
       return false;
     }
   };
