@@ -106,6 +106,8 @@ public class PlaceDetailBean
         rate = obj.getInt("rate");
       if (obj.has("likeCount"))
         likeCount = obj.getInt("likeCount");
+      if(obj.has("bookmarkCount"))
+        bookmarkCount = obj.getInt("bookmarkCount");
       if (obj.has("reviewCount"))
         reviewCount = obj.getInt("reviewCount");
       

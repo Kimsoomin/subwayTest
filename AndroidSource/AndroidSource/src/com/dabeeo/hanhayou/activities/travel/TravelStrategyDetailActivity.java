@@ -28,7 +28,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hanhayou.beans.ContentBean;
 import com.dabeeo.hanhayou.beans.PremiumDetailBean;
@@ -36,7 +35,6 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
 import com.dabeeo.hanhayou.utils.SystemUtil;
@@ -375,7 +373,6 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      BlinkingCommon.smlLibDebug("추천서울", "premiumIdx : " + placeIdx);
       return apiClient.getPremiumDetail(placeIdx);
     }
     

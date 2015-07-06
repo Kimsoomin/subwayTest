@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hanhayou.activities.ticket.TicketDetailActivity;
-import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
@@ -609,11 +608,14 @@ public class PlaceDetailActivity extends ActionBarActivity
         {
           btnBookmark.setActivated(true);
           Toast.makeText(PlaceDetailActivity.this, getString(R.string.msg_add_bookmark), Toast.LENGTH_LONG).show();
+          bean.bookmarkCount++;
         }
         else
         {
+          bean.bookmarkCount--;
           btnBookmark.setActivated(false);
         }
+        titleView.reloadBookmarkCount(bean.bookmarkCount);
       }
       catch (Exception e)
       {
@@ -642,7 +644,9 @@ public class PlaceDetailActivity extends ActionBarActivity
         if (obj.getString("result").equals("INS"))
           bean.likeCount++;
         else
+        {
           bean.likeCount--;
+        }
         titleView.reloadLikeCount(bean.likeCount);
       }
       catch (Exception e)
