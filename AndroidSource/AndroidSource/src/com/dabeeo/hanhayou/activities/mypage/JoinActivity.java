@@ -3,6 +3,7 @@ package com.dabeeo.hanhayou.activities.mypage;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.AgreementActivity;
@@ -70,6 +72,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   
   private RelativeLayout progressLayout;
   private FrameLayout joinLayout;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -353,7 +356,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     @Override
     public void onClick(View v)
     {
-      InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+      InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
       mgr.hideSoftInputFromWindow(joinLayout.getWindowToken(), 0);
       if (btnGenderMale.isActivated())
       {
@@ -521,11 +524,33 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       if (status.equals("OK"))
       {
         isValidEmail = true;
-        alertView.setAlert(getString(R.string.msg_possibile_email_account));
+        Toast.makeText(JoinActivity.this, getString(R.string.msg_possibile_email_account), Toast.LENGTH_LONG).show();
+//        alertView.setAlert(getString(R.string.msg_possibile_email_account));
       }
       else
       {
-        alertView.setAlert(getString(R.string.msg_duplicate_email));
+//        alertView.setAlert(getString(R.string.msg_duplicate_email));
+        try
+        {
+          JSONObject jsonObject = new JSONObject(result.response);
+          String message = jsonObject.getString("message");
+          if (jsonObject.getString("message").contains("이미 가입"))
+          {
+            if (!Locale.getDefault().getLanguage().contains("ko"))
+              message = getString(R.string.msg_duplicate_email);
+          }else if (jsonObject.getString("message").contains("탈퇴"))
+          {
+            if (!Locale.getDefault().getLanguage().contains("ko"))
+              message = getString(R.string.msg_please_error_out);
+          }
+          Toast.makeText(JoinActivity.this, message, Toast.LENGTH_LONG).show();
+        }
+        catch (JSONException e)
+        {
+          status = "";
+          e.printStackTrace();
+        }
+        
       }
     }
   }

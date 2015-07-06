@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.activities.mypage;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,6 +111,7 @@ public class LoginActivity extends Activity
     }
   };
   
+  
   public boolean validCheckEmail(String email)
   {
     boolean validEmail = false;
@@ -171,7 +173,13 @@ public class LoginActivity extends Activity
           if (jsonObject.has("userSeq"))
             userSeq = jsonObject.getString("userSeq");
           //getString(R.string.msg_please_error_auth)
-          alertDialogManager.showAlertDialog(getString(R.string.term_alert), jsonObject.getString("message"), getString(R.string.term_ok), null, new AlertListener()
+          String message = jsonObject.getString("message");
+          if (jsonObject.getString("message").contains("미인증"))
+          {
+            if (!Locale.getDefault().getLanguage().contains("ko"))
+              message = getString(R.string.msg_not_authorize_email);
+          }
+          alertDialogManager.showAlertDialog(getString(R.string.term_alert), message, getString(R.string.term_ok), null, new AlertListener()
           {
             @Override
             public void onPositiveButtonClickListener()
