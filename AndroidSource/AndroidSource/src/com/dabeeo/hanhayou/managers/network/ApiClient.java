@@ -9,16 +9,18 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
+import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
@@ -768,18 +770,205 @@ public class ApiClient
   }
   
   
-  public NetworkResult searchAuto(String keyword)
+  public ArrayList<SearchResultBean> searchAuto(String keyword)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
+    ArrayList<SearchResultBean> results = new ArrayList<SearchResultBean>();
+    if (TextUtils.isEmpty(keyword))
+      return results;
+    
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      String status = "";
+      NetworkResult result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_AUTO&keyword=" + keyword);
+      try
+      {
+        JSONObject jsonObject = new JSONObject(result.response);
+        if (jsonObject.has("status"))
+        {
+          status = jsonObject.getString("status");
+        }
+        
+        if (status.equals("OK"))
+        {
+          JSONArray jsonArray = jsonObject.getJSONArray("data");
+          for (int i = 0; i < jsonArray.length(); i++)
+          {
+            SearchResultBean bean = new SearchResultBean();
+            JSONObject obj = jsonArray.getJSONObject(i);
+            bean.text = obj.getString("title");
+            bean.idx = obj.getString("idx");
+            bean.setLogType(obj.getString("logType"));
+            results.add(bean);
+          }
+        }
+      }
+      catch (JSONException e)
+      {
+        status = "";
+        e.printStackTrace();
+      }
+    }
+    else
+      return offlineDatabaseManager.getSearchAuto(keyword);
+    
+    return results;
   }
   
   
-  public NetworkResult searchResult(String keyword)
+  public ArrayList<SearchResultBean> searchResult(String keyword)
   {
-    if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
+    return searchResult(keyword, -1);
+  }
+  
+  
+  public ArrayList<SearchResultBean> searchResult(String keyword, int limit)
+  {
+    ArrayList<SearchResultBean> array = new ArrayList<SearchResultBean>();
+    if (TextUtils.isEmpty(keyword))
+      return array;
+    
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = null;
+      if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword);
+      else
+        result = httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+      
+      String status = "";
+      try
+      {
+        JSONObject jsonObject = new JSONObject(result.response);
+        if (jsonObject.has("status"))
+        {
+          status = jsonObject.getString("status");
+        }
+        
+        if (status.equals("OK"))
+        {
+          ArrayList<SearchResultBean> placeList = new ArrayList<SearchResultBean>();
+          ArrayList<SearchResultBean> planList = new ArrayList<SearchResultBean>();
+          ArrayList<SearchResultBean> premiumList = new ArrayList<SearchResultBean>();
+          
+          JSONArray jsonArray = jsonObject.getJSONArray("data");
+          
+          for (int i = 0; i < jsonArray.length(); i++)
+          {
+            SearchResultBean bean = new SearchResultBean();
+            JSONObject obj = jsonArray.getJSONObject(i);
+            bean.setLogType(obj.getString("logType"));
+            bean.text = obj.getString("title");
+            bean.idx = obj.getString("idx");
+            
+            if (bean.type == SearchResultBean.TYPE_PLACE)
+              placeList.add(bean);
+            else if (bean.type == SearchResultBean.TYPE_SCHEDULE)
+              planList.add(bean);
+            else if (bean.type == SearchResultBean.TYPE_RECOMMEND_SEOUL)
+              premiumList.add(bean);
+          }
+          
+          Log.w("WARN", "검색결과 장소 사이즈 : " + placeList.size());
+          Log.w("WARN", "검색결과 일정 사이즈 : " + planList.size());
+          Log.w("WARN", "검색결과 추천서울 사이즈 : " + premiumList.size());
+          
+          SearchResultBean titleBean = new SearchResultBean();
+          if (placeList.size() > 0)
+          {
+            titleBean = new SearchResultBean();
+            titleBean.addPlaceTitle(context.getString(R.string.term_place), jsonObject.getInt("placeCount"));
+            titleBean.type = SearchResultBean.TYPE_PLACE;
+            array.add(titleBean);
+            
+            if (placeList.size() > 0)
+            {
+              int maxCount = limit;
+              if (limit == -1)
+                maxCount = placeList.size();
+              for (int i = 0; i < maxCount; i++)
+              {
+                try
+                {
+                  SearchResultBean listBean = new SearchResultBean();
+                  listBean.idx = placeList.get(i).idx;
+                  listBean.addText(placeList.get(i).text, placeList.get(i).type);
+                  array.add(listBean);
+                }
+                catch (Exception e)
+                {
+                }
+              }
+            }
+          }
+          
+          if (premiumList.size() > 0)
+          {
+            titleBean = new SearchResultBean();
+            titleBean.addPlaceTitle(context.getString(R.string.term_strategy_seoul), jsonObject.getInt("premiumCount"));
+            titleBean.type = SearchResultBean.TYPE_RECOMMEND_SEOUL;
+            array.add(titleBean);
+            
+            if (premiumList.size() > 0)
+            {
+              int maxCount = limit;
+              if (limit == -1)
+                maxCount = premiumList.size();
+              for (int i = 0; i < maxCount; i++)
+              {
+                try
+                {
+                  SearchResultBean listBean = new SearchResultBean();
+                  listBean.idx = premiumList.get(i).idx;
+                  listBean.addText(premiumList.get(i).text, premiumList.get(i).type);
+                  array.add(listBean);
+                }
+                catch (Exception e)
+                {
+                }
+              }
+            }
+          }
+          
+          if (planList.size() > 0)
+          {
+            titleBean = new SearchResultBean();
+            titleBean.addPlaceTitle(context.getString(R.string.term_travel_schedule), jsonObject.getInt("planCount"));
+            titleBean.type = SearchResultBean.TYPE_SCHEDULE;
+            array.add(titleBean);
+            
+            if (planList.size() > 0)
+            {
+              int maxCount = limit;
+              if (limit == -1)
+                maxCount = planList.size();
+              for (int i = 0; i < maxCount; i++)
+              {
+                try
+                {
+                  SearchResultBean listBean = new SearchResultBean();
+                  listBean.idx = planList.get(i).idx;
+                  listBean.addText(planList.get(i).text, planList.get(i).type);
+                  array.add(listBean);
+                }
+                catch (Exception e)
+                {
+                }
+              }
+            }
+          }
+        }
+      }
+      catch (JSONException e)
+      {
+        status = "";
+        e.printStackTrace();
+      }
+      return array;
+    }
     else
-      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SEARCH_RESULT&keyword=" + keyword + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+    {
+      return offlineDatabaseManager.getSearchResult(keyword, limit);
+    }
   }
   
   
@@ -861,14 +1050,13 @@ public class ApiClient
   
   public NetworkResult uploadReviewImage(String idx, String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + idx
-        + "&userSeq="+PreferenceManager.getInstance(context).getUserSeq(), filePath);
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + idx + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(), filePath);
   }
   
   
   public NetworkResult uploadProfileImage(String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + PreferenceManager.getInstance(context).getUserSeq()
-        +"&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(), filePath);
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + PreferenceManager.getInstance(context).getUserSeq() + "&userSeq="
+        + PreferenceManager.getInstance(context).getUserSeq(), filePath);
   }
 }

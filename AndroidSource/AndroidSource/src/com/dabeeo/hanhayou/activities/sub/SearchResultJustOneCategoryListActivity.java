@@ -1,5 +1,7 @@
 package com.dabeeo.hanhayou.activities.sub;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,7 +75,7 @@ public class SearchResultJustOneCategoryListActivity extends ActionBarActivity
   /**************************************************
    * AsyncTask
    ***************************************************/
-  private class SearchTask extends AsyncTask<String, Void, NetworkResult>
+  private class SearchTask extends AsyncTask<String, Void, ArrayList<SearchResultBean>>
   {
     @Override
     protected void onPreExecute()
@@ -86,44 +88,25 @@ public class SearchResultJustOneCategoryListActivity extends ActionBarActivity
     
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected ArrayList<SearchResultBean> doInBackground(String... params)
     {
       return apiClient.searchResult(params[0]);
     }
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ArrayList<SearchResultBean> result)
     {
-      String status = "";
       try
       {
-        JSONObject jsonObject = new JSONObject(result.response);
-        if (jsonObject.has("status"))
+        for (int i = 1; i < result.size(); i++)
         {
-          status = jsonObject.getString("status");
-        }
-        
-        if (status.equals("OK"))
-        {
-          JSONArray jsonArray = jsonObject.getJSONArray("data");
-          
-          for (int i = 0; i < jsonArray.length(); i++)
-          {
-            SearchResultBean bean = new SearchResultBean();
-            JSONObject obj = jsonArray.getJSONObject(i);
-            bean.text = obj.getString("title");
-            bean.idx = obj.getString("idx");
-            bean.setLogType(obj.getString("logType"));
-            
-            if (bean.type == searchType)
-              adapter.add(bean);
-          }
+          if (result.get(i).type == searchType)
+            adapter.add(result.get(i));
         }
       }
-      catch (JSONException e)
+      catch (Exception e)
       {
-        status = "";
         e.printStackTrace();
       }
       

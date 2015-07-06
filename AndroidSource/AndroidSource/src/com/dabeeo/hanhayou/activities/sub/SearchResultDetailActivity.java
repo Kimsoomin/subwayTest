@@ -235,7 +235,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
   /**************************************************
    * AsyncTask
    ***************************************************/
-  private class SearchTask extends AsyncTask<String, Void, NetworkResult>
+  private class SearchTask extends AsyncTask<String, Void, ArrayList<SearchResultBean>>
   {
     @Override
     protected void onPreExecute()
@@ -248,137 +248,17 @@ public class SearchResultDetailActivity extends ActionBarActivity
     
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected ArrayList<SearchResultBean> doInBackground(String... params)
     {
-      return apiClient.searchResult(params[0]);
+      return apiClient.searchResult(params[0], 3);
     }
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ArrayList<SearchResultBean> result)
     {
       adapter.clear();
-      String status = "";
-      try
-      {
-        JSONObject jsonObject = new JSONObject(result.response);
-        if (jsonObject.has("status"))
-        {
-          status = jsonObject.getString("status");
-        }
-        
-        if (status.equals("OK"))
-        {
-          ArrayList<SearchResultBean> placeList = new ArrayList<SearchResultBean>();
-          ArrayList<SearchResultBean> planList = new ArrayList<SearchResultBean>();
-          ArrayList<SearchResultBean> premiumList = new ArrayList<SearchResultBean>();
-          
-          JSONArray jsonArray = jsonObject.getJSONArray("data");
-          
-          for (int i = 0; i < jsonArray.length(); i++)
-          {
-            SearchResultBean bean = new SearchResultBean();
-            JSONObject obj = jsonArray.getJSONObject(i);
-            bean.setLogType(obj.getString("logType"));
-            bean.text = obj.getString("title");
-            bean.idx = obj.getString("idx");
-            
-            if (bean.type == SearchResultBean.TYPE_PLACE)
-              placeList.add(bean);
-            else if (bean.type == SearchResultBean.TYPE_SCHEDULE)
-              planList.add(bean);
-            else if (bean.type == SearchResultBean.TYPE_RECOMMEND_SEOUL)
-              premiumList.add(bean);
-          }
-          
-          Log.w("WARN","검색결과 장소 사이즈 : "+placeList.size());
-          Log.w("WARN","검색결과 일정 사이즈 : "+planList.size());
-          Log.w("WARN","검색결과 추천서울 사이즈 : "+premiumList.size());
-          
-          SearchResultBean titleBean = new SearchResultBean();
-          if (placeList.size() > 0)
-          {
-            titleBean = new SearchResultBean();
-            titleBean.addPlaceTitle(getString(R.string.term_place), jsonObject.getInt("placeCount"));
-            titleBean.type = SearchResultBean.TYPE_PLACE;
-            adapter.add(titleBean);
-            
-            if (placeList.size() > 0)
-            {
-              for (int i = 0; i < 3; i++)
-              {
-                try
-                {
-                  SearchResultBean listBean = new SearchResultBean();
-                  listBean.idx = placeList.get(i).idx;
-                  listBean.addText(placeList.get(i).text, placeList.get(i).type);
-                  adapter.add(listBean);
-                }
-                catch (Exception e)
-                {
-                }
-              }
-            }
-          }
-          
-          if (premiumList.size() > 0)
-          {
-            titleBean = new SearchResultBean();
-            titleBean.addPlaceTitle(getString(R.string.term_strategy_seoul), jsonObject.getInt("premiumCount"));
-            titleBean.type = SearchResultBean.TYPE_RECOMMEND_SEOUL;
-            adapter.add(titleBean);
-            
-            if (premiumList.size() > 0)
-            {
-              for (int i = 0; i < 3; i++)
-              {
-                try
-                {
-                  SearchResultBean listBean = new SearchResultBean();
-                  listBean.idx = premiumList.get(i).idx;
-                  listBean.addText(premiumList.get(i).text, premiumList.get(i).type);
-                  adapter.add(listBean);
-                }
-                catch (Exception e)
-                {
-                }
-              }
-            }
-          }
-          
-          if (planList.size() > 0)
-          {
-            titleBean = new SearchResultBean();
-            titleBean.addPlaceTitle(getString(R.string.term_travel_schedule), jsonObject.getInt("planCount"));
-            titleBean.type = SearchResultBean.TYPE_SCHEDULE;
-            adapter.add(titleBean);
-            
-            if (planList.size() > 0)
-            {
-              for (int i = 0; i < 3; i++)
-              {
-                try
-                {
-                  SearchResultBean listBean = new SearchResultBean();
-                  listBean.idx = planList.get(i).idx;
-                  listBean.addText(planList.get(i).text, planList.get(i).type);
-                  adapter.add(listBean);
-                }
-                catch (Exception e)
-                {
-                }
-              }
-            }
-          }
-          
-          adapter.notifyDataSetChanged();
-        }
-      }
-      catch (JSONException e)
-      {
-        status = "";
-        e.printStackTrace();
-      }
+      adapter.add(result);
       
       if (adapter.getCount() == 0)
       {

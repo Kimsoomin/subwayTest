@@ -1,5 +1,7 @@
 package com.dabeeo.hanhayou.fragments.mainmenu;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -281,7 +283,7 @@ public class SearchFragment extends Fragment
     }
   }
   
-  private class SearchTask extends AsyncTask<String, Void, NetworkResult>
+  private class SearchTask extends AsyncTask<String, Void, ArrayList<SearchResultBean>>
   {
     @Override
     protected void onPreExecute()
@@ -292,43 +294,16 @@ public class SearchFragment extends Fragment
     
     
     @Override
-    protected NetworkResult doInBackground(String... params)
+    protected ArrayList<SearchResultBean> doInBackground(String... params)
     {
       return apiClient.searchAuto(params[0]);
     }
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(ArrayList<SearchResultBean> result)
     {
-      String status = "";
-      try
-      {
-        JSONObject jsonObject = new JSONObject(result.response);
-        if (jsonObject.has("status"))
-        {
-          status = jsonObject.getString("status");
-        }
-        
-        if (status.equals("OK"))
-        {
-          JSONArray jsonArray = jsonObject.getJSONArray("data");
-          for (int i = 0; i < jsonArray.length(); i++)
-          {
-            SearchResultBean bean = new SearchResultBean();
-            JSONObject obj = jsonArray.getJSONObject(i);
-            bean.text = obj.getString("title");
-            bean.idx = obj.getString("idx");
-            bean.setLogType(obj.getString("logType"));
-            adapter.add(bean);
-          }
-        }
-      }
-      catch (JSONException e)
-      {
-        status = "";
-        e.printStackTrace();
-      }
+      adapter.addAll(result);
       
       if (adapter.getCount() == 0)
       {

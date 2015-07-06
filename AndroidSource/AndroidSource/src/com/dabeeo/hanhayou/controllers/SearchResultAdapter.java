@@ -25,6 +25,12 @@ public class SearchResultAdapter extends BaseAdapter
     notifyDataSetChanged();
   }
   
+  public void add(ArrayList<SearchResultBean> bean)
+  {
+    items.addAll(bean);
+    notifyDataSetChanged();
+  }
+  
   
   public void clear()
   {

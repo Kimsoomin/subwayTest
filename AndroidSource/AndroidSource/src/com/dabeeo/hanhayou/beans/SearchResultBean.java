@@ -2,6 +2,8 @@ package com.dabeeo.hanhayou.beans;
 
 import org.json.JSONObject;
 
+import android.database.Cursor;
+
 public class SearchResultBean
 {
   public static final int TYPE_NORMAL = -1;
@@ -32,6 +34,20 @@ public class SearchResultBean
       text = obj.getString("text");
       moreCount = obj.getInt("more_count");
       type = obj.getInt("type");
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
+  public void setCursor(Cursor c)
+  {
+    try
+    {
+      idx = c.getString(c.getColumnIndex("idx"));
+      text = c.getString(c.getColumnIndex("title"));
     }
     catch (Exception e)
     {

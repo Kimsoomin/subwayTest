@@ -23,11 +23,13 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
+import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.beans.StationBean;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.map.Global;
@@ -523,6 +525,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
           }
         } while (c.moveToNext());
       }
+      
       c.close();
       myDataBase.close();
     }
@@ -531,6 +534,163 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
       e.printStackTrace();
     }
     return beans;
+  }
+  
+  
+  public ArrayList<SearchResultBean> getSearchAuto(String keyword)
+  {
+    ArrayList<SearchResultBean> beans = new ArrayList<SearchResultBean>();
+    try
+    {
+      this.openDataBase();
+      Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLAN + " WHERE title LIKE '%" + keyword + "%'", null);
+      if (c.moveToFirst())
+      {
+        do
+        {
+          try
+          {
+            SearchResultBean bean = new SearchResultBean();
+            bean.setCursor(c);
+            bean.setLogType("plan");
+            beans.add(bean);
+            Log.w("WARN", "일정 더하기 : " + bean.text);
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
+        } while (c.moveToNext());
+      }
+      
+      c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE title LIKE '%" + keyword + "%'", null);
+      if (c.moveToFirst())
+      {
+        do
+        {
+          try
+          {
+            SearchResultBean bean = new SearchResultBean();
+            bean.setCursor(c);
+            bean.setLogType("place");
+            beans.add(bean);
+            Log.w("WARN", "장소 더하기 : " + bean.text);
+          }
+          catch (Exception e)
+          {
+          }
+        } while (c.moveToNext());
+      }
+      
+      c.close();
+      myDataBase.close();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return beans;
+  }
+  
+  
+  public ArrayList<SearchResultBean> getSearchResult(String keyword)
+  {
+    return getSearchResult(keyword, -1);
+  }
+  
+  
+  public ArrayList<SearchResultBean> getSearchResult(String keyword, int limit)
+  {
+    ArrayList<SearchResultBean> array = new ArrayList<SearchResultBean>();
+    int queryLimit = limit;
+    
+    try
+    {
+      this.openDataBase();
+      String query = "SELECT * FROM " + TABLE_NAME_PLAN + " WHERE title LIKE '%" + keyword + "%'";
+      Cursor c = myDataBase.rawQuery(query, null);
+      
+      if (limit != -1)
+        queryLimit = 0;
+      
+      if (c.moveToFirst())
+      {
+        if (c.getCount() > 0)
+        {
+          SearchResultBean titleBean = new SearchResultBean();
+          titleBean = new SearchResultBean();
+          titleBean.addPlaceTitle(context.getString(R.string.term_schedule), c.getCount());
+          titleBean.type = SearchResultBean.TYPE_PLACE;
+          array.add(titleBean);
+        }
+        
+        do
+        {
+          if (queryLimit == 3)
+            break;
+          
+          try
+          {
+            SearchResultBean bean = new SearchResultBean();
+            bean.setCursor(c);
+            bean.setLogType("plan");
+            array.add(bean);
+          }
+          catch (Exception e)
+          {
+          }
+          
+          if (limit != -1)
+            queryLimit++;
+        } while (c.moveToNext());
+      }
+      
+      if (limit != -1)
+        queryLimit = 0;
+      query = "SELECT * FROM " + TABLE_NAME_PLACE + " WHERE title LIKE '%" + keyword + "%'";
+      c = myDataBase.rawQuery(query, null);
+      
+      if (c.moveToFirst())
+      {
+        if (c.getCount() > 0)
+        {
+          SearchResultBean titleBean = new SearchResultBean();
+          titleBean = new SearchResultBean();
+          titleBean.addPlaceTitle(context.getString(R.string.term_place), c.getCount());
+          titleBean.type = SearchResultBean.TYPE_PLACE;
+          array.add(titleBean);
+        }
+        
+        do
+        {
+          if (queryLimit == 3)
+            break;
+          
+          try
+          {
+            SearchResultBean bean = new SearchResultBean();
+            bean.setCursor(c);
+            bean.setLogType("place");
+            Log.w("WARN", "Search offline plan : " + c.getString(c.getColumnIndex("title")));
+            array.add(bean);
+          }
+          catch (Exception e)
+          {
+          }
+          
+          if (limit != -1)
+            queryLimit++;
+        } while (c.moveToNext());
+      }
+      
+      c.close();
+      myDataBase.close();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return array;
   }
   
   
