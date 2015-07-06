@@ -48,7 +48,7 @@ public class DeclareReviewView extends RelativeLayout
   public String getReason()
   {
     String reason = "";
-    if (spinner.getSelectedItemPosition() == 1 || spinner.getSelectedItemPosition() == 2)
+    if (spinner.getSelectedItemPosition() == 0 || spinner.getSelectedItemPosition() == 1)
       reason = (String) spinner.getSelectedItem();
     else
       reason = editReason.getText().toString();
@@ -65,7 +65,7 @@ public class DeclareReviewView extends RelativeLayout
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
     ArrayList<String> reasons = new ArrayList<>();
-    reasons.add(context.getString(R.string.msg_review_declare_reason));
+//    reasons.add(context.getString(R.string.msg_review_declare_reason));
     reasons.add(context.getString(R.string.msg_review_declare_reason_1));
     reasons.add(context.getString(R.string.msg_review_declare_reason_2));
     reasons.add(context.getString(R.string.msg_review_declare_reason_3));

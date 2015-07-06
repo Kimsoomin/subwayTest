@@ -615,7 +615,7 @@ public class ApiClient
   }
   
   
-  public boolean declareReview(String idx, String reason)
+  public NetworkResult declareReview(String idx, String reason)
   {
     boolean isSuccess = false;
     try
@@ -626,12 +626,13 @@ public class ApiClient
       JSONObject obj = new JSONObject(result.response);
       if (obj.getString("status").equals("OK"))
         isSuccess = true;
+      return result;
     }
     catch (Exception e)
     {
       e.printStackTrace();
     }
-    return isSuccess;
+    return null;
   }
   
   

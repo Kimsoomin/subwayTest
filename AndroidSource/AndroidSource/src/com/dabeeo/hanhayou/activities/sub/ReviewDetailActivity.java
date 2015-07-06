@@ -1,5 +1,8 @@
 package com.dabeeo.hanhayou.activities.sub;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -29,6 +32,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.views.DeclareReviewView;
 
@@ -297,7 +301,7 @@ public class ReviewDetailActivity extends ActionBarActivity
     }
   }
   
-  private class DeclareAsyncTask extends AsyncTask<String, Integer, Boolean>
+  private class DeclareAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     
     @Override
@@ -308,16 +312,27 @@ public class ReviewDetailActivity extends ActionBarActivity
     
     
     @Override
-    protected Boolean doInBackground(String... params)
+    protected NetworkResult doInBackground(String... params)
     {
       return apiClient.declareReview(params[0], params[1]);
     }
     
     
     @Override
-    protected void onPostExecute(Boolean result)
+    protected void onPostExecute(NetworkResult result)
     {
-      Toast.makeText(ReviewDetailActivity.this, getString(R.string.msg_declare_compelete), Toast.LENGTH_SHORT).show();
+      try
+      {
+        JSONObject object = new JSONObject(result.response);
+        if (object.has("status") && object.getString("status").equals("OK"))
+          Toast.makeText(ReviewDetailActivity.this, getString(R.string.msg_declare_compelete), Toast.LENGTH_SHORT).show();
+        else
+          Toast.makeText(ReviewDetailActivity.this, object.getString("message"), Toast.LENGTH_SHORT).show();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
       super.onPostExecute(result);
     }
   }

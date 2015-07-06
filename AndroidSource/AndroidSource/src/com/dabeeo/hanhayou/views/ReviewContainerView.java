@@ -3,6 +3,8 @@ package com.dabeeo.hanhayou.views;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +20,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.ReviewDetailActivity;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.views.ReviewView.DeleteListener;
 
 public class ReviewContainerView extends LinearLayout
@@ -210,7 +213,7 @@ public class ReviewContainerView extends LinearLayout
     }
   }
   
-  private class DeclareAsyncTask extends AsyncTask<String, Integer, Boolean>
+  private class DeclareAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     
     @Override
@@ -221,16 +224,28 @@ public class ReviewContainerView extends LinearLayout
     
     
     @Override
-    protected Boolean doInBackground(String... params)
+    protected NetworkResult doInBackground(String... params)
     {
       return apiClient.declareReview(params[0], params[1]);
     }
     
     
     @Override
-    protected void onPostExecute(Boolean result)
+    protected void onPostExecute(NetworkResult result)
     {
-      Toast.makeText(context, context.getString(R.string.msg_declare_compelete), Toast.LENGTH_SHORT).show();
+      try
+      {
+        JSONObject object = new JSONObject(result.response);
+        if (object.has("status") && object.getString("status").equals("OK"))
+          Toast.makeText(context, context.getString(R.string.msg_declare_compelete), Toast.LENGTH_SHORT).show();
+        else
+          Toast.makeText(context, object.getString("message"), Toast.LENGTH_SHORT).show();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
       super.onPostExecute(result);
     }
   }
