@@ -22,6 +22,7 @@ import com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.PlaceListAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class PlaceListFragment extends Fragment
 {
@@ -81,7 +82,7 @@ public class PlaceListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (!isLoading && !isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (SystemUtil.isConnectNetwork(getActivity()) && !isLoading && !isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           load();
