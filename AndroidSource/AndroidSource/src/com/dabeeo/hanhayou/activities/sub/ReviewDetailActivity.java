@@ -126,7 +126,7 @@ public class ReviewDetailActivity extends ActionBarActivity
                   new DeleteAsyncTask().execute(bean.idx);
                 }
               });
-              builder.setNegativeButton(android.R.string.cancel, null);
+              builder.setNegativeButton(R.string.term_cancel, null);
               builder.show();
             }
             else
@@ -137,7 +137,7 @@ public class ReviewDetailActivity extends ActionBarActivity
               final DeclareReviewView declareView = new DeclareReviewView(ReviewDetailActivity.this);
               declareView.init();
               builder.setView(declareView);
-              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              builder.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
               {
                 @Override
                 public void onClick(DialogInterface dialog, int which)
@@ -199,13 +199,15 @@ public class ReviewDetailActivity extends ActionBarActivity
       SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
       if(bean.insertDate != null)
         time.setText(format.format(bean.insertDate));
-      reviewScore.setText(Integer.toString(bean.rate));
+      reviewScore.setText(Float.toString(bean.rate));
       content.setText(bean.content);
       
       for (int i = 0; i < bean.imageUrls.size(); i++)
       {
         ImageView imageView = new ImageView(ReviewDetailActivity.this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(80, 80);
+        float density = getResources().getDisplayMetrics().density;
+        int size = (int) (80*density);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
         params.setMargins(8, 8, 8, 8);
         imageView.setLayoutParams(params);
         final String imageUrl = bean.imageUrls.get(i);

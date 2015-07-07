@@ -1,6 +1,5 @@
 package com.dabeeo.hanhayou.activities.mainmenu;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;

@@ -12,11 +12,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +26,8 @@ import com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
+import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.squareup.picasso.Picasso;
 
 public class ReviewView extends RelativeLayout
 {
@@ -40,8 +42,10 @@ public class ReviewView extends RelativeLayout
   private ImageView btnMore;
   
   private ListPopupWindow listPopupWindow;
-  private LinearLayout imageContainer;
+  private ViewGroup horizontalImagesView;
   private DeleteListener deleteListener;
+  
+  private View view;
   
   
   public ReviewView(Context context)
@@ -85,32 +89,36 @@ public class ReviewView extends RelativeLayout
     if (bean.insertDate != null)
       time.setText(format.format(bean.insertDate));
     
-    reviewScore.setText(Integer.toString(bean.rate));
+    reviewScore.setText(Float.toString(bean.rate));
     content.setText(bean.content);
     
     ImageDownloader.displayProfileImage(context, bean.mfidx, icon);
     
+    horizontalImagesView.removeAllViews();
+    
     for (int i = 0; i < bean.imageUrls.size(); i++)
     {
-      ImageView imageView = new ImageView(context);
-      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(80, 80);
-      params.setMargins(8, 8, 8, 8);
-      imageView.setLayoutParams(params);
+      int resId = R.layout.list_item_recommend_seoul_photo;
+      View parentView = LayoutInflater.from(context).inflate(resId, null);
+      
       final String imageUrl = bean.imageUrls.get(i);
-      imageView.setOnClickListener(new OnClickListener()
+      ImageView view = (ImageView) parentView.findViewById(R.id.photo);
+      float density = getResources().getDisplayMetrics().density;
+      Picasso.with(context).load(imageUrl).resize((int) (50 * density), (int) (50 * density)).centerCrop().into(view);
+      final String finalImageUrl = imageUrl;
+      view.setOnClickListener(new OnClickListener()
       {
         @Override
         public void onClick(View arg0)
         {
-          Intent i = new Intent(context, ImagePopUpActivity.class);
-          i.putExtra("imageUrls", bean.imageUrls);
-          i.putExtra("imageUrl", imageUrl);
-          context.startActivity(i);
+          Log.w("WARN", "onClick!");
+          Intent intent = new Intent(context, ImagePopUpActivity.class);
+          intent.putExtra("imageUrls", bean.imageUrls);
+          intent.putExtra("imageUrl", finalImageUrl);
+          context.startActivity(intent);
         }
       });
-      imageView.setImageResource(R.drawable.default_thumbnail_s);
-      ImageDownloader.displayImage(context, bean.imageUrls.get(i), imageView, null);
-      imageContainer.addView(imageView);
+      horizontalImagesView.addView(parentView);
     }
     
     btnMore.setOnClickListener(new OnClickListener()
@@ -191,10 +199,10 @@ public class ReviewView extends RelativeLayout
   public void init()
   {
     int resId = R.layout.view_place_review;
-    View view = LayoutInflater.from(context).inflate(resId, null);
+    view = LayoutInflater.from(context).inflate(resId, null);
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
-    imageContainer = (LinearLayout) view.findViewById(R.id.image_container);
+    horizontalImagesView = (ViewGroup) view.findViewById(R.id.horizontal_images_view);
     
     icon = (ImageView) view.findViewById(R.id.icon);
     name = (TextView) view.findViewById(R.id.name);
@@ -202,6 +210,9 @@ public class ReviewView extends RelativeLayout
     content = (TextView) view.findViewById(R.id.content);
     reviewScore = (TextView) view.findViewById(R.id.text_review_score);
     btnMore = (ImageView) view.findViewById(R.id.btn_review_list_more);
+    
+    if(!SystemUtil.isConnectNetwork(context))
+      btnMore.setVisibility(View.INVISIBLE);
     
     addView(view);
   }
