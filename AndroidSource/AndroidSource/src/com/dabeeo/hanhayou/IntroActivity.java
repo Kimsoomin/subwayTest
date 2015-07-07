@@ -38,6 +38,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.services.BackService;
 import com.dabeeo.hanhayou.utils.SystemUtil;
@@ -321,7 +322,6 @@ public class IntroActivity extends Activity
             byte[] buffer = new byte[contentLength];
             stream.readFully(buffer);
             stream.close();
-            publishProgress(40);
             
             Log.w("WARN", "이미지 압축파일 다운로드 중");
             DataOutputStream fos = new DataOutputStream(new FileOutputStream(outputFile));
@@ -338,7 +338,6 @@ public class IntroActivity extends Activity
             e.printStackTrace();
           }
           
-          publishProgress(80);
           unpackZip(outputFile.getAbsolutePath());
           
           outputFile.delete();

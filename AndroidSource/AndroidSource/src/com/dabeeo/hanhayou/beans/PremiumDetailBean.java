@@ -29,7 +29,7 @@ public class PremiumDetailBean
   public int bookmarkCount = 0;
   public int shareCount = 0;
   
-  public int isLiked;
+  public boolean isLiked;
   public int isBookmarked;
   
   public String updateDateString;
@@ -78,7 +78,7 @@ public class PremiumDetailBean
         reviewCount = obj.getInt("reviewCount");
       
       if (obj.has("isLiked"))
-        isLiked = obj.getInt("isLiked");
+        isLiked = obj.getInt("isLiked") != 0;
       if (obj.has("isBookmarked"))
         isBookmarked = obj.getInt("isBookmarked");
       

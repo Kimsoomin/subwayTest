@@ -162,6 +162,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       return;
     
     setTitle("");
+    btnLike.setActivated(bean.isLiked);
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
     if (bean.placeDetail != null)
     {
