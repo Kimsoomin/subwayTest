@@ -40,8 +40,8 @@
             android:name="com.dabeeo.hanhayou.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
 
         <!-- MainMenu Activities -->
         <activity
@@ -251,10 +251,11 @@
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.SearchResultDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.SearchResultJustOneCategoryListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity"
             android:screenOrientation="portrait" />
