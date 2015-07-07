@@ -8,6 +8,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.external.libraries.RoundedImageView;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
+import com.squareup.picasso.Picasso;
 
 public class ScheduleDetailTitleView extends RelativeLayout
 {
@@ -31,6 +33,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   public LinearLayout infoContainer;
   public LinearLayout likeAndBookmarkContainer, userContainer;
   public View titleDivider;
+  public ImageView isPublic;
   
   
   public ScheduleDetailTitleView(Context context)
@@ -87,6 +90,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     {
       e.printStackTrace();
     }
+    
     if (Locale.getDefault().getLanguage().contains("ko"))
       textDays.setText(Integer.toString(bean.dayCount) + "일");
     else
@@ -94,7 +98,11 @@ public class ScheduleDetailTitleView extends RelativeLayout
       textDays.setText(Integer.toString(bean.dayCount) + "日游");
     }
     
-    ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
+    if(!bean.isOpen)
+      isPublic.setVisibility(View.VISIBLE);
+    
+    Picasso.with(context).load(bean.mfidx).fit().into(imageView);
+//    ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
   }
   
   
@@ -116,6 +124,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     textMoney = (TextView) view.findViewById(R.id.text_money);
     textDays = (TextView) view.findViewById(R.id.text_days);
     titleDivider = (View) view.findViewById(R.id.schedule_title_divider);
+    isPublic = (ImageView) view.findViewById(R.id.is_public);
     addView(view);
   }
   

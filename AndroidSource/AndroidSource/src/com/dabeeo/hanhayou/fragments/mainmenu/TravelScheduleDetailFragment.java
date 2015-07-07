@@ -4,9 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -27,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.mainmenu.WriteReviewActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
@@ -36,9 +32,9 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.CustomScrollView;
 import com.dabeeo.hanhayou.views.CustomScrollView.ScrollViewListener;
@@ -197,6 +193,19 @@ public class TravelScheduleDetailFragment extends Fragment
     this.isRecommendSchedule = isRecommendSchedule;
   }
   
+  public void rateBtnSet()
+  {
+    if(bean.myLastRate == 1)
+    {
+      btnReviewWorst.setSelected(true);
+    }else if(bean.myLastRate == 3)
+    {
+      btnReviewSoso.setSelected(true);
+    }else if(bean.myLastRate == 5)
+    {
+      btnReviewBest.setSelected(true);
+    }
+  }
   
   private void displayContentData()
   {
@@ -204,6 +213,7 @@ public class TravelScheduleDetailFragment extends Fragment
     
     displayDayView();
     
+    rateBtnSet();
     textRate.setText(Float.toString(bean.rate));
     headerView.setData(bean.imageUrl, bean.title, bean.days.size(), bean.budgetTotal);
     titleView.setBean(bean);
@@ -380,7 +390,6 @@ public class TravelScheduleDetailFragment extends Fragment
         contentContainer.addView(view);
       }
     }
-    
   }
   
   private OnClickListener rateClickListener = new OnClickListener()

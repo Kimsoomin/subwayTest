@@ -61,7 +61,6 @@ public class TravelScheduleListFragment extends Fragment
   
   public int dayCount = -1;
   
-  
   public TravelScheduleListFragment(int type)
   {
     this.type = type;

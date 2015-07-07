@@ -41,6 +41,7 @@ public class PlaceDetailBean
   public int reviewCount = 0;
   public int bookmarkCount = 0;
   public int shareCount = 0;
+  public int myLastRate = 0;
   
   public boolean isLiked;
   public boolean isBookmarked;
@@ -103,14 +104,16 @@ public class PlaceDetailBean
         popularCount = obj.getInt("popular");
       
       if (obj.has("rate"))
-        rate = obj.getInt("rate");
+        rate = obj.getInt("rate")/2;
       if (obj.has("likeCount"))
         likeCount = obj.getInt("likeCount");
       if(obj.has("bookmarkCount"))
         bookmarkCount = obj.getInt("bookmarkCount");
       if (obj.has("reviewCount"))
         reviewCount = obj.getInt("reviewCount");
-      
+      if (obj.has("myLastRate"))
+        myLastRate = obj.getInt("myLastRate");
+        
       if (obj.has("isLiked"))
         isLiked = obj.getInt("isLiked") != 0;
       if (obj.has("isBookmarked"))
@@ -164,6 +167,7 @@ public class PlaceDetailBean
       lng = c.getDouble(c.getColumnIndex("lng"));
       tag = c.getString(c.getColumnIndex("tag"));
       rate = c.getInt(c.getColumnIndex("rate"));
+      myLastRate = c.getInt(c.getColumnIndex("myLastRate"));
       likeCount = c.getInt(c.getColumnIndex("likeCount"));
       bookmarkCount = c.getInt(c.getColumnIndex("bookmarkCount"));
       shareCount = c.getInt(c.getColumnIndex("shareCount"));

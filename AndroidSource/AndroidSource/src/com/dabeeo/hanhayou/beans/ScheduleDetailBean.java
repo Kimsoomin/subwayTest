@@ -31,6 +31,7 @@ public class ScheduleDetailBean
   public int bookmarkCount = 0;
   public int shareCount = 0;
   public int rate = 0;
+  public int myLastRate =0;
   public int ownerUserSeq;
   public String userName;
   public String gender;
@@ -43,7 +44,7 @@ public class ScheduleDetailBean
   public String budget2 = "0";
   public String budget3 = "0";
   public String imageUrl;
-  public boolean isLiked, isBookmarked;
+  public boolean isLiked, isBookmarked, isOpen;
   
   public ArrayList<ScheduleDayBean> days = new ArrayList<ScheduleDayBean>();
   
@@ -62,23 +63,18 @@ public class ScheduleDetailBean
       if (obj.has("title"))
         title = obj.getString("title");
       
-      try
-      {
-        if (obj.has("likeCount"))
-          likeCount = obj.getInt("likeCount");
-        if (obj.has("reviewCount"))
-          reviewCount = obj.getInt("reviewCount");
-        if (obj.has("bookmarkCount"))
-          bookmarkCount = obj.getInt("bookmarkCount");
-        if (obj.has("shareCount"))
-          shareCount = obj.getInt("shareCount");
-        if (obj.has("rate"))
-          rate = obj.getInt("rate");
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
+      if (obj.has("likeCount"))
+        likeCount = obj.getInt("likeCount");
+      if (obj.has("reviewCount"))
+        reviewCount = obj.getInt("reviewCount");
+      if (obj.has("bookmarkCount"))
+        bookmarkCount = obj.getInt("bookmarkCount");
+      if (obj.has("shareCount"))
+        shareCount = obj.getInt("shareCount");
+      if (obj.has("rate"))
+        rate = obj.getInt("rate")/2;
+      if (obj.has("myLastRate"))
+        myLastRate = obj.getInt("myLastRate");
       
       if (obj.has("ownerUserSeq"))
         ownerUserSeq = obj.getInt("ownerUserSeq");
@@ -113,6 +109,8 @@ public class ScheduleDetailBean
         isLiked = obj.getInt("isLiked") != 0;
       if (obj.has("isBookmarked"))
         isBookmarked = obj.getInt("isBookmarked") != 0;
+      if(obj.has("isOpen"))
+        isOpen = obj.getInt("isOpen") != 0;
       
       if (obj.has("image"))
       {

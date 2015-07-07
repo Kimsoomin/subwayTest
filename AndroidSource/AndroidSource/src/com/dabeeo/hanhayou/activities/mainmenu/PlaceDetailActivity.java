@@ -90,7 +90,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private ViewGroup layoutRecommendProduct;
   
-  int rate = 3;
+  int rate = 0;
   
   
   @Override
@@ -295,6 +295,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private void displayContentData()
   {
+    rateBtnSet();
     //TEST BEAN
     TicketBean ticketBean = new TicketBean();
     ticketBean.title = "경복궁 동반1인 무료 입장";
@@ -354,7 +355,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     reviewLayout.addView(reviewContainerView);
     reviewContainerView.loadMore();
     
-    textRate.setText(Float.toString(bean.rate/2));
+    textRate.setText(Float.toString(bean.rate));
 //    textDetail.setText(bean.contents);
     
     addDetailInfo(getString(R.string.term_place_detail_info), bean.contents);
@@ -423,14 +424,13 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   public void rateBtnSet()
   {
-    int rateset = 0;
-    if(rateset == 1)
+    if(bean.myLastRate == 1)
     {
       btnReviewWorst.setSelected(true);
-    }else if(rateset == 3)
+    }else if(bean.myLastRate == 3)
     {
       btnReviewSoso.setSelected(true);
-    }else if(rateset == 5)
+    }else if(bean.myLastRate == 5)
     {
       btnReviewBest.setSelected(true);
     }
