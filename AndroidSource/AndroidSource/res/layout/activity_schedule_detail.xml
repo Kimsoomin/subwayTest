@@ -51,17 +51,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="4dp"
                         android:text="@string/term_public"
-                        android:textColor="@color/light_gray" />
+                        android:textColor="@color/darker_gray" />
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="24dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/is_public_check_image" />
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/is_public_check_image" />
             </RelativeLayout>
 
             <View
@@ -89,17 +90,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="4dp"
                         android:text="@string/term_private"
-                        android:textColor="@color/light_gray" />
+                        android:textColor="@color/darker_gray" />
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="24dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/is_public_check_image" />
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/is_public_check_image" />
             </RelativeLayout>
 
             <View
