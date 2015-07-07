@@ -892,6 +892,34 @@ public class ApiClient
           Log.w("WARN", "검색결과 추천서울 사이즈 : " + premiumList.size());
           
           SearchResultBean titleBean = new SearchResultBean();
+          if (premiumList.size() > 0)
+          {
+            titleBean = new SearchResultBean();
+            titleBean.addPlaceTitle(context.getString(R.string.term_recommend_seoul), jsonObject.getInt("premiumCount"));
+            titleBean.type = SearchResultBean.TYPE_RECOMMEND_SEOUL;
+            array.add(titleBean);
+            
+            if (premiumList.size() > 0)
+            {
+              int maxCount = limit;
+              if (limit == -1)
+                maxCount = premiumList.size();
+              for (int i = 0; i < maxCount; i++)
+              {
+                try
+                {
+                  SearchResultBean listBean = new SearchResultBean();
+                  listBean.idx = premiumList.get(i).idx;
+                  listBean.addText(premiumList.get(i).text, premiumList.get(i).type);
+                  array.add(listBean);
+                }
+                catch (Exception e)
+                {
+                }
+              }
+            }
+          }
+          
           if (placeList.size() > 0)
           {
             titleBean = new SearchResultBean();
@@ -911,34 +939,6 @@ public class ApiClient
                   SearchResultBean listBean = new SearchResultBean();
                   listBean.idx = placeList.get(i).idx;
                   listBean.addText(placeList.get(i).text, placeList.get(i).type);
-                  array.add(listBean);
-                }
-                catch (Exception e)
-                {
-                }
-              }
-            }
-          }
-          
-          if (premiumList.size() > 0)
-          {
-            titleBean = new SearchResultBean();
-            titleBean.addPlaceTitle(context.getString(R.string.term_strategy_seoul), jsonObject.getInt("premiumCount"));
-            titleBean.type = SearchResultBean.TYPE_RECOMMEND_SEOUL;
-            array.add(titleBean);
-            
-            if (premiumList.size() > 0)
-            {
-              int maxCount = limit;
-              if (limit == -1)
-                maxCount = premiumList.size();
-              for (int i = 0; i < maxCount; i++)
-              {
-                try
-                {
-                  SearchResultBean listBean = new SearchResultBean();
-                  listBean.idx = premiumList.get(i).idx;
-                  listBean.addText(premiumList.get(i).text, premiumList.get(i).type);
                   array.add(listBean);
                 }
                 catch (Exception e)
@@ -1069,14 +1069,14 @@ public class ApiClient
   
   public NetworkResult uploadReviewImage(String seqCode, String filePath)
   {
-    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=review" +"&seqCode=" + seqCode + 
-        "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(), filePath);
+    return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=review" + "&seqCode=" + seqCode + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq(),
+        filePath);
   }
   
   
   public NetworkResult uploadProfileImage(String filePath)
   {
-    String userSeq =  PreferenceManager.getInstance(context).getUserSeq();
+    String userSeq = PreferenceManager.getInstance(context).getUserSeq();
     return httpClient.requestPostWithFile(getSiteUrl() + "?v=m1&mode=FILE_UPLOAD&folderName=profile&seqCode=" + userSeq + "&userSeq=" + userSeq, filePath);
   }
 }

@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -52,6 +53,8 @@ public class SearchFragment extends Fragment
   private LinearLayout popularKeywordOuterContainer, popularKeyworkdContainer;
   private ListView searchListView;
   private ScrollView emptyContainer;
+  private RelativeLayout searchContainer; 
+  private LinearLayout searchEmptyContainer;
   
   public ApiClient apiClient;
   
@@ -73,6 +76,9 @@ public class SearchFragment extends Fragment
     
     popularKeywordOuterContainer = (LinearLayout) getView().findViewById(R.id.popular_keyword_outer_container);
     popularKeyworkdContainer = (LinearLayout) getView().findViewById(R.id.popular_keyword_container);
+    searchContainer = (RelativeLayout) getView().findViewById(R.id.search_conatiner);
+    searchEmptyContainer = (LinearLayout) getView().findViewById(R.id.search_empty_container);
+    
     searchListView = (ListView) getView().findViewById(R.id.search_list);
     emptyContainer = (ScrollView) getView().findViewById(R.id.empty_container);
     
@@ -121,12 +127,13 @@ public class SearchFragment extends Fragment
         if (s.length() >= 2)
         {
           imageX.setVisibility(View.VISIBLE);
+          searchContainer.setVisibility(View.VISIBLE);
           search(s.toString());
         }
         else
         {
           imageX.setVisibility(View.GONE);
-          searchListView.setVisibility(View.GONE);
+          searchContainer.setVisibility(View.GONE);
           emptyContainer.setVisibility(View.VISIBLE);
         }
       }
@@ -336,11 +343,17 @@ public class SearchFragment extends Fragment
       if (adapter.getCount() == 0)
       {
         searchListView.setVisibility(View.GONE);
+        
+        searchEmptyContainer.setVisibility(View.VISIBLE);
+        
         emptyContainer.setVisibility(View.VISIBLE);
       }
       else
       {
         searchListView.setVisibility(View.VISIBLE);
+        
+        searchEmptyContainer.setVisibility(View.GONE);
+        
         emptyContainer.setVisibility(View.GONE);
       }
       super.onPostExecute(result);
