@@ -117,14 +117,47 @@
 
             <!-- 검색결과 -->
 
-            <ListView
-                android:id="@+id/search_list"
+            <RelativeLayout
+                android:id="@+id/search_conatiner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:padding="8dp"
-                android:visibility="gone" />
+                android:background="@android:color/white"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:id="@+id/search_empty_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/character_list_blank" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/msg_empty_search_result"
+                        android:textColor="#444a4b"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/search_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:padding="8dp"
+                    android:visibility="gone" />
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 
