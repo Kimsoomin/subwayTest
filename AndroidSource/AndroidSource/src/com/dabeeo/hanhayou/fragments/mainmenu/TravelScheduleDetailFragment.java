@@ -4,9 +4,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.mainmenu.WriteReviewActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
@@ -31,6 +36,8 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.CustomScrollView;
@@ -67,9 +74,11 @@ public class TravelScheduleDetailFragment extends Fragment
   private boolean isMySchedule = false;
   private boolean isRecommendSchedule = false;
   
-  int rate = 3;
+  int rate = 0;
   
   int spotNum = 0;
+  
+  public ApiClient apiClient;
   
   
   @Override
@@ -85,6 +94,8 @@ public class TravelScheduleDetailFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    apiClient = new ApiClient(getActivity());
     
     scrollView = (CustomScrollView) getView().findViewById(R.id.scrollview);
     contentContainer = (LinearLayout) getView().findViewById(R.id.content_container);
@@ -423,13 +434,29 @@ public class TravelScheduleDetailFragment extends Fragment
           startActivity(i);
         }
         
-        
         public void onNegativeButtonClickListener()
         {
-          //TODO 평점 서버로 전송 - API필요
+          new postRateTask().execute();
         }
       });
     }
   };
+  
+  private class postRateTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.postReviewRate("palce", bean.idx, PreferenceManager.getInstance(getActivity()).getUserSeq(), rate, null);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+    }
+  }
   
 }

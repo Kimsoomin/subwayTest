@@ -421,6 +421,21 @@ public class PlaceDetailActivity extends ActionBarActivity
     }
   }
   
+  public void rateBtnSet()
+  {
+    int rateset = 0;
+    if(rateset == 1)
+    {
+      btnReviewWorst.setSelected(true);
+    }else if(rateset == 3)
+    {
+      btnReviewSoso.setSelected(true);
+    }else if(rateset == 5)
+    {
+      btnReviewBest.setSelected(true);
+    }
+  }
+  
   /**************************************************
    * listener
    ***************************************************/
@@ -465,7 +480,6 @@ public class PlaceDetailActivity extends ActionBarActivity
       AlertDialogManager alert = new AlertDialogManager(PlaceDetailActivity.this);
       alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_write_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
       {
-        
         public void onPositiveButtonClickListener()
         {
           Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
@@ -474,7 +488,6 @@ public class PlaceDetailActivity extends ActionBarActivity
           i.putExtra("rate", rate);
           startActivity(i);
         }
-        
         
         public void onNegativeButtonClickListener()
         {
@@ -531,37 +544,6 @@ public class PlaceDetailActivity extends ActionBarActivity
   };
   
   
-  public void responseParser(String response)
-  {
-    String status = null;
-    try
-    {
-      JSONObject jsonObject = new JSONObject(response);
-      if (jsonObject.has("status"))
-      {
-        status = jsonObject.getString("status");
-      }
-    }
-    catch (JSONException e)
-    {
-      status = "";
-      e.printStackTrace();
-    }
-    
-    if (status.equals("OK"))
-    {
-      
-    }
-    else if (status.equals("ERROR_REQ"))
-    {
-      
-    }
-    else
-    {
-      
-    }
-  }
-  
   /**************************************************
    * async task
    ***************************************************/
@@ -581,9 +563,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      // TODO Auto-generated method stub
       super.onPostExecute(result);
-      
     }
   }
   

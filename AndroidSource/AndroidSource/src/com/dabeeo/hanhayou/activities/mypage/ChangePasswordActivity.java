@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
@@ -173,7 +175,24 @@ public class ChangePasswordActivity extends ActionBarActivity
     
     if (status.equals("OK"))
     {
-      finish();
+      new AlertDialogManager(ChangePasswordActivity.this).showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_success_password_change), 
+          getString(R.string.term_ok), null, new AlertListener()
+          {
+            
+            @Override
+            public void onPositiveButtonClickListener()
+            {
+              finish();
+            }
+            
+            
+            @Override
+            public void onNegativeButtonClickListener()
+            {
+              // TODO Auto-generated method stub
+              
+            }
+          });
     }
     else if (status.equals("ERROR_PW"))
     {
@@ -181,7 +200,7 @@ public class ChangePasswordActivity extends ActionBarActivity
     }
     else
     {
-      CreateAlert(getString(R.string.msg_please_check_user_info));
+      CreateAlert(getString(R.string.msg_fail_password_change));
     }
   }
   

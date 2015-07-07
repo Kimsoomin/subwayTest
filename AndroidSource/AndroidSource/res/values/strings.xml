@@ -449,6 +449,8 @@
     <string name="msg_please_error_out">该账号为已注销账号。</string>
     <string name="msg_please_error_password">密码不正确，请重新输入。</string>
     <string name="msg_please_error_old_password">原先的密码不正确，请重新输入。</string>
+    <string name="msg_success_password_change">비밀번호가 정상적으로 변경되었습니다.</string>
+    <string name="msg_fail_password_change">密码更改失败。请重新再试。</string>
     <string name="term_detail">(查看详情)</string>
     <string name="term_qq">QQ</string>
     <string name="term_wechat">微信</string>
