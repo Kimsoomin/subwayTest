@@ -11,13 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:paddingBottom="12dp" />
+        android:padding="8dp"
+        android:paddingBottom="12dp"
+        android:textColor="@color/darker_gray" />
 
     <View
         android:id="@+id/seperater"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/light_gray"
+        android:background="#eeeeee"
         android:text="@null" />
 
 </LinearLayout>

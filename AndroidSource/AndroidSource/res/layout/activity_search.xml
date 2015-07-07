@@ -56,6 +56,14 @@
                 android:src="@drawable/icon_typing_cancel" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/text_search_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="17sp"
+            android:textStyle="bold" />
         <!-- 빈화면 -->
 
         <RelativeLayout
@@ -96,7 +104,6 @@
                 android:layout_height="match_parent"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:padding="8dp"
                 android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>

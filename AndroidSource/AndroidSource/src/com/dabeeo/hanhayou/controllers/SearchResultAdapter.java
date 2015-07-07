@@ -25,6 +25,7 @@ public class SearchResultAdapter extends BaseAdapter
     notifyDataSetChanged();
   }
   
+  
   public void add(ArrayList<SearchResultBean> bean)
   {
     items.addAll(bean);
@@ -95,6 +96,7 @@ public class SearchResultAdapter extends BaseAdapter
       else
         seperator.setVisibility(View.VISIBLE);
     }
+    
     TextView title = (TextView) convertView.findViewById(android.R.id.text1);
     title.setText(bean.text);
     

@@ -41,6 +41,7 @@ import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.SearchResultAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 
 public class SearchResultDetailActivity extends ActionBarActivity
 {
@@ -52,6 +53,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
   private ApiClient apiClient;
   private Handler handler = new Handler();
   private ProgressBar progressBar;
+  private TextView textSearchResult;
   
   
   @Override
@@ -68,6 +70,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    textSearchResult = (TextView) findViewById(R.id.text_search_result);
+    textSearchResult.setVisibility(View.GONE);
     progressBar = (ProgressBar) findViewById(R.id.progressbar);
     apiClient = new ApiClient(this);
     searchListView = (ListView) findViewById(R.id.search_list);
@@ -265,6 +269,9 @@ public class SearchResultDetailActivity extends ActionBarActivity
    ***************************************************/
   private class SearchTask extends AsyncTask<String, Void, ArrayList<SearchResultBean>>
   {
+    private int size = 0;
+    
+    
     @Override
     protected void onPreExecute()
     {
@@ -278,13 +285,23 @@ public class SearchResultDetailActivity extends ActionBarActivity
     @Override
     protected ArrayList<SearchResultBean> doInBackground(String... params)
     {
-      return apiClient.searchResult(params[0], 3);
+      ArrayList<SearchResultBean> allReuslt = apiClient.searchResult(params[0]);
+      ArrayList<SearchResultBean> reuslt = apiClient.searchResult(params[0], 3);
+      size = allReuslt.size();
+      return reuslt;
     }
     
     
     @Override
     protected void onPostExecute(ArrayList<SearchResultBean> result)
     {
+      if (size == 0)
+        textSearchResult.setVisibility(View.GONE);
+      else
+      {
+        textSearchResult.setVisibility(View.VISIBLE);
+        textSearchResult.setText(getString(R.string.term_search_result) + " (" + Integer.toString(size) + ")");
+      }
       adapter.clear();
       adapter.add(result);
       
