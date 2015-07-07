@@ -7,11 +7,14 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,7 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -38,7 +41,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
 {
   private RoundedImageView profileImage;
   private TextView textCompelete;
-  private RelativeLayout containerRecommendSchedule;
+  private LinearLayout containerRecommendSchedule;
   private Button btnAnotherSchedule, btnNewSchedule;
   private ScheduleBean bean;
   private ApiClient apiClient;
@@ -66,7 +69,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     apiClient = new ApiClient(getApplicationContext());
     profileImage = (RoundedImageView) findViewById(R.id.profile_image);
     textCompelete = (TextView) findViewById(R.id.text_compelete);
-    containerRecommendSchedule = (RelativeLayout) findViewById(R.id.container_recommend_schedule);
+    containerRecommendSchedule = (LinearLayout) findViewById(R.id.container_recommend_schedule);
     
     btnAnotherSchedule = (Button) findViewById(R.id.btn_another_schedule_recommend);
     btnNewSchedule = (Button) findViewById(R.id.btn_new_schedule);
@@ -107,10 +110,11 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
   
   private void displayRecommendScheduleView(String json, String startDate)
   {
-    String text = "<font color='#969b9c'>"+ getString(R.string.msg_comeplete_recommend_schedule1) + "</font>"
-        +"<font color='#444a4b'>" + PreferenceManager.getInstance(getApplicationContext()).getUserName() + "</font><font color='#969b9c'>"
-        + getString(R.string.msg_comeplete_recommend_schedule2) + "</font>";
-    textCompelete.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
+    String userName = PreferenceManager.getInstance(getApplicationContext()).getUserName();
+    String completeText = userName + getString(R.string.msg_comeplete_recommend_schedule);
+    SpannableStringBuilder style = new SpannableStringBuilder(completeText);
+    style.setSpan(new ForegroundColorSpan(Color.parseColor("#444a4b")), 0, userName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    textCompelete.setText(style);
     
     bean = new ScheduleBean();
     try

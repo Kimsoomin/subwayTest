@@ -467,8 +467,7 @@
     <string name="msg_send_auth_number">验证邮件已发到邮箱\n确认验证码后，\n请在页面输入验证码</string>
     <string name="msg_recommend_schedule_title">适合“#1”用户的#2天定制行程</string>
     <string name="msg_warn_password_not_same_name">不能使用与昵称相同的密码。</string>
-    <string name="msg_comeplete_recommend_schedule1">成功创建</string>
-    <string name="msg_comeplete_recommend_schedule2">用户的推荐行程。</string>
+    <string name="msg_comeplete_recommend_schedule">用户的 \n推荐行程创建成功！</string>
     <!-- 번역안됨 -->
     <string name="msg_not_authorize_email">美国认证的邮件</string>
     <string name="msg_not_find_email">입력하신 E-mail 주소로 등록된 계정이 없습니다.</string>

@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/darker_gray"
+        android:textColor="@color/light_gray"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -130,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/darker_gray"
+            android:background="#cc969b9c"
             android:text="@string/term_generate_new_schedule"
             android:textColor="@android:color/white" />
 
@@ -139,7 +139,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/dark_pink"
+            android:background="#ccff6262"
             android:text="@string/term_another_recommend_schedule"
             android:textColor="@android:color/white" />
     </LinearLayout>
