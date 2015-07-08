@@ -109,7 +109,6 @@ public class PreferenceManager extends BasePreferenceManager
     put(KEY_USER_GENDER, "");
     put(KEY_USER_PROFILE, "");
     put(KEY_AUTO_LOGIN, false);
-    offlineManger.clearMyTables();
   }
   
   

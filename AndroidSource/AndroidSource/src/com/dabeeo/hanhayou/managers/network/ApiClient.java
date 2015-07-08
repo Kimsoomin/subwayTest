@@ -20,6 +20,7 @@ import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
+import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
@@ -141,8 +142,7 @@ public class ApiClient
       String url = getSiteUrl() + "?v=m1&mode=MY_PLAN_LIST&ownerUserSeq=" + PreferenceManager.getInstance(context).getUserSeq();
       NetworkResult result = httpClient.requestGet(url);
       
-      offlineDatabaseManager.writeDatabaseMyPlan(result.response);
-      
+      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLAN, result.response);
       try
       {
         JSONObject obj = new JSONObject(result.response);
@@ -171,7 +171,32 @@ public class ApiClient
     }
     else
     {
-      beans.addAll(offlineDatabaseManager.getMyTravelSchedules(dayCount));
+      try
+      {
+        JSONObject obj = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN));
+        if (!obj.has("plan"))
+          return beans;
+        
+        JSONArray array = obj.getJSONArray("plan");
+        for (int i = 0; i < array.length(); i++)
+        {
+          JSONObject beanObj = array.getJSONObject(i);
+          ScheduleBean bean = new ScheduleBean();
+          bean.setJSONObject(beanObj);
+          if (dayCount == -1)
+            beans.add(bean);
+          else
+          {
+            if (bean.dayCount == dayCount)
+              beans.add(bean);
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
     }
     return beans;
   }
@@ -396,6 +421,7 @@ public class ApiClient
     
     NetworkResult result = httpClient.requestGet(url);
     Log.w("WARN", "GetPlace List url : " + url);
+    
     try
     {
       JSONObject obj = new JSONObject(result.response);

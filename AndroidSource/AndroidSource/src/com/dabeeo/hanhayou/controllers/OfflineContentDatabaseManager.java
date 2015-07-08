@@ -31,6 +31,8 @@ import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.beans.StationBean;
+import com.dabeeo.hanhayou.managers.FileManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.map.Global;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
@@ -44,8 +46,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   private static String TABLE_NAME_PLACE = "place";
   private static String TABLE_NAME_PLAN = "plan";
   public static String TABLE_NAME_REVIEW = "review";
-  private static String TABLE_NAME_MY_PLAN = "my_plan";
-  private static String TABLE_NAME_MY_PLACE = "my_place";
   private SQLiteDatabase myDataBase;
   
   private final Context context;
@@ -184,7 +184,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     ContentValues insertValues = new ContentValues();
     try
     {
-      if (tableName.equals(TABLE_NAME_PLAN) || tableName.equals(TABLE_NAME_MY_PLAN))
+      if (tableName.equals(TABLE_NAME_PLAN))
       {
         insertValues.put("idx", obj.getString("idx"));
         insertValues.put("planCode", obj.getString("planCode"));
@@ -213,7 +213,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         if (obj.has("currencySymbol"))
           insertValues.put("currencySymbol", obj.getString("currencySymbol"));
       }
-      else if (tableName.equals(TABLE_NAME_PLACE) || tableName.equals(TABLE_NAME_MY_PLACE))
+      else if (tableName.equals(TABLE_NAME_PLACE))
       {
         insertValues.put("idx", obj.getString("idx"));
         insertValues.put("seqCode", obj.getString("seqCode"));
@@ -357,80 +357,104 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     this.openDataBase();
     try
     {
-      myDataBase.delete(TABLE_NAME_MY_PLACE, null, null);
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-    try
-    {
       JSONObject obj = new JSONObject(jsonString);
       
       //Plan
       JSONArray arr = obj.getJSONArray("place");
-      for (int i = 0; i < arr.length(); i++)
-      {
-        JSONObject innerObj = arr.getJSONObject(i);
-        try
-        {
-          insert(TABLE_NAME_MY_PLACE, innerObj);
-        }
-        catch (Exception e)
-        {
-        }
-      }
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-  }
-  
-  
-  public void clearMyTables()
-  {
-    try
-    {
-      this.openDataBase();
-      myDataBase.delete(TABLE_NAME_MY_PLAN, null, null);
-      myDataBase.delete(TABLE_NAME_MY_PLACE, null, null);
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-  }
-  
-  
-  public void writeDatabaseMyPlan(String jsonString)
-  {
-    this.openDataBase();
-    try
-    {
-      myDataBase.delete(TABLE_NAME_MY_PLAN, null, null);
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-    
-    try
-    {
-      JSONObject obj = new JSONObject(jsonString);
       
-      //Plan
-      JSONArray arr = obj.getJSONArray("plan");
       for (int i = 0; i < arr.length(); i++)
       {
         JSONObject innerObj = arr.getJSONObject(i);
-        try
+        innerObj.put("ownerUserSeq", PreferenceManager.getInstance(context).getUserSeq());
+        innerObj.put("userName", PreferenceManager.getInstance(context).getUserName());
+        Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE idx = " + innerObj.getString("idx"), null);
+        c.moveToFirst();
+        if (c.getCount() > 0)
         {
-          insert(TABLE_NAME_MY_PLAN, innerObj);
+          Log.w("WARN", "이미 있는 장소");
+          ContentValues insertValues = new ContentValues();
+          try
+          {
+            insertValues.put("idx", obj.getString("idx"));
+            insertValues.put("seqCode", obj.getString("seqCode"));
+            insertValues.put("cityIdx", obj.getString("cityIdx"));
+            insertValues.put("ownerUserSeq", obj.getString("ownerUserSeq"));
+            insertValues.put("userName", obj.getString("userName"));
+            insertValues.put("gender", obj.getString("gender"));
+            if (obj.has("category"))
+              insertValues.put("category", obj.getInt("category"));
+            insertValues.put("title", obj.getString("title"));
+            if (obj.has("address"))
+              insertValues.put("address", obj.getString("address"));
+            if (obj.has("businessHours"))
+              insertValues.put("businessHours", obj.getString("businessHours"));
+            if (obj.has("priceInfo"))
+              insertValues.put("priceInfo", obj.getString("priceInfo"));
+            if (obj.has("trafficInfo"))
+              insertValues.put("trafficInfo", obj.getString("trafficInfo"));
+            if (obj.has("homepage"))
+              insertValues.put("homepage", obj.getString("homepage"));
+            if (obj.has("contact"))
+              insertValues.put("contact", obj.getString("contact"));
+            if (obj.has("contents"))
+              insertValues.put("contents", obj.getString("contents"));
+            if (obj.has("useTime"))
+              insertValues.put("useTime", obj.getInt("useTime"));
+            insertValues.put("lat", obj.getDouble("lat"));
+            insertValues.put("lng", obj.getDouble("lng"));
+            if (obj.has("tag"))
+              insertValues.put("tag", obj.getString("tag"));
+            if (obj.has("popular"))
+              insertValues.put("popular", obj.getInt("popular"));
+            if (obj.has("rate"))
+              insertValues.put("rate", obj.getInt("rate"));
+            if (obj.has("likeCount"))
+              insertValues.put("likeCount", obj.getInt("likeCount"));
+            if (obj.has("bookmarkCount"))
+              insertValues.put("bookmarkCount", obj.getInt("bookmarkCount"));
+            if (obj.has("shareCount"))
+              insertValues.put("shareCount", obj.getInt("shareCount"));
+            if (obj.has("reviewCount"))
+              insertValues.put("reviewCount", obj.getInt("reviewCount"));
+            if (obj.has("isLiked"))
+              insertValues.put("isLiked", obj.getInt("isLiked"));
+            if (obj.has("isBookmarked"))
+              insertValues.put("isBookmarked", obj.getInt("isBookmarked"));
+            if (obj.has("insertDate"))
+              insertValues.put("insertDate", obj.getString("insertDate"));
+            if (obj.has("updateDate"))
+              insertValues.put("updateDate", obj.getString("updateDate"));
+            if (obj.has("premiumIdx"))
+            {
+              if (obj.getString("premiumIdx") != null)
+              {
+                insertValues.put("premiumIdx", obj.getString("premiumIdx"));
+              }
+              else
+              {
+                insertValues.put("premiumIdx", "null");
+              }
+            }
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
+          myDataBase.update(TABLE_NAME_PLACE, insertValues, "idx = ?", new String[] { innerObj.getString("idx") });
         }
-        catch (Exception e)
+        else
         {
+          Log.w("WARN", "없는 장소");
+          try
+          {
+            insert(TABLE_NAME_PLACE, innerObj);
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
         }
+        c.close();
       }
     }
     catch (Exception e)
@@ -563,6 +587,29 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   }
   
   
+  public ScheduleDetailBean getMYTravelScheduleDetailBean(String idx)
+  {
+    ScheduleDetailBean bean = new ScheduleDetailBean();
+    
+    JSONArray array;
+    try
+    {
+      array = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN)).getJSONArray("plan");
+      for (int i = 0; i < array.length(); i++)
+      {
+        JSONObject obj = array.getJSONObject(i);
+        if (obj.getString("idx").equals(idx))
+          bean.setJSONObject(obj);
+      }
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    return bean;
+  }
+  
+  
   public ArrayList<PlaceBean> getMyPlaces(int categoryId)
   {
     ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
@@ -570,9 +617,9 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     {
       this.openDataBase();
       
-      Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLACE, null);
+      Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq(), null);
       if (categoryId != -1)
-        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLACE + " WHERE category = " + categoryId, null);
+        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq() + " AND category = " + categoryId, null);
       c.moveToFirst();
       if (c.moveToFirst())
       {
@@ -582,8 +629,8 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
           {
             PlaceBean bean = new PlaceBean();
             bean.setCursor(c);
-            if (!bean.premiumIdx.equals("null"))
-              beans.add(bean);
+//            if (!bean.premiumIdx.equals("null"))
+            beans.add(bean);
           }
           catch (Exception e)
           {
@@ -832,57 +879,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     c.close();
     myDataBase.close();
     return bean;
-  }
-  
-  
-  public ScheduleDetailBean getMYTravelScheduleDetailBean(String idx)
-  {
-    this.openDataBase();
-    ScheduleDetailBean bean = new ScheduleDetailBean();
-    
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLAN + " WHERE idx = " + idx, null);
-    c.moveToFirst();
-    try
-    {
-      bean.setCursor(c);
-    }
-    catch (Exception e)
-    {
-    }
-    c.close();
-    return bean;
-  }
-  
-  
-  public ArrayList<ScheduleBean> getMyTravelSchedules(int dayCount)
-  {
-    this.openDataBase();
-    ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLAN, null);
-    if (c.moveToFirst())
-    {
-      do
-      {
-        try
-        {
-          ScheduleBean bean = new ScheduleBean();
-          bean.setCursor(c);
-          if (dayCount == -1)
-            beans.add(bean);
-          else
-          {
-            if (bean.dayCount == dayCount)
-              beans.add(bean);
-          }
-        }
-        catch (Exception e)
-        {
-        }
-      } while (c.moveToNext());
-    }
-    c.close();
-    myDataBase.close();
-    return beans;
   }
   
   

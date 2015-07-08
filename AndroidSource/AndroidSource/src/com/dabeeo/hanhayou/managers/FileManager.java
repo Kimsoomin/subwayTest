@@ -14,7 +14,6 @@ import android.widget.Toast;
 public class FileManager
 {
   public static final String FILE_MY_PLAN = "my_plan.txt";
-  public static final String FILE_MY_PLACE = "my_place.txt";
   private volatile static FileManager instance;
   private Context context;
   
@@ -39,21 +38,20 @@ public class FileManager
   }
   
   
-  private void clear()
+  public void clear()
   {
-    deleteFile(FileManager.FILE_MY_PLACE);
     deleteFile(FileManager.FILE_MY_PLAN);
   }
   
   
-  private void deleteAndWriteFile(String fileName, String content)
+  public void deleteAndWriteFile(String fileName, String content)
   {
     deleteFile(fileName);
     writeFile(fileName, content);
   }
   
   
-  private String readFile(String fileName)
+  public String readFile(String fileName)
   {
     //Get the text file
     File file = new File(context.getFilesDir(), fileName);
@@ -81,7 +79,7 @@ public class FileManager
   }
   
   
-  private void writeFile(String fileName, String content)
+  public void writeFile(String fileName, String content)
   {
     try
     {

@@ -36,6 +36,7 @@ public class MySchedulesListAdapter extends BaseAdapter
   private float imageWidth;
   private OfflineContentDatabaseManager offlineManager;
   
+  
   public MySchedulesListAdapter(Context context)
   {
     this.context = context;
@@ -104,7 +105,7 @@ public class MySchedulesListAdapter extends BaseAdapter
     try
     {
       object.put("plan", array);
-      offlineManager.writeDatabaseMyPlan(object.toString());
+      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLAN, object.toString());
     }
     catch (JSONException e)
     {
