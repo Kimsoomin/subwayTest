@@ -52,15 +52,30 @@
             android:layout_marginTop="20dip"
             android:orientation="horizontal" >
 
-            <EditText
-                android:id="@+id/edit_text"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/term_input_auth_number"
-                android:singleLine="true"
-                android:textColor="@color/darker_gray"
-                android:textColorHint="@color/light_gray" />
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/term_input_auth_number"
+                    android:layout_marginTop="7dp"
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textColorHint="@color/light_gray" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@color/gray" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_re_send"
