@@ -167,7 +167,7 @@ public class TravelScheduleDetailFragment extends Fragment
         View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
         int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
         
-        if (diff == 0 && (reviewContainerView.getVisibility() == View.VISIBLE))
+        if (position == 0 && diff == 0 && (reviewContainerView.getVisibility() == View.VISIBLE))
           reviewContainerView.loadMore();
       }
     });
@@ -178,7 +178,7 @@ public class TravelScheduleDetailFragment extends Fragment
   @Override
   public void onResume()
   {
-    if (reviewContainerView != null)
+    if (reviewContainerView != null && position == 0 && (reviewContainerView.getVisibility() == View.VISIBLE))
       reviewContainerView.reload();
     super.onResume();
   }
@@ -193,19 +193,23 @@ public class TravelScheduleDetailFragment extends Fragment
     this.isRecommendSchedule = isRecommendSchedule;
   }
   
+  
   public void rateBtnSet()
   {
-    if(bean.myLastRate == 1)
+    if (bean.myLastRate == 1)
     {
       btnReviewWorst.setSelected(true);
-    }else if(bean.myLastRate == 3)
+    }
+    else if (bean.myLastRate == 3)
     {
       btnReviewSoso.setSelected(true);
-    }else if(bean.myLastRate == 5)
+    }
+    else if (bean.myLastRate == 5)
     {
       btnReviewBest.setSelected(true);
     }
   }
+  
   
   private void displayContentData()
   {
@@ -220,7 +224,6 @@ public class TravelScheduleDetailFragment extends Fragment
     
     reviewContainerView = new ReviewContainerView(getActivity(), "plan", bean.idx);
     reviewLayout.addView(reviewContainerView);
-    reviewContainerView.loadMore();
     
     if (isMySchedule)
     {
@@ -405,9 +408,10 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
         return;
-      }else
+      }
+      else
       {
-        if(!SystemUtil.isConnectNetwork(getActivity()))
+        if (!SystemUtil.isConnectNetwork(getActivity()))
         {
           new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
           return;
@@ -443,6 +447,7 @@ public class TravelScheduleDetailFragment extends Fragment
           startActivity(i);
         }
         
+        
         public void onNegativeButtonClickListener()
         {
           new postRateTask().execute();
@@ -457,7 +462,7 @@ public class TravelScheduleDetailFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.postReviewRate("palce", bean.idx, PreferenceManager.getInstance(getActivity()).getUserSeq(), rate*2, null);
+      return apiClient.postReviewRate("palce", bean.idx, PreferenceManager.getInstance(getActivity()).getUserSeq(), rate * 2, null);
     }
     
     
