@@ -68,7 +68,7 @@
                         android:id="@+id/btn_check_duplicate_email"
                         android:layout_width="wrap_content"
                         android:layout_height="40dip"
-                        android:background="@drawable/app_button"
+                        android:background="@drawable/normal_app_button"
                         android:padding="2dip"
                         android:text="@string/term_check_duplicate"
                         android:textColor="@color/color_normal_appcolor_select_white" />
@@ -107,7 +107,7 @@
                         android:id="@+id/btn_check_duplicate_name"
                         android:layout_width="wrap_content"
                         android:layout_height="40dip"
-                        android:background="@drawable/app_button"
+                        android:background="@drawable/normal_app_button"
                         android:padding="2dp"
                         android:text="@string/term_check_duplicate"
                         android:textColor="@color/color_normal_appcolor_select_white" />
@@ -203,7 +203,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/gray_fill_select_appcolor_round_button"
+                            android:background="@drawable/btn_join_man"
                             android:text="@string/term_gender_male"
                             android:textColor="@color/color_normal_gray_select_white" />
 
@@ -212,7 +212,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/gray_fill_select_appcolor_round_button"
+                            android:background="@drawable/btn_join_woman"
                             android:text="@string/term_gender_female"
                             android:textColor="@color/color_normal_gray_select_white" />
                     </LinearLayout>
@@ -419,7 +419,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="24dip"
-                    android:background="@drawable/normal_appcolor_select_white"
+                    android:background="@drawable/appcolor_dark_selector"
                     android:text="@string/term_join"
                     android:textColor="@color/color_normal_white_select_appcolor" />
 
@@ -431,7 +431,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="8dip"
-                    android:background="@drawable/gray_fill_round_button"
+                    android:background="@drawable/gray_fill_selector"
                     android:text="@string/term_cancel"
                     android:textColor="@color/color_normal_gray_select_white" />
             </LinearLayout>

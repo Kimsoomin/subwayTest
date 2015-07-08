@@ -13,6 +13,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -269,9 +270,11 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       View view = getLayoutInflater().inflate(detailResId, null);
       TextView titleView = (TextView) view.findViewById(R.id.text_title);
       TextView textView = (TextView) view.findViewById(R.id.text_description);
+      titleView.setText(title);
+      textView.setText(text);
+
       ImageView imageCall = (ImageView) view.findViewById(R.id.btn_call);
-      ImageView imageAddress = (ImageView) view.findViewById(R.id.btn_address);
-      
+      ImageView imageAddress = (ImageView) view.findViewById(R.id.btn_address);      
       if (title.equals(getString(R.string.term_phone)))
       {
         imageCall.setVisibility(View.VISIBLE);
@@ -314,14 +317,11 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
             }
           });
         }
-      }
-      else
+      } else if(title.equals(getString(R.string.term_homepage)))
       {
-        imageCall.setVisibility(View.GONE);
-        imageAddress.setVisibility(View.GONE);
+        Linkify.addLinks(textView, Linkify.WEB_URLS);
       }
-      titleView.setText(title);
-      textView.setText(text);
+      
       layoutDetailPlaceInfo.addView(view);
     }
   }

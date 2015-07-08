@@ -112,7 +112,7 @@
                         android:layout_height="40dip"
                         android:layout_marginLeft="5dip"
                         android:layout_marginRight="5dip"
-                        android:background="@drawable/app_button"
+                        android:background="@drawable/normal_app_button"
                         android:padding="2dip"
                         android:text="@string/term_check_duplicate"
                         android:textColor="@color/color_normal_appcolor_select_white"

@@ -3,8 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="14dip"
-    android:layout_marginRight="14dip" >
+    android:paddingLeft="14dip"
+    android:paddingRight="14dip"
+    android:background="@android:color/white" >
     
     <ImageView
         android:layout_width="90dip"
@@ -37,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
-        android:background="@drawable/normal_appcolor_select_dark"
+        android:background="@drawable/appcolor_dark_selector"
         android:text="@string/term_login"
         android:textColor="@android:color/white" />
 
@@ -46,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
-        android:background="@drawable/gray_fill_round_button"
+        android:background="@drawable/gray_fill_selector"
         android:text="@string/term_home"
         android:textColor="@color/color_normal_gray_select_white" />
 

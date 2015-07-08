@@ -358,17 +358,17 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     {
       InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
       mgr.hideSoftInputFromWindow(joinLayout.getWindowToken(), 0);
-      if (btnGenderMale.isActivated())
-      {
-        isMale = false;
-        btnGenderMale.setActivated(false);
-        btnGenderFemale.setActivated(true);
-      }
-      else
+      if (v.getId() == R.id.radio_gender_male)
       {
         isMale = true;
         btnGenderMale.setActivated(true);
         btnGenderFemale.setActivated(false);
+      }
+      else
+      {
+        isMale = false;
+        btnGenderMale.setActivated(false);
+        btnGenderFemale.setActivated(true);
       }
     }
   };

@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -86,6 +87,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private Button btnLike, btnBookmark;
   private SharePickView sharePickView;
   private LinearLayout rateLayout;
+  public TextView placeTitle;
   
   private ViewGroup layoutRecommendProduct;
   
@@ -99,8 +101,8 @@ public class PlaceDetailActivity extends ActionBarActivity
     setContentView(R.layout.activity_place_detail);
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
-    TextView title = (TextView) customActionBar.findViewById(R.id.title);
-    title.setText(getString(R.string.term_place));
+    placeTitle = (TextView) customActionBar.findViewById(R.id.title);
+    placeTitle.setText(getString(R.string.term_place));
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -295,7 +297,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private void displayContentData()
   {
     rateBtnSet();
-    //TEST BEAN
+    placeTitle.setText(bean.title);
     TicketBean ticketBean = new TicketBean();
     ticketBean.title = "경복궁 동반1인 무료 입장";
     DetailTicketView view = new DetailTicketView(PlaceDetailActivity.this);
@@ -402,8 +404,7 @@ public class PlaceDetailActivity extends ActionBarActivity
             });
           }
         });
-      }
-      else if (title.equals(getString(R.string.term_phone)))
+      } else if (title.equals(getString(R.string.term_phone)))
       {
         btnCall.setVisibility(View.VISIBLE);
         btnCall.setOnClickListener(new OnClickListener()
@@ -416,6 +417,9 @@ public class PlaceDetailActivity extends ActionBarActivity
             startActivity(callIntent);
           }
         });
+      }else if(title.equals(getString(R.string.term_homepage)))
+      {
+        Linkify.addLinks(textView, Linkify.WEB_URLS);
       }
       layoutDetailPlaceInfo.addView(view);
     }
