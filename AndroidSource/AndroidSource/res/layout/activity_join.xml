@@ -62,8 +62,8 @@
                             android:id="@+id/edit_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
                             android:layout_marginTop="7dp"
+                            android:background="@android:color/transparent"
                             android:ems="10"
                             android:hint="@string/term_email"
                             android:inputType="textEmailAddress"
@@ -117,8 +117,8 @@
                             android:id="@+id/edit_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
                             android:layout_marginTop="7dp"
+                            android:background="@android:color/transparent"
                             android:hint="@string/term_name"
                             android:singleLine="true"
                             android:textColor="@color/darker_gray"
@@ -152,29 +152,23 @@
 
                 <!-- 휴대폰번호 -->
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/edit_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical" >
+                    android:background="@android:color/transparent"
+                    android:hint="@string/term_cell_phone"
+                    android:inputType="text|phone"
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textColorHint="@color/light_gray" />
 
-                    <EditText
-                        android:id="@+id/edit_phone_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="@string/term_cell_phone"
-                        android:inputType="text|phone"
-                        android:singleLine="true"
-                        android:textColor="@color/darker_gray"
-                        android:textColorHint="@color/light_gray" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/gray" />
-                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/gray" />
 
                 <CheckBox
                     android:id="@+id/checkbox_allow_receive_phone"
@@ -189,29 +183,23 @@
 
                 <!-- 비밀번호 -->
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/edit_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical" >
+                    android:background="@android:color/transparent"
+                    android:hint="@string/term_password_join"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textColorHint="@color/light_gray" />
 
-                    <EditText
-                        android:id="@+id/edit_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="@string/term_password_join"
-                        android:inputType="textPassword"
-                        android:singleLine="true"
-                        android:textColor="@color/darker_gray"
-                        android:textColorHint="@color/light_gray" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/gray" />
-                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/gray" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -221,30 +209,23 @@
                     android:textColor="@color/appcolor"
                     android:textSize="14sp" />
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/edit_re_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical" >
+                    android:background="@android:color/transparent"
+                    android:hint="@string/term_re_password_join"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textColorHint="@color/light_gray" />
 
-                    <EditText
-                        android:id="@+id/edit_re_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:hint="@string/term_re_password_join"
-                        android:background="@android:color/transparent"
-                        android:inputType="textPassword"
-                        android:singleLine="true"
-                        android:textColor="@color/darker_gray"
-                        android:textColorHint="@color/light_gray" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/gray" />
-                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
