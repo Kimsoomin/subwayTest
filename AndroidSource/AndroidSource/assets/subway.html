@@ -2,19 +2,19 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=3.0 user-scalable=1"/> 
+        <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=3.0 user-scalable=1"/>
         <title>서울지하철</title>
-     
-        
+
+
         <script src="snap.svg-min.js"></script>
         <script src="jquery.min.js" charset="utf-8"></script>
         <script src="d3.v3.min.js" charset="utf-8"></script>
         <link rel="stylesheet" href="./ui/jquery-ui.min.css" media="all" />
         <script src="./ui/jquery-ui.min.js" charset="utf-8"></script>
         <script src="subway_data.js" charset="utf-8"></script>
-        <script src="subway.js" charset="utf-8"></script> 
-        <script src="snap.svg.zpd.js" charset="utf-8"></script> 
-        
+        <script src="subway.js" charset="utf-8"></script>
+        <script src="snap.svg.zpd.js" charset="utf-8"></script>
+
         <!-- <script src="file:///android_asset/snap.svg-min.js"></script>
         <script src="file:///android_asset/jquery-1.11.1.min.js" charset="utf-8"></script>
         <script src="file:///android_asset/d3.v3.min.js" charset="utf-8"></script>
@@ -28,9 +28,9 @@
       <style type="text/css">
       * {
           -webkit-touch-callout: none;
-          -webkit-user-select: none; 
+          -webkit-user-select: none;
       }
-      
+
       html, body {
         width: 100%;
         height: 100%;
@@ -43,7 +43,7 @@
         width: 2614px;
         height: 1991px;
       }
-        
+
       #svg {
         position: absolute;
         margin: 0 auto;
@@ -54,11 +54,11 @@
     </head>
 
    <body>
-       <div id="svgWrapper"  > 
+       <div id="svgWrapper"  >
           <svg id="svg" width="100" height="100"></svg>
-       </div> 
+       </div>
 
-      <script src="./js/zoom.js" charset="utf-8"></script>    
+      <script src="./js/zoom.js" charset="utf-8"></script>
       <script type="text/javascript">
         var sbox = $('#svgWrapper');
         var s = Snap("#svg");
@@ -72,7 +72,7 @@
         var isElementClick = false;
         var svgPan = undefined;
 
-        window.onscroll = function (e) { 
+        window.onscroll = function (e) {
           if(!isElementClick && background != undefined){
             console.log("Remove popup");
             background.remove();
@@ -83,7 +83,7 @@
           }
 
           isElementClick = false;
-        } 
+        }
 
         function onSvgLoadEnded(){
           window.myClient.onSvgLoadEnded();
@@ -146,15 +146,15 @@
             }
 
             station = Snap.select(".station#"+station_id)
-            
+
             try{
-              bound = station.getBBox()            
+              bound = station.getBBox()
             }catch(exception){
               console.log("Re-find")
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
-                
+
                   try{
                     if(temp_station.getBBox() != null){
                       bound = temp_station.getBBox()
@@ -180,7 +180,7 @@
             station = Snap.select(".station#"+station_id)
 
             try{
-              bound = station.getBBox()            
+              bound = station.getBBox()
             }catch(exception){
 
               for (var i = 0; i < station_ids.length; i++){
@@ -210,14 +210,16 @@
           calcRoute: function() {
             this.clear_marked_stations()
             var path = path_for_stations(this.start_station_id, this.end_station_id)
-            this.mark_stations(path)
-            
+
+
             var path_infos = new Array()
             for (var i = 0; i < path.length; i++) {
               path_infos.push(stations[path[i]])
             }
             time = floyd_time(this.start_station_id, this.end_station_id)
-
+            console.log("Time")
+            console.log(time)
+            this.mark_stations(path)
             onRouteCalculated(path_infos, time)
           },
           mark_station: function(stationbean) {
@@ -227,7 +229,7 @@
 
               var bound;
               try{
-                bound = station.getBBox()            
+                bound = station.getBBox()
               }catch(exception){
 
                 for (var i = 0; i < station_ids.length; i++){
@@ -253,7 +255,7 @@
                 if(stationbean.isTransfer){
                   console.log(stationbean.id.split("line").length)
                   if(stationbean.id.split("line").length == 5){
-                    //환승역4개  
+                    //환승역4개
                     image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 10, bound.y - 15, 50, 50);
                   }
                   else if(stationbean.id.split("line").length == 4){
@@ -264,7 +266,7 @@
                     image = s.image('./ui/images/icon_subway_transfer.png', bound.x + 2, bound.y - 15, 50, 50);
                 }else{
                   if(80 >bound.width  && bound.width > 58){
-                    //환승역3/4개  
+                    //환승역3/4개
                     image = s.image('./ui/images/icon_subway_route.png', bound.x + 17, bound.y - 7, 32, 32);
                   }
                   else if(57 >bound.width  && bound.width > 32){
@@ -281,19 +283,19 @@
                 console.log(exception);
               }
 
-              image.click(function(event) { 
+              image.click(function(event) {
                  console.log("image click");
                  showDestinationPopUp(stationbean.id);
                });
 
               this.marked_stations.push(image);
 
-                    
+
               if(stationbean.id != "line211" && stationbean.id != "line234"){
                 var animation = function(){
                     if(image.hasClass("on")){
                         image.removeClass("on")
-                        image.animate({opacity: '0'}, 1000, mina.linear, null)  
+                        image.animate({opacity: '0'}, 1000, mina.linear, null)
                     }else{
                         image.addClass("on")
                         image.animate({opacity: '1.0'}, 1000, mina.linear, null)
@@ -320,7 +322,7 @@
             this.marked_stations_interval_ids = []
 
             var length = this.marked_stations.length
-            for (var i = 0; i < length; i++) {  
+            for (var i = 0; i < length; i++) {
               var marked_station = this.marked_stations[i]
               try{
                   marked_station.stop();
@@ -415,8 +417,8 @@
               }
             }
 
-             
-           
+
+
             for (var i = 0; i < jsonArray.length; i++){
               if(i != 0 && i != jsonArray.length - 1){
                   this.mark_station(jsonArray[i]);
@@ -429,17 +431,17 @@
             if (this.end_station) {
               this.end_station.remove()
             }
-            
+
             station = Snap.select(".station#"+this.start_station_id)
-      
+
             try{
-              bound = station.getBBox()            
+              bound = station.getBBox()
             }catch(exception){
               console.log("Re-find")
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(this.start_station_id) > -1 && station_ids[i] != this.start_station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
-                
+
                   try{
                     if(temp_station.getBBox() != null){
                       bound = temp_station.getBBox()
@@ -451,17 +453,17 @@
               }
             }
             this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3, bound.y - 42, 35, 50);
-         
+
             station = Snap.select(".station#"+this.end_station_id)
-      
+
             try{
-              bound = station.getBBox()            
+              bound = station.getBBox()
             }catch(exception){
               console.log("Re-find")
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(this.end_station_id) > -1 && station_ids[i] != this.end_station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
-                
+
                   try{
                     if(temp_station.getBBox() != null){
                       bound = temp_station.getBBox()
@@ -474,18 +476,18 @@
             }
 
             this.end_station = s.image('./ui/images/pin_subway_finish.png', bound.x - 3, bound.y - 42, 35, 50);
-         
-           
+
+
             console.log(jsonArray);
 
             var jsonInfo = JSON.stringify(jsonArray);
-            completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id)); 
+            completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id));
           },
           setCenterWithStationId: function (station_id){
-            isElementClick = true;  
+            isElementClick = true;
             station = Snap.select(".station#"+station_id);
             try{
-              bound = station.getBBox()            
+              bound = station.getBBox()
             }catch(exception){
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
@@ -504,7 +506,7 @@
                 }
               }
             }
-      
+
             var half_width = window.innerWidth/2
             var half_height = window.innerHeight/2
             window.scrollTo(bound.x - half_width, bound.y - half_height);
@@ -514,26 +516,26 @@
             var jsonArray = new Array();
             for (var i = 0; i < station_ids.length; i++){
               var station = stations[station_ids[i]];
-            
+
               var station_lat = station.location.latitude;
               var station_lon = station.location.longitude;
 
-             
+
               var R = 6371; // Radius of the earth in km
               var dLat = (station_lat-find_lat)* (Math.PI/180);  // deg2rad below
-              var dLon = (station_lon-find_lon)* (Math.PI/180); 
-              var a = 
+              var dLon = (station_lon-find_lon)* (Math.PI/180);
+              var a =
               Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos((find_lat)* (Math.PI/180)) * Math.cos((station_lat)* (Math.PI/180)) * 
+              Math.cos((find_lat)* (Math.PI/180)) * Math.cos((station_lat)* (Math.PI/180)) *
               Math.sin(dLon/2) * Math.sin(dLon/2)
-              ; 
-              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              ;
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
               var d = R * c; // Distance in km
-           
+
               var distance = d;
               var jsonObject = new Object();
 
-              
+
               jsonObject.name = station.name_cn;
               jsonObject.name_ko = station.name_ko;
               jsonObject.id = station_ids[i];
@@ -572,22 +574,22 @@
             var jsonArray = new Array();
             for (var i = 0; i < station_ids.length; i++){
               var station = stations[station_ids[i]];
-            
+
               var station_lat = station.location.latitude;
               var station_lon = station.location.longitude;
 
-             
+
               var R = 6371; // Radius of the earth in km
               var dLat = (station_lat-find_lat)* (Math.PI/180);  // deg2rad below
-              var dLon = (station_lon-find_lon)* (Math.PI/180); 
-              var a = 
+              var dLon = (station_lon-find_lon)* (Math.PI/180);
+              var a =
               Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos((find_lat)* (Math.PI/180)) * Math.cos((station_lat)* (Math.PI/180)) * 
+              Math.cos((find_lat)* (Math.PI/180)) * Math.cos((station_lat)* (Math.PI/180)) *
               Math.sin(dLon/2) * Math.sin(dLon/2)
-              ; 
-              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              ;
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
               var d = R * c; // Distance in km
-           
+
               var distance = d;
               var jsonObject = new Object();
 
@@ -654,18 +656,20 @@
 
         function sortByKey(array, key) {
           return array.sort(function(a, b) {
-              var x = a[key]; 
+              var x = a[key];
               var y = b[key];
               return x < y;
           });
         }
 
         function showDestinationPopUp(station_id){
+        	console.log("call NativeZoom!");
+           setNativeZoom(station_id);
           isElementClick = true;
           var station = Snap.select(".station#" + station_id)
           var bound;
           try{
-            bound = station.getBBox()            
+            bound = station.getBBox()
           }catch(exception){
             console.log(exception);
             for (var i = 0; i < station_ids.length; i++){
@@ -707,8 +711,8 @@
            });
 
 
-             
-           startButton.click(function(event) { 
+
+           startButton.click(function(event) {
             if(background != undefined){
               background.remove();
               line.remove();
@@ -718,7 +722,7 @@
             }
             // ## Native
             setStartStation(station_id);
-            
+
             // ## Web test
             // subway.set_start_station(station_id);
            });
@@ -733,13 +737,13 @@
             }
             // ## Native
             setEndStation(station_id);
-            
+
             // ## Web test
             // subway.set_end_station(station_id);
            });
 
-           console.log("call NativeZoom!");
-           setNativeZoom(station_id);
+           // console.log("call NativeZoom!");
+           // setNativeZoom(station_id);
           // subway.setCenterWithStationId(station_id);
         }
         //file:///android_asset/subway.svg
@@ -783,7 +787,7 @@
           if(subway.start_station_id == undefined && subway.end_station_id == undefined && !isCleared)
             subway.setCenterWithStationId("line132line201");
         });
-      
+
 
         function sortByKey(array, key) {
           return array.sort(function(a, b) {
