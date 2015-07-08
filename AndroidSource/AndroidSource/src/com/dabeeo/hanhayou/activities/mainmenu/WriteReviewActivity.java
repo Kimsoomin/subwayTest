@@ -136,7 +136,7 @@ public class WriteReviewActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.postReviewRate(parentType, parentIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate, params[0]);
+      return apiClient.postReviewRate(parentType, parentIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate*2, params[0]);
     }
     
     

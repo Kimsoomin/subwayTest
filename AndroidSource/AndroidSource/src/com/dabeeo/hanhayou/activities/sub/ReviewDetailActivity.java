@@ -90,7 +90,6 @@ public class ReviewDetailActivity extends ActionBarActivity
     time = (TextView) findViewById(R.id.time);
     content = (TextView) findViewById(R.id.content);
     reviewScore = (TextView) findViewById(R.id.text_review_score);
-    reviewScore.setText("4");
     btnMore = (ImageView) findViewById(R.id.btn_review_list_more);
     
     btnMore.setOnClickListener(new OnClickListener()

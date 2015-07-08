@@ -57,7 +57,7 @@
                         android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/lighter_gray"
+                        android:textColor="@color/light_gray"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:textColor="@color/light_gray"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 

@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -41,7 +41,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
 {
   private RoundedImageView profileImage;
   private TextView textCompelete;
-  private LinearLayout containerRecommendSchedule;
+  private RelativeLayout containerRecommendSchedule;
   private Button btnAnotherSchedule, btnNewSchedule;
   private ScheduleBean bean;
   private ApiClient apiClient;
@@ -69,7 +69,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     apiClient = new ApiClient(getApplicationContext());
     profileImage = (RoundedImageView) findViewById(R.id.profile_image);
     textCompelete = (TextView) findViewById(R.id.text_compelete);
-    containerRecommendSchedule = (LinearLayout) findViewById(R.id.container_recommend_schedule);
+    containerRecommendSchedule = (RelativeLayout) findViewById(R.id.container_recommend_schedule);
     
     btnAnotherSchedule = (Button) findViewById(R.id.btn_another_schedule_recommend);
     btnNewSchedule = (Button) findViewById(R.id.btn_new_schedule);
@@ -149,7 +149,6 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
       {
         Intent i = new Intent(RecommendScheduleCompeletedActivity.this, TravelScheduleDetailActivity.class);
         i.putExtra("title", finalMyScheduleTitle);
-        
         i.putExtra("idx", bean.idx);
         i.putExtra("isRecommend", true);
         i.putExtra("startDate", bean.startDateString);
