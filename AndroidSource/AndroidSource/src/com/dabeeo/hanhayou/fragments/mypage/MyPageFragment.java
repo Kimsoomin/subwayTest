@@ -316,6 +316,7 @@ public class MyPageFragment extends Fragment
       {
         JSONObject obj = new JSONObject(result.response);
         Picasso.with(getActivity()).load(obj.getString("mfidx")).fit().centerCrop().into(imageProfile);
+        PreferenceManager.getInstance(getActivity()).setUserProfile(obj.getString("mfidx"));
       }
       catch (JSONException e)
       {

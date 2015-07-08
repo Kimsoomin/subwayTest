@@ -36,6 +36,7 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.views.CharacterProgressView;
+import com.squareup.picasso.Picasso;
 
 public class RecommendScheduleCompeletedActivity extends ActionBarActivity
 {
@@ -68,6 +69,8 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     theme = getIntent().getIntExtra("theme", 1);
     apiClient = new ApiClient(getApplicationContext());
     profileImage = (RoundedImageView) findViewById(R.id.profile_image);
+    String profile = PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserProfile();
+    Picasso.with(RecommendScheduleCompeletedActivity.this).load(profile).fit().centerCrop().into(profileImage);
     textCompelete = (TextView) findViewById(R.id.text_compelete);
     containerRecommendSchedule = (RelativeLayout) findViewById(R.id.container_recommend_schedule);
     

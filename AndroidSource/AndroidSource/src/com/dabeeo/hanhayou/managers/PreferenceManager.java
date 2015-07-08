@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 
+import com.dabeeo.hanhayou.utils.SystemUtil;
+
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -95,7 +97,6 @@ public class PreferenceManager extends BasePreferenceManager
     return get(KEY_DONT_SHOW_POPUP_DATE);
   }
   
-  
   public void clearUserInfo()
   {
     put(KEY_USER_SEQ, "");
@@ -161,6 +162,15 @@ public class PreferenceManager extends BasePreferenceManager
   public String getUserSeq()
   {
     return get(KEY_USER_SEQ);
+  }
+  
+  public String getUserProfile()
+  {
+    String profile = get(KEY_USER_PROFILE);
+    if(TextUtils.isEmpty(profile))
+      return "";
+    else
+      return profile;
   }
   
   
