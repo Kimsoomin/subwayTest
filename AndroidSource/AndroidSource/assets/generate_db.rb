@@ -104,8 +104,14 @@ stations_by_internal_id.each do |k, v|
 			}
 		],
 		lines: Array.new,
+		isDuplicate: false,
 		# transfers: v[:transfers].map{|s|stations_by_internal_id[s][:id]},
 		# 환승은 5분으로 통일한다.
+		# connections: Hash[
+		# 	v[:transfers].map {|s|
+		# 		[stations_by_internal_id[s][:id], 5]
+		# 	}
+		# ]
 		connections: Hash.new
 	}
 
@@ -119,8 +125,8 @@ stations_by_internal_id.each do |k, v|
 		transfer_station_lines = []
 		transfer_station_lines.push(v[:line])
 		transfer_station_lines.push(v[:transfers].map{|s|stations_by_internal_id[s][:line]})
-		
-		
+
+
 		isContain = false
 		transfer_id = "";
 		for i in 0..(transfer_stations.count - 1)
@@ -130,37 +136,39 @@ stations_by_internal_id.each do |k, v|
 			end
 		end
 
-		
+
 		if stations[t_id] == nil
 			if !isContain
 				transfer_stations.push(t_id)
 				stations[t_id] = {
 					id: t_id,
-					lines: transfer_station_lines.flatten.each {|s|s}, 
+					lines: transfer_station_lines.flatten.each {|s|s},
 					line: "환승역",
+					isDuplicate: false,
 					name_ko: v[:name_ko],
 					name_en: v[:name_en],
 					name_cn: v[:name_cn],
 					location: v[:location],
 					exits: stations[v[:id]][:exits],
-					connections: Hash[transfer_station.map{|s|[s, 0]}]
+					connections: Hash[transfer_station.map{|s|[s, 5]}]
 				}
 			else
 				stations[t_id] = {
 					id: transfer_id,
-					lines: transfer_station_lines.flatten.each {|s|s}, 
+					lines: transfer_station_lines.flatten.each {|s|s},
 					line: "환승역",
+					isDuplicate: true,
 					name_ko: v[:name_ko],
 					name_en: v[:name_en],
 					name_cn: v[:name_cn],
 					location: v[:location],
 					exits: stations[v[:id]][:exits],
-					connections: Hash[transfer_station.map{|s|[s, 0]}]
+					connections: Hash[transfer_station.map{|s|[s, 5]}]
 				}
 			end
-			stations[v[:id]][:connections][t_id] = 0
+			stations[v[:id]][:connections][t_id] = 5
 		end
-		
+
 
 	end
 end
