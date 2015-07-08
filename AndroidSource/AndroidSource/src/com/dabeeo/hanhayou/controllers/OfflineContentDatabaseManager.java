@@ -31,7 +31,6 @@ import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.beans.StationBean;
-import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.map.Global;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
@@ -45,7 +44,8 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   private static String TABLE_NAME_PLACE = "place";
   private static String TABLE_NAME_PLAN = "plan";
   public static String TABLE_NAME_REVIEW = "review";
-  
+  private static String TABLE_NAME_MY_PLAN = "my_plan";
+  private static String TABLE_NAME_MY_PLACE = "my_place";
   private SQLiteDatabase myDataBase;
   
   private final Context context;
@@ -184,7 +184,7 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     ContentValues insertValues = new ContentValues();
     try
     {
-      if (tableName.equals(TABLE_NAME_PLAN))
+      if (tableName.equals(TABLE_NAME_PLAN) || tableName.equals(TABLE_NAME_MY_PLAN))
       {
         insertValues.put("idx", obj.getString("idx"));
         insertValues.put("planCode", obj.getString("planCode"));
@@ -208,10 +208,12 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         insertValues.put("budget2", obj.getString("budget2"));
         insertValues.put("budget3", obj.getString("budget3"));
         insertValues.put("days", obj.getString("days"));
-        insertValues.put("currency", obj.getString("currency"));
-        insertValues.put("currencySymbol", obj.getString("currencySymbol"));
+        if (obj.has("currency"))
+          insertValues.put("currency", obj.getString("currency"));
+        if (obj.has("currencySymbol"))
+          insertValues.put("currencySymbol", obj.getString("currencySymbol"));
       }
-      else if (tableName.equals(TABLE_NAME_PLACE))
+      else if (tableName.equals(TABLE_NAME_PLACE) || tableName.equals(TABLE_NAME_MY_PLACE))
       {
         insertValues.put("idx", obj.getString("idx"));
         insertValues.put("seqCode", obj.getString("seqCode"));
@@ -219,19 +221,29 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         insertValues.put("ownerUserSeq", obj.getString("ownerUserSeq"));
         insertValues.put("userName", obj.getString("userName"));
         insertValues.put("gender", obj.getString("gender"));
-        insertValues.put("category", obj.getInt("category"));
+        if (obj.has("category"))
+          insertValues.put("category", obj.getInt("category"));
         insertValues.put("title", obj.getString("title"));
-        insertValues.put("address", obj.getString("address"));
-        insertValues.put("businessHours", obj.getString("businessHours"));
-        insertValues.put("priceInfo", obj.getString("priceInfo"));
-        insertValues.put("trafficInfo", obj.getString("trafficInfo"));
-        insertValues.put("homepage", obj.getString("homepage"));
-        insertValues.put("contact", obj.getString("contact"));
-        insertValues.put("contents", obj.getString("contents"));
-        insertValues.put("useTime", obj.getInt("useTime"));
+        if (obj.has("address"))
+          insertValues.put("address", obj.getString("address"));
+        if (obj.has("businessHours"))
+          insertValues.put("businessHours", obj.getString("businessHours"));
+        if (obj.has("priceInfo"))
+          insertValues.put("priceInfo", obj.getString("priceInfo"));
+        if (obj.has("trafficInfo"))
+          insertValues.put("trafficInfo", obj.getString("trafficInfo"));
+        if (obj.has("homepage"))
+          insertValues.put("homepage", obj.getString("homepage"));
+        if (obj.has("contact"))
+          insertValues.put("contact", obj.getString("contact"));
+        if (obj.has("contents"))
+          insertValues.put("contents", obj.getString("contents"));
+        if (obj.has("useTime"))
+          insertValues.put("useTime", obj.getInt("useTime"));
         insertValues.put("lat", obj.getDouble("lat"));
         insertValues.put("lng", obj.getDouble("lng"));
-        insertValues.put("tag", obj.getString("tag"));
+        if (obj.has("tag"))
+          insertValues.put("tag", obj.getString("tag"));
         if (obj.has("popular"))
           insertValues.put("popular", obj.getInt("popular"));
         if (obj.has("rate"))
@@ -248,8 +260,10 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
           insertValues.put("isLiked", obj.getInt("isLiked"));
         if (obj.has("isBookmarked"))
           insertValues.put("isBookmarked", obj.getInt("isBookmarked"));
-        insertValues.put("insertDate", obj.getString("insertDate"));
-        insertValues.put("updateDate", obj.getString("updateDate"));
+        if (obj.has("insertDate"))
+          insertValues.put("insertDate", obj.getString("insertDate"));
+        if (obj.has("updateDate"))
+          insertValues.put("updateDate", obj.getString("updateDate"));
         if (obj.has("premiumIdx"))
         {
           if (obj.getString("premiumIdx") != null)
@@ -338,6 +352,94 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   }
   
   
+  public void writeDatabaseMyPlace(String jsonString)
+  {
+    this.openDataBase();
+    try
+    {
+      myDataBase.delete(TABLE_NAME_MY_PLACE, null, null);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    try
+    {
+      JSONObject obj = new JSONObject(jsonString);
+      
+      //Plan
+      JSONArray arr = obj.getJSONArray("place");
+      for (int i = 0; i < arr.length(); i++)
+      {
+        JSONObject innerObj = arr.getJSONObject(i);
+        try
+        {
+          insert(TABLE_NAME_MY_PLACE, innerObj);
+        }
+        catch (Exception e)
+        {
+        }
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
+  public void clearMyTables()
+  {
+    try
+    {
+      this.openDataBase();
+      myDataBase.delete(TABLE_NAME_MY_PLAN, null, null);
+      myDataBase.delete(TABLE_NAME_MY_PLACE, null, null);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
+  public void writeDatabaseMyPlan(String jsonString)
+  {
+    this.openDataBase();
+    try
+    {
+      myDataBase.delete(TABLE_NAME_MY_PLAN, null, null);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    
+    try
+    {
+      JSONObject obj = new JSONObject(jsonString);
+      
+      //Plan
+      JSONArray arr = obj.getJSONArray("plan");
+      for (int i = 0; i < arr.length(); i++)
+      {
+        JSONObject innerObj = arr.getJSONObject(i);
+        try
+        {
+          insert(TABLE_NAME_MY_PLAN, innerObj);
+        }
+        catch (Exception e)
+        {
+        }
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
   public void writeDatabase(String jsonString)
   {
     this.openDataBase();
@@ -395,27 +497,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   }
   
   
-//  private void putSubwayStationDatas()
-//  {
-//    SubwayManager.getInstance(context).loadAllStations(context);
-//    ArrayList<StationBean> stations = SubwayManager.getInstance(context).stations;
-//    for (int i = 0; i < stations.size(); i++)
-//    {
-//      StationBean bean = stations.get(i);
-//      if (!bean.isDuplicate)
-//      {
-//        try
-//        {
-//          insertSubwayStation(bean);
-//        }
-//        catch (Exception e)
-//        {
-//          e.printStackTrace();
-//        }
-//      }
-//    }
-//  }
-  
   /**
    * Get Data
    */
@@ -469,6 +550,45 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
           }
         };
         Collections.sort(beans, compare);
+      }
+      
+      c.close();
+      myDataBase.close();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return beans;
+  }
+  
+  
+  public ArrayList<PlaceBean> getMyPlaces(int categoryId)
+  {
+    ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
+    try
+    {
+      this.openDataBase();
+      
+      Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLACE, null);
+      if (categoryId != -1)
+        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLACE + " WHERE category = " + categoryId, null);
+      c.moveToFirst();
+      if (c.moveToFirst())
+      {
+        do
+        {
+          try
+          {
+            PlaceBean bean = new PlaceBean();
+            bean.setCursor(c);
+            if (!bean.premiumIdx.equals("null"))
+              beans.add(bean);
+          }
+          catch (Exception e)
+          {
+          }
+        } while (c.moveToNext());
       }
       
       c.close();
@@ -717,24 +837,52 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   
   public ScheduleDetailBean getMYTravelScheduleDetailBean(String idx)
   {
+    this.openDataBase();
     ScheduleDetailBean bean = new ScheduleDetailBean();
     
-    JSONArray array;
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLAN + " WHERE idx = " + idx, null);
+    c.moveToFirst();
     try
     {
-      array = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN)).getJSONArray("plan");
-      for (int i = 0; i < array.length(); i++)
-      {
-        JSONObject obj = array.getJSONObject(i);
-        if (obj.getString("idx").equals(idx))
-          bean.setJSONObject(obj);
-      }
+      bean.setCursor(c);
     }
-    catch (JSONException e)
+    catch (Exception e)
     {
-      e.printStackTrace();
     }
+    c.close();
     return bean;
+  }
+  
+  
+  public ArrayList<ScheduleBean> getMyTravelSchedules(int dayCount)
+  {
+    this.openDataBase();
+    ArrayList<ScheduleBean> beans = new ArrayList<ScheduleBean>();
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_MY_PLAN, null);
+    if (c.moveToFirst())
+    {
+      do
+      {
+        try
+        {
+          ScheduleBean bean = new ScheduleBean();
+          bean.setCursor(c);
+          if (dayCount == -1)
+            beans.add(bean);
+          else
+          {
+            if (bean.dayCount == dayCount)
+              beans.add(bean);
+          }
+        }
+        catch (Exception e)
+        {
+        }
+      } while (c.moveToNext());
+    }
+    c.close();
+    myDataBase.close();
+    return beans;
   }
   
   

@@ -85,8 +85,7 @@ public class OfflineDeleteManager
   {
     mDbHelper.close();
   }
-  
-  
+
   public void deleteBehavior(int id)
   {
     if (mDb == null)

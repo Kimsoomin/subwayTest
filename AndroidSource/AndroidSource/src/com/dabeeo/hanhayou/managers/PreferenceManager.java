@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 
-import com.dabeeo.hanhayou.utils.SystemUtil;
-
 import android.content.Context;
 import android.text.TextUtils;
+
+import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 
 public class PreferenceManager extends BasePreferenceManager
 {
   private static PreferenceManager instance;
   private Context context;
+  private OfflineContentDatabaseManager offlineManger;
+  
   
   public static PreferenceManager getInstance(Context context)
   {
@@ -32,6 +34,7 @@ public class PreferenceManager extends BasePreferenceManager
   {
     super(context);
     this.context = context;
+    this.offlineManger = new OfflineContentDatabaseManager(context);
   }
   
   private static final String KEY_IS_FIRST = "key_is_first";
@@ -97,6 +100,7 @@ public class PreferenceManager extends BasePreferenceManager
     return get(KEY_DONT_SHOW_POPUP_DATE);
   }
   
+  
   public void clearUserInfo()
   {
     put(KEY_USER_SEQ, "");
@@ -105,7 +109,7 @@ public class PreferenceManager extends BasePreferenceManager
     put(KEY_USER_GENDER, "");
     put(KEY_USER_PROFILE, "");
     put(KEY_AUTO_LOGIN, false);
-    FileManager.getInstance(context).clear();
+    offlineManger.clearMyTables();
   }
   
   
@@ -164,10 +168,11 @@ public class PreferenceManager extends BasePreferenceManager
     return get(KEY_USER_SEQ);
   }
   
+  
   public String getUserProfile()
   {
     String profile = get(KEY_USER_PROFILE);
-    if(TextUtils.isEmpty(profile))
+    if (TextUtils.isEmpty(profile))
       return "";
     else
       return profile;

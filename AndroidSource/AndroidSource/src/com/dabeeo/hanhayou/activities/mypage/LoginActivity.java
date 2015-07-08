@@ -269,7 +269,7 @@ public class LoginActivity extends Activity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      apiClient.getMyPlaceList();
+      apiClient.getMyPlaceList(-1);
       apiClient.getMyTravelSchedules(-1);
       return null;
     }

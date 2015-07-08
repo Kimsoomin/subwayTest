@@ -20,7 +20,6 @@ import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
-import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
@@ -141,7 +140,9 @@ public class ApiClient
     {
       String url = getSiteUrl() + "?v=m1&mode=MY_PLAN_LIST&ownerUserSeq=" + PreferenceManager.getInstance(context).getUserSeq();
       NetworkResult result = httpClient.requestGet(url);
-      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLAN, result.response);
+      
+      offlineDatabaseManager.writeDatabaseMyPlan(result.response);
+      
       try
       {
         JSONObject obj = new JSONObject(result.response);
@@ -170,31 +171,7 @@ public class ApiClient
     }
     else
     {
-      try
-      {
-        JSONObject obj = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN));
-        if (!obj.has("plan"))
-          return beans;
-        
-        JSONArray array = obj.getJSONArray("plan");
-        for (int i = 0; i < array.length(); i++)
-        {
-          JSONObject beanObj = array.getJSONObject(i);
-          ScheduleBean bean = new ScheduleBean();
-          bean.setJSONObject(beanObj);
-          if (dayCount == -1)
-            beans.add(bean);
-          else
-          {
-            if (bean.dayCount == dayCount)
-              beans.add(bean);
-          }
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
+      beans.addAll(offlineDatabaseManager.getMyTravelSchedules(dayCount));
     }
     return beans;
   }
@@ -346,7 +323,7 @@ public class ApiClient
    */
   public ArrayList<PlaceBean> getPlaceListByAddedByMe(int page, int categoryId)
   {
-    ArrayList<PlaceBean> lists = getMyPlaceList();
+    ArrayList<PlaceBean> lists = getMyPlaceList(categoryId);
     ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
     for (int i = 0; i < lists.size(); i++)
     {
@@ -376,7 +353,7 @@ public class ApiClient
   }
   
   
-  public ArrayList<PlaceBean> getMyPlaceList()
+  public ArrayList<PlaceBean> getMyPlaceList(int categoryId)
   {
     ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
     
@@ -385,28 +362,10 @@ public class ApiClient
       String url = getSiteUrl() + "?v=m1&mode=MY_PLACE_LIST";
       url += "&ownerUserSeq=" + PreferenceManager.getInstance(context).getUserSeq();
       
-      places.addAll(getPlaceList(url));
+      places.addAll(getPlaceList(url, categoryId));
     }
     else
-    {
-      String localMyPlacesString = FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLACE);
-      try
-      {
-        JSONObject obj = new JSONObject(localMyPlacesString);
-        JSONArray arr = obj.getJSONArray("place");
-        for (int i = 0; i < arr.length(); i++)
-        {
-          JSONObject objInArr = arr.getJSONObject(i);
-          PlaceBean bean = new PlaceBean();
-          bean.setJSONObject(objInArr);
-          places.add(bean);
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-    }
+      places.addAll(offlineDatabaseManager.getMyPlaces(categoryId));
     
     return places;
   }
@@ -425,14 +384,18 @@ public class ApiClient
   }
   
   
-  // TODO 오프라인 처리하기
   public ArrayList<PlaceBean> getPlaceList(String url)
+  {
+    return getPlaceList(url, -2);
+  }
+  
+  
+  public ArrayList<PlaceBean> getPlaceList(String url, int categoryId)
   {
     ArrayList<PlaceBean> places = new ArrayList<PlaceBean>();
     
     NetworkResult result = httpClient.requestGet(url);
-    if (url.contains("MY"))
-      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLACE, result.response);
+    Log.w("WARN", "GetPlace List url : " + url);
     try
     {
       JSONObject obj = new JSONObject(result.response);

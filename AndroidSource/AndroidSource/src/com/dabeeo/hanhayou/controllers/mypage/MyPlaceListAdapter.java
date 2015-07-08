@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
+import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.CategoryManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
@@ -31,14 +32,16 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class MyPlaceListAdapter extends BaseAdapter
 {
-  private ArrayList<PlaceBean> beans = new ArrayList<>();
+  public ArrayList<PlaceBean> beans = new ArrayList<>();
   private boolean isEditMode = false;
   private Context context;
+  private OfflineContentDatabaseManager offlineManager;
   
   
   public MyPlaceListAdapter(Context context)
   {
     this.context = context;
+    offlineManager = new OfflineContentDatabaseManager(context);
   }
   
   
@@ -73,15 +76,8 @@ public class MyPlaceListAdapter extends BaseAdapter
   }
   
   
-  public void removeCheckedItem()
+  public String getJSONArrayString()
   {
-    for (int i = beans.size() - 1; i >= 0; i--)
-    {
-      PlaceBean bean = beans.get(i);
-      if (bean.isChecked)
-        beans.remove(i);
-    }
-    
     JSONArray array = new JSONArray();
     for (int i = 0; i < beans.size(); i++)
     {
@@ -91,9 +87,29 @@ public class MyPlaceListAdapter extends BaseAdapter
     try
     {
       object.put("place", array);
-      FileManager.getInstance(context).writeFile(FileManager.FILE_MY_PLACE, object.toString());
     }
-    catch (JSONException e)
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return object.toString();
+  }
+  
+  
+  public void removeCheckedItem()
+  {
+    try
+    {
+      for (int i = beans.size() - 1; i >= 0; i--)
+      {
+        PlaceBean bean = beans.get(i);
+        if (bean.isChecked)
+          beans.remove(i);
+      }
+      
+      offlineManager.writeDatabaseMyPlace(getJSONArrayString());
+    }
+    catch (Exception e)
     {
       e.printStackTrace();
     }

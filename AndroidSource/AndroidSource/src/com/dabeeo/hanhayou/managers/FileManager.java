@@ -39,21 +39,21 @@ public class FileManager
   }
   
   
-  public void clear()
+  private void clear()
   {
     deleteFile(FileManager.FILE_MY_PLACE);
     deleteFile(FileManager.FILE_MY_PLAN);
   }
   
   
-  public void deleteAndWriteFile(String fileName, String content)
+  private void deleteAndWriteFile(String fileName, String content)
   {
     deleteFile(fileName);
     writeFile(fileName, content);
   }
   
   
-  public String readFile(String fileName)
+  private String readFile(String fileName)
   {
     //Get the text file
     File file = new File(context.getFilesDir(), fileName);
@@ -81,7 +81,7 @@ public class FileManager
   }
   
   
-  public void writeFile(String fileName, String content)
+  private void writeFile(String fileName, String content)
   {
     try
     {
