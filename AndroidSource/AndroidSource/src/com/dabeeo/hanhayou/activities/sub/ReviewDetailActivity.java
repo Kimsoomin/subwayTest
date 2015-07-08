@@ -1,12 +1,14 @@
 package com.dabeeo.hanhayou.activities.sub;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,11 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,13 +51,16 @@ public class ReviewDetailActivity extends ActionBarActivity
   private ImageView btnMore;
   
   private ListPopupWindow listPopupWindow;
-  private LinearLayout imageContainer;
   
   private String reviewIdx = "";
   private ApiClient apiClient;
   private ReviewBean bean;
   
   private ProgressBar progressBar;
+  
+  private GridView myGrid;
+  private ArrayList<ImageView> imageArray;
+  private ImageAdapter imageadapter;
   
   
   @Override
@@ -74,8 +81,10 @@ public class ReviewDetailActivity extends ActionBarActivity
     apiClient = new ApiClient(this);
     reviewIdx = getIntent().getStringExtra("review_idx");
     
+    myGrid = (GridView) findViewById(R.id.MyGrid);
+    imageArray = new ArrayList<ImageView>();
+    
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-    imageContainer = (LinearLayout) findViewById(R.id.image_container);
     icon = (ImageView) findViewById(R.id.icon);
     name = (TextView) findViewById(R.id.name);
     time = (TextView) findViewById(R.id.time);
@@ -207,9 +216,9 @@ public class ReviewDetailActivity extends ActionBarActivity
         ImageView imageView = new ImageView(ReviewDetailActivity.this);
         float density = getResources().getDisplayMetrics().density;
         int size = (int) (80*density);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
-        params.setMargins(8, 8, 8, 8);
-        imageView.setLayoutParams(params);
+        imageView.setLayoutParams(new GridView.LayoutParams(size, size));
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setPadding(8, 8, 8, 8);
         final String imageUrl = bean.imageUrls.get(i);
         imageView.setOnClickListener(new OnClickListener()
         {
@@ -224,33 +233,11 @@ public class ReviewDetailActivity extends ActionBarActivity
         });
         imageView.setImageResource(R.drawable.default_thumbnail_s);
         ImageDownloader.displayImage(ReviewDetailActivity.this, bean.imageUrls.get(i), imageView, null);
-        imageContainer.addView(imageView);
+        imageArray.add(imageView);
       }
-    }
-    else
-    {
-      name.setText("TourPlan B");
-      time.setText("2015.01.01 15:00:30");
-      content.setText("테스트중입니다");
-      ImageView imageView = new ImageView(ReviewDetailActivity.this);
-      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(80, 80);
-      params.setMargins(8, 8, 8, 8);
-      imageView.setLayoutParams(params);
-      final String imageUrl = "http://image.gsshop.com/image/16/65/16656247_O1.jpg";
-      imageView.setOnClickListener(new OnClickListener()
-      {
-        @Override
-        public void onClick(View arg0)
-        {
-          Intent i = new Intent(ReviewDetailActivity.this, ImagePopUpActivity.class);
-          i.putExtra("imageUrls", bean.imageUrls);
-          i.putExtra("imageUrl", imageUrl);
-          startActivity(i);
-        }
-      });
-      imageView.setImageResource(R.drawable.default_thumbnail_s);
-      ImageDownloader.displayImage(ReviewDetailActivity.this, "http://image.gsshop.com/image/16/65/16656247_O1.jpg", imageView, null);
-      imageContainer.addView(imageView);
+      
+      imageadapter = new ImageAdapter(ReviewDetailActivity.this, imageArray);
+      myGrid.setAdapter(imageadapter);
     }
     
     ImageDownloader.displayProfileImage(ReviewDetailActivity.this, bean.mfidx, icon);
@@ -340,5 +327,39 @@ public class ReviewDetailActivity extends ActionBarActivity
       }
       super.onPostExecute(result);
     }
+  }
+  
+  class ImageAdapter extends BaseAdapter{
+    private Context mContext;
+    ArrayList<ImageView> images;
+    
+    public ImageAdapter(Context mContext, ArrayList<ImageView> images) {
+      this.mContext = mContext;
+      this.images = images;
+    } 
+    
+    public int getCount() {
+      return images.size();
+    }
+    
+    public Object getItem(int position) {
+      return images.get(position);
+    }
+    
+    public long getItemId(int position) {
+      return 0;
+    }
+    
+    // 뷰에있는 데이터를 하나씩 가져와서 출력
+    public View getView(int position, View convertView, ViewGroup parent) {
+      ImageView imageview;
+      if(convertView == null){
+        imageview = new ImageView(mContext);
+      }else{
+        imageview = (ImageView)convertView;
+      }
+      imageview = images.get(position);
+      return imageview;
+    }      
   }
 }
