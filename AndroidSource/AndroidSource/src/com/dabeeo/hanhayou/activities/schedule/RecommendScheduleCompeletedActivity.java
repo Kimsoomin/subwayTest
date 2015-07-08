@@ -136,13 +136,16 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     ImageView imageView = (ImageView) findViewById(R.id.imageview);
     TextView title = (TextView) findViewById(R.id.title);
     TextView month = (TextView) findViewById(R.id.month);
-    
+    TextView textDate = (TextView) findViewById(R.id.date);
     myScheduleTitle = getString(R.string.msg_recommend_schedule_title);
     myScheduleTitle = myScheduleTitle.replaceAll("#1", PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserName());
     myScheduleTitle = myScheduleTitle.replaceAll("#2", Integer.toString(bean.dayCount));
     final String finalMyScheduleTitle = myScheduleTitle;
     title.setText(myScheduleTitle);
     month.setText(Integer.toString(bean.dayCount) + "天");
+    
+    textDate.setText(startDate.replace("-", "."));
+    
     ImageDownloader.displayImage(RecommendScheduleCompeletedActivity.this, bean.imageUrl, imageView, null);
     
     containerRecommendSchedule.setOnClickListener(new OnClickListener()

@@ -274,7 +274,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      startDate = year + "-" + String.format("%02d", month) + "-" + dayOfMonth;
+      startDate = year + "-" + String.format("%02d", month) + "-" + String.format("%02d", dayOfMonth);
       return apiClient.getCreateRecommendSchedule(startDate, dayCount, theme);
     }
     

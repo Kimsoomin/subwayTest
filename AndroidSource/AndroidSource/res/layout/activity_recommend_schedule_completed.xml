@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/highlight"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -32,9 +33,9 @@
                 android:id="@+id/profile_image"
                 android:layout_width="60dip"
                 android:layout_height="60dip"
-                android:padding="2dp"
                 android:background="@drawable/shape_circle_profile"
                 android:contentDescription="@null"
+                android:padding="2dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_profile_l"
                 app:riv_corner_radius="60dp" />
@@ -100,11 +101,14 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                android:ellipsize="end"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:lines="2"
+                android:textColor="@color/darker_gray"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -112,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:layout_marginTop="-8dp"
                 android:gravity="center"
                 android:singleLine="true"
                 android:textColor="@color/appcolor"
