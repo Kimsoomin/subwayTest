@@ -108,18 +108,6 @@ public class MySchedulesActivity extends ActionBarActivity
   }
   
   
-  @Override
-  protected void onRestart()
-  {
-    super.onRestart();
-    
-    page = 1;
-    adapter.clear();
-    
-    loadSchedules();
-  }
-  
-  
   private void loadSchedules()
   {
     if (!isLoading)

@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
+import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.SystemUtil;
@@ -33,11 +34,13 @@ public class MySchedulesListAdapter extends BaseAdapter
   private boolean isEditMode = false;
   private Context context;
   private float imageWidth;
+  private OfflineContentDatabaseManager offlineManager;
   
   
   public MySchedulesListAdapter(Context context)
   {
     this.context = context;
+    offlineManager = new OfflineContentDatabaseManager(context);
     @SuppressWarnings("deprecation")
     float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
     float margin = (int) SystemUtil.convertDpToPixel(10f, (Activity) context);

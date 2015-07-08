@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -32,7 +33,7 @@ public class ReviewContainerView extends LinearLayout
   private String parentType, parentIdx;
   private int page = 1;
   private boolean isLoading = false;
-  
+  private boolean isLoadEnded = false;
   private RelativeLayout progressLayout;
   private HashMap<String, ReviewView> reviewViews = new HashMap<String, ReviewView>();
   
@@ -65,6 +66,7 @@ public class ReviewContainerView extends LinearLayout
   
   private void init()
   {
+    page = 1;
     apiClient = new ApiClient(context);
     LayoutInflater inflater = LayoutInflater.from(context);
     int resId = R.layout.view_review_container;
@@ -81,8 +83,10 @@ public class ReviewContainerView extends LinearLayout
     try
     {
       page = 1;
+      isLoadEnded = false;
       isLoading = false;
       container.removeAllViews();
+      reviewViews.clear();
       loadMore();
     }
     catch (Exception e)
@@ -94,7 +98,7 @@ public class ReviewContainerView extends LinearLayout
   
   public void loadMore()
   {
-    if (isLoading)
+    if (isLoading || isLoadEnded)
       return;
     new LoadMoreAsyncTask().execute();
   }
@@ -113,6 +117,8 @@ public class ReviewContainerView extends LinearLayout
     @Override
     protected ArrayList<ReviewBean> doInBackground(String... params)
     {
+      Log.w("WARN", "Review loadMore");
+      
       if (apiClient == null)
         apiClient = new ApiClient(context);
       return apiClient.getReviews(page, parentType, parentIdx);
@@ -122,6 +128,8 @@ public class ReviewContainerView extends LinearLayout
     @Override
     protected void onPostExecute(ArrayList<ReviewBean> result)
     {
+      if (result.size() == 0)
+        isLoadEnded = true;
       try
       {
         for (int i = 0; i < result.size(); i++)

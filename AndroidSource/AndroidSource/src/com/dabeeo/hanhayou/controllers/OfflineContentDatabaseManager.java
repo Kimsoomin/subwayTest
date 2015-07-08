@@ -32,6 +32,7 @@ import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.beans.StationBean;
 import com.dabeeo.hanhayou.managers.FileManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.map.Global;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
@@ -45,7 +46,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   private static String TABLE_NAME_PLACE = "place";
   private static String TABLE_NAME_PLAN = "plan";
   public static String TABLE_NAME_REVIEW = "review";
-  
   private SQLiteDatabase myDataBase;
   
   private final Context context;
@@ -208,8 +208,10 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         insertValues.put("budget2", obj.getString("budget2"));
         insertValues.put("budget3", obj.getString("budget3"));
         insertValues.put("days", obj.getString("days"));
-        insertValues.put("currency", obj.getString("currency"));
-        insertValues.put("currencySymbol", obj.getString("currencySymbol"));
+        if (obj.has("currency"))
+          insertValues.put("currency", obj.getString("currency"));
+        if (obj.has("currencySymbol"))
+          insertValues.put("currencySymbol", obj.getString("currencySymbol"));
       }
       else if (tableName.equals(TABLE_NAME_PLACE))
       {
@@ -219,19 +221,29 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
         insertValues.put("ownerUserSeq", obj.getString("ownerUserSeq"));
         insertValues.put("userName", obj.getString("userName"));
         insertValues.put("gender", obj.getString("gender"));
-        insertValues.put("category", obj.getInt("category"));
+        if (obj.has("category"))
+          insertValues.put("category", obj.getInt("category"));
         insertValues.put("title", obj.getString("title"));
-        insertValues.put("address", obj.getString("address"));
-        insertValues.put("businessHours", obj.getString("businessHours"));
-        insertValues.put("priceInfo", obj.getString("priceInfo"));
-        insertValues.put("trafficInfo", obj.getString("trafficInfo"));
-        insertValues.put("homepage", obj.getString("homepage"));
-        insertValues.put("contact", obj.getString("contact"));
-        insertValues.put("contents", obj.getString("contents"));
-        insertValues.put("useTime", obj.getInt("useTime"));
+        if (obj.has("address"))
+          insertValues.put("address", obj.getString("address"));
+        if (obj.has("businessHours"))
+          insertValues.put("businessHours", obj.getString("businessHours"));
+        if (obj.has("priceInfo"))
+          insertValues.put("priceInfo", obj.getString("priceInfo"));
+        if (obj.has("trafficInfo"))
+          insertValues.put("trafficInfo", obj.getString("trafficInfo"));
+        if (obj.has("homepage"))
+          insertValues.put("homepage", obj.getString("homepage"));
+        if (obj.has("contact"))
+          insertValues.put("contact", obj.getString("contact"));
+        if (obj.has("contents"))
+          insertValues.put("contents", obj.getString("contents"));
+        if (obj.has("useTime"))
+          insertValues.put("useTime", obj.getInt("useTime"));
         insertValues.put("lat", obj.getDouble("lat"));
         insertValues.put("lng", obj.getDouble("lng"));
-        insertValues.put("tag", obj.getString("tag"));
+        if (obj.has("tag"))
+          insertValues.put("tag", obj.getString("tag"));
         if (obj.has("popular"))
           insertValues.put("popular", obj.getInt("popular"));
         if (obj.has("rate"))
@@ -248,8 +260,10 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
           insertValues.put("isLiked", obj.getInt("isLiked"));
         if (obj.has("isBookmarked"))
           insertValues.put("isBookmarked", obj.getInt("isBookmarked"));
-        insertValues.put("insertDate", obj.getString("insertDate"));
-        insertValues.put("updateDate", obj.getString("updateDate"));
+        if (obj.has("insertDate"))
+          insertValues.put("insertDate", obj.getString("insertDate"));
+        if (obj.has("updateDate"))
+          insertValues.put("updateDate", obj.getString("updateDate"));
         if (obj.has("premiumIdx"))
         {
           if (obj.getString("premiumIdx") != null)
@@ -338,6 +352,118 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   }
   
   
+  public void writeDatabaseMyPlace(String jsonString)
+  {
+    this.openDataBase();
+    try
+    {
+      JSONObject obj = new JSONObject(jsonString);
+      
+      //Plan
+      JSONArray arr = obj.getJSONArray("place");
+      
+      for (int i = 0; i < arr.length(); i++)
+      {
+        JSONObject innerObj = arr.getJSONObject(i);
+        innerObj.put("ownerUserSeq", PreferenceManager.getInstance(context).getUserSeq());
+        innerObj.put("userName", PreferenceManager.getInstance(context).getUserName());
+        Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE idx = " + innerObj.getString("idx"), null);
+        c.moveToFirst();
+        if (c.getCount() > 0)
+        {
+          Log.w("WARN", "이미 있는 장소");
+          ContentValues insertValues = new ContentValues();
+          try
+          {
+            insertValues.put("idx", obj.getString("idx"));
+            insertValues.put("seqCode", obj.getString("seqCode"));
+            insertValues.put("cityIdx", obj.getString("cityIdx"));
+            insertValues.put("ownerUserSeq", obj.getString("ownerUserSeq"));
+            insertValues.put("userName", obj.getString("userName"));
+            insertValues.put("gender", obj.getString("gender"));
+            if (obj.has("category"))
+              insertValues.put("category", obj.getInt("category"));
+            insertValues.put("title", obj.getString("title"));
+            if (obj.has("address"))
+              insertValues.put("address", obj.getString("address"));
+            if (obj.has("businessHours"))
+              insertValues.put("businessHours", obj.getString("businessHours"));
+            if (obj.has("priceInfo"))
+              insertValues.put("priceInfo", obj.getString("priceInfo"));
+            if (obj.has("trafficInfo"))
+              insertValues.put("trafficInfo", obj.getString("trafficInfo"));
+            if (obj.has("homepage"))
+              insertValues.put("homepage", obj.getString("homepage"));
+            if (obj.has("contact"))
+              insertValues.put("contact", obj.getString("contact"));
+            if (obj.has("contents"))
+              insertValues.put("contents", obj.getString("contents"));
+            if (obj.has("useTime"))
+              insertValues.put("useTime", obj.getInt("useTime"));
+            insertValues.put("lat", obj.getDouble("lat"));
+            insertValues.put("lng", obj.getDouble("lng"));
+            if (obj.has("tag"))
+              insertValues.put("tag", obj.getString("tag"));
+            if (obj.has("popular"))
+              insertValues.put("popular", obj.getInt("popular"));
+            if (obj.has("rate"))
+              insertValues.put("rate", obj.getInt("rate"));
+            if (obj.has("likeCount"))
+              insertValues.put("likeCount", obj.getInt("likeCount"));
+            if (obj.has("bookmarkCount"))
+              insertValues.put("bookmarkCount", obj.getInt("bookmarkCount"));
+            if (obj.has("shareCount"))
+              insertValues.put("shareCount", obj.getInt("shareCount"));
+            if (obj.has("reviewCount"))
+              insertValues.put("reviewCount", obj.getInt("reviewCount"));
+            if (obj.has("isLiked"))
+              insertValues.put("isLiked", obj.getInt("isLiked"));
+            if (obj.has("isBookmarked"))
+              insertValues.put("isBookmarked", obj.getInt("isBookmarked"));
+            if (obj.has("insertDate"))
+              insertValues.put("insertDate", obj.getString("insertDate"));
+            if (obj.has("updateDate"))
+              insertValues.put("updateDate", obj.getString("updateDate"));
+            if (obj.has("premiumIdx"))
+            {
+              if (obj.getString("premiumIdx") != null)
+              {
+                insertValues.put("premiumIdx", obj.getString("premiumIdx"));
+              }
+              else
+              {
+                insertValues.put("premiumIdx", "null");
+              }
+            }
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
+          myDataBase.update(TABLE_NAME_PLACE, insertValues, "idx = ?", new String[] { innerObj.getString("idx") });
+        }
+        else
+        {
+          Log.w("WARN", "없는 장소");
+          try
+          {
+            insert(TABLE_NAME_PLACE, innerObj);
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
+        }
+        c.close();
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  
   public void writeDatabase(String jsonString)
   {
     this.openDataBase();
@@ -395,27 +521,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
   }
   
   
-//  private void putSubwayStationDatas()
-//  {
-//    SubwayManager.getInstance(context).loadAllStations(context);
-//    ArrayList<StationBean> stations = SubwayManager.getInstance(context).stations;
-//    for (int i = 0; i < stations.size(); i++)
-//    {
-//      StationBean bean = stations.get(i);
-//      if (!bean.isDuplicate)
-//      {
-//        try
-//        {
-//          insertSubwayStation(bean);
-//        }
-//        catch (Exception e)
-//        {
-//          e.printStackTrace();
-//        }
-//      }
-//    }
-//  }
-  
   /**
    * Get Data
    */
@@ -469,6 +574,68 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
           }
         };
         Collections.sort(beans, compare);
+      }
+      
+      c.close();
+      myDataBase.close();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return beans;
+  }
+  
+  
+  public ScheduleDetailBean getMYTravelScheduleDetailBean(String idx)
+  {
+    ScheduleDetailBean bean = new ScheduleDetailBean();
+    
+    JSONArray array;
+    try
+    {
+      array = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN)).getJSONArray("plan");
+      for (int i = 0; i < array.length(); i++)
+      {
+        JSONObject obj = array.getJSONObject(i);
+        if (obj.getString("idx").equals(idx))
+          bean.setJSONObject(obj);
+      }
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    return bean;
+  }
+  
+  
+  public ArrayList<PlaceBean> getMyPlaces(int categoryId)
+  {
+    ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
+    try
+    {
+      this.openDataBase();
+      
+      Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq(), null);
+      if (categoryId != -1)
+        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq() + " AND category = " + categoryId, null);
+      c.moveToFirst();
+      if (c.moveToFirst())
+      {
+        do
+        {
+          try
+          {
+            PlaceBean bean = new PlaceBean();
+            bean.setCursor(c);
+//            if (!bean.premiumIdx.equals("null"))
+            beans.add(bean);
+          }
+          catch (Exception e)
+          {
+          }
+        } while (c.moveToNext());
       }
       
       c.close();
@@ -711,29 +878,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     }
     c.close();
     myDataBase.close();
-    return bean;
-  }
-  
-  
-  public ScheduleDetailBean getMYTravelScheduleDetailBean(String idx)
-  {
-    ScheduleDetailBean bean = new ScheduleDetailBean();
-    
-    JSONArray array;
-    try
-    {
-      array = new JSONObject(FileManager.getInstance(context).readFile(FileManager.FILE_MY_PLAN)).getJSONArray("plan");
-      for (int i = 0; i < array.length(); i++)
-      {
-        JSONObject obj = array.getJSONObject(i);
-        if (obj.getString("idx").equals(idx))
-          bean.setJSONObject(obj);
-      }
-    }
-    catch (JSONException e)
-    {
-      e.printStackTrace();
-    }
     return bean;
   }
   

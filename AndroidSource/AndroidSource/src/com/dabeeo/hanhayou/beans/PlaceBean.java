@@ -53,7 +53,7 @@ public class PlaceBean
       obj.put("title", title);
       obj.put("lat", lat);
       obj.put("lng", lng);
-      obj.put("categoryId", categoryId);
+      obj.put("category", categoryId);
       obj.put("insertDate", insertDateString);
       obj.put("popularCount", popularCount);
       obj.put("likeCount", likeCount);

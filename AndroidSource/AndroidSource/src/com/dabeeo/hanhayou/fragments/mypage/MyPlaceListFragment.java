@@ -31,6 +31,7 @@ import com.dabeeo.hanhayou.activities.mypage.MyPlaceActivity;
 import com.dabeeo.hanhayou.activities.mypage.MyPlaceDetailActivity;
 import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
 import com.dabeeo.hanhayou.beans.PlaceBean;
+import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.controllers.mypage.MyPlaceListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
@@ -85,10 +86,12 @@ public class MyPlaceListFragment extends Fragment
     load();
   }
   
+  
   public int listCount()
   {
     return adapter.getCount();
   }
+  
   
   public void refresh()
   {
@@ -128,7 +131,7 @@ public class MyPlaceListFragment extends Fragment
   private void load()
   {
     progressBar.setVisibility(View.VISIBLE);
-    new GetStoreAsyncTask().execute();
+    new GetStoreAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
   }
   
   
@@ -255,7 +258,7 @@ public class MyPlaceListFragment extends Fragment
     @Override
     protected ArrayList<PlaceBean> doInBackground(Void... params)
     {
-      return apiClient.getMyPlaceList();
+      return apiClient.getMyPlaceList(categoryId);
     }
     
     
@@ -283,6 +286,27 @@ public class MyPlaceListFragment extends Fragment
         emptyContainer.setVisibility(View.VISIBLE);
       }
       progressBar.setVisibility(View.GONE);
+      if (categoryId == -1 && SystemUtil.isConnectNetwork(getActivity()))
+        new SaveLocalAsyncTask().execute();
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class SaveLocalAsyncTask extends AsyncTask<Void, Integer, String>
+  {
+    @Override
+    protected String doInBackground(Void... params)
+    {
+      OfflineContentDatabaseManager offlineDatabaseManager = new OfflineContentDatabaseManager(getActivity());
+      offlineDatabaseManager.writeDatabaseMyPlace(adapter.getJSONArrayString());
+      return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(String result)
+    {
+      Log.w("WARN", "Save to local Finish!");
       super.onPostExecute(result);
     }
   }

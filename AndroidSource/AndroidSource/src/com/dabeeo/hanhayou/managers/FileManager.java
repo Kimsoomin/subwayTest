@@ -14,7 +14,6 @@ import android.widget.Toast;
 public class FileManager
 {
   public static final String FILE_MY_PLAN = "my_plan.txt";
-  public static final String FILE_MY_PLACE = "my_place.txt";
   private volatile static FileManager instance;
   private Context context;
   
@@ -41,7 +40,6 @@ public class FileManager
   
   public void clear()
   {
-    deleteFile(FileManager.FILE_MY_PLACE);
     deleteFile(FileManager.FILE_MY_PLAN);
   }
   
