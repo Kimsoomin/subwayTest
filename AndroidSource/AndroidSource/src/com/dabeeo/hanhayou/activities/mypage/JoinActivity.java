@@ -524,33 +524,16 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       if (status.equals("OK"))
       {
         isValidEmail = true;
-        Toast.makeText(JoinActivity.this, getString(R.string.msg_possibile_email_account), Toast.LENGTH_LONG).show();
-//        alertView.setAlert(getString(R.string.msg_possibile_email_account));
-      }
-      else
+        alertView.setAlert(getString(R.string.msg_possibile_email_account));
+      } else if (status.equals("ERROR_ID")) 
       {
-//        alertView.setAlert(getString(R.string.msg_duplicate_email));
-        try
-        {
-          JSONObject jsonObject = new JSONObject(result.response);
-          String message = jsonObject.getString("message");
-          if (jsonObject.getString("message").contains("이미 가입"))
-          {
-            if (!Locale.getDefault().getLanguage().contains("ko"))
-              message = getString(R.string.msg_duplicate_email);
-          }else if (jsonObject.getString("message").contains("탈퇴"))
-          {
-            if (!Locale.getDefault().getLanguage().contains("ko"))
-              message = getString(R.string.msg_please_error_out);
-          }
-          Toast.makeText(JoinActivity.this, message, Toast.LENGTH_LONG).show();
-        }
-        catch (JSONException e)
-        {
-          status = "";
-          e.printStackTrace();
-        }
-        
+        alertView.setAlert(getString(R.string.msg_please_error_id));
+      } else if (status.equals("ERROR_OUT"))
+      {
+        alertView.setAlert(getString(R.string.msg_please_error_out));
+      }else
+      {
+        alertView.setAlert(getString(R.string.msg_please_check_user_info));
       }
     }
   }

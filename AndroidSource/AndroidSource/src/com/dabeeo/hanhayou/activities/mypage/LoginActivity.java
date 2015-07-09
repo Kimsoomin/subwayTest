@@ -1,6 +1,5 @@
 package com.dabeeo.hanhayou.activities.mypage;
 
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,8 +23,8 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.FindPasswordActivity;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.views.LoginBottomAlertView;
@@ -184,7 +183,6 @@ public class LoginActivity extends Activity
               startActivity(i);
             }
             
-            
             @Override
             public void onNegativeButtonClickListener()
             {
@@ -197,17 +195,13 @@ public class LoginActivity extends Activity
           if (status.equals("ERROR_ID"))
           {
             alertMessage = getString(R.string.msg_please_error_id);
-          }
-          
-          else if (status.equals("ERROR_OUT"))
+          }else if (status.equals("ERROR_OUT"))
           {
             alertMessage = getString(R.string.msg_please_error_out);
-          }
-          else if (status.equals("ERROR_PW"))
+          }else if (status.equals("ERROR_PW"))
           {
             alertMessage = getString(R.string.msg_please_error_password);
-          }
-          else
+          }else
           {
             alertMessage = getString(R.string.msg_please_check_user_info);
           }

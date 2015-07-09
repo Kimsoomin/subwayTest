@@ -1,6 +1,5 @@
 package com.dabeeo.hanhayou.activities.sub;
 
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +16,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
@@ -139,14 +137,18 @@ public class FindPasswordActivity extends Activity
           });
           builder.create().show();
         }
-        else
+        else if(obj.getString("status").equals("ERROR_ID"))
         {
-          String message = obj.getString("message");
-          if (obj.getString("message").contains("등록된 아이디(이메일이)"))
-            if (!Locale.getDefault().getLanguage().contains("ko"))
-              message = getString(R.string.msg_not_find_email);
-          
-          Toast.makeText(FindPasswordActivity.this, message, Toast.LENGTH_LONG).show();
+          alertView.setAlert(getString(R.string.msg_please_error_id));
+        }else if(obj.getString("status").equals("ERROR_EMAIL"))
+        {
+          alertView.setAlert(getString(R.string.msg_send_email_fail));
+        }else if(obj.getString("status").equals("ERROR_OUT"))
+        {
+          alertView.setAlert(getString(R.string.msg_please_error_out));
+        }else
+        {
+          alertView.setAlert(getString(R.string.msg_please_check_user_info));
         }
       }
       catch (Exception e)
