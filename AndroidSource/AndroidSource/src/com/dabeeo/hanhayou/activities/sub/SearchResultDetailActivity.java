@@ -33,15 +33,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
+import com.dabeeo.hanhayou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.SearchResultAdapter;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
-import com.dabeeo.hanhayou.managers.network.NetworkResult;
 
 public class SearchResultDetailActivity extends ActionBarActivity
 {
@@ -54,6 +57,9 @@ public class SearchResultDetailActivity extends ActionBarActivity
   private Handler handler = new Handler();
   private ProgressBar progressBar;
   private TextView textSearchResult;
+  
+  private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
+  private LinearLayout containerBottomTab;
   
   
   @Override
@@ -69,6 +75,18 @@ public class SearchResultDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    
+    containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
+    bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
+    bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
+    bottomMenuPhotolog = (LinearLayout) findViewById(R.id.container_menu_photolog);
+    bottomMenuWishList = (LinearLayout) findViewById(R.id.container_menu_wishlist);
+    bottomMenuSearch = (LinearLayout) findViewById(R.id.container_menu_search);
+    bottomMenuHome.setOnClickListener(bottomMenuClickListener);
+    bottomMenuMyPage.setOnClickListener(bottomMenuClickListener);
+    bottomMenuPhotolog.setOnClickListener(bottomMenuClickListener);
+    bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
+    bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
     
     textSearchResult = (TextView) findViewById(R.id.text_search_result);
     textSearchResult.setVisibility(View.GONE);
@@ -263,6 +281,56 @@ public class SearchResultDetailActivity extends ActionBarActivity
       finish();
     return super.onOptionsItemSelected(item);
   }
+  
+  /**************************************************
+   * listener
+   ***************************************************/
+  private OnClickListener bottomMenuClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == bottomMenuHome.getId())
+      {
+        finish();
+      }
+      else if (v.getId() == bottomMenuMyPage.getId())
+      {
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          Intent i = new Intent(SearchResultDetailActivity.this, MainActivity.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra("position", MainActivity.POSITION_MY_PAGE);
+          startActivity(i);
+        }
+        else
+        {
+          new AlertDialogManager(SearchResultDetailActivity.this).showNeedLoginDialog(1);
+        }
+      }
+      else if (v.getId() == bottomMenuWishList.getId())
+      {
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        {
+          Intent i = new Intent(SearchResultDetailActivity.this, MainActivity.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra("position", MainActivity.POSITION_WISHLIST);
+          startActivity(i);
+        }
+        else
+        {
+          new AlertDialogManager(SearchResultDetailActivity.this).showNeedLoginDialog(2);
+        }
+      }
+      else if (v.getId() == bottomMenuSearch.getId())
+      {
+        Intent i = new Intent(SearchResultDetailActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("position", MainActivity.POSITION_SEARCH);
+        startActivity(i);
+      }
+    }
+  };
   
   /**************************************************
    * AsyncTask

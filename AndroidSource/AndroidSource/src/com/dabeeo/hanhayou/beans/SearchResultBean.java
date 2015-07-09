@@ -15,6 +15,7 @@ public class SearchResultBean
   public String text;
   public boolean isTitle = false;
   public int moreCount = 0;
+  public String placeTitle;
   public int type = TYPE_NORMAL;
   public String idx;
   
@@ -34,6 +35,8 @@ public class SearchResultBean
       text = obj.getString("text");
       moreCount = obj.getInt("more_count");
       type = obj.getInt("type");
+      if (obj.has("placeTitle"))
+        placeTitle = obj.getString(placeTitle);
     }
     catch (Exception e)
     {

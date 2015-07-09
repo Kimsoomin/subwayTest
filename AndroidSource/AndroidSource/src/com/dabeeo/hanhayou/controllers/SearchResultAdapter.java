@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 
 import android.annotation.SuppressLint;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,15 @@ public class SearchResultAdapter extends BaseAdapter
     
     TextView title = (TextView) convertView.findViewById(android.R.id.text1);
     title.setText(bean.text);
+    
+    TextView placeTitle = (TextView) convertView.findViewById(R.id.text2);
+    if (TextUtils.isEmpty(bean.placeTitle))
+      placeTitle.setVisibility(View.GONE);
+    else
+    {
+      placeTitle.setVisibility(View.VISIBLE);
+      placeTitle.setText(bean.placeTitle);
+    }
     
     if (bean.isTitle)
     {

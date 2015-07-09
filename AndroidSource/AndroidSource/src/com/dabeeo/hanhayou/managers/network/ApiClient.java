@@ -865,6 +865,8 @@ public class ApiClient
             SearchResultBean bean = new SearchResultBean();
             JSONObject obj = jsonArray.getJSONObject(i);
             bean.setLogType(obj.getString("logType"));
+            if (obj.has("placeTitle"))
+              bean.placeTitle = obj.getString("placeTitle");
             bean.text = obj.getString("title");
             bean.idx = obj.getString("idx");
             
@@ -899,6 +901,7 @@ public class ApiClient
                 {
                   SearchResultBean listBean = new SearchResultBean();
                   listBean.idx = premiumList.get(i).idx;
+                  listBean.placeTitle = premiumList.get(i).placeTitle;
                   listBean.addText(premiumList.get(i).text, premiumList.get(i).type);
                   array.add(listBean);
                 }
