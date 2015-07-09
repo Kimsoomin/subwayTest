@@ -80,7 +80,7 @@ public class DeclareReviewView extends RelativeLayout
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
       {
         declareReason = position;
-        if (position == 3)
+        if (position == 2)
           editReason.setVisibility(View.VISIBLE);
         else
           editReason.setVisibility(View.GONE);
