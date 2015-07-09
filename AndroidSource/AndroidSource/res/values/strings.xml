@@ -471,7 +471,6 @@
     <string name="msg_recommend_schedule_title">适合“#1”用户的#2天定制行程</string>
     <string name="msg_warn_password_not_same_name">不能使用与昵称相同的密码。</string>
     <string name="msg_comeplete_recommend_schedule">用户的 \n推荐行程创建成功！</string>
-    <!-- 번역안됨 -->
-    <string name="msg_not_find_email">입력하신 E-mail 주소로 등록된 계정이 없습니다.</string>
+    <string name="msg_not_find_email">您输入的帐号不存在</string>
 
 </resources>
