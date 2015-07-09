@@ -362,8 +362,9 @@
     <string name="msg_require_login">登录后使用</string>
     <string name="msg_only_wifi_is_disable">关闭 仅WiFi设定 时消耗流量进行更新我的行程和内容信息。\n关闭 仅WiFi 设定吗？</string>
     <string name="msg_help_withdraw">为了注销会员需要进行客服连接。\n请咨询以下客服。</string>
-    <string name="msg_help_withdraw_qq">官方QQ: 889751559</string>
-    <string name="msg_help_withdraw_email">(+82)1899-3577\n客服邮箱 hanhayou@gsshop.com</string>
+    <string name="msg_help_withdraw_qq">QQ : 2889751559</string>
+    <string name="msg_help_withdraw_tel">客服中心电话 : (+82)1899-3577</string>
+    <string name="msg_help_withdraw_email">客服中心邮箱 : hanhayou@gsshop.com</string>
     <!-- 여행일정 -->
     <string name="term_one_days_schedule">1日游</string>
     <string name="term_two_days_schedule">2日游</string>
@@ -471,7 +472,6 @@
     <string name="msg_warn_password_not_same_name">不能使用与昵称相同的密码。</string>
     <string name="msg_comeplete_recommend_schedule">用户的 \n推荐行程创建成功！</string>
     <!-- 번역안됨 -->
-    <string name="msg_not_authorize_email">美国认证的邮件</string>
     <string name="msg_not_find_email">입력하신 E-mail 주소로 등록된 계정이 없습니다.</string>
 
 </resources>

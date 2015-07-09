@@ -308,8 +308,9 @@
     <string name="term_after_day">일</string>
     <!-- 마이페이지 -->
     <string name="msg_help_withdraw">원활한 회원탈퇴 처리를 위해 상담원 연결이 필요합니다.\n아래 고객센터로 문의 바랍니다.</string>
-    <string name="msg_help_withdraw_qq">QQ: 889751559</string>
-    <string name="msg_help_withdraw_email">고객센터 전화번호 : (+82)1899-3577\n고객센터 이메일 : hanhayou@gsshop.com</string>
+    <string name="msg_help_withdraw_qq">QQ : 2889751559</string>
+    <string name="msg_help_withdraw_tel">>고객센터 전화번호 : (+82)1899-3577</string>
+    <string name="msg_help_withdraw_email">고객센터 이메일 : hanhayou@gsshop.com</string>
     <string name="term_change_password">비밀번호 변경</string>
     <string name="term_withdraw">회원탈퇴</string>
     <string name="msg_withdraw">회원 탈퇴하기</string>

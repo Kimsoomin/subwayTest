@@ -17,8 +17,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.UnderlineSpan;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -156,6 +159,8 @@ public class AccountSettingActivity extends ActionBarActivity
         dialog.setTitle(getString(R.string.term_alert));
         View view = LayoutInflater.from(AccountSettingActivity.this).inflate(R.layout.view_withdraw_popup, null);
         TextView textQQ = (TextView) view.findViewById(R.id.text_withdraw_qq);
+        textQQ.setText(underLineString(textQQ.getText().toString()));
+        
         textQQ.setOnClickListener(new OnClickListener()
         {
           @Override
@@ -177,6 +182,7 @@ public class AccountSettingActivity extends ActionBarActivity
             }
           }
         });
+        
         dialog.setView(view);
         dialog.setPositiveButton(android.R.string.ok, null);
         dialog.show();
@@ -211,6 +217,13 @@ public class AccountSettingActivity extends ActionBarActivity
         alertView.setAlert(getString(R.string.msg_please_valid_check_name));
     }
   };
+  
+  public SpannableString underLineString(String text)
+  {
+    SpannableString spanString = new SpannableString(text);
+    spanString.setSpan(new UnderlineSpan(), 0, text.length(), 0);
+    return spanString;
+  }
   
   
   public boolean validCheckName(String name)
