@@ -183,6 +183,7 @@ public class ReviewContainerView extends LinearLayout
     View line = new View(context);
     line.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 1));
     line.setBackgroundColor(Color.parseColor("#c3c3c3"));
+    line.setPadding(0, 20, 0, 20);
     container.addView(line);
   }
   
