@@ -13,7 +13,7 @@
         android:paddingBottom="12dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="12dp" >
+        android:paddingTop="8dp" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -22,6 +22,7 @@
             android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -37,19 +38,20 @@
 
                 <ImageView
                     android:id="@+id/is_public"
-                    android:layout_width="15dp"
+                    android:layout_width="12dp"
                     android:layout_height="15dp"
-                    android:layout_marginLeft="5dp"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/icon_list_private_on"
-                    android:visibility="gone"
-                    android:contentDescription="@null" />
+                    android:contentDescription="@null"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/total_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -59,11 +61,15 @@
                     android:background="@drawable/rectangle_appcolor_box"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="4dip" >
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp" >
 
                     <ImageView
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
                         android:background="@drawable/icon_plan_day"
                         android:contentDescription="@null" />
 
@@ -71,9 +77,9 @@
                         android:id="@+id/text_days"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
                         android:textColor="@color/light_gray"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -83,11 +89,15 @@
                     android:background="@drawable/rectangle_appcolor_box"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="4dip" >
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp" >
 
                     <ImageView
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
                         android:background="@drawable/icon_budget_cn"
                         android:contentDescription="@null" />
 
@@ -95,9 +105,9 @@
                         android:id="@+id/text_money"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
                         android:textColor="@color/light_gray"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -105,17 +115,17 @@
                 android:id="@+id/user_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
-                <com.dabeeo.hanhayou.external.libraries.RoundedImageView
+                <ImageView
                     android:id="@+id/imageview"
-                    android:layout_width="33dip"
-                    android:layout_height="33dip"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="4dip"
-                    android:contentDescription="@null"
-                    android:src="@drawable/default_profile_s" />
+                    android:background="@drawable/default_profile_s"
+                    android:contentDescription="@null" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -149,8 +159,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="10dip"
-                        android:layout_height="10dip"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@null"
                         android:src="@drawable/icon_like_s" />
@@ -160,14 +170,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dip"
+                        android:layout_marginLeft="2dp"
                         android:textColor="@color/darker_gray" />
 
                     <ImageView
-                        android:layout_width="10dip"
-                        android:layout_height="10dip"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dip"
+                        android:layout_marginLeft="6dp"
                         android:contentDescription="@null"
                         android:src="@drawable/icon_bookmark_s" />
 
@@ -176,7 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dip"
+                        android:layout_marginLeft="2dp"
                         android:textColor="@color/darker_gray" />
                 </LinearLayout>
             </LinearLayout>

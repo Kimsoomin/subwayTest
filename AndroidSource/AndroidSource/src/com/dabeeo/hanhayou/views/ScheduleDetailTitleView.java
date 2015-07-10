@@ -15,20 +15,20 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
-import com.dabeeo.hanhayou.external.libraries.RoundedImageView;
+import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
-import com.squareup.picasso.Picasso;
 
 public class ScheduleDetailTitleView extends RelativeLayout
 {
   private Context context;
-  private RoundedImageView imageView;
+  private ImageView imageView;
   private TextView name;
   private TextView time;
   private TextView likeCount;
   private TextView bookmarkCount;
   public RelativeLayout container;
   public TextView title, textMoney, textDays;
+  public LinearLayout titleLayout;
   public LinearLayout infoContainer;
   public LinearLayout likeAndBookmarkContainer, userContainer;
   public View titleDivider;
@@ -100,8 +100,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     if(!bean.isOpen)
       isPublic.setVisibility(View.VISIBLE);
     
-    Picasso.with(context).load(bean.mfidx).fit().into(imageView);
-//    ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
+    ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
   }
   
   
@@ -114,11 +113,12 @@ public class ScheduleDetailTitleView extends RelativeLayout
     likeAndBookmarkContainer = (LinearLayout) view.findViewById(R.id.like_and_bookmark_count_container);
     container = (RelativeLayout) view.findViewById(R.id.container);
     infoContainer = (LinearLayout) view.findViewById(R.id.total_container);
-    imageView = (RoundedImageView) view.findViewById(R.id.imageview);
+    imageView = (ImageView) view.findViewById(R.id.imageview);
     name = (TextView) view.findViewById(R.id.name);
     time = (TextView) view.findViewById(R.id.time);
     likeCount = (TextView) view.findViewById(R.id.like_count);
     bookmarkCount = (TextView) view.findViewById(R.id.bookmark_count);
+    titleLayout = (LinearLayout) view.findViewById(R.id.title_layout);
     title = (TextView) view.findViewById(R.id.text_title);
     textMoney = (TextView) view.findViewById(R.id.text_money);
     textDays = (TextView) view.findViewById(R.id.text_days);
@@ -130,7 +130,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
   
   public void initDayTitle()
   {
-    title.setVisibility(View.GONE);
+    titleLayout.setVisibility(View.GONE);
     infoContainer.setVisibility(View.GONE);
   }
   

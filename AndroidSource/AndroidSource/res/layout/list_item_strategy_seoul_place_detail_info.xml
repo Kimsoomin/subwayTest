@@ -36,21 +36,21 @@
 
         <ImageView
             android:id="@+id/btn_call"
-            android:layout_width="75dip"
-            android:layout_height="75dip"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:padding="16dp"
-            android:src="@drawable/btn_direct_call"
+            android:background="@drawable/btn_direct_call"
             android:contentDescription="@null"
             android:visibility="gone" />
 
         <ImageView
             android:id="@+id/btn_address"
-            android:layout_width="75dip"
-            android:layout_height="75dip"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:padding="16dp"
-            android:src="@drawable/btn_address_map"
+            android:background="@drawable/btn_address_map"
             android:contentDescription="@null"
             android:visibility="gone" />
     </LinearLayout>

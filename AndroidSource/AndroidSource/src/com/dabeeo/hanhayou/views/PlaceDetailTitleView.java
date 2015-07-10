@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,10 +17,11 @@ import com.dabeeo.hanhayou.utils.ImageDownloader;
 public class PlaceDetailTitleView extends RelativeLayout
 {
   private Context context;
-  public LinearLayout container;
+  public RelativeLayout container;
   private ImageView imageView;
   public TextView title;
   private TextView name, time, likeCount, bookmarkCount;
+  public View titleDivider;
   
   
   public PlaceDetailTitleView(Context context)
@@ -80,13 +80,14 @@ public class PlaceDetailTitleView extends RelativeLayout
     View view = LayoutInflater.from(context).inflate(resId, null);
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
-    container = (LinearLayout) view.findViewById(R.id.container);
+    container = (RelativeLayout) view.findViewById(R.id.container);
     title = (TextView) view.findViewById(R.id.text_title);
     imageView = (ImageView) view.findViewById(R.id.imageview);
     name = (TextView) view.findViewById(R.id.name);
     time = (TextView) view.findViewById(R.id.time);
     likeCount = (TextView) view.findViewById(R.id.like_count);
     bookmarkCount = (TextView) view.findViewById(R.id.bookmark_count);
+    titleDivider = (View) view.findViewById(R.id.place_title_divider);
     
     addView(view);
   }

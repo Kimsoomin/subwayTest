@@ -148,19 +148,19 @@ public class TravelScheduleDetailFragment extends Fragment
           {
             if (dayBean == null)
             {
-              titleView.title.setVisibility(View.INVISIBLE);
+              titleView.titleLayout.setVisibility(View.INVISIBLE);
               titleView.infoContainer.setVisibility(View.INVISIBLE);
-              titleView.titleDivider.setVisibility(View.VISIBLE);
             }
+            titleView.titleDivider.setVisibility(View.VISIBLE);
           }
           else
           {
             if (dayBean == null)
             {
-              titleView.title.setVisibility(View.VISIBLE);
+              titleView.titleLayout.setVisibility(View.VISIBLE);
               titleView.infoContainer.setVisibility(View.VISIBLE);
-              titleView.titleDivider.setVisibility(View.GONE);
             }
+            titleView.titleDivider.setVisibility(View.GONE);
           }
         }
         

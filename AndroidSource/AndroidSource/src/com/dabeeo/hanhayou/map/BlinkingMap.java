@@ -427,9 +427,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public boolean myLocation()
   {
     userLocationInit();
-    if (m_locManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || m_locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+    if (m_locManager.isProviderEnabled(LocationManager.GPS_PROVIDER))//|| m_locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
     {
-      
       if (m_myLocation != null)
       {
         m_fLatitude = m_myLocation.getLatitude();

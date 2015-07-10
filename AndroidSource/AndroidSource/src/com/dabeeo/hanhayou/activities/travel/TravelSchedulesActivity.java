@@ -299,7 +299,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
       }
       else
       {
-        if(tab.getPosition() ==2 && !SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
+        if(tab.getPosition() == 2 && !SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
         {
           alertManager.showDontNetworkConnectDialog();
           Runnable runnn = new Runnable()
