@@ -11,9 +11,9 @@
         android:visibility="gone" />
 
     <LinearLayout
+        android:id="@+id/top_info_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <!-- 환승정보 표시 -->
@@ -28,7 +28,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
+                android:background="#E8ffffff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp" >
@@ -55,7 +55,12 @@
                             android:id="@+id/start_station_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp" />
+                            android:layout_marginLeft="4dp"
+                            android:ellipsize="end"
+                            android:maxEms="8"
+                            android:singleLine="true"
+                            android:textColor="@color/darker_gray"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="10dp"
@@ -73,7 +78,12 @@
                             android:id="@+id/end_station_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp" />
+                            android:layout_marginLeft="4dp"
+                            android:ellipsize="end"
+                            android:maxEms="8"
+                            android:singleLine="true"
+                            android:textColor="@color/darker_gray"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -111,7 +121,7 @@
             android:id="@+id/container_near_station_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:background="#E8ffffff"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:visibility="gone" >
@@ -151,7 +161,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
                             android:paddingBottom="4dp"
-                            android:paddingTop="4dp" />
+                            android:paddingTop="4dp"
+                            android:textColor="@color/darker_gray"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -181,16 +193,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:background="#20000000" />
+                android:background="#33000000" />
         </LinearLayout>
-
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="false" />
     </LinearLayout>
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false" />
 
     <LinearLayout
         android:id="@+id/layout_find_start_station"

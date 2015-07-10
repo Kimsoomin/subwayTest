@@ -368,7 +368,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
       else
       {
         textSearchResult.setVisibility(View.VISIBLE);
-        textSearchResult.setText(getString(R.string.term_search_result) + " (" + Integer.toString(size) + ")");
+        textSearchResult.setText(getString(R.string.term_search_result) + " (" + Integer.toString(size - 1) + ")");
       }
       adapter.clear();
       adapter.add(result);
