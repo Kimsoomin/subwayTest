@@ -191,6 +191,9 @@ public class SubwayFragment extends Fragment
     endStationId = "";
     int resId = R.layout.fragment_subway;
     view = LayoutInflater.from(activity).inflate(resId, null);
+    
+    ((LinearLayout) view.findViewById(R.id.top_info_layout)).bringToFront();
+    
     stationsInfoLayout = (LinearLayout) view.findViewById(R.id.stations_info);
     stationsInfoText = (TextView) view.findViewById(R.id.text_stations_info);
     detailStationInfo = (ImageView) view.findViewById(R.id.image_stations_info_detail);
@@ -790,6 +793,7 @@ public class SubwayFragment extends Fragment
             try
             {
               stationsInfoLayout.setVisibility(View.VISIBLE);
+              stationsInfoLayout.bringToFront();
               containerNearByStationInfo.setVisibility(View.GONE);
               
               StationBean firstFindStationBean = stations.get(0);
@@ -914,6 +918,7 @@ public class SubwayFragment extends Fragment
                 {
                   Log.w("WARN", "가까운 역 정보 표시");
                   containerNearByStationInfo.setVisibility(View.VISIBLE);
+                  containerNearByStationInfo.bringToFront();
                   nearStationImage.removeAllViews();
                   if (nearByStationWithTransfer.lines.size() == 0)
                   {
@@ -999,6 +1004,7 @@ public class SubwayFragment extends Fragment
                         if (TextUtils.isEmpty(startStationId))
                         {
                           containerNearByStationInfo.setVisibility(View.VISIBLE);
+                          containerNearByStationInfo.bringToFront();
                           nearStationImage.removeAllViews();
                           if (nearByStationWithTransfer.lines.size() == 0)
                           {
@@ -1096,6 +1102,7 @@ public class SubwayFragment extends Fragment
           progressBar.setVisibility(View.GONE);
           
           containerNearByStationInfo.setVisibility(View.VISIBLE);
+          containerNearByStationInfo.bringToFront();
 //          nearStationImage.setImageResource(SubwayManager.getInstance(activity).getSubwayLineResourceId(nearByStation.line));
           nearStationImage.removeAllViews();
           if (nearByStationWithTransfer.lines.size() == 0)
