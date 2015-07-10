@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -34,7 +35,12 @@
                     android:id="@+id/start_station_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp" />
+                    android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxEms="8"
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="10dp"
@@ -52,7 +58,12 @@
                     android:id="@+id/end_station_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp" />
+                    android:layout_marginLeft="4dp"
+                    android:ellipsize="end"
+                    android:maxEms="8"
+                    android:singleLine="true"
+                    android:textColor="@color/darker_gray"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
