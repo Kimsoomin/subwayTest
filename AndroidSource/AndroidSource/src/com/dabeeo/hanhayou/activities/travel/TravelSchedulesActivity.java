@@ -34,6 +34,7 @@ import com.dabeeo.hanhayou.fragments.mainmenu.TravelScheduleListFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -254,8 +255,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
   {
     @Override
     public void onTabSelected(final Tab tab, FragmentTransaction ft)
-    {
-      
+    { 
       if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn() 
           && tab.getPosition() != 0 && !isFirstSelectTravelSchedules)
       {
@@ -299,8 +299,25 @@ public class TravelSchedulesActivity extends ActionBarActivity
       }
       else
       {
-        viewPager.setCurrentItem(tab.getPosition());
-        lastSelectedTab = tab.getPosition();
+        if(tab.getPosition() ==2 && !SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
+        {
+          alertManager.showDontNetworkConnectDialog();
+          Runnable runnn = new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              getSupportActionBar().setSelectedNavigationItem(lastSelectedTab);
+            }
+          };
+          Handler handler = new Handler();
+          handler.post(runnn);
+        }else
+        {
+          viewPager.setCurrentItem(tab.getPosition());
+          lastSelectedTab = tab.getPosition();
+        }
+        BlinkingCommon.smlLibDebug("TravelSchedule", "lastSelectedTab : "+lastSelectedTab);        
       }
       
       if (tab.getPosition() == 1 || tab.getPosition() == 2)
