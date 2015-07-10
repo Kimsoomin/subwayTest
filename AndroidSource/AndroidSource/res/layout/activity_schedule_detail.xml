@@ -158,8 +158,8 @@
                     <Button
                         android:id="@+id/btn_is_public"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="36dp"
-                        android:layout_height="30dp"
+                        android:layout_width="30dp"
+                        android:layout_height="24dp"
                         android:background="@drawable/btn_is_public"
                         android:gravity="center" />
                 </LinearLayout>
@@ -175,8 +175,8 @@
                     <Button
                         android:id="@+id/btn_like"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="24dp"
                         android:background="@drawable/like_button"
                         android:gravity="center" />
                 </LinearLayout>
@@ -192,8 +192,8 @@
                     <Button
                         android:id="@+id/btn_bookmark"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="24dp"
                         android:background="@drawable/bookmark_button"
                         android:gravity="center" />
                 </LinearLayout>
@@ -208,8 +208,8 @@
                     <Button
                         android:id="@+id/btn_share"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="30dp"
-                        android:layout_height="28dp"
+                        android:layout_width="27dp"
+                        android:layout_height="25dp"
                         android:background="@drawable/share_button"
                         android:gravity="center" />
                 </LinearLayout>
@@ -225,8 +225,8 @@
                     <Button
                         android:id="@+id/btn_write_review"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="30dp"
-                        android:layout_height="28dp"
+                        android:layout_width="27dp"
+                        android:layout_height="25dp"
                         android:background="@drawable/review_button"
                         android:gravity="center" />
                 </LinearLayout>

@@ -163,7 +163,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
-                            android:background="@drawable/rectangle_appcolor_stroke_select_fill"
+                            android:background="@drawable/btn_recommend_expert_state"
                             android:paddingBottom="12dp"
                             android:paddingLeft="30dp"
                             android:paddingRight="30dp"
@@ -277,8 +277,8 @@
                 <Button
                     android:id="@+id/btn_like"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="30dp"
-                    android:layout_height="28dp"
+                    android:layout_width="25dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/like_button"
                     android:gravity="center" />
             </LinearLayout>
@@ -293,8 +293,8 @@
                 <Button
                     android:id="@+id/btn_bookmark"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="30dp"
-                    android:layout_height="28dp"
+                    android:layout_width="25dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/bookmark_button"
                     android:gravity="center" />
             </LinearLayout>
@@ -309,8 +309,8 @@
                 <Button
                     android:id="@+id/btn_share"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="27dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/share_button"
                     android:gravity="center" />
             </LinearLayout>
@@ -326,8 +326,8 @@
                 <Button
                     android:id="@+id/btn_write_review"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="27dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/review_button"
                     android:gravity="center" />
             </LinearLayout>

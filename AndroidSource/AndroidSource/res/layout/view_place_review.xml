@@ -48,7 +48,7 @@
 
             <ImageView
                 android:id="@+id/btn_review_list_more"
-                android:layout_width="20dp"
+                android:layout_width="14dp"
                 android:layout_height="20dp"
                 android:background="@drawable/btn_review_list_more"
                 android:contentDescription="@null" />
