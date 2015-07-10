@@ -414,7 +414,6 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   @Override
   public void onFocusChange(View v, boolean hasFocus)
   {
-    // TODO Auto-generated method stub
     
   }
   
@@ -509,7 +508,6 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      // TODO Auto-generated method stub
       return apiClient.userIdDuplicateCheck(editEmail.getText().toString());
     }
     
@@ -517,7 +515,6 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      // TODO Auto-generated method stub
       super.onPostExecute(result);
       progressLayout.setVisibility(View.GONE);
       String status = responseParser(result.response);
