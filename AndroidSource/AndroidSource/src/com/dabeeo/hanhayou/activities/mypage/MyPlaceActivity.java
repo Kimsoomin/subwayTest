@@ -16,13 +16,14 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.TitleCategoryBean;
+import com.dabeeo.hanhayou.controllers.CustomViewPager;
 import com.dabeeo.hanhayou.controllers.mypage.MyPlaceViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.mypage.MyPlaceListFragment;
 
 @SuppressWarnings("deprecation")
 public class MyPlaceActivity extends ActionBarActivity
 {
-  private ViewPager viewPager;
+  private CustomViewPager viewPager;
   private MenuItem editMenuItem, closeMenuItem;
   public boolean isEditMode = false;
   private MyPlaceViewPagerAdapter adapter;
@@ -43,7 +44,7 @@ public class MyPlaceActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
-    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    viewPager = (CustomViewPager) findViewById(R.id.viewpager);
     viewPager.setOnPageChangeListener(pageChangeListener);
     viewPager.setOffscreenPageLimit(100);
     
@@ -105,6 +106,10 @@ public class MyPlaceActivity extends ActionBarActivity
     this.isEditMode = isEditMode;
     MyPlaceListFragment fragment = adapter.getFragment(viewPager.getCurrentItem());
     fragment.setEditMode(isEditMode);
+    if(isEditMode)
+      viewPager.setPagingDisabled();
+    else
+      viewPager.setPagingEnabled();
     getSupportActionBar().setNavigationMode(isEditMode ? ActionBar.NAVIGATION_MODE_STANDARD : ActionBar.NAVIGATION_MODE_TABS);
     invalidateOptionsMenu();
   }

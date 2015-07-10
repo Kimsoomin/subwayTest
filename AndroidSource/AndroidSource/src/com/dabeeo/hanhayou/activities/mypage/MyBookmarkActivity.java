@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.controllers.CustomViewPager;
 import com.dabeeo.hanhayou.controllers.mypage.MyBookmarkViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.MyBookmarkPlaceListFragment;
 import com.dabeeo.hanhayou.fragments.mainmenu.MyBookmarkTravelScheduleListFragment;
@@ -25,7 +26,7 @@ import com.dabeeo.hanhayou.fragments.mainmenu.MyBookmarkTravelScheduleListFragme
 @SuppressWarnings("deprecation")
 public class MyBookmarkActivity extends ActionBarActivity
 {
-  private ViewPager viewPager;
+  private CustomViewPager viewPager;
   private MenuItem editMenuItem, closeMenuItem;
   public boolean isEditMode = false;
   private MyBookmarkViewPagerAdapter adapter;
@@ -47,7 +48,7 @@ public class MyBookmarkActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
-    viewPager = (ViewPager) findViewById(R.id.viewpager);
+    viewPager = (CustomViewPager) findViewById(R.id.viewpager);
     adapter = new MyBookmarkViewPagerAdapter(this, getSupportFragmentManager());
     viewPager.setAdapter(adapter);
     viewPager.setOnPageChangeListener(pageChangeListener);
@@ -112,6 +113,10 @@ public class MyBookmarkActivity extends ActionBarActivity
       ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
     else
       ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
+    if(isEditMode)
+      viewPager.setPagingDisabled();
+    else
+      viewPager.setPagingEnabled();
     getSupportActionBar().setNavigationMode(isEditMode ? ActionBar.NAVIGATION_MODE_STANDARD : ActionBar.NAVIGATION_MODE_TABS);
     invalidateOptionsMenu();
   }
