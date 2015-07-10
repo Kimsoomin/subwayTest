@@ -50,39 +50,42 @@
                         style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_above="@+id/text_desciption_layout"
                         android:layout_marginLeft="16dip"
                         android:ellipsize="end"
                         android:maxLines="4"
                         android:maxWidth="270dip"
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_above="@+id/text_desciption_layout" />
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:id="@+id/text_desciption_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="bottom|center_vertical"
-                        android:layout_alignParentBottom="true" >
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="2dp" >
 
                         <TextView
                             android:id="@+id/text_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:layout_marginBottom="18dip"
-                            android:layout_marginLeft="16dip"
+                            android:layout_toRightOf="@+id/like_ic_heart"
                             android:maxWidth="270dip"
                             android:textColor="@android:color/white"
                             android:textSize="14sp" />
 
                         <ImageView
+                            android:id="@+id/like_ic_heart"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:layout_marginTop="3dip"
-                            android:layout_marginLeft="10dip"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="3dp"
                             android:layout_toLeftOf="@+id/like_count"
                             android:src="@drawable/ic_heart" />
 
@@ -91,8 +94,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_marginLeft="5dp"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginRight="16dip"
                             android:textColor="@android:color/white"
                             android:textSize="14sp" />
                     </RelativeLayout>
@@ -109,8 +112,8 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="20dp" >
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="8dp" >
 
                     <LinearLayout
                         android:id="@+id/horizontal_images_view"

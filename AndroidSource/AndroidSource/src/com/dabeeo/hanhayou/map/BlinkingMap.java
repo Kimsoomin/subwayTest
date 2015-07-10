@@ -163,6 +163,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   private RelativeLayout emptysearchList;
   private EditText searchEditText;
   private TextWatcher placewatcher;
+  private TextView blankText;
+  private ImageView blankImage;
   
   // - summary view
   private FrameLayout summaryView;
@@ -768,6 +770,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     searchView = (LinearLayout) findViewById(R.id.search_layout);
     searchEditText = (EditText) findViewById(R.id.SearchEditText);
     searchCancel = (ImageButton) findViewById(R.id.search_cancel);
+    blankText = (TextView) findViewById(R.id.black_text);
+    blankImage = (ImageView) findViewById(R.id.blank_character);
     
     backBtn.setOnClickListener(this);
     searchEditText.setOnEditorActionListener(this);
@@ -791,7 +795,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       @Override
       public void afterTextChanged(Editable s)
       {
-        searchList();
+        searchList(true);
       }
     };
     searchEditText.addTextChangedListener(placewatcher);
@@ -804,7 +808,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     switch (actionId)
     {
       case EditorInfo.IME_ACTION_SEARCH:
-        searchList();
+        searchList(false);
         HideKeyboard(m_mapView);
         break;
       default:
@@ -814,7 +818,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     return false;
   }
   
-  public void searchList()
+  public void searchList(boolean isAuto)
   {
     if (searchEditText.getText().toString().length() > 1)
     {
@@ -850,6 +854,15 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       else
       {
         ListViewVisibleSetting(1);
+        if(isAuto)
+        {
+          blankImage.setVisibility(View.INVISIBLE);
+          blankText.setVisibility(View.INVISIBLE);
+        }else
+        {
+          blankImage.setVisibility(View.VISIBLE);
+          blankText.setVisibility(View.VISIBLE);
+        }
       }
     }
   }
