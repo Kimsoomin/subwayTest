@@ -104,7 +104,7 @@ public class ReviewView extends RelativeLayout
       final String imageUrl = bean.imageUrls.get(i);
       ImageView view = (ImageView) parentView.findViewById(R.id.photo);
       float density = getResources().getDisplayMetrics().density;
-      Picasso.with(context).load(imageUrl).resize((int) (50 * density), (int) (50 * density)).centerCrop().into(view);
+      Picasso.with(context).load(imageUrl).resize((int) (70 * density), (int) (70 * density)).centerCrop().into(view);
       final String finalImageUrl = imageUrl;
       view.setOnClickListener(new OnClickListener()
       {

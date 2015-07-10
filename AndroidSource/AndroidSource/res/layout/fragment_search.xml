@@ -64,7 +64,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:paddingTop="8dp" >
 
                     <LinearLayout
                         android:id="@+id/popular_keyword_outer_container"
@@ -78,7 +79,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:padding="8dp"
-                            android:text="@string/term_search_popular_word" />
+                            android:text="@string/term_search_popular_word"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:id="@+id/popular_keyword_container"
@@ -89,8 +91,13 @@
 
                     <View
                         android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#dcdcdc" />
+
+                    <View
+                        android:layout_width="match_parent"
                         android:layout_height="8dp"
-                        android:background="#f0f0f0" />
+                        android:background="#f1f1f1" />
 
                     <LinearLayout
                         android:id="@+id/layout_recommend_product_parent"
@@ -104,7 +111,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="@string/term_popular_recommend_product" />
+                            android:text="@string/term_popular_recommend_product"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:id="@+id/layout_recommend_product"
@@ -133,7 +141,6 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:visibility="gone" >
-
                 </LinearLayout>
 
                 <ListView
