@@ -150,7 +150,7 @@ stations_by_internal_id.each do |k, v|
 					name_cn: v[:name_cn],
 					location: v[:location],
 					exits: stations[v[:id]][:exits],
-					connections: Hash[transfer_station.map{|s|[s, 5]}]
+					connections: Hash[transfer_station.map{|s|[s, 2]}]
 				}
 			else
 				stations[t_id] = {
@@ -163,10 +163,10 @@ stations_by_internal_id.each do |k, v|
 					name_cn: v[:name_cn],
 					location: v[:location],
 					exits: stations[v[:id]][:exits],
-					connections: Hash[transfer_station.map{|s|[s, 5]}]
+					connections: Hash[transfer_station.map{|s|[s, 2]}]
 				}
 			end
-			stations[v[:id]][:connections][t_id] = 5
+			stations[v[:id]][:connections][t_id] = 2
 		end
 
 
