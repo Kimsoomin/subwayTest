@@ -356,7 +356,7 @@ public class CaldroidFragment extends DialogFragment
     caldroidData.put(_MIN_DATE_TIME, minDateTime);
     caldroidData.put(_MAX_DATE_TIME, maxDateTime);
     caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
-    caldroidData.put(SIX_WEEKS_IN_CALENDAR, Boolean.valueOf(sixWeeksInCalendar));
+    caldroidData.put(SIX_WEEKS_IN_CALENDAR, false);
     caldroidData.put(SQUARE_TEXT_VIEW_CELL, squareTextViewCell);
     
     // For internal use
@@ -1435,7 +1435,9 @@ public class CaldroidFragment extends DialogFragment
   {
     ArrayList<String> list = new ArrayList<String>();
     
-    SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.getDefault());
+    SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.CHINA);
+    if (Locale.getDefault().getLanguage().contains("ko"))
+      fmt = new SimpleDateFormat("EEE", Locale.KOREA);
     
     // 17 Feb 2013 is Sunday
     DateTime sunday = new DateTime(2013, 2, 17, 0, 0, 0, 0);

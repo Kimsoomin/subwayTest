@@ -5,5 +5,4 @@
     android:layout_height="match_parent"
     android:background="@drawable/cal_cell_bg"
     android:padding="15dp"
-    android:textSize="14sp"
-    android:textStyle="bold" />
+    android:textSize="14sp" />
