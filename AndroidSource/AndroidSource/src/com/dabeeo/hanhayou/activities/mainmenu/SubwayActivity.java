@@ -33,6 +33,8 @@ import com.dabeeo.hanhayou.beans.StationBean;
 import com.dabeeo.hanhayou.controllers.mypage.SubwaySearchListAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hanhayou.managers.SubwayManager;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
+import com.dabeeo.hanhayou.map.BlinkingMap;
 
 public class SubwayActivity extends Activity
 {
@@ -45,8 +47,7 @@ public class SubwayActivity extends Activity
   private RelativeLayout searchContainer;
   private RelativeLayout emptySearchContainer;
   
-  public static Activity subwayactivity;
-  
+  public static Activity subwayactivity = null;
   
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
   @Override
@@ -204,6 +205,8 @@ public class SubwayActivity extends Activity
       @Override
       public void onClick(View v)
       {
+        if(BlinkingMap.blinkingactivity != null)
+          BlinkingMap.blinkingactivity.finish();
         finish();
       }
     });
@@ -244,17 +247,12 @@ public class SubwayActivity extends Activity
     super.onNewIntent(intent);
   }
   
-  
   @Override
-  public boolean onOptionsItemSelected(MenuItem item)
+  public void onBackPressed()
   {
-    int id = item.getItemId();
-    if (id == android.R.id.home)
-    {
-      finish();
-      overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
-    }
-    
-    return super.onOptionsItemSelected(item);
+    if(BlinkingMap.blinkingactivity != null)
+      BlinkingMap.blinkingactivity.finish();
+    finish();
+    super.onBackPressed();
   }
 }
