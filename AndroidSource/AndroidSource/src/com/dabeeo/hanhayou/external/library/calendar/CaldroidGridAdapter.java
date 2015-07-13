@@ -283,7 +283,7 @@ public class CaldroidGridAdapter extends BaseAdapter
     int bottomPadding = cellView.getPaddingBottom();
     int rightPadding = cellView.getPaddingRight();
     DateTime dateTime = this.datetimeList.get(position);
-
+    
     if (selectDate != null)
     {
       if (dateTime.equals(selectDate))
@@ -309,6 +309,7 @@ public class CaldroidGridAdapter extends BaseAdapter
     if (dateTime.getMonth() != month)
     {
       cellView.setTextColor(resources.getColor(R.color.caldroid_darker_gray));
+      cellView.setVisibility(View.INVISIBLE);
     }
     
     boolean shouldResetDiabledView = false;
