@@ -48,7 +48,7 @@ public class GallerySpinnerAdapter extends ArrayAdapter<String>
   {
     View v = convertView;
     LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    v = vi.inflate(R.layout.view_gallery_spinner, null);
+    v = vi.inflate(R.layout.view_gallery_spinner_dropdown, null);
     
     String item = items.get(position);
     TextView tt = (TextView) v.findViewById(R.id.title);

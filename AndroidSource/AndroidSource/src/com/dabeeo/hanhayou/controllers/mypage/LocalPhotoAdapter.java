@@ -134,7 +134,7 @@ public class LocalPhotoAdapter extends BaseAdapter
     {
       photo.setImageResource(R.drawable.btn_gallery_camera);
       photo.setBackgroundColor(Color.parseColor("#969b9c"));
-      photo.setScaleType(ScaleType.FIT_CENTER);
+      photo.setScaleType(ScaleType.FIT_XY);
     }
     else
     {

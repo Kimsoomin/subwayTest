@@ -1,7 +1,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <stroke
-        android:width="4dp"
+        android:width="6dp"
         android:color="@color/select_box_stroke" />
 
     <solid android:color="@color/middle_transparent" />
