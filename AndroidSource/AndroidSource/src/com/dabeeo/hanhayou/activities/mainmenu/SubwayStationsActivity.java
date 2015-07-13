@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,15 +34,13 @@ public class SubwayStationsActivity extends ActionBarActivity
   private TextView infoText;
   private ImageView imageX;
   
-  private TextView stationsInfoText;
   private TextView startStationName, endStationName;
   private ImageView startStationImage, endStationImage;
   
   private double nearByLat, nearByLon;
-  private TextView exitInfoText;
-  private LinearLayout exitContainer;
   
   private String destName;
+  private View exitsInfoView;
   
   
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
@@ -75,8 +73,6 @@ public class SubwayStationsActivity extends ActionBarActivity
     endStationName = (TextView) findViewById(R.id.end_station_name);
     startStationImage = (ImageView) findViewById(R.id.start_station_image);
     endStationImage = (ImageView) findViewById(R.id.end_station_image);
-    exitInfoText = (TextView) findViewById(R.id.text_exit_info);
-    exitContainer = (LinearLayout) findViewById(R.id.container_exit_info);
     
     imageX = (ImageView) findViewById(R.id.image_x);
     imageX.setOnClickListener(new OnClickListener()
@@ -92,6 +88,7 @@ public class SubwayStationsActivity extends ActionBarActivity
     infoText.setText(infoString);
     
     listView = (ListView) findViewById(R.id.list_view);
+    
     adapter = new SubwayListAdapter(SubwayStationsActivity.this);
     listView.setAdapter(adapter);
     parseStationsJson(jsonStations);
@@ -118,7 +115,6 @@ public class SubwayStationsActivity extends ActionBarActivity
       e.printStackTrace();
     }
     
-    
     try
     {
       startStationImage.setImageResource(SubwayManager.getInstance(SubwayStationsActivity.this).getSubwayLineResourceId(stations.get(0).line));
@@ -144,7 +140,7 @@ public class SubwayStationsActivity extends ActionBarActivity
     {
       try
       {
-        exitContainer.setVisibility(View.VISIBLE);
+        exitsInfoView = LayoutInflater.from(SubwayStationsActivity.this).inflate(R.layout.view_subway_exit_info, null);
         StationBean finalStationBean = stations.get(stations.size() - 1);
         finalStationBean = SubwayManager.getInstance(SubwayStationsActivity.this).findStation(finalStationBean.stationId);
         
@@ -173,18 +169,17 @@ public class SubwayStationsActivity extends ActionBarActivity
           e.printStackTrace();
         }
         
-        String nearString = destName + "과 가장 가까운 출구는 " + finalStationBean.nameKo + " " + nearByExit + "번 출구입니다.";
+        String nearString = destName + "과 가장 가까운 출구는 " + finalStationBean.nameKo + " <b>" + nearByExit + "</b>번 출구입니다.";
         if (!Locale.getDefault().getLanguage().contains("ko"))
-          nearString = "离" + destName + "最近的出口是" + finalStationBean.nameCn + "站" + nearByExit + "号出口";
-        exitInfoText.setText(nearString);
+          nearString = "离" + destName + "最近的出口是" + finalStationBean.nameCn + "站<b>" + nearByExit + "</b>号出口";
+        TextView exitInfoText = (TextView) exitsInfoView.findViewById(R.id.text_exit_info);
+        exitInfoText.setText(Html.fromHtml(nearString));
+        listView.addFooterView(exitsInfoView);
       }
       catch (Exception e)
       {
-        exitContainer.setVisibility(View.GONE);
       }
     }
-    else
-      exitContainer.setVisibility(View.GONE);
     adapter.addAll(stations);
   }
   
