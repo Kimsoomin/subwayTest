@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#f0f0f0"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         android:background="@android:color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
@@ -35,7 +36,7 @@
                 <ImageView
                     android:id="@+id/imageview"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="120dp"
                     android:contentDescription="@null" />
             </RelativeLayout>
 
@@ -43,56 +44,71 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp" >
+                android:padding="12dp" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
+                    android:minHeight="66dp"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/created_at"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:textColor="#969b9c"
+                            android:textSize="10sp" />
+
+                        <ImageView
+                            android:id="@+id/image_private"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="4dp"
+                            android:src="@drawable/icon_list_private_on"
+                            android:visibility="visible" />
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/created_at"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/title"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/darker_gray"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/month"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
-                        android:ellipsize="end"
-                        android:textColor="@color/light_gray" />
-
-                    <ImageView
-                        android:id="@+id/image_private"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_marginLeft="4dp"
-                        android:src="@drawable/icon_list_private_on"
-                        android:visibility="visible" />
+                        android:textColor="@color/appcolor"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:lines="2"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:textColor="@color/appcolor" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_heart" />
 
@@ -100,11 +116,15 @@
                         android:id="@+id/like_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/darker_gray"
+                        android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="8dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_review" />
@@ -113,7 +133,10 @@
                         android:id="@+id/review_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/darker_gray"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

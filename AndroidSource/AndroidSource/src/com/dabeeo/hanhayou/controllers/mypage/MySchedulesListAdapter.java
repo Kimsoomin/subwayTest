@@ -43,7 +43,7 @@ public class MySchedulesListAdapter extends BaseAdapter
     offlineManager = new OfflineContentDatabaseManager(context);
     @SuppressWarnings("deprecation")
     float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
-    float margin = (int) SystemUtil.convertDpToPixel(10f, (Activity) context);
+    float margin = (int) SystemUtil.convertDpToPixel(4f, (Activity) context);
     // two images, three margins of 10dips
     imageWidth = ((width - (3 * margin)) / 2);
   }
