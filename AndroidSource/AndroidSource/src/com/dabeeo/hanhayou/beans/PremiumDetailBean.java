@@ -39,7 +39,8 @@ public class PremiumDetailBean
   public ArrayList<String> smallImages = new ArrayList<String>();
   public ArrayList<String> allImages = new ArrayList<String>();
   
-  public PlaceDetailBean placeDetail;  
+  public PlaceDetailBean placeDetail;
+  
   
   public void setJSONObject(JSONObject obj)
   {
@@ -117,7 +118,7 @@ public class PremiumDetailBean
         }
       }
       
-      if(obj.has("place"))
+      if (obj.has("place"))
       {
         placeDetail = new PlaceDetailBean();
         placeDetail.setJSONObject(obj.getJSONObject("place"));

@@ -189,7 +189,8 @@ public class PlaceDetailActivity extends ActionBarActivity
         {
           titleView.title.setVisibility(View.INVISIBLE);
           titleView.titleDivider.setVisibility(View.VISIBLE);
-        }else
+        }
+        else
         {
           titleView.title.setVisibility(View.VISIBLE);
           titleView.titleDivider.setVisibility(View.GONE);
@@ -293,6 +294,13 @@ public class PlaceDetailActivity extends ActionBarActivity
       btnLike.setActivated(bean.isLiked);
       displayContentData();
       headerView.setBean(bean);
+      
+      String shareBody = bean.title + "\n" + bean.contents + "\n ";
+      String imageUrl = "";
+      if (!TextUtils.isEmpty(bean.imageUrl))
+        imageUrl = bean.imageUrl;
+      sharePickView.setData(shareBody, imageUrl);
+      
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
     }
@@ -409,7 +417,8 @@ public class PlaceDetailActivity extends ActionBarActivity
             });
           }
         });
-      } else if (title.equals(getString(R.string.term_phone)))
+      }
+      else if (title.equals(getString(R.string.term_phone)))
       {
         btnCall.setVisibility(View.VISIBLE);
         btnCall.setOnClickListener(new OnClickListener()
@@ -422,7 +431,8 @@ public class PlaceDetailActivity extends ActionBarActivity
             startActivity(callIntent);
           }
         });
-      }else if(title.equals(getString(R.string.term_homepage)))
+      }
+      else if (title.equals(getString(R.string.term_homepage)))
       {
         Linkify.addLinks(textView, Linkify.WEB_URLS);
       }
@@ -430,15 +440,18 @@ public class PlaceDetailActivity extends ActionBarActivity
     }
   }
   
+  
   public void rateBtnSet()
   {
-    if(bean.myLastRate == 1)
+    if (bean.myLastRate == 1)
     {
       btnReviewWorst.setSelected(true);
-    }else if(bean.myLastRate == 3)
+    }
+    else if (bean.myLastRate == 3)
     {
       btnReviewSoso.setSelected(true);
-    }else if(bean.myLastRate == 5)
+    }
+    else if (bean.myLastRate == 5)
     {
       btnReviewBest.setSelected(true);
     }
@@ -460,9 +473,10 @@ public class PlaceDetailActivity extends ActionBarActivity
       {
         new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
         return;
-      }else
+      }
+      else
       {
-        if(!SystemUtil.isConnectNetwork(getApplicationContext()))
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
         {
           new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
           return;
@@ -497,6 +511,7 @@ public class PlaceDetailActivity extends ActionBarActivity
           startActivity(i);
         }
         
+        
         public void onNegativeButtonClickListener()
         {
           new postRateTask().execute();
@@ -510,7 +525,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if(!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+      if (!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
       {
         new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
         return;
@@ -522,7 +537,7 @@ public class PlaceDetailActivity extends ActionBarActivity
         sharePickView.view.setVisibility(View.VISIBLE);
         sharePickView.bringToFront();
       }
-      else 
+      else
       {
         if (PreferenceManager.getInstance(PlaceDetailActivity.this).isLoggedIn())
         {
@@ -551,7 +566,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     }
   };
   
-  
   /**************************************************
    * async task
    ***************************************************/
@@ -564,7 +578,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.postReviewRate("palce", placeIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate*2, null);
+      return apiClient.postReviewRate("palce", placeIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate * 2, null);
     }
     
     

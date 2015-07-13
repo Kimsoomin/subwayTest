@@ -272,9 +272,9 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       TextView textView = (TextView) view.findViewById(R.id.text_description);
       titleView.setText(title);
       textView.setText(text);
-
+      
       ImageView imageCall = (ImageView) view.findViewById(R.id.btn_call);
-      ImageView imageAddress = (ImageView) view.findViewById(R.id.btn_address);      
+      ImageView imageAddress = (ImageView) view.findViewById(R.id.btn_address);
       if (title.equals(getString(R.string.term_phone)))
       {
         imageCall.setVisibility(View.VISIBLE);
@@ -317,7 +317,8 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
             }
           });
         }
-      } else if(title.equals(getString(R.string.term_homepage)))
+      }
+      else if (title.equals(getString(R.string.term_homepage)))
       {
         Linkify.addLinks(textView, Linkify.WEB_URLS);
       }
@@ -334,9 +335,9 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if(PreferenceManager.getInstance(TravelStrategyDetailActivity.this).isLoggedIn())
+      if (PreferenceManager.getInstance(TravelStrategyDetailActivity.this).isLoggedIn())
       {
-        if(SystemUtil.isConnectNetwork(TravelStrategyDetailActivity.this))
+        if (SystemUtil.isConnectNetwork(TravelStrategyDetailActivity.this))
         {
           if (v.getId() == R.id.btn_share)
           {
@@ -354,11 +355,13 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
             //좋아요 
             new ToggleLikeTask().execute();
           }
-        }else
+        }
+        else
         {
           new AlertDialogManager(TravelStrategyDetailActivity.this).showDontNetworkConnectDialog();
         }
-      }else
+      }
+      else
       {
         new AlertDialogManager(TravelStrategyDetailActivity.this).showNeedLoginDialog(-1);
       }
@@ -393,6 +396,8 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
         {
           e.printStackTrace();
         }
+        
+        sharePickView.setData(bean.title + "\n", bean.mainImageUrl);
         displayContentData();
       }
       

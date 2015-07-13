@@ -344,6 +344,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       btnLike.setActivated(bean.isLiked);
       btnBookmark.setActivated(bean.isBookmarked);
       progressBar.setVisibility(View.GONE);
+      
+      sharePickView.setData(bean.title + "\n", bean.imageUrl);
+      
       displayContent();
       super.onPostExecute(result);
     }
