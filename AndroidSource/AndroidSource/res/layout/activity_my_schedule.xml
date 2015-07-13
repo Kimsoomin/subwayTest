@@ -36,6 +36,7 @@
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="50dp"
             android:layout_weight="1"
             android:numColumns="2" />
     </LinearLayout>
@@ -92,7 +93,7 @@
     <Button
         android:id="@+id/btn_recommend_travel_schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/btn_background_pink"
         android:padding="8dp"

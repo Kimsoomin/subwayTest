@@ -105,11 +105,11 @@
                             android:textColor="@color/darker_gray"
                             android:textSize="16sp" />
 
-                        <ImageView 
+                        <ImageView
                             android:layout_width="11dip"
                             android:layout_height="15dip"
                             android:background="@drawable/icon_arrow_g_next"
-                            android:contentDescription="@null"/>
+                            android:contentDescription="@null" />
                     </LinearLayout>
 
                     <View
@@ -117,7 +117,7 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:background="#efefee" />
+                        android:background="@color/l_gray" />
 
                     <!-- 일정삭제 -->
 
@@ -201,13 +201,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dip"
                     android:layout_weight="1"
-                    android:background="@color/gray"
-                    android:orientation="vertical" >
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="12dp" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="130dp"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal"
+                        android:background="@color/l_gray" >
 
                         <LinearLayout
                             android:id="@+id/container_shopping"
@@ -279,6 +284,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="130dp"
                         android:orientation="horizontal"
+                        android:background="@color/l_gray"
                         android:paddingTop="1dp" >
 
                         <LinearLayout
