@@ -122,9 +122,9 @@ public class TravelScheduleDetailFragment extends Fragment
     if (dayBean == null)
     {
       if (isRecommendSchedule)
-        tempPx = 75;
+        tempPx = 71;
       else
-        tempPx = 51;
+        tempPx = 66;
     }
     else
     {
@@ -197,17 +197,11 @@ public class TravelScheduleDetailFragment extends Fragment
   public void rateBtnSet()
   {
     if (bean.myLastRate == 1)
-    {
       btnReviewWorst.setSelected(true);
-    }
     else if (bean.myLastRate == 3)
-    {
       btnReviewSoso.setSelected(true);
-    }
     else if (bean.myLastRate == 5)
-    {
       btnReviewBest.setSelected(true);
-    }
   }
   
   
@@ -346,6 +340,7 @@ public class TravelScheduleDetailFragment extends Fragment
       btnLayoutParams.gravity = Gravity.TOP;
       titleView.setLayoutParams(btnLayoutParams);
       titleView.initDayTitle();
+      
       if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
       {
         //TEST ADD RECOMMEND PRODUCT VIEW

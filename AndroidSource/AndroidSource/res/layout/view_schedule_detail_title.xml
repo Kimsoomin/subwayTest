@@ -32,7 +32,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:singleLine="true"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -115,7 +114,7 @@
                 android:id="@+id/user_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -159,8 +158,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
                         android:layout_gravity="center_vertical"
                         android:contentDescription="@null"
                         android:src="@drawable/icon_like_s" />
@@ -170,14 +169,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dp"
-                        android:textColor="@color/darker_gray" />
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/darker_gray"
+                        android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="8dp"
                         android:contentDescription="@null"
                         android:src="@drawable/icon_bookmark_s" />
 
@@ -186,8 +186,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dp"
-                        android:textColor="@color/darker_gray" />
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/darker_gray"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
