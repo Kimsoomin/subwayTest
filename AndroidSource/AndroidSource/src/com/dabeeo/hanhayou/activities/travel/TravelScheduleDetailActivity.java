@@ -306,7 +306,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
             i.putExtra("type", "plan");
             startActivity(i);
           }
-        }else
+        }
+        else
         {
           new AlertDialogManager(TravelScheduleDetailActivity.this).showNeedLoginDialog(-1);
         }
@@ -345,7 +346,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       btnBookmark.setActivated(bean.isBookmarked);
       progressBar.setVisibility(View.GONE);
       
-      sharePickView.setData(bean.title + "\n", bean.imageUrl);
+      sharePickView.setData(bean.title + "\n", bean.imageUrl, "plan", bean.idx);
       
       displayContent();
       super.onPostExecute(result);

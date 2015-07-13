@@ -75,10 +75,13 @@ public class SharePickView extends RelativeLayout
   }
   
   
-  public void setData(String body, String imageUrl)
+  //추천서울 type=premium 일정상세 type=plan 장소상세 type=place
+  public void setData(String body, String imageUrl, String type, String idx)
   {
     this.body = "[Hanhayou]\n" + body;
     this.imageUrl = imageUrl;
+    if (!TextUtils.isEmpty(idx))
+      this.body += "http://gs.blinking.kr:8900/?type=" + type + "&mode=view&idx=" + 204;
   }
   
   

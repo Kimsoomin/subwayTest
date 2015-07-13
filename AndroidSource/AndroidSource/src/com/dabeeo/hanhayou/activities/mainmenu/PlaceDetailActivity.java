@@ -299,7 +299,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       String imageUrl = "";
       if (!TextUtils.isEmpty(bean.imageUrl))
         imageUrl = bean.imageUrl;
-      sharePickView.setData(shareBody, imageUrl);
+      sharePickView.setData(shareBody, imageUrl, "place", bean.idx);
       
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);

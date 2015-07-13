@@ -397,7 +397,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
           e.printStackTrace();
         }
         
-        sharePickView.setData(bean.title + "\n", bean.mainImageUrl);
+        sharePickView.setData(bean.title + "\n", bean.mainImageUrl, "premium", bean.idx);
         displayContentData();
       }
       
