@@ -155,7 +155,7 @@ public class ReviewView extends RelativeLayout
               Builder builder = new AlertDialog.Builder(context);
               builder.setTitle(context.getString(R.string.app_name));
               builder.setMessage(context.getString(R.string.msg_confirm_delete));
-              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              builder.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
               {
                 @Override
                 public void onClick(DialogInterface dialog, int which)

@@ -42,7 +42,6 @@ public class WriteReviewActivity extends ActionBarActivity
   private EditText editReview;
   
   private int rate = -1;
-  private String reviewImageFilePath;
   private ProgressBar progressBar;
   private ApiClient apiClient;
   
@@ -52,6 +51,7 @@ public class WriteReviewActivity extends ActionBarActivity
   private ImageView btnAddPic;
   private HorizontalScrollView imageScrollView;
   private LinearLayout imageContainer;
+  private LinearLayout addLayout;
   
   private HashMap<String, View> fileViewWithUrl = new HashMap<String, View>();
   private ReviewImageUploadView addImageView;
@@ -84,6 +84,7 @@ public class WriteReviewActivity extends ActionBarActivity
     btnReviewWorst = (Button) findViewById(R.id.btn_review_worst);
     editReview = (EditText) findViewById(R.id.edit_review);
     
+    addLayout = (LinearLayout) findViewById(R.id.add_layout);
     btnAddPic = (ImageView) findViewById(R.id.add_pic);
     imageScrollView = (HorizontalScrollView) findViewById(R.id.image_scrollview);
     imageContainer = (LinearLayout) findViewById(R.id.image_container);
@@ -93,7 +94,7 @@ public class WriteReviewActivity extends ActionBarActivity
     btnReviewWorst.setOnClickListener(rateClickListener);
     btnReviewBest.setActivated(true);
     
-    btnAddPic.setOnClickListener(new OnClickListener()
+    addLayout.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
@@ -333,7 +334,7 @@ public class WriteReviewActivity extends ActionBarActivity
       
       btnAddPic.setVisibility(View.GONE);
       imageScrollView.setVisibility(View.VISIBLE);
-      imageContainer.setVisibility(View.VISIBLE);
+      imageContainer.setVisibility(View.VISIBLE);;
     }
   }
 }
