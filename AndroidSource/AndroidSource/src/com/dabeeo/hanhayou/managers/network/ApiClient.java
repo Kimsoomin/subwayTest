@@ -586,6 +586,28 @@ public class ApiClient
   }
   
   
+  public int getReviewCount(int page, String parentType, String parentIdx)
+  {
+    int count = 0;
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
+      JSONObject obj;
+      try
+      {
+        obj = new JSONObject(result.response);
+        count = obj.getInt("total");
+      }
+      catch (JSONException e)
+      {
+      }
+    }
+    else
+      count = offlineDatabaseManager.getReviews(page, parentIdx).size();
+    return count;
+  }
+  
+  
   public boolean removeReview(String idx)
   {
     NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_DEL&idx=" + idx);

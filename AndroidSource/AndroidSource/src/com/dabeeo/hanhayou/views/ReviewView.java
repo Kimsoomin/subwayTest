@@ -1,7 +1,9 @@
 package com.dabeeo.hanhayou.views;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -85,7 +87,7 @@ public class ReviewView extends RelativeLayout
     
     name.setText(bean.userName);
     
-    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     if (bean.insertDate != null)
       time.setText(format.format(bean.insertDate));
     
@@ -141,7 +143,9 @@ public class ReviewView extends RelativeLayout
         }
         
         final String[] finalListPopupArray = listPopupArray;
-        listPopupWindow.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, listPopupArray));
+//        listPopupWindow.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, listPopupArray));
+        ListPopupArrayAdapter popupAdapter = new ListPopupArrayAdapter(context, android.R.layout.simple_list_item_1, listPopupArray);
+        listPopupWindow.setAdapter(popupAdapter);
         listPopupWindow.setAnchorView(btnMore);
         listPopupWindow.setWidth(300);
         listPopupWindow.setOnItemClickListener(new OnItemClickListener()
@@ -195,6 +199,36 @@ public class ReviewView extends RelativeLayout
     });
   }
   
+  private class ListPopupArrayAdapter extends ArrayAdapter<String>
+  {
+    
+    private String[] items;
+    
+    
+    public ListPopupArrayAdapter(Context context, int textViewResourceId, String[] items)
+    {
+      super(context, textViewResourceId, items);
+      this.items = items;
+    }
+    
+    
+    @SuppressLint("InflateParams")
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+      View v = convertView;
+      if (v == null)
+      {
+        LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        v = vi.inflate(R.layout.view_list_popup_review, null);
+      }
+      
+      TextView tt = (TextView) v.findViewById(R.id.text);
+      tt.setText(items[position]);
+      return v;
+    }
+  }
+  
   
   public void init()
   {
@@ -211,7 +245,7 @@ public class ReviewView extends RelativeLayout
     reviewScore = (TextView) view.findViewById(R.id.text_review_score);
     btnMore = (ImageView) view.findViewById(R.id.btn_review_list_more);
     
-    if(!SystemUtil.isConnectNetwork(context))
+    if (!SystemUtil.isConnectNetwork(context))
       btnMore.setVisibility(View.INVISIBLE);
     
     addView(view);
