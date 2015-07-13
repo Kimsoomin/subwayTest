@@ -698,12 +698,12 @@
           }
 
           var stationBean = stations[station_id];
-          background  = s.image('./ui/images/popup_station.png', bound.x - 108, bound.y - 98, 250, 100);
+          background  = s.image('./ui/images/popup_station.png', bound.x - 118, bound.y - 98, 270, 100);
           startButton = s.image('./ui/images/icon_start.png', bound.x - 85, bound.y - 60, 80, 35);
-          endButton = s.image('./ui/images/icon_finish.png', bound.x + 35, bound.y - 60, 80, 35);
-          line = s.image('./ui/images/ic_line.png', bound.x + 16, bound.y - 60, 1, 35);
+          endButton = s.image('./ui/images/icon_finish.png', bound.x + 45, bound.y - 60, 80, 35);
+          line = s.image('./ui/images/ic_line.png', bound.x + 20, bound.y - 60, 1, 35);
 
-          tit = s.text(bound.x + 16, bound.y - 70, stationBean.name_cn);
+          tit = s.text(bound.x + 20, bound.y - 70, stationBean.name_cn);
            tit.attr({
              fill: "#fff",
              textAnchor: "middle",
