@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -109,50 +110,15 @@ public class PlaceDetailActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     isEnterMap = getIntent().getBooleanExtra("is_map", false);
-    isPremium = getIntent().getBooleanExtra("isPremium", false);
     apiClient = new ApiClient(this);
     placeIdx = getIntent().getStringExtra("place_idx");
-    if (getIntent().hasExtra("premium_Idx"))
-    {
-      premiumIdx = getIntent().getStringExtra("premium_Idx");
-      if (TextUtils.isEmpty(premiumIdx))
-        premiumIdx = "null";
-    }
-    else
-      premiumIdx = "null";
-    
-    BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
     
     layoutRecommendSeoul = (LinearLayout) findViewById(R.id.container_recommend_by_expect);
-    if (premiumIdx.equals("null") || isPremium)
-    {
-      layoutRecommendSeoul.setVisibility(View.GONE);
-    }
-    else
-    {
-      layoutRecommendSeoul.setVisibility(View.VISIBLE);
-    }
     
     rateLayout = (LinearLayout) findViewById(R.id.rate_layout);
     rateLayout.setOnClickListener(rateClickListener);
     btnRecommendSeoul = (Button) findViewById(R.id.btn_recommend_by_expert);
-    btnRecommendSeoul.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View arg0)
-      {
-        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
-          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-        else
-        {
-          Intent i = new Intent(PlaceDetailActivity.this, TravelStrategyDetailActivity.class);
-          i.putExtra("place_idx", premiumIdx);
-          i.putExtra("is_map", isEnterMap);
-          BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + premiumIdx);
-          startActivity(i);
-        }
-      }
-    });
+    
     containerWriteReview = (LinearLayout) findViewById(R.id.write_review_container);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     layoutDetailPlaceInfo = (ViewGroup) findViewById(R.id.layout_place_detail_info);
@@ -364,6 +330,29 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     if (bean == null)
       return;
+    
+    if (!bean.isPremium)
+      layoutRecommendSeoul.setVisibility(View.GONE);
+    else
+      layoutRecommendSeoul.setVisibility(View.VISIBLE);
+    
+    btnRecommendSeoul.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View arg0)
+      {
+        if (!SystemUtil.isConnectNetwork(getApplicationContext()))
+          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+        else
+        {
+          Intent i = new Intent(PlaceDetailActivity.this, TravelStrategyDetailActivity.class);
+          i.putExtra("place_idx", bean.premiumIdx);
+          i.putExtra("is_map", isEnterMap);
+          BlinkingCommon.smlLibDebug("PlaceDetail", "premiumIdx : " + bean.premiumIdx);
+          startActivity(i);
+        }
+      }
+    });
     
     reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.idx);
     reviewLayout.addView(reviewContainerView);

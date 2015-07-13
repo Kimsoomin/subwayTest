@@ -51,6 +51,9 @@ public class PlaceDetailBean
   public String updateDateString;
   public Date updateDate;
   
+  public boolean isPremium = false;
+  public String premiumIdx, premiumTitle;
+  
   
   public void setJSONObject(JSONObject obj)
   {
@@ -104,16 +107,16 @@ public class PlaceDetailBean
         popularCount = obj.getInt("popular");
       
       if (obj.has("rate"))
-        rate = obj.getInt("rate")/2;
+        rate = obj.getInt("rate") / 2;
       if (obj.has("likeCount"))
         likeCount = obj.getInt("likeCount");
-      if(obj.has("bookmarkCount"))
+      if (obj.has("bookmarkCount"))
         bookmarkCount = obj.getInt("bookmarkCount");
       if (obj.has("reviewCount"))
         reviewCount = obj.getInt("reviewCount");
       if (obj.has("myLastRate"))
         myLastRate = obj.getInt("myLastRate");
-        
+      
       if (obj.has("isLiked"))
         isLiked = obj.getInt("isLiked") != 0;
       if (obj.has("isBookmarked"))
@@ -134,6 +137,16 @@ public class PlaceDetailBean
           imageUrls.add(arr.getJSONObject(i).getString("url"));
         }
         imageUrl = arr.getJSONObject(0).getString("url");
+      }
+      
+      if (obj.has("premiumIdx"))
+      {
+        premiumIdx = obj.getString("premiumIdx");
+        if (!premiumIdx.equals("null"))
+        {
+          isPremium = true;
+          premiumTitle = obj.getString("premiumTitle");
+        }
       }
     }
     catch (Exception e)

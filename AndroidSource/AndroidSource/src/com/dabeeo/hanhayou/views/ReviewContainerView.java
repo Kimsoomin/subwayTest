@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
@@ -36,6 +37,7 @@ public class ReviewContainerView extends LinearLayout
   private boolean isLoadEnded = false;
   private RelativeLayout progressLayout;
   private HashMap<String, ReviewView> reviewViews = new HashMap<String, ReviewView>();
+  private TextView reviewTitle;
   
   
   public ReviewContainerView(Activity context, String parentType, String parentIdx)
@@ -66,12 +68,16 @@ public class ReviewContainerView extends LinearLayout
   
   private void init()
   {
+    if (apiClient == null)
+      apiClient = new ApiClient(context);
+    
     page = 1;
     apiClient = new ApiClient(context);
     LayoutInflater inflater = LayoutInflater.from(context);
     int resId = R.layout.view_review_container;
     View view = inflater.inflate(resId, null);
     
+    reviewTitle = (TextView) view.findViewById(R.id.text_review_title);
     container = (LinearLayout) view.findViewById(R.id.content);
     progressLayout = (RelativeLayout) view.findViewById(R.id.progress_layout);
     addView(view);
@@ -105,6 +111,9 @@ public class ReviewContainerView extends LinearLayout
   
   private class LoadMoreAsyncTask extends AsyncTask<String, Integer, ArrayList<ReviewBean>>
   {
+    int reviewTotalCount = 0;
+    
+    
     @Override
     protected void onPreExecute()
     {
@@ -118,9 +127,7 @@ public class ReviewContainerView extends LinearLayout
     protected ArrayList<ReviewBean> doInBackground(String... params)
     {
       Log.w("WARN", "Review loadMore");
-      
-      if (apiClient == null)
-        apiClient = new ApiClient(context);
+      reviewTotalCount = apiClient.getReviewCount(reviewTotalCount, parentType, parentIdx);
       return apiClient.getReviews(page, parentType, parentIdx);
     }
     
@@ -132,6 +139,7 @@ public class ReviewContainerView extends LinearLayout
         isLoadEnded = true;
       try
       {
+        
         for (int i = 0; i < result.size(); i++)
         {
           addReviewView(result.get(i));
@@ -141,6 +149,8 @@ public class ReviewContainerView extends LinearLayout
       {
         e.printStackTrace();
       }
+      
+      reviewTitle.setText(context.getString(R.string.term_review) + " (" + Integer.toString(reviewTotalCount) + ")");
       progressLayout.setVisibility(View.GONE);
       page++;
       isLoading = false;

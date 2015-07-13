@@ -6,7 +6,7 @@
     <color name="background_darker_gray">#333434</color>
     <color name="box_stroke">#f0f0f0</color>
     <color name="select_box_stroke">#2dbdb6</color>
-    <color name="middle_transparent">#50ffffff</color>
+    <color name="middle_transparent">#80ffffff</color>
     <color name="background_light_gray">#E8E8E8</color>
     <color name="highlight">#ffffff</color>
     <color name="transparent">#00000000</color>
