@@ -56,7 +56,7 @@ import com.dabeeo.hanhayou.utils.MapCheckUtil;
 @SuppressLint("SetJavaScriptEnabled")
 public class SubwayFragment extends Fragment
 {
-  private static int LCOATION_TIME_OUT_SECOND = 10 * 1000;
+  private static int LCOATION_TIME_OUT_SECOND = 30 * 1000;
   
   private static View view;
   private WebView webview;
