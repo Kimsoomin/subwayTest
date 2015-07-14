@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,12 @@ public class TravelStrategyListFragment extends Fragment
     
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new RecommendSeoulListAdapter(getActivity());
+    DisplayMetrics metrics = new DisplayMetrics();
+    getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    int imageWidth = metrics.widthPixels;
+    int imageheight = (int) (imageWidth*0.56);
+    
+    adapter = new RecommendSeoulListAdapter(getActivity(), imageWidth, imageheight);
     
     ((TravelStrategyActivity) getActivity()).showBottomTab(true);
     ListView listView = (ListView) getView().findViewById(R.id.listview);

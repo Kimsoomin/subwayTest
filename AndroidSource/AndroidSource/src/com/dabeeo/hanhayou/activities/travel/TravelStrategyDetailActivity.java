@@ -14,6 +14,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -162,6 +163,11 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     if (bean == null)
       return;
     
+    DisplayMetrics metrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    int imageWidth = metrics.widthPixels;
+    int imageheight = (int) (imageWidth*0.56);
+    
     setTitle("");
     btnLike.setActivated(bean.isLiked);
     ((TextView) findViewById(R.id.text_title)).setText(bean.title);
@@ -196,7 +202,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
       }
       else
       {
-        Picasso.with(this).load(contentBean.imageUrl).fit().centerCrop().into(image);
+        Picasso.with(this).load(contentBean.imageUrl).resize(imageWidth, imageheight).centerCrop().into(image);
         image.setVisibility(View.VISIBLE);
         final String imageUrl = contentBean.imageUrl;
         image.setOnClickListener(new OnClickListener()
@@ -218,7 +224,7 @@ public class TravelStrategyDetailActivity extends ActionBarActivity
     likeCount.setText(Integer.toString(bean.likeCount));
     
     //Main Image
-    Picasso.with(this).load(bean.mainImageUrl).into((ImageView) findViewById(R.id.imageview));
+    Picasso.with(this).load(bean.mainImageUrl).resize(imageWidth, imageheight).into((ImageView) findViewById(R.id.imageview));
     Log.w("WARN", "Image Url : " + bean.mainImageUrl);
     
     //Scroll small Images

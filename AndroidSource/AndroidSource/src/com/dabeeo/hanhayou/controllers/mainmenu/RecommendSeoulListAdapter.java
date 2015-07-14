@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +29,15 @@ public class RecommendSeoulListAdapter extends BaseAdapter
   private int lastPosition;
   private Context context;
   
+  private int imageWidth = 0;
+  private int imageHeight = 0;
   
-  public RecommendSeoulListAdapter(Context context)
+  
+  public RecommendSeoulListAdapter(Context context, int imageWidth, int imageHeight)
   {
     this.context = context;
+    this.imageWidth = imageWidth;
+    this.imageHeight = imageHeight;
   }
   
   
@@ -97,7 +103,7 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     likeCount.setText(Integer.toString(bean.likeCount));
     
     Log.w("WARN", "bean.imageUrl : " + bean.imageUrl);
-    Picasso.with(parent.getContext()).load(bean.imageUrl).fit().centerCrop().into(imageView);
+    Picasso.with(parent.getContext()).load(bean.imageUrl).resize(imageWidth, imageHeight).centerCrop().into(imageView);
     Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
     view.startAnimation(animation);
     lastPosition = position;
