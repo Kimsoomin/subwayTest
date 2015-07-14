@@ -18,8 +18,8 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#dfdfdf"
-            android:dividerHeight="6dp" />
+            android:divider="@color/box_stroke"
+            android:dividerHeight="5dp" />
 
         <LinearLayout
             android:id="@+id/recommend_container"

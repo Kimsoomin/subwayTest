@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.views.PinchImageView;
 
-@SuppressWarnings("deprecation")
 public class ImagePopUpJustOneActivity extends ActionBarActivity
 {
   private RelativeLayout container;

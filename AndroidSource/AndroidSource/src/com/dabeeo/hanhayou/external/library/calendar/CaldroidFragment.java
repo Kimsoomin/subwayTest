@@ -1435,9 +1435,9 @@ public class CaldroidFragment extends DialogFragment
   {
     ArrayList<String> list = new ArrayList<String>();
     
-    SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.CHINA);
-    if (Locale.getDefault().getLanguage().contains("ko"))
-      fmt = new SimpleDateFormat("EEE", Locale.KOREA);
+    SimpleDateFormat fmt = new SimpleDateFormat("EEEEE", Locale.CHINA);
+//    if (Locale.getDefault().getLanguage().contains("ko"))
+//      fmt = new SimpleDateFormat("E", Locale.KOREA);
     
     // 17 Feb 2013 is Sunday
     DateTime sunday = new DateTime(2013, 2, 17, 0, 0, 0, 0);

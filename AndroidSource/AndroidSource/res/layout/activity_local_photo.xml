@@ -20,13 +20,6 @@
             android:text="@android:string/cancel"
             android:textColor="@android:color/white" />
 
-        <!--
-             <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-        -->
-
         <Spinner
             android:id="@+id/spinner_directory"
             style="@style/MooSpinnerItem"
@@ -34,13 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@drawable/spinner_selector" />
-
-        <!--
-             <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-        -->
 
         <Button
             android:id="@+id/btn_ok"
@@ -61,6 +47,7 @@
         android:scrollbarStyle="outsideOverlay"
         android:stretchMode="columnWidth"
         android:verticalSpacing="0dp"
-        tools:listitem="@layout/list_item_local_photo" />
+        tools:listitem="@layout/list_item_local_photo"
+        android:background="@android:color/white" />
 
 </LinearLayout>
