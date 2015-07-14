@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp" >
+            android:padding="10dp" >
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -89,8 +89,7 @@
                     android:layout_marginBottom="2dp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:textColor="@color/darker_gray"
-                    android:textStyle="bold" />
+                    android:textColor="@color/darker_gray" />
 
                 <TextView
                     android:id="@+id/category"
@@ -105,13 +104,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_heart" />
 
@@ -120,11 +119,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:textColor="@color/darker_gray" />
+                        android:textColor="@color/dark_gray"
+                        android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_marginLeft="8dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_review" />
@@ -134,7 +134,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:textColor="@color/darker_gray" />
+                        android:textColor="@color/dark_gray"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 

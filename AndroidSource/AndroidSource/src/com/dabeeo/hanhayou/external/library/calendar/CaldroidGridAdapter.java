@@ -340,7 +340,7 @@ public class CaldroidGridAdapter extends BaseAdapter
     {
       cellView.setTextColor(resources.getColor(R.color.caldroid_white));
       cellView.setBackgroundColor(resources.getColor(R.color.caldroid_white));
-      cellView.setSelected(false);
+      cellView.setClickable(false);
     }
   }
   

@@ -43,8 +43,7 @@
                     android:lines="2"
                     android:text="@null"
                     android:textColor="@color/darker_gray"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/original_price"

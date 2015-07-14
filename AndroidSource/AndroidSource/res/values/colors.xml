@@ -12,6 +12,7 @@
     <color name="transparent">#00000000</color>
     <color name="lighter_gray">#dfdfdf</color>
     <color name="light_gray">#969b9c</color>
+    <color name="dark_gray">#828a8f</color>
     <color name="darker_gray">#444a4b</color>
     <color name="l_gray">#e5e5e5</color>
     <color name="gray">#c3c3c3</color>
