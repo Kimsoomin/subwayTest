@@ -62,13 +62,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textColor="@color/darker_gray"
+            android:text="@string/msg_empty_my_schedule"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:orientation="vertical" >
 
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/app_button"
+                android:background="@drawable/normal_app_button"
                 android:padding="8dp"
                 android:text="@string/term_recommend_travel_schedule"
                 android:textColor="@color/color_normal_appcolor_select_white" />
