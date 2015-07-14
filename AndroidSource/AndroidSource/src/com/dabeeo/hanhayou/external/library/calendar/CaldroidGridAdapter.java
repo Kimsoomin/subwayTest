@@ -286,7 +286,7 @@ public class CaldroidGridAdapter extends BaseAdapter
     
     if (selectDate != null)
     {
-      if (dateTime.equals(selectDate))
+      if (dateTime.equals(selectDate) && dateTime.getMonth() == month)
       {
         cellView.setTextColor(Color.WHITE);
         cellView.setBackgroundColor(resources.getColor(R.color.appcolor));
@@ -305,12 +305,7 @@ public class CaldroidGridAdapter extends BaseAdapter
   
   private void customTextView2(int position, TextView cellView, DateTime dateTime)
   {
-    // Set color of the dates in previous / next month
-    if (dateTime.getMonth() != month)
-    {
-      cellView.setTextColor(resources.getColor(R.color.caldroid_darker_gray));
-      cellView.setVisibility(View.INVISIBLE);
-    }
+    
     
     boolean shouldResetDiabledView = false;
     boolean shouldResetSelectedView = false;
@@ -338,6 +333,14 @@ public class CaldroidGridAdapter extends BaseAdapter
     if (shouldResetDiabledView && shouldResetSelectedView)
     {
       cellView.setBackgroundResource(R.drawable.cal_cell_bg);
+    }
+    
+ // Set color of the dates in previous / next month
+    if (dateTime.getMonth() != month)
+    {
+      cellView.setTextColor(resources.getColor(R.color.caldroid_white));
+      cellView.setBackgroundColor(resources.getColor(R.color.caldroid_white));
+      cellView.setSelected(false);
     }
   }
   
