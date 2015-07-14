@@ -61,7 +61,6 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private PlaceDetailHeaderView headerView;
   private PlaceDetailTitleView titleView;
-  private TextView textDetail;
   private TextView textRate;
   
   private LinearLayout containerProduct;
@@ -74,7 +73,6 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private ApiClient apiClient;
   private String placeIdx;
-  private String premiumIdx;
   private PlaceDetailBean bean;
   private ViewGroup layoutDetailPlaceInfo;
   private LinearLayout containerTicketAndCoupon;
@@ -124,7 +122,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     containerTicketAndCoupon = (LinearLayout) findViewById(R.id.container_coupon_and_ticket);
     
-//    textDetail = (TextView) findViewById(R.id.text_detail);
     textRate = (TextView) findViewById(R.id.text_rate);
     sharePickView = (SharePickView) findViewById(R.id.view_share_pick);
     

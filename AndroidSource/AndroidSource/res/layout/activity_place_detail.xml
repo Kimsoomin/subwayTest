@@ -46,8 +46,8 @@
                         android:id="@+id/rate_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dip"
                         android:layout_marginBottom="8dip"
+                        android:layout_marginTop="5dip"
                         android:background="@android:color/white"
                         android:gravity="center"
                         android:orientation="horizontal"
@@ -100,30 +100,6 @@
                             android:textColor="@color/color_normal_gray_select_white"
                             android:textSize="12sp" />
                     </LinearLayout>
-
-                    
-                   <!--   <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:orientation="vertical"
-                        android:padding="16dp" >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/white"
-                            android:text="@string/term_place_description"
-                            android:textColor="@color/darker_gray"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/text_detail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/white"
-                            android:textColor="@color/light_gray" />
-                    </LinearLayout>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
