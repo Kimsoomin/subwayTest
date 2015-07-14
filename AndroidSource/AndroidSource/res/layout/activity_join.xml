@@ -82,8 +82,8 @@
 
                     <Button
                         android:id="@+id/btn_check_duplicate_email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dip"
+                        android:layout_width="95dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/normal_app_button"
                         android:padding="2dip"
                         android:text="@string/term_check_duplicate"
@@ -136,8 +136,8 @@
 
                     <Button
                         android:id="@+id/btn_check_duplicate_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dip"
+                        android:layout_width="95dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/normal_app_button"
                         android:padding="2dp"
                         android:text="@string/term_check_duplicate"
