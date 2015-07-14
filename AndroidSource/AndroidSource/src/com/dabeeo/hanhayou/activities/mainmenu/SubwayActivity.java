@@ -12,7 +12,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -33,7 +32,6 @@ import com.dabeeo.hanhayou.beans.StationBean;
 import com.dabeeo.hanhayou.controllers.mypage.SubwaySearchListAdapter;
 import com.dabeeo.hanhayou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hanhayou.managers.SubwayManager;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 
 public class SubwayActivity extends Activity

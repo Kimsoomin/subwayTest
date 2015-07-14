@@ -128,7 +128,6 @@ public class PlaceListFragment extends Fragment
       PlaceBean bean = (PlaceBean) adapter.getItem(position);
       Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
       i.putExtra("place_idx", bean.idx);
-      i.putExtra("premium_Idx", bean.premiumIdx);
       startActivity(i);
     }
   };

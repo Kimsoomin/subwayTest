@@ -23,6 +23,8 @@
             android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:layout_weight="1"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:background="@drawable/input_search" >
             
             <ImageView

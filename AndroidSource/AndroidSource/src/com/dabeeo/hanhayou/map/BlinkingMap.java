@@ -1106,7 +1106,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         {
           Intent detailPlaceIntent = new Intent(this, PlaceDetailActivity.class);
           detailPlaceIntent.putExtra("place_idx", idx);
-          detailPlaceIntent.putExtra("premium_Idx", preimumIdx);
           detailPlaceIntent.putExtra("is_map", true);
           detailPlaceIntent.putExtra("isPremium", isPremium);
           startActivity(detailPlaceIntent);
