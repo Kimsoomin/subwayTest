@@ -36,6 +36,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.dabeeo.hanhayou.views.ListFooterProgressView;
 import com.dabeeo.hanhayou.views.ScheduleListHeaderMallView;
 
 public class TravelScheduleListFragment extends Fragment
@@ -58,8 +59,10 @@ public class TravelScheduleListFragment extends Fragment
   private TextView emptyText;
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
+  private ListFooterProgressView footerLoadView;
   
   public int dayCount = -1;
+  
   
   public TravelScheduleListFragment(int type)
   {
@@ -79,6 +82,9 @@ public class TravelScheduleListFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    footerLoadView = new ListFooterProgressView(getActivity());
+    
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
@@ -108,6 +114,7 @@ public class TravelScheduleListFragment extends Fragment
       });
       listView.addHeaderView(view);
     }
+    listView.addFooterView(footerLoadView);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     loadSchedules();
@@ -163,6 +170,7 @@ public class TravelScheduleListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
+      listView.setVisibleFooterView(footerLoadView);
       super.onPreExecute();
     }
     
@@ -209,7 +217,8 @@ public class TravelScheduleListFragment extends Fragment
               if (!PreferenceManager.getInstance(getActivity()).isLoggedIn())
               {
                 new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
-              }else
+              }
+              else
               {
                 Intent i = new Intent(getActivity(), RecommendScheduleActivity.class);
                 startActivity(i);
@@ -229,6 +238,7 @@ public class TravelScheduleListFragment extends Fragment
         emptyContainer.setVisibility(View.GONE);
       }
       progressBar.setVisibility(View.GONE);
+      listView.setInvisibleFooterView(footerLoadView);
       isLoading = false;
       super.onPostExecute(result);
     }

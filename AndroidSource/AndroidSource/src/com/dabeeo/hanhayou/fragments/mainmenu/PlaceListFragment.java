@@ -23,6 +23,7 @@ import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.PlaceListAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.dabeeo.hanhayou.views.ListFooterProgressView;
 
 public class PlaceListFragment extends Fragment
 {
@@ -40,6 +41,7 @@ public class PlaceListFragment extends Fragment
   private boolean isLoading = false;
   private ApiClient apiClient;
   private ListView listView;
+  private ListFooterProgressView footerLoadView;
   
   private int filteringMode = FILTERING_MODE_ALL;
   
@@ -62,6 +64,8 @@ public class PlaceListFragment extends Fragment
   public void onActivityCreated(Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
+    
+    footerLoadView = new ListFooterProgressView(getActivity());
     
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
@@ -141,6 +145,7 @@ public class PlaceListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
+      listView.addFooterView(footerLoadView);
       super.onPreExecute();
     }
     
@@ -174,6 +179,7 @@ public class PlaceListFragment extends Fragment
         listView.setVisibility(View.VISIBLE);
       isLoading = false;
       progressBar.setVisibility(View.GONE);
+      listView.removeFooterView(footerLoadView);
       super.onPostExecute(result);
     }
   }

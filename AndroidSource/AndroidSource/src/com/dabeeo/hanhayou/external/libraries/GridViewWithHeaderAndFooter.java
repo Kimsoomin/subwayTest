@@ -195,6 +195,24 @@ public class GridViewWithHeaderAndFooter extends GridView
   }
   
   
+  public void setVisibleFooterView(View v)
+  {
+    for (int i = 0; i < mFooterViewInfos.size(); i++)
+    {
+      mFooterViewInfos.get(i).view.setVisibility(View.VISIBLE);
+    }
+  }
+  
+  
+  public void setInvisibleFooterView(View v)
+  {
+    for (int i = 0; i < mFooterViewInfos.size(); i++)
+    {
+      mFooterViewInfos.get(i).view.setVisibility(View.GONE);
+    }
+  }
+  
+  
   public void addFooterView(View v)
   {
     addFooterView(v, null, true);

@@ -27,6 +27,7 @@ import com.dabeeo.hanhayou.beans.PremiumBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.RecommendSeoulListAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.views.ListFooterProgressView;
 
 public class TravelStrategyListFragment extends Fragment
 {
@@ -36,9 +37,12 @@ public class TravelStrategyListFragment extends Fragment
   private ProgressBar progressBar;
   private RecommendSeoulListAdapter adapter;
   private int page = 1;
+  private boolean isLoading = false;
   private boolean isLoadEnded = false;
   private ApiClient apiClient;
-  private int area = 0; // 0전체, 1한류, 2홍대, 3압구정, 4명동, 5인사동, 6기타 
+  private int area = 0; // 0전체, 1한류, 2홍대, 3압구정, 4명동, 5인사동, 6기타
+  private ListView listView;
+  private ListFooterProgressView footerLoadView;
   
   
   public TravelStrategyListFragment(int categoryId)
@@ -61,17 +65,18 @@ public class TravelStrategyListFragment extends Fragment
     super.onActivityCreated(savedInstanceState);
     apiClient = new ApiClient(getActivity());
     
+    footerLoadView = new ListFooterProgressView(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
     DisplayMetrics metrics = new DisplayMetrics();
     getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
     int imageWidth = metrics.widthPixels;
-    int imageheight = (int) (imageWidth*0.56);
+    int imageheight = (int) (imageWidth * 0.56);
     
     adapter = new RecommendSeoulListAdapter(getActivity(), imageWidth, imageheight);
     
     ((TravelStrategyActivity) getActivity()).showBottomTab(true);
-    ListView listView = (ListView) getView().findViewById(R.id.listview);
+    listView = (ListView) getView().findViewById(R.id.listview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()
     {
@@ -84,7 +89,7 @@ public class TravelStrategyListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if (!isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+        if (!isLoading && !isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
         {
           page++;
           load();
@@ -117,6 +122,15 @@ public class TravelStrategyListFragment extends Fragment
   
   private class GetStoreAsyncTask extends AsyncTask<Void, Void, NetworkResult>
   {
+    @Override
+    protected void onPreExecute()
+    {
+      isLoading = true;
+      listView.addFooterView(footerLoadView);
+      super.onPreExecute();
+    }
+    
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
@@ -152,6 +166,8 @@ public class TravelStrategyListFragment extends Fragment
         adapter.addAll(places);
       }
       progressBar.setVisibility(View.GONE);
+      listView.removeFooterView(footerLoadView);
+      isLoading = false;
       super.onPostExecute(result);
     }
   }

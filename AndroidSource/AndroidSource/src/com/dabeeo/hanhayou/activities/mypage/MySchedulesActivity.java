@@ -32,18 +32,21 @@ import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.controllers.mypage.MySchedulesListAdapter;
+import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.dabeeo.hanhayou.views.ListFooterProgressView;
 
 public class MySchedulesActivity extends ActionBarActivity
 {
   private ProgressBar progressBar;
-  private GridView listView;
+  private GridViewWithHeaderAndFooter listView;
   private MySchedulesListAdapter adapter;
+  private ListFooterProgressView footerLoadView;
   
   private Button btnDelete;
   
@@ -55,7 +58,6 @@ public class MySchedulesActivity extends ActionBarActivity
   private CheckBox deleteAllCheckbox;
   private LinearLayout emptyContainer;
   private boolean isLoading = false;
-  private boolean isLoadEnded = false;
   private ApiClient apiClient;
   public View bottomMargin;
   
@@ -74,6 +76,8 @@ public class MySchedulesActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    
+    footerLoadView = new ListFooterProgressView(MySchedulesActivity.this);
     
     apiClient = new ApiClient(this);
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -100,7 +104,8 @@ public class MySchedulesActivity extends ActionBarActivity
     
     bottomMargin = (View) findViewById(R.id.bottom_margin);
     adapter = new MySchedulesListAdapter(this);
-    listView = (GridView) findViewById(R.id.gridview);
+    listView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridview);
+    listView.addFooterView(footerLoadView);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
@@ -309,6 +314,7 @@ public class MySchedulesActivity extends ActionBarActivity
       isLoading = true;
       progressBar.setVisibility(View.VISIBLE);
       progressBar.bringToFront();
+      listView.setVisibleFooterView(footerLoadView);
       super.onPreExecute();
     }
     
@@ -323,9 +329,6 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     protected void onPostExecute(ArrayList<ScheduleBean> result)
     {
-      if (result.size() == 0)
-        isLoadEnded = true;
-      
       adapter.addAll(result);
       
       if (adapter.getCount() == 0 && result.size() == 0)
@@ -343,6 +346,7 @@ public class MySchedulesActivity extends ActionBarActivity
         btnRecommendSchedule.setVisibility(View.VISIBLE);
       }
       progressBar.setVisibility(View.GONE);
+      listView.setInvisibleFooterView(footerLoadView);
       isLoading = false;
       super.onPostExecute(result);
     }

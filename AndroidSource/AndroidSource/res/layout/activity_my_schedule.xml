@@ -25,15 +25,15 @@
                 android:id="@+id/all_check_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/check_background"
                 android:layout_marginLeft="4dp"
+                android:button="@drawable/check_background"
                 android:padding="8dp"
                 android:text="@string/term_all_check"
                 android:textColor="@color/darker_gray"
                 android:visibility="gone" />
         </LinearLayout>
 
-        <GridView
+        <com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -67,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="@color/darker_gray"
             android:text="@string/msg_empty_my_schedule"
+            android:textColor="@color/darker_gray"
             android:textSize="16sp"
             android:textStyle="bold" />
 
