@@ -712,7 +712,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   @Override
   public void onBackPressed()
   {
-    if (m_ListView.getVisibility() == View.VISIBLE)
+    if (m_ListView.getVisibility() == View.VISIBLE || emptysearchList.getVisibility() == View.VISIBLE)
     {
       searchEditText.setText("");
       searchEditText.setHint(R.string.message_search_word_here);
@@ -795,6 +795,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       @Override
       public void afterTextChanged(Editable s)
       {
+        if(s.length()>0)
+          searchCancel.setVisibility(View.VISIBLE);
+        else
+          searchCancel.setVisibility(View.INVISIBLE);
         searchList(true);
       }
     };
@@ -981,7 +985,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     {
       m_mapView.setVisibility(View.GONE);
       m_ListView.setVisibility(View.VISIBLE);
-      searchCancel.setVisibility(View.VISIBLE);
       emptysearchList.setVisibility(View.GONE);
     }
     else if (visible == 1)
@@ -989,14 +992,12 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       m_mapView.setVisibility(View.GONE);
       m_ListView.setVisibility(View.GONE);
       emptysearchList.setVisibility(View.VISIBLE);
-      searchCancel.setVisibility(View.INVISIBLE);
     }
     else
     {
       m_mapView.setVisibility(View.VISIBLE);
       m_ListView.setVisibility(View.GONE);
       emptysearchList.setVisibility(View.GONE);
-      searchCancel.setVisibility(View.INVISIBLE);
     }
   }
   

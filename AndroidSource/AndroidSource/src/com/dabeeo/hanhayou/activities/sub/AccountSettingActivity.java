@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -21,18 +22,23 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
-import android.text.util.Linkify;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mypage.ChangePasswordActivity;
@@ -57,6 +63,8 @@ public class AccountSettingActivity extends ActionBarActivity
   public boolean isValidName = false;
   private ImageView typingCancel;
   
+  private ScrollView accountScroll;
+  
   private PreferenceManager preferenceManager;
   
   
@@ -77,6 +85,20 @@ public class AccountSettingActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    
+    accountScroll = (ScrollView) findViewById(R.id.account_scroll);
+    accountScroll.setOnTouchListener(new OnTouchListener()
+    {
+      
+      @Override
+      public boolean onTouch(View v, MotionEvent event)
+      {
+        InputMethodManager manager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        typingCancel.setVisibility(View.INVISIBLE);
+        return false;
+      }
+    });
     
     typingCancel = (ImageView) findViewById(R.id.image_name_typing_cancel);
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
@@ -123,9 +145,27 @@ public class AccountSettingActivity extends ActionBarActivity
     };
     editName.addTextChangedListener(watcher);
     
+    editName.setOnEditorActionListener(new OnEditorActionListener()
+    {
+      
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+      {
+        typingCancel.setVisibility(View.VISIBLE);
+        return false;
+      }
+    });
+    
     checkDuplicatedBtn.setOnClickListener(duplicatedChcek);
     changePasswordContainer.setOnClickListener(menuClickListener);
     withDrawContainer.setOnClickListener(menuClickListener);
+  }
+  
+  @Override
+  public void onBackPressed()
+  {
+    typingCancel.setVisibility(View.INVISIBLE);
+    super.onBackPressed();
   }
   
   
