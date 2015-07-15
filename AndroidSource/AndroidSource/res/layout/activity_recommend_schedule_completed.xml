@@ -136,7 +136,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/darker_gray_transparent"
+            android:background="@drawable/btn_background_blue"
             android:text="@string/term_generate_new_schedule"
             android:textColor="@android:color/white" />
 
@@ -145,7 +145,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/dark_pink_transparent"
+            android:background="@drawable/btn_background_pink"
             android:text="@string/term_another_recommend_schedule"
             android:textColor="@android:color/white" />
     </LinearLayout>

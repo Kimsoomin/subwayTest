@@ -360,6 +360,9 @@
     <string name="msg_write_review">리뷰를 작성하시겠습니까?</string>
     <string name="msg_rate_this_place">이 장소를\n평가해주세요!</string>
     <string name="msg_how_about_this_place">이 장소 어떠셨나요?</string>
+    <!-- 인트로 -->
+    <string name="msg_download_travel_cotnent">여행정보를 다운로드 중입니다.\n잠시만 기다려주세요.</string>
+    <string name="msg_update_travel_content">업데이트정보를 확인 중입니다.\n잠시만 기다려주세요.</string>
     <!-- 트렌드한국 -->
     <string name="term_shopping_all">ALL</string>
     <string name="term_shopping_cosmetic">화장품/미용</string>

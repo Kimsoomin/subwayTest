@@ -37,6 +37,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MySchedulesActivity extends ActionBarActivity
@@ -57,6 +58,7 @@ public class MySchedulesActivity extends ActionBarActivity
   private boolean isLoading = false;
   private boolean isLoadEnded = false;
   private ApiClient apiClient;
+  public View bottomMargin;
   
   
   @Override
@@ -97,6 +99,7 @@ public class MySchedulesActivity extends ActionBarActivity
     btnDelete = (Button) findViewById(R.id.btn_delete);
     btnDelete.setOnClickListener(buttonClickListener);
     
+    bottomMargin = (View) findViewById(R.id.bottom_margin);
     adapter = new MySchedulesListAdapter(this);
     listView = (GridView) findViewById(R.id.gridview);
     listView.setAdapter(adapter);
@@ -288,11 +291,11 @@ public class MySchedulesActivity extends ActionBarActivity
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
     {
-//      if (!isLoadEnded && !isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-//      {
-//        page++;
-//        loadSchedules();
-//      }
+      if (totalItemCount > 0 && totalItemCount == firstVisibleItem + visibleItemCount)
+      {
+        bottomMargin.setVisibility(View.VISIBLE);
+      }else
+        bottomMargin.setVisibility(View.GONE);
     }
   };
   

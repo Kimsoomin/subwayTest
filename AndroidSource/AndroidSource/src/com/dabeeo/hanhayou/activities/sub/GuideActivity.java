@@ -25,6 +25,7 @@ import com.dabeeo.hanhayou.external.libraries.CirclePageIndicator;
 public class GuideActivity extends Activity
 {
   public Button skipBtn;
+  
   @SuppressLint("InlinedApi")
   @Override
   protected void onCreate(Bundle savedInstanceState)
