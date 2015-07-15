@@ -86,7 +86,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private SharePickView sharePickView;
   private LinearLayout rateLayout;
   public TextView placeTitle;
-  
+  private FrameLayout header;
   private ViewGroup layoutRecommendProduct;
   
   int rate = 0;
@@ -173,7 +173,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     btnLike.setOnClickListener(clickListener);
     findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
     
-    FrameLayout header = (FrameLayout) findViewById(R.id.header);
+    header = (FrameLayout) findViewById(R.id.header);
     Resources r = getResources();
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, r.getDisplayMetrics());
     StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
@@ -327,7 +327,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     if (bean == null)
       return;
     
-    isPremium = getIntent().getBooleanExtra("isPremium", false);    
+    isPremium = getIntent().getBooleanExtra("isPremium", false);
     
     if (!bean.isPremium || isPremium)
       layoutRecommendSeoul.setVisibility(View.GONE);
@@ -368,6 +368,13 @@ public class PlaceDetailActivity extends ActionBarActivity
     addDetailInfo(getString(R.string.term_traffic), bean.trafficInfo);
     
     titleView.setBean(bean);
+    
+    if (TextUtils.isEmpty(bean.imageUrl))
+    {
+      headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
+      header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78,
+          getResources().getDisplayMetrics())));
+    }
   }
   
   
