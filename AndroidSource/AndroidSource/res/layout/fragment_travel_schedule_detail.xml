@@ -7,8 +7,7 @@
     <com.dabeeo.hanhayou.views.CustomScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:paddingTop="300dp" >
+        android:layout_height="wrap_content" >
 
         <!-- 하단 내용 -->
 
@@ -117,6 +116,7 @@
         android:layout_height="300dip" >
 
         <!-- 첫번째 이미지 -->
+
         <com.dabeeo.hanhayou.views.ScheduleDetailHeaderView
             android:id="@+id/header_view"
             android:layout_width="match_parent"

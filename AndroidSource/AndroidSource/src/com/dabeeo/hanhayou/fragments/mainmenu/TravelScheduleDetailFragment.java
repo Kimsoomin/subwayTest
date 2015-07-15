@@ -114,7 +114,6 @@ public class TravelScheduleDetailFragment extends Fragment
     headerView = (ScheduleDetailHeaderView) getView().findViewById(R.id.header_view);
     titleView = (ScheduleDetailTitleView) getView().findViewById(R.id.title_view);
     headerView.init();
-//    titleView.init();
     
     FrameLayout header = (FrameLayout) getView().findViewById(R.id.header);
     Resources r = getResources();
@@ -171,6 +170,7 @@ public class TravelScheduleDetailFragment extends Fragment
           reviewContainerView.loadMore();
       }
     });
+    
     displayContentData();
   }
   
@@ -240,33 +240,42 @@ public class TravelScheduleDetailFragment extends Fragment
       rateLayout.setVisibility(View.GONE);
     }
     
-    if (headerView != null)
+    if (!SystemUtil.isConnectNetwork(getActivity()))
     {
-      if (dayBean == null)
+      headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
+      headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (120 * density)));
+      scrollView.setPadding(0, 0, 0, 0);
+    }
+    else
+    {
+      if (headerView != null)
       {
-        //전체
-        if (!isRecommendSchedule)
+        if (dayBean == null)
         {
-          headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
-          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+          //전체
+          if (!isRecommendSchedule)
+          {
+            headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+            headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+          }
+          else
+          {
+            headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
+            headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (225 * density)));
+          }
+          scrollView.setPadding(0, 0, 0, 0);
         }
         else
         {
-          headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (300 * density)));
-          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (225 * density)));
+          //일정일 때 (1일 ..)
+          headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (0 * density)));
+          if (!isRecommendSchedule)
+            headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (100 * density)));
+          else
+            headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (0 * density)));
+          scrollView.setPadding(0, 0, 0, 0);
+          reviewContainerView.setVisibility(View.GONE);
         }
-        scrollView.setPadding(0, 0, 0, 0);
-      }
-      else
-      {
-        //일정일 때 (1일 ..)
-        headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) (0 * density)));
-        if (!isRecommendSchedule)
-          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (100 * density)));
-        else
-          headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (0 * density)));
-        scrollView.setPadding(0, 0, 0, 0);
-        reviewContainerView.setVisibility(View.GONE);
       }
     }
   }

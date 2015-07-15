@@ -104,7 +104,8 @@ public class ScheduleView extends RelativeLayout
         if (!isThumbnailInvisible)
         {
           imageView.setVisibility(View.VISIBLE);
-          ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
+          if (SystemUtil.isConnectNetwork(context))
+            ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
         }
         else
           imageView.setVisibility(View.GONE);
