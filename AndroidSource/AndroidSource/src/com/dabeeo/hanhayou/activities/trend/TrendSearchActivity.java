@@ -37,7 +37,7 @@ public class TrendSearchActivity extends Activity
   private RelativeLayout searchNotExistContainer;
   
   //Bottom
-  private LinearLayout conatinerAll, conatinerCosmetic, conatinerFood, conatinerBaby, conatinerLiving, conatinerEtc;
+  private LinearLayout containerAll, containerCosmetic, containerShoesbag, containerAccessory, containerBaby, containerFood;
   
   
   @Override
@@ -48,19 +48,19 @@ public class TrendSearchActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_trend_search);
     
-    conatinerAll = (LinearLayout) findViewById(R.id.container_all);
-    conatinerCosmetic = (LinearLayout) findViewById(R.id.container_cosmetic);
-    conatinerFood = (LinearLayout) findViewById(R.id.container_food);
-    conatinerBaby = (LinearLayout) findViewById(R.id.container_baby);
-    conatinerLiving = (LinearLayout) findViewById(R.id.container_living);
-    conatinerEtc = (LinearLayout) findViewById(R.id.container_etc);
+    containerAll = (LinearLayout) findViewById(R.id.container_all);
+    containerCosmetic = (LinearLayout) findViewById(R.id.container_cosmetic);
+    containerShoesbag = (LinearLayout) findViewById(R.id.container_shoesbag);
+    containerAccessory = (LinearLayout) findViewById(R.id.container_accessory);
+    containerBaby = (LinearLayout) findViewById(R.id.container_baby);
+    containerFood = (LinearLayout) findViewById(R.id.container_food);
     
-    conatinerAll.setOnClickListener(clickListener);
-    conatinerCosmetic.setOnClickListener(clickListener);
-    conatinerFood.setOnClickListener(clickListener);
-    conatinerBaby.setOnClickListener(clickListener);
-    conatinerLiving.setOnClickListener(clickListener);
-    conatinerEtc.setOnClickListener(clickListener);
+    containerAll.setOnClickListener(clickListener);
+    containerCosmetic.setOnClickListener(clickListener);
+    containerShoesbag.setOnClickListener(clickListener);
+    containerAccessory.setOnClickListener(clickListener);
+    containerBaby.setOnClickListener(clickListener);
+    containerFood.setOnClickListener(clickListener);
     
     editSearch = (EditText) findViewById(R.id.edit_search);
     searchTitle = (TextView) findViewById(R.id.search_title);
@@ -159,29 +159,29 @@ public class TrendSearchActivity extends Activity
     {
       Intent i = new Intent(TrendSearchActivity.this, TrendProductWithCategoryActivity.class);
       i.putExtra("is_exist_category", true);
-      if (v.getId() == conatinerAll.getId())
+      if (v.getId() == containerAll.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_all));
       }
-      else if (v.getId() == conatinerCosmetic.getId())
+      else if (v.getId() == containerCosmetic.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_cosmetic));
       }
-      else if (v.getId() == conatinerFood.getId())
+      else if (v.getId() == containerShoesbag.getId())
       {
-        i.putExtra("category_title", getString(R.string.term_shopping_food));
+        i.putExtra("category_title", getString(R.string.term_shopping_shoesbag));
       }
-      else if (v.getId() == conatinerBaby.getId())
+      else if (v.getId() == containerAccessory.getId())
+      {
+        i.putExtra("category_title", getString(R.string.term_shopping_accessory));
+      }
+      else if (v.getId() == containerBaby.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_baby));
       }
-      else if (v.getId() == conatinerLiving.getId())
+      else if (v.getId() == containerFood.getId())
       {
-        i.putExtra("category_title", getString(R.string.term_shopping_living));
-      }
-      else if (v.getId() == conatinerEtc.getId())
-      {
-        i.putExtra("category_title", getString(R.string.term_shopping_etc));
+        i.putExtra("category_title", getString(R.string.term_shopping_food));
       }
       startActivity(i);
     }

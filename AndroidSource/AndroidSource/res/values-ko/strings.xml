@@ -365,11 +365,11 @@
     <string name="msg_update_travel_content">업데이트정보를 확인 중입니다.\n잠시만 기다려주세요.</string>
     <!-- 트렌드한국 -->
     <string name="term_shopping_all">ALL</string>
-    <string name="term_shopping_cosmetic">화장품/미용</string>
-    <string name="term_shopping_food">식품</string>
-    <string name="term_shopping_baby">육아용품</string>
-    <string name="term_shopping_living">주방/생활</string>
-    <string name="term_shopping_etc">기타</string>
+    <string name="term_shopping_cosmetic">이미용</string>
+    <string name="term_shopping_shoesbag">슈즈/가방</string>
+    <string name="term_shopping_accessory">보석/액세서리</string>
+    <string name="term_shopping_baby">유아용품</string>
+    <string name="term_shopping_food">식품/건강식품</string>
     <!-- 프로모션 -->
     <string name="term_show_detail">자세히보기</string>
     <string name="term_dont_show_a_day">오늘하루 보지 않기</string>

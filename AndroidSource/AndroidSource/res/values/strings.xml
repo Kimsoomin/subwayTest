@@ -348,10 +348,10 @@
     <!-- 트렌드한국 -->
     <string name="term_shopping_all">全部</string>
     <string name="term_shopping_cosmetic">化妆品/美容</string>
-    <string name="term_shopping_food">食品</string>
-    <string name="term_shopping_baby">母婴用品</string>
-    <string name="term_shopping_living">厨房/生活</string>
-    <string name="term_shopping_etc">其它</string>
+    <string name="term_shopping_shoesbag">食品</string>
+    <string name="term_shopping_accessory">母婴用品</string>
+    <string name="term_shopping_baby">厨房/生活</string>
+    <string name="term_shopping_food">其它</string>
     <!-- 프로모션 -->
     <string name="term_show_detail">查看详情</string>
     <string name="term_dont_show_a_day">今天不再显示</string>

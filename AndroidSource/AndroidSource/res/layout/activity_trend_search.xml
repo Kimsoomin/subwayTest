@@ -70,14 +70,15 @@
             android:id="@+id/container_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="8dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
-                android:background="#c3c3c3"
+                android:background="@color/lighter_gray"
                 android:orientation="horizontal" >
 
                 <LinearLayout
@@ -91,15 +92,18 @@
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/btn_shopping_all" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/btn_shopping_all"
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/term_shopping_all" />
+                        android:layout_marginTop="6dp"
+                        android:text="@string/term_shopping_all"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,19 +117,22 @@
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/btn_shopping_cosmetic" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/btn_shopping_cosmetic"
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/term_shopping_cosmetic" />
+                        android:layout_marginTop="6dp"
+                        android:text="@string/term_shopping_cosmetic"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/container_food"
+                    android:id="@+id/container_shoesbag"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -134,24 +141,52 @@
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/btn_shopping_food" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/btn_shopping_shoesbag"
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/term_shopping_food" />
+                        android:layout_marginTop="6dp"
+                        android:text="@string/term_shopping_shoesbag"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
-                android:background="#c3c3c3"
+                android:background="@color/lighter_gray"
                 android:orientation="horizontal"
                 android:paddingTop="1dp" >
+
+                <LinearLayout
+                    android:id="@+id/container_accessory"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/btn_shopping_accessory"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/term_shopping_accessory"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/container_baby"
@@ -164,41 +199,22 @@
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/btn_shopping_baby" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/btn_shopping_baby"
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/term_shopping_baby" />
+                        android:layout_marginTop="6dp"
+                        android:text="@string/term_shopping_baby"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/container_living"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:orientation="vertical" >
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/btn_shopping_living" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/term_shopping_living" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/container_etc"
+                    android:id="@+id/container_food"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -207,15 +223,18 @@
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/btn_shopping_etc" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/btn_shopping_food"
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/term_shopping_etc" />
+                        android:layout_marginTop="6dp"
+                        android:text="@string/term_shopping_food"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
