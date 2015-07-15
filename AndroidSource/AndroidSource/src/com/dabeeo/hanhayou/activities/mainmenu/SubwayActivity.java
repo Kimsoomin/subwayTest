@@ -47,6 +47,7 @@ public class SubwayActivity extends Activity
   
   public static Activity subwayactivity = null;
   
+  
   @SuppressLint({ "SetJavaScriptEnabled", "InflateParams" })
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -155,6 +156,18 @@ public class SubwayActivity extends Activity
       }
     };
     editSearch.addTextChangedListener(watcher);
+    editSearch.setOnFocusChangeListener(new View.OnFocusChangeListener()
+    {
+      @Override
+      public void onFocusChange(View v, boolean hasFocus)
+      {
+        if (!hasFocus)
+        {
+          InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+          imm.hideSoftInputFromWindow(editSearch.getWindowToken(), 0);
+        }
+      }
+    });
     editSearch.setOnEditorActionListener(new OnEditorActionListener()
     {
       @Override
@@ -203,7 +216,7 @@ public class SubwayActivity extends Activity
       @Override
       public void onClick(View v)
       {
-        if(BlinkingMap.blinkingactivity != null)
+        if (BlinkingMap.blinkingactivity != null)
           BlinkingMap.blinkingactivity.finish();
         finish();
       }
@@ -245,10 +258,11 @@ public class SubwayActivity extends Activity
     super.onNewIntent(intent);
   }
   
+  
   @Override
   public void onBackPressed()
   {
-    if(BlinkingMap.blinkingactivity != null)
+    if (BlinkingMap.blinkingactivity != null)
       BlinkingMap.blinkingactivity.finish();
     finish();
     super.onBackPressed();
