@@ -516,8 +516,18 @@ public class ApiClient
     if (TextUtils.isEmpty(contents))
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate);
     else
+    {
+      try
+      {
+        contents = URLEncoder.encode(contents, "UTF-8");
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate + "&contents="
           + contents);
+    }
   }
   
   

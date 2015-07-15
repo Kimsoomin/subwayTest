@@ -137,7 +137,7 @@ public class WriteReviewActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(String... params)
     {
-      return apiClient.postReviewRate(parentType, parentIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate*2, params[0]);
+      return apiClient.postReviewRate(parentType, parentIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate, params[0]);
     }
     
     
@@ -308,6 +308,7 @@ public class WriteReviewActivity extends ActionBarActivity
           {
             ReviewImageUploadView view = (ReviewImageUploadView) fileViewWithUrl.get(finalPhotoUrl);
             imageContainer.removeView(view);
+            fileViewWithUrl.remove(finalPhotoUrl);
           }
         });
         
@@ -334,7 +335,8 @@ public class WriteReviewActivity extends ActionBarActivity
       
       btnAddPic.setVisibility(View.GONE);
       imageScrollView.setVisibility(View.VISIBLE);
-      imageContainer.setVisibility(View.VISIBLE);;
+      imageContainer.setVisibility(View.VISIBLE);
+      ;
     }
   }
 }
