@@ -664,7 +664,7 @@
 
         function showDestinationPopUp(station_id){
         	console.log("call NativeZoom!");
-          // setNativeZoom(station_id);
+          setNativeZoom(station_id);
           isElementClick = true;
           var station = Snap.select(".station#" + station_id)
           var bound;
@@ -721,10 +721,10 @@
               tit.remove();
             }
             // ## Native
-            // setStartStation(station_id);
+            setStartStation(station_id);
 
             // ## Web test
-            subway.set_start_station(station_id);
+            // subway.set_start_station(station_id);
            });
 
            endButton.click(function(event) {
@@ -736,10 +736,10 @@
               tit.remove();
             }
             // ## Native
-            // setEndStation(station_id);
+            setEndStation(station_id);
 
             // ## Web test
-            subway.set_end_station(station_id);
+            // subway.set_end_station(station_id);
            });
 
            // console.log("call NativeZoom!");
