@@ -30,6 +30,7 @@ import com.dabeeo.hanhayou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 
 public class MyBookmarkTravelScheduleListFragment extends Fragment
 {
@@ -40,7 +41,6 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   private ProgressBar progressBar;
   private MySchedulesListAdapter adapter;
   private ApiClient apiClient;
-  private int page = 1;
   private int type = SCHEDULE_TYPE_POPULAR;
   private boolean isLoading = false;
   private int lastVisibleItem = 0;
@@ -54,6 +54,8 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   private CheckBox allCheckBox;
   private TextView selectDelete;
   
+  public boolean isEditmode = false;
+  public View bottomMargin;
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -80,10 +82,8 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     
     adapter = new MySchedulesListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
-//    ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
-//    view.setBean(null);
-//    listView.addHeaderView(view);
     
+    bottomMargin = (View) getView().findViewById(R.id.bottom_margin);
     listView.setOnItemClickListener(itemClickListener);
     listView.setAdapter(adapter);
     listView.setOnScrollListener(new OnScrollListener()
@@ -97,6 +97,16 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
+        if(isEditmode)
+        {
+          if (totalItemCount > 0 && totalItemCount == firstVisibleItem + visibleItemCount)
+          {
+            bottomMargin.setVisibility(View.VISIBLE);
+          }else
+          {
+            bottomMargin.setVisibility(View.GONE);
+          }
+        }
       }
     });
     loadSchedules();
@@ -106,6 +116,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   public void setEditMode(boolean isEditMode)
   {
     adapter.setEditMode(isEditMode);
+    isEditmode = isEditMode;
     allCheckContainer.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
     selectDelete.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
   }

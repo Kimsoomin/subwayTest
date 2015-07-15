@@ -37,7 +37,6 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MySchedulesActivity extends ActionBarActivity

@@ -38,6 +38,7 @@ import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MyPlaceListFragment extends Fragment
@@ -55,6 +56,8 @@ public class MyPlaceListFragment extends Fragment
   private TextView selectDelete;
   private GridViewWithHeaderAndFooter listView;
   
+  public boolean isEditmode = false;
+  public View bottomMargin;
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -83,6 +86,8 @@ public class MyPlaceListFragment extends Fragment
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     
+    bottomMargin = (View) getView().findViewById(R.id.bottom_margin);
+    
     load();
   }
   
@@ -105,6 +110,7 @@ public class MyPlaceListFragment extends Fragment
   public void setEditMode(boolean isEditMode)
   {
     adapter.setEditMode(isEditMode);
+    isEditmode = isEditMode;
     
     if (isEditMode)
     {
@@ -155,7 +161,17 @@ public class MyPlaceListFragment extends Fragment
     
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-    {
+    { 
+      if(isEditmode)
+      {
+        if (totalItemCount > 0 && totalItemCount == firstVisibleItem + visibleItemCount)
+        {
+          bottomMargin.setVisibility(View.VISIBLE);
+        }else
+        {
+          bottomMargin.setVisibility(View.GONE);
+        }
+      }
     }
   };
   

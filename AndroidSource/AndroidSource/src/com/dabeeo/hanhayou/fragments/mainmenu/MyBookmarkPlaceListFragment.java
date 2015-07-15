@@ -46,6 +46,9 @@ public class MyBookmarkPlaceListFragment extends Fragment
   private TextView selectDelete;
   private boolean isLoadEnded = false;
   
+  public boolean isEditmode = false;
+  public View bottomMargin;
+  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -71,6 +74,8 @@ public class MyBookmarkPlaceListFragment extends Fragment
     
     adapter = new MyPlaceListAdapter(getActivity());
     
+    bottomMargin = (View) getView().findViewById(R.id.bottom_margin);
+    
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(new OnScrollListener()
@@ -84,6 +89,16 @@ public class MyBookmarkPlaceListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
+        if(isEditmode)
+        {
+          if (totalItemCount > 0 && totalItemCount == firstVisibleItem + visibleItemCount)
+          {
+            bottomMargin.setVisibility(View.VISIBLE);
+          }else
+          {
+            bottomMargin.setVisibility(View.GONE);
+          }
+        }
       }
     });
     listView.setAdapter(adapter);
@@ -95,6 +110,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
   public void setEditMode(boolean isEditMode)
   {
     adapter.setEditMode(isEditMode);
+    isEditmode = isEditMode;
     allCheckContainer.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
     selectDelete.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
   }
