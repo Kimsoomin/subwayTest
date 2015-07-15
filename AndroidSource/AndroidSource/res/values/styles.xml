@@ -5,6 +5,7 @@
         <item name="actionBarTabStyle">@style/MyActionBarTabs</item>
         <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
         <item name="actionBarTabBarStyle">@style/Divider</item>
+        <item name="android:homeAsUpIndicator">@drawable/btn_title_back_state</item>
     </style>
 
     <style name="Divider" parent="@android:style/Widget.Holo.ActionBar.TabBar">
