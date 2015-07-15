@@ -483,8 +483,7 @@
             var jsonInfo = JSON.stringify(jsonArray);
             completeMarkStation(jsonInfo, floyd_time(this.start_station_id, this.end_station_id));
           },
-          setCenterWithStationId: function (station_id){
-            isElementClick = true;
+          setCenterWithStationIdWithoutPopup: function (station_id){
             station = Snap.select(".station#"+station_id);
             try{
               bound = station.getBBox()
@@ -509,8 +508,87 @@
 
             var half_width = window.innerWidth/2
             var half_height = window.innerHeight/2
+            console.log(half_width, half_height)
             window.scrollTo(bound.x - half_width, bound.y - half_height);
-            // isElementClick = false;
+          },
+          setCenterWithStationId: function (station_id){
+            station = Snap.select(".station#"+station_id);
+            try{
+              bound = station.getBBox()
+            }catch(exception){
+              for (var i = 0; i < station_ids.length; i++){
+                if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                  var temp_station = Snap.select(".station#"+station_ids[i])
+                  console.log(station_ids[i])
+
+                  try{
+                    if(temp_station.getBBox() != undefined){
+                      console.log(temp_station.getBBox())
+                      bound = temp_station.getBBox()
+                    }
+                    break;
+                  }catch(exception){
+                    console.log(exception);
+                  }
+                }
+              }
+            }
+
+            var half_width = window.innerWidth/2
+            var half_height = window.innerHeight/2
+            console.log(half_width, half_height)
+            window.scrollTo(bound.x - half_width, bound.y - half_height);
+
+            if(background != undefined){
+              background.remove();
+              line.remove();
+              startButton.remove();
+              endButton.remove();
+              tit.remove();
+            }
+
+            var stationBean = stations[station_id];
+            background  = s.image('./ui/images/popup_station.png', bound.x - 118, bound.y - 98, 270, 100);
+            startButton = s.image('./ui/images/icon_start.png', bound.x - 85, bound.y - 60, 80, 35);
+            endButton = s.image('./ui/images/icon_finish.png', bound.x + 45, bound.y - 60, 80, 35);
+            line = s.image('./ui/images/ic_line.png', bound.x + 20, bound.y - 60, 1, 35);
+
+            tit = s.text(bound.x + 20, bound.y - 70, stationBean.name_cn);
+             tit.attr({
+               fill: "#fff",
+               textAnchor: "middle",
+               fontSize: "20px"
+             });
+
+             startButton.click(function(event) {
+              if(background != undefined){
+                background.remove();
+                line.remove();
+                startButton.remove();
+                endButton.remove();
+                tit.remove();
+              }
+              // ## Native
+              setStartStation(station_id);
+
+              // ## Web test
+              // subway.set_start_station(station_id);
+             });
+
+             endButton.click(function(event) {
+              if(background != undefined){
+                background.remove();
+                line.remove();
+                startButton.remove();
+                endButton.remove();
+                tit.remove();
+              }
+              // ## Native
+              setEndStation(station_id);
+
+              // ## Web test
+              // subway.set_end_station(station_id);
+             });
           },
           findNearByStation: function(find_lat, find_lon){
             var jsonArray = new Array();
@@ -666,85 +744,6 @@
         	console.log("call NativeZoom!");
           setNativeZoom(station_id);
           isElementClick = true;
-          var station = Snap.select(".station#" + station_id)
-          var bound;
-          try{
-            bound = station.getBBox()
-          }catch(exception){
-            console.log(exception);
-            for (var i = 0; i < station_ids.length; i++){
-              if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
-                var temp_station = Snap.select(".station#"+station_ids[i])
-
-                try{
-                  if(temp_station.getBBox() != undefined){
-                    console.log(temp_station.getBBox())
-                    bound = temp_station.getBBox()
-                  }
-                  break;
-                }catch(exception){
-                  console.log(exception);
-                }
-              }
-            }
-          }
-
-          if(background != undefined){
-            background.remove();
-            line.remove();
-            startButton.remove();
-            endButton.remove();
-            tit.remove();
-          }
-
-          var stationBean = stations[station_id];
-          background  = s.image('./ui/images/popup_station.png', bound.x - 118, bound.y - 98, 270, 100);
-          startButton = s.image('./ui/images/icon_start.png', bound.x - 85, bound.y - 60, 80, 35);
-          endButton = s.image('./ui/images/icon_finish.png', bound.x + 45, bound.y - 60, 80, 35);
-          line = s.image('./ui/images/ic_line.png', bound.x + 20, bound.y - 60, 1, 35);
-
-          tit = s.text(bound.x + 20, bound.y - 70, stationBean.name_cn);
-           tit.attr({
-             fill: "#fff",
-             textAnchor: "middle",
-             fontSize: "20px"
-           });
-
-
-
-           startButton.click(function(event) {
-            if(background != undefined){
-              background.remove();
-              line.remove();
-              startButton.remove();
-              endButton.remove();
-              tit.remove();
-            }
-            // ## Native
-            setStartStation(station_id);
-
-            // ## Web test
-            // subway.set_start_station(station_id);
-           });
-
-           endButton.click(function(event) {
-            if(background != undefined){
-              background.remove();
-              line.remove();
-              startButton.remove();
-              endButton.remove();
-              tit.remove();
-            }
-            // ## Native
-            setEndStation(station_id);
-
-            // ## Web test
-            // subway.set_end_station(station_id);
-           });
-
-           // console.log("call NativeZoom!");
-           // setNativeZoom(station_id);
-          // subway.setCenterWithStationId(station_id);
         }
         //file:///android_asset/subway.svg
         Snap.load("subway.svg", function(data) {
@@ -785,7 +784,7 @@
 
           onSvgLoadEnded();
           if(subway.start_station_id == undefined && subway.end_station_id == undefined && !isCleared)
-            subway.setCenterWithStationId("line132line201");
+            subway.setCenterWithStationIdWithoutPopup("line132line201");
         });
 
 

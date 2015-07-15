@@ -1082,7 +1082,7 @@ public class SubwayFragment extends Fragment
             {
               webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
             }
-          }, 600);
+          }, 200);
         }
       });
     }
