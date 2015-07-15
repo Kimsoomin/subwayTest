@@ -37,7 +37,6 @@ import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
-import com.dabeeo.hanhayou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
@@ -60,6 +59,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
   
   private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
   private LinearLayout containerBottomTab;
+  
+  private TextWatcher watcher;
   
   
   @Override
@@ -106,8 +107,12 @@ public class SearchResultDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
+        inputWord.removeTextChangedListener(watcher);
         inputWord.setText("");
-        search("");
+        inputWord.requestFocus();
+        InputMethodManager keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        keyboard.showSoftInput(inputWord, 0);
+        inputWord.addTextChangedListener(watcher);
       }
     });
     
@@ -130,7 +135,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
     });
     searchListView.setAdapter(adapter);
     
-    TextWatcher watcher = new TextWatcher()
+    watcher = new TextWatcher()
     {
       @Override
       public void afterTextChanged(Editable s)

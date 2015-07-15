@@ -117,6 +117,7 @@ public class ScheduleDetailBean
         JSONObject imgObject = obj.getJSONObject("image");
         imageUrl = imgObject.getString("url");
       }
+      
       if (obj.has("startDate"))
       {
         try
