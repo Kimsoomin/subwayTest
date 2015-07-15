@@ -1,9 +1,9 @@
 package com.dabeeo.hanhayou.views;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity;
 import com.dabeeo.hanhayou.beans.ReviewBean;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.SystemUtil;
@@ -33,7 +34,7 @@ import com.squareup.picasso.Picasso;
 
 public class ReviewView extends RelativeLayout
 {
-  private Context context;
+  private Activity context;
   private ReviewBean bean;
   
   private ImageView icon;
@@ -50,21 +51,21 @@ public class ReviewView extends RelativeLayout
   private View view;
   
   
-  public ReviewView(Context context)
+  public ReviewView(Activity context)
   {
     super(context);
     this.context = context;
   }
   
   
-  public ReviewView(Context context, AttributeSet attrs, int defStyle)
+  public ReviewView(Activity context, AttributeSet attrs, int defStyle)
   {
     super(context, attrs, defStyle);
     this.context = context;
   }
   
   
-  public ReviewView(Context context, AttributeSet attrs)
+  public ReviewView(Activity context, AttributeSet attrs)
   {
     super(context, attrs);
     this.context = context;
@@ -153,45 +154,52 @@ public class ReviewView extends RelativeLayout
           @Override
           public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
           {
-            if (finalListPopupArray[position].equals(context.getString(R.string.term_delete)))
+            if (!PreferenceManager.getInstance(context).isLoggedIn())
             {
-              //삭제
-              Builder builder = new AlertDialog.Builder(context);
-              builder.setTitle(context.getString(R.string.app_name));
-              builder.setMessage(context.getString(R.string.msg_confirm_delete));
-              builder.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
-              {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                  if (deleteListener != null)
-                    deleteListener.onDelete(bean.idx);
-                }
-              });
-              builder.setNegativeButton(android.R.string.cancel, null);
-              builder.show();
+              new AlertDialogManager(context).showNeedLoginDialog(position);
             }
             else
             {
-              //신고
-              Builder builder = new AlertDialog.Builder(context);
-              builder.setTitle(context.getString(R.string.term_declare_review));
-              final DeclareReviewView declareView = new DeclareReviewView(context);
-              declareView.init();
-              builder.setView(declareView);
-              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+              if (finalListPopupArray[position].equals(context.getString(R.string.term_delete)))
               {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
+                //삭제
+                Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(context.getString(R.string.app_name));
+                builder.setMessage(context.getString(R.string.msg_confirm_delete));
+                builder.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
                 {
-                  if (deleteListener != null)
-                    deleteListener.onDeclare(bean.idx, declareView.getReason());
-                }
-              });
-              builder.setNegativeButton(android.R.string.cancel, null);
-              builder.show();
+                  @Override
+                  public void onClick(DialogInterface dialog, int which)
+                  {
+                    if (deleteListener != null)
+                      deleteListener.onDelete(bean.idx);
+                  }
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.show();
+              }
+              else
+              {
+                //신고
+                Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(context.getString(R.string.term_declare_review));
+                final DeclareReviewView declareView = new DeclareReviewView(context);
+                declareView.init();
+                builder.setView(declareView);
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which)
+                  {
+                    if (deleteListener != null)
+                      deleteListener.onDeclare(bean.idx, declareView.getReason());
+                  }
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.show();
+              }
+              listPopupWindow.dismiss();
             }
-            listPopupWindow.dismiss();
           }
         });
         listPopupWindow.show();

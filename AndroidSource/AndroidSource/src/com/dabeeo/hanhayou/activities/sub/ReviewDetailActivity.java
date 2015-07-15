@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ReviewBean;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
@@ -112,7 +113,9 @@ public class ReviewDetailActivity extends ActionBarActivity
         }
         
         final String[] finalListPopupArray = listPopupArray;
-        listPopupWindow.setAdapter(new ArrayAdapter<String>(ReviewDetailActivity.this, android.R.layout.simple_list_item_1, listPopupArray));
+//        listPopupWindow.setAdapter(new ArrayAdapter<String>(ReviewDetailActivity.this, android.R.layout.simple_list_item_1, listPopupArray));
+        ListPopupArrayAdapter popupAdapter = new ListPopupArrayAdapter(ReviewDetailActivity.this, android.R.layout.simple_list_item_1, listPopupArray);
+        listPopupWindow.setAdapter(popupAdapter);
         listPopupWindow.setAnchorView(btnMore);
         listPopupWindow.setWidth(300);
         listPopupWindow.setOnItemClickListener(new OnItemClickListener()
@@ -120,41 +123,48 @@ public class ReviewDetailActivity extends ActionBarActivity
           @Override
           public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
           {
-            if (finalListPopupArray[position].equals(getString(R.string.term_delete)))
+            if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
             {
-              //삭제
-              Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
-              builder.setTitle(ReviewDetailActivity.this.getString(R.string.app_name));
-              builder.setMessage(ReviewDetailActivity.this.getString(R.string.msg_confirm_delete));
-              builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-              {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                  new DeleteAsyncTask().execute(bean.idx);
-                }
-              });
-              builder.setNegativeButton(R.string.term_cancel, null);
-              builder.show();
+              new AlertDialogManager(ReviewDetailActivity.this).showNeedLoginDialog(position);
             }
             else
             {
-              //신고
-              Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
-              builder.setTitle(ReviewDetailActivity.this.getString(R.string.term_declare_review));
-              final DeclareReviewView declareView = new DeclareReviewView(ReviewDetailActivity.this);
-              declareView.init();
-              builder.setView(declareView);
-              builder.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
+              if (finalListPopupArray[position].equals(getString(R.string.term_delete)))
               {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
+                //삭제
+                Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
+                builder.setTitle(ReviewDetailActivity.this.getString(R.string.app_name));
+                builder.setMessage(ReviewDetailActivity.this.getString(R.string.msg_confirm_delete));
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
                 {
-                  new DeclareAsyncTask().execute(bean.idx, declareView.getReason());
-                }
-              });
-              builder.setNegativeButton(android.R.string.cancel, null);
-              builder.show();
+                  @Override
+                  public void onClick(DialogInterface dialog, int which)
+                  {
+                    new DeleteAsyncTask().execute(bean.idx);
+                  }
+                });
+                builder.setNegativeButton(R.string.term_cancel, null);
+                builder.show();
+              }
+              else
+              {
+                //신고
+                Builder builder = new AlertDialog.Builder(ReviewDetailActivity.this);
+                builder.setTitle(ReviewDetailActivity.this.getString(R.string.term_declare_review));
+                final DeclareReviewView declareView = new DeclareReviewView(ReviewDetailActivity.this);
+                declareView.init();
+                builder.setView(declareView);
+                builder.setPositiveButton(R.string.term_ok, new DialogInterface.OnClickListener()
+                {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which)
+                  {
+                    new DeclareAsyncTask().execute(bean.idx, declareView.getReason());
+                  }
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.show();
+              }
             }
             listPopupWindow.dismiss();
           }
@@ -163,6 +173,36 @@ public class ReviewDetailActivity extends ActionBarActivity
       }
     });
     loadReviewDetail();
+  }
+  
+  private class ListPopupArrayAdapter extends ArrayAdapter<String>
+  {
+    
+    private String[] items;
+    
+    
+    public ListPopupArrayAdapter(Context context, int textViewResourceId, String[] items)
+    {
+      super(context, textViewResourceId, items);
+      this.items = items;
+    }
+    
+    
+    @SuppressLint("InflateParams")
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+      View v = convertView;
+      if (v == null)
+      {
+        LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        v = vi.inflate(R.layout.view_list_popup_review, null);
+      }
+      
+      TextView tt = (TextView) v.findViewById(R.id.text);
+      tt.setText(items[position]);
+      return v;
+    }
   }
   
   
@@ -205,7 +245,7 @@ public class ReviewDetailActivity extends ActionBarActivity
     {
       name.setText(bean.userName);
       SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
-      if(bean.insertDate != null)
+      if (bean.insertDate != null)
         time.setText(format.format(bean.insertDate));
       reviewScore.setText(Float.toString(bean.rate));
       content.setText(bean.content);
@@ -214,7 +254,7 @@ public class ReviewDetailActivity extends ActionBarActivity
       {
         ImageView imageView = new ImageView(ReviewDetailActivity.this);
         float density = getResources().getDisplayMetrics().density;
-        int size = (int) (80*density);
+        int size = (int) (80 * density);
         imageView.setLayoutParams(new GridView.LayoutParams(size, size));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setPadding(8, 8, 8, 8);
@@ -328,37 +368,51 @@ public class ReviewDetailActivity extends ActionBarActivity
     }
   }
   
-  class ImageAdapter extends BaseAdapter{
+  class ImageAdapter extends BaseAdapter
+  {
     private Context mContext;
     ArrayList<ImageView> images;
     
-    public ImageAdapter(Context mContext, ArrayList<ImageView> images) {
+    
+    public ImageAdapter(Context mContext, ArrayList<ImageView> images)
+    {
       this.mContext = mContext;
       this.images = images;
-    } 
+    }
     
-    public int getCount() {
+    
+    public int getCount()
+    {
       return images.size();
     }
     
-    public Object getItem(int position) {
+    
+    public Object getItem(int position)
+    {
       return images.get(position);
     }
     
-    public long getItemId(int position) {
+    
+    public long getItemId(int position)
+    {
       return 0;
     }
     
+    
     // 뷰에있는 데이터를 하나씩 가져와서 출력
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
       ImageView imageview;
-      if(convertView == null){
+      if (convertView == null)
+      {
         imageview = new ImageView(mContext);
-      }else{
-        imageview = (ImageView)convertView;
+      }
+      else
+      {
+        imageview = (ImageView) convertView;
       }
       imageview = images.get(position);
       return imageview;
-    }      
+    }
   }
 }
