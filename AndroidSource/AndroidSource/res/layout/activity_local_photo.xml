@@ -25,8 +25,8 @@
             style="@style/MooSpinnerItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/spinner_selector" />
+            android:layout_centerInParent="true" />
+        <!-- android:background="@drawable/spinner_selector"   style="@style/MooSpinnerItem" -->
 
         <Button
             android:id="@+id/btn_ok"
@@ -42,12 +42,12 @@
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:horizontalSpacing="0dp"
         android:numColumns="4"
         android:scrollbarStyle="outsideOverlay"
         android:stretchMode="columnWidth"
         android:verticalSpacing="0dp"
-        tools:listitem="@layout/list_item_local_photo"
-        android:background="@android:color/white" />
+        tools:listitem="@layout/list_item_local_photo" />
 
 </LinearLayout>
