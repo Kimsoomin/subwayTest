@@ -292,6 +292,10 @@ public class SearchResultDetailActivity extends ActionBarActivity
     {
       if (v.getId() == bottomMenuHome.getId())
       {
+        Intent i = new Intent(SearchResultDetailActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("position", MainActivity.POSITION_HOME);
+        startActivity(i);
         finish();
       }
       else if (v.getId() == bottomMenuMyPage.getId())
