@@ -98,7 +98,10 @@ public class ScheduleView extends RelativeLayout
       line.setVisibility(View.VISIBLE);
       title.setText(bean.title);
       if (TextUtils.isEmpty(bean.imageUrl))
-        imageView.setVisibility(View.GONE);
+      {
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setImageResource(R.drawable.default_thumbnail_s);
+      }
       else
       {
         if (!isThumbnailInvisible)
