@@ -41,6 +41,7 @@ import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.controllers.SearchResultAdapter;
+import com.dabeeo.hanhayou.controllers.SearchResultDetailAdapter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
@@ -57,10 +58,14 @@ public class SearchResultDetailActivity extends ActionBarActivity
   private ProgressBar progressBar;
   private TextView textSearchResult;
   
+  private ListView autoSearchListView;
+  private SearchResultDetailAdapter autoSearchAdapter;
+  
   private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
   private LinearLayout containerBottomTab;
   
   private TextWatcher watcher;
+  private boolean isClickedSearchButton = false;
   
   
   @Override
@@ -88,6 +93,33 @@ public class SearchResultDetailActivity extends ActionBarActivity
     bottomMenuPhotolog.setOnClickListener(bottomMenuClickListener);
     bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
     bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
+    
+    autoSearchAdapter = new SearchResultDetailAdapter();
+    autoSearchListView = (ListView) findViewById(R.id.auto_search_list);
+    autoSearchListView.setOnItemClickListener(itemClickListener);
+    autoSearchListView.setOnScrollListener(new OnScrollListener()
+    {
+      @Override
+      public void onScrollStateChanged(AbsListView view, int scrollState)
+      {
+        hideKeyboard();
+      }
+      
+      
+      @Override
+      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+      {
+      }
+    });
+    autoSearchListView.setAdapter(autoSearchAdapter);
+    autoSearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+    {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+      {
+        new SearchTask().execute(inputWord.getText().toString());
+      }
+    });
     
     textSearchResult = (TextView) findViewById(R.id.text_search_result);
     textSearchResult.setVisibility(View.GONE);
@@ -142,6 +174,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
       {
         if (inputWord.getText().toString().length() > 1)
         {
+          isClickedSearchButton = false;
           searchListView.setVisibility(View.VISIBLE);
           emptyContainer.setVisibility(View.GONE);
           imageX.setVisibility(View.VISIBLE);
@@ -150,8 +183,9 @@ public class SearchResultDetailActivity extends ActionBarActivity
         else
         {
           imageX.setVisibility(View.GONE);
-          searchListView.setVisibility(View.GONE);
-          emptyContainer.setVisibility(View.VISIBLE);
+          autoSearchListView.setVisibility(View.GONE);
+//          searchListView.setVisibility(View.GONE);
+//          emptyContainer.setVisibility(View.VISIBLE);
         }
       }
       
@@ -174,9 +208,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
     {
       imageX.setVisibility(View.VISIBLE);
       inputWord.setSelection(inputWord.getText().toString().length());
-      search(inputWord.getText().toString());
+      new SearchTask().execute(inputWord.getText().toString());
     }
-    
   }
   
   
@@ -217,7 +250,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
     @Override
     public void run()
     {
-      new SearchTask().execute(inputWord.getText().toString());
+      new AutoSearchTask().execute(inputWord.getText().toString());
     }
   };
   
@@ -344,6 +377,40 @@ public class SearchResultDetailActivity extends ActionBarActivity
   /**************************************************
    * AsyncTask
    ***************************************************/
+  private class AutoSearchTask extends AsyncTask<String, Void, ArrayList<SearchResultBean>>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      autoSearchAdapter.clear();
+      super.onPreExecute();
+    }
+    
+    
+    @Override
+    protected ArrayList<SearchResultBean> doInBackground(String... params)
+    {
+      return apiClient.searchAuto(params[0]);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(ArrayList<SearchResultBean> result)
+    {
+      autoSearchAdapter.addAll(result);
+      
+      if (autoSearchAdapter.getCount() == 0 || TextUtils.isEmpty(inputWord.getText().toString()) || isClickedSearchButton)
+        autoSearchListView.setVisibility(View.GONE);
+      else
+      {
+        Log.w("WARN", "Auto listView show!");
+        autoSearchListView.setVisibility(View.VISIBLE);
+        autoSearchListView.bringToFront();
+      }
+      super.onPostExecute(result);
+    }
+  }
+  
   private class SearchTask extends AsyncTask<String, Void, ArrayList<SearchResultBean>>
   {
     private int size = 0;
@@ -392,6 +459,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
         emptyContainer.setVisibility(View.GONE);
       }
       
+      autoSearchListView.setVisibility(View.GONE);
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
     }
@@ -407,7 +475,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
     {
       if (actionId == EditorInfo.IME_ACTION_SEARCH)
       {
-        search(v.getText().toString());
+        isClickedSearchButton = true;
+        new SearchTask().execute(inputWord.getText().toString());
         hideKeyboard();
       }
       return false;
