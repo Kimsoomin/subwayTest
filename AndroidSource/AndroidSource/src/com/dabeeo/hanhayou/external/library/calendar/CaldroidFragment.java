@@ -33,6 +33,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -118,8 +119,8 @@ public class CaldroidFragment extends DialogFragment
   /**
    * Caldroid view components
    */
-  private Button leftArrowButton;
-  private Button rightArrowButton;
+  private RelativeLayout leftArrowButton;
+  private RelativeLayout rightArrowButton;
   private TextView monthTitleTextView;
   private GridView weekdayGridView;
   private InfiniteViewPager dateViewPager;
@@ -304,13 +305,13 @@ public class CaldroidFragment extends DialogFragment
   /**
    * To let user customize the navigation buttons
    */
-  public Button getLeftArrowButton()
+  public RelativeLayout getLeftArrowButton()
   {
     return leftArrowButton;
   }
   
   
-  public Button getRightArrowButton()
+  public RelativeLayout getRightArrowButton()
   {
     return rightArrowButton;
   }
@@ -1278,8 +1279,8 @@ public class CaldroidFragment extends DialogFragment
     monthTitleTextView = (TextView) view.findViewById(R.id.calendar_month_year_textview);
     
     // For the left arrow button
-    leftArrowButton = (Button) view.findViewById(R.id.calendar_left_arrow);
-    rightArrowButton = (Button) view.findViewById(R.id.calendar_right_arrow);
+    leftArrowButton = (RelativeLayout) view.findViewById(R.id.calendar_left_arrow);
+    rightArrowButton = (RelativeLayout) view.findViewById(R.id.calendar_right_arrow);
     
     // Navigate to previous month when user click
     leftArrowButton.setOnClickListener(new OnClickListener()
