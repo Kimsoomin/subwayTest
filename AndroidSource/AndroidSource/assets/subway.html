@@ -548,16 +548,16 @@
             }
 
             var stationBean = stations[station_id];
-            background  = s.image('./ui/images/popup_station.png', bound.x - 118, bound.y - 98, 270, 100);
-            startButton = s.image('./ui/images/icon_start.png', bound.x - 85, bound.y - 60, 80, 35);
-            endButton = s.image('./ui/images/icon_finish.png', bound.x + 45, bound.y - 60, 80, 35);
-            line = s.image('./ui/images/ic_line.png', bound.x + 20, bound.y - 60, 1, 35);
+            background  = s.image('./ui/images/popup_station.png', bound.x - 105, bound.y - 90, 243, 90);
+            startButton = s.image('./ui/images/icon_start.png', bound.x - 76, bound.y - 50, 60, 27);
+            endButton = s.image('./ui/images/icon_finish.png', bound.x + 48, bound.y - 50, 60, 27);
+            line = s.image('./ui/images/ic_line.png', bound.x + 15, bound.y - 50, 1, 28);
 
-            tit = s.text(bound.x + 20, bound.y - 70, stationBean.name_cn);
+            tit = s.text(bound.x + 15, bound.y - 64, stationBean.name_cn);
              tit.attr({
                fill: "#fff",
                textAnchor: "middle",
-               fontSize: "20px"
+               fontSize: "16px"
              });
 
              startButton.click(function(event) {
@@ -742,7 +742,11 @@
 
         function showDestinationPopUp(station_id){
         	console.log("call NativeZoom!");
+          //Native
           setNativeZoom(station_id);
+
+          //Web test
+          // subway.setCenterWithStationId(station_id);
           isElementClick = true;
         }
         //file:///android_asset/subway.svg
