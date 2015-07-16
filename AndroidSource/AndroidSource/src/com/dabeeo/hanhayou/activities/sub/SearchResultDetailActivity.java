@@ -362,9 +362,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
     @Override
     protected ArrayList<SearchResultBean> doInBackground(String... params)
     {
-      ArrayList<SearchResultBean> allReuslt = apiClient.searchResult(params[0]);
       ArrayList<SearchResultBean> reuslt = apiClient.searchResult(params[0], 3);
-      size = allReuslt.size();
+      size = apiClient.getSearchResultCount(params[0]);
       return reuslt;
     }
     
@@ -377,7 +376,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
       else
       {
         textSearchResult.setVisibility(View.VISIBLE);
-        textSearchResult.setText(getString(R.string.term_search_result) + " (" + Integer.toString(size - 1) + ")");
+        textSearchResult.setText(getString(R.string.term_search_result) + " (" + Integer.toString(size) + ")");
       }
       adapter.clear();
       adapter.add(result);

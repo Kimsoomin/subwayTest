@@ -853,6 +853,19 @@ public class ApiClient
   }
   
   
+  public int getSearchResultCount(String keyword)
+  {
+    ArrayList<SearchResultBean> results = searchResult(keyword, -1);
+    for (int i = 0; i < results.size(); i++)
+    {
+      if (results.get(i).isTitle)
+        results.remove(i);
+    }
+    
+    return results.size();
+  }
+  
+  
   public ArrayList<SearchResultBean> searchResult(String keyword, int limit)
   {
     ArrayList<SearchResultBean> array = new ArrayList<SearchResultBean>();
