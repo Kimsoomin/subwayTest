@@ -59,6 +59,7 @@ public class MyPlaceListFragment extends Fragment
   public boolean isEditmode = false;
   public View bottomMargin;
   
+  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -161,13 +162,14 @@ public class MyPlaceListFragment extends Fragment
     
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-    { 
-      if(isEditmode)
+    {
+      if (isEditmode)
       {
         if (totalItemCount > 0 && totalItemCount == firstVisibleItem + visibleItemCount)
         {
           bottomMargin.setVisibility(View.VISIBLE);
-        }else
+        }
+        else
         {
           bottomMargin.setVisibility(View.GONE);
         }
@@ -287,10 +289,21 @@ public class MyPlaceListFragment extends Fragment
         adapter.addAll(tempArray);
       else
       {
-        for (int i = 0; i < tempArray.size(); i++)
+        if (categoryId != 9)
         {
-          if (tempArray.get(i).categoryId == categoryId)
-            adapter.add(tempArray.get(i));
+          for (int i = 0; i < tempArray.size(); i++)
+          {
+            if (tempArray.get(i).categoryId == 1 || tempArray.get(i).categoryId == 3 || tempArray.get(i).categoryId == 4 || tempArray.get(i).categoryId == 5 || tempArray.get(i).categoryId == 6)
+              adapter.add(tempArray.get(i));
+          }
+        }
+        else
+        {
+          for (int i = 0; i < tempArray.size(); i++)
+          {
+            if (tempArray.get(i).categoryId == categoryId)
+              adapter.add(tempArray.get(i));
+          }
         }
       }
       
