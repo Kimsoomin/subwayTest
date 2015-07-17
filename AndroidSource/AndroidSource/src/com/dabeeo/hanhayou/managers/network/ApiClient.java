@@ -1061,6 +1061,16 @@ public class ApiClient
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&parentIdx=" + prentIdx + "&parentType=" + parentType + "&usedType=" + usedType);
   }
   
+  /**
+   * 북마크 Cancel
+   * @param Email
+   * @param Password
+   * @return
+   */
+  public NetworkResult reqeustBookmarkCancel(String ownerUserSeq, String prentIdx, String parentType)
+  {
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=BOOKMARK_CANCEL&userSeq=" + ownerUserSeq + "&parent=" + prentIdx + "&parentType=" + parentType);
+  }
   
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)
