@@ -97,7 +97,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public double place_fLatitude = 0;
   public double place_fLongitute = 0;
   private int zoomLevel = 16;
-  final int nMinZoomLevel = 13;
+  final int nMinZoomLevel = 12;
   final int nMaxZoomLevel = 18;
   private BoundedMapView m_mapView;
   
@@ -114,8 +114,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   float offsetX = 0.04f;
   float offsetY = 0.01f;
-  BoundingBoxE6 m_boundingBox = new BoundingBoxE6(37.70453488762476 + offsetY, 127.17361450195312 + offsetX, 
-      37.43677099171195 - offsetY, 126.76300048828125 - offsetX);
+  BoundingBoxE6 m_boundingBox = new BoundingBoxE6(37.73705525336632 + offsetY, 127.19833374023439 + offsetX, 
+      37.38761749978395 - offsetY, 126.75338745117188 - offsetX);
   
   // - Marker 관련.
   private NavigationOverlay navigationOverlay;
