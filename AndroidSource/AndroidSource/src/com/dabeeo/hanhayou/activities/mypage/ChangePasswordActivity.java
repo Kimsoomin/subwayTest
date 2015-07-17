@@ -98,17 +98,24 @@ public class ChangePasswordActivity extends ActionBarActivity
       return false;
     }
     
-    if(TextUtils.isEmpty(newPassword))
+    if (TextUtils.isEmpty(newPassword))
     {
       alertView.setAlert(getString(R.string.msg_please_write_new_password));
       return false;
-    }else
+    }
+    else
     {
+      if (currentPassword.equals(newPassword))
+      {
+        alertView.setAlert(getString(R.string.msg_warn_password_dont_same_original_password));
+        return false;
+      }
       if (newPassword.length() < 6 || newPassword.length() > 16)
       {
         alertView.setAlert(getString(R.string.msg_warn_password_length));
         return false;
-      }else
+      }
+      else
       {
         
         // 알파벳, 숫자, 몇몇의 특수문자만 가능
@@ -139,11 +146,12 @@ public class ChangePasswordActivity extends ActionBarActivity
       }
     }
     
-    if(TextUtils.isEmpty(newPasswordRe))
+    if (TextUtils.isEmpty(newPasswordRe))
     {
       alertView.setAlert(getString(R.string.msg_please_write_new_password));
       return false;
-    }else
+    }
+    else
     {
       if (!newPassword.equals(newPasswordRe.toString()))
       {
@@ -175,8 +183,8 @@ public class ChangePasswordActivity extends ActionBarActivity
     
     if (status.equals("OK"))
     {
-      new AlertDialogManager(ChangePasswordActivity.this).showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_success_password_change), 
-          getString(R.string.term_ok), null, new AlertListener()
+      new AlertDialogManager(ChangePasswordActivity.this).showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_success_password_change), getString(R.string.term_ok), null,
+          new AlertListener()
           {
             
             @Override
