@@ -384,5 +384,6 @@
     <string name="msg_send_auth_number">가입하신 이메일로 인증번호를 발송하였습니다.\n인증번호를 확인한 후,\n입력창에 인증번호를 입력해주세요</string>
     <string name="msg_recommend_schedule_title">#1님에게 딱 맞는 #2일 맞춤일정</string>
     <string name="msg_not_find_email">입력하신 E-mail 주소로 등록된 계정이 없습니다.</string>
+    <string name="msg_not_chinese">본 서비스의 회원가입은 중국인만 가능합니다.</string>
 
 </resources>

@@ -105,6 +105,7 @@ public class MySchedulesActivity extends ActionBarActivity
     adapter = new MySchedulesListAdapter(this);
     listView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridview);
     listView.addFooterView(footerLoadView);
+    listView.setInvisibleFooterView(footerLoadView);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
@@ -297,7 +298,8 @@ public class MySchedulesActivity extends ActionBarActivity
       if (totalItemCount > 0 && totalItemCount == firstVisibleItem + visibleItemCount)
       {
         bottomMargin.setVisibility(View.VISIBLE);
-      }else
+      }
+      else
         bottomMargin.setVisibility(View.GONE);
     }
   };
@@ -313,7 +315,8 @@ public class MySchedulesActivity extends ActionBarActivity
       isLoading = true;
       progressBar.setVisibility(View.VISIBLE);
       progressBar.bringToFront();
-      listView.setVisibleFooterView(footerLoadView);
+      if (adapter.getCount() != 0)
+        listView.setVisibleFooterView(footerLoadView);
       super.onPreExecute();
     }
     

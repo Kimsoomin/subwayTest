@@ -152,6 +152,7 @@ public class PlaceListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
+      if (adapter.getCount() != 0)
       listView.addFooterView(footerLoadView);
       super.onPreExecute();
     }

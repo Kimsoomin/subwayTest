@@ -126,7 +126,8 @@ public class TravelStrategyListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
-      listView.addFooterView(footerLoadView);
+      if (adapter.getCount() != 0)
+        listView.addFooterView(footerLoadView);
       super.onPreExecute();
     }
     

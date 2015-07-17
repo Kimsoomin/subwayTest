@@ -84,7 +84,6 @@ public class TravelScheduleListFragment extends Fragment
     super.onActivityCreated(savedInstanceState);
     
     footerLoadView = new ListFooterProgressView(getActivity());
-    
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
@@ -115,6 +114,7 @@ public class TravelScheduleListFragment extends Fragment
       listView.addHeaderView(view);
     }
     listView.addFooterView(footerLoadView);
+    listView.setInvisibleFooterView(footerLoadView);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
     loadSchedules();
@@ -170,7 +170,8 @@ public class TravelScheduleListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
-      listView.setVisibleFooterView(footerLoadView);
+      if (adapter.getCount() != 0)
+        listView.setVisibleFooterView(footerLoadView);
       super.onPreExecute();
     }
     

@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.activities.mypage;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,7 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -104,7 +107,18 @@ public class LoginActivity extends Activity
       else if (v.getId() == R.id.btn_find_password)
         startActivity(new Intent(LoginActivity.this, FindPasswordActivity.class));
       else if (v.getId() == R.id.btn_join)
-        startActivity(new Intent(LoginActivity.this, JoinActivity.class));
+      {
+        if (Locale.getDefault().getLanguage().contains("cn"))
+          startActivity(new Intent(LoginActivity.this, JoinActivity.class));
+        else
+        {
+          AlertDialog.Builder ab = new AlertDialog.Builder(LoginActivity.this);
+          ab.setTitle(R.string.term_alert);
+          ab.setMessage(R.string.msg_not_chinese);
+          ab.setPositiveButton(R.string.term_ok, null);
+          ab.show();
+        }
+      }
       else if (v.getId() == R.id.btn_cancel)
         finish();
     }
@@ -183,6 +197,7 @@ public class LoginActivity extends Activity
               startActivity(i);
             }
             
+            
             @Override
             public void onNegativeButtonClickListener()
             {
@@ -195,13 +210,16 @@ public class LoginActivity extends Activity
           if (status.equals("ERROR_ID"))
           {
             alertMessage = getString(R.string.msg_please_error_id);
-          }else if (status.equals("ERROR_OUT"))
+          }
+          else if (status.equals("ERROR_OUT"))
           {
             alertMessage = getString(R.string.msg_please_error_out);
-          }else if (status.equals("ERROR_PW"))
+          }
+          else if (status.equals("ERROR_PW"))
           {
             alertMessage = getString(R.string.msg_please_error_password);
-          }else
+          }
+          else
           {
             alertMessage = getString(R.string.msg_please_check_user_info);
           }

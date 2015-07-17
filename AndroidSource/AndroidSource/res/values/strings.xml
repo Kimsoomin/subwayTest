@@ -407,9 +407,10 @@
     <string name="msg_empty_rate">请留下评价</string>
     <string name="msg_string_length_less_six">至少输入6个字。</string>
     <!-- 비밀번호 찾기 -->
-    <string name="msg_please_write_password">请输入密码。</string>
-    <string name="msg_please_write_new_password">请输入新密码。</string>
+    <string name="msg_please_write_password">请输入原密码</string>
+    <string name="msg_please_write_new_password">请重新输入新密码。</string>
     <string name="msg_warn_password_length">密码为6~16个字符。</string>
+    <string name="msg_warn_password_dont_same_original_password">请输入与原密码不同的新密码</string>
     <string name="msg_please_valid_check_password">密码只能输入英文字符/数字/特殊符号。</string>
     <string name="msg_valid_password">只能输入英文/数字/特殊符号。</string>
     <string name="msg_warn_password_not_same">密码不正确，请重新输入。</string>
@@ -472,5 +473,6 @@
     <string name="msg_warn_password_not_same_name">不能使用与昵称相同的密码。</string>
     <string name="msg_comeplete_recommend_schedule">用户的 \n推荐行程创建成功！</string>
     <string name="msg_not_find_email">您输入的帐号不存在</string>
+    <string name="msg_not_chinese">该服务仅限中国人注册使用。</string>
 
 </resources>
