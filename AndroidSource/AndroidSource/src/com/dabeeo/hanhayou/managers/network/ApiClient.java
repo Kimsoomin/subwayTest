@@ -332,8 +332,18 @@ public class ApiClient
     ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
     for (int i = 0; i < bookmarkArray.size(); i++)
     {
-      if (bookmarkArray.get(i).categoryId == categoryId)
-        tempArray.add(bookmarkArray.get(i));
+      if(categoryId == 9)
+      {
+        if(bookmarkArray.get(i).categoryId == 1 || bookmarkArray.get(i).categoryId == 3 || bookmarkArray.get(i).categoryId == 4 
+            || bookmarkArray.get(i).categoryId == 5 || bookmarkArray.get(i).categoryId == 6)
+        {
+          tempArray.add(bookmarkArray.get(i));
+        }
+      }else
+      {
+        if (bookmarkArray.get(i).categoryId == categoryId)
+          tempArray.add(bookmarkArray.get(i));
+      }
     }
     return tempArray;
   }
@@ -352,8 +362,18 @@ public class ApiClient
     ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
     for (int i = 0; i < lists.size(); i++)
     {
-      if (lists.get(i).categoryId == categoryId)
-        tempArray.add(lists.get(i));
+      if(categoryId == 9)
+      {
+        if(lists.get(i).categoryId == 1 || lists.get(i).categoryId == 3 || lists.get(i).categoryId == 4 
+            || lists.get(i).categoryId == 5 || lists.get(i).categoryId == 6)
+        {
+          tempArray.add(lists.get(i));
+        }
+      }else
+      {
+        if (lists.get(i).categoryId == categoryId)
+          tempArray.add(lists.get(i));
+      }
     }
     return tempArray;
   }

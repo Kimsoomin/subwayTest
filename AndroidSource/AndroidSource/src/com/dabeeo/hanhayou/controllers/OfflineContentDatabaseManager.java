@@ -619,7 +619,14 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
       
       Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq(), null);
       if (categoryId != -1)
-        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq() + " AND category = " + categoryId, null);
+      {
+        if(categoryId == 9)
+          c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq() 
+              + " AND (category = 1 or category = 3 or category = 4 or category = 5 or category = 6)" , null);
+        else
+          c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_PLACE + " WHERE ownerUserSeq = " + PreferenceManager.getInstance(context).getUserSeq() 
+              + " AND category =" + categoryId, null);
+      }
       c.moveToFirst();
       if (c.moveToFirst())
       {

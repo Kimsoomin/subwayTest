@@ -13,8 +13,10 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
@@ -45,6 +47,8 @@ public class PlaceListFragment extends Fragment
   
   private int filteringMode = FILTERING_MODE_ALL;
   
+  public LinearLayout emptyLayout;
+  public TextView emptyText;
   
   public PlaceListFragment(int categoryId)
   {
@@ -69,6 +73,9 @@ public class PlaceListFragment extends Fragment
     
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+    
+    emptyLayout = (LinearLayout) getView().findViewById(R.id.empty_list);
+    emptyText = (TextView) getView().findViewById(R.id.empty_text);
     
     adapter = new PlaceListAdapter(getActivity());
     ((TravelStrategyActivity) getActivity()).showBottomTab(true);
@@ -174,9 +181,19 @@ public class PlaceListFragment extends Fragment
         isLoadEnded = true;
       
       if (adapter.getCount() == 0)
+      {
         listView.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.VISIBLE);
+        if (filteringMode == FILTERING_MODE_BOOKMARKED)
+          emptyText.setText(getString(R.string.msg_empty_my_bookmark));
+        else if (filteringMode == FILTERING_MODE_ADDED_BY_ME)
+          emptyText.setText(getString(R.string.msg_empty_my_place));
+      }
       else
+      {
         listView.setVisibility(View.VISIBLE);
+        emptyLayout.setVisibility(View.GONE);
+      }
       isLoading = false;
       progressBar.setVisibility(View.GONE);
       listView.removeFooterView(footerLoadView);
