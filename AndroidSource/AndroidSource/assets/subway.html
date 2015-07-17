@@ -224,22 +224,28 @@
           },
           mark_station: function(stationbean) {
             try{
+              // //예외 케이스 '-' 때문에 해당 역은 예외로 추가함
+              if(stationbean.id == "line234")
+                stationbean.id = "line140line234"
+
               var station = Snap.select(".station[id*="+stationbean.id+"]")
-
-
+             
               var bound;
               try{
+                if(stationbean.id == "line211")
+                  station= Snap.select(".station[id*=line211]")
                 bound = station.getBBox()
-              }catch(exception){
 
+              }catch(exception){
+                console.log("Re-Find in markstation");
                 for (var i = 0; i < station_ids.length; i++){
-                  if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id){
+                  if(station_ids[i].indexOf(station_id) > -1 && station_ids[i] != station_id ){
                     var temp_station = Snap.select(".station#"+station_ids[i])
-                    console.log(station_ids[i])
+                    // console.log(station_ids[i])
 
                     try{
                       if(temp_station.getBBox() != null){
-                        console.log(temp_station.getBBox())
+                        // console.log(temp_station.getBBox())
                         bound = temp_station.getBBox()
                       }
                       break;
@@ -438,6 +444,7 @@
               bound = station.getBBox()
             }catch(exception){
               console.log("Re-find")
+
               for (var i = 0; i < station_ids.length; i++){
                 if(station_ids[i].indexOf(this.start_station_id) > -1 && station_ids[i] != this.start_station_id){
                   var temp_station = Snap.select(".station#"+station_ids[i])
@@ -569,10 +576,10 @@
                 tit.remove();
               }
               // ## Native
-              setStartStation(station_id);
+              // setStartStation(station_id);
 
               // ## Web test
-              // subway.set_start_station(station_id);
+              subway.set_start_station(station_id);
              });
 
              endButton.click(function(event) {
@@ -584,10 +591,10 @@
                 tit.remove();
               }
               // ## Native
-              setEndStation(station_id);
+              // setEndStation(station_id);
 
               // ## Web test
-              // subway.set_end_station(station_id);
+              subway.set_end_station(station_id);
              });
           },
           findNearByStation: function(find_lat, find_lon){
@@ -743,10 +750,10 @@
         function showDestinationPopUp(station_id){
         	console.log("call NativeZoom!");
           //Native
-          setNativeZoom(station_id);
+          // setNativeZoom(station_id);
 
           //Web test
-          // subway.setCenterWithStationId(station_id);
+          subway.setCenterWithStationId(station_id);
           isElementClick = true;
         }
         //file:///android_asset/subway.svg
@@ -756,6 +763,7 @@
           }
           onClick = function(e) {
             console.log("click");
+            console.log(this.node.id);
             showDestinationPopUp(this.node.id);
           }
           onDblClick = function(e) {
