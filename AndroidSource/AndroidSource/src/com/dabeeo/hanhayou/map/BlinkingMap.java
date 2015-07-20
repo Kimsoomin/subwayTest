@@ -92,11 +92,11 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public Context mContext;
   
   // - Location
-  private double m_fLatitude = 37.5716550;
-  private double m_fLongitude = 126.9862330;
+  private double m_fLatitude = 37.530713;
+  private double m_fLongitude = 126.981770;
   public double place_fLatitude = 0;
   public double place_fLongitute = 0;
-  private int zoomLevel = 16;
+  private int zoomLevel = 12;
   final int nMinZoomLevel = 12;
   final int nMaxZoomLevel = 18;
   private BoundedMapView m_mapView;
@@ -492,16 +492,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     setContentView(R.layout.main_mapview);
     mContext = this;
     
-    createCategoryBitmap();
-    createSubwayExitBitmap();
-    MapButtonSetting();
-    summaryViewSetting();
-    navigationViewSetting();
-    userLocationInit();
-    databaseRead();
-    SearchSetting();
-    planButtonSetting();
-    
     blinkingactivity = BlinkingMap.this;
     
     /*
@@ -646,6 +636,15 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     
     g_sensorcallback = this;
     
+    createCategoryBitmap();
+    createSubwayExitBitmap();
+    MapButtonSetting();
+    summaryViewSetting();
+    navigationViewSetting();
+    userLocationInit();
+    databaseRead();
+    SearchSetting();
+    planButtonSetting();
     allIntent();
   } // - onCreate end..
   
@@ -1432,12 +1431,14 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     }
     else if (intent.hasExtra("placeIdx"))
     {
+      m_mapView.getController().setZoom(17);
       idx = intent.getStringExtra("placeIdx");
       selectItem = 1;
       selectMarker(idx, selectItem);
     }
     else if (intent.hasExtra("premiumIdx"))
     {
+      m_mapView.getController().setZoom(17);
       preimumIdx = intent.getStringExtra("premiumIdx");
       isPremium = intent.getBooleanExtra("isPremium", false);
       idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
@@ -1459,12 +1460,14 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       }
       else if (intent.hasExtra("placeIdx"))
       {
+        m_mapView.getController().setZoom(17);
         idx = intent.getStringExtra("placeIdx");
         selectItem = 1;
         selectMarker(idx, selectItem);
       }
       else if (intent.hasExtra("premiumIdx"))
       {
+        m_mapView.getController().setZoom(17);
         preimumIdx = intent.getStringExtra("premiumIdx");
         idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
         selectItem = 1;
@@ -1509,6 +1512,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   public void planIntent()
   {
+    m_mapView.getController().setZoom(17);
     Intent planIntent = getIntent();
     
     planIntentget = true;
@@ -1668,10 +1672,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   public void markerSel(int select)
   {
-//    if (onePlaceOverlay != null)
-//    {
-//      m_mapView.getOverlays().remove(onePlaceOverlay);
-//    }
+    if (onePlaceOverlay != null)
+    {
+      m_mapView.getOverlays().remove(onePlaceOverlay);
+    }
     
     if (select == 1)
     {
@@ -1953,9 +1957,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     ArrayList<OverlayItem> localPlaceItems = new ArrayList<OverlayItem>();
     ArrayList<OverlayItem> localSubwayItems = new ArrayList<OverlayItem>();
     ArrayList<OverlayItem> localSubwayExitItems = new ArrayList<OverlayItem>();
-    int attractionCount = 0;
-    int shoppingCount = 0;
-    int restaurantCount = 0;
     
     
     @Override
@@ -2004,62 +2005,45 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
               }
               else if (categoryType == -1)
               {
-                if (m_mapView.getZoomLevel() == 17 || m_mapView.getZoomLevel() == 18)
+                if(m_mapView.getZoomLevel() == 13)
                 {
-                  OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
-                  localPlaceItems.add(item);
-                }
-                else if (m_mapView.getZoomLevel() == 16)
-                {
-                  if (!info.premiumIdx.equals("null"))
+                  if(!info.premiumIdx.equals("null") && (info.category == 4 || info.category == 2))
                   {
                     OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                     localPlaceItems.add(item);
                   }
-                  else
-                  {
-                    if (info.category == 1 || info.category == 2 || info.category == 3 || info.category == 4 || info.category == 5 || info.category == 8 || info.category == 7 || info.category == 6
-                        || info.category == 60)
-                    {
-                      OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
-                      localPlaceItems.add(item);
-                    }
-                  }
-                }
-                else if (m_mapView.getZoomLevel() == 15)
+                }else if(m_mapView.getZoomLevel() == 14)
                 {
-                  if (!info.premiumIdx.equals("null"))
+                  if(!info.premiumIdx.equals("null") && (info.category == 4 || info.category == 2 
+                      || info.category == 1 || info.category == 5 ))
                   {
                     OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                     localPlaceItems.add(item);
                   }
-                  else
+                }else if(m_mapView.getZoomLevel() == 15)
+                {
+                  if(!info.premiumIdx.equals("null"))
                   {
-                    if ((info.category == 1 || info.category == 3 || info.category == 4 || info.category == 5 || info.category == 6) && attractionCount < 10)
+                    OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
+                    localPlaceItems.add(item);
+                  }
+                }else if(m_mapView.getZoomLevel() == 16)
+                {
+                  if(!info.premiumIdx.equals("null"))
+                  {
+                    OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
+                    localPlaceItems.add(item);
+                  }else
+                  {
+                    if(info.category == 1 || info.category == 2 || info.category == 4 || info.category == 5)
                     {
                       OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                       localPlaceItems.add(item);
-                      attractionCount++;
-                    }
-                    
-                    if (info.category == 2 && shoppingCount < 10)
-                    {
-                      OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
-                      localPlaceItems.add(item);
-                      shoppingCount++;
-                    }
-                    
-                    if (info.category == 7 && restaurantCount < 10)
-                    {
-                      OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
-                      localPlaceItems.add(item);
-                      restaurantCount++;
                     }
                   }
-                }
-                else
+                }else if(m_mapView.getZoomLevel() == 17 || m_mapView.getZoomLevel() == 18)
                 {
-                  if (!info.premiumIdx.equals("null"))
+                  if(info.category != 50 && info.category != 60 && info.category != 70 && info.category != 80)
                   {
                     OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                     localPlaceItems.add(item);
@@ -2122,10 +2106,14 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     }
   }
   
+  public double select_lat = 0;
+  public double select_lng = 0;
   
 // - ui
   public void refreshState()
   {
+   
+    
     if (exitItems != null)
     {
       subwayExitOverlay = new SubwayExitOverlay(exitItems, null, new DefaultResourceProxyImpl(mContext), mContext, exitNumber);
@@ -2148,6 +2136,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         {
           BlinkingCommon.smlLibDebug("Blinkingmap", "touch me allplaceOverlay");
           selectItem = 1;
+          select_lat = arg1.getPoint().getLatitude();
+          select_lng = arg1.getPoint().getLongitude();
           selectMarker(arg1.getSnippet(), selectItem);
           return false;
         }
@@ -2171,11 +2161,30 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         {
           BlinkingCommon.smlLibDebug("Blinkingmap", "touch me subway");
           selectItem = 2;
+          select_lat = arg1.getPoint().getLatitude();
+          select_lng = arg1.getPoint().getLongitude();
           selectMarker(arg1.getSnippet(), selectItem);
           return false;
         }
           }, new DefaultResourceProxyImpl(mContext), mContext, categorys);
       m_mapView.getOverlays().add(subwayOverlay);
+    }
+    
+    if(select_lat != 0 && select_lng != 0)
+    {
+      BlinkingCommon.smlLibDebug("BlinkingMap12312321", "sadjflkdasjfkldjasklfjdkla");
+      if(selectItem != -1)
+      {
+        BlinkingCommon.smlLibDebug("BlinkingMap", "sadjflkdasjfkldjasklfjdkla");
+        onePlaceItems = new ArrayList<OverlayItem>();
+        OverlayItem item = new OverlayItem("","","",new GeoPoint(select_lat, select_lng));
+        onePlaceItems.add(item);
+        
+        onePlaceOverlay = new OnePlaceOverlay(onePlaceItems, null, new DefaultResourceProxyImpl(mContext), mContext);
+        m_mapView.getOverlays().add(onePlaceOverlay);
+        select_lat = 0;
+        select_lng = 0;
+      }
     }
     
     runOnUiThread(new Runnable()
@@ -2192,7 +2201,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         }
         else if (selectItem == 2)
         {
-          
           if(subwayOverlay != null)
             subwayOverlay.changeMethod(idx);
           if(allplaceOverlay != null)
@@ -2324,7 +2332,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       categorys = new LinkedList<>();
     }
     
-    int reSize = DpToPixel(22);
+    int reSize = DpToPixel(17);
     
     for (int resourceId : categoryResource)
     {
@@ -2347,7 +2355,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       exitNumber = new LinkedList<>();
     }
     
-    int reSize = DpToPixel(15);
+    int reSize = DpToPixel(12);
     
     for (int resourceId : exitResource)
     {
