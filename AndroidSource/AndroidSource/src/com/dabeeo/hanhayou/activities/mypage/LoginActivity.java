@@ -30,6 +30,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.views.LoginBottomAlertView;
 
 public class LoginActivity extends Activity
@@ -108,7 +109,7 @@ public class LoginActivity extends Activity
         startActivity(new Intent(LoginActivity.this, FindPasswordActivity.class));
       else if (v.getId() == R.id.btn_join)
       {
-        if (Locale.getDefault().getLanguage().contains("cn"))
+        if (Locale.getDefault().getLanguage().contains("zh"))
           startActivity(new Intent(LoginActivity.this, JoinActivity.class));
         else
         {
