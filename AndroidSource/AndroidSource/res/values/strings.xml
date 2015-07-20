@@ -31,7 +31,7 @@
     <string name="term_register_photolog">上传游记</string>
     <string name="term_wishlist">收藏夹</string>
     <string name="term_search">搜索</string>
-    <string name="msg_download_map">贴士!你可以免费下载离线地图哟！</string>
+    <string name="msg_download_map">贴士!\n你可以免费下载\n离线地图哟！</string>
 
     <!-- Place activities term -->
     <string name="term_review_best">好</string>

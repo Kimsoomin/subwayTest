@@ -19,6 +19,7 @@ import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.beans.SearchResultBean;
+import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
@@ -676,6 +677,26 @@ public class ApiClient
     return null;
   }
   
+  /**
+   * TrendyKorea Api
+   */
+  
+  public ArrayList<TrendKoreaBean> getThemeList()
+  {
+    try
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=THEME_LIST&lang=zh_cn&isRandom=0");
+      
+      JSONObject obj = new JSONObject(result.response);
+    }
+    catch (Exception e)
+    {
+      // TODO: handle exception
+    }
+    
+    return null;
+  }
+  
   
   public NetworkResult getTicketDetail(String ticketId)
   {
@@ -1069,7 +1090,7 @@ public class ApiClient
    */
   public NetworkResult reqeustBookmarkCancel(String ownerUserSeq, String prentIdx, String parentType)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=BOOKMARK_CANCEL&userSeq=" + ownerUserSeq + "&parent=" + prentIdx + "&parentType=" + parentType);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=BOOKMARK_CANCEL&userSeq=" + ownerUserSeq + "&parentIdx=" + prentIdx + "&parentType=" + parentType);
   }
   
   //회원관련 API
