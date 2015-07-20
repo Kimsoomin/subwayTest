@@ -1,9 +1,13 @@
 package com.dabeeo.hanhayou.activities.trend;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,9 +29,9 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendKoreaListAdapter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
-@SuppressWarnings("deprecation")
 public class TrendActivity extends ActionBarActivity
 {
   private ListView listview;
@@ -40,12 +44,19 @@ public class TrendActivity extends ActionBarActivity
   private boolean isAnimation = false;
   private float bottomTappx;
   
+  private int imageWidth = 0;
+  private int imageheight = 0;
+  
+  public ApiClient apiClient;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_trend_korea);
+    
+    apiClient = new ApiClient(TrendActivity.this);
     
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -67,54 +78,18 @@ public class TrendActivity extends ActionBarActivity
     bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
     
     listview = (ListView) findViewById(R.id.listview);
-    adapter = new TrendKoreaListAdapter(this);
+    DisplayMetrics metrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    imageWidth = metrics.widthPixels;
+    imageheight = (int) (imageWidth*0.43);
+    
+    adapter = new TrendKoreaListAdapter(this, imageWidth, imageheight);
     listview.setAdapter(adapter);
-    
-    TrendKoreaBean bean = new TrendKoreaBean();
-    bean.title = "한류스타들의 BEST 상품";
-    bean.category = "[K STAR]";
-    bean.imageUrl = "http://image.gsshop.com/mi09/deal/dealno/166/201551517223568016.jpg";
-    adapter.add(bean);
-    
-    bean = new TrendKoreaBean();
-    bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP";
-    bean.category = "[BEAUTY]";
-    bean.imageUrl = "http://image.gsshop.com/mi09/deal/dealno/166/20150520154548882748.jpg";
-    adapter.add(bean);
-    
-    bean = new TrendKoreaBean();
-    bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP 2";
-    bean.category = "[BEAUTY]";
-    bean.imageUrl = "http://image.gsshop.com/mi09/deal/dealno/165/20155893948481946.jpg";
-    adapter.add(bean);
-    
-    bean = new TrendKoreaBean();
-    bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP 3";
-    bean.category = "[BEAUTY]";
-    adapter.add(bean);
-    
-    bean = new TrendKoreaBean();
-    bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP 4";
-    bean.category = "[BEAUTY]";
-    adapter.add(bean);
-    
-    bean = new TrendKoreaBean();
-    bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP 5";
-    bean.category = "[BEAUTY]";
-    adapter.add(bean);
-    
-    bean = new TrendKoreaBean();
-    bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP 6";
-    bean.category = "[BEAUTY]";
-    adapter.add(bean);
-    
-    bean = new TrendKoreaBean();
-    bean.title = "서울 현지인이 추천하는 코스메틱선물 TOP 7";
-    bean.category = "[BEAUTY]";
-    adapter.add(bean);
     
     float density = getResources().getDisplayMetrics().density;
     bottomTappx = 65 * density;
+    
+    loadThemeList();
     
     listview.setOnScrollListener(new OnScrollListener()
     {
@@ -215,9 +190,17 @@ public class TrendActivity extends ActionBarActivity
         TrendKoreaBean bean = (TrendKoreaBean) adapter.getItem(position);
         
         Intent i = new Intent(TrendActivity.this, TrendExhibitionActivity.class);
+        i.putExtra("themeIdx", bean.idx);
+        i.putExtra("themeTitle", bean.title);
+        i.putExtra("themeImageUrl", bean.imageUrl);
         startActivity(i);
       }
     });
+  }
+  
+  public void loadThemeList()
+  {
+    new GetTrendyKoreaList().execute();
   }
   
   private OnClickListener bottomMenuClickListener = new OnClickListener()
@@ -252,7 +235,6 @@ public class TrendActivity extends ActionBarActivity
       }
     }
   };
-  
   
   @Override
   public void onBackPressed()
@@ -289,5 +271,38 @@ public class TrendActivity extends ActionBarActivity
       
     }
     return super.onOptionsItemSelected(item);
+  }
+  
+  private class GetTrendyKoreaList extends AsyncTask<Void, Integer, ArrayList<TrendKoreaBean>>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+
+    @Override
+    protected ArrayList<TrendKoreaBean> doInBackground(Void... params)
+    {
+      ArrayList<TrendKoreaBean> result = null;
+      result = apiClient.getThemeList();
+      return result;
+    }
+    
+    @Override
+    protected void onPostExecute(ArrayList<TrendKoreaBean> result)
+    {
+      super.onPostExecute(result);
+      adapter.addAll(result);
+      
+      if (adapter.getCount() == 0)
+      {
+        listview.setVisibility(View.GONE);
+      }
+      else
+      {
+        listview.setVisibility(View.VISIBLE);
+      }
+    }
   }
 }

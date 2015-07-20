@@ -307,9 +307,9 @@ public class TravelScheduleDetailFragment extends Fragment
         {
           //TEST ADD RECOMMEND PRODUCT VIEW
           ProductBean bean = new ProductBean();
-          bean.title = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
-          bean.originalPrice = 109000;
-          bean.discountPrice = 90000;
+          bean.name = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
+          bean.priceSale = "109000";
+          bean.priceDiscount = "90000";
           
           ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
           productRecommendView.setBean(bean);
@@ -354,9 +354,9 @@ public class TravelScheduleDetailFragment extends Fragment
       {
         //TEST ADD RECOMMEND PRODUCT VIEW
         ProductBean bean = new ProductBean();
-        bean.title = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
-        bean.originalPrice = 4000;
-        bean.discountPrice = 3000;
+        bean.name = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
+        bean.priceSale = "4000";
+        bean.priceDiscount = "3000";
         
         ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
         productRecommendView.setBean(bean);

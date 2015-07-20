@@ -75,7 +75,7 @@ public class TrendSearchListAdapter extends BaseAdapter
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     TextView title = (TextView) view.findViewById(R.id.title);
-    title.setText(bean.title);
+    title.setText(bean.name);
     return view;
   }
 }

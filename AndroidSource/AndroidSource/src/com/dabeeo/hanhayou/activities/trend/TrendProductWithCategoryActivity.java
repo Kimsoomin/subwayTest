@@ -65,17 +65,17 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 				startActivity(new Intent(TrendProductWithCategoryActivity.this, TrendProductDetailActivity.class));
 			}
 		});
-		ProductBean bean = new ProductBean();
-		bean.title = "[숨]워터풀 타임리스 워터젤 크림";
-		bean.originalPrice = 80000;
-		bean.discountPrice = 452000;
-		adapter.add(bean);
-		
-		bean = new ProductBean();
-		bean.title = "[네이처리퍼블릭]수딩 맨 모이스처 알로엘 수딩젤";
-		bean.originalPrice = 80000;
-		bean.discountPrice = 452000;
-		adapter.add(bean);
+//		ProductBean bean = new ProductBean();
+//		bean.title = "[숨]워터풀 타임리스 워터젤 크림";
+//		bean.originalPrice = 80000;
+//		bean.discountPrice = 452000;
+//		adapter.add(bean);
+//		
+//		bean = new ProductBean();
+//		bean.title = "[네이처리퍼블릭]수딩 맨 모이스처 알로엘 수딩젤";
+//		bean.originalPrice = 80000;
+//		bean.discountPrice = 452000;
+//		adapter.add(bean);
 		
 		if (isCategoryExist)
 			displayCategories();

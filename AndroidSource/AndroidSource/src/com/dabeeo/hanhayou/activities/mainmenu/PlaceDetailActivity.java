@@ -313,9 +313,9 @@ public class PlaceDetailActivity extends ActionBarActivity
       containerProduct.removeAllViews();
       ProductView productView = new ProductView(PlaceDetailActivity.this);
       ProductBean productBean = new ProductBean();
-      productBean.title = "XXX 수분크림";
-      productBean.originalPrice = 150;
-      productBean.discountPrice = 93;
+      productBean.name = "XXX 수분크림";
+      productBean.priceSale = "150";
+      productBean.priceDiscount = "93";
       productView.setBean(productBean, productBean);
       containerProduct.addView(productView);
     }

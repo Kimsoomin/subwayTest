@@ -89,15 +89,15 @@ public class WishListSearchActivity extends Activity
 					emptyContainer.setVisibility(View.GONE);
 					
 					ProductBean bean = new ProductBean();
-					bean.title = "[숨]워터풀 타임리스 워터젤 크림";
-					bean.originalPrice = 80000;
-					bean.discountPrice = 452000;
+					bean.name = "[숨]워터풀 타임리스 워터젤 크림";
+					bean.priceSale = "80000";
+					bean.priceDiscount = "452000";
 					adapter.add(bean);
 					
 					bean = new ProductBean();
-					bean.title = "[SKII]나이트밤";
-					bean.originalPrice = 100000;
-					bean.discountPrice = 252000;
+					bean.name = "[SKII]나이트밤";
+					bean.priceSale = "100000";
+					bean.priceDiscount = "252000";
 					adapter.add(bean);
 				}
 				else

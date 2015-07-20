@@ -123,15 +123,15 @@ public class TrendSearchActivity extends Activity
         adapter.clear();
         
         ProductBean bean = new ProductBean();
-        bean.title = "TEST";
+        bean.name = "TEST";
         adapter.add(bean);
         
         bean = new ProductBean();
-        bean.title = "TEST 1";
+        bean.name = "TEST 1";
         adapter.add(bean);
         
         bean = new ProductBean();
-        bean.title = "TEST 2";
+        bean.name = "TEST 2";
         adapter.add(bean);
       }
       

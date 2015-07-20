@@ -101,9 +101,9 @@ public class TrendProductListAdapter extends BaseAdapter
         btnWishList.setActivated(!btnWishList.isActivated());
       }
     });
-    title.setText(bean.title);
-    discountPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.toString(bean.discountPrice)));
-    price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.toString(bean.originalPrice)));
+    title.setText(bean.name);
+    discountPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.priceSale));
+    price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.priceDiscount));
     month.setText("7월");
     chinaPrice.setText("(500￥)");
     

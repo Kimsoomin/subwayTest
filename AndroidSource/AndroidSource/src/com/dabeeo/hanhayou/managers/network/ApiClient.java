@@ -15,6 +15,7 @@ import android.util.Log;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
+import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
@@ -23,6 +24,7 @@ import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
@@ -683,18 +685,33 @@ public class ApiClient
   
   public ArrayList<TrendKoreaBean> getThemeList()
   {
+    ArrayList<TrendKoreaBean> themeList = new ArrayList<TrendKoreaBean>();
+    
     try
     {
       NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=THEME_LIST&lang=zh_cn&isRandom=0");
       
       JSONObject obj = new JSONObject(result.response);
+      JSONArray arr = obj.getJSONArray("theme");
+      for (int i = 0; i < arr.length(); i++)
+      {
+        JSONObject objInArr = arr.getJSONObject(i);
+        TrendKoreaBean bean = new TrendKoreaBean();
+        bean.setJSONObject(objInArr);
+        themeList.add(bean);
+      }
     }
     catch (Exception e)
     {
-      // TODO: handle exception
+      BlinkingCommon.smlLibPrintException("ApiClient", " e :" + e);
     }
     
-    return null;
+    return themeList;
+  }
+  
+  public NetworkResult getThemeItem(String idx)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0");
   }
   
   

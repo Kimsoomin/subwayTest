@@ -99,8 +99,7 @@
                             android:layout_gravity="bottom"
                             android:layout_marginLeft="2dp"
                             android:layout_weight="1"
-                            android:text="()"
-                            android:textColor="#444a4b"
+                            android:textColor="@color/darker_gray"
                             android:textSize="11sp" />
                     </LinearLayout>
                 </LinearLayout>

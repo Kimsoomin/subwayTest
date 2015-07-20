@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="@color/light_gray"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:contentDescription="@null" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:contentDescription="@null"
-        android:scaleType="fitXY"
-        android:src="@drawable/shadow_theme_list" />
-
     <LinearLayout
+        android:id="@+id/trendy_text_layout"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
+        android:background="@drawable/shadow_theme_list"
         android:gravity="bottom"
         android:orientation="horizontal" >
 
@@ -31,32 +25,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="12dp"
+            android:paddingLeft="12dp" >
 
-            <!--
-             <TextView
-            android:id="@+id/category"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold" />
-            -->
-
-            <View
-                android:layout_width="30dp"
-                android:layout_height="2dp"
-                android:background="@android:color/white" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/deco_theme_title"
+                android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:text="title"
-                android:textColor="#ffffff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <View

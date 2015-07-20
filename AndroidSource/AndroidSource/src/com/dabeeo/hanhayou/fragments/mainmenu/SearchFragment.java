@@ -171,9 +171,9 @@ public class SearchFragment extends Fragment
     layoutRecommedProduct.removeAllViews();
     ProductView productView = new ProductView(getActivity());
     ProductBean productBean = new ProductBean();
-    productBean.title = "상품명1";
-    productBean.originalPrice = 100;
-    productBean.discountPrice = 40;
+    productBean.name = "상품명1";
+    productBean.priceSale = "100";
+    productBean.priceDiscount = "40";
     productView.setBean(productBean, productBean);
     layoutRecommedProduct.addView(productView);
   }
