@@ -26,7 +26,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="15dip"
+        android:layout_height="3dip"
         android:background="@drawable/bottom_bar_shadow"
         android:contentDescription="@null" />
 
