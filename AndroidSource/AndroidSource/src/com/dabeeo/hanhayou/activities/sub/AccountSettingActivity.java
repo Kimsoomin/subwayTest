@@ -161,8 +161,6 @@ public class AccountSettingActivity extends ActionBarActivity
       }
     };
     editName.addTextChangedListener(watcher);
-    typingCancel.setVisibility(View.GONE);
-    
     editName.setOnEditorActionListener(new OnEditorActionListener()
     {
       
@@ -193,6 +191,7 @@ public class AccountSettingActivity extends ActionBarActivity
   {
     super.onResume();
     editName.setText(preferenceManager.getUserName());
+    typingCancel.setVisibility(View.GONE);
   }
   
   private OnClickListener menuClickListener = new OnClickListener()
