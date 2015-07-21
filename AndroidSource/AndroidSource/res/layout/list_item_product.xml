@@ -33,7 +33,6 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:lines="2"
-                android:text="askldjfalksjfdlkjasklfjlkdasjfkldjsaklfjdklsajfkldjsaklfjdsklaj"
                 android:textColor="@color/darker_gray"
                 android:textSize="14sp" />
 
@@ -55,7 +54,6 @@
                         android:id="@+id/price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="original"
                         android:textColor="@color/darker_gray"
                         android:textSize="16sp" />
 
@@ -63,24 +61,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal" >
+                        android:orientation="vertical" >
 
                         <TextView
                             android:id="@+id/chinese_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="discount"
                             android:textColor="@color/light_gray"
                             android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/discount_rate"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:layout_marginLeft="4dp"
-                            android:layout_weight="1"
-                            android:text="alskjdfklajsfkljdas;kljf;kldsaj;klfjdsak;l"
                             android:textColor="@color/light_gray"
                             android:textSize="12sp" />
                     </LinearLayout>
