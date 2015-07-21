@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -120,6 +121,22 @@ public class AccountSettingActivity extends ActionBarActivity
       }
     });
     
+    editName.setOnFocusChangeListener(new OnFocusChangeListener()
+    {
+      @Override
+      public void onFocusChange(View v, boolean hasFocus)
+      {
+        if (!hasFocus)
+          typingCancel.setVisibility(View.GONE);
+        else
+        {
+          if (editName.getText().toString().length() > 0)
+            typingCancel.setVisibility(View.VISIBLE);
+          else
+            typingCancel.setVisibility(View.GONE);
+        }
+      }
+    });
     TextWatcher watcher = new TextWatcher()
     {
       @Override
@@ -144,6 +161,7 @@ public class AccountSettingActivity extends ActionBarActivity
       }
     };
     editName.addTextChangedListener(watcher);
+    typingCancel.setVisibility(View.GONE);
     
     editName.setOnEditorActionListener(new OnEditorActionListener()
     {
@@ -160,6 +178,7 @@ public class AccountSettingActivity extends ActionBarActivity
     changePasswordContainer.setOnClickListener(menuClickListener);
     withDrawContainer.setOnClickListener(menuClickListener);
   }
+  
   
   @Override
   public void onBackPressed()
@@ -257,6 +276,7 @@ public class AccountSettingActivity extends ActionBarActivity
         alertView.setAlert(getString(R.string.msg_please_valid_check_name));
     }
   };
+  
   
   public SpannableString underLineString(String text)
   {
