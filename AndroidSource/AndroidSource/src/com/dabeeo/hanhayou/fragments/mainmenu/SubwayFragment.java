@@ -923,7 +923,7 @@ public class SubwayFragment extends Fragment
                   if (nearByStationWithTransfer.lines.size() == 0)
                   {
                     ImageView imageView = new ImageView(getActivity());
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
                     imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.line));
                     nearStationImage.addView(imageView);
                   }
@@ -932,7 +932,7 @@ public class SubwayFragment extends Fragment
                     for (int i = 0; i < nearByStationWithTransfer.lines.size(); i++)
                     {
                       ImageView imageView = new ImageView(getActivity());
-                      imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                      imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
                       imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.lines.get(i)));
                       nearStationImage.addView(imageView);
                     }
