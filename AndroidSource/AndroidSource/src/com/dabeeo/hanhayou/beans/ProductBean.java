@@ -23,7 +23,41 @@ public class ProductBean
   {
     try
     {
-     
+      if(obj.has("currencyConvert")) 
+        currencyConvert = obj.getString("currencyConvert");
+      
+      if(obj.has("id"))
+        id = obj.getString("id");
+      
+      if(obj.has("name"))
+        name = obj.getString("name");
+      
+      if(obj.has("currency"))
+        currency = obj.getString("currency");
+      
+      if(obj.has("priceDiscount"))
+        priceDiscount = obj.getString("priceDiscount");
+      
+      if(obj.has("priceSale"))
+        priceSale = obj.getString("priceSale");
+      
+      if(obj.has("saleRate"))
+        saleRate = obj.getString("saleRate");
+      
+      if(obj.has("origin"))
+        origin = obj.getString("origin");
+      
+      if(obj.has("manufacture"))
+        manufacture = obj.getString("manufacture");
+      
+      if(obj.has("imageAlt"))
+        imageAlt = obj.getString("imageAlt");
+      
+      if(obj.has("imageTitle"))
+        imageTitle = obj.getString("imageTitle");
+      
+      if(obj.has("imageUrl"))
+        imageUrl = obj.getString("imageUrl");
     }
     catch (Exception e)
     {

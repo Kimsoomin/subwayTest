@@ -5,12 +5,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.squareup.picasso.Picasso;
 
 public class TrendExhibitionTopView extends RelativeLayout
@@ -43,27 +40,21 @@ public class TrendExhibitionTopView extends RelativeLayout
   }
   
   
-  public void setBean(String themeTitle, String imageUrl)
+  public void setBean(String imageUrl)
   {
-    init(themeTitle, imageUrl);
+    init(imageUrl);
   }
   
   
-  public void init(String themetitle, String imageUrl)
+  public void init(String imageUrl)
   {
     int resId = R.layout.view_trend_exhibition_top_view;
     View view = LayoutInflater.from(context).inflate(resId, null);
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    LinearLayout textLayout = (LinearLayout) view.findViewById(R.id.trendy_text_layout);
-    RelativeLayout.LayoutParams layparam = (RelativeLayout.LayoutParams) textLayout.getLayoutParams();
-    layparam.height = (int)(imageheight*0.8);
-    textLayout.setLayoutParams(layparam);
-    TextView title = (TextView) view.findViewById(R.id.title);
     
     Picasso.with(context).load(imageUrl).resize(imagewidth, imageheight).centerCrop().into(imageView);
-    title.setText(themetitle);
     addView(view);
   }
 }

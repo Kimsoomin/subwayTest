@@ -1,9 +1,15 @@
 package com.dabeeo.hanhayou.activities.trend;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -20,9 +26,10 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendProductListAdapter;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.views.TrendProductCategoryView;
 
-@SuppressWarnings("deprecation")
 public class TrendProductWithCategoryActivity extends ActionBarActivity
 {
 	private GridView gridView;
@@ -30,14 +37,17 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 	private LinearLayout categoryContainer;
 	private HashMap<String, LinearLayout> categoriesLayouts = new HashMap<>();
 	
-	private boolean isCategoryExist = false;
-	
+	public ApiClient apiClient;
+	public String categoryId;
+	public ArrayList<ProductBean> ProductArray;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trend_product_with_category_list);
+		
+		apiClient = new ApiClient(TrendProductWithCategoryActivity.this);
 		
 		@SuppressLint("InflateParams")
 		View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -50,7 +60,7 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 		String categoryTitle = getIntent().getStringExtra("category_title");
 		title.setText(categoryTitle);
 		
-		isCategoryExist = getIntent().getBooleanExtra("is_exist_category", false);
+		categoryId = getIntent().getStringExtra("categoryId");
 		
 		categoryContainer = (LinearLayout) findViewById(R.id.category_container);
 		gridView = (GridView) findViewById(R.id.product_list);
@@ -65,20 +75,14 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 				startActivity(new Intent(TrendProductWithCategoryActivity.this, TrendProductDetailActivity.class));
 			}
 		});
-//		ProductBean bean = new ProductBean();
-//		bean.title = "[숨]워터풀 타임리스 워터젤 크림";
-//		bean.originalPrice = 80000;
-//		bean.discountPrice = 452000;
-//		adapter.add(bean);
-//		
-//		bean = new ProductBean();
-//		bean.title = "[네이처리퍼블릭]수딩 맨 모이스처 알로엘 수딩젤";
-//		bean.originalPrice = 80000;
-//		bean.discountPrice = 452000;
-//		adapter.add(bean);
 		
-		if (isCategoryExist)
-			displayCategories();
+		loadCategoryItems();
+//		displayCategories();
+	}
+	
+	private void loadCategoryItems()
+	{
+	  new GetCategoryProductList().execute();
 	}
 	
 	
@@ -88,22 +92,6 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 		view.setData("스킨케어", "메이크업");
 		categoriesLayouts.put("스킨케어", view.leftContainer);
 		categoriesLayouts.put("메이크업", view.rightContainer);
-		view.leftContainer.setOnClickListener(categoryContainerClickListener);
-		view.rightContainer.setOnClickListener(categoryContainerClickListener);
-		categoryContainer.addView(view);
-		
-		view = new TrendProductCategoryView(this);
-		view.setData("헤어케어", "바디케어");
-		categoriesLayouts.put("헤어케어", view.leftContainer);
-		categoriesLayouts.put("바디케어", view.rightContainer);
-		view.leftContainer.setOnClickListener(categoryContainerClickListener);
-		view.rightContainer.setOnClickListener(categoryContainerClickListener);
-		categoryContainer.addView(view);
-		
-		view = new TrendProductCategoryView(this);
-		view.setData("남성화장품", "기타");
-		categoriesLayouts.put("남성화장품", view.leftContainer);
-		categoriesLayouts.put("기타", view.rightContainer);
 		view.leftContainer.setOnClickListener(categoryContainerClickListener);
 		view.rightContainer.setOnClickListener(categoryContainerClickListener);
 		categoryContainer.addView(view);
@@ -145,4 +133,50 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	private class GetCategoryProductList extends AsyncTask<Void, Void, NetworkResult>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.getCategryProductList(categoryId);
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      
+      responseParser(result.response);
+    }
+  }
+  
+  public void responseParser(String result)
+  {
+    try
+    {
+      JSONObject obj = new JSONObject(result);
+      ProductArray = new ArrayList<ProductBean>();
+      JSONArray productArr = obj.getJSONArray("product");
+      for (int i = 0; i < productArr.length(); i++)
+      {
+        ProductBean product = new ProductBean();
+        JSONObject objInArr = productArr.getJSONObject(i);
+        product.setJSONObject(objInArr);
+        ProductArray.add(product);
+      }
+      adapter.addAll(ProductArray);
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    
+  }
 }

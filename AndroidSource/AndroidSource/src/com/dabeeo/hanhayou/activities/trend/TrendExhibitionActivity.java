@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
-import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendProductListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
@@ -57,7 +56,6 @@ public class TrendExhibitionActivity extends ActionBarActivity
     getSupportActionBar().setHomeButtonEnabled(true);
     
     idx = getIntent().getStringExtra("themeIdx");
-    themeTitle = getIntent().getStringExtra("themeTitle");
     themeUrl = getIntent().getStringExtra("themeImageUrl");
     
     gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.gridview);
@@ -68,6 +66,7 @@ public class TrendExhibitionActivity extends ActionBarActivity
     int imageHeight = (int) (imageWidth*0.43);
     
     TopView = new TrendExhibitionTopView(this, imageWidth, imageHeight);
+    gridView.addHeaderView(TopView);
     
     adapter = new TrendProductListAdapter(this);
     gridView.setAdapter(adapter);
@@ -133,10 +132,7 @@ public class TrendExhibitionActivity extends ActionBarActivity
   {
     try
     {
-      
-
-      TopView.setBean(themeTitle, themeUrl);
-      gridView.addHeaderView(TopView);
+      TopView.setBean(themeUrl);
       
       JSONObject obj = new JSONObject(result);
       ProductArray = new ArrayList<ProductBean>();

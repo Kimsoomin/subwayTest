@@ -158,30 +158,35 @@ public class TrendSearchActivity extends Activity
     public void onClick(View v)
     {
       Intent i = new Intent(TrendSearchActivity.this, TrendProductWithCategoryActivity.class);
-      i.putExtra("is_exist_category", true);
       if (v.getId() == containerAll.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_all));
+        i.putExtra("categoryId", "0");
       }
       else if (v.getId() == containerCosmetic.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_cosmetic));
+        i.putExtra("categoryId", "37");
       }
       else if (v.getId() == containerShoesbag.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_shoesbag));
+        i.putExtra("categoryId", "39");
       }
       else if (v.getId() == containerAccessory.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_accessory));
+        i.putExtra("categoryId", "40");
       }
       else if (v.getId() == containerBaby.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_baby));
+        i.putExtra("categoryId", "41");
       }
       else if (v.getId() == containerFood.getId())
       {
         i.putExtra("category_title", getString(R.string.term_shopping_food));
+        i.putExtra("categoryId", "42");
       }
       startActivity(i);
     }

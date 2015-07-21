@@ -96,8 +96,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   private double m_fLongitude = 126.981770;
   public double place_fLatitude = 0;
   public double place_fLongitute = 0;
-  private int zoomLevel = 12;
-  final int nMinZoomLevel = 12;
+  private int zoomLevel = 13;
+  final int nMinZoomLevel = 13;
   final int nMaxZoomLevel = 18;
   private BoundedMapView m_mapView;
   

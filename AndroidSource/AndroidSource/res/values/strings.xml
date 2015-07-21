@@ -347,11 +347,11 @@
     <string name="msg_how_about_this_place">这个地点怎么样？</string>
     <!-- 트렌드한국 -->
     <string name="term_shopping_all">全部</string>
-    <string name="term_shopping_cosmetic">化妆品/美容</string>
-    <string name="term_shopping_shoesbag">食品</string>
-    <string name="term_shopping_accessory">母婴用品</string>
-    <string name="term_shopping_baby">厨房/生活</string>
-    <string name="term_shopping_food">其它</string>
+    <string name="term_shopping_cosmetic">美妆/美容</string>
+    <string name="term_shopping_shoesbag">鞋类/箱包</string>
+    <string name="term_shopping_accessory">珠宝/配饰</string>
+    <string name="term_shopping_baby">母婴/儿童</string>
+    <string name="term_shopping_food">食品/保健</string>
     <!-- 프로모션 -->
     <string name="term_show_detail">查看详情</string>
     <string name="term_dont_show_a_day">今天不再显示</string>

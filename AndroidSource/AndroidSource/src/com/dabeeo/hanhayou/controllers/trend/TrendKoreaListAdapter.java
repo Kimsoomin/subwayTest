@@ -11,9 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.TrendKoreaBean;
@@ -88,12 +85,12 @@ public class TrendKoreaListAdapter extends BaseAdapter
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-    LinearLayout textLayout = (LinearLayout) view.findViewById(R.id.trendy_text_layout);
-    RelativeLayout.LayoutParams layparam = (RelativeLayout.LayoutParams) textLayout.getLayoutParams();
-    layparam.height = (int)(imageheight*0.8);
-    textLayout.setLayoutParams(layparam);
-    TextView title = (TextView) view.findViewById(R.id.title);
-    title.setText(bean.title);
+//    LinearLayout textLayout = (LinearLayout) view.findViewById(R.id.trendy_text_layout);
+//    RelativeLayout.LayoutParams layparam = (RelativeLayout.LayoutParams) textLayout.getLayoutParams();
+//    layparam.height = (int)(imageheight*0.8);
+//    textLayout.setLayoutParams(layparam);
+//    TextView title = (TextView) view.findViewById(R.id.title);
+//    title.setText(bean.title);
     
     Picasso.with(context).load(bean.imageUrl).resize(imagewidth, imageheight).centerCrop().into(imageView);
     Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);

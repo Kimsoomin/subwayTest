@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#f0f0f0"
-    android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:gravity="center_vertical" 
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="4dp"
-                        android:textColor="@color/darker_gray"
+                        android:textColor="@color/dark_gray"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -135,11 +135,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="4dp"
-                        android:textColor="@color/darker_gray"
+                        android:textColor="@color/dark_gray"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    
 
 </LinearLayout>

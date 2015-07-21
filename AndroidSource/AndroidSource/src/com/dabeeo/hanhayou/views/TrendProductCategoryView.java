@@ -45,7 +45,10 @@ public class TrendProductCategoryView extends RelativeLayout
 	public void setData(String categoryTitle, String categoryTitle2)
 	{
 		leftTitle.setText(categoryTitle);
-		rightTitle.setText(categoryTitle2);
+		if(categoryTitle2 == null)
+		  rightContainer.setVisibility(View.INVISIBLE);
+		else
+		  rightTitle.setText(categoryTitle2);
 	}
 	
 	

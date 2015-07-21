@@ -12,44 +12,4 @@
         android:layout_centerInParent="true"
         android:contentDescription="@null" />
 
-    <LinearLayout
-        android:id="@+id/trendy_text_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shadow_theme_list"
-        android:gravity="bottom"
-        android:orientation="horizontal" >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:orientation="vertical"
-            android:paddingBottom="12dp"
-            android:paddingLeft="12dp" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/deco_theme_title"
-                android:contentDescription="@null" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:maxLines="4"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2" />
-    </LinearLayout>
-
 </RelativeLayout>

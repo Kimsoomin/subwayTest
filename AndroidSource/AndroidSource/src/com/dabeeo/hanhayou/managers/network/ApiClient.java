@@ -714,6 +714,11 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0");
   }
   
+  public NetworkResult getCategryProductList(String categroyId)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&categoryId=" + categroyId + "&lang=zh&isRandom=0");
+  }
+  
   
   public NetworkResult getTicketDetail(String ticketId)
   {

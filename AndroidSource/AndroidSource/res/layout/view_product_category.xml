@@ -24,6 +24,7 @@
             android:layout_weight="1"
             android:singleLine="true"
             android:text="title"
+            android:textSize="18sp"
             android:textColor="@color/color_normal_black_select_appcolor" />
 
         <ImageView
@@ -48,6 +49,7 @@
             android:layout_weight="1"
             android:singleLine="true"
             android:text="title"
+            android:textSize="18sp"
             android:textColor="@color/color_normal_black_select_appcolor" />
 
         <ImageView
