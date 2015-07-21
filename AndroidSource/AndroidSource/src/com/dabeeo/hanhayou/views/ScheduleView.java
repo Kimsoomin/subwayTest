@@ -99,7 +99,7 @@ public class ScheduleView extends RelativeLayout
       title.setText(bean.title);
       if (TextUtils.isEmpty(bean.imageUrl))
       {
-        imageView.setVisibility(View.INVISIBLE);
+        imageView.setVisibility(View.GONE);
       }
       else
       {
@@ -110,7 +110,7 @@ public class ScheduleView extends RelativeLayout
             ImageDownloader.displayImage(context, bean.imageUrl, imageView, null);
         }
         else
-          imageView.setVisibility(View.INVISIBLE);
+          imageView.setVisibility(View.GONE);
       }
       
       if (!SystemUtil.isConnectNetwork(context))
