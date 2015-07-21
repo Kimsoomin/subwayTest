@@ -2,7 +2,6 @@ package com.dabeeo.hanhayou.views;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,24 +46,22 @@ public class ProductView extends RelativeLayout
     ImageView firstImageView = (ImageView) view.findViewById(R.id.imageview);
     TextView firstTitle = (TextView) view.findViewById(R.id.product_title);
     TextView firstOriginalPrice = (TextView) view.findViewById(R.id.original_price);
-    TextView firstDiscountPrice = (TextView) view.findViewById(R.id.discount_price);
-    TextView firstDiscountPriceCn = (TextView) view.findViewById(R.id.discount_price_cn);
+    TextView firstCnPrice = (TextView) view.findViewById(R.id.cn_price);
+    TextView firstDiscountRate = (TextView) view.findViewById(R.id.discount_rate);
     
     LinearLayout secondContainer = (LinearLayout) view.findViewById(R.id.conatiner_second_bean);
     ImageView secondImageView = (ImageView) view.findViewById(R.id.imageview_second);
     TextView secondTitle = (TextView) view.findViewById(R.id.product_title_second);
     TextView secondOriginalPrice = (TextView) view.findViewById(R.id.original_price_second);
-    TextView secondDiscountPrice = (TextView) view.findViewById(R.id.discount_price_second);
-    TextView secondDiscountPirceCn = (TextView) view.findViewById(R.id.discount_price_second_cn);
-    //가데이터
-//    ImageDownloader.displayImage(context, "", firstImageView, null);
+    TextView secondCnPrice = (TextView) view.findViewById(R.id.cn_price_second);
+    TextView secondDiscountRate = (TextView) view.findViewById(R.id.discount_rate_second);
+    
     firstImageView.setImageResource(R.drawable.sample_place_detail_shopping_list1);
     firstContainer.setVisibility(View.VISIBLE);
     firstTitle.setText("IOPE/亦博 气垫BB霜粉底霜 气垫粉饼保湿美白遮瑕SPF50+/PA+++");
     firstOriginalPrice.setText("₩ 77,000");
-    firstDiscountPrice.setText("₩ 49,500");
-    firstDiscountPriceCn.setText("(￥275)");
-    firstOriginalPrice.setPaintFlags(firstOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    firstCnPrice.setText("(대략"+context.getString(R.string.term_yuan)+"455"+")");
+    firstDiscountRate.setText("9折");
     firstContainer.setOnClickListener(new OnClickListener()
     {
       @Override
@@ -81,9 +78,8 @@ public class ProductView extends RelativeLayout
     secondImageView.setImageResource(R.drawable.sample_place_detail_shopping_list2);
     secondTitle.setText("[ISA KNOX伊诺姿]365长效防晒隔离霜70ml");
     secondOriginalPrice.setText("₩ 91,000");
-    secondDiscountPrice.setText("₩ 87,000");
-    secondDiscountPirceCn.setText("(￥485)");
-    secondOriginalPrice.setPaintFlags(secondOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    secondCnPrice.setText("(대략"+context.getString(R.string.term_yuan) + "538"+")");
+    secondDiscountRate.setText("9折");
     secondContainer.setOnClickListener(new OnClickListener()
     {
       @Override
