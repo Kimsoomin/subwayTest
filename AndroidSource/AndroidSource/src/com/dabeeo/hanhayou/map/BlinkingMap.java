@@ -244,6 +244,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public boolean getintent = false;
   public boolean isPremium = false;
   
+  public double select_lat = 0;
+  public double select_lng = 0;
+  
+  
   /**
    * ===================================================================================== 
    * 단말기의 방향을 감지. - 네비게이션에 필요.
@@ -1137,6 +1141,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       case R.id.naviBtn:
         if (myLocation() == true)
         {
+          select_lat = 0;
+          select_lng = 0;
           navigationStart();
         }
         break;
@@ -1236,7 +1242,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     lineId = "";
     idx = null;
     if (planOverlay != null)
-      new PlanSetAsyncTask().execute(0);
+      new PlanSetAsyncTask().execute();
     markerRefresh();
     
     summaryViewVisibleSet(summaryViewInVisible, 0);
@@ -1287,18 +1293,21 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     }
     else
     {
-      if (distance < 3.6)
+      temp = distance / 3.6;
+      if(temp < 1)
       {
-        temp = distance / 3.6;
-        temp = temp * 100;
-        clock = (int) temp;
-        naviTexts[1] = "" + clock + "min";
-      }
-      else
+        naviTexts[1] = "" + temp*60 + "min" ;
+      }else
       {
-        clock = (int) ((int) distance / 3.6);
-        naviTexts[1] = "" + clock + "hour";
+        int hour = (int) temp;
+        naviTexts[1] = "" + hour +"hour";
+        
+        if(temp-hour != 0)
+        {
+          naviTexts[1] = naviTexts[1] + "" + (int)((temp-hour) * 60) + "min";
+        }
       }
+      
       naviTexts[0] = kmeter + "km";
       
     }
@@ -2105,9 +2114,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       refreshState();
     }
   }
-  
-  public double select_lat = 0;
-  public double select_lng = 0;
   
 // - ui
   public void refreshState()

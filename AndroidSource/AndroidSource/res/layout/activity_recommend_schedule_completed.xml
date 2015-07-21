@@ -35,7 +35,7 @@
                 android:layout_height="60dip"
                 android:background="@drawable/shape_circle_profile"
                 android:contentDescription="@null"
-                android:padding="2dp"
+                android:padding="4dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_profile_l"
                 app:riv_corner_radius="60dp" />
