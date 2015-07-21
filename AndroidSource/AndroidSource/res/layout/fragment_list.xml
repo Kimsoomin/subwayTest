@@ -49,14 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/msg_recommend_schedule"
-                android:textColor="#969b9c" />
+                android:textColor="@color/light_gray" />
 
             <Button
                 android:id="@+id/recommend_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/app_button"
+                android:background="@drawable/normal_app_button"
                 android:padding="8dp"
                 android:text="@string/term_recommend_travel_schedule"
                 android:textColor="@color/color_normal_appcolor_select_white" />

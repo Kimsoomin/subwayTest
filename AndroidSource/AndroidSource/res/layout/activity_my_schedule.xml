@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/msg_recommend_schedule"
-                android:textColor="#969b9c" />
+                android:textColor="@color/light_gray" />
 
             <Button
                 android:id="@+id/recommend_button"
@@ -104,7 +104,7 @@
         android:background="@drawable/btn_background_pink"
         android:padding="8dp"
         android:text="@string/term_recommend_travel_schedule"
-        android:textColor="#ffffff"
+        android:textColor="@android:color/white"
         android:textSize="21sp" />
 
     <Button
@@ -115,7 +115,7 @@
         android:background="@drawable/btn_background_blue"
         android:padding="8dp"
         android:text="@string/term_select_delete"
-        android:textColor="#ffffff"
+        android:textColor="@android:color/white"
         android:textSize="21sp"
         android:visibility="gone" />
 
