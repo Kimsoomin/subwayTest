@@ -54,12 +54,13 @@
 
                         <TextView
                             android:id="@+id/text_title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:minHeight="50dp"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:ellipsize="end"
                             android:gravity="center_vertical"
+                            android:minHeight="50dp"
                             android:paddingLeft="8dp"
                             android:singleLine="true"
                             android:text="test"
@@ -129,7 +130,7 @@
                     android:src="@drawable/icon_plan_memo_s" />
             </RelativeLayout>
         </LinearLayout>
-        
+
         <!-- Line & next km / time -->
 
         <LinearLayout
