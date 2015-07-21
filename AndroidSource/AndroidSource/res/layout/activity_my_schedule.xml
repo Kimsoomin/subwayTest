@@ -39,22 +39,23 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:numColumns="2" />
-        <View 
+
+        <View
             android:id="@+id/bottom_margin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/empty_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:background="@android:color/white"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingTop="42dp"
         android:visibility="gone" >
 
         <ImageView
@@ -81,6 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/msg_recommend_schedule"
                 android:textColor="@color/light_gray" />
 
@@ -90,7 +92,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/normal_app_button"
-                android:padding="8dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp"
                 android:text="@string/term_recommend_travel_schedule"
                 android:textColor="@color/color_normal_appcolor_select_white" />
         </LinearLayout>

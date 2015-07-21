@@ -13,18 +13,17 @@
         android:id="@+id/empty_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:background="@android:color/white"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingBottom="50dp"
+        android:paddingTop="42dp"
         android:visibility="gone" >
 
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/character_list_blank"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"
+            android:src="@drawable/character_list_blank" />
 
         <TextView
             android:id="@+id/text_empty"
@@ -57,7 +56,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/normal_app_button"
-                android:padding="8dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp"
                 android:text="@string/term_recommend_travel_schedule"
                 android:textColor="@color/color_normal_appcolor_select_white" />
         </LinearLayout>
