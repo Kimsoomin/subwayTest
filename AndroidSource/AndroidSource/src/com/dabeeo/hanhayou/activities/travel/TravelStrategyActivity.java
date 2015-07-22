@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.activities.travel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -57,6 +58,9 @@ public class TravelStrategyActivity extends ActionBarActivity
   private TravelStrategyListFragment recommendSeoulFragment;
   private PlaceListFragment popularFragment, shoppingFragment, restaurantFragment;
   
+  private PlaceListFragment currentPlaceListFragment = null;
+  private HashMap<Integer, String> itemTitle = new HashMap<Integer, String>();
+  
   
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -112,6 +116,11 @@ public class TravelStrategyActivity extends ActionBarActivity
     titles.add(getString(R.string.term_shopping));
     titles.add(getString(R.string.term_restaurant));
     
+    itemTitle.put(0, getString(R.string.term_all));
+    itemTitle.put(1, getString(R.string.term_all));
+    itemTitle.put(2, getString(R.string.term_all));
+    itemTitle.put(3, getString(R.string.term_all));
+    
     for (String str : titles)
     {
       getSupportActionBar().addTab(getSupportActionBar().newTab().setText(str).setTabListener(tabListener));
@@ -159,6 +168,9 @@ public class TravelStrategyActivity extends ActionBarActivity
     getMenuInflater().inflate(R.menu.menu_recommend_seoul, menu);
     areaItem = menu.findItem(R.id.all);
     areaItem.setVisible(true);
+    
+    String title = itemTitle.get(lastSelectedTab);
+    areaItem.setTitle(title);
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -192,26 +204,28 @@ public class TravelStrategyActivity extends ActionBarActivity
       }
       else if (v.getId() == bottomMenuMyPage.getId())
       {
-        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
           Intent i = new Intent(TravelStrategyActivity.this, MainActivity.class);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           i.putExtra("position", MainActivity.POSITION_MY_PAGE);
           startActivity(i);
-        }else
+        }
+        else
         {
           alertDialogManager.showNeedLoginDialog(1);
         }
       }
       else if (v.getId() == bottomMenuWishList.getId())
       {
-        if(PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+        if (PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
           Intent i = new Intent(TravelStrategyActivity.this, MainActivity.class);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           i.putExtra("position", MainActivity.POSITION_WISHLIST);
           startActivity(i);
-        }else
+        }
+        else
         {
           alertDialogManager.showNeedLoginDialog(2);
         }
@@ -254,6 +268,16 @@ public class TravelStrategyActivity extends ActionBarActivity
       
       if (tab.getPosition() == 0)
         isFirstSelectRecommendSeoulTab = false;
+      else
+      {
+        if (tab.getPosition() == 1)
+          currentPlaceListFragment = popularFragment;
+        if (tab.getPosition() == 2)
+          currentPlaceListFragment = shoppingFragment;
+        if (tab.getPosition() == 3)
+          currentPlaceListFragment = restaurantFragment;
+      }
+      invalidateOptionsMenu();
     }
     
     
@@ -284,20 +308,25 @@ public class TravelStrategyActivity extends ActionBarActivity
   private void spotArrayItemClick(int which)
   {
     Log.w("WARN", "filtering mode : " + which);
+    
+    itemTitle.put(lastSelectedTab, getResources().getStringArray(R.array.spot_array)[which]);
+    
     if (which == 2 && !SystemUtil.isConnectNetwork(getApplicationContext()))
       new AlertDialogManager(TravelStrategyActivity.this).showDontNetworkConnectDialog();
     else
     {
-      popularFragment.changeFilteringMode(which);
-      shoppingFragment.changeFilteringMode(which);
-      restaurantFragment.changeFilteringMode(which);
+      if (currentPlaceListFragment != null)
+        currentPlaceListFragment.changeFilteringMode(which);
     }
+    invalidateOptionsMenu();
   }
   
   
   private void areaItemClick(int which)
   {
+    itemTitle.put(lastSelectedTab, getResources().getStringArray(R.array.area_array)[which]);
     recommendSeoulFragment.filtering(which);
+    invalidateOptionsMenu();
   }
   
   
@@ -323,13 +352,9 @@ public class TravelStrategyActivity extends ActionBarActivity
       public void onClick(DialogInterface dialog, int which)
       {
         if (adapter.currentPosition != 0)
-        {
           spotArrayItemClick(which);
-        }
         else
-        {
           areaItemClick(which);
-        }
       }
     });
     builderSingle.show();
