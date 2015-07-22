@@ -25,7 +25,7 @@
                 android:id="@+id/scrollview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="35dp"
+                android:paddingBottom="35dp"
                 tools:paddingTop="@dimen/max_height_header" >
 
                 <LinearLayout
@@ -190,8 +190,8 @@
                                 android:layout_height="12dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="4dp"
-                                android:src="@drawable/btn_list_more_arrow"
-                                android:contentDescription="@null" />
+                                android:contentDescription="@null"
+                                android:src="@drawable/btn_list_more_arrow" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -221,8 +221,7 @@
         <com.dabeeo.hanhayou.views.PlaceDetailHeaderView
             android:id="@+id/header_view"
             android:layout_width="match_parent"
-            android:layout_height="300dip"
-            android:paddingBottom="78dip" />
+            android:layout_height="300dip" />
 
         <com.dabeeo.hanhayou.views.PlaceDetailTitleView
             android:id="@+id/title_view"

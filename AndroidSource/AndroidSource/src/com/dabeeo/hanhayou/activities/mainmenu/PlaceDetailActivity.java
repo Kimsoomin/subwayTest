@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -377,6 +378,8 @@ public class PlaceDetailActivity extends ActionBarActivity
       headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
       header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78,
           getResources().getDisplayMetrics())));
+      scrollView.setPadding(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
+          getResources().getDisplayMetrics()), 0, 0);
     }
   }
   
