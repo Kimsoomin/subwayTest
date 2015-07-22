@@ -83,6 +83,8 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hanhayou.beans.ScheduleDayBean;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.map.SensorUpdater.SensorUpdaterCallback;
 import com.dabeeo.hanhayou.map.SubwayExitInfo.ExitInfo;
 import com.squareup.picasso.Picasso;
@@ -1143,7 +1145,36 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         {
           select_lat = 0;
           select_lng = 0;
-          navigationStart();
+          if(distancCheck(m_locMarkTarget))
+          {
+            navigationStart();
+          }else
+          {
+            new AlertDialogManager(blinkingactivity).showAlertDialog(getString(R.string.term_alert), getString(R.string.map_navigation_long_distance), 
+                getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+            {
+              
+              @Override
+              public void onPositiveButtonClickListener()
+              {
+//                Toast.makeText(mContext, "1.5km넘었습니다", Toast.LENGTH_SHORT).show();
+                destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
+                double[] destLatLong = new double[3];
+                destLatLong[0] = place_fLatitude;
+                destLatLong[1] = place_fLongitute;
+                destLatLong[2] = 1;
+                destSubwayIntent.putExtra("set_dest_station_lat_lon", destLatLong);
+                destSubwayIntent.putExtra("dest_name", summaryTitle.getText().toString());
+                startActivity(destSubwayIntent);
+              }
+              
+              @Override
+              public void onNegativeButtonClickListener()
+              {
+                navigationStart();
+              }
+            });
+          }
         }
         break;
         
@@ -1215,10 +1246,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     m_mapView.getOverlays().clear();
     viewSetForNavigation();
     MoveToCurrentPosition();
-    //ShowCurrentPosition(UseLocationNavi,g_fLastAngle);
-    
     navigationCal(m_locMarkTarget);
-    
     m_sensorManager.registerListener(m_sensorListener, m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
   }
   
@@ -1246,6 +1274,20 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     markerRefresh();
     
     summaryViewVisibleSet(summaryViewInVisible, 0);
+  }
+  
+  public boolean distancCheck(Location MarkTaget)
+  {
+    Location locHere = g_locationHere;
+    
+    double distance = locHere.distanceTo(MarkTaget) * 0.001;
+    
+    Log.i("INFO", "distanceto " + locHere.distanceTo(MarkTaget));
+    
+    if(distance > 1.5)
+      return false;
+    else
+      return true;
   }
   
   
@@ -1288,7 +1330,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       }
       else
       {
-        naviTexts[1] = "" + clock + "min";
+        naviTexts[1] = "" + (int)clock + "min";
       }
     }
     else
@@ -1296,7 +1338,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       temp = distance / 3.6;
       if(temp < 1)
       {
-        naviTexts[1] = "" + temp*60 + "min" ;
+        naviTexts[1] = "" + (int)(temp*60) + "min" ;
       }else
       {
         int hour = (int) temp;
@@ -2118,7 +2160,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
 // - ui
   public void refreshState()
   {
-   
+    
     
     if (exitItems != null)
     {

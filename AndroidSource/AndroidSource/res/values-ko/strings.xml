@@ -167,6 +167,7 @@
     <string name="msg_dest_arrived">목적지에 도착하였습니다.</string>
     <string name="app_finish">\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.</string>
     <string name="msg_no_search_result">검색 결과가 없습니다.</string>
+    <string name="map_navigation_long_distance">도보로 이용하기에 먼거리입니다. 지하철역으로 안내해드릴까요?</string>
     <!-- Intro -->
     <string name="msg_map_donwload">서울 지도를 다운로드 중 입니다\n잠시만 기다려주세요</string>
 
