@@ -51,7 +51,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
   private EditText editEmail, editName, editPassword, editPasswordRe, editPhoneNumber;
   private Button btnCheckDuplicateEmail, btnCheckDuplicateName;
   private LoginBottomAlertView alertView;
-  private CheckBox checkAgreement, checkPrivateAgreement, checkGPSAgreement;
+  private CheckBox checkAgreement, checkPrivateAgreement, checkGPSAgreement, checkAboveFourTeenAgreement;
   
   private TextView textAgree, textPrivateAgree, textGpsAgree;
   
@@ -107,6 +107,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     checkAgreement = (CheckBox) findViewById(R.id.chk_agreement);
     checkPrivateAgreement = (CheckBox) findViewById(R.id.chk_private_agreement);
     checkGPSAgreement = (CheckBox) findViewById(R.id.chk_gps_agreement);
+    checkAboveFourTeenAgreement = (CheckBox) findViewById(R.id.chk_agreement_above_fourteen);
     
     joinLayout = (FrameLayout) findViewById(R.id.join_frame_layout);
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
@@ -352,6 +353,11 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
+      if (!checkAboveFourTeenAgreement.isChecked())
+      {
+        alertView.setAlert(getString(R.string.msg_check_above_fourteen_agreement));
+        return;
+      }
       new JoinHanhayouTask().execute();
     }
   };

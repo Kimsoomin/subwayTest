@@ -138,6 +138,8 @@
     <string name="msg_agreement">同意使用条款</string>
     <string name="msg_private_agreement">同意隐私条款</string>
     <string name="msg_gps_agreement">同意位置信息条款</string>
+    <string name="msg_above_fourteen_agreement">14岁以上。</string>
+    <string name="term_requirement">(必选)</string>
     <string name="msg_date_of_birth">请输入出生日期</string>
     <string name="term_send">发送</string>
     <!-- 지하철 -->
@@ -434,6 +436,7 @@
     <string name="msg_check_agreement">请同意使用条款</string>
     <string name="msg_check_private_agreement">请同意隐私条款</string>
     <string name="msg_check_gps_agreement">请同意定位信息条款。</string>
+    <string name="msg_check_above_fourteen_agreement">请确认您输入的内容。</string>
     <string name="msg_please_check_user_info">请确认您输入的内容。</string>
     <string name="msg_send_email_fail">邮件发送失败。 </string>
     <string name="msg_wrong_password">密码不正确。</string>
