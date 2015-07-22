@@ -146,6 +146,7 @@
     <string name="term_gender">Gender</string>
     <string name="term_gender_male">Male</string>
     <string name="term_gender_female">Female</string>
+    <string name="msg_warn_password_only_english_and_number">비밀번호는 6~16자의 영문/숫자 조합으로 만드세요</string>
     <string name="term_date_of_birth">Date of birth</string>
     <string name="term_auto_login">자동 로그인</string>
     <string name="term_find_password">비밀번호 찾기</string>

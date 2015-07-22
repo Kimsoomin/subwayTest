@@ -327,6 +327,13 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
+      boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", passWord);
+      if (!chk)
+      {
+        alertView.setAlert(getString(R.string.msg_warn_password_only_english_and_number));
+        return;
+      }
+      
       mailFemail = isMale ? "M" : "F";
       
       if (birthDay == null)

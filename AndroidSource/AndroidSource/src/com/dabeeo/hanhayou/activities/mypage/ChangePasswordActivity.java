@@ -122,7 +122,7 @@ public class ChangePasswordActivity extends ActionBarActivity
         boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", newPassword);
         if (!chk)
         {
-          alertView.setAlert(getString(R.string.msg_please_valid_check_password));
+          alertView.setAlert(getString(R.string.msg_warn_password_only_english_and_number));
           return false;
         }
         
