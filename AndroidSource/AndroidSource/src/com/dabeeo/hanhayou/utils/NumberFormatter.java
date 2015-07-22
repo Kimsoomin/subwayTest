@@ -15,12 +15,12 @@ public class NumberFormatter
       int minutes = (time % 60);
       
       if(hours != 0)
-        timeString = Integer.toString(hours) + "hour ";
+        timeString = Integer.toString(hours) + "h ";
       if (minutes != 0)
-        timeString = timeString + Integer.toString(minutes) + "min";
+        timeString = timeString + Integer.toString(minutes) + "m";
       
       if(timeString.length() == 0)
-        timeString = "0hour";
+        timeString = "0h";
     }
     catch (Exception e)
     {

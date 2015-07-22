@@ -158,8 +158,8 @@
                     <Button
                         android:id="@+id/btn_is_public"
                         style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="24dp"
-                        android:layout_height="18dp"
+                        android:layout_width="29dp"
+                        android:layout_height="24dp"
                         android:background="@drawable/btn_is_public"
                         android:gravity="center" />
                 </LinearLayout>
