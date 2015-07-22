@@ -246,7 +246,7 @@ public class TravelScheduleDetailFragment extends Fragment
     if (!SystemUtil.isConnectNetwork(getActivity()))
     {
       headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
-      headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (120 * density)));
+      headerContainer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) (130 * density)));
       scrollView.setPadding(0, 0, 0, 0);
     }
     else
