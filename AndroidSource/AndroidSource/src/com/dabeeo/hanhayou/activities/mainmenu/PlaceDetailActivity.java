@@ -352,9 +352,12 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
     });
     
-    reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.idx);
-    reviewLayout.addView(reviewContainerView);
-    reviewContainerView.loadMore();
+    if (SystemUtil.isConnectNetwork(this))
+    {
+      reviewContainerView = new ReviewContainerView(PlaceDetailActivity.this, "place", bean.idx);
+      reviewLayout.addView(reviewContainerView);
+      reviewContainerView.loadMore();
+    }
     
     textRate.setText(Float.toString(bean.rate));
 //    textDetail.setText(bean.contents);

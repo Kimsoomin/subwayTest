@@ -216,8 +216,11 @@ public class TravelScheduleDetailFragment extends Fragment
     headerView.setData(bean.imageUrl, bean.title, bean.days.size(), bean.budgetTotal);
     titleView.setBean(bean);
     
-    reviewContainerView = new ReviewContainerView(getActivity(), "plan", bean.idx);
-    reviewLayout.addView(reviewContainerView);
+    if (SystemUtil.isConnectNetwork(getActivity()))
+    {
+      reviewContainerView = new ReviewContainerView(getActivity(), "plan", bean.idx);
+      reviewLayout.addView(reviewContainerView);
+    }
     
     if (isMySchedule)
     {
