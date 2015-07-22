@@ -34,6 +34,17 @@
                     android:gravity="center"
                     android:orientation="vertical" >
 
+                    <TextView
+                        android:id="@+id/text_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:padding="8dp"
+                        android:textColor="@color/darker_gray"
+                        android:textSize="19sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -47,21 +58,9 @@
                             android:orientation="vertical"
                             android:padding="8dp" >
 
-                            <TextView
-                                android:id="@+id/text_title"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
-                                android:lines="2"
-                                android:textColor="#444a4b"
-                                android:textSize="19sp"
-                                android:textStyle="bold" />
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal" >
 
@@ -93,7 +92,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="8dp"
                                             android:text="original"
-                                            android:textColor="#969b9c"
+                                            android:textColor="@color/light_gray"
                                             android:textSize="11sp" />
                                     </LinearLayout>
 
@@ -103,12 +102,12 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:gravity="center_vertical"
                                         android:orientation="horizontal" >
 
                                         <TextView
                                             android:layout_width="40dp"
                                             android:layout_height="wrap_content"
+                                            android:layout_marginTop="3dp"
                                             android:text="@string/term_coupon_price"
                                             android:textColor="@color/darker_gray"
                                             android:textSize="8sp" />
@@ -176,7 +175,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="8dp"
                                             android:text="10% 할인쿠폰"
-                                            android:textColor="#969b9c"
+                                            android:textColor="@color/light_gray"
                                             android:textSize="11sp" />
                                     </LinearLayout>
                                     <!-- 배송 -->
@@ -200,7 +199,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="8dp"
                                             android:text="무료배송"
-                                            android:textColor="#969b9c"
+                                            android:textColor="@color/light_gray"
                                             android:textSize="11sp" />
 
                                         <TextView
@@ -209,7 +208,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="8dp"
                                             android:background="@drawable/sqaure_app_color_stroke_box"
-                                            android:padding="2dp"
+                                            android:padding="3dp"
                                             android:text="@string/term_delivery_some_day"
                                             android:textColor="@color/appcolor"
                                             android:textSize="11sp" />
@@ -222,11 +221,10 @@
                                     android:orientation="vertical" >
 
                                     <TextView
-                                        android:id="@+id/text_discount_month"
+                                        android:id="@+id/text_discount_rate"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="top|right"
-                                        android:text="8&apos;s"
                                         android:textColor="@color/dark_pink"
                                         android:textSize="21sp" />
 
@@ -258,8 +256,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="#CECECE" />
+                    android:layout_height="3dp"
+                    android:background="@color/gray" />
 
                 <!-- 상세정보 -->
 
@@ -292,7 +290,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#CECECE" />
+                        android:background="@color/gray" />
 
                     <LinearLayout
                         android:id="@+id/container_product_detail_info"
@@ -348,7 +346,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#CECECE" />
+                        android:background="@color/gray" />
 
                     <TextView
                         android:id="@+id/text_product_detail_delivery_info"
@@ -401,8 +399,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#CECECE" />
+                    android:layout_height="3dp"
+                    android:background="@color/gray" />
 
                 <!-- 추천상품 -->
 
@@ -444,7 +442,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="#CECECE"
+                    android:background="@color/gray"
                     android:paddingBottom="50dp" />
 
                 <RelativeLayout
