@@ -293,7 +293,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
-      // 연속된 3개의 문자/숫자 불가 
+      // 붙어있는 3개의 동일한 문자/숫자 불가 
       for (int i = 0; i < passWord.length(); i++)
       {
         String character = passWord.charAt(i) + "";
@@ -317,6 +317,13 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           alertView.setAlert(getString(R.string.msg_warn_password_not_same));
           return;
         }
+      }
+      
+      //연속된 3개의 문자 숫자 
+      if (checkForAscendingOrDescendingPart(passWord, 3))
+      {
+        alertView.setAlert(getString(R.string.msg_now_allow_continuos_three_letters));
+        return;
       }
       
       mailFemail = isMale ? "M" : "F";
@@ -370,6 +377,40 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       }
     }
   };
+  
+  
+  public boolean checkForAscendingOrDescendingPart(String txt, int l)
+  {
+    for (int i = 0; i <= txt.length() - l; ++i)
+    {
+      boolean success = true;
+      char c = txt.charAt(i);
+      for (int j = 1; j < l; ++j)
+      {
+        if (((char) c + j) != txt.charAt(i + j))
+        {
+          success = false;
+          break;
+        }
+      }
+      if (success)
+        return true;
+      
+      success = true;
+      
+      for (int j = 1; j < l; ++j)
+      {
+        if (((char) c - j) != txt.charAt(i + j))
+        {
+          success = false;
+          break;
+        }
+      }
+      if (success)
+        return true;
+    }
+    return false;
+  }
   
   private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener()
   {
@@ -520,13 +561,16 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       {
         isValidEmail = true;
         alertView.setAlert(getString(R.string.msg_possibile_email_account));
-      } else if (status.equals("ERROR_ID")) 
+      }
+      else if (status.equals("ERROR_ID"))
       {
         alertView.setAlert(getString(R.string.msg_please_error_id));
-      } else if (status.equals("ERROR_OUT"))
+      }
+      else if (status.equals("ERROR_OUT"))
       {
         alertView.setAlert(getString(R.string.msg_please_error_out));
-      }else
+      }
+      else
       {
         alertView.setAlert(getString(R.string.msg_please_check_user_info));
       }
