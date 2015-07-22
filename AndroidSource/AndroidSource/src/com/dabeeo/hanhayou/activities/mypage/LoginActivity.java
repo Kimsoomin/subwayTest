@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.views.LoginBottomAlertView;
 
 public class LoginActivity extends Activity
