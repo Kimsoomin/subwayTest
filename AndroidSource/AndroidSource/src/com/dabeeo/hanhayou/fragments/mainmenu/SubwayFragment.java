@@ -284,6 +284,8 @@ public class SubwayFragment extends Fragment
       }
     });
     
+    progressBar.setVisibility(View.VISIBLE);
+    progressBar.bringToFront();
     if (SubwayManager.getInstance(getActivity()).stations.size() == 0)
       loadAllStations(null);
   }
@@ -714,6 +716,7 @@ public class SubwayFragment extends Fragment
         @Override
         public void run()
         {
+          progressBar.setVisibility(View.GONE);
           defaultZoom = (int) (webview.getScale() * 100);
           Log.w("WARN", "Default Zoom : " + defaultZoom);
           btnMap.setVisibility(View.VISIBLE);
