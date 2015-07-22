@@ -129,7 +129,8 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 		}
 		else if (id == R.id.cart)
 		{
-			
+		  Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendCartActivity.class);
+      startActivity(i);
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -268,7 +268,8 @@ public class TrendActivity extends ActionBarActivity
     }
     else if (id == R.id.cart)
     {
-      
+      Intent i = new Intent(TrendActivity.this, TrendCartActivity.class);
+      startActivity(i);
     }
     return super.onOptionsItemSelected(item);
   }

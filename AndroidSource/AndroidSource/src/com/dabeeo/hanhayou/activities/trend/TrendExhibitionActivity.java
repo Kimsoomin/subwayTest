@@ -100,7 +100,8 @@ public class TrendExhibitionActivity extends ActionBarActivity
     }
     else if (id == R.id.cart)
     {
-      
+      Intent i = new Intent(TrendExhibitionActivity.this, TrendCartActivity.class);
+      startActivity(i);
     }
     return super.onOptionsItemSelected(item);
   }

@@ -227,7 +227,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="top|right"
                                         android:text="8&apos;s"
-                                        android:textColor="#ff6262"
+                                        android:textColor="@color/dark_pink"
                                         android:textSize="21sp" />
 
                                     <LinearLayout

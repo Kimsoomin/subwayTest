@@ -716,7 +716,10 @@ public class ApiClient
   
   public NetworkResult getCategryProductList(String categroyId)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&categoryId=" + categroyId + "&lang=zh&isRandom=0");
+    if(!categroyId.equals("0"))
+      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&categoryId=" + categroyId + "&lang=zh&isRandom=0");
+    else
+      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh&isRandom=0");
   }
   
   
