@@ -33,8 +33,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:textColor="@color/darker_gray"
-                    android:textSize="19sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/is_public"

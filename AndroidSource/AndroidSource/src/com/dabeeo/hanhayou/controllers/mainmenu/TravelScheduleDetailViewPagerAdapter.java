@@ -106,7 +106,7 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
       {
         String dayString = context.getString(R.string.term_after_day);
         dayString = dayString.replace("#1", Integer.toString(position));
-        return dayString;
+        return "   " + dayString + "   ";
       }
       
     }
