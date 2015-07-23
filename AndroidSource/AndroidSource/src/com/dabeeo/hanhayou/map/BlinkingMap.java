@@ -68,6 +68,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -98,8 +99,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   private double m_fLongitude = 126.981770;
   public double place_fLatitude = 0;
   public double place_fLongitute = 0;
-  private int zoomLevel = 13;
-  final int nMinZoomLevel = 13;
+  private int zoomLevel = 12;
+  final int nMinZoomLevel = 12;
   final int nMaxZoomLevel = 18;
   private BoundedMapView m_mapView;
   
@@ -141,18 +142,12 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   // - map button
   private FrameLayout btnlayout;
-  private ImageButton myLocationBtn;
-  private ImageButton nearByBtn;
-  private ImageButton subwayBtn;
-  private ImageButton zoomInBtn;
-  private ImageButton zoomOutBtn;
+  private ImageButton myLocationBtn, nearByBtn, subwayBtn, zoomInBtn, zoomOutBtn;
   
   // - plan button
   private LinearLayout planDay;
-  private ImageButton dayLeft;
-  private ImageButton dayRight;
-  private TextView dayText;
-  private TextView ymdText;
+  private ImageButton dayLeft, dayRight;
+  private TextView dayText, ymdText;
   public int planDayNum;
   public String planYMD;
   public Date planDate;
@@ -249,6 +244,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public double select_lat = 0;
   public double select_lng = 0;
   
+  //map_banner
+  public LinearLayout mapBannerLayout;
+  public Button mapBannerClose;
+  public boolean bannerVisible = false;  
   
   /**
    * ===================================================================================== 
@@ -651,6 +650,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     databaseRead();
     SearchSetting();
     planButtonSetting();
+    MapBannerSetting();
     allIntent();
   } // - onCreate end..
   
@@ -761,6 +761,20 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     subwayBtn.setOnClickListener(this);
     zoomInBtn.setOnClickListener(this);
     zoomOutBtn.setOnClickListener(this);
+  }
+  
+  public void MapBannerSetting()
+  {
+    bannerVisible = getIntent().getBooleanExtra("bannerVisible", false);
+    mapBannerLayout = (LinearLayout) findViewById(R.id.map_banner);
+    mapBannerClose = (Button) findViewById(R.id.map_banner_close);
+    mapBannerClose.setOnClickListener(this);
+    
+    if(bannerVisible)
+    {
+      mapBannerLayout.bringToFront();
+      mapBannerLayout.setVisibility(View.VISIBLE);
+    }
   }
   
   public void SearchSetting()
@@ -1157,15 +1171,14 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
               @Override
               public void onPositiveButtonClickListener()
               {
-//                Toast.makeText(mContext, "1.5km넘었습니다", Toast.LENGTH_SHORT).show();
-                destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
-                double[] destLatLong = new double[3];
-                destLatLong[0] = place_fLatitude;
-                destLatLong[1] = place_fLongitute;
-                destLatLong[2] = 1;
-                destSubwayIntent.putExtra("set_dest_station_lat_lon", destLatLong);
-                destSubwayIntent.putExtra("dest_name", summaryTitle.getText().toString());
-                startActivity(destSubwayIntent);
+//                destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
+//                double[] destLatLong = new double[3];
+//                destLatLong[0] = place_fLatitude;
+//                destLatLong[1] = place_fLongitute;
+//                destLatLong[2] = 1;
+//                destSubwayIntent.putExtra("set_dest_station_lat_lon", destLatLong);
+//                destSubwayIntent.putExtra("dest_name", summaryTitle.getText().toString());
+//                startActivity(destSubwayIntent);
               }
               
               @Override
@@ -1218,6 +1231,10 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         
         mapCenterset(0);
         
+        break;
+        
+      case R.id.map_banner_close:
+        mapBannerLayout.setVisibility(View.GONE);
         break;
         
     }

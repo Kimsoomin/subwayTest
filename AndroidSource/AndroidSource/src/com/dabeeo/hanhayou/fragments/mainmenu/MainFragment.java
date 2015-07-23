@@ -133,7 +133,9 @@ public class MainFragment extends Fragment
           @Override
           public void run()
           {
-            startActivity(new Intent(getActivity(), BlinkingMap.class));
+            Intent mapIntent = new Intent(getActivity(), BlinkingMap.class);
+            mapIntent.putExtra("bannerVisible", true);
+            startActivity(mapIntent);
             getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
           }
         });

@@ -180,6 +180,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
         public void run()
         {
           Intent intent = new Intent(TravelScheduleDetailActivity.this, BlinkingMap.class);
+          intent.putExtra("bannerVisible", true);
           intent.putExtra("plan", bean.days);
           SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy.MM.dd");
           String currentDate;

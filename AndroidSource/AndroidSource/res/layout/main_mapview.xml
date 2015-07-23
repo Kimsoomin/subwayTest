@@ -41,7 +41,8 @@
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/icon_search" />
+                    android:background="@drawable/icon_search"
+                    android:contentDescription="@null" />
 
                 <EditText
                     android:id="@+id/SearchEditText"
@@ -85,23 +86,23 @@
             android:background="@android:color/white"
             android:clickable="true"
             android:visibility="gone" >
-            
-            <ImageView 
+
+            <ImageView
                 android:id="@+id/blank_character"
-                android:layout_marginTop="50dp"
                 android:layout_width="80dp"
                 android:layout_height="66dp"
-                android:background="@drawable/character_list_blank"
                 android:layout_centerHorizontal="true"
-                android:contentDescription="@null"/>
+                android:layout_marginTop="50dp"
+                android:background="@drawable/character_list_blank"
+                android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/black_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/blank_character"
-                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
                 android:text="@string/msg_no_search_result"
                 android:textColor="@color/light_gray" />
         </RelativeLayout>
@@ -109,6 +110,35 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:id="@+id/map_banner"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="#b0f4b159"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="민호 추천 아이더 자켓\n수지맞는 특별가!"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/map_banner_close"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/btn_close_white_l" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_map_view"
@@ -373,7 +403,7 @@
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
                                 android:textColor="@android:color/black"
-                                android:textSize="18sp"/>
+                                android:textSize="18sp" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -582,18 +612,6 @@
                     </RelativeLayout>
                 </LinearLayout>
             </FrameLayout>
-
-            <!--
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="2dp"
-            android:alpha="0.2"
-            android:text="ⓒOpenStreetMap contributors(CC-BY-SA)"
-            android:textColor="#515151"
-            android:textSize="10sp" />-->
         </FrameLayout>
     </LinearLayout>
 
