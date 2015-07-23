@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/msg_empty_wish_list"
-                android:textColor="#444a4b"
+                android:textColor="@color/darker_gray"
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/msg_help_wish_list"
-                android:textColor="#969b9c"
+                android:textColor="@color/light_gray"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -63,10 +63,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:background="@drawable/normal_appcolor_select_white"
+                    android:background="@drawable/btn_recommend_expert_state"
                     android:padding="12dp"
                     android:text="@string/term_go_to_popular_product"
-                    android:textColor="@color/color_normal_white_select_appcolor" />
+                    android:textColor="@color/color_normal_appcolor_select_white"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="20dp"
