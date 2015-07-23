@@ -1,13 +1,6 @@
 package com.dabeeo.hanhayou.managers.network;
 
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -22,11 +15,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
@@ -72,10 +63,6 @@ public class HttpClient
     }
     return result;
   }
-  
-  public final static String UPLOAD_IMAGE_TYPE_PROFILE = "profile";
-  public final static String UPLOAD_IMAGE_TYPE_PLACE = "place";
-  public final static String UPLOAD_IMAGE_TYPE_REVIEW = "review";
   
   public NetworkResult requestPostWithFile(String siteUrl, String filePath)
   {
