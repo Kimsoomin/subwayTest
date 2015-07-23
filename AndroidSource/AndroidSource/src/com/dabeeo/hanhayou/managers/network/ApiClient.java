@@ -15,7 +15,6 @@ import android.util.Log;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
-import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
@@ -716,15 +715,31 @@ public class ApiClient
   
   public NetworkResult getThemeItem(String idx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0");
+    if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+    else
+      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0");
   }
   
-  public NetworkResult getCategryProductList(String categoryId)
+  public NetworkResult getCategoryProductList(String categoryId)
   {
+    String url = getSiteUrl() + "?v=m1&mode=PRODUCT_LIST";
+    
     if(!categoryId.equals("0"))
-      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&categoryId=" + categoryId + "&lang=zh&isRandom=0");
+    {
+      url += "&categoryId=" + categoryId + "&lang=zh&isRandom=0";
+    }
     else
-      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh&isRandom=0");
+    {
+      url += "&lang=zh&isRandom=0";
+    }
+    
+    if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+    {
+      url += "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+    }
+    
+    return httpClient.requestGet(url);
   }
   
   

@@ -30,7 +30,6 @@ public class WishListFragment extends Fragment
 	private Button btnPopularProduct;
 	
 	
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{

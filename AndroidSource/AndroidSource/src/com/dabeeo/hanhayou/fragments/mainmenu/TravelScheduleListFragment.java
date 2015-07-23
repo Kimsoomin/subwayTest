@@ -275,7 +275,6 @@ public class TravelScheduleListFragment extends Fragment
       bean = result.get(0);
       headerView.setBean(bean);
     }
-    
   }
   
   /**************************************************

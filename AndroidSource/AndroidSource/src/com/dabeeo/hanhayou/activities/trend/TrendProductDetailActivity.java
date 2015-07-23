@@ -2,8 +2,11 @@ package com.dabeeo.hanhayou.activities.trend;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +29,9 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendProductImageViewPagerAdapter;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.dabeeo.hanhayou.views.CustomScrollView;
 import com.dabeeo.hanhayou.views.ProductJustOneView;
@@ -62,12 +68,16 @@ public class TrendProductDetailActivity extends ActionBarActivity
   //품절 처리 추후 API연동되면 빠져야 함
   private boolean isSoldOut = false;
   
+  private ApiClient apiClient;  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_trend_product_detail);
+    
+    apiClient = new ApiClient(TrendProductDetailActivity.this);
+    
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
     TextView title = (TextView) customActionBar.findViewById(R.id.title);
@@ -223,7 +233,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        btnWishList.setActivated(!btnWishList.isActivated());
+        new ToggleWishList().execute();
       }
     });
     btnShare.setOnClickListener(new OnClickListener()
@@ -347,5 +357,29 @@ public class TrendProductDetailActivity extends ActionBarActivity
     if (id == android.R.id.home)
       finish();
     return super.onOptionsItemSelected(item);
+  }
+  
+  private class ToggleWishList extends AsyncTask<String, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq(), params[0], "product", "W");
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        btnWishList.setActivated(obj.getString("result").equals("INS"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
   }
 }
