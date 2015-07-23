@@ -286,6 +286,13 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         }
       }
       
+      if (passWord.contains(" "))
+      {
+        Log.w("WARN", "Containe escape");
+        alertView.setAlert(getString(R.string.msg_please_delete_escape));
+        return;
+      }
+      
       //이름과 같은 지 
       if (passWord.equals(name))
       {

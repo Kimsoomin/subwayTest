@@ -411,6 +411,7 @@
     <string name="msg_string_length_less_six">至少输入6个字。</string>
     <!-- 비밀번호 찾기 -->
     <string name="msg_please_write_password">请输入原密码</string>
+    <string name="msg_please_delete_escape">请输入6~16个字符的英文/数字组合</string>
     <string name="msg_please_write_new_password">请输入新密码。</string>
     <string name="msg_please_write_new_re_password">请重新输入新密码。</string>
     <string name="msg_warn_password_length">密码为6~16个字符。</string>
