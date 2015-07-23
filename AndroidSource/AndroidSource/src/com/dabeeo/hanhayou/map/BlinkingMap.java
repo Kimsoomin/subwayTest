@@ -1851,7 +1851,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         place_fLatitude = info.lat;
         place_fLongitute = info.lng;
         mapCenterset(0);
-        BlinkingCommon.smlLibDebug("BlinkingMap", "placeLat : " + place_fLatitude + " placeLng : " + place_fLongitute);
+        BlinkingCommon.smlLibDebug("BlinkingMap", "idx : " + idx);
         DestinationTitle = info.title;
         summarysubTitle.setVisibility(View.VISIBLE);
         if (info.address != null)
@@ -1879,9 +1879,11 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
           if (imagefile.exists())
           {
             Picasso.with(mContext).load(imagefile).fit().centerCrop().into(summaryImage);
+            summaryViewVisibleSet(summaryViewVisible, 1);
+          }else
+          {
+            summaryViewVisibleSet(summaryViewVisible, 2);
           }
-          
-          summaryViewVisibleSet(summaryViewVisible, 1);
         }
         else
         {
@@ -1890,9 +1892,11 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
             if (Global.IsNetworkConnected(mContext, false))
             {
               new summaryImageGetFromUrl().execute(info.image);
+              summaryViewVisibleSet(summaryViewVisible, 1);
+            }else
+            {
+              summaryViewVisibleSet(summaryViewVisible, 2);
             }
-            
-            summaryViewVisibleSet(summaryViewVisible, 1);
           }
           else
           {
@@ -2238,10 +2242,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     
     if(select_lat != 0 && select_lng != 0)
     {
-      BlinkingCommon.smlLibDebug("BlinkingMap12312321", "sadjflkdasjfkldjasklfjdkla");
       if(selectItem != -1)
       {
-        BlinkingCommon.smlLibDebug("BlinkingMap", "sadjflkdasjfkldjasklfjdkla");
         onePlaceItems = new ArrayList<OverlayItem>();
         OverlayItem item = new OverlayItem("","","",new GeoPoint(select_lat, select_lng));
         onePlaceItems.add(item);
