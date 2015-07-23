@@ -166,7 +166,7 @@ stations_by_internal_id.each do |k, v|
 					connections: Hash[transfer_station.map{|s|[s, 2]}]
 				}
 			end
-			stations[v[:id]][:connections][t_id] = 2
+			stations[v[:id]][:connections][t_id] = 1
 		end
 
 
