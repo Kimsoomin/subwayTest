@@ -262,8 +262,9 @@
                 <!-- 상세정보 -->
 
                 <LinearLayout
+                    android:id="@+id/product_detail_info"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:orientation="vertical" >
 
                     <LinearLayout
@@ -284,7 +285,8 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:padding="8dp"
-                            android:src="@drawable/list_right_arrow_normal_down_activate_right" />
+                            android:src="@drawable/list_right_arrow_normal_down_activate_right"
+                            android:contentDescription="@null" />
                     </LinearLayout>
 
                     <View
@@ -318,6 +320,7 @@
                 <!-- 배송정보 -->
 
                 <LinearLayout
+                    android:id="@+id/product_detail_delivery_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
@@ -339,6 +342,7 @@
                             android:id="@+id/toggle_product_detail_delivery_info"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
+                            android:contentDescription="@null"
                             android:padding="8dp"
                             android:src="@drawable/list_right_arrow_normal_down_activate_right" />
                     </LinearLayout>
@@ -359,6 +363,7 @@
                 <!-- 반품교환 -->
 
                 <LinearLayout
+                    android:id="@+id/product_detail_refund"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >

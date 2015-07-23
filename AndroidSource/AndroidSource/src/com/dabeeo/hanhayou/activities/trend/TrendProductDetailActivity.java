@@ -43,6 +43,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private TextView discountRate;
   private Button btnWishList, btnShare;
   private Button btnCart, btnBuy, btnSoldOut;
+  private LinearLayout productDtailInfo, deliveryInfo, refundInfo;
   private ImageView toggleProductDetailInfo, toggleDeliveryInfo, toggleRefund;
   private LinearLayout containerProductDetailInfo;
   private TextView textDeliveryInfo, textRefundInfo;
@@ -106,8 +107,11 @@ public class TrendProductDetailActivity extends ActionBarActivity
     btnTop = (Button) findViewById(R.id.btn_top);
     btnSoldOut = (Button) findViewById(R.id.btn_soldout);
     
+    productDtailInfo = (LinearLayout) findViewById(R.id.product_detail_info);
     toggleProductDetailInfo = (ImageView) findViewById(R.id.toggle_product_detail_info);
+    deliveryInfo = (LinearLayout) findViewById(R.id.product_detail_delivery_info);
     toggleDeliveryInfo = (ImageView) findViewById(R.id.toggle_product_detail_delivery_info);
+    refundInfo = (LinearLayout) findViewById(R.id.product_detail_refund);
     toggleRefund = (ImageView) findViewById(R.id.toggle_product_detail_refund);
     containerProductDetailInfo = (LinearLayout) findViewById(R.id.container_product_detail_info);
     textDeliveryInfo = (TextView) findViewById(R.id.text_product_detail_delivery_info);
@@ -250,9 +254,9 @@ public class TrendProductDetailActivity extends ActionBarActivity
         startActivity(i);
       }
     });
-    toggleProductDetailInfo.setOnClickListener(toggleClickListener);
-    toggleDeliveryInfo.setOnClickListener(toggleClickListener);
-    toggleRefund.setOnClickListener(toggleClickListener);
+    productDtailInfo.setOnClickListener(toggleClickListener);
+    deliveryInfo.setOnClickListener(toggleClickListener);
+    refundInfo.setOnClickListener(toggleClickListener);
     
     recommendProductContainer.removeAllViews();
     for (int i = 0; i < 7; i++)
@@ -295,7 +299,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
-      if (v.getId() == toggleProductDetailInfo.getId())
+      if (v.getId() == productDtailInfo.getId())
       {
         btnTop.setVisibility(View.VISIBLE);
         btnImageDetail.setVisibility(View.VISIBLE);
@@ -308,7 +312,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
         }
         toggleProductDetailInfo.setActivated(!toggleProductDetailInfo.isActivated());
       }
-      else if (v.getId() == toggleDeliveryInfo.getId())
+      else if (v.getId() == deliveryInfo.getId())
       {
         if (!toggleDeliveryInfo.isActivated())
           textDeliveryInfo.setVisibility(View.VISIBLE);
@@ -316,7 +320,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
           textDeliveryInfo.setVisibility(View.GONE);
         toggleDeliveryInfo.setActivated(!toggleDeliveryInfo.isActivated());
       }
-      else if (v.getId() == toggleRefund.getId())
+      else if (v.getId() == refundInfo.getId())
       {
         if (!toggleRefund.isActivated())
           textRefundInfo.setVisibility(View.VISIBLE);
