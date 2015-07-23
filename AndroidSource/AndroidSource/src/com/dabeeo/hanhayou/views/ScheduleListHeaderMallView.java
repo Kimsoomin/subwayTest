@@ -6,20 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.beans.ReviewBean;
+import com.dabeeo.hanhayou.beans.TrendKoreaBean;
+import com.squareup.picasso.Picasso;
 
 public class ScheduleListHeaderMallView extends RelativeLayout
 {
   private Context context;
+  private int imageWidth = 0;
+  private int imageHeight = 0;
+  private TrendKoreaBean bean;
   
-  
-  public ScheduleListHeaderMallView(Context context)
+  public ScheduleListHeaderMallView(Context context, int imageWidth, int imageHeight)
   {
     super(context);
     this.context = context;
+    this.imageWidth = imageWidth;
+    this.imageHeight = imageHeight;
   }
   
   
@@ -37,8 +41,9 @@ public class ScheduleListHeaderMallView extends RelativeLayout
   }
   
   
-  public void setBean(ReviewBean bean)
+  public void setBean(TrendKoreaBean bean)
   {
+    this.bean = bean;
     init();
   }
   
@@ -50,10 +55,11 @@ public class ScheduleListHeaderMallView extends RelativeLayout
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
     ImageView imageview = (ImageView) view.findViewById(R.id.imageview);
-    TextView title = (TextView) view.findViewById(R.id.title);
-    title.setVisibility(View.GONE);
     
-    title.setText("서울 현지인이 추천하는\n여행선물 TOP");
+    imageview.getLayoutParams().width = imageWidth;
+    imageview.getLayoutParams().height = imageHeight;
+    
+    Picasso.with(context).load(bean.imageUrl).resize(imageWidth, imageHeight).centerCrop().into(imageview);
     addView(view);
   }
 }

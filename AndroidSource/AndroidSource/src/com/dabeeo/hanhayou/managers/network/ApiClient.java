@@ -683,13 +683,18 @@ public class ApiClient
    * TrendyKorea Api
    */
   
-  public ArrayList<TrendKoreaBean> getThemeList()
+  public ArrayList<TrendKoreaBean> getThemeList(int limit)
   {
     ArrayList<TrendKoreaBean> themeList = new ArrayList<TrendKoreaBean>();
     
     try
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=THEME_LIST&lang=zh_cn&isRandom=0");
+      NetworkResult result;
+      if(limit == 1)
+      {
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=THEME_LIST&lang=zh_cn&isRandom=1&limit=1");
+      }else
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=THEME_LIST&lang=zh_cn&isRandom=0");
       
       JSONObject obj = new JSONObject(result.response);
       JSONArray arr = obj.getJSONArray("theme");

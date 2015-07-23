@@ -286,7 +286,7 @@ public class TrendActivity extends ActionBarActivity
     protected ArrayList<TrendKoreaBean> doInBackground(Void... params)
     {
       ArrayList<TrendKoreaBean> result = null;
-      result = apiClient.getThemeList();
+      result = apiClient.getThemeList(0);
       return result;
     }
     

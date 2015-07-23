@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.dabeeo.hanhayou.activities.travel.TravelScheduleDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendExhibitionActivity;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
+import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
@@ -60,6 +62,9 @@ public class TravelScheduleListFragment extends Fragment
   private LinearLayout recommendContainer;
   private GridViewWithHeaderAndFooter listView;
   private ListFooterProgressView footerLoadView;
+  
+  private ScheduleListHeaderMallView headerView;
+  private TrendKoreaBean bean;
   
   public int dayCount = -1;
   
@@ -100,18 +105,25 @@ public class TravelScheduleListFragment extends Fragment
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
     if (SystemUtil.isConnectNetwork(getActivity()) && (type == SCHEDULE_TYPE_POPULAR))
     {
-      ScheduleListHeaderMallView view = new ScheduleListHeaderMallView(getActivity());
-      view.setBean(null);
-      view.setOnClickListener(new OnClickListener()
+      DisplayMetrics metrics = new DisplayMetrics();
+      getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+      int imageWidth = metrics.widthPixels;
+      int imageheight = (int) (imageWidth*0.43);
+      
+      headerView = new ScheduleListHeaderMallView(getActivity(), imageWidth, imageheight);
+      new GetScheduleThemeAsyncTask().execute();
+      headerView.setOnClickListener(new OnClickListener()
       {
         @Override
         public void onClick(View arg0)
         {
           Intent i = new Intent(getActivity(), TrendExhibitionActivity.class);
+          i.putExtra("themeIdx", bean.idx);
+          i.putExtra("themeImageUrl", bean.imageUrl);
           startActivity(i);
         }
       });
-      listView.addHeaderView(view);
+      listView.addHeaderView(headerView);
     }
     listView.addFooterView(footerLoadView);
     listView.setInvisibleFooterView(footerLoadView);
@@ -243,6 +255,27 @@ public class TravelScheduleListFragment extends Fragment
       isLoading = false;
       super.onPostExecute(result);
     }
+  }
+  
+  private class GetScheduleThemeAsyncTask extends AsyncTask<Void, Integer, ArrayList<TrendKoreaBean>>
+  {
+    
+    @Override
+    protected ArrayList<TrendKoreaBean> doInBackground(Void... params)
+    {
+      ArrayList<TrendKoreaBean> result = null;
+      result = apiClient.getThemeList(1);
+      return result;
+    }
+    
+    @Override
+    protected void onPostExecute(ArrayList<TrendKoreaBean> result)
+    {
+      super.onPostExecute(result);
+      bean = result.get(0);
+      headerView.setBean(bean);
+    }
+    
   }
   
   /**************************************************
