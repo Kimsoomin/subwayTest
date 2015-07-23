@@ -1171,6 +1171,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
               @Override
               public void onPositiveButtonClickListener()
               {
+                Toast.makeText(mContext, "서비스 준비중입니다.", Toast.LENGTH_SHORT).show();
 //                destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
 //                double[] destLatLong = new double[3];
 //                destLatLong[0] = place_fLatitude;
@@ -2111,7 +2112,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
                   }
                 }else if(m_mapView.getZoomLevel() == 17 || m_mapView.getZoomLevel() == 18)
                 {
-                  if(info.category != 50 && info.category != 60 && info.category != 70 && info.category != 80)
+                  if(info.category != 40 && info.category != 50 && info.category != 60 && info.category != 70 && info.category != 80)
                   {
                     OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                     localPlaceItems.add(item);

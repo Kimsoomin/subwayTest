@@ -115,7 +115,7 @@ public class PlaceDetailBean
       if (obj.has("reviewCount"))
         reviewCount = obj.getInt("reviewCount");
       if (obj.has("myLastRate"))
-        myLastRate = obj.getInt("myLastRate");
+        myLastRate = obj.getInt("myLastRate")/2;
       
       if (obj.has("isLiked"))
         isLiked = obj.getInt("isLiked") != 0;
