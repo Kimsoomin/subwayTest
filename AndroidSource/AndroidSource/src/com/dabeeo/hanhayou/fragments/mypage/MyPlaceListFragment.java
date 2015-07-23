@@ -79,6 +79,7 @@ public class MyPlaceListFragment extends Fragment
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
+    ((TextView) getView().findViewById(R.id.empty_text)).setText(getString(R.string.msg_empty_my_place));
     
     adapter = new MyPlaceListAdapter(getActivity());
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);

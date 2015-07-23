@@ -51,7 +51,6 @@ public class MyBookmarkPlaceListFragment extends Fragment
   public boolean isEditmode = false;
   public View bottomMargin;
   
-  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -73,6 +72,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
     selectDelete.setOnClickListener(deleteButtonClickListener);
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
+    ((TextView) getView().findViewById(R.id.empty_text)).setText(getString(R.string.msg_empty_my_bookmark_place));
     
     adapter = new MyPlaceListAdapter(getActivity());
     

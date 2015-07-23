@@ -310,6 +310,7 @@
     <string name="msg_empty_my_schedule">등록된 일정이 없습니다.</string>
     <string name="term_declare">신고하기</string>
     <string name="msg_empty_my_bookmark">북마크한 일정이 없습니다.</string>
+    <string name="msg_empty_my_bookmark_place">북마크한 장소가 없습니다.</string>
     <string name="msg_recommend_schedule">한고우요우 자동추천일정으로\n여행일정을 만들어보세요!</string>
     <string name="msg_empty_search_result">결과가 없습니다.</string>
     <string name="msg_confirm_delete">정말 삭제하시겠습니까?</string>

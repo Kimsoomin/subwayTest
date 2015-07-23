@@ -126,6 +126,7 @@ public class PlaceListFragment extends Fragment
     page = 0;
     adapter.clear();
     load();
+    
   }
   
   /**************************************************
@@ -186,7 +187,7 @@ public class PlaceListFragment extends Fragment
         listView.setVisibility(View.GONE);
         emptyLayout.setVisibility(View.VISIBLE);
         if (filteringMode == FILTERING_MODE_BOOKMARKED)
-          emptyText.setText(getString(R.string.msg_empty_my_bookmark));
+          emptyText.setText(getString(R.string.msg_empty_my_bookmark_place));
         else if (filteringMode == FILTERING_MODE_ADDED_BY_ME)
           emptyText.setText(getString(R.string.msg_empty_my_place));
       }

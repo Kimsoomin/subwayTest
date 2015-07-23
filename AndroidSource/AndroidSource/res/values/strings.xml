@@ -289,10 +289,11 @@
     <string name="term_confirm_use_coupon">仅限商店工作人员使用的按键。使用后不能取消或退钱。确认使用吗？</string>
     <string name="term_conpun_used">成功使用</string>
     <!-- 여행일정 -->
-    <string name="msg_empty_my_schedule">没有上传的行程</string>
+    <string name="msg_empty_my_schedule">没有上传的行程。</string>
     <string name="term_declare">举报</string>
     <string name="msg_empty_my_bookmark">书签夹为空，没有添加的行程</string>
-    <string name="msg_recommend_schedule">用韩哈游的行程助手\n创建旅游行程吧！</string>
+    <string name="msg_empty_my_bookmark_place">书签夹为空，没有添加的地点</string>
+    <string name="msg_recommend_schedule">使用韩哈游的自动推荐行程创建旅程吧！</string>
     <string name="msg_empty_search_result">未找到结果</string>
     <string name="msg_confirm_delete">确定删除吗？</string>
     <string name="term_declare_review">举报点评</string>
@@ -321,7 +322,7 @@
     <string name="msg_warn_select_theme">请选择旅游主题</string>
     <string name="term_order_item">已购商品</string>
     <!-- 내 장소 -->
-    <string name="msg_empty_my_place">书签夹为空，没有添加的地点</string>
+    <string name="msg_empty_my_place">没有添加的地点</string>
     <string name="term_all_check">全部选择</string>
     <string name="term_select_delete">选中删除</string>
     <string name="term_public">全部公开</string>
@@ -391,7 +392,7 @@
     </array>
     <!-- 북마크 -->
     <string name="term_schedule">行程</string>
-    <string name="msg_empty_bookmark">没有书签夹里的行程</string>
+    <string name="msg_empty_bookmark">书签夹为空，没有添加的行程</string>
     <!-- 인트로 -->
     <string name="msg_download_travel_cotnent">正在确认旅游信息，请稍等。</string>
     <string name="msg_update_travel_content">正在下载更新内容，请稍等。</string>
