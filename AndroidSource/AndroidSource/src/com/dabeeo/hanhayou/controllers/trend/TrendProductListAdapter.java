@@ -2,9 +2,12 @@ package com.dabeeo.hanhayou.controllers.trend;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +21,10 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.squareup.picasso.Picasso;
@@ -26,10 +33,13 @@ public class TrendProductListAdapter extends BaseAdapter
 {
   private ArrayList<ProductBean> beans = new ArrayList<>();
   private Activity context;
-  
+  private ApiClient apiClient;
+  private Button btnWishList;
+  private int position;
   
   public TrendProductListAdapter(Activity context)
   {
+    apiClient = new ApiClient(context);
     this.context = context;
   }
   
@@ -75,12 +85,11 @@ public class TrendProductListAdapter extends BaseAdapter
     return position;
   }
   
-  
   @SuppressLint("ViewHolder")
   @Override
   public View getView(final int position, View convertView, ViewGroup parent)
   {
-    ProductBean bean = (ProductBean) beans.get(position);
+    final ProductBean bean = (ProductBean) beans.get(position);
     int resId = R.layout.list_item_product;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
@@ -91,13 +100,15 @@ public class TrendProductListAdapter extends BaseAdapter
     TextView chinesePrice = (TextView) view.findViewById(R.id.chinese_price);
     TextView discountRate = (TextView) view.findViewById(R.id.discount_rate);
     
-    final Button btnWishList = (Button) view.findViewById(R.id.btn_wish_list);
+    btnWishList = (Button) view.findViewById(R.id.btn_wish_list);
+    btnWishList.setId(position);
     btnWishList.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
       {
         btnWishList.setActivated(!btnWishList.isActivated());
+        BlinkingCommon.smlLibDebug("TrendProducTList", "btnWishList gegid" + btnWishList.getId());
       }
     });
     
@@ -119,6 +130,7 @@ public class TrendProductListAdapter extends BaseAdapter
           new AlertDialogManager(context).showDontNetworkConnectDialog();
         else
         {
+          BlinkingCommon.smlLibDebug("TrendProducTList", "bean.id"+bean.id);
           Intent i = new Intent(context, TrendProductDetailActivity.class);
           context.startActivity(i);
         }
@@ -126,5 +138,29 @@ public class TrendProductListAdapter extends BaseAdapter
     });
     
     return view;
+  }
+  
+  private class ToggleWishList extends AsyncTask<String, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(context).getUserSeq(), params[0], "product", "W");
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        btnWishList.setActivated(obj.getString("result").equals("INS"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
   }
 }
