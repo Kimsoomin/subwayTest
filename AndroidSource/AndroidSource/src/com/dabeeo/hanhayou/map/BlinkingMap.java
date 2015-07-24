@@ -1851,7 +1851,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         place_fLatitude = info.lat;
         place_fLongitute = info.lng;
         mapCenterset(0);
-        BlinkingCommon.smlLibDebug("BlinkingMap", "idx : " + idx);
         DestinationTitle = info.title;
         summarysubTitle.setVisibility(View.VISIBLE);
         if (info.address != null)

@@ -577,7 +577,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.postReviewRate("palce", placeIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate * 2, null);
+      return apiClient.postReviewRate("place", placeIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate * 2, null);
     }
     
     

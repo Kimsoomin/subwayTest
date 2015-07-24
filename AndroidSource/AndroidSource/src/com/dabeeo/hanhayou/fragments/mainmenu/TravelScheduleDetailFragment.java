@@ -469,7 +469,7 @@ public class TravelScheduleDetailFragment extends Fragment
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.postReviewRate("palce", bean.idx, PreferenceManager.getInstance(getActivity()).getUserSeq(), rate * 2, null);
+      return apiClient.postReviewRate("plan", bean.idx, PreferenceManager.getInstance(getActivity()).getUserSeq(), rate * 2, null);
     }
     
     

@@ -37,7 +37,7 @@ public class TrendCartActivity extends ActionBarActivity
     
     trendCart = (WebView) findViewById(R.id.trend_cart_webview);    
     trendCart.getSettings().setJavaScriptEnabled(true);
-    trendCart.loadUrl("http://google.com");
+    trendCart.loadUrl("https://devorder.hanhayou.com/ecom/cart/list?_hgy_token=242");
     trendCart.setWebViewClient(new WebViewClientClass());  
   }
   
