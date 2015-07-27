@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.WishListSearchActivity;
@@ -29,14 +30,13 @@ import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.PopularWishListParticleView;
 
 public class WishListFragment extends Fragment
 {
   private LinearLayout popularWishListContainer;
-  private LinearLayout emptyContainer;
+  private ScrollView emptyContainer;
   private GridViewWithHeaderAndFooter listView;
   private WishListAdapter adapter;
   private Button btnPopularProduct;
@@ -55,7 +55,7 @@ public class WishListFragment extends Fragment
     
     apiClient = new ApiClient(getActivity());
     
-    emptyContainer = (LinearLayout) view.findViewById(R.id.empty_container);
+    emptyContainer = (ScrollView) view.findViewById(R.id.empty_container);
     btnPopularProduct = (Button) view.findViewById(R.id.btn_go_to_popular_product);
     btnPopularProduct.setOnClickListener(new OnClickListener()
     {
@@ -95,18 +95,19 @@ public class WishListFragment extends Fragment
         {
           emptyContainer.setVisibility(View.VISIBLE);
           listView.setVisibility(View.GONE);
+          new PopularWishList().execute();
         }
         else
         {
           emptyContainer.setVisibility(View.GONE);
           listView.setVisibility(View.VISIBLE);
-          listView.addFooterView(v);
         }
       }
     };
     
     adapter = new WishListAdapter(getActivity(), wishListListener);
     
+    listView.addFooterView(v);
     listView.setAdapter(adapter);
     
     popularWishListContainer = (LinearLayout) view.findViewById(R.id.wish_list_container);
@@ -142,10 +143,7 @@ public class WishListFragment extends Fragment
     try
     {
       JSONObject obj = new JSONObject(result);
-      if(obj.getString("status").equals("NO_DATA"))
-      {
-        new PopularWishList().execute();
-      }else
+      if(!obj.getString("status").equals("NO_DATA"))
       {
         ProductArray = new ArrayList<ProductBean>();
         JSONArray productArr = obj.getJSONArray("product");
@@ -192,7 +190,7 @@ public class WishListFragment extends Fragment
       for(int i = 0; i < result.size(); i++)
       {
         PopularWishListParticleView pView = new PopularWishListParticleView(getActivity());
-        pView.setBean(position, result.get(i).name, result.get(i+1).name);
+        pView.setBean(position, result.get(i).name, result.get(i+1).name , result.get(i).id, result.get(i+1).id);
         position = position + 1;
         i = i + 1;
         popularWishListContainer.addView(pView);
