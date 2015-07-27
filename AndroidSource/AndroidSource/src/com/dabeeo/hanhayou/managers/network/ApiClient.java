@@ -16,6 +16,7 @@ import android.util.Log;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
+import com.dabeeo.hanhayou.beans.PopularWishBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
@@ -744,9 +745,31 @@ public class ApiClient
     return httpClient.requestGet(url);
   }
   
-  public HashMap<String, String> getPopularWishList()
+  public ArrayList<PopularWishBean> getPopularWishList()
   {
-    return null;
+    ArrayList<PopularWishBean> popularWishList = new ArrayList<PopularWishBean>();
+    
+    try
+    {
+      NetworkResult result;
+      
+      result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=POPULAR_WISH_LIST&limit=10");
+      
+      JSONObject obj = new JSONObject(result.response);
+      JSONArray arr = obj.getJSONArray("product");
+      for (int i = 0; i < arr.length(); i++)
+      {
+        JSONObject objInArr = arr.getJSONObject(i);
+        PopularWishBean bean = new PopularWishBean();
+        bean.setJSONObject(objInArr);
+        popularWishList.add(bean);
+      }
+    }catch(Exception e)
+    {
+      BlinkingCommon.smlLibPrintException("ApiClient", " e :" + e);
+    }
+    
+    return popularWishList;
   }
   
   public NetworkResult getWishList()
@@ -758,6 +781,7 @@ public class ApiClient
    * 통계 데이터 API
    */
   
+  // 앱 최초 실행, 맵 다운로드 통계
   public NetworkResult setLogApp(String deviceID, int type)
   {
     return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=LOG_APP_INS&device=" + deviceID + "&type=" + type);

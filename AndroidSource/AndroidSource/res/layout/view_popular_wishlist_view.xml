@@ -21,8 +21,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:padding="8dp"
-                android:singleLine="true" />
+                android:ellipsize="end"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -37,8 +39,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:padding="8dp"
-                android:singleLine="true" />
+                android:ellipsize="end"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 

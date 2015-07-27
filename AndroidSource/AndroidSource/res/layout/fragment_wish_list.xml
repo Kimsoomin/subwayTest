@@ -7,105 +7,116 @@
     <com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/lighter_gray"
+        android:verticalSpacing="1dp" />
 
-    <LinearLayout
-        android:id="@+id/empty_container"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone" >
+        android:background="@android:color/white" >
 
         <LinearLayout
+            android:id="@+id/empty_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/msg_empty_wish_list"
-                android:textColor="@color/darker_gray"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="@string/msg_help_wish_list"
-                android:textColor="@color/light_gray"
-                android:textSize="16sp" />
+            android:visibility="gone" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:background="@android:color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp" >
+                android:orientation="vertical"
+                android:padding="8dp" >
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="bottom"
-                    android:src="@drawable/deco_color_dot_l" />
-
-                <Button
-                    android:id="@+id/btn_go_to_popular_product"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/btn_recommend_expert_state"
-                    android:padding="12dp"
-                    android:text="@string/term_go_to_popular_product"
-                    android:textColor="@color/color_normal_appcolor_select_white"
-                    android:textSize="14sp" />
+                    android:gravity="center"
+                    android:text="@string/msg_empty_wish_list"
+                    android:textColor="@color/darker_gray"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="bottom"
-                    android:src="@drawable/deco_color_dot_r" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/msg_help_wish_list"
+                    android:textColor="@color/light_gray"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="bottom"
+                        android:contentDescription="@null"
+                        android:src="@drawable/deco_color_dot_l" />
+
+                    <Button
+                        android:id="@+id/btn_go_to_popular_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/btn_recommend_expert_state"
+                        android:padding="12dp"
+                        android:text="@string/term_go_to_popular_product"
+                        android:textColor="@color/color_normal_appcolor_select_white"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="bottom"
+                        android:contentDescription="@null"
+                        android:src="@drawable/deco_color_dot_r" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/background_light_gray" />
+
+            <!-- 인기 위시리스트 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:padding="8dp" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/term_popular_wish_list"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/wish_list_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical" />
             </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="#cecece" />
-        <!-- 인기 위시리스트 -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:padding="8dp" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/term_popular_wish_list"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/wish_list_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="vertical" />
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

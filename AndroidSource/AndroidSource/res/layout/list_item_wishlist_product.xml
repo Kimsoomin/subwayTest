@@ -141,10 +141,4 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <View
-        android:id="@+id/bottom_line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CECECE" />
-
 </LinearLayout>

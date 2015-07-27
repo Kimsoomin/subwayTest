@@ -30,7 +30,6 @@ import com.dabeeo.hanhayou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 
 public class MyBookmarkTravelScheduleListFragment extends Fragment
 {
