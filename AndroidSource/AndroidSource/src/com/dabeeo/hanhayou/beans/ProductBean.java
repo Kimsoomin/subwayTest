@@ -18,6 +18,7 @@ public class ProductBean
   public String imageAlt;
   public String imageTitle;
   public String imageUrl;
+  public boolean isWished = false;
   
   public void setJSONObject(JSONObject obj)
   {
@@ -58,6 +59,9 @@ public class ProductBean
       
       if(obj.has("imageUrl"))
         imageUrl = obj.getString("imageUrl");
+      
+      if(obj.has("isWished"))
+        isWished = obj.getInt("isWished") != 0;
     }
     catch (Exception e)
     {

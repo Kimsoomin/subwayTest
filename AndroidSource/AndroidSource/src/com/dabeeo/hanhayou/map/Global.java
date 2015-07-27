@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -45,6 +47,7 @@ import android.app.AlertDialog;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageInstaller.Session;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -64,8 +67,11 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Debug;
 import android.os.Environment;
+import android.provider.Settings.Secure;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -538,11 +544,11 @@ public class Global
     
 //    if (width > maxWidth || height > maxHeight)
 //    {
-      Bitmap resizebm = Bitmap.createScaledBitmap(bm, ((int) (scale * width)), ((int) (scale * height)), true);
-      
-      SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(resizebm);
-      
-      return myBitmap.get();
+    Bitmap resizebm = Bitmap.createScaledBitmap(bm, ((int) (scale * width)), ((int) (scale * height)), true);
+    
+    SoftReference<Bitmap> myBitmap = new SoftReference<Bitmap>(resizebm);
+    
+    return myBitmap.get();
 //    }
 //    else
 //    {
@@ -1053,11 +1059,11 @@ public class Global
   public static int getDip(Window window, int dip)
   {
     DisplayMetrics displayMetrics = new DisplayMetrics();
-
+    
     window.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics); 
     
     BlinkingCommon.smlLibDebug("GLOBAL", "density : " + displayMetrics.densityDpi);
-
+    
     int dipWidth = (int) (dip *(160/displayMetrics.densityDpi));
     BlinkingCommon.smlLibDebug("GLOBAL", "dipWidth : " + dipWidth);
     return dipWidth;

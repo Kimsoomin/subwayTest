@@ -100,17 +100,24 @@ public class TrendProductListAdapter extends BaseAdapter
     TextView discountRate = (TextView) view.findViewById(R.id.discount_rate);
     
     btnWishList = (Button) view.findViewById(R.id.btn_wish_list);
+    btnWishList.setActivated(bean.isWished);
     btnWishList.setTag(position);
     btnWishList.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
       {
-        int position = (int) v.getTag();
-        ProductBean pb = (ProductBean)getItem(position);
-//        new ToggleWishList().execute(pb.id);
-//        btnWishList.setActivated(!btnWishList.isActivated());
-        BlinkingCommon.smlLibDebug("TrendProducTList", "pb id : " + pb.id);
+        if(PreferenceManager.getInstance(context).isLoggedIn())
+        {
+          int position = (int) v.getTag();
+          ProductBean pb = (ProductBean)getItem(position);
+          if(pb.isWished == false)
+            pb.isWished = true;
+          else
+            pb.isWished = false;
+          new ToggleWishList().execute(pb.id);
+        }else
+          new AlertDialogManager(context).showNeedLoginDialog(-1);
       }
     });
     
@@ -157,7 +164,10 @@ public class TrendProductListAdapter extends BaseAdapter
       try
       {
         JSONObject obj = new JSONObject(result.response);
-        btnWishList.setActivated(obj.getString("result").equals("INS"));
+        if(obj.getString("result").equals("INS"))
+        {
+          notifyDataSetChanged();
+        }
       }
       catch (Exception e)
       {
