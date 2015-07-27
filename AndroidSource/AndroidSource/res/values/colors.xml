@@ -19,6 +19,7 @@
     <color name="darker_gray_transparent">#a0444a4b</color>
     <color name="light_pink">#d0ff6262</color>
     <color name="dark_pink">#ff6262</color>
+    <color name="darker_pink">#ff4545</color>
     <color name="dark_pink_transparent">#a0ff6262</color>
     <color name="light_blue">#d0697577</color>
     <color name="dark_blue">#697577</color>

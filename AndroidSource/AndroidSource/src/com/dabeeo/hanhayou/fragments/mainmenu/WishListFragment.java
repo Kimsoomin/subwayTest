@@ -1,7 +1,14 @@
 package com.dabeeo.hanhayou.fragments.mainmenu;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +25,8 @@ import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter;
 import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter.WishListListener;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.PopularWishListParticleView;
 
@@ -29,12 +38,17 @@ public class WishListFragment extends Fragment
 	private WishListAdapter adapter;
 	private Button btnPopularProduct;
 	
+	private ApiClient apiClient;
+	public ArrayList<ProductBean> ProductArray;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		int resId = R.layout.fragment_wish_list;
 		View view = inflater.inflate(resId, null);
+		
+		apiClient = new ApiClient(getActivity());
 		
 		emptyContainer = (LinearLayout) view.findViewById(R.id.empty_container);
 		btnPopularProduct = (Button) view.findViewById(R.id.btn_go_to_popular_product);
@@ -49,6 +63,8 @@ public class WishListFragment extends Fragment
 					startActivity(new Intent(getActivity(), TrendActivity.class));
 			}
 		});
+		
+		new getWishListTask().execute();
 		popularWishListContainer = (LinearLayout) view.findViewById(R.id.wish_list_container);
 		PopularWishListParticleView pView = new PopularWishListParticleView(getActivity());
 		pView.setBean(0, "CELDREAM 화장품", "아쿠아 리움 티켓");
@@ -95,18 +111,53 @@ public class WishListFragment extends Fragment
 		});
 		listView.setAdapter(adapter);
 		
-		ProductBean bean = new ProductBean();
-		bean.name = "[숨]워터풀 타임리스 워터젤 크림";
-		bean.priceSale = "80000";
-		bean.priceDiscount = "452000";
-		adapter.add(bean);
-		
-		bean = new ProductBean();
-		bean.name = "[SKII]나이트밤";
-		bean.priceSale = "100000";
-		bean.priceDiscount = "252000";
-		adapter.add(bean);
-		
 		return view;
 	}
+	
+	private class getWishListTask extends AsyncTask<Void, Void, NetworkResult>
+	{
+	  
+	  @Override
+	  protected void onPreExecute()
+	  {
+	    // TODO Auto-generated method stub
+	    super.onPreExecute();
+	  }
+
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.getWishList();
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      responseParser(result.response);
+    }	  
+	}
+	
+	public void responseParser(String result)
+  {
+    try
+    {
+      JSONObject obj = new JSONObject(result);
+      ProductArray = new ArrayList<ProductBean>();
+      JSONArray productArr = obj.getJSONArray("product");
+      for (int i = 0; i < productArr.length(); i++)
+      {
+        ProductBean product = new ProductBean();
+        JSONObject objInArr = productArr.getJSONObject(i);
+        product.setJSONObject(objInArr);
+        ProductArray.add(product);
+      }
+      adapter.addAll(ProductArray);
+    }
+    catch (JSONException e)
+    {
+      e.printStackTrace();
+    }
+    
+  }
 }

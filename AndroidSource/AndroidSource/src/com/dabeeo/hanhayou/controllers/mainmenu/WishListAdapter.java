@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +21,7 @@ import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.squareup.picasso.Picasso;
 
 public class WishListAdapter extends BaseAdapter
 {
@@ -93,12 +93,11 @@ public class WishListAdapter extends BaseAdapter
 		View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+		Picasso.with(context).load(bean.imageUrl).fit().centerCrop().into(imageView);
 		TextView title = (TextView) view.findViewById(R.id.title);
 		TextView price = (TextView) view.findViewById(R.id.price);
-		price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-		TextView discountPrice = (TextView) view.findViewById(R.id.discount_price);
-		TextView chinaPrice = (TextView) view.findViewById(R.id.discount_china_currency);
-		TextView month = (TextView) view.findViewById(R.id.text_discount_month);
+		TextView chinaPrice = (TextView) view.findViewById(R.id.ch_price);
+		TextView saleRate = (TextView) view.findViewById(R.id.sale_rate);
 		ImageView btnTrash = (ImageView) view.findViewById(R.id.btn_trash);
 		btnTrash.setOnClickListener(new OnClickListener()
 		{
@@ -142,10 +141,12 @@ public class WishListAdapter extends BaseAdapter
 			bottomLine.setVisibility(View.VISIBLE);
 		
 		title.setText(bean.name);
-		discountPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.priceSale));
-		price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.priceDiscount));
-		month.setText("7월");
-		chinaPrice.setText("(500￥)");
+		price.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(bean.priceSale)));
+		String ch_price = "";
+    int calChPrice = (int)(Integer.parseInt(bean.priceSale)/Float.parseFloat(bean.currencyConvert));
+    ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
+		chinaPrice.setText(""+ch_price);
+		saleRate.setText(bean.saleRate + "折");
 		
 		view.setOnClickListener(new OnClickListener()
 		{
