@@ -3,6 +3,7 @@ package com.dabeeo.hanhayou.managers.network;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +16,7 @@ import android.util.Log;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
+import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
@@ -742,6 +744,25 @@ public class ApiClient
     return httpClient.requestGet(url);
   }
   
+  public HashMap<String, String> getPopularWishList()
+  {
+    return null;
+  }
+  
+  public NetworkResult getWishList()
+  {
+    return httpClient.requestGet(getSiteUrl()+"?v=m1&mode=MY_WISH_LIST&userSeq="+PreferenceManager.getInstance(context).getUserSeq());
+  }
+  
+  /**
+   * 통계 데이터 API
+   */
+  
+  public NetworkResult setLogApp(String deviceID, int type)
+  {
+    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=LOG_APP_INS&device=" + deviceID + "&type=" + type 
+        + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+  }
   
   public NetworkResult getTicketDetail(String ticketId)
   {
