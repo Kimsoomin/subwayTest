@@ -35,7 +35,6 @@ public class TrendProductListAdapter extends BaseAdapter
   private Activity context;
   private ApiClient apiClient;
   private Button btnWishList;
-  private int position;
   
   public TrendProductListAdapter(Activity context)
   {
@@ -101,14 +100,17 @@ public class TrendProductListAdapter extends BaseAdapter
     TextView discountRate = (TextView) view.findViewById(R.id.discount_rate);
     
     btnWishList = (Button) view.findViewById(R.id.btn_wish_list);
-    btnWishList.setId(position);
+    btnWishList.setTag(position);
     btnWishList.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
       {
-        btnWishList.setActivated(!btnWishList.isActivated());
-        BlinkingCommon.smlLibDebug("TrendProducTList", "btnWishList gegid" + btnWishList.getId());
+        int position = (int) v.getTag();
+        ProductBean pb = (ProductBean)getItem(position);
+//        new ToggleWishList().execute(pb.id);
+//        btnWishList.setActivated(!btnWishList.isActivated());
+        BlinkingCommon.smlLibDebug("TrendProducTList", "pb id : " + pb.id);
       }
     });
     
