@@ -760,8 +760,7 @@ public class ApiClient
   
   public NetworkResult setLogApp(String deviceID, int type)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=LOG_APP_INS&device=" + deviceID + "&type=" + type 
-        + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=LOG_APP_INS&device=" + deviceID + "&type=" + type);
   }
   
   public NetworkResult getTicketDetail(String ticketId)

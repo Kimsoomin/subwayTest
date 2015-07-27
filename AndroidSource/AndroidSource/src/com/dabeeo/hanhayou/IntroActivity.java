@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
 import android.widget.ProgressBar;
@@ -34,6 +35,7 @@ import android.widget.ProgressBar;
 import com.dabeeo.hanhayou.activities.sub.GuideActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.SetLogMapDownload;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
@@ -66,6 +68,9 @@ public class IntroActivity extends Activity
     PreferenceManager preferenceManager = PreferenceManager.getInstance(this);
     if (!preferenceManager.getIsAutoLogin())
       preferenceManager.clearUserInfo();
+    
+    if(TextUtils.isEmpty(preferenceManager.getDeviceId()))
+      preferenceManager.setDeviceId(Global.getDeviceID(getBaseContext(), getContentResolver()));
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     alertManager = new AlertDialogManager(this);
@@ -544,6 +549,8 @@ public class IntroActivity extends Activity
     {
       if (pView.isShowing())
         pView.dismiss();
+            
+      new SetLogMapDownload().execute(IntroActivity.this);
       checkAllowAlarm();
       super.onPostExecute(result);
     }
@@ -583,6 +590,7 @@ public class IntroActivity extends Activity
   private void startGuideActivity()
   {
     PreferenceManager.getInstance(this).setIsFirst(false);
+    new setFirstStartTask().execute();
     startActivity(new Intent(IntroActivity.this, GuideActivity.class));
     finish();
   }
@@ -593,4 +601,16 @@ public class IntroActivity extends Activity
     startActivity(new Intent(IntroActivity.this, MainActivity.class));
     finish();
   }
+  
+  private class setFirstStartTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return client.setLogApp(PreferenceManager.getInstance(IntroActivity.this).getDeviceId(), 1);
+    }
+  }
+  
+  
 }

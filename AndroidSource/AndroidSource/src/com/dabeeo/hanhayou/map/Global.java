@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -45,9 +44,9 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LocalActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageInstaller.Session;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -67,10 +66,8 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.os.Debug;
 import android.os.Environment;
-import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -1074,5 +1071,22 @@ public class Global
     float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DP, context.getResources().getDisplayMetrics());
     
     return (int) px;
+  }
+  
+  public static String getDeviceID(Context contenxt, ContentResolver contentResolver)
+  {
+    final TelephonyManager tm = (TelephonyManager) contenxt.getSystemService(Context.TELEPHONY_SERVICE);
+
+    final String tmDevice, tmSerial, androidId;
+    tmDevice = "" + tm.getDeviceId();
+    tmSerial = "" + tm.getSimSerialNumber();
+    androidId = "" + android.provider.Settings.Secure.getString(contentResolver, android.provider.Settings.Secure.ANDROID_ID);
+
+    UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
+    String deviceId = deviceUuid.toString();
+    
+    BlinkingCommon.smlLibDebug("GLOBAL", "deviceID : " + deviceId);
+    
+    return deviceId;
   }
 }

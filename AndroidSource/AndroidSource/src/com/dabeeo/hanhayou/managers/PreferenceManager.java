@@ -39,7 +39,6 @@ public class PreferenceManager extends BasePreferenceManager
   
   private static final String KEY_IS_FIRST = "key_is_first";
   private static final String KEY_IS_ALLOW_POPUP = "key_is_allow_pop_up";
-  private static final String KEY_RECENT_SEARCH_WORD = "key_recent_search_word";
   private static final String KEY_USER_SEQ = "key_user_seq";
   //유저정보 추가
   private static final String KEY_USER_EMAIL = "key_user_email";
@@ -47,6 +46,7 @@ public class PreferenceManager extends BasePreferenceManager
   private static final String KEY_USER_GENDER = "key_user_gender";
   private static final String KEY_USER_PROFILE = "key_user_profile";
   private static final String KEY_AUTO_LOGIN = "key_auto_login";
+  private static final String KEY_DEVICE_ID = "key_device_id";
   
   private static final String KEY_DONT_SHOW_POPUP_DATE = "key_dont_show_popup_date";
   
@@ -189,53 +189,13 @@ public class PreferenceManager extends BasePreferenceManager
     return get(KEY_AUTO_LOGIN, false);
   }
   
-  
-  public void setRecentSearchWord(String word)
+  public void setDeviceId(String deviceId)
   {
-    ArrayList<String> result = getRecentSearchWord();
-    if (result.contains(word))
-      result.remove(word);
-    
-    result.add(0, word);
-    
-    // 최근 3개만 남기기
-    for (int i = result.size() - 1; i >= 3; i--)
-    {
-      result.remove(i);
-    }
-    
-    JSONArray array = new JSONArray();
-    for (String string : result)
-    {
-      array.put(string);
-    }
-    
-    put(KEY_RECENT_SEARCH_WORD, array.toString());
+    put(KEY_DEVICE_ID, deviceId);
   }
   
-  
-  public ArrayList<String> getRecentSearchWord()
+  public String getDeviceId()
   {
-    ArrayList<String> result = new ArrayList<>();
-    
-    String json = get(KEY_RECENT_SEARCH_WORD);
-    if (TextUtils.isEmpty(json))
-      json = "[]";
-    
-    try
-    {
-      JSONArray array = new JSONArray(json);
-      
-      for (int i = 0; i < array.length(); i++)
-      {
-        result.add(array.getString(i));
-      }
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-    
-    return result;
+    return get(KEY_DEVICE_ID);
   }
 }
