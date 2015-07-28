@@ -32,7 +32,6 @@ public class TrendExhibitionActivity extends ActionBarActivity
   private TrendProductListAdapter adapter;
   
   public String idx;
-  public String themeTitle;
   public String themeUrl;
   public ApiClient apiClient;  
   public TrendExhibitionTopView TopView;

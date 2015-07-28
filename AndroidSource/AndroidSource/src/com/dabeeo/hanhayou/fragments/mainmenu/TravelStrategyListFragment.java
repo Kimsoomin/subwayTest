@@ -23,7 +23,9 @@ import android.widget.ProgressBar;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
+import com.dabeeo.hanhayou.activities.trend.TrendExhibitionActivity;
 import com.dabeeo.hanhayou.beans.PremiumBean;
+import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.RecommendSeoulListAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
@@ -44,6 +46,8 @@ public class TravelStrategyListFragment extends Fragment
   private ListView listView;
   private ListFooterProgressView footerLoadView;
   
+  private int themePosition = 0;
+  private ArrayList<TrendKoreaBean> themeList;
   
   public TravelStrategyListFragment(int categoryId)
   {
@@ -98,14 +102,18 @@ public class TravelStrategyListFragment extends Fragment
     });
     listView.setAdapter(adapter);
     
-    load();
+    loadThemeList();
   }
   
-  
-  private void load()
+  private void loadThemeList()
   {
     progressBar.setVisibility(View.VISIBLE);
     
+    new GetThemeListAsyncTask().execute();
+  }
+  
+  private void load()
+  {
     new GetStoreAsyncTask().execute();
   }
   
@@ -118,6 +126,25 @@ public class TravelStrategyListFragment extends Fragment
     this.area = area;
     
     load();
+  }
+  
+  private class GetThemeListAsyncTask extends AsyncTask<Void, Void, ArrayList<TrendKoreaBean>>
+  {
+    
+    @Override
+    protected ArrayList<TrendKoreaBean> doInBackground(Void... params)
+    {
+      themeList = null;
+      themeList = apiClient.getThemeList(0);
+      return themeList;
+    }
+    
+    @Override
+    protected void onPostExecute(ArrayList<TrendKoreaBean> result)
+    {
+      super.onPostExecute(result);
+      new GetStoreAsyncTask().execute();
+    }
   }
   
   private class GetStoreAsyncTask extends AsyncTask<Void, Void, NetworkResult>
@@ -142,6 +169,7 @@ public class TravelStrategyListFragment extends Fragment
     @Override
     protected void onPostExecute(NetworkResult result)
     {
+      
       if (result.isSuccess)
       {
         ArrayList<PremiumBean> places = new ArrayList<PremiumBean>();
@@ -153,7 +181,19 @@ public class TravelStrategyListFragment extends Fragment
           {
             JSONObject objInArr = arr.getJSONObject(i);
             PremiumBean bean = new PremiumBean();
-            bean.setJSONObject(objInArr);
+            
+            if(themeList.size()-1 > themePosition)
+            {
+              if((i+1) % 4 == 0)
+              {
+                bean.idx = themeList.get(themePosition).idx;
+                bean.title = null;
+                bean.imageUrl = themeList.get(themePosition).imageUrl;
+                themePosition = themePosition + 1;
+              }else
+                bean.setJSONObject(objInArr);
+            }else
+              bean.setJSONObject(objInArr);
             places.add(bean);
           }
         }
@@ -166,6 +206,7 @@ public class TravelStrategyListFragment extends Fragment
           isLoadEnded = true;
         adapter.addAll(places);
       }
+      
       progressBar.setVisibility(View.GONE);
       listView.removeFooterView(footerLoadView);
       isLoading = false;
@@ -182,8 +223,17 @@ public class TravelStrategyListFragment extends Fragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
       PremiumBean bean = (PremiumBean) adapter.getItem(position);
-      Intent i = new Intent(getActivity(), TravelStrategyDetailActivity.class);
-      i.putExtra("place_idx", bean.idx);
+      Intent i;
+      if(bean.title != null)
+      {
+        i = new Intent(getActivity(), TravelStrategyDetailActivity.class);
+        i.putExtra("place_idx", bean.idx);
+      }else
+      {
+        i = new Intent(getActivity(), TrendExhibitionActivity.class);
+        i.putExtra("themeIdx", bean.idx);
+        i.putExtra("themeImageUrl", bean.imageUrl);
+      }
       startActivity(i);
     }
   };

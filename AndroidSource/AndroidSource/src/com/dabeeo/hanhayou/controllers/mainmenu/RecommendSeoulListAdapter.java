@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -93,15 +94,23 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
+    LinearLayout likeLayout = (LinearLayout) view.findViewById(R.id.like_layout);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     
-    SpannableStringBuilder style = new SpannableStringBuilder(bean.title);
-    style.setSpan(new BackgroundColorSpan(Color.parseColor("#ffffff")), 0, bean.title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    title.setText(style);
-    subtitle.setText(bean.placeTitle);
-    likeCount.setText(Integer.toString(bean.likeCount));
+    if(bean.title != null)
+    {
+      SpannableStringBuilder style = new SpannableStringBuilder(bean.title);
+      style.setSpan(new BackgroundColorSpan(Color.parseColor("#ffffff")), 0, bean.title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+      title.setText(style);
+      subtitle.setText(bean.placeTitle);
+      likeCount.setText(Integer.toString(bean.likeCount));
+    }else
+    {
+      title.setVisibility(View.INVISIBLE);
+      subtitle.setVisibility(View.INVISIBLE);
+      likeLayout.setVisibility(View.INVISIBLE);
+    }
     
-    Log.w("WARN", "bean.imageUrl : " + bean.imageUrl);
     Picasso.with(parent.getContext()).load(bean.imageUrl).resize(imageWidth, imageHeight).centerCrop().into(imageView);
     Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
     view.startAnimation(animation);
