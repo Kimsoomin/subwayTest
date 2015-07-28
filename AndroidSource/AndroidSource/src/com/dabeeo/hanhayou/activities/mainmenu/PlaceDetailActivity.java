@@ -277,7 +277,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   
   private class GetPlaceProductAsyncTask extends AsyncTask<String, Integer, ArrayList<ProductBean>>
   {
-
+    
     @Override
     protected ArrayList<ProductBean> doInBackground(String... params)
     {
@@ -528,7 +528,8 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
       
       AlertDialogManager alert = new AlertDialogManager(PlaceDetailActivity.this);
-      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_write_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_write_review), getString(R.string.term_ok), 
+          getString(R.string.term_cancel), new AlertListener()
       {
         public void onPositiveButtonClickListener()
         {
@@ -538,7 +539,6 @@ public class PlaceDetailActivity extends ActionBarActivity
           i.putExtra("rate", rate);
           startActivity(i);
         }
-        
         
         public void onNegativeButtonClickListener()
         {

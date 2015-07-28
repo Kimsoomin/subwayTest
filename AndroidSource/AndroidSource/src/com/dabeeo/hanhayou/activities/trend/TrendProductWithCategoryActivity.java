@@ -178,6 +178,5 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
     {
       e.printStackTrace();
     }
-    
   }
 }

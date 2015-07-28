@@ -3,7 +3,6 @@ package com.dabeeo.hanhayou.managers.network;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -531,13 +530,6 @@ public class ApiClient
   //user_LOG
   public NetworkResult postReviewRate(String parentType, String parentIdx, String ownerUserSeq, int rate, String contents)
   {
-//    mode: "REVIEW_INS",
-//    parentType: [부모컨텐츠종류],
-//    parentIdx: [부모컨텐츠idx],
-//    userSeq: [회원번호],
-//    rate: [평점],1/3/5
-//    contents: [내용],
-//    regDate: [등록일자]
     if (TextUtils.isEmpty(contents))
       return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate);
     else
@@ -550,8 +542,8 @@ public class ApiClient
       {
         e.printStackTrace();
       }
-      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate + "&contents="
-          + contents);
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType 
+          + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate + "&contents=" + contents);
     }
   }
   
@@ -596,7 +588,8 @@ public class ApiClient
     ArrayList<ReviewBean> beans = new ArrayList<ReviewBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" 
+          + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
       JSONObject obj;
       try
       {
@@ -684,7 +677,6 @@ public class ApiClient
   /**
    * TrendyKorea Api
    */
-  
   public ArrayList<TrendKoreaBean> getThemeList(int limit)
   {
     ArrayList<TrendKoreaBean> themeList = new ArrayList<TrendKoreaBean>();
@@ -719,7 +711,8 @@ public class ApiClient
   public NetworkResult getThemeItem(String idx)
   {
     if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0&userSeq=" 
+          + PreferenceManager.getInstance(context).getUserSeq());
     else
       return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0");
   }
@@ -769,7 +762,7 @@ public class ApiClient
       }
     }catch(Exception e)
     {
-      BlinkingCommon.smlLibPrintException("ApiClient", " e :" + e);
+      BlinkingCommon.smlLibPrintException("ApiClient", " e : " + e);
     }
     
     return popularWishList;
@@ -787,8 +780,12 @@ public class ApiClient
     {
       NetworkResult result;
       
-      result = httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1"
-          + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
+      if(TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        result = httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1"
+            + "&limit=2");
+      else
+        result =httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1"
+            + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
       
       JSONObject obj = new JSONObject(result.response);
       JSONArray arr = obj.getJSONArray("product");
@@ -808,10 +805,72 @@ public class ApiClient
     return placeProduct;
   }
   
-  public NetworkResult getScheduleProduct(String idx)
+  public ArrayList<ProductBean> getSearchProduct()
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx 
-        + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&lang=zh_cn");
+    ArrayList<ProductBean> searchProduct = new ArrayList<ProductBean>();
+    
+    try
+    {
+      NetworkResult result;
+      
+      if(TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        result = httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1" + "&limit=2");
+      else
+        result =httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1"
+            + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
+      
+      JSONObject obj = new JSONObject(result.response);
+      JSONArray arr = obj.getJSONArray("product");
+      for(int i = 0; i < arr.length(); i++)
+      {
+        JSONObject objInArr = arr.getJSONObject(i);
+        ProductBean bean = new ProductBean();
+        bean.setJSONObject(objInArr);
+        searchProduct.add(bean);
+      }
+    }
+    catch (Exception e)
+    {
+      BlinkingCommon.smlLibDebug("ApiClient", " e : " + e);
+    }
+    
+    return searchProduct;
+  }
+  
+  public ArrayList<ProductBean> getScheduleProduct(String idx)
+  {
+    ArrayList<ProductBean> planProduct = new ArrayList<ProductBean>();
+    try
+    {
+      NetworkResult result;
+      
+      if(TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx 
+            + "&lang=zh_cn");
+      else
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx 
+            + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&lang=zh_cn");
+      
+      JSONObject obj = new JSONObject(result.response);
+      JSONArray arr = obj.getJSONArray("day");
+      for(int i = 0; i < arr.length(); i++)
+      {
+        JSONArray arrInArr = arr.getJSONArray(i);
+        for(int j = 0; j<arrInArr.length(); j++)
+        {
+          JSONObject objInArr = arrInArr.getJSONObject(j);
+          ProductBean bean = new ProductBean();
+          bean.setJSONObject(objInArr);
+          planProduct.add(bean);
+        }
+      }      
+    }
+    catch (Exception e)
+    {
+      BlinkingCommon.smlLibDebug("ApiClient", "e : " + e);
+    }
+    
+    return planProduct;
   }
   
   /**

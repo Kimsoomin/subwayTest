@@ -168,14 +168,7 @@ public class SearchFragment extends Fragment
   
   private void loadRecommendProduct()
   {
-    layoutRecommedProduct.removeAllViews();
-    ProductView productView = new ProductView(getActivity());
-    ProductBean productBean = new ProductBean();
-    productBean.name = "상품명1";
-    productBean.priceSale = "100";
-    productBean.priceDiscount = "40";
-    productView.setBean(productBean, productBean);
-    layoutRecommedProduct.addView(productView);
+    new GetSearchProductList().execute();
   }
   
   
@@ -357,6 +350,47 @@ public class SearchFragment extends Fragment
         emptyContainer.setVisibility(View.GONE);
       }
       super.onPostExecute(result);
+    }
+  }
+  
+  private class GetSearchProductList extends AsyncTask<Void, Void, ArrayList<ProductBean>>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected ArrayList<ProductBean> doInBackground(Void... params)
+    {
+      ArrayList<ProductBean> result  = null;
+      result = apiClient.getSearchProduct();
+      return result;
+    }
+    
+    @Override
+    protected void onPostExecute(ArrayList<ProductBean> result)
+    {
+      super.onPostExecute(result);
+      
+      ProductBean leftProduct = null;
+      ProductBean rightProduct = null;
+      
+      if(result.size() > 0)
+      {
+        leftProduct = result.get(0);
+      }
+      
+      if(result.size() == 2)
+      {
+        rightProduct = result.get(1);
+      }
+      
+      layoutRecommedProduct.removeAllViews();
+      ProductView productView = new ProductView(getActivity());
+      productView.setBean(leftProduct, rightProduct);
+      layoutRecommedProduct.addView(productView);
     }
   }
 }
