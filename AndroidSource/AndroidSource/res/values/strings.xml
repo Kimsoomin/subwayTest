@@ -162,7 +162,7 @@
     <string name="msg_dest_arrived">已到达目的地</string>
     <string name="app_finish">再按一次后退键退出应用。</string>
     <string name="msg_no_search_result">无搜索结果</string>
-    <string name="map_navigation_long_distance">도보로 이용하기에 먼거리입니다. 지하철역으로 안내해드릴까요?</string>
+    <string name="map_navigation_long_distance">走路太远，要不要去坐地铁？</string>
     <!-- Intro -->
     <string name="msg_map_donwload">正在下载地图，请稍等。</string>
 
