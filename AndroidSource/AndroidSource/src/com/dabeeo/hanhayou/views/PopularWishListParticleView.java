@@ -15,8 +15,6 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
-import com.dabeeo.hanhayou.map.BlinkingMap;
 
 public class PopularWishListParticleView extends RelativeLayout
 {

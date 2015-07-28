@@ -186,11 +186,28 @@ public class WishListFragment extends Fragment
     {
       super.onPostExecute(result);
       
+      String leftName = "";
+      String leftId = "";
+      String rightName = "";
+      String rightId = "";
+      super.onPostExecute(result);
+      
       int position = 0;
       for(int i = 0; i < result.size(); i++)
       {
         PopularWishListParticleView pView = new PopularWishListParticleView(getActivity());
-        pView.setBean(position, result.get(i).name, result.get(i+1).name , result.get(i).id, result.get(i+1).id);
+        leftName = result.get(i).name;
+        leftId = result.get(i).id;
+        if(result.size()-1 > i)
+        {
+          rightName = result.get(i+1).name;
+          rightId = result.get(i+1).id;
+        }else
+        {
+          rightName = "";
+          rightId = "";
+        }
+        pView.setBean(position, leftName, rightName, leftId, rightId);
         position = position + 1;
         i = i + 1;
         popularWishListContainer.addView(pView);

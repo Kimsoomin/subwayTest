@@ -762,7 +762,10 @@ public class ApiClient
         JSONObject objInArr = arr.getJSONObject(i);
         PopularWishBean bean = new PopularWishBean();
         bean.setJSONObject(objInArr);
-        popularWishList.add(bean);
+        if(!bean.name.equals("null") && !TextUtils.isEmpty(bean.name))
+        {
+          popularWishList.add(bean);
+        }
       }
     }catch(Exception e)
     {
