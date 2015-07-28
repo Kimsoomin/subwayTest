@@ -74,7 +74,7 @@ public class ScheduleDetailBean
       if (obj.has("rate"))
         rate = obj.getInt("rate")/2;
       if (obj.has("myLastRate"))
-        myLastRate = obj.getInt("myLastRate");
+        myLastRate = obj.getInt("myLastRate")/2;
       
       if (obj.has("ownerUserSeq"))
         ownerUserSeq = obj.getInt("ownerUserSeq");
