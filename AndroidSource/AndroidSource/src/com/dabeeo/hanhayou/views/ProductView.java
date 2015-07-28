@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
-import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.utils.SystemUtil;
+import com.dabeeo.hanhayou.utils.NumberFormatter;
+import com.squareup.picasso.Picasso;
 
 public class ProductView extends RelativeLayout
 {
@@ -56,49 +56,56 @@ public class ProductView extends RelativeLayout
     TextView secondCnPrice = (TextView) view.findViewById(R.id.cn_price_second);
     TextView secondDiscountRate = (TextView) view.findViewById(R.id.discount_rate_second);
     
-    firstImageView.setImageResource(R.drawable.sample_place_detail_shopping_list1);
-    firstContainer.setVisibility(View.VISIBLE);
-    firstTitle.setText("IOPE/亦博 气垫BB霜粉底霜 气垫粉饼保湿美白遮瑕SPF50+/PA+++");
-    firstOriginalPrice.setText("₩ 77,000");
-    firstCnPrice.setText("(대략"+context.getString(R.string.term_yuan)+"455"+")");
-    firstDiscountRate.setText("9折");
-    firstContainer.setOnClickListener(new OnClickListener()
+    String ch_price = "";
+    int calChPrice = 0;
+    if(firstBean != null)
     {
-      @Override
-      public void onClick(View v)
+      firstContainer.setVisibility(View.VISIBLE);
+      Picasso.with(context).load(firstBean.imageUrl).fit().centerCrop().into(firstImageView);
+      firstImageView.setImageResource(R.drawable.sample_place_detail_shopping_list1);
+      firstContainer.setVisibility(View.VISIBLE);
+      firstTitle.setText(firstBean.name);
+      firstOriginalPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(firstBean.priceSale)));
+      calChPrice = (int)(Integer.parseInt(firstBean.priceSale)/Float.parseFloat(firstBean.currencyConvert));
+      ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
+      firstCnPrice.setText(ch_price);
+      firstDiscountRate.setText(firstBean.saleRate + "折");
+      firstContainer.setOnClickListener(new OnClickListener()
       {
-        if (!SystemUtil.isConnectNetwork(context))
-          new AlertDialogManager(context).showDontNetworkConnectDialog();
-        else
+        @Override
+        public void onClick(View v)
+        {
           context.startActivity(new Intent(context, TrendProductDetailActivity.class));
-      }
-    });
-    secondContainer.setVisibility(View.VISIBLE);
-//    ImageDownloader.displayImage(context, "", secondImageView, null);
-    secondImageView.setImageResource(R.drawable.sample_place_detail_shopping_list2);
-    secondTitle.setText("[ISA KNOX伊诺姿]365长效防晒隔离霜70ml");
-    secondOriginalPrice.setText("₩ 91,000");
-    secondCnPrice.setText("(대략"+context.getString(R.string.term_yuan) + "538"+")");
-    secondDiscountRate.setText("9折");
-    secondContainer.setOnClickListener(new OnClickListener()
+        }
+      });
+    }else
     {
-      @Override
-      public void onClick(View v)
-      {
-        if (!SystemUtil.isConnectNetwork(context))
-          new AlertDialogManager(context).showDontNetworkConnectDialog();
-        else
-          context.startActivity(new Intent(context, TrendProductDetailActivity.class));
-      }
-    });
+      firstContainer.setVisibility(View.GONE);
+    }
     
-//    if (firstBean != null)
-//    {
-//      firstTitle.setText(firstBean.title);
-//      firstOriginalPrice.setText("¥ " + firstBean.originalPrice);
-//      firstDiscountPrice.setText("¥ " + firstBean.discountPrice);
-//      firstOriginalPrice.setPaintFlags(firstOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//    }
+    if(secondBean != null)
+    {
+      secondContainer.setVisibility(View.VISIBLE);
+      Picasso.with(context).load(secondBean.imageUrl).fit().centerCrop().into(secondImageView);
+      secondTitle.setText(secondBean.name);
+      secondOriginalPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(secondBean.priceSale)));
+      calChPrice = (int)(Integer.parseInt(secondBean.priceSale)/Float.parseFloat(secondBean.currencyConvert));
+      ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
+      secondCnPrice.setText(ch_price);
+      secondDiscountRate.setText(secondBean.saleRate+"折");
+      secondContainer.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          context.startActivity(new Intent(context, TrendProductDetailActivity.class));
+        }
+      });
+    }else
+    {
+      secondContainer.setVisibility(View.GONE);
+    }
+    
     addView(view);
   }
 }

@@ -780,6 +780,40 @@ public class ApiClient
     return httpClient.requestGet(getSiteUrl()+"?v=m1&mode=MY_WISH_LIST&userSeq="+PreferenceManager.getInstance(context).getUserSeq());
   }
   
+  public ArrayList<ProductBean> getPlaceProduct(String idx)
+  {
+    ArrayList<ProductBean> placeProduct = new ArrayList<ProductBean>();
+    try
+    {
+      NetworkResult result;
+      
+      result = httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1"
+          + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
+      
+      JSONObject obj = new JSONObject(result.response);
+      JSONArray arr = obj.getJSONArray("product");
+      for(int i = 0; i < arr.length(); i++)
+      {
+        JSONObject objInArr = arr.getJSONObject(i);
+        ProductBean bean = new ProductBean();
+        bean.setJSONObject(objInArr);
+        placeProduct.add(bean);
+      }      
+    }
+    catch (Exception e)
+    {
+      BlinkingCommon.smlLibDebug("ApiClient", " e : " + e);
+    }
+    
+    return placeProduct;
+  }
+  
+  public NetworkResult getScheduleProduct(String idx)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx 
+        + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&lang=zh_cn");
+  }
+  
   /**
    * 통계 데이터 API
    */

@@ -1,5 +1,7 @@
 package com.dabeeo.hanhayou.activities.mainmenu;
 
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -236,6 +238,11 @@ public class PlaceDetailActivity extends ActionBarActivity
     progressBar.setVisibility(View.VISIBLE);
     progressBar.bringToFront();
     new GetPlaceDetailAsyncTask().execute();
+    
+    if(SystemUtil.isConnectNetwork(this))
+    {
+      new GetPlaceProductAsyncTask().execute();
+    }
   }
   
   private class GetPlaceDetailAsyncTask extends AsyncTask<String, Integer, PlaceDetailBean>
@@ -266,6 +273,45 @@ public class PlaceDetailActivity extends ActionBarActivity
       progressBar.setVisibility(View.GONE);
       super.onPostExecute(result);
     }
+  }
+  
+  private class GetPlaceProductAsyncTask extends AsyncTask<String, Integer, ArrayList<ProductBean>>
+  {
+
+    @Override
+    protected ArrayList<ProductBean> doInBackground(String... params)
+    {
+      ArrayList<ProductBean> result = null;
+      result = apiClient.getPlaceProduct(placeIdx);
+      return result;
+    }
+    
+    @Override
+    protected void onPostExecute(ArrayList<ProductBean> result)
+    {
+      super.onPostExecute(result);
+      
+      ProductBean leftProduct = null;
+      ProductBean rightProduct = null;
+      
+      if(result.size() > 0)
+      {
+        leftProduct = result.get(0);
+      }
+      
+      if(result.size() == 2)
+      {
+        rightProduct = result.get(1);
+      }
+      
+      layoutRecommendProduct.setVisibility(View.VISIBLE);
+      containerProduct.removeAllViews();
+      ProductView productView = new ProductView(PlaceDetailActivity.this);
+      
+      productView.setBean(leftProduct, rightProduct);
+      containerProduct.addView(productView);
+    }
+    
   }
   
   
@@ -306,23 +352,6 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
     });
     containerTicketAndCoupon.addView(couponView);
-    
-    if (SystemUtil.isConnectNetwork(getApplicationContext()))
-    {
-      layoutRecommendProduct.setVisibility(View.VISIBLE);
-      containerProduct.removeAllViews();
-      ProductView productView = new ProductView(PlaceDetailActivity.this);
-      ProductBean productBean = new ProductBean();
-      productBean.name = "XXX 수분크림";
-      productBean.priceSale = "150";
-      productBean.priceDiscount = "93";
-      productView.setBean(productBean, productBean);
-      containerProduct.addView(productView);
-    }
-    else
-    {
-      layoutRecommendProduct.setVisibility(View.GONE);
-    }
     
     if (bean == null)
       return;
