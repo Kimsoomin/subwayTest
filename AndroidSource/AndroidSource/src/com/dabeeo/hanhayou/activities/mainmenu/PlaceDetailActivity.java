@@ -33,6 +33,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hanhayou.activities.ticket.TicketDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
+import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
@@ -80,6 +81,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private LinearLayout containerTicketAndCoupon;
   public LinearLayout containerWriteReview;
   private LinearLayout layoutRecommendSeoul;
+  private LinearLayout moreProductLayout;
   private Button btnRecommendSeoul;
   
   private boolean isEnterMap = false;
@@ -241,6 +243,15 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     if(SystemUtil.isConnectNetwork(this))
     {
+      moreProductLayout = (LinearLayout) findViewById(R.id.more_product_layout);
+      moreProductLayout.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          startActivity(new Intent(PlaceDetailActivity.this, TrendActivity.class));
+        }
+      });
       new GetPlaceProductAsyncTask().execute();
     }
   }

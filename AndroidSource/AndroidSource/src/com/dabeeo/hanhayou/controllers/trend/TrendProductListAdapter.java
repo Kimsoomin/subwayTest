@@ -161,18 +161,7 @@ public class TrendProductListAdapter extends BaseAdapter
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      try
-      {
-        JSONObject obj = new JSONObject(result.response);
-        if(obj.getString("result").equals("INS"))
-        {
-          notifyDataSetChanged();
-        }
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
+      notifyDataSetChanged();
     }
   }
 }
