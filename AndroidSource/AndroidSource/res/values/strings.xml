@@ -420,11 +420,11 @@
     <string name="msg_warn_password_only_english_and_number">请输入6~16个字符的英文/数字组合</string>
     <string name="msg_warn_password_dont_same_original_password">请输入与原密码不同的新密码</string>
     <string name="msg_please_valid_check_password">密码只能输入英文字符/数字/特殊符号。</string>
-    <string name="msg_valid_password">只能输入英文/数字/特殊符号。</string>
+    <string name="msg_valid_password">请输入6~16个字符的英文/数字组合</string>
     <string name="msg_warn_password_not_same">新密码输入不一致。</string>
     <!-- 로그인/회원가입 -->
     <string name="msg_please_write_email">请输入邮箱地址。</string>
-    <string name="msg_please_valid_check_email">请确认您输入的内容。</string>
+    <string name="msg_please_valid_check_email">请输入正确的邮箱地址。</string>
     <string name="msg_check_duplicate_email">请检查邮箱是否重复。</string>
     <string name="msg_duplicate_email">此邮箱已注册。</string>
     <string name="msg_possibile_email_account">此邮箱可以使用。</string>
@@ -456,7 +456,7 @@
     <string name="msg_please_error_id">您输入的帐号不存在</string>
     <string name="msg_erro_auto_id">正在等待认证</string>
     <string name="msg_now_allow_consecutive_three_letters">密码不能使用连续3个以上的字母/数字。</string>
-    <string name="msg_now_allow_continuos_three_letters">密码不能使用连续3个以上的字母/数字。</string>
+    <string name="msg_now_allow_continuos_three_letters">密码不能使用3个以上的相同或连续字母/数字。</string>
     <string name="msg_please_error_auth">正在等待认证</string>
     <string name="msg_please_error_out">该账号为已注销账号。</string>
     <string name="msg_please_error_password">密码不正确，请重新输入。</string>
