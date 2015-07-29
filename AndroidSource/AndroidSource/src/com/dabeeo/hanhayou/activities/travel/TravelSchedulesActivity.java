@@ -355,7 +355,12 @@ public class TravelSchedulesActivity extends ActionBarActivity
       if (lastSelectedTab == 1)
       {
         if (myScheduleListFragment.getItemCount() == 0)
-          sortItem.setVisible(false);
+        {
+          if (sortItem.getTitle().equals(getString(R.string.term_all)))
+            sortItem.setVisible(false);
+          else
+            sortItem.setVisible(true);
+        }
         else
           sortItem.setVisible(true);
       }
@@ -363,7 +368,10 @@ public class TravelSchedulesActivity extends ActionBarActivity
       if (lastSelectedTab == 2)
       {
         if (myBookMarkscheduleListFragment.getItemCount() == 0)
-          sortItem.setVisible(false);
+          if (sortItem.getTitle().equals(getString(R.string.term_all)))
+            sortItem.setVisible(false);
+          else
+            sortItem.setVisible(true);
         else
           sortItem.setVisible(true);
       }
