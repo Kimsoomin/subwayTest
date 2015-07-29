@@ -186,6 +186,12 @@ public class PlaceDetailActivity extends ActionBarActivity
     {
       headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
       header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics())));
+//      scrollView.setPadding(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
+//          r.getDisplayMetrics()));
+      FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
+      layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics());
+      layoutParams.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, r.getDisplayMetrics());
+      scrollView.setLayoutParams(layoutParams);
     }
     layoutRecommendProduct = (ViewGroup) findViewById(R.id.layout_recommend_product);
     loadPlaceDetail();
@@ -241,7 +247,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     progressBar.bringToFront();
     new GetPlaceDetailAsyncTask().execute();
     
-    if(SystemUtil.isConnectNetwork(this))
+    if (SystemUtil.isConnectNetwork(this))
     {
       moreProductLayout = (LinearLayout) findViewById(R.id.more_product_layout);
       moreProductLayout.setOnClickListener(new OnClickListener()
@@ -297,6 +303,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       return result;
     }
     
+    
     @Override
     protected void onPostExecute(ArrayList<ProductBean> result)
     {
@@ -305,12 +312,12 @@ public class PlaceDetailActivity extends ActionBarActivity
       ProductBean leftProduct = null;
       ProductBean rightProduct = null;
       
-      if(result.size() > 0)
+      if (result.size() > 0)
       {
         leftProduct = result.get(0);
       }
       
-      if(result.size() == 2)
+      if (result.size() == 2)
       {
         rightProduct = result.get(1);
       }
@@ -417,8 +424,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
       header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78,
           getResources().getDisplayMetrics())));
-      scrollView.setPadding(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
-          getResources().getDisplayMetrics()), 0, 0);
+      scrollView.setPadding(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()), 0, 0);
     }
   }
   
@@ -539,8 +545,7 @@ public class PlaceDetailActivity extends ActionBarActivity
       }
       
       AlertDialogManager alert = new AlertDialogManager(PlaceDetailActivity.this);
-      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_write_review), getString(R.string.term_ok), 
-          getString(R.string.term_cancel), new AlertListener()
+      alert.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_write_review), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
       {
         public void onPositiveButtonClickListener()
         {
@@ -550,6 +555,7 @@ public class PlaceDetailActivity extends ActionBarActivity
           i.putExtra("rate", rate);
           startActivity(i);
         }
+        
         
         public void onNegativeButtonClickListener()
         {

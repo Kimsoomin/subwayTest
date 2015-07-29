@@ -24,9 +24,7 @@
             <com.dabeeo.hanhayou.views.CustomScrollView
                 android:id="@+id/scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="35dp"
-                tools:paddingTop="@dimen/max_height_header" >
+                android:layout_height="wrap_content" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
