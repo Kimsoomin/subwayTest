@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0"
-    android:gravity="center">
+    android:gravity="center" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,11 +85,5 @@
                 android:padding="8dp" />
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/summary_center" />
 
 </RelativeLayout>
