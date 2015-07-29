@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.activities.mypage;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONException;
@@ -12,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -110,6 +112,7 @@ public class ChangePasswordActivity extends ActionBarActivity
         alertView.setAlert(getString(R.string.msg_warn_password_dont_same_original_password));
         return false;
       }
+      
       if (newPassword.length() < 6 || newPassword.length() > 16)
       {
         alertView.setAlert(getString(R.string.msg_warn_password_length));
@@ -117,7 +120,6 @@ public class ChangePasswordActivity extends ActionBarActivity
       }
       else
       {
-        
         // 알파벳, 숫자, 몇몇의 특수문자만 가능
         boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", newPassword);
         if (!chk)
@@ -136,6 +138,40 @@ public class ChangePasswordActivity extends ActionBarActivity
             alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
             return false;
           }
+        }
+        
+        if (newPassword.contains(" "))
+        {
+          Log.w("WARN", "Containe escape");
+          alertView.setAlert(getString(R.string.msg_please_delete_escape));
+          return false;
+        }
+        
+        // 붙어있는 3개의 동일한 문자/숫자 불가 
+        for (int i = 0; i < newPassword.length(); i++)
+        {
+          String character = newPassword.charAt(i) + "";
+          character = character + character + character;
+          if (newPassword.indexOf(character) >= 0)
+          {
+            alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
+            return false;
+          }
+        }
+        
+        //영문과 숫자 혼용되어야 함
+        Pattern pattern = Pattern.compile("[0-9]");
+        Matcher matcher = pattern.matcher(newPassword);
+        boolean isContainNumber = matcher.find();
+        
+        pattern = Pattern.compile("[a-zA-Z]");
+        matcher = pattern.matcher(newPassword);
+        boolean isContainEnglish = matcher.find();
+        
+        if (!isContainNumber || !isContainEnglish)
+        {
+          alertView.setAlert(getString(R.string.msg_valid_password));
+          return false;
         }
         
         if (preferenceManager.getUserName().equals(newPassword))

@@ -82,6 +82,9 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     apiClient = new ApiClient(this);
     
     calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, 1970);
+    calendar.set(Calendar.MONTH, 0);
+    calendar.set(Calendar.DAY_OF_MONTH, 1);
     btnDateOfbirth = (Button) findViewById(R.id.btn_date);
     btnDateOfbirth.setOnClickListener(new OnClickListener()
     {
@@ -335,6 +338,21 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
+      //영문과 숫자 혼용되어야 함
+      Pattern pattern = Pattern.compile("[0-9]");
+      Matcher matcher = pattern.matcher(passWord);
+      boolean isContainNumber = matcher.find();
+      
+      pattern = Pattern.compile("[a-zA-Z]");
+      matcher = pattern.matcher(passWord);
+      boolean isContainEnglish = matcher.find();
+      
+      if (!isContainNumber || !isContainEnglish)
+      {
+        alertView.setAlert(getString(R.string.msg_valid_password));
+        return;
+      }
+      
       boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", passWord);
       if (!chk)
       {
@@ -355,7 +373,6 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         Calendar selectCalendar = Calendar.getInstance();
         selectCalendar.setTime(birthDay);
         int diff = current.get(Calendar.YEAR) - selectCalendar.get(Calendar.YEAR);
-        Log.w("WARN", "Calendar diff : " + diff);
         if (!checkAboveFourTeenAgreement.isChecked())
         {
           if (diff < 14)
