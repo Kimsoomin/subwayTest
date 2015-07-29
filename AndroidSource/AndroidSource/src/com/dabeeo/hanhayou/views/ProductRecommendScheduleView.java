@@ -1,6 +1,9 @@
 package com.dabeeo.hanhayou.views;
 
+import org.json.JSONObject;
+
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,9 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.squareup.picasso.Picasso;
 
@@ -19,11 +25,14 @@ public class ProductRecommendScheduleView extends RelativeLayout
   private ImageView imageView;
   private TextView title, price, chinaPrice, saleRate, btnWishList;
   
+  private ApiClient apiClient;
+  
   
   public ProductRecommendScheduleView(Context context)
   {
     super(context);
     this.context = context;
+    apiClient = new ApiClient(context);
     init();
   }
   
@@ -54,12 +63,14 @@ public class ProductRecommendScheduleView extends RelativeLayout
     ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
     chinaPrice.setText(""+ch_price);
     saleRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));
+    final String id = bean.id;
+    btnWishList.setActivated(bean.isWished);
     btnWishList.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
       {
-        btnWishList.setActivated(!btnWishList.isActivated());
+        new ToggleWishList().execute(id);
       }
     });
   }
@@ -79,5 +90,29 @@ public class ProductRecommendScheduleView extends RelativeLayout
     btnWishList = (TextView) view.findViewById(R.id.btn_wish_list);
     
     addView(view);
+  }
+  
+  private class ToggleWishList extends AsyncTask<String, Void, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.setUsedLog(PreferenceManager.getInstance(context).getUserSeq(), params[0], "product", "W");
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        btnWishList.setActivated(obj.getString("result").equals("INS"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    }
   }
 }
