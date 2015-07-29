@@ -452,8 +452,8 @@
     <string name="msg_resend_emil_auth">验证码重新发到邮箱。请查看后输入验证码。</string>
     <string name="msg_not_correct_email_auth">验证码不符。请确认后再试。</string>
     <string name="msg_complete_auth">邮箱验证成功。</string>
-    <string name="term_congratulate">恭喜！\n欢迎成为‘韩哈游’的会员。</string>
-    <string name="msg_success_join">注册成功.\n欢迎体验韩哈游的精彩服务</string>
+    <string name="term_congratulate">韩哈游 恭喜您已注册成功</string>
+    <string name="msg_success_join">您可以在韩哈游享受更多的服务了！</string>
     <string name="msg_please_error_id">您输入的帐号不存在</string>
     <string name="msg_erro_auto_id">正在等待认证</string>
     <string name="msg_now_allow_consecutive_three_letters">密码不能使用连续3个以上的字母/数字。</string>
