@@ -309,6 +309,13 @@ public class WriteReviewActivity extends ActionBarActivity
             ReviewImageUploadView view = (ReviewImageUploadView) fileViewWithUrl.get(finalPhotoUrl);
             imageContainer.removeView(view);
             fileViewWithUrl.remove(finalPhotoUrl);
+            
+            if (fileViewWithUrl.size() == 0)
+            {
+              btnAddPic.setVisibility(View.VISIBLE);
+              imageScrollView.setVisibility(View.GONE);
+              imageContainer.setVisibility(View.GONE);
+            }
           }
         });
         
@@ -336,7 +343,6 @@ public class WriteReviewActivity extends ActionBarActivity
       btnAddPic.setVisibility(View.GONE);
       imageScrollView.setVisibility(View.VISIBLE);
       imageContainer.setVisibility(View.VISIBLE);
-      ;
     }
   }
 }

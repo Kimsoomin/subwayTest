@@ -9,6 +9,7 @@
         android:id="@+id/image_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
         android:orientation="vertical" >
 
         <ImageView
@@ -22,10 +23,9 @@
             android:id="@+id/img_x"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:padding="2dp"
-            android:background="@drawable/btn_viewer_close" />
+            android:layout_marginLeft="65dp"
+            android:background="@drawable/btn_viewer_close"
+            android:padding="2dp" />
     </RelativeLayout>
 
     <RelativeLayout
