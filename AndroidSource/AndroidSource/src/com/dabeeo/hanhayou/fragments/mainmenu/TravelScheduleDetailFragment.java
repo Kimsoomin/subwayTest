@@ -77,7 +77,6 @@ public class TravelScheduleDetailFragment extends Fragment
   
   public ApiClient apiClient;
   
-  
   private ArrayList<ProductBean> scheduleProductList;
   
   
@@ -170,7 +169,7 @@ public class TravelScheduleDetailFragment extends Fragment
         View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
         int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
         
-        if (position == 0 && diff == 0 && (reviewContainerView.getVisibility() == View.VISIBLE))
+        if (position == 0 && diff == 0 && reviewContainerView != null && (reviewContainerView.getVisibility() == View.VISIBLE))
           reviewContainerView.loadMore();
       }
     });
@@ -188,7 +187,7 @@ public class TravelScheduleDetailFragment extends Fragment
   }
   
   
-  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule , ArrayList<ProductBean> scheduleProductList)
+  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule, ArrayList<ProductBean> scheduleProductList)
   {
     this.position = position;
     this.bean = bean;
@@ -336,7 +335,7 @@ public class TravelScheduleDetailFragment extends Fragment
       titleView.setLayoutParams(btnLayoutParams);
       titleView.initDayTitle();
       
-      productViewSet(position-1);
+      productViewSet(position - 1);
       
       //하루에 대한 내용
       for (int i = 0; i < dayBean.spots.size(); i++)
@@ -355,6 +354,7 @@ public class TravelScheduleDetailFragment extends Fragment
       }
     }
   }
+  
   
   public void productViewSet(int position)
   {
