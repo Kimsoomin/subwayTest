@@ -26,7 +26,6 @@ import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
-import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
@@ -337,14 +336,15 @@ public class ApiClient
     ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
     for (int i = 0; i < bookmarkArray.size(); i++)
     {
-      if(categoryId == 9)
+      if (categoryId == 9)
       {
-        if(bookmarkArray.get(i).categoryId == 1 || bookmarkArray.get(i).categoryId == 3 || bookmarkArray.get(i).categoryId == 4 
-            || bookmarkArray.get(i).categoryId == 5 || bookmarkArray.get(i).categoryId == 6)
+        if (bookmarkArray.get(i).categoryId == 1 || bookmarkArray.get(i).categoryId == 3 || bookmarkArray.get(i).categoryId == 4 || bookmarkArray.get(i).categoryId == 5
+            || bookmarkArray.get(i).categoryId == 6)
         {
           tempArray.add(bookmarkArray.get(i));
         }
-      }else
+      }
+      else
       {
         if (bookmarkArray.get(i).categoryId == categoryId)
           tempArray.add(bookmarkArray.get(i));
@@ -367,14 +367,14 @@ public class ApiClient
     ArrayList<PlaceBean> tempArray = new ArrayList<PlaceBean>();
     for (int i = 0; i < lists.size(); i++)
     {
-      if(categoryId == 9)
+      if (categoryId == 9)
       {
-        if(lists.get(i).categoryId == 1 || lists.get(i).categoryId == 3 || lists.get(i).categoryId == 4 
-            || lists.get(i).categoryId == 5 || lists.get(i).categoryId == 6)
+        if (lists.get(i).categoryId == 1 || lists.get(i).categoryId == 3 || lists.get(i).categoryId == 4 || lists.get(i).categoryId == 5 || lists.get(i).categoryId == 6)
         {
           tempArray.add(lists.get(i));
         }
-      }else
+      }
+      else
       {
         if (lists.get(i).categoryId == categoryId)
           tempArray.add(lists.get(i));
@@ -543,8 +543,8 @@ public class ApiClient
       {
         e.printStackTrace();
       }
-      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType 
-          + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate + "&contents=" + contents);
+      return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=REVIEW_INS&parentType=" + parentType + "&parentIdx=" + parentIdx + "&userSeq=" + ownerUserSeq + "&rate=" + rate + "&contents="
+          + contents);
     }
   }
   
@@ -589,8 +589,7 @@ public class ApiClient
     ArrayList<ReviewBean> beans = new ArrayList<ReviewBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" 
-          + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
       JSONObject obj;
       try
       {
@@ -675,6 +674,7 @@ public class ApiClient
     return null;
   }
   
+  
   /**
    * TrendyKorea Api
    */
@@ -685,10 +685,11 @@ public class ApiClient
     try
     {
       NetworkResult result;
-      if(limit == 1)
+      if (limit == 1)
       {
         result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=THEME_LIST&lang=zh_cn&isRandom=1&limit=1");
-      }else
+      }
+      else
         result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=THEME_LIST&lang=zh_cn&isRandom=0");
       
       JSONObject obj = new JSONObject(result.response);
@@ -709,20 +710,21 @@ public class ApiClient
     return themeList;
   }
   
+  
   public NetworkResult getThemeItem(String idx)
   {
     if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0&userSeq=" 
-          + PreferenceManager.getInstance(context).getUserSeq());
+      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
     else
       return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&themeIdx=" + idx + "&lang=zh_cn&isRandom=0");
   }
+  
   
   public NetworkResult getCategoryProductList(String categoryId)
   {
     String url = getSiteUrl() + "?v=m1&mode=PRODUCT_LIST";
     
-    if(!categoryId.equals("0"))
+    if (!categoryId.equals("0"))
     {
       url += "&categoryId=" + categoryId + "&lang=zh&isRandom=0";
     }
@@ -738,6 +740,7 @@ public class ApiClient
     
     return httpClient.requestGet(url);
   }
+  
   
   public ArrayList<PopularWishBean> getPopularWishList()
   {
@@ -756,12 +759,13 @@ public class ApiClient
         JSONObject objInArr = arr.getJSONObject(i);
         PopularWishBean bean = new PopularWishBean();
         bean.setJSONObject(objInArr);
-        if(!bean.name.equals("null") && !TextUtils.isEmpty(bean.name))
+        if (!bean.name.equals("null") && !TextUtils.isEmpty(bean.name))
         {
           popularWishList.add(bean);
         }
       }
-    }catch(Exception e)
+    }
+    catch (Exception e)
     {
       BlinkingCommon.smlLibPrintException("ApiClient", " e : " + e);
     }
@@ -769,10 +773,12 @@ public class ApiClient
     return popularWishList;
   }
   
+  
   public NetworkResult getWishList()
   {
-    return httpClient.requestGet(getSiteUrl()+"?v=m1&mode=MY_WISH_LIST&userSeq="+PreferenceManager.getInstance(context).getUserSeq());
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=MY_WISH_LIST&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
   }
+  
   
   public ArrayList<ProductBean> getPlaceProduct(String idx)
   {
@@ -781,22 +787,21 @@ public class ApiClient
     {
       NetworkResult result;
       
-      if(TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-        result = httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1"
-            + "&limit=2");
+      if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1" + "&limit=2");
       else
-        result =httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1"
-            + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1" + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq()
+            + "&limit=2");
       
       JSONObject obj = new JSONObject(result.response);
       JSONArray arr = obj.getJSONArray("product");
-      for(int i = 0; i < arr.length(); i++)
+      for (int i = 0; i < arr.length(); i++)
       {
         JSONObject objInArr = arr.getJSONObject(i);
         ProductBean bean = new ProductBean();
         bean.setJSONObject(objInArr);
         placeProduct.add(bean);
-      }      
+      }
     }
     catch (Exception e)
     {
@@ -806,6 +811,7 @@ public class ApiClient
     return placeProduct;
   }
   
+  
   public ArrayList<ProductBean> getSearchProduct()
   {
     ArrayList<ProductBean> searchProduct = new ArrayList<ProductBean>();
@@ -814,15 +820,14 @@ public class ApiClient
     {
       NetworkResult result;
       
-      if(TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-        result = httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1" + "&limit=2");
+      if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1" + "&limit=2");
       else
-        result =httpClient.requestGet(getSiteUrl()+"?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1"
-            + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1" + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
       
       JSONObject obj = new JSONObject(result.response);
       JSONArray arr = obj.getJSONArray("product");
-      for(int i = 0; i < arr.length(); i++)
+      for (int i = 0; i < arr.length(); i++)
       {
         JSONObject objInArr = arr.getJSONObject(i);
         ProductBean bean = new ProductBean();
@@ -838,6 +843,7 @@ public class ApiClient
     return searchProduct;
   }
   
+  
   public ArrayList<ProductBean> getScheduleProduct(String idx)
   {
     ArrayList<ProductBean> planProduct = new ArrayList<ProductBean>();
@@ -845,16 +851,14 @@ public class ApiClient
     {
       NetworkResult result;
       
-      if(TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx 
-            + "&lang=zh_cn");
+      if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx + "&lang=zh_cn");
       else
-        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx 
-            + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&lang=zh_cn");
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_PRODUCT_LIST&planIdx=" + idx + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&lang=zh_cn");
       
       JSONObject obj = new JSONObject(result.response);
       JSONArray arr = obj.getJSONArray("day");
-      for(int i = 0; i < arr.length(); i++)
+      for (int i = 0; i < arr.length(); i++)
       {
         JSONObject objInArr = arr.getJSONObject(i);
         JSONArray arrInArr = objInArr.getJSONArray("product");
@@ -863,7 +867,7 @@ public class ApiClient
         bean.setJSONObject(proudctJson);
         planProduct.add(bean);
         BlinkingCommon.smlLibDebug("ApiClient", "PlanProduct : " + planProduct.get(i).name);
-      }      
+      }
     }
     catch (Exception e)
     {
@@ -873,6 +877,7 @@ public class ApiClient
     return planProduct;
   }
   
+  
   /**
    * 통계 데이터 API
    */
@@ -880,8 +885,9 @@ public class ApiClient
   // 앱 최초 실행, 맵 다운로드 통계
   public NetworkResult setLogApp(String deviceID, int type)
   {
-    return httpClient.requestPost(getSiteUrl()+"?v=m1&mode=LOG_APP_INS&device=" + deviceID + "&type=" + type);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=LOG_APP_INS&device=" + deviceID + "&type=" + type);
   }
+  
   
   public NetworkResult getTicketDetail(String ticketId)
   {
@@ -1267,8 +1273,10 @@ public class ApiClient
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=SET_USEDLOG&userSeq=" + ownerUserSeq + "&parentIdx=" + prentIdx + "&parentType=" + parentType + "&usedType=" + usedType);
   }
   
+  
   /**
    * 북마크 Cancel
+   * 
    * @param Email
    * @param Password
    * @return
@@ -1277,6 +1285,17 @@ public class ApiClient
   {
     return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=BOOKMARK_CANCEL&userSeq=" + ownerUserSeq + "&parentIdx=" + prentIdx + "&parentType=" + parentType);
   }
+  
+  
+  /**
+   * Push Notification
+   */
+  public NetworkResult reqeustPushNotification(double lat, double lon)
+  {
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=LOG_APP_INS&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&device="
+        + PreferenceManager.getInstance(context).getDeviceId() + "&type=3&lat=" + lat + "&lng=" + lon);
+  }
+  
   
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)

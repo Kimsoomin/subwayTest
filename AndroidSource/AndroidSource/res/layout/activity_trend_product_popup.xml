@@ -28,6 +28,7 @@
             android:orientation="vertical" >
 
             <ImageView
+                android:id="@+id/imageview"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
@@ -36,11 +37,11 @@
                 android:src="@drawable/default_thumbnail_s" />
 
             <TextView
+                android:id="@+id/push_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="8dp"
-                android:text="5월, 당신의 마음을 전할 선물\n한아요우가 준비한 기획상품을 만나보세요! (한정수량!)" />
+                android:padding="8dp" />
         </LinearLayout>
 
         <LinearLayout

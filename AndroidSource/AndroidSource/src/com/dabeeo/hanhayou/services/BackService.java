@@ -2,6 +2,8 @@ package com.dabeeo.hanhayou.services;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,6 +28,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendProductPopupActivity;
 import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
+import com.dabeeo.hanhayou.beans.PushBean;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
@@ -44,6 +47,8 @@ public class BackService extends Service
   private long minTime = (1000 * 60) * 10;
   private long notificationRequestTime = (1000 * 60) * 60;
   private int notificationId = 12342;
+  
+  private boolean isFirstTime = true;
   
   
   @Override
@@ -70,22 +75,56 @@ public class BackService extends Service
   
   Runnable pushNotificationRunnable = new Runnable()
   {
-    
     @Override
     public void run()
     {
       Log.w("WARN", "Push Notification 요청 lat :" + currentLat + " / lon:" + currentLon);
-      
       //TODO 실제 서버에 currentLat/Lng 보내고 받은 내용으로 팝업띄우기
       //현재는 테스트용으로 60분마다 로그인 (자동로그인 O) / 설정의 알림팝업이 켜져있는 경우 뜨도록 
       if (PreferenceManager.getInstance(BackService.this).getIsAutoLogin())
       {
         if (PreferenceManager.getInstance(BackService.this).isLoggedIn() && PreferenceManager.getInstance(BackService.this).getAllowPopup())
         {
+          if (currentLat != 0)
+            new PushNotificationAPIAsyncTask().execute();
+        }
+      }
+      
+      handler.postDelayed(pushNotificationRunnable, notificationRequestTime);
+    }
+  };
+  
+  private class PushNotificationAPIAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      return apiClient.reqeustPushNotification(currentLat, currentLon);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(final NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        PushBean bean = new PushBean();
+        bean.setJSONObject(new JSONObject(result.response));
+        
+        if (bean.status.equals("NO_PUSH"))
+        {
+          Log.w("WARN", "No Push feed");
+        }
+        else
+        {
           final Intent emptyIntent = new Intent(BackService.this, TrendProductDetailActivity.class);
+          emptyIntent.putExtra("idx", bean.productId);
+          
           PendingIntent pendingIntent = PendingIntent.getActivity(BackService.this, notificationId, emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
           NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(BackService.this).setSmallIcon(R.drawable.hanhayou).setLargeIcon(
-              BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou)).setContentTitle("피테라 에센스 핑크 리미티드 에디션").setContentText("[무료배송] 32,000원").setContentIntent(pendingIntent);
+              BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou)).setContentTitle(bean.productTitle).setContentText(bean.productDiscount + bean.productCurrency).setContentIntent(
+              pendingIntent);
           NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
           notificationManager.notify(101, mBuilder.build());
           
@@ -95,17 +134,19 @@ public class BackService extends Service
             public void run()
             {
               Intent i = new Intent(BackService.this, TrendProductPopupActivity.class);
+              i.putExtra("json_string", result.response);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               startActivity(i);
             }
           }, 3000);
-          
         }
       }
-      
-      handler.postDelayed(pushNotificationRunnable, notificationRequestTime);
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
     }
-  };
+  }
   
   
   @Override
@@ -176,6 +217,13 @@ public class BackService extends Service
       currentLat = location.getLatitude();
       currentLon = location.getLongitude();
       Log.w("WARN", "current Lat : " + currentLat + " / current Lon : " + currentLon);
+      
+      if (isFirstTime)
+      {
+        handler.removeCallbacks(pushNotificationRunnable);
+        handler.post(pushNotificationRunnable);
+        isFirstTime = false;
+      }
     }
     
     
@@ -208,7 +256,6 @@ public class BackService extends Service
       {
         //온라인 연결 시 SQLite 가져와서 동기화 처리하기
         Log.w("WARN", "백단 서비스 온라인 연결 동기화 시작 ");
-        
         ArrayList<OfflineBehaviorBean> behaviors = offlineDatabaseManager.getAllBehavior();
         Log.w("WARN", "백단 서비스 온라인 : 오프라인 행동의 갯수 : " + behaviors.size());
         
