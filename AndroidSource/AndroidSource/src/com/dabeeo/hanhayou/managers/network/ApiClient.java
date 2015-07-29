@@ -1308,7 +1308,7 @@ public class ApiClient
   //회원관련 API
   public NetworkResult userLogin(String Email, String Password)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_LOGIN&userEmail=" + Email + "&userPw=" + Password);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&lang=zh_cn&mode=USER_LOGIN&userEmail=" + Email + "&userPw=" + Password);
   }
   
   
@@ -1326,7 +1326,7 @@ public class ApiClient
   
   public NetworkResult userJoin(String Email, String Password, String userName, String phoneNum, String gender, String birthday, String agreeEmail, String agreeSms)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_INS&userEmail=" + Email + "&userPw=" + Password + "&userName=" + userName + "&phone=" + phoneNum + "&gender=" + gender + "&birthday="
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&lang=zh_cn&mode=USER_INS&userEmail=" + Email + "&userPw=" + Password + "&userName=" + userName + "&phone=" + phoneNum + "&gender=" + gender + "&birthday="
         + birthday + "&agreeEmail=" + agreeEmail + "&agreeSms=" + agreeSms);
   }
   
@@ -1339,7 +1339,7 @@ public class ApiClient
   
   public NetworkResult userEmailKeyResend(String userEmail)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&mode=USER_EMAILKEY_RESEND&userEmail=" + userEmail);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&lang=zh_cn&mode=USER_EMAILKEY_RESEND&userEmail=" + userEmail);
   }
   
   
