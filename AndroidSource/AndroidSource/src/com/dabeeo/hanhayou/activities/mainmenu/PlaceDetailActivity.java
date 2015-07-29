@@ -151,15 +151,24 @@ public class PlaceDetailActivity extends ActionBarActivity
       @Override
       public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
       {
-        if (scrollView.getScrollY() > 150 * density)
+        Resources r = getResources();
+        if (scrollView.getScrollY() > 100 * density)
         {
           titleView.title.setVisibility(View.INVISIBLE);
           titleView.titleDivider.setVisibility(View.VISIBLE);
+          
+          FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
+          layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 58, r.getDisplayMetrics());
+          scrollView.setLayoutParams(layoutParams);
         }
         else
         {
           titleView.title.setVisibility(View.VISIBLE);
           titleView.titleDivider.setVisibility(View.GONE);
+          
+          FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
+          layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics());
+          scrollView.setLayoutParams(layoutParams);
         }
         
         View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
