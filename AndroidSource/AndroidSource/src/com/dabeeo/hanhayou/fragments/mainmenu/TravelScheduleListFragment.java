@@ -268,7 +268,14 @@ public class TravelScheduleListFragment extends Fragment
       listView.setInvisibleFooterView(footerLoadView);
       isLoading = false;
       
-      ((TravelSchedulesActivity) getActivity()).invalidateSortItem();
+      try
+      {
+        ((TravelSchedulesActivity) getActivity()).invalidateSortItem();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
       super.onPostExecute(result);
     }
   }
