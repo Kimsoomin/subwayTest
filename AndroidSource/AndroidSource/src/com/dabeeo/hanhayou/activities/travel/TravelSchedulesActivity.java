@@ -57,6 +57,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
   private AlertDialogManager alertManager;
   private MenuItem sortItem;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -255,9 +256,8 @@ public class TravelSchedulesActivity extends ActionBarActivity
   {
     @Override
     public void onTabSelected(final Tab tab, FragmentTransaction ft)
-    { 
-      if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn() 
-          && tab.getPosition() != 0 && !isFirstSelectTravelSchedules)
+    {
+      if (!PreferenceManager.getInstance(TravelSchedulesActivity.this).isLoggedIn() && tab.getPosition() != 0 && !isFirstSelectTravelSchedules)
       {
         alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_require_login), getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
         {
@@ -265,23 +265,25 @@ public class TravelSchedulesActivity extends ActionBarActivity
           @Override
           public void onPositiveButtonClickListener()
           {
-            if(SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
+            if (SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
             {
               alertManager.dismiss();
               Intent i = new Intent(TravelSchedulesActivity.this, LoginActivity.class);
               i.putExtra("mainFragmentPostion", -1);
               startActivity(i);
               overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-            }else
+            }
+            else
             {
               alertManager.showDontNetworkConnectDialog();
             }
-          }          
+          }
+          
           
           @Override
           public void onNegativeButtonClickListener()
           {
-            lastSelectedTab = 0;            
+            lastSelectedTab = 0;
           }
         });
         
@@ -299,7 +301,7 @@ public class TravelSchedulesActivity extends ActionBarActivity
       }
       else
       {
-        if(tab.getPosition() == 2 && !SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
+        if (tab.getPosition() == 2 && !SystemUtil.isConnectNetwork(TravelSchedulesActivity.this))
         {
           alertManager.showDontNetworkConnectDialog();
           Runnable runnn = new Runnable()
@@ -312,16 +314,19 @@ public class TravelSchedulesActivity extends ActionBarActivity
           };
           Handler handler = new Handler();
           handler.post(runnn);
-        }else
+        }
+        else
         {
           viewPager.setCurrentItem(tab.getPosition());
           lastSelectedTab = tab.getPosition();
         }
-        BlinkingCommon.smlLibDebug("TravelSchedule", "lastSelectedTab : "+lastSelectedTab);        
+        BlinkingCommon.smlLibDebug("TravelSchedule", "lastSelectedTab : " + lastSelectedTab);
       }
       
       if (tab.getPosition() == 1 || tab.getPosition() == 2)
         isFirstSelectTravelSchedules = false;
+      
+      invalidateSortItem();
     }
     
     
@@ -338,6 +343,35 @@ public class TravelSchedulesActivity extends ActionBarActivity
       
     }
   };
+  
+  
+  public void invalidateSortItem()
+  {
+    try
+    {
+      if (lastSelectedTab == 0)
+        sortItem.setVisible(true);
+      
+      if (lastSelectedTab == 1)
+      {
+        if (myScheduleListFragment.getItemCount() == 0)
+          sortItem.setVisible(false);
+        else
+          sortItem.setVisible(true);
+      }
+      
+      if (lastSelectedTab == 2)
+      {
+        if (myBookMarkscheduleListFragment.getItemCount() == 0)
+          sortItem.setVisible(false);
+        else
+          sortItem.setVisible(true);
+      }
+    }
+    catch (Exception e)
+    {
+    }
+  }
   
   protected ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {

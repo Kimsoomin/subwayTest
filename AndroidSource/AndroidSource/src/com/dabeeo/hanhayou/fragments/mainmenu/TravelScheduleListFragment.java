@@ -83,6 +83,20 @@ public class TravelScheduleListFragment extends Fragment
   }
   
   
+  public int getItemCount()
+  {
+    int count = 0;
+    try
+    {
+      count = adapter.getCount();
+    }
+    catch (Exception e)
+    {
+    }
+    return count;
+  }
+  
+  
   @Override
   public void onActivityCreated(Bundle savedInstanceState)
   {
@@ -108,7 +122,7 @@ public class TravelScheduleListFragment extends Fragment
       DisplayMetrics metrics = new DisplayMetrics();
       getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
       int imageWidth = metrics.widthPixels;
-      int imageheight = (int) (imageWidth*0.43);
+      int imageheight = (int) (imageWidth * 0.43);
       
       headerView = new ScheduleListHeaderMallView(getActivity(), imageWidth, imageheight);
       new GetScheduleThemeAsyncTask().execute();
@@ -253,6 +267,8 @@ public class TravelScheduleListFragment extends Fragment
       progressBar.setVisibility(View.GONE);
       listView.setInvisibleFooterView(footerLoadView);
       isLoading = false;
+      
+      ((TravelSchedulesActivity) getActivity()).invalidateSortItem();
       super.onPostExecute(result);
     }
   }
@@ -267,6 +283,7 @@ public class TravelScheduleListFragment extends Fragment
       result = apiClient.getThemeList(1);
       return result;
     }
+    
     
     @Override
     protected void onPostExecute(ArrayList<TrendKoreaBean> result)

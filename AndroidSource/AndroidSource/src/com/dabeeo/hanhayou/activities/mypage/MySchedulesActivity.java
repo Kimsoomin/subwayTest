@@ -94,6 +94,7 @@ public class MySchedulesActivity extends ActionBarActivity
     });
     btnRecommendScheduleInEmpty = (Button) findViewById(R.id.recommend_button);
     btnRecommendScheduleInEmpty.setOnClickListener(buttonClickListener);
+    btnRecommendScheduleInEmpty.setVisibility(View.GONE);
     
     btnRecommendSchedule = (Button) findViewById(R.id.btn_recommend_travel_schedule);
     btnRecommendSchedule.setOnClickListener(buttonClickListener);
