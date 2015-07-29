@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.activities.travel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,6 +32,7 @@ import android.widget.Toast;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mainmenu.WriteReviewActivity;
 import com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity;
+import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
@@ -63,6 +65,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   private boolean isRecommendSchedule = false;
   public boolean isMySchedule = false;
   private String titleFromOutSide;
+  
+  private ArrayList<ProductBean> scheduleProductList = null;
   
   
   @Override
@@ -135,7 +139,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   
   private void loadScheduleDetail()
   {
-    new LoadScheduleAsyncTask().execute();
+    new LoadScheduleProductAsyncTask().execute();
   }
   
   
@@ -146,7 +150,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     else
       title.setText(titleFromOutSide);
     adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
-    adapter.setBean(bean);
+    adapter.setBean(bean, scheduleProductList);
     adapter.setIsRecommendSchedule(isRecommendSchedule);
     adapter.setIsMySchedule(isMySchedule);
     
@@ -319,6 +323,25 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   /**************************************************
    * async task
    ***************************************************/
+  private class LoadScheduleProductAsyncTask extends AsyncTask<Void, Void, ArrayList<ProductBean>>
+  {
+
+    @Override
+    protected ArrayList<ProductBean> doInBackground(Void... params)
+    {
+      
+      scheduleProductList = apiClient.getScheduleProduct(idx);
+      return scheduleProductList;
+    }
+    
+    @Override
+    protected void onPostExecute(ArrayList<ProductBean> result)
+    {
+      super.onPostExecute(result);
+      new LoadScheduleAsyncTask().execute();
+    }
+  }
+  
   private class LoadScheduleAsyncTask extends AsyncTask<String, Integer, ScheduleDetailBean>
   {
     @Override

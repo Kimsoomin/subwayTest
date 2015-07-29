@@ -8,7 +8,11 @@ import org.json.JSONObject;
 
 public class ScheduleDayBean implements Serializable
 {
-	public int type;
+	/**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+  public int type;
 	public String dayDist;
 	public String dayTime;
 	public ArrayList<SpotBean> spots = new ArrayList<SpotBean>();

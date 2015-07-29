@@ -146,7 +146,7 @@ public class WishListAdapter extends BaseAdapter
     int calChPrice = (int)(Integer.parseInt(bean.priceSale)/Float.parseFloat(bean.currencyConvert));
     ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
     chinaPrice.setText(""+ch_price);
-    saleRate.setText(bean.saleRate + "折");
+    saleRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));
     
     view.setOnClickListener(new OnClickListener()
     {

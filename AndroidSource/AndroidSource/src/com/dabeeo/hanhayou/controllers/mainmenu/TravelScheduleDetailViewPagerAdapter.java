@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.controllers.mainmenu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.fragments.mainmenu.TravelScheduleDetailFragment;
 
@@ -22,6 +24,7 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   
   private HashMap<Integer, Fragment> framgents = new HashMap<Integer, Fragment>();
   
+  private ArrayList<ProductBean> scheduleProductList;
   
   public TravelScheduleDetailViewPagerAdapter(Context context, FragmentManager fm)
   {
@@ -58,9 +61,10 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
-  public void setBean(ScheduleDetailBean bean)
+  public void setBean(ScheduleDetailBean bean, ArrayList<ProductBean> scheduleProductList)
   {
     this.bean = bean;
+    this.scheduleProductList = scheduleProductList;
     notifyDataSetChanged();
   }
   
@@ -70,9 +74,9 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   {
     Fragment fragment = new TravelScheduleDetailFragment();
     if (position == 0)
-      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, null, isMySchedule, isRecommendSchedule);
+      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, null, isMySchedule, isRecommendSchedule , scheduleProductList);
     else
-      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, bean.days.get(position - 1), isMySchedule, isRecommendSchedule);
+      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, bean.days.get(position - 1), isMySchedule, isRecommendSchedule, scheduleProductList);
     
     framgents.put(position, fragment);
     return fragment;

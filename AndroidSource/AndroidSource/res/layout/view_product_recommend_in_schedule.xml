@@ -23,6 +23,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -38,25 +39,25 @@
                     android:id="@+id/text_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginRight="8dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" >
 
@@ -71,33 +72,32 @@
                             android:id="@+id/price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/light_gray"
-                            android:textSize="12sp" />
+                            android:textColor="@color/darker_gray"
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:paddingBottom="2dp"
-                            android:orientation="horizontal" >
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp" >
 
                             <TextView
                                 android:id="@+id/discount_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/darker_gray"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
+                                android:textColor="@color/light_gray"
+                                android:textSize="13sp" />
 
                             <TextView
                                 android:id="@+id/discount_china_currency"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:layout_marginLeft="2dp"
                                 android:layout_weight="1"
                                 android:textColor="@color/light_gray"
-                                android:textSize="12sp" />
+                                android:textSize="13sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -106,9 +106,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:layout_marginRight="4dp"
-                        android:background="@drawable/wishlist_button"
-                        android:padding="8dp" />
+                        android:background="@drawable/wishlist_button" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -117,9 +115,16 @@
 
         <ImageView
             android:id="@+id/imageview"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center" />
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#20E3E3E3" />
 
 </RelativeLayout>

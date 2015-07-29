@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.fragments.mainmenu;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -75,6 +76,9 @@ public class TravelScheduleDetailFragment extends Fragment
   int spotNum = 0;
   
   public ApiClient apiClient;
+  
+  
+  private ArrayList<ProductBean> scheduleProductList;
   
   
   @Override
@@ -184,13 +188,14 @@ public class TravelScheduleDetailFragment extends Fragment
   }
   
   
-  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule)
+  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule , ArrayList<ProductBean> scheduleProductList)
   {
     this.position = position;
     this.bean = bean;
     this.dayBean = dayBean;
     this.isMySchedule = isMySchedule;
     this.isRecommendSchedule = isRecommendSchedule;
+    this.scheduleProductList = scheduleProductList;
   }
   
   
@@ -306,29 +311,7 @@ public class TravelScheduleDetailFragment extends Fragment
         }
         contentContainer.addView(tView);
         
-        if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
-        {
-          //TEST ADD RECOMMEND PRODUCT VIEW
-          ProductBean bean = new ProductBean();
-          bean.name = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
-          bean.priceSale = "109000";
-          bean.priceDiscount = "90000";
-          
-          ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
-          productRecommendView.setBean(bean);
-          productRecommendView.setOnClickListener(new OnClickListener()
-          {
-            @Override
-            public void onClick(View v)
-            {
-              if (!SystemUtil.isConnectNetwork(getActivity()))
-                new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-              else
-                getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
-            }
-          });
-          contentContainer.addView(productRecommendView);
-        }
+        productViewSet(i);
         
         for (int j = 0; j < bean.days.get(i).spots.size(); j++)
         {
@@ -353,36 +336,7 @@ public class TravelScheduleDetailFragment extends Fragment
       titleView.setLayoutParams(btnLayoutParams);
       titleView.initDayTitle();
       
-      if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
-      {
-        //TEST ADD RECOMMEND PRODUCT VIEW
-        ProductBean bean = new ProductBean();
-        bean.name = "韩国it's skin/伊思清爽修护套装 香港直邮 正品";
-        bean.priceSale = "4000";
-        bean.priceDiscount = "3000";
-        
-        ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
-        productRecommendView.setBean(bean);
-        productRecommendView.setOnClickListener(new OnClickListener()
-        {
-          @Override
-          public void onClick(View v)
-          {
-            if (!SystemUtil.isConnectNetwork(getActivity()))
-              new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-            else
-              getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
-          }
-        });
-        contentContainer.addView(productRecommendView);
-      }
-      
-//      Log.w("WARN", "일정에 대한 뷰");
-//      ScheduleTitleView tView = new ScheduleTitleView(getActivity());
-//      Calendar c = Calendar.getInstance();
-//      c.setTime(bean.startDate);
-//      tView.setData("Day" + Integer.toString(position), new Date(c.getTimeInMillis()));
-//      contentContainer.addView(tView);
+      productViewSet(position-1);
       
       //하루에 대한 내용
       for (int i = 0; i < dayBean.spots.size(); i++)
@@ -399,6 +353,30 @@ public class TravelScheduleDetailFragment extends Fragment
         }
         contentContainer.addView(view);
       }
+    }
+  }
+  
+  public void productViewSet(int position)
+  {
+    if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
+    {
+      ProductBean bean = new ProductBean();
+      bean = scheduleProductList.get(position);
+      
+      ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
+      productRecommendView.setBean(bean);
+      productRecommendView.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          if (!SystemUtil.isConnectNetwork(getActivity()))
+            new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+          else
+            getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
+        }
+      });
+      contentContainer.addView(productRecommendView);
     }
   }
   

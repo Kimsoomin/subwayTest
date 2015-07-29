@@ -2,5 +2,6 @@
 
     <string name="term_won">₩</string>
     <string name="term_yuan">¥</string>
+    <string name="term_sale_rate">折</string>
 
 </resources>

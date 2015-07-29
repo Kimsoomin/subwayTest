@@ -26,6 +26,7 @@ import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
+import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
@@ -855,19 +856,18 @@ public class ApiClient
       JSONArray arr = obj.getJSONArray("day");
       for(int i = 0; i < arr.length(); i++)
       {
-        JSONArray arrInArr = arr.getJSONArray(i);
-        for(int j = 0; j<arrInArr.length(); j++)
-        {
-          JSONObject objInArr = arrInArr.getJSONObject(j);
-          ProductBean bean = new ProductBean();
-          bean.setJSONObject(objInArr);
-          planProduct.add(bean);
-        }
+        JSONObject objInArr = arr.getJSONObject(i);
+        JSONArray arrInArr = objInArr.getJSONArray("product");
+        JSONObject proudctJson = arrInArr.getJSONObject(0);
+        ProductBean bean = new ProductBean();
+        bean.setJSONObject(proudctJson);
+        planProduct.add(bean);
+        BlinkingCommon.smlLibDebug("ApiClient", "PlanProduct : " + planProduct.get(i).name);
       }      
     }
     catch (Exception e)
     {
-      BlinkingCommon.smlLibDebug("ApiClient", "e : " + e);
+      BlinkingCommon.smlLibPrintException("ApiClient", "e : " + e);
     }
     
     return planProduct;

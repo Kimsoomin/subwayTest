@@ -69,7 +69,7 @@ public class ProductView extends RelativeLayout
       calChPrice = (int)(Integer.parseInt(firstBean.priceSale)/Float.parseFloat(firstBean.currencyConvert));
       ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
       firstCnPrice.setText(ch_price);
-      firstDiscountRate.setText(firstBean.saleRate + "折");
+      firstDiscountRate.setText(firstBean.saleRate + context.getString(R.string.term_sale_rate));
       firstContainer.setOnClickListener(new OnClickListener()
       {
         @Override
@@ -92,7 +92,7 @@ public class ProductView extends RelativeLayout
       calChPrice = (int)(Integer.parseInt(secondBean.priceSale)/Float.parseFloat(secondBean.currencyConvert));
       ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
       secondCnPrice.setText(ch_price);
-      secondDiscountRate.setText(secondBean.saleRate+"折");
+      secondDiscountRate.setText(secondBean.saleRate + context.getString(R.string.term_sale_rate));
       secondContainer.setOnClickListener(new OnClickListener()
       {
         @Override

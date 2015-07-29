@@ -126,7 +126,7 @@ public class TrendProductListAdapter extends BaseAdapter
     int calChPrice = (int)(Integer.parseInt(bean.priceSale)/Float.parseFloat(bean.currencyConvert));
     ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
     chinesePrice.setText("" + ch_price);
-    discountRate.setText(bean.saleRate + "折");
+    discountRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));
     
     view.setOnClickListener(new OnClickListener()
     {
