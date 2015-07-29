@@ -66,6 +66,12 @@ public class ScheduleDetailTitleView extends RelativeLayout
   }
   
   
+  public void setTitle(String titleStr)
+  {
+    title.setText(titleStr);
+  }
+  
+  
   @SuppressLint("SimpleDateFormat")
   public void setBean(ScheduleDetailBean bean)
   {
@@ -97,7 +103,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
       textDays.setText(Integer.toString(bean.dayCount) + "日游");
     }
     
-    if(!bean.isOpen)
+    if (!bean.isOpen)
       isPublic.setVisibility(View.VISIBLE);
     
     ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);

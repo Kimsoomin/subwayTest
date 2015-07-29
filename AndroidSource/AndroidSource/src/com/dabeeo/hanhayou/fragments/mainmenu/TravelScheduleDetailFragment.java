@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -75,6 +76,7 @@ public class TravelScheduleDetailFragment extends Fragment
   
   int spotNum = 0;
   
+  private String outSideTitle;
   public ApiClient apiClient;
   
   private ArrayList<ProductBean> scheduleProductList;
@@ -187,7 +189,7 @@ public class TravelScheduleDetailFragment extends Fragment
   }
   
   
-  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule, ArrayList<ProductBean> scheduleProductList)
+  public void setBean(int position, ScheduleDetailBean bean, ScheduleDayBean dayBean, boolean isMySchedule, boolean isRecommendSchedule, ArrayList<ProductBean> scheduleProductList, String outSideTitle)
   {
     this.position = position;
     this.bean = bean;
@@ -195,6 +197,7 @@ public class TravelScheduleDetailFragment extends Fragment
     this.isMySchedule = isMySchedule;
     this.isRecommendSchedule = isRecommendSchedule;
     this.scheduleProductList = scheduleProductList;
+    this.outSideTitle = outSideTitle;
   }
   
   
@@ -219,6 +222,8 @@ public class TravelScheduleDetailFragment extends Fragment
     textRate.setText(Float.toString(bean.rate));
     headerView.setData(bean.imageUrl, bean.title, bean.days.size(), bean.budgetTotal);
     titleView.setBean(bean);
+    if (!TextUtils.isEmpty(outSideTitle))
+      titleView.setTitle(outSideTitle);
     
     if (SystemUtil.isConnectNetwork(getActivity()))
     {

@@ -1006,8 +1006,16 @@ public class ApiClient
    */
   public NetworkResult completeCreateRecommendSchedule(String startDate, String idx, int dayCount, String title)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_SMART_SAVE&startDate=" + startDate + "&dayCount=" + dayCount + "&planIdx=" + idx + "&userSeq="
-        + PreferenceManager.getInstance(context).getUserSeq() + "&title=" + title);
+    try
+    {
+      return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PLAN_SMART_SAVE&startDate=" + startDate + "&dayCount=" + dayCount + "&planIdx=" + idx + "&userSeq="
+          + PreferenceManager.getInstance(context).getUserSeq() + "&title=" + URLEncoder.encode(title, "UTF-8"));
+    }
+    catch (UnsupportedEncodingException e)
+    {
+      e.printStackTrace();
+      return new NetworkResult(false, null, 1);
+    }
   }
   
   

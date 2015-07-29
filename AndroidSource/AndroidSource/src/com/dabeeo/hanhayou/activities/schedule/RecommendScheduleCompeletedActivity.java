@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
 {
   private RoundedImageView profileImage;
   private TextView textCompelete;
-  private RelativeLayout containerRecommendSchedule;
+  private LinearLayout containerRecommendSchedule;
   private Button btnAnotherSchedule, btnNewSchedule;
   private ScheduleBean bean;
   private ApiClient apiClient;
@@ -72,7 +73,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     String profile = PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserProfile();
     Picasso.with(RecommendScheduleCompeletedActivity.this).load(profile).fit().centerCrop().into(profileImage);
     textCompelete = (TextView) findViewById(R.id.text_compelete);
-    containerRecommendSchedule = (RelativeLayout) findViewById(R.id.container_recommend_schedule);
+    containerRecommendSchedule = (LinearLayout) findViewById(R.id.container_recommend_schedule);
     
     btnAnotherSchedule = (Button) findViewById(R.id.btn_another_schedule_recommend);
     btnNewSchedule = (Button) findViewById(R.id.btn_new_schedule);
@@ -144,7 +145,14 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     title.setText(myScheduleTitle);
     month.setText(Integer.toString(bean.dayCount) + "天");
     
-    textDate.setText(startDate.replace("-", "."));
+    try
+    {
+      textDate.setText(startDate.replace("-", "."));
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
     
     ImageDownloader.displayImage(RecommendScheduleCompeletedActivity.this, bean.imageUrl, imageView, null);
     

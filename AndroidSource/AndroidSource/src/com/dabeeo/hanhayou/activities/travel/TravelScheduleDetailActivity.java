@@ -151,7 +151,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       title.setText(titleFromOutSide);
     adapter = new TravelScheduleDetailViewPagerAdapter(this, getSupportFragmentManager());
     adapter.setBean(bean, scheduleProductList);
-    adapter.setIsRecommendSchedule(isRecommendSchedule);
+    adapter.setIsRecommendSchedule(isRecommendSchedule, titleFromOutSide);
     adapter.setIsMySchedule(isMySchedule);
     
     viewPager.setAdapter(adapter);
@@ -325,7 +325,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
    ***************************************************/
   private class LoadScheduleProductAsyncTask extends AsyncTask<Void, Void, ArrayList<ProductBean>>
   {
-
+    
     @Override
     protected ArrayList<ProductBean> doInBackground(Void... params)
     {
@@ -333,6 +333,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
       scheduleProductList = apiClient.getScheduleProduct(idx);
       return scheduleProductList;
     }
+    
     
     @Override
     protected void onPostExecute(ArrayList<ProductBean> result)

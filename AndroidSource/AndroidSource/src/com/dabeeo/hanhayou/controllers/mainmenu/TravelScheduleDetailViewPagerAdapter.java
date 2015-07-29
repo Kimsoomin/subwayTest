@@ -21,10 +21,12 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   private Context context;
   private boolean isMySchedule = false;
   private boolean isRecommendSchedule = false;
+  private String outSideTitle;
   
   private HashMap<Integer, Fragment> framgents = new HashMap<Integer, Fragment>();
   
   private ArrayList<ProductBean> scheduleProductList;
+  
   
   public TravelScheduleDetailViewPagerAdapter(Context context, FragmentManager fm)
   {
@@ -55,9 +57,10 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   }
   
   
-  public void setIsRecommendSchedule(boolean isRecommendSchedule)
+  public void setIsRecommendSchedule(boolean isRecommendSchedule, String title)
   {
     this.isRecommendSchedule = isRecommendSchedule;
+    this.outSideTitle = title;
   }
   
   
@@ -74,9 +77,9 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
   {
     Fragment fragment = new TravelScheduleDetailFragment();
     if (position == 0)
-      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, null, isMySchedule, isRecommendSchedule , scheduleProductList);
+      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, null, isMySchedule, isRecommendSchedule, scheduleProductList, outSideTitle);
     else
-      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, bean.days.get(position - 1), isMySchedule, isRecommendSchedule, scheduleProductList);
+      ((TravelScheduleDetailFragment) fragment).setBean(position, this.bean, bean.days.get(position - 1), isMySchedule, isRecommendSchedule, scheduleProductList, null);
     
     framgents.put(position, fragment);
     return fragment;
