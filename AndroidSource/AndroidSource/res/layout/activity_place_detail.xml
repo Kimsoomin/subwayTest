@@ -24,7 +24,8 @@
             <com.dabeeo.hanhayou.views.CustomScrollView
                 android:id="@+id/scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
