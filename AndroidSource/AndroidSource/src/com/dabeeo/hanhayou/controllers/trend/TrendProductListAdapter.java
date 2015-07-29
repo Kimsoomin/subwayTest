@@ -2,8 +2,6 @@ package com.dabeeo.hanhayou.controllers.trend;
 
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;

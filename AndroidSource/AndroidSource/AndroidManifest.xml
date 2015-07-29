@@ -29,7 +29,6 @@
         <activity
             android:name="com.dabeeo.hanhayou.IntroActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,25 +39,22 @@
         <activity
             android:name="com.dabeeo.hanhayou.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing" />
 
         <!-- MainMenu Activities -->
         <activity
             android:name="com.dabeeo.hanhayou.activities.mainmenu.SubwayActivity"
             android:label="@string/term_famous_place"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mainmenu.SubwayStationsActivity"
             android:label="@string/term_famous_place"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mainmenu.FamousPlaceActivity"
             android:label="@string/term_famous_place"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity"
@@ -88,12 +84,10 @@
         <activity
             android:name="com.dabeeo.hanhayou.activities.schedule.RecommendScheduleActivity"
             android:label="@string/term_recommend_travel_schedule"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.schedule.RecommendScheduleCompeletedActivity"
             android:label="@string/term_recommend_schedule_compeleted"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.schedule.CalendarActivity"
@@ -105,7 +99,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendProductPopupActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
         <activity
@@ -114,11 +107,9 @@
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendExhibitionActivity"
             android:label="@string/term_exhibitions"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendSearchActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity"
@@ -129,69 +120,56 @@
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.PromotionActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.WishListSearchActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.ReviewDetailActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.AccountSettingActivity"
             android:label="@string/term_profile"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.LoginActivity"
             android:label="@string/term_login"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.ChangePasswordActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.FindPasswordActivity"
             android:label="@string/term_find_password"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.JoinActivity"
             android:label="@string/term_join"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.CongratulateJoinActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity"
             android:label="@string/term_my_schedule"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.MyScheduleDetailActivity"
             android:label="@string/term_my_schedule"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.MyPlaceActivity"
             android:label="@string/term_my_place"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.MyPlaceDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.AuthEmailActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <!--
              <activity
@@ -216,38 +194,31 @@
         <activity
             android:name="com.dabeeo.hanhayou.activities.mypage.MyBookmarkActivity"
             android:label="@string/term_my_bookmark"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- Sub Activities -->
         <activity
-            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity"
-            android:launchMode="singleTask" />
+            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity" />
         <activity
-            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpJustOneActivity"
-            android:launchMode="singleTask" />
+            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpJustOneActivity" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.GuideActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.AgreementActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.SettingActivity"
             android:label="@string/term_setting"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.VersionActivity"
             android:label="@string/term_version_info"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.NoticeActivity"
             android:label="@string/term_notice"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.PhotoSelectActivity"
@@ -266,7 +237,6 @@
         <activity
             android:name="com.dabeeo.hanhayou.activities.ticket.TicketActivity"
             android:label="@string/term_ticket"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.ticket.TicketDetailActivity"
@@ -301,7 +271,6 @@
         <!-- Map -->
         <activity
             android:name="com.dabeeo.hanhayou.map.BlinkingMap"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
 

@@ -75,6 +75,12 @@ public class LoginActivity extends Activity
     findViewById(R.id.btn_cancel).setOnClickListener(clickListener);
   }
   
+  @Override
+  protected void onResume()
+  {
+    super.onResume();
+  }
+  
   private OnClickListener clickListener = new OnClickListener()
   {
     @Override
@@ -180,50 +186,50 @@ public class LoginActivity extends Activity
       else
       {
         String alertMessage = "";
-        if (status.equals("ERROR_AUTH"))
+//        if (status.equals("ERROR_AUTH"))
+//        {
+//          if (jsonObject.has("userSeq"))
+//            userSeq = jsonObject.getString("userSeq");
+//          String message = getString(R.string.msg_please_error_auth);
+//          alertDialogManager.showAlertDialog(getString(R.string.term_alert), message, getString(R.string.term_ok), null, new AlertListener()
+//          {
+//            @Override
+//            public void onPositiveButtonClickListener()
+//            {
+//              Intent i = new Intent(LoginActivity.this, AuthEmailActivity.class);
+//              i.putExtra("email", editEmail.getText().toString());
+//              i.putExtra("userSeq", userSeq);
+//              startActivity(i);
+//            }
+//            
+//            
+//            @Override
+//            public void onNegativeButtonClickListener()
+//            {
+//              
+//            }
+//          });
+//        }
+//        else
+//        {
+        if (status.equals("ERROR_ID"))
         {
-          if (jsonObject.has("userSeq"))
-            userSeq = jsonObject.getString("userSeq");
-          String message = getString(R.string.msg_please_error_auth);
-          alertDialogManager.showAlertDialog(getString(R.string.term_alert), message, getString(R.string.term_ok), null, new AlertListener()
-          {
-            @Override
-            public void onPositiveButtonClickListener()
-            {
-              Intent i = new Intent(LoginActivity.this, AuthEmailActivity.class);
-              i.putExtra("email", editEmail.getText().toString());
-              i.putExtra("userSeq", userSeq);
-              startActivity(i);
-            }
-            
-            
-            @Override
-            public void onNegativeButtonClickListener()
-            {
-              
-            }
-          });
+          alertMessage = getString(R.string.msg_please_error_id);
+        }
+        else if (status.equals("ERROR_OUT"))
+        {
+          alertMessage = getString(R.string.msg_please_error_out);
+        }
+        else if (status.equals("ERROR_PW"))
+        {
+          alertMessage = getString(R.string.msg_please_error_password);
         }
         else
         {
-          if (status.equals("ERROR_ID"))
-          {
-            alertMessage = getString(R.string.msg_please_error_id);
-          }
-          else if (status.equals("ERROR_OUT"))
-          {
-            alertMessage = getString(R.string.msg_please_error_out);
-          }
-          else if (status.equals("ERROR_PW"))
-          {
-            alertMessage = getString(R.string.msg_please_error_password);
-          }
-          else
-          {
-            alertMessage = getString(R.string.msg_please_check_user_info);
-          }
-          alertDialogManager.showAlertDialog(getString(R.string.term_alert), alertMessage, getString(R.string.term_ok), null, null);
+          alertMessage = getString(R.string.msg_please_check_user_info);
         }
+        alertDialogManager.showAlertDialog(getString(R.string.term_alert), alertMessage, getString(R.string.term_ok), null, null);
+//        }
       }
     }
     catch (JSONException e)
