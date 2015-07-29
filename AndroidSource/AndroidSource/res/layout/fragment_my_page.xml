@@ -35,7 +35,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp" >
+                    android:layout_height="80dp" >
 
                     <View
                         android:layout_width="match_parent"
@@ -52,18 +52,18 @@
                         <ImageView
                             android:layout_width="20dip"
                             android:layout_height="20dip"
-                            android:layout_marginTop="10dip"
                             android:layout_gravity="center"
-                            android:src="@drawable/deco_color_dot_l"
-                            android:contentDescription="@null" />
+                            android:layout_marginTop="10dip"
+                            android:contentDescription="@null"
+                            android:src="@drawable/deco_color_dot_l" />
 
                         <com.dabeeo.hanhayou.external.libraries.RoundedImageView
                             android:id="@+id/image_profile"
                             android:layout_width="60dip"
                             android:layout_height="60dip"
-                            android:padding="4dp"
                             android:background="@drawable/shape_circle_profile"
                             android:contentDescription="@null"
+                            android:padding="4dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/default_profile_l"
                             app:riv_corner_radius="60dip" />
@@ -71,10 +71,10 @@
                         <ImageView
                             android:layout_width="20dip"
                             android:layout_height="20dip"
-                            android:layout_marginTop="10dip"
                             android:layout_gravity="center"
-                            android:src="@drawable/deco_color_dot_r"
-                            android:contentDescription="@null" />
+                            android:layout_marginTop="10dip"
+                            android:contentDescription="@null"
+                            android:src="@drawable/deco_color_dot_r" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -84,8 +84,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/darker_gray"
-                    android:textSize="23sp"
-                    android:textStyle="bold" />
+                    android:textSize="23sp" />
             </LinearLayout>
         </RelativeLayout>
 
