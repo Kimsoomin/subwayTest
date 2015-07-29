@@ -75,12 +75,7 @@ public class LoginActivity extends Activity
     findViewById(R.id.btn_cancel).setOnClickListener(clickListener);
   }
   
-  @Override
-  protected void onResume()
-  {
-    super.onResume();
-  }
-  
+
   private OnClickListener clickListener = new OnClickListener()
   {
     @Override
