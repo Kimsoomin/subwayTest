@@ -16,6 +16,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.YuvImage;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -347,6 +348,22 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
       {
         alertView.setAlert(getString(R.string.msg_please_write_birthday));
         return;
+      }
+      else
+      {
+        Calendar current = Calendar.getInstance();
+        Calendar selectCalendar = Calendar.getInstance();
+        selectCalendar.setTime(birthDay);
+        int diff = current.get(Calendar.YEAR) - selectCalendar.get(Calendar.YEAR);
+        Log.w("WARN", "Calendar diff : " + diff);
+        if (!checkAboveFourTeenAgreement.isChecked())
+        {
+          if (diff < 14)
+          {
+            alertView.setAlert(getString(R.string.msg_only_use_fourteen));
+            return;
+          }
+        }
       }
       
       if (!checkAgreement.isChecked())

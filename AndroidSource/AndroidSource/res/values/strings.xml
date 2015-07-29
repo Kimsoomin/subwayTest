@@ -438,10 +438,11 @@
     <string name="msg_please_not_match_password">密码不正确，请重新输入。</string>
     <string name="msg_dont_same_name_and_password">不能使用与昵称相同的密码。</string>
     <string name="msg_please_write_birthday">请输入出生日期</string>
+    <string name="msg_only_use_fourteen">本服务仅限14岁以上用户使用。</string>
     <string name="msg_check_agreement">请同意使用条款</string>
     <string name="msg_check_private_agreement">请同意隐私条款</string>
     <string name="msg_check_gps_agreement">请同意定位信息条款。</string>
-    <string name="msg_check_above_fourteen_agreement">请确认您输入的内容。</string>
+    <string name="msg_check_above_fourteen_agreement">本服务仅限14岁以上用户使用，请在‘14岁以上’选项打勾。</string>
     <string name="msg_please_check_user_info">请确认您输入的内容。</string>
     <string name="msg_send_email_fail">邮件发送失败。 </string>
     <string name="msg_wrong_password">密码不正确。</string>
