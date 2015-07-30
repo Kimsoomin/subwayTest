@@ -1,7 +1,7 @@
 package com.dabeeo.hanhayou.views;
 
 import java.text.SimpleDateFormat;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
@@ -22,6 +21,7 @@ public class PlaceDetailTitleView extends RelativeLayout
   public TextView title;
   private TextView name, time, likeCount, bookmarkCount;
   public View titleDivider;
+  private ImageView isPrivateImage;
   
   
   public PlaceDetailTitleView(Context context)
@@ -54,6 +54,7 @@ public class PlaceDetailTitleView extends RelativeLayout
       likeCount.setText(Integer.toString(count));
   }
   
+  
   public void reloadBookmarkCount(int count)
   {
     if (count != -1)
@@ -61,6 +62,7 @@ public class PlaceDetailTitleView extends RelativeLayout
   }
   
   
+  @SuppressLint("SimpleDateFormat")
   public void setBean(PlaceDetailBean bean)
   {
     title.setText(bean.title);
@@ -71,6 +73,9 @@ public class PlaceDetailTitleView extends RelativeLayout
     likeCount.setText(Integer.toString(bean.likeCount));
     bookmarkCount.setText(Integer.toString(bean.bookmarkCount));
     ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
+    
+    if (!bean.isOpen)
+      isPrivateImage.setVisibility(View.VISIBLE);
   }
   
   
@@ -80,6 +85,7 @@ public class PlaceDetailTitleView extends RelativeLayout
     View view = LayoutInflater.from(context).inflate(resId, null);
     view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     
+    isPrivateImage = (ImageView) view.findViewById(R.id.is_public);
     container = (RelativeLayout) view.findViewById(R.id.container);
     title = (TextView) view.findViewById(R.id.text_title);
     imageView = (ImageView) view.findViewById(R.id.imageview);

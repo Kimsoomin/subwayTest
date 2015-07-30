@@ -42,6 +42,7 @@ public class PlaceDetailBean
   public int bookmarkCount = 0;
   public int shareCount = 0;
   public int myLastRate = 0;
+  public boolean isOpen = true;
   
   public boolean isLiked;
   public boolean isBookmarked;
@@ -115,7 +116,7 @@ public class PlaceDetailBean
       if (obj.has("reviewCount"))
         reviewCount = obj.getInt("reviewCount");
       if (obj.has("myLastRate"))
-        myLastRate = obj.getInt("myLastRate")/2;
+        myLastRate = obj.getInt("myLastRate") / 2;
       
       if (obj.has("isLiked"))
         isLiked = obj.getInt("isLiked") != 0;
@@ -148,6 +149,9 @@ public class PlaceDetailBean
           premiumTitle = obj.getString("premiumTitle");
         }
       }
+      
+      if (obj.has("isOpen"))
+        isOpen = obj.getInt("isOpen") != 0;
     }
     catch (Exception e)
     {
