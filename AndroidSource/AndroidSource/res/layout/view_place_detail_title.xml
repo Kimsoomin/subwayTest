@@ -20,8 +20,8 @@
             android:id="@+id/text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="@color/darker_gray"
+            android:textSize="20sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

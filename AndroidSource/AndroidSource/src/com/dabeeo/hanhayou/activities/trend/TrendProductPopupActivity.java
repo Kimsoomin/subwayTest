@@ -68,7 +68,7 @@ public class TrendProductPopupActivity extends Activity
   private void displayInfo()
   {
     ImageView imageView = (ImageView) findViewById(R.id.imageview);
-    ImageDownloader.displayImage(TrendProductPopupActivity.this, bean.image, imageView, null);
+    ImageDownloader.displayImageWithListener(TrendProductPopupActivity.this, bean.image, imageView, null);
     
     TextView pushTitle = (TextView) findViewById(R.id.push_title);
     pushTitle.setText(bean.title);

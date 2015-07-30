@@ -349,7 +349,9 @@
     <string name="msg_remove_wishlist">위시리스트에서 삭제되었습니다.</string>
     <!-- 여행공략 -->
     <string name="msg_rate_this_place">请评价这地点</string>
+    <string name="msg_rate_this_schedule">请评价这行程</string>
     <string name="msg_how_about_this_place">这个地点怎么样？</string>
+    <string name="msg_how_about_this_schedule">这个行程怎么样？</string>
     <!-- 트렌드한국 -->
     <string name="term_shopping_all">全部</string>
     <string name="term_shopping_cosmetic">美妆/美容</string>

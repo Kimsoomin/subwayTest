@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -93,6 +94,12 @@ public class WriteReviewActivity extends ActionBarActivity
     btnReviewSoso.setOnClickListener(rateClickListener);
     btnReviewWorst.setOnClickListener(rateClickListener);
     btnReviewBest.setActivated(true);
+    
+    if (!TextUtils.isEmpty(parentType) && parentType.equals("plan"))
+    {
+      ((TextView) findViewById(R.id.text_rate_here)).setText(getString(R.string.msg_rate_this_schedule));
+      editReview.setHint(getString(R.string.msg_how_about_this_schedule));
+    }
     
     addLayout.setOnClickListener(new OnClickListener()
     {

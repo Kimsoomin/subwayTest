@@ -13,7 +13,8 @@ public class PushBean
   public String productId;
   public String productTitle;
   public String productCurrency;
-  public String productDiscount;
+  public String productPriceSale;
+  public String productPriceDiscount;
   
   
   public void setJSONObject(JSONObject object)
@@ -48,7 +49,10 @@ public class PushBean
             productCurrency = productObject.getString("currency");
           
           if (productObject.has("priceDiscount"))
-            productDiscount = productObject.getString("priceDiscount");
+            productPriceDiscount = productObject.getString("priceDiscount");
+          
+          if (productObject.has("priceSale"))
+            productPriceSale = productObject.getString("priceSale");
         }
       }
     }
