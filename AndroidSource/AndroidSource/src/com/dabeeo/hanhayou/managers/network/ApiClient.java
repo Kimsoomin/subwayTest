@@ -821,9 +821,9 @@ public class ApiClient
       NetworkResult result;
       
       if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1" + "&limit=2");
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=2" + "&limit=2");
       else
-        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=1" + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&lang=zh_cn&isRandom=2" + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&limit=2");
       
       JSONObject obj = new JSONObject(result.response);
       JSONArray arr = obj.getJSONArray("product");
