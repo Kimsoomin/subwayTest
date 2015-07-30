@@ -158,15 +158,14 @@ public class MainFragment extends Fragment
           @Override
           public void onPositiveButtonClickListener()
           {
-            Global.useDevUrl = !Global.useDevUrl;
-            BlinkingCommon.smlLibDebug("MainFragment","siteUrl : " + Global.useDevUrl);
+            Global.useDevUrl = false;
           }
           
           
           @Override
           public void onNegativeButtonClickListener()
           {
-            
+            Global.useDevUrl = true;
           }
         });
 //        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
