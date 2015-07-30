@@ -61,7 +61,7 @@ public class ProductRecommendScheduleView extends RelativeLayout
     price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.priceSale));
     String ch_price = "";
     int calChPrice = (int)(Integer.parseInt(bean.priceSale)/Float.parseFloat(bean.currencyConvert));
-    ch_price = "(대략 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
+    ch_price = "(大约 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
     chinaPrice.setText(""+ch_price);
     saleRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));
     final String id = bean.id;
