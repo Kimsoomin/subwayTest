@@ -6,6 +6,11 @@
         <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
         <item name="actionBarTabBarStyle">@style/Divider</item>
         <item name="android:homeAsUpIndicator">@drawable/btn_title_back_state</item>
+        <item name="actionMenuTextAppearance">@style/CustomMenuItem</item>
+    </style>
+
+    <style name="CustomMenuItem" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Menu">
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Divider" parent="@android:style/Widget.Holo.ActionBar.TabBar">
