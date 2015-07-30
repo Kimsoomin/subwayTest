@@ -28,8 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="4dp"
-                android:textColor="@color/darker_gray"
-                android:textStyle="bold" />
+                android:textColor="@color/darker_gray" />
         </LinearLayout>
 
         <View
