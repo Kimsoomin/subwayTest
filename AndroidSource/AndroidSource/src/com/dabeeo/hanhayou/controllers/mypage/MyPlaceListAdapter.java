@@ -198,7 +198,7 @@ public class MyPlaceListAdapter extends BaseAdapter
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     ImageView imagePrivate = (ImageView) view.findViewById(R.id.image_private);
     
-    int height = (int) ((imageWidth / 3) * 2);
+    int height = (int) ((imageWidth / 3) * 2.5);
     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) imageWidth, height);
     imageView.setLayoutParams(params);
     
