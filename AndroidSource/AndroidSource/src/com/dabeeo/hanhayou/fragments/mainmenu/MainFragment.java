@@ -22,6 +22,7 @@ import com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.BlinkingMap;
@@ -150,9 +151,25 @@ public class MainFragment extends Fragment
       else if (v.getId() == containerTicket.getId())
       {
         //temp
-        Global.useDevUrl = !Global.useDevUrl;
-        BlinkingCommon.smlLibDebug("MainFragment","siteUrl : " + Global.useDevUrl);
-        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
+        
+        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
+        {
+          
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            Global.useDevUrl = !Global.useDevUrl;
+            BlinkingCommon.smlLibDebug("MainFragment","siteUrl : " + Global.useDevUrl);
+          }
+          
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          {
+            
+          }
+        });
+//        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
 //        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
 //        {
 //          startActivity(new Intent(getActivity(), TicketActivity.class));
