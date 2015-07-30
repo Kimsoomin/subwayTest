@@ -1152,8 +1152,10 @@ public class ApiClient
             bean.setLogType(obj.getString("logType"));
             if (obj.has("placeTitle"))
               bean.placeTitle = obj.getString("placeTitle");
-            bean.text = obj.getString("title");
-            bean.idx = obj.getString("idx");
+            if (obj.has("title"))
+              bean.text = obj.getString("title");
+            if (obj.has("idx"))
+              bean.idx = obj.getString("idx");
             
             if (bean.type == SearchResultBean.TYPE_PLACE)
               placeList.add(bean);
@@ -1326,8 +1328,8 @@ public class ApiClient
   
   public NetworkResult userJoin(String Email, String Password, String userName, String phoneNum, String gender, String birthday, String agreeEmail, String agreeSms)
   {
-    return httpClient.requestPost(getSiteUrl() + "?v=m1&lang=zh_cn&mode=USER_INS&userEmail=" + Email + "&userPw=" + Password + "&userName=" + userName + "&phone=" + phoneNum + "&gender=" + gender + "&birthday="
-        + birthday + "&agreeEmail=" + agreeEmail + "&agreeSms=" + agreeSms);
+    return httpClient.requestPost(getSiteUrl() + "?v=m1&lang=zh_cn&mode=USER_INS&userEmail=" + Email + "&userPw=" + Password + "&userName=" + userName + "&phone=" + phoneNum + "&gender=" + gender
+        + "&birthday=" + birthday + "&agreeEmail=" + agreeEmail + "&agreeSms=" + agreeSms);
   }
   
   

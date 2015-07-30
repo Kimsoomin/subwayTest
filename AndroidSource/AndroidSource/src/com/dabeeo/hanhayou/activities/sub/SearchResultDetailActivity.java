@@ -63,6 +63,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
   
   private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
   private LinearLayout containerBottomTab;
+  private LinearLayout searchContainer;
   
   private TextWatcher watcher;
   private boolean isClickedSearchButton = false;
@@ -82,6 +83,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    searchContainer = (LinearLayout) findViewById(R.id.search_container);
     containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
     bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
     bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
@@ -117,6 +119,9 @@ public class SearchResultDetailActivity extends ActionBarActivity
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
       {
+        SearchResultBean bean = (SearchResultBean) autoSearchAdapter.getItem(position);
+        inputWord.setText(bean.text);
+        autoSearchListView.setVisibility(View.GONE);
         new SearchTask().execute(inputWord.getText().toString());
       }
     });
@@ -139,6 +144,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
+        autoSearchListView.setVisibility(View.GONE);
         inputWord.removeTextChangedListener(watcher);
         inputWord.setText("");
         inputWord.requestFocus();
@@ -175,7 +181,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
         if (inputWord.getText().toString().length() > 1)
         {
           isClickedSearchButton = false;
-          searchListView.setVisibility(View.VISIBLE);
+          searchContainer.setVisibility(View.VISIBLE);
           emptyContainer.setVisibility(View.GONE);
           imageX.setVisibility(View.VISIBLE);
           search(inputWord.getText().toString());
@@ -232,12 +238,12 @@ public class SearchResultDetailActivity extends ActionBarActivity
     if (TextUtils.isEmpty(text))
     {
       emptyContainer.setVisibility(View.VISIBLE);
-      searchListView.setVisibility(View.GONE);
+      searchContainer.setVisibility(View.GONE);
       return;
     }
     else
     {
-      searchListView.setVisibility(View.VISIBLE);
+      searchContainer.setVisibility(View.VISIBLE);
       emptyContainer.setVisibility(View.GONE);
     }
     
@@ -446,6 +452,8 @@ public class SearchResultDetailActivity extends ActionBarActivity
     @Override
     protected void onPostExecute(ArrayList<SearchResultBean> result)
     {
+      Log.w("WARN", "Result size : " + result.size());
+      Log.w("WARN", "Result size : " + size);
       if (size == 0)
         textSearchResult.setVisibility(View.GONE);
       else
@@ -458,12 +466,12 @@ public class SearchResultDetailActivity extends ActionBarActivity
       
       if (adapter.getCount() == 0)
       {
-        searchListView.setVisibility(View.GONE);
+        searchContainer.setVisibility(View.GONE);
         emptyContainer.setVisibility(View.VISIBLE);
       }
       else
       {
-        searchListView.setVisibility(View.VISIBLE);
+        searchContainer.setVisibility(View.VISIBLE);
         emptyContainer.setVisibility(View.GONE);
       }
       
