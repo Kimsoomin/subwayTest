@@ -137,6 +137,25 @@ public class ImageDownloader
   }
   
   
+  public static void displayImageWithListener(Context context, String url, final ImageView imageView, ImageLoadingListener listener)
+  {
+    if (imageLoader == null)
+      initImageLoader(context);
+    
+    DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(null)
+                                                                   .bitmapConfig(Bitmap.Config.ARGB_8888)
+                                                                   .showImageForEmptyUri(R.drawable.default_thumbnail_s)
+                                                                   .showImageOnFail(R.drawable.default_thumbnail_s)
+                                                                   .cacheInMemory(false)
+                                                                   .cacheOnDisc(true)
+                                                                   .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                                                                   .handler(new Handler())
+                                                                   .build();
+    
+    imageLoader.displayImage(url, imageView, options, listener);
+  }
+  
+  
   public static void usingSimpleImage(ImageView imageView)
   {
     Log.w("WARN", "Use Image Attacher");

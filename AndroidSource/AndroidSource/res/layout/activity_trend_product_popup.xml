@@ -33,7 +33,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/default_thumbnail_s" />
 
             <TextView
@@ -41,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:textColor="@color/darker_gray" />
         </LinearLayout>
 
         <LinearLayout
@@ -55,10 +56,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
-                android:background="@drawable/gray_fill_select_appcolor_round_button"
+                android:background="@drawable/normal_darkgray_click_gray_rectangle"
                 android:padding="8dp"
                 android:text="@string/term_cancel"
-                android:textColor="@color/color_normal_gray_select_white" />
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_go_intent"
@@ -66,10 +67,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1.3"
-                android:background="@drawable/normal_appcolor_select_white"
+                android:background="@drawable/normal_appcolor_click_gray_rectangle"
                 android:padding="8dp"
                 android:text="@string/term_go"
-                android:textColor="@color/color_normal_white_select_appcolor" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </LinearLayout>
 

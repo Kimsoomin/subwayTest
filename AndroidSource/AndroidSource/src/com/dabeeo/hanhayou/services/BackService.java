@@ -121,10 +121,12 @@ public class BackService extends Service
           final Intent emptyIntent = new Intent(BackService.this, TrendProductDetailActivity.class);
           emptyIntent.putExtra("idx", bean.productId);
           
+          String won = getString(R.string.term_yuan);
+          if (bean.productCurrency.equals("KRW"))
+            won = getString(R.string.term_won);
           PendingIntent pendingIntent = PendingIntent.getActivity(BackService.this, notificationId, emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
           NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(BackService.this).setSmallIcon(R.drawable.hanhayou).setLargeIcon(
-              BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou)).setContentTitle(bean.productTitle).setContentText(bean.productDiscount + bean.productCurrency).setContentIntent(
-              pendingIntent);
+              BitmapFactory.decodeResource(getResources(), R.drawable.hanhayou)).setContentTitle(bean.productTitle).setContentText(bean.productDiscount + won).setContentIntent(pendingIntent);
           NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
           notificationManager.notify(101, mBuilder.build());
           
