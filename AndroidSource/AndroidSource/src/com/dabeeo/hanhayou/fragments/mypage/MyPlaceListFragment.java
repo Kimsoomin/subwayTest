@@ -289,7 +289,7 @@ public class MyPlaceListFragment extends Fragment
         adapter.addAll(tempArray);
       else
       {
-        if (categoryId != 9)
+        if (categoryId == 9)
         {
           for (int i = 0; i < tempArray.size(); i++)
           {
