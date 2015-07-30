@@ -184,7 +184,7 @@ public class TravelStrategyListFragment extends Fragment
             
             if(themeList.size()-1 > themePosition)
             {
-              if((i+1) % 4 == 0)
+              if((i+1) % 5 == 0)
               {
                 bean.idx = themeList.get(themePosition).idx;
                 bean.title = null;

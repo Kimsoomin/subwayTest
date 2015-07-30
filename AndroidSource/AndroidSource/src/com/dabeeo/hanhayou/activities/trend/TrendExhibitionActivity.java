@@ -65,6 +65,7 @@ public class TrendExhibitionActivity extends ActionBarActivity
     int imageHeight = (int) (imageWidth*0.43);
     
     TopView = new TrendExhibitionTopView(this, imageWidth, imageHeight);
+    TopView.setBean(themeUrl);
     gridView.addHeaderView(TopView);
     
     adapter = new TrendProductListAdapter(this);
@@ -132,8 +133,6 @@ public class TrendExhibitionActivity extends ActionBarActivity
   {
     try
     {
-      TopView.setBean(themeUrl);
-      
       JSONObject obj = new JSONObject(result);
       ProductArray = new ArrayList<ProductBean>();
       JSONArray productArr = obj.getJSONArray("product");
