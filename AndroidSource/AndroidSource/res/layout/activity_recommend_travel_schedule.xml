@@ -17,13 +17,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingBottom="12dp" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -48,8 +49,8 @@
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:padding="8dp"
                     android:text="@string/msg_recommend_schedule_help"
                     android:textColor="@color/appcolor"
                     android:textStyle="bold" />
@@ -58,8 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="8dp"
-                    android:paddingBottom="12dp"
+                    android:padding="3dp"
                     android:text="@string/msg_recommend_schedule_help_1"
                     android:textColor="@color/light_gray" />
             </LinearLayout>
@@ -211,8 +211,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="130dp"
-                        android:orientation="horizontal"
-                        android:background="@color/l_gray" >
+                        android:background="@color/l_gray"
+                        android:orientation="horizontal" >
 
                         <LinearLayout
                             android:id="@+id/container_shopping"
@@ -283,8 +283,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="130dp"
-                        android:orientation="horizontal"
                         android:background="@color/l_gray"
+                        android:orientation="horizontal"
                         android:paddingTop="1dp" >
 
                         <LinearLayout
