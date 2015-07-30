@@ -50,7 +50,7 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/darker_gray"
+                        android:textColor="@color/dark_gray"
                         android:textStyle="bold"
                         android:textSize="16sp" />
 
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:textColor="@color/light_gray"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 
