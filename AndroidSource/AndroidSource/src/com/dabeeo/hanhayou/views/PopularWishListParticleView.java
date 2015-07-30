@@ -108,9 +108,6 @@ public class PopularWishListParticleView extends RelativeLayout
         if(obj.getString("result").equals("INS"))
         {
           Toast.makeText(context, context.getString(R.string.msg_add_wishlist), Toast.LENGTH_SHORT).show();
-        }else
-        {
-          Toast.makeText(context, context.getString(R.string.msg_remove_wishlist), Toast.LENGTH_SHORT).show();
         }
       }
       catch (Exception e)

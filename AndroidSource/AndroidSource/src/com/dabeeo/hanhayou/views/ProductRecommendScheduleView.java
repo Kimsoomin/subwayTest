@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
@@ -107,7 +108,12 @@ public class ProductRecommendScheduleView extends RelativeLayout
       try
       {
         JSONObject obj = new JSONObject(result.response);
-        btnWishList.setActivated(obj.getString("result").equals("INS"));
+        boolean ins = obj.getString("result").equals("INS");
+        btnWishList.setActivated(ins);
+        if(ins)
+        {
+          Toast.makeText(context, context.getString(R.string.msg_add_wishlist), Toast.LENGTH_SHORT).show();
+        }
       }
       catch (Exception e)
       {

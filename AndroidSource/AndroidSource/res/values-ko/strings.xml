@@ -370,7 +370,6 @@
     <string name="term_go_to_popular_product">인기상품 둘러보기</string>
     <string name="term_popular_wish_list">인기 위시리스트</string>
     <string name="msg_add_wishlist">위시리스트에 추가되었습니다.</string>
-    <string name="msg_remove_wishlist">위시리스트에서 삭제되었습니다.</string>
     <!-- 여행공략 -->
     <string name="msg_write_review">리뷰를 작성하시겠습니까?</string>
     <string name="msg_rate_this_place">이 장소를\n평가해주세요!</string>

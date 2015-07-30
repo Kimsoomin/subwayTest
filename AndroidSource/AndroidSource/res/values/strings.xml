@@ -346,7 +346,6 @@
     <string name="term_go_to_popular_product">浏览热门商品</string>
     <string name="term_popular_wish_list">热门收藏夹</string>
     <string name="msg_add_wishlist">成功保存到收藏夹</string>
-    <string name="msg_remove_wishlist">위시리스트에서 삭제되었습니다.</string>
     <!-- 여행공략 -->
     <string name="msg_rate_this_place">请评价这地点</string>
     <string name="msg_rate_this_schedule">请评价这行程</string>
