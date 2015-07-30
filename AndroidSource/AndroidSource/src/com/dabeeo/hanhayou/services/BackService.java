@@ -119,7 +119,7 @@ public class BackService extends Service
         else
         {
           final Intent emptyIntent = new Intent(BackService.this, TrendProductDetailActivity.class);
-          emptyIntent.putExtra("idx", bean.productId);
+          emptyIntent.putExtra("product_idx", bean.productId);
           
           String won = getString(R.string.term_yuan);
           if (bean.productCurrency.equals("KRW"))

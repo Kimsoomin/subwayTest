@@ -72,7 +72,9 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id)
 			{
-				startActivity(new Intent(TrendProductWithCategoryActivity.this, TrendProductDetailActivity.class));
+			  Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendProductDetailActivity.class);
+			  i.putExtra("product_idx", ProductArray.get(position).id);
+				startActivity(i);
 			}
 		});
 		

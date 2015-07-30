@@ -155,22 +155,25 @@ public class SearchResultJustOneCategoryListActivity extends ActionBarActivity
           i.putExtra("place_idx", bean.idx);
           startActivity(i);
           break;
-        
+          
         case SearchResultBean.TYPE_PRODUCT:
-          startActivity(new Intent(SearchResultJustOneCategoryListActivity.this, TrendProductDetailActivity.class));
+          i = new Intent(SearchResultJustOneCategoryListActivity.this, TrendProductDetailActivity.class);
+          i.putExtra("product_idx", bean.idx);
+          startActivity(i);
           break;
-        
+          
         case SearchResultBean.TYPE_RECOMMEND_SEOUL:
           i = new Intent(SearchResultJustOneCategoryListActivity.this, TravelStrategyDetailActivity.class);
           i.putExtra("place_idx", bean.idx);
           startActivity(i);
           break;
-        
+          
         case SearchResultBean.TYPE_SCHEDULE:
           i = new Intent(SearchResultJustOneCategoryListActivity.this, TravelScheduleDetailActivity.class);
           i.putExtra("idx", bean.idx);
           startActivity(i);
           break;
+          
       }
     }
   };

@@ -367,7 +367,7 @@ public class TravelScheduleDetailFragment extends Fragment
     {
       ProductBean bean = new ProductBean();
       bean = scheduleProductList.get(position);
-      
+      final String id = bean.id;
       ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
       productRecommendView.setBean(bean);
       productRecommendView.setOnClickListener(new OnClickListener()
@@ -378,7 +378,11 @@ public class TravelScheduleDetailFragment extends Fragment
           if (!SystemUtil.isConnectNetwork(getActivity()))
             new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
           else
-            getActivity().startActivity(new Intent(getActivity(), TrendProductDetailActivity.class));
+          {
+            Intent i = new Intent(getActivity(), TrendProductDetailActivity.class);
+            i.putExtra("product_idx", id);
+            getActivity().startActivity(i);
+          }
         }
       });
       contentContainer.addView(productRecommendView);

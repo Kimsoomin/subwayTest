@@ -57,7 +57,7 @@ public class TrendProductPopupActivity extends Activity
       public void onClick(View v)
       {
         Intent i = new Intent(TrendProductPopupActivity.this, TrendProductDetailActivity.class);
-        i.putExtra("idx", bean.productId);
+        i.putExtra("product_idx", bean.productId);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
       }

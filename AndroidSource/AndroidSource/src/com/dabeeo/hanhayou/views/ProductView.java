@@ -75,7 +75,9 @@ public class ProductView extends RelativeLayout
         @Override
         public void onClick(View v)
         {
-          context.startActivity(new Intent(context, TrendProductDetailActivity.class));
+          Intent i = new Intent(context, TrendProductDetailActivity.class);
+          i.putExtra("product_idx", firstBean.id);
+          context.startActivity(i);
         }
       });
     }else
@@ -98,7 +100,9 @@ public class ProductView extends RelativeLayout
         @Override
         public void onClick(View v)
         {
-          context.startActivity(new Intent(context, TrendProductDetailActivity.class));
+          Intent i = new Intent(context, TrendProductDetailActivity.class);
+          i.putExtra("product_idx", secondBean.id);
+          context.startActivity(i);
         }
       });
     }else

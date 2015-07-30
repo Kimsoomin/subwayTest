@@ -276,7 +276,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
     }
     else
     {
-      Intent i = new Intent(SearchResultDetailActivity.this, PlaceDetailActivity.class);
+      Intent i;
       switch (searchResultBean.type)
       {
         case SearchResultBean.TYPE_PLACE:
@@ -286,7 +286,9 @@ public class SearchResultDetailActivity extends ActionBarActivity
           break;
         
         case SearchResultBean.TYPE_PRODUCT:
-          startActivity(new Intent(SearchResultDetailActivity.this, TrendProductDetailActivity.class));
+          i = new Intent(SearchResultDetailActivity.this, TrendProductDetailActivity.class);
+          i.putExtra("product_idx", searchResultBean.idx);
+          startActivity(i);
           break;
         
         case SearchResultBean.TYPE_RECOMMEND_SEOUL:

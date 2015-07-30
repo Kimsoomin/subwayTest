@@ -90,8 +90,9 @@ public class TrendSearchActivity extends Activity
       @Override
       public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
       {
-        Intent i = new Intent(TrendSearchActivity.this, TrendProductDetailActivity.class);
-        startActivity(i);
+//        Intent i = new Intent(TrendSearchActivity.this, TrendProductDetailActivity.class);
+//        i.putExtra("product_id", value)
+//        startActivity(i);
       }
     });
     

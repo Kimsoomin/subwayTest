@@ -60,7 +60,11 @@ public class ProductJustOneView extends RelativeLayout
         if (!SystemUtil.isConnectNetwork(context))
           new AlertDialogManager(context).showDontNetworkConnectDialog();
         else
-          context.startActivity(new Intent(context, TrendProductDetailActivity.class));
+        {
+          Intent i = new Intent(context, TrendProductDetailActivity.class);
+//          i.putExtra("product_idx", bean.id);
+          context.startActivity(i);
+        }
       }
     });
     addView(view);

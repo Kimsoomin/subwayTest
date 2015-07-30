@@ -156,7 +156,11 @@ public class WishListAdapter extends BaseAdapter
         if (!SystemUtil.isConnectNetwork(context))
           new AlertDialogManager(context).showDontNetworkConnectDialog();
         else
-          context.startActivity(new Intent(context, TrendProductDetailActivity.class));
+        {
+          Intent i = new Intent(context, TrendProductDetailActivity.class);
+          i.putExtra("product_id", bean.id);
+          context.startActivity(i);
+        }
       }
     });
     return view;
