@@ -190,7 +190,10 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       }
       else
       {
-        CreateAlert(message, false);
+        if (status.equals("ERROR_EMAIL"))
+          CreateAlert(getString(R.string.msg_re_send_email_fail), false);
+        else
+          CreateAlert(message, false);
       }
       super.onPostExecute(result);
     }

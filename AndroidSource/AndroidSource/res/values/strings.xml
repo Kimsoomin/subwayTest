@@ -454,6 +454,7 @@
     <string name="msg_allow_receive_phone">同意接收有关商品和推广活动，金融商品信息的短信与电话。（选项）</string>
     <string name="msg_resend_emil_auth">验证码重新发到邮箱。请查看后输入验证码。</string>
     <string name="msg_not_correct_email_auth">验证码不符。请确认后再试。</string>
+    <string name="msg_re_send_email_fail">验证码重新发送失败。</string>
     <string name="msg_complete_auth">邮箱验证成功。</string>
     <string name="term_congratulate">韩哈游 恭喜您已注册成功</string>
     <string name="msg_success_join">您可以在韩哈游享受更多的服务了！</string>
