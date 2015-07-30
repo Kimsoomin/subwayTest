@@ -2,7 +2,7 @@ package com.dabeeo.hanhayou.views;
 
 import org.json.JSONObject;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
@@ -22,14 +23,14 @@ import com.squareup.picasso.Picasso;
 
 public class ProductRecommendScheduleView extends RelativeLayout
 {
-  private Context context;
+  private Activity context;
   private ImageView imageView;
   private TextView title, price, chinaPrice, saleRate, btnWishList;
   
   private ApiClient apiClient;
   
   
-  public ProductRecommendScheduleView(Context context)
+  public ProductRecommendScheduleView(Activity context)
   {
     super(context);
     this.context = context;
@@ -38,7 +39,7 @@ public class ProductRecommendScheduleView extends RelativeLayout
   }
   
   
-  public ProductRecommendScheduleView(Context context, AttributeSet attrs, int defStyle)
+  public ProductRecommendScheduleView(Activity context, AttributeSet attrs, int defStyle)
   {
     super(context, attrs, defStyle);
     this.context = context;
@@ -46,7 +47,7 @@ public class ProductRecommendScheduleView extends RelativeLayout
   }
   
   
-  public ProductRecommendScheduleView(Context context, AttributeSet attrs)
+  public ProductRecommendScheduleView(Activity context, AttributeSet attrs)
   {
     super(context, attrs);
     this.context = context;
@@ -71,7 +72,10 @@ public class ProductRecommendScheduleView extends RelativeLayout
       @Override
       public void onClick(View v)
       {
-        new ToggleWishList().execute(id);
+        if(PreferenceManager.getInstance(context).isLoggedIn())
+          new ToggleWishList().execute(id);
+        else
+          new AlertDialogManager(context).showNeedLoginDialog(-1);
       }
     });
   }
