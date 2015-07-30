@@ -84,6 +84,7 @@ import android.widget.TextView;
 // 공통 사용 클레스
 public class Global
 {
+  public static boolean useDevUrl = false;
   public static String g_strMapDBFileName = "gs_seoul.mbtiles";
   public static String HangouyouDBFileName = "hanhayou.sqlite";
   static final String strURLPath = "http://blinkingtour.com/map_data/dabeeo_map_seoul.mbtiles";

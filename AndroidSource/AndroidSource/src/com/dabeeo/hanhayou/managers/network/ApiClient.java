@@ -26,11 +26,13 @@ import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
+import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class ApiClient
 {
   private String siteUrl = "http://gs.blinking.kr:8900/_libs/api.common.php";
+  private String devUrl = "http://dev.hanhayou.com/_libs/api.common.php";
 //  private String testUrl = "http://10.53.13.18/_libs/api.common.php";
   private HttpClient httpClient;
   private Context context;
@@ -53,7 +55,10 @@ public class ApiClient
   
   public String getSiteUrl()
   {
-    return siteUrl;
+    if(!Global.useDevUrl)
+      return siteUrl;
+    else
+      return devUrl;
   }
   
   
@@ -875,6 +880,11 @@ public class ApiClient
     }
     
     return planProduct;
+  }
+  
+  public NetworkResult getProductDetail(String productId)
+  {
+    return httpClient.requestGet("https://devshop.hanhayou.com/ecom/product/" + productId);
   }
   
   
