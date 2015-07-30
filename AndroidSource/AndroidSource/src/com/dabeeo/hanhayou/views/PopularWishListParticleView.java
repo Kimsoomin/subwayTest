@@ -5,8 +5,10 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,11 +28,15 @@ public class PopularWishListParticleView extends RelativeLayout
   private int position;
   
   private ApiClient apiClient;
+  private int imageWidth = 0;
   
-  public PopularWishListParticleView(Context context)
+  public PopularWishListParticleView(Context context, WindowManager wm)
   {
     super(context);
     this.context = context;
+    DisplayMetrics metrics = new DisplayMetrics();
+    wm.getDefaultDisplay().getMetrics(metrics);
+    imageWidth = metrics.widthPixels/2;
     apiClient = new ApiClient(context);
   }
   
@@ -52,6 +58,7 @@ public class PopularWishListParticleView extends RelativeLayout
     View view = LayoutInflater.from(context).inflate(resId, null);
     
     TextView leftText = (TextView) view.findViewById(R.id.text_left);
+    leftText.setMaxWidth(imageWidth);
     TextView rightText = (TextView) view.findViewById(R.id.text_right);
     
     leftText.setText(firstBean);

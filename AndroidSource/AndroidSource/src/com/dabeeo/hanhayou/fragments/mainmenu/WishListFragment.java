@@ -196,7 +196,7 @@ public class WishListFragment extends Fragment
       int position = 0;
       for(int i = 0; i < result.size(); i++)
       {
-        PopularWishListParticleView pView = new PopularWishListParticleView(getActivity());
+        PopularWishListParticleView pView = new PopularWishListParticleView(getActivity(), getActivity().getWindowManager());
         leftName = result.get(i).name;
         leftId = result.get(i).id;
         if(result.size()-1 > i)
