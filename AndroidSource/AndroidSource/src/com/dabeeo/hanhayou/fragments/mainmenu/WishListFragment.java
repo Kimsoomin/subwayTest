@@ -152,7 +152,8 @@ public class WishListFragment extends Fragment
           ProductBean product = new ProductBean();
           JSONObject objInArr = productArr.getJSONObject(i);
           product.setJSONObject(objInArr);
-          ProductArray.add(product);
+          if(!product.productNull)
+            ProductArray.add(product);
         }
         adapter.addAll(ProductArray);
       }

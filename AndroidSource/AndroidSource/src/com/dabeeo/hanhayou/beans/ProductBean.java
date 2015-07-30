@@ -19,6 +19,7 @@ public class ProductBean
   public String imageTitle;
   public String imageUrl;
   public boolean isWished = false;
+  public boolean productNull = false;
   
   public void setJSONObject(JSONObject obj)
   {
@@ -28,7 +29,14 @@ public class ProductBean
         currencyConvert = obj.getString("currencyConvert");
       
       if(obj.has("id"))
+      {
         id = obj.getString("id");
+        if(id.equals("null"))
+        {
+          productNull = true;
+        }else
+          productNull = false;
+      }
       
       if(obj.has("name"))
         name = obj.getString("name");
