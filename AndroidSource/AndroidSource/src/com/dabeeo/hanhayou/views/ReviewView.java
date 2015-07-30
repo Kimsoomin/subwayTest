@@ -88,7 +88,7 @@ public class ReviewView extends RelativeLayout
     
     name.setText(bean.userName);
     
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
     if (bean.insertDate != null)
       time.setText(format.format(bean.insertDate));
     

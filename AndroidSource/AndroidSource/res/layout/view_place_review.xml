@@ -33,11 +33,11 @@
 
                 <TextView
                     android:id="@+id/name"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darker_gray"
-                    android:textSize="16sp" />
+                    android:textColor="@color/dark_gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/time"
@@ -53,7 +53,6 @@
                 android:layout_height="25dp"
                 android:background="@drawable/btn_review_list_more"
                 android:contentDescription="@null" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -84,7 +83,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
-            android:textColor="@color/light_gray" />
+            android:textColor="@color/light_gray"
+            android:textSize="18sp" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
