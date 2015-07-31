@@ -556,6 +556,8 @@
               tit.remove();
             }
 
+            if(station_id = "line211_1_")
+              station_id = "line211"
             var stationBean = stations[station_id];
             background  = s.image('./ui/images/popup_station.png', bound.x - 105, bound.y - 90, 243, 90);
             startButton = s.image('./ui/images/icon_start.png', bound.x - 76, bound.y - 50, 60, 27);
@@ -751,6 +753,8 @@
 
         function showDestinationPopUp(station_id){
         	console.log("call NativeZoom!");
+          if(station_id == "line211")
+            station_id = "line211_1_"
           //Native
           setNativeZoom(station_id);
 
