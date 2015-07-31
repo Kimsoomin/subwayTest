@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,6 +42,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -926,17 +928,23 @@ public class SubwayFragment extends Fragment
                   nearStationImage.removeAllViews();
                   if (nearByStationWithTransfer.lines.size() == 0)
                   {
+                    Log.w("WARN", "가까운 역 정보 표시 1");
                     ImageView imageView = new ImageView(getActivity());
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                    int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
+                    imageView.setScaleType(ScaleType.FIT_XY);
                     imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.line));
                     nearStationImage.addView(imageView);
                   }
                   else
                   {
+                    Log.w("WARN", "가까운 역 정보 표시 2");
                     for (int i = 0; i < nearByStationWithTransfer.lines.size(); i++)
                     {
                       ImageView imageView = new ImageView(getActivity());
-                      imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                      int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+                      imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
+                      imageView.setScaleType(ScaleType.FIT_XY);
                       imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.lines.get(i)));
                       nearStationImage.addView(imageView);
                     }
@@ -960,7 +968,7 @@ public class SubwayFragment extends Fragment
                   });
                 }
                 
-                webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+                webview.loadUrl("javascript:subway.setCenterWithStationIdWithoutPopup('" + stationId + "')");
                 if (SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId) != -1)
                 {
                   double lat = SubwayManager.getInstance(activity).getLatitudeWithSubwayId(stationId);
@@ -998,7 +1006,7 @@ public class SubwayFragment extends Fragment
                     }
                     
                     endStationId = stationId;
-                    webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+                    webview.loadUrl("javascript:subway.setCenterWithStationIdWithoutPopup('" + stationId + "')");
                     handler.postDelayed(new Runnable()
                     {
                       @Override
@@ -1013,7 +1021,8 @@ public class SubwayFragment extends Fragment
                           if (nearByStationWithTransfer.lines.size() == 0)
                           {
                             ImageView imageView = new ImageView(getActivity());
-                            imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                            int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+                            imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
                             imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.line));
                             nearStationImage.addView(imageView);
                           }
@@ -1022,7 +1031,8 @@ public class SubwayFragment extends Fragment
                             for (int i = 0; i < nearByStationWithTransfer.lines.size(); i++)
                             {
                               ImageView imageView = new ImageView(getActivity());
-                              imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                              int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+                              imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
                               imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.lines.get(i)));
                               nearStationImage.addView(imageView);
                             }
@@ -1102,7 +1112,7 @@ public class SubwayFragment extends Fragment
         @Override
         public void run()
         {
-          webview.loadUrl("javascript:subway.setCenterWithStationId('" + stationId + "')");
+          webview.loadUrl("javascript:subway.setCenterWithStationIdWithoutPopup('" + stationId + "')");
           progressBar.setVisibility(View.GONE);
           
           containerNearByStationInfo.setVisibility(View.VISIBLE);
@@ -1112,7 +1122,8 @@ public class SubwayFragment extends Fragment
           if (nearByStationWithTransfer.lines.size() == 0)
           {
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+            int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
             imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.line));
             nearStationImage.addView(imageView);
           }
@@ -1121,7 +1132,8 @@ public class SubwayFragment extends Fragment
             for (int i = 0; i < nearByStationWithTransfer.lines.size(); i++)
             {
               ImageView imageView = new ImageView(getActivity());
-              imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+              int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+              imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
               imageView.setImageResource(SubwayManager.getInstance(getActivity()).getSubwayLineResourceId(nearByStationWithTransfer.lines.get(i)));
               nearStationImage.addView(imageView);
             }
