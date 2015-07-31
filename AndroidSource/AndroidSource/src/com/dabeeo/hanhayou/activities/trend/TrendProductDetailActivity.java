@@ -210,13 +210,13 @@ public class TrendProductDetailActivity extends ActionBarActivity
     reviewLayout.addView(reviewContainerView);
     reviewContainerView.testLoadMore();
     
-    addDetailInfo("상품코드", "8213124515");
-    addDetailInfo("제품사양", "350g");
-    addDetailInfo("사용방법", "페이스 메이크업 후");
-    addDetailInfo("제품/유통", "한국/아모레퍼시픽");
+    for(int i = 0; i < productDetail.inforDescArray.size(); i++)
+    {
+      addDetailInfo(productDetail.inforDescArray.get(i).name, productDetail.inforDescArray.get(i).conetent);
+    }
     
-    String data = productDetail.productDetailInfo;
-    productImage.loadData(data, "text/html", "utf-8");
+    String productDetailUrl = "https://dev.hanhayou.com/_html/product_detail_desc.php?idx=" + productId;
+    productImage.loadUrl(productDetailUrl);
     
     btnCart.setOnClickListener(cartClickListener);
     btnBuy.setOnClickListener(cartClickListener);
@@ -225,7 +225,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       @Override
       public void onClick(View arg0)
       {
-        new ToggleWishList().execute();
+        new ToggleWishList().execute(productId);
       }
     });
     btnShare.setOnClickListener(new OnClickListener()

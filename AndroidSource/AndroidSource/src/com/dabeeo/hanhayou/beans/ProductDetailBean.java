@@ -95,11 +95,19 @@ public class ProductDetailBean
         
         if(productBasicInfo.has("designatedShippingYn"))
           designatedShippingYn = productBasicInfo.getString("designatedShippingYn");
+      }
+      
+      if(obj.has("product_detail_info"))
+      {
+        JSONObject jsonObj = obj.getJSONObject("product_detail_info");
         
-        inforDescArray = new ArrayList<InformationDesc>();
-        if(productBasicInfo.has("information_desc"))
+        if(jsonObj.has("product_desc"))
+          productDetailInfo = jsonObj.getString("product_desc");
+        
+        if(jsonObj.has("information_desc"))
         {
-          JSONArray informationArr = productBasicInfo.getJSONArray("information_desc");
+          inforDescArray = new ArrayList<InformationDesc>();
+          JSONArray informationArr = jsonObj.getJSONArray("information_desc");
           for(int i = 0; i < informationArr.length(); i++)
           {
             JSONObject informationObj = informationArr.getJSONObject(i);
@@ -108,12 +116,6 @@ public class ProductDetailBean
             inforDescArray.add(inforDesc);
           }
         }
-      }
-      
-      if(obj.has("product_detail_info"))
-      {
-        JSONObject jsonObj = obj.getJSONObject("product_detail_info");
-        productDetailInfo = jsonObj.getString("product_desc");
       }
       
       if(obj.has("CurrencyConvert"))

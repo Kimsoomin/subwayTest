@@ -18,6 +18,7 @@ import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter.WishListListener
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 
 public class PopularWishListParticleView extends RelativeLayout
 {
@@ -69,7 +70,7 @@ public class PopularWishListParticleView extends RelativeLayout
     if(!TextUtils.isEmpty(secondBean) && !TextUtils.isEmpty(secondId))
     {
       rightText.setText(secondBean);
-      rightText.setId(position);
+      rightText.setId(position+100);
     }
     else
     {
@@ -97,6 +98,8 @@ public class PopularWishListParticleView extends RelativeLayout
           id = firstId;
         else
           id = secondId;
+        
+        BlinkingCommon.smlLibDebug("PopularWish", " id : " + id);
         
         new ToggleWishList().execute(id);
       }
