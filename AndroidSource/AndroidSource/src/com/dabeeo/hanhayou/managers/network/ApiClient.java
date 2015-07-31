@@ -17,6 +17,7 @@ import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.PopularWishBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
+import com.dabeeo.hanhayou.beans.ProductDetailBean;
 import com.dabeeo.hanhayou.beans.ReviewBean;
 import com.dabeeo.hanhayou.beans.ScheduleBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
@@ -882,9 +883,21 @@ public class ApiClient
     return planProduct;
   }
   
-  public NetworkResult getProductDetail(String productId)
+  public ProductDetailBean getProductDetail(String productId)
   {
-    return httpClient.requestGet("https://devshop.hanhayou.com/ecom/product/" + productId);
+    ProductDetailBean productDetail = new ProductDetailBean();
+    NetworkResult result = httpClient.requestGet("https://devshop.hanhayou.com/ecom/product/" + productId);
+    try
+    {
+      JSONObject obj = new JSONObject(result.response);
+      productDetail.setJSONObject(obj);
+    }
+    catch (Exception e)
+    {
+      BlinkingCommon.smlLibDebug("ApiClient", "e : " + e);
+    }
+    
+    return productDetail;
   }
   
   
