@@ -166,7 +166,24 @@
               }
             }
 
-            this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3, bound.y - 42, 35, 50);
+            var adjustX = 0;
+            var adjustY = 0;
+            if(80 >bound.width  && bound.width > 58){
+              //환승역3/4개
+              adjustX = 17;
+              adjustY = 0;
+            }
+            else if(57 >bound.width  && bound.width > 32){
+              //환승역2개
+              adjustX = 8;
+              adjustY = 0;
+            }
+            else if(31 >bound.width  && bound.width > 29){
+              adjustX = -1;
+              adjustY = -1;
+            }
+
+            this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3 + adjustX, bound.y - 42 + adjustY, 35, 50);
             this.start_station_id = station_id
 
             if (this.end_station_id) {
@@ -200,7 +217,24 @@
 
             }
 
-            this.end_station = s.image('./ui/images/pin_subway_finish.png', bound.x - 3, bound.y - 42, 35, 50);
+            var adjustX = 0;
+            var adjustY = 0;
+            if(80 >bound.width  && bound.width > 58){
+              //환승역3/4개
+              adjustX = 17;
+              adjustY = 0;
+            }
+            else if(57 >bound.width  && bound.width > 32){
+              //환승역2개
+              adjustX = 8;
+              adjustY = 0;
+            }
+            else if(31 >bound.width  && bound.width > 29){
+              adjustX = -1;
+              adjustY = -1;
+            }
+
+            this.end_station = s.image('./ui/images/pin_subway_finish.png', bound.x - 3 + adjustX, bound.y - 42 + adjustY, 35, 50);
             this.end_station_id = station_id
 
             if (this.start_station_id) {
@@ -461,7 +495,23 @@
                 }
               }
             }
-            this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3, bound.y - 42, 35, 50);
+
+            if(80 >bound.width  && bound.width > 58){
+              //환승역3/4개
+              adjustX = 22;
+              adjustY = 0;
+            }
+            else if(57 >bound.width  && bound.width > 32){
+              //환승역2개
+              adjustX = 8;
+              adjustY = 0;
+            }
+            else if(31 >bound.width  && bound.width > 29){
+              adjustX = -1;
+              adjustY = -1;
+            }
+
+            this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3 + adjustX, bound.y - 42 + adjustY, 35, 50);
 
             station = Snap.select(".station#"+this.end_station_id)
 
@@ -484,7 +534,7 @@
               }
             }
 
-            this.end_station = s.image('./ui/images/pin_subway_finish.png', bound.x - 3, bound.y - 42, 35, 50);
+            this.end_station = s.image('./ui/images/pin_subway_finish.png', bound.x - 3 + adjustX, bound.y - 42 + adjustY, 35, 50);
 
 
             console.log(jsonArray);
@@ -559,12 +609,30 @@
             if(station_id == "line211_1_")
               station_id = "line211"
             var stationBean = stations[station_id];
-            background  = s.image('./ui/images/popup_station.png', bound.x - 105, bound.y - 90, 243, 90);
-            startButton = s.image('./ui/images/icon_start.png', bound.x - 76, bound.y - 50, 60, 27);
-            endButton = s.image('./ui/images/icon_finish.png', bound.x + 48, bound.y - 50, 60, 27);
-            line = s.image('./ui/images/ic_line.png', bound.x + 15, bound.y - 50, 1, 28);
 
-            tit = s.text(bound.x + 15, bound.y - 64, stationBean.name_cn);
+            var adjustX = 0;
+            var adjustY = 0;
+            if(80 >bound.width  && bound.width > 58){
+              //환승역3/4개
+              adjustX = 17;
+              adjustY = 0;
+            }
+            else if(57 >bound.width  && bound.width > 32){
+              //환승역2개
+              adjustX = 8;
+              adjustY = 0;
+            }
+            else if(31 >bound.width  && bound.width > 29){
+              adjustX = -1;
+              adjustY = -1;
+            }
+
+            background  = s.image('./ui/images/popup_station.png', bound.x - 105 + adjustX, bound.y - 90 + adjustY, 243, 90);
+            startButton = s.image('./ui/images/icon_start.png', bound.x - 76 + adjustX, bound.y - 50 + adjustY, 60, 27);
+            endButton = s.image('./ui/images/icon_finish.png', bound.x + 48 + adjustX, bound.y - 50 + adjustY, 60, 27);
+            line = s.image('./ui/images/ic_line.png', bound.x + 15 + adjustX, bound.y - 50 + adjustY, 1, 28);
+
+            tit = s.text(bound.x + 15 + adjustX, bound.y - 64 + adjustY, stationBean.name_cn);
              tit.attr({
                fill: "#fff",
                textAnchor: "middle",
