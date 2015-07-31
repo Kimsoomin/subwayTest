@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
+import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.squareup.picasso.Picasso;
 
@@ -57,7 +58,6 @@ public class ProductView extends RelativeLayout
     TextView secondDiscountRate = (TextView) view.findViewById(R.id.discount_rate_second);
     
     String ch_price = "";
-    int calChPrice = 0;
     if(firstBean != null)
     {
       firstContainer.setVisibility(View.VISIBLE);
@@ -66,8 +66,7 @@ public class ProductView extends RelativeLayout
       firstContainer.setVisibility(View.VISIBLE);
       firstTitle.setText(firstBean.name);
       firstOriginalPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(firstBean.priceSale)));
-      calChPrice = (int)(Integer.parseInt(firstBean.priceSale)/Float.parseFloat(firstBean.currencyConvert));
-      ch_price = "(大约 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
+      ch_price = Global.getCurrencyConvert(context, Integer.parseInt(firstBean.priceSale), Float.parseFloat(firstBean.currencyConvert));
       firstCnPrice.setText(ch_price);
       firstDiscountRate.setText(firstBean.saleRate + context.getString(R.string.term_sale_rate));
       firstContainer.setOnClickListener(new OnClickListener()
@@ -91,8 +90,7 @@ public class ProductView extends RelativeLayout
       Picasso.with(context).load(secondBean.imageUrl).fit().centerCrop().into(secondImageView);
       secondTitle.setText(secondBean.name);
       secondOriginalPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(secondBean.priceSale)));
-      calChPrice = (int)(Integer.parseInt(secondBean.priceSale)/Float.parseFloat(secondBean.currencyConvert));
-      ch_price = "(大约 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
+      ch_price = Global.getCurrencyConvert(context, Integer.parseInt(secondBean.priceSale), Float.parseFloat(secondBean.currencyConvert));
       secondCnPrice.setText(ch_price);
       secondDiscountRate.setText(secondBean.saleRate + context.getString(R.string.term_sale_rate));
       secondContainer.setOnClickListener(new OnClickListener()

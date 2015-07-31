@@ -18,6 +18,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.squareup.picasso.Picasso;
 
@@ -60,10 +61,8 @@ public class ProductRecommendScheduleView extends RelativeLayout
     Picasso.with(context).load(bean.imageUrl).fit().centerCrop().into(imageView);
     title.setText(bean.name);
     price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(bean.priceSale));
-    String ch_price = "";
-    int calChPrice = (int)(Integer.parseInt(bean.priceSale)/Float.parseFloat(bean.currencyConvert));
-    ch_price = "(大约 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
-    chinaPrice.setText(""+ch_price);
+    String ch_price = Global.getCurrencyConvert(context, Integer.parseInt(bean.priceSale), Float.parseFloat(bean.currencyConvert));
+    chinaPrice.setText(ch_price);
     saleRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));
     final String id = bean.id;
     btnWishList.setActivated(bean.isWished);

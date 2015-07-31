@@ -25,6 +25,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.squareup.picasso.Picasso;
@@ -61,6 +62,7 @@ public class WishListAdapter extends BaseAdapter
   public interface WishListListener
   {
     public void onRemove();
+    public void onRefresh();
   }
   
   
@@ -142,10 +144,8 @@ public class WishListAdapter extends BaseAdapter
     
     title.setText(bean.name);
     price.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(bean.priceSale)));
-    String ch_price = "";
-    int calChPrice = (int)(Integer.parseInt(bean.priceSale)/Float.parseFloat(bean.currencyConvert));
-    ch_price = "(大约 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
-    chinaPrice.setText(""+ch_price);
+    String ch_price = Global.getCurrencyConvert(context, Integer.parseInt(bean.priceSale), Float.parseFloat(bean.currencyConvert));
+    chinaPrice.setText(ch_price);
     saleRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));
     
     view.setOnClickListener(new OnClickListener()

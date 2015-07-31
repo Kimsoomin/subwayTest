@@ -81,6 +81,9 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
+import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.utils.NumberFormatter;
+
 // 공통 사용 클레스
 public class Global
 {
@@ -1089,5 +1092,12 @@ public class Global
     BlinkingCommon.smlLibDebug("GLOBAL", "deviceID : " + deviceId);
     
     return deviceId;
+  }
+  
+  public static String getCurrencyConvert(Context context, int priceSale, float currencyConvert)
+  {
+    int calChPrice = (int)(priceSale/currencyConvert);
+    String ch_price = "(大约 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
+    return ch_price;
   }
 }
