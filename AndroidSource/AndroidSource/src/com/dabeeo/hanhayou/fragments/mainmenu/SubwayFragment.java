@@ -576,6 +576,7 @@ public class SubwayFragment extends Fragment
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
+          btnFindFirstStation.setVisibility(View.GONE);
           if (isSetDestination)
           {
             startStationId = stationId;
