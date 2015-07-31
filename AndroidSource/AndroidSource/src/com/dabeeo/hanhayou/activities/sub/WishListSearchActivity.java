@@ -151,7 +151,7 @@ public class WishListSearchActivity extends Activity
       int position = 0;
       for(int i = 0; i < result.size(); i++)
       {
-        PopularWishListParticleView pView = new PopularWishListParticleView(WishListSearchActivity.this, getWindowManager());
+        PopularWishListParticleView pView = new PopularWishListParticleView(WishListSearchActivity.this, getWindowManager(), null);
         leftName = result.get(i).name;
         leftId = result.get(i).id;
         if(result.size()-1 > i)

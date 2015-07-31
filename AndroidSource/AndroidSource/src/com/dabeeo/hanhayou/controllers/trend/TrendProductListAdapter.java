@@ -23,6 +23,7 @@ import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
+import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.squareup.picasso.Picasso;
@@ -122,10 +123,8 @@ public class TrendProductListAdapter extends BaseAdapter
     Picasso.with(context).load(bean.imageUrl).fit().centerCrop().into(imageView);
     title.setText(bean.name);
     price.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(bean.priceSale)));
-    String ch_price = "";
-    int calChPrice = (int)(Integer.parseInt(bean.priceSale)/Float.parseFloat(bean.currencyConvert));
-    ch_price = "(大约 "+ context.getString(R.string.term_yuan) + ""+ NumberFormatter.addComma(calChPrice) + ")";
-    chinesePrice.setText("" + ch_price);
+    String ch_price = Global.getCurrencyConvert(context, Integer.parseInt(bean.priceSale), Float.parseFloat(bean.currencyConvert));
+    chinesePrice.setText(ch_price);
     discountRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));
     
     view.setOnClickListener(new OnClickListener()

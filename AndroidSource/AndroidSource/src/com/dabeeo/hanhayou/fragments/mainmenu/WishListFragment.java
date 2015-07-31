@@ -44,6 +44,7 @@ public class WishListFragment extends Fragment
   
   private ApiClient apiClient;
   public ArrayList<ProductBean> ProductArray;
+  public ArrayList<PopularWishBean> popularWishArray;
   
   
   @SuppressLint("InflateParams")
@@ -54,6 +55,8 @@ public class WishListFragment extends Fragment
     View view = inflater.inflate(resId, null);
     
     apiClient = new ApiClient(getActivity());
+    
+    popularWishArray = new ArrayList<PopularWishBean>();
     
     emptyContainer = (ScrollView) view.findViewById(R.id.empty_container);
     btnPopularProduct = (Button) view.findViewById(R.id.btn_go_to_popular_product);
@@ -68,8 +71,6 @@ public class WishListFragment extends Fragment
           startActivity(new Intent(getActivity(), TrendActivity.class));
       }
     });
-    
-    new getWishListTask().execute();
     
     listView = (GridViewWithHeaderAndFooter) view.findViewById(R.id.listview);
     final View v = LayoutInflater.from(getActivity()).inflate(R.layout.view_add_wishlist, null);
@@ -95,13 +96,20 @@ public class WishListFragment extends Fragment
         {
           emptyContainer.setVisibility(View.VISIBLE);
           listView.setVisibility(View.GONE);
-          new PopularWishList().execute();
+          if(popularWishArray.size() == 0)
+            new PopularWishList().execute();
         }
         else
         {
           emptyContainer.setVisibility(View.GONE);
           listView.setVisibility(View.VISIBLE);
         }
+      }
+      
+      @Override
+      public void onRefresh()
+      {
+        loadWishList();        
       }
     };
     
@@ -112,7 +120,15 @@ public class WishListFragment extends Fragment
     
     popularWishListContainer = (LinearLayout) view.findViewById(R.id.wish_list_container);
     
+    
+    loadWishList();
+    
     return view;
+  }
+  
+  public void loadWishList()
+  {
+    new getWishListTask().execute();
   }
   
   private class getWishListTask extends AsyncTask<Void, Void, NetworkResult>
@@ -157,13 +173,12 @@ public class WishListFragment extends Fragment
         }
         adapter.addAll(ProductArray);
       }
-      
-      wishListListener.onRemove();
     }
     catch (JSONException e)
     {
       e.printStackTrace();
     }
+    wishListListener.onRemove();
   }
   
   private class PopularWishList extends AsyncTask<Void, Void, ArrayList<PopularWishBean>>
@@ -177,9 +192,8 @@ public class WishListFragment extends Fragment
     @Override
     protected ArrayList<PopularWishBean> doInBackground(Void... params)
     {
-      ArrayList<PopularWishBean> result = null;
-      result = apiClient.getPopularWishList();
-      return result;
+      popularWishArray = apiClient.getPopularWishList();
+      return popularWishArray;
     }
     
     @Override
@@ -196,7 +210,7 @@ public class WishListFragment extends Fragment
       int position = 0;
       for(int i = 0; i < result.size(); i++)
       {
-        PopularWishListParticleView pView = new PopularWishListParticleView(getActivity(), getActivity().getWindowManager());
+        PopularWishListParticleView pView = new PopularWishListParticleView(getActivity(), getActivity().getWindowManager(), wishListListener);
         leftName = result.get(i).name;
         leftId = result.get(i).id;
         if(result.size()-1 > i)

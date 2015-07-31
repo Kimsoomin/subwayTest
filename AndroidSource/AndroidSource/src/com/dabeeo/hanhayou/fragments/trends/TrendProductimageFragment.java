@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.dabeeo.hanhayou.R;
@@ -49,7 +48,6 @@ public class TrendProductimageFragment extends Fragment
   @Override
   public void onResume()
   {
-    Log.w("WARN", "Load images");
     ImageDownloader.displayImage(getActivity(), imageUrl, imageView, null);
     imageView.setOnClickListener(new OnClickListener()
     {

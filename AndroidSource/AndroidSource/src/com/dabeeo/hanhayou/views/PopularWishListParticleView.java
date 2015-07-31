@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter.WishListListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
@@ -29,8 +30,9 @@ public class PopularWishListParticleView extends RelativeLayout
   
   private ApiClient apiClient;
   private int imageWidth = 0;
+  private WishListListener listener;
   
-  public PopularWishListParticleView(Context context, WindowManager wm)
+  public PopularWishListParticleView(Context context, WindowManager wm, WishListListener listener)
   {
     super(context);
     this.context = context;
@@ -38,6 +40,7 @@ public class PopularWishListParticleView extends RelativeLayout
     wm.getDefaultDisplay().getMetrics(metrics);
     imageWidth = metrics.widthPixels/2;
     apiClient = new ApiClient(context);
+    this.listener = listener;
   }
   
   
@@ -62,11 +65,11 @@ public class PopularWishListParticleView extends RelativeLayout
     TextView rightText = (TextView) view.findViewById(R.id.text_right);
     
     leftText.setText(firstBean);
-    leftText.setId(Integer.parseInt(firstId));
-    if(!TextUtils.isEmpty(secondBean) && !TextUtils.isEmpty(secondId) && !TextUtils.equals(secondId, "null"))
+    leftText.setId(position);
+    if(!TextUtils.isEmpty(secondBean) && !TextUtils.isEmpty(secondId))
     {
       rightText.setText(secondBean);
-      rightText.setId(Integer.parseInt(secondId));
+      rightText.setId(position);
     }
     else
     {
@@ -89,7 +92,12 @@ public class PopularWishListParticleView extends RelativeLayout
       @Override
       public void onClick(View v)
       {
-        String id = "" + v.getId();
+        String id = "";
+        if(position == v.getId())
+          id = firstId;
+        else
+          id = secondId;
+        
         new ToggleWishList().execute(id);
       }
     });
@@ -115,6 +123,8 @@ public class PopularWishListParticleView extends RelativeLayout
         if(obj.getString("result").equals("INS"))
         {
           Toast.makeText(context, context.getString(R.string.msg_add_wishlist), Toast.LENGTH_SHORT).show();
+          if(listener != null)
+            listener.onRefresh();
         }
       }
       catch (Exception e)
