@@ -63,7 +63,7 @@
                             android:textStyle="bold" />
 
                         <ImageView
-                            android:layout_width="10dp"
+                            android:layout_width="6dp"
                             android:layout_height="10dp"
                             android:layout_marginLeft="4dp"
                             android:background="@drawable/ic_right_arrow" />
@@ -112,7 +112,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="2dp"
                 android:background="#20000000" />
         </LinearLayout>
         <!-- 가까운 역 표시 -->
@@ -189,7 +189,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="2dp"
                 android:background="#33000000" />
         </LinearLayout>
     </LinearLayout>
