@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,8 @@ public class SubwaySearchListAdapter extends BaseAdapter
     if (bean.lines.size() == 0)
     {
       ImageView imageView = new ImageView(context);
-      imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+      int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, context.getResources().getDisplayMetrics());
+      imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
       imageView.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.line));
       imageContainer.addView(imageView);
     }
@@ -103,7 +105,8 @@ public class SubwaySearchListAdapter extends BaseAdapter
       for (int i = 0; i < bean.lines.size(); i++)
       {
         ImageView imageView = new ImageView(context);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+        int imageSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, context.getResources().getDisplayMetrics());
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(imageSize, imageSize));
         imageView.setImageResource(SubwayManager.getInstance(context).getSubwayLineResourceId(bean.lines.get(i)));
         imageContainer.addView(imageView);
       }
