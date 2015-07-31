@@ -227,6 +227,8 @@
               // //예외 케이스 '-' 때문에 해당 역은 예외로 추가함
               if(stationbean.id == "line234")
                 stationbean.id = "line140line234"
+              if(stationbean.id == "line211")
+                stationbean.id = "line211_1_"
 
               var station = Snap.select(".station[id*="+stationbean.id+"]")
              
