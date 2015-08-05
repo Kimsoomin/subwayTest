@@ -97,14 +97,6 @@ public class AuthEmailActivity extends Activity implements OnClickListener
   
   
   @Override
-  protected void onPause()
-  {
-    finish();
-    super.onPause();
-  }
-  
-  
-  @Override
   public void onClick(View v)
   {
     switch (v.getId())
