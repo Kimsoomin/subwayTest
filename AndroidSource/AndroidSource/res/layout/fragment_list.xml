@@ -16,7 +16,7 @@
         android:background="@android:color/white"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="42dp"
+        android:paddingTop="40dp"
         android:visibility="gone" >
 
         <ImageView

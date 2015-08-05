@@ -128,22 +128,25 @@ public class ChangePasswordActivity extends ActionBarActivity
           return false;
         }
         
-        // 연속된 3개의 문자/숫자 불가 
-        for (int i = 0; i < newPassword.length(); i++)
+        //영문과 숫자 혼용되어야 함
+        Pattern pattern = Pattern.compile("[0-9]");
+        Matcher matcher = pattern.matcher(newPassword);
+        boolean isContainNumber = matcher.find();
+        
+        pattern = Pattern.compile("[a-zA-Z]");
+        matcher = pattern.matcher(newPassword);
+        boolean isContainEnglish = matcher.find();
+        
+        if (!isContainNumber || !isContainEnglish)
         {
-          String character = newPassword.charAt(i) + "";
-          character = character + character + character;
-          if (newPassword.indexOf(character) >= 0)
-          {
-            alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
-            return false;
-          }
+          alertView.setAlert(getString(R.string.msg_valid_password));
+          return false;
         }
         
-        if (newPassword.contains(" "))
+        //연속된 3개의 문자 숫자 
+        if (checkForAscendingOrDescendingPart(newPassword, 3))
         {
-          Log.w("WARN", "Containe escape");
-          alertView.setAlert(getString(R.string.msg_please_delete_escape));
+          alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
           return false;
         }
         
@@ -159,18 +162,10 @@ public class ChangePasswordActivity extends ActionBarActivity
           }
         }
         
-        //영문과 숫자 혼용되어야 함
-        Pattern pattern = Pattern.compile("[0-9]");
-        Matcher matcher = pattern.matcher(newPassword);
-        boolean isContainNumber = matcher.find();
-        
-        pattern = Pattern.compile("[a-zA-Z]");
-        matcher = pattern.matcher(newPassword);
-        boolean isContainEnglish = matcher.find();
-        
-        if (!isContainNumber || !isContainEnglish)
+        if (newPassword.contains(" "))
         {
-          alertView.setAlert(getString(R.string.msg_valid_password));
+          Log.w("WARN", "Containe escape");
+          alertView.setAlert(getString(R.string.msg_please_delete_escape));
           return false;
         }
         
@@ -197,6 +192,40 @@ public class ChangePasswordActivity extends ActionBarActivity
     }
     
     return true;
+  }
+  
+  
+  public boolean checkForAscendingOrDescendingPart(String txt, int l)
+  {
+    for (int i = 0; i <= txt.length() - l; ++i)
+    {
+      boolean success = true;
+      char c = txt.charAt(i);
+      for (int j = 1; j < l; ++j)
+      {
+        if (((char) c + j) != txt.charAt(i + j))
+        {
+          success = false;
+          break;
+        }
+      }
+      if (success)
+        return true;
+      
+      success = true;
+      
+      for (int j = 1; j < l; ++j)
+      {
+        if (((char) c - j) != txt.charAt(i + j))
+        {
+          success = false;
+          break;
+        }
+      }
+      if (success)
+        return true;
+    }
+    return false;
   }
   
   

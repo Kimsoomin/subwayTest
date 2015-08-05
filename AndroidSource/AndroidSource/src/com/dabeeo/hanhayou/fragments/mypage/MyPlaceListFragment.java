@@ -316,6 +316,14 @@ public class MyPlaceListFragment extends Fragment
       progressBar.setVisibility(View.GONE);
       if (categoryId == -1 && SystemUtil.isConnectNetwork(getActivity()))
         new SaveLocalAsyncTask().execute();
+      try
+      {
+        ((MyPlaceActivity) getActivity()).invalidateOptionsMenu();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
       super.onPostExecute(result);
     }
   }

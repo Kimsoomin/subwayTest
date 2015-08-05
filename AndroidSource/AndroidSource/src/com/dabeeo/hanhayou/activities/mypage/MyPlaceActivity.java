@@ -28,6 +28,7 @@ public class MyPlaceActivity extends ActionBarActivity
   public boolean isEditMode = false;
   private MyPlaceViewPagerAdapter adapter;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -77,6 +78,24 @@ public class MyPlaceActivity extends ActionBarActivity
     closeMenuItem = menu.findItem(R.id.close);
     editMenuItem.setVisible(!isEditMode);
     closeMenuItem.setVisible(isEditMode);
+    
+    try
+    {
+      MyPlaceListFragment fragment = adapter.getFragment(viewPager.getCurrentItem());
+      if (fragment.listCount() == 0)
+      {
+        editMenuItem.setVisible(false);
+        closeMenuItem.setVisible(false);
+      }
+      else
+      {
+        editMenuItem.setVisible(true);
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -106,7 +125,7 @@ public class MyPlaceActivity extends ActionBarActivity
     this.isEditMode = isEditMode;
     MyPlaceListFragment fragment = adapter.getFragment(viewPager.getCurrentItem());
     fragment.setEditMode(isEditMode);
-    if(isEditMode)
+    if (isEditMode)
       viewPager.setPagingDisabled();
     else
       viewPager.setPagingEnabled();
@@ -123,6 +142,7 @@ public class MyPlaceActivity extends ActionBarActivity
     public void onTabSelected(Tab tab, FragmentTransaction ft)
     {
       viewPager.setCurrentItem(tab.getPosition());
+      invalidateOptionsMenu();
     }
     
     
