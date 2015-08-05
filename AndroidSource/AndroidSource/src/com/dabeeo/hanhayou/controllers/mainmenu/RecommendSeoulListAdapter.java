@@ -3,6 +3,7 @@ package com.dabeeo.hanhayou.controllers.mainmenu;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Spannable;
@@ -16,10 +17,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PremiumBean;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.squareup.picasso.Picasso;
 
 public class RecommendSeoulListAdapter extends BaseAdapter
@@ -37,6 +40,12 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     this.context = context;
     this.imageWidth = imageWidth;
     this.imageHeight = imageHeight;
+    
+    @SuppressWarnings("deprecation")
+    float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
+    float margin = (int) SystemUtil.convertDpToPixel(4f, (Activity) context);
+    // two images, three margins of 10dips
+    imageWidth = (int) ((width - (3 * margin)) / 2);
   }
   
   
@@ -82,6 +91,8 @@ public class RecommendSeoulListAdapter extends BaseAdapter
   }
   
   
+  //1242, 698
+  //1242, 544
   @SuppressLint("ViewHolder")
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
@@ -96,14 +107,24 @@ public class RecommendSeoulListAdapter extends BaseAdapter
     LinearLayout likeLayout = (LinearLayout) view.findViewById(R.id.like_layout);
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     
-    if(bean.title != null)
+    int height = (int) (imageWidth * 0.56);
+    if (bean.title == null)
+    {
+      //Product Recommend
+      height = (int) (imageWidth * 0.43);
+    }
+    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) imageWidth, height);
+    imageView.setLayoutParams(params);
+    
+    if (bean.title != null)
     {
       SpannableStringBuilder style = new SpannableStringBuilder(bean.title);
       style.setSpan(new BackgroundColorSpan(Color.parseColor("#ffffff")), 0, bean.title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
       title.setText(style);
       subtitle.setText(bean.placeTitle);
       likeCount.setText(Integer.toString(bean.likeCount));
-    }else
+    }
+    else
     {
       title.setVisibility(View.INVISIBLE);
       subtitle.setVisibility(View.INVISIBLE);
