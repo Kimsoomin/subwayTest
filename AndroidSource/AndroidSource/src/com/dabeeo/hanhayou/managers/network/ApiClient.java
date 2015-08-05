@@ -56,7 +56,7 @@ public class ApiClient
   
   public String getSiteUrl()
   {
-    if(!Global.useDevUrl)
+    if (!Global.useDevUrl)
       return siteUrl;
     else
       return devUrl;
@@ -883,6 +883,7 @@ public class ApiClient
     return planProduct;
   }
   
+  
   public ProductDetailBean getProductDetail(String productId)
   {
     ProductDetailBean productDetail = new ProductDetailBean();
@@ -890,10 +891,10 @@ public class ApiClient
     try
     {
       JSONObject obj = new JSONObject(result.response);
-      if(obj.has("result"))
+      if (obj.has("result"))
       {
         JSONObject resultObj = obj.getJSONObject("result");
-        if(resultObj.getString("status").equals("FAIL_UNKNOWN_EXCEPTION"))
+        if (resultObj.getString("status").equals("FAIL_UNKNOWN_EXCEPTION"))
         {
           return null;
         }
@@ -953,6 +954,31 @@ public class ApiClient
   {
 //    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + ticketId);
     return new NetworkResult(true, null, 1);
+  }
+  
+  
+  /**
+   * Agreement
+   * 
+   * @param page
+   * @param contentType
+   * @return
+   */
+  public NetworkResult getAgreement()
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=agree&mode=USE");
+  }
+  
+  
+  public NetworkResult getAgreementGPS()
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=agree&mode=LOCATION");
+  }
+  
+  
+  public NetworkResult getAgreementPrivate()
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=agree&mode=MEMBER");
   }
   
   

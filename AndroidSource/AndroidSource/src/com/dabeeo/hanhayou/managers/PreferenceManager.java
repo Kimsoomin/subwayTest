@@ -52,7 +52,48 @@ public class PreferenceManager extends BasePreferenceManager
   
   private static final String KEY_SYNC_ONLY_WIFI = "key_sync_only_wifi";
   
+  private static final String KEY_AGREEMENT = "key_agreement";
+  private static final String KEY_AGREEMENT_PRIVATE = "key_agreement_private";
+  private static final String KEY_AGREEMENT_GPS_INFO = "key_agreement_gps_info";
   
+  
+  public void setAgreementHtmlString(String value)
+  {
+    put(KEY_AGREEMENT, value);
+  }
+  
+  
+  public String getAgreementHtmlString()
+  {
+    return get(KEY_AGREEMENT);
+  }
+  
+  
+  public void setAgreementPrivateHtmlString(String value)
+  {
+    put(KEY_AGREEMENT_PRIVATE, value);
+  }
+  
+  
+  public String getAgreementPrivateHtmlString()
+  {
+    return get(KEY_AGREEMENT_PRIVATE);
+  }
+  
+  
+  public void setAgreementGPSInfoHtmlString(String value)
+  {
+    put(KEY_AGREEMENT_GPS_INFO, value);
+  }
+  
+  
+  public String getAgreementGPSInfoHtmlString()
+  {
+    return get(KEY_AGREEMENT_GPS_INFO);
+  }
+  
+  
+  //
   public void setIsFirst(boolean value)
   {
     put(KEY_IS_FIRST, value);
@@ -189,10 +230,12 @@ public class PreferenceManager extends BasePreferenceManager
     return get(KEY_AUTO_LOGIN, false);
   }
   
+  
   public void setDeviceId(String deviceId)
   {
     put(KEY_DEVICE_ID, deviceId);
   }
+  
   
   public String getDeviceId()
   {

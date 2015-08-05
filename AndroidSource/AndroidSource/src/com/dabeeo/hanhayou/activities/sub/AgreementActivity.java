@@ -1,15 +1,21 @@
 package com.dabeeo.hanhayou.activities.sub;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
 public class AgreementActivity extends ActionBarActivity
@@ -18,7 +24,8 @@ public class AgreementActivity extends ActionBarActivity
   public static final String TYPE_AGREEMENT_PRIVATE = "agreement_private";
   public static final String TYPE_AGREEMENT_GPS = "agreement_gps";
   private String type;
-  private TextView content;
+  private WebView webview;
+  private ApiClient client;
   
   
   @Override
@@ -30,6 +37,7 @@ public class AgreementActivity extends ActionBarActivity
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
     TextView title = (TextView) customActionBar.findViewById(R.id.title);
     type = getIntent().getStringExtra("type");
+    client = new ApiClient(this);
     
     if (type.equals(TYPE_AGREEMENT))
       title.setText(getString(R.string.term_agreement));
@@ -43,8 +51,60 @@ public class AgreementActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
-    content = (TextView) findViewById(R.id.content);
-    content.setText("가상의 이용약관입니다");
+    webview = (WebView) findViewById(R.id.webview);
+    
+    if (!SystemUtil.isConnectNetwork(AgreementActivity.this))
+      displayFromLocal();
+    else
+      new GetAgreementAsyncTask().execute();
+  }
+  
+  
+  private void displayFromLocal()
+  {
+    if (type.equals(TYPE_AGREEMENT))
+      webview.loadData(PreferenceManager.getInstance(this).getAgreementHtmlString(), "text/html", "UTF-8");
+    else if (type.equals(TYPE_AGREEMENT_PRIVATE))
+      webview.loadData(PreferenceManager.getInstance(this).getAgreementPrivateHtmlString(), "text/html", "UTF-8");
+    else if (type.equals(TYPE_AGREEMENT_GPS))
+      webview.loadData(PreferenceManager.getInstance(this).getAgreementGPSInfoHtmlString(), "text/html", "UTF-8");
+  }
+  
+  private class GetAgreementAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      if (type.equals(TYPE_AGREEMENT))
+        return client.getAgreement();
+      else if (type.equals(TYPE_AGREEMENT_PRIVATE))
+        return client.getAgreementPrivate();
+      else
+        return client.getAgreementGPS();
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      try
+      {
+        String htmlString = result.response;
+        if (type.equals(TYPE_AGREEMENT))
+          PreferenceManager.getInstance(AgreementActivity.this).setAgreementHtmlString(htmlString);
+        else if (type.equals(TYPE_AGREEMENT_PRIVATE))
+          PreferenceManager.getInstance(AgreementActivity.this).setAgreementPrivateHtmlString(htmlString);
+        else if (type.equals(TYPE_AGREEMENT_GPS))
+          PreferenceManager.getInstance(AgreementActivity.this).setAgreementGPSInfoHtmlString(htmlString);
+        
+        displayFromLocal();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      super.onPostExecute(result);
+    }
   }
   
   
