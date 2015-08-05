@@ -340,6 +340,9 @@ public class MySchedulesActivity extends ActionBarActivity
         listView.setVisibility(View.GONE);
         emptyText.setText(getString(R.string.msg_empty_my_schedule));
         btnRecommendSchedule.setVisibility(View.VISIBLE);
+        
+        editMenuItem.setVisible(false);
+        closeMenuItem.setVisible(false);
       }
       else
       {
