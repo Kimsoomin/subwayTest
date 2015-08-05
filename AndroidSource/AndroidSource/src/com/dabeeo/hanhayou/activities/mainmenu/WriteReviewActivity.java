@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -95,6 +96,7 @@ public class WriteReviewActivity extends ActionBarActivity
     btnReviewWorst.setOnClickListener(rateClickListener);
     btnReviewBest.setActivated(true);
     
+    editReview.setHintTextColor(Color.parseColor("#c3c3c3"));
     if (!TextUtils.isEmpty(parentType) && parentType.equals("plan"))
     {
       ((TextView) findViewById(R.id.text_rate_here)).setText(getString(R.string.msg_rate_this_schedule));
