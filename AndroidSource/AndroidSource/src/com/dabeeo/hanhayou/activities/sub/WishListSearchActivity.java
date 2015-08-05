@@ -163,6 +163,7 @@ public class WishListSearchActivity extends Activity
           rightName = "";
           rightId = "";
         }
+        
         pView.setBean(position, leftName, rightName, leftId, rightId);
         position = position + 1;
         i = i + 1;

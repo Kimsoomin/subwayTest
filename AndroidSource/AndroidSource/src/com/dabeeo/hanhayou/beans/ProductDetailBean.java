@@ -50,7 +50,6 @@ public class ProductDetailBean
       if(obj.has("product_option_list"))
       {
         productOptionList = obj.getJSONObject("product_option_list");
-        BlinkingCommon.smlLibDebug("asdfjsafkldsjafkjdjksjfkdsajkfjdsak", "productOptionList : " + productOptionList);
       }
       
       if(obj.has("product_basic_info"))

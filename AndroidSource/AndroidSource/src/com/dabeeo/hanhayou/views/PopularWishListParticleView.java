@@ -66,17 +66,17 @@ public class PopularWishListParticleView extends RelativeLayout
     TextView rightText = (TextView) view.findViewById(R.id.text_right);
     
     leftText.setText(firstBean);
-    leftText.setId(position);
+    
     if(!TextUtils.isEmpty(secondBean) && !TextUtils.isEmpty(secondId))
     {
       rightText.setText(secondBean);
-      rightText.setId(position+100);
+      rightText.setId(Integer.parseInt(secondId));
     }
     else
     {
       rightText.setVisibility(View.GONE);
     }
-    
+       
     if (position % 2 == 0)
     {
       leftText.setBackgroundResource(R.drawable.yellow_rectangle);
@@ -88,20 +88,23 @@ public class PopularWishListParticleView extends RelativeLayout
       rightText.setBackgroundResource(R.drawable.red_rectangle);
     }
     
-    view.setOnClickListener(new OnClickListener()
+    leftText.setOnClickListener(new OnClickListener()
     {
+      
       @Override
       public void onClick(View v)
       {
-        String id = "";
-        if(position == v.getId())
-          id = firstId;
-        else
-          id = secondId;
-        
-        BlinkingCommon.smlLibDebug("PopularWish", " id : " + id);
-        
-        new ToggleWishList().execute(id);
+        new ToggleWishList().execute(firstId);
+      }
+    });
+    
+    rightText.setOnClickListener(new OnClickListener()
+    {
+      
+      @Override
+      public void onClick(View v)
+      {
+        new ToggleWishList().execute(secondId);
       }
     });
     
