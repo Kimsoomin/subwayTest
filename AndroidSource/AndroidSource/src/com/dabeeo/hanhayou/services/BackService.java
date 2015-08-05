@@ -221,7 +221,6 @@ public class BackService extends Service
     {
       currentLat = location.getLatitude();
       currentLon = location.getLongitude();
-      Log.w("WARN", "current Lat : " + currentLat + " / current Lon : " + currentLon);
       
       if (isFirstTime)
       {

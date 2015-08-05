@@ -21,23 +21,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/text_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/darker_gray"
-                android:textSize="20sp" />
-
             <ImageView
                 android:id="@+id/is_public"
                 android:layout_width="12dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
                 android:background="@drawable/icon_list_private_on"
                 android:contentDescription="@null"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:textColor="@color/darker_gray"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <RelativeLayout
