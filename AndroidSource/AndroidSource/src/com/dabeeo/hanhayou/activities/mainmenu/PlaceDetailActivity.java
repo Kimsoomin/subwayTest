@@ -167,7 +167,7 @@ public class PlaceDetailActivity extends ActionBarActivity
           titleView.titleDivider.setVisibility(View.GONE);
           
           FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
-          layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics());
+          layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, r.getDisplayMetrics());
           scrollView.setLayoutParams(layoutParams);
         }
         
