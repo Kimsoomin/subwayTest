@@ -459,8 +459,8 @@
     <string name="msg_success_join">您可以在韩哈游享受更多的服务了！</string>
     <string name="msg_please_error_id">您输入的帐号不存在</string>
     <string name="msg_erro_auto_id">正在等待认证</string>
-    <string name="msg_now_allow_consecutive_three_letters">密码不能使用连续3个以上的字母/数字。</string>
-    <string name="msg_now_allow_continuos_three_letters">密码不能使用3个以上的相同或连续字母/数字。</string>
+    <string name="msg_now_allow_consecutive_three_letters">密码不能包含3个以上连续或重复的字母/数字。</string>
+    <string name="msg_now_allow_continuos_three_letters">请输入6~16个字符的英文/数字组合</string>
     <string name="msg_please_error_auth">正在等待认证</string>
     <string name="msg_please_error_out">该账号为已注销账号。</string>
     <string name="msg_please_error_password">密码不正确，请重新输入。</string>

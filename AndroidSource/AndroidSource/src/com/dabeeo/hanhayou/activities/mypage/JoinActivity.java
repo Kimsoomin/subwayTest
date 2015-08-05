@@ -305,6 +305,29 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         return;
       }
       
+      
+      //영문과 숫자 혼용되어야 함
+      Pattern pattern = Pattern.compile("[0-9]");
+      Matcher matcher = pattern.matcher(passWord);
+      boolean isContainNumber = matcher.find();
+      
+      pattern = Pattern.compile("[a-zA-Z]");
+      matcher = pattern.matcher(passWord);
+      boolean isContainEnglish = matcher.find();
+      
+      if (!isContainNumber || !isContainEnglish)
+      {
+        alertView.setAlert(getString(R.string.msg_valid_password));
+        return;
+      }
+      
+      //연속된 3개의 문자 숫자 
+      if (checkForAscendingOrDescendingPart(passWord, 3))
+      {
+        alertView.setAlert(getString(R.string.msg_now_allow_consecutive_three_letters));
+        return;
+      }
+      
       // 붙어있는 3개의 동일한 문자/숫자 불가 
       for (int i = 0; i < passWord.length(); i++)
       {
@@ -329,28 +352,6 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           alertView.setAlert(getString(R.string.msg_warn_password_not_same));
           return;
         }
-      }
-      
-      //연속된 3개의 문자 숫자 
-      if (checkForAscendingOrDescendingPart(passWord, 3))
-      {
-        alertView.setAlert(getString(R.string.msg_now_allow_continuos_three_letters));
-        return;
-      }
-      
-      //영문과 숫자 혼용되어야 함
-      Pattern pattern = Pattern.compile("[0-9]");
-      Matcher matcher = pattern.matcher(passWord);
-      boolean isContainNumber = matcher.find();
-      
-      pattern = Pattern.compile("[a-zA-Z]");
-      matcher = pattern.matcher(passWord);
-      boolean isContainEnglish = matcher.find();
-      
-      if (!isContainNumber || !isContainEnglish)
-      {
-        alertView.setAlert(getString(R.string.msg_valid_password));
-        return;
       }
       
       boolean chk = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~`]+$", passWord);
