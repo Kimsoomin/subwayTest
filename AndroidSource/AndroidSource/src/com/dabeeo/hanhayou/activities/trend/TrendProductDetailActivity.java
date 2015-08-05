@@ -464,7 +464,23 @@ public class TrendProductDetailActivity extends ActionBarActivity
       progressBar.setVisibility(View.GONE);
       productDetail = result;
       
-      displayProductInfo();
+      if(productDetail != null)
+        displayProductInfo();
+      else
+        new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(getString(R.string.term_alert), "상품 정보 오류", 
+            getString(R.string.term_ok), null, new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            finish();
+          }
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          { 
+          }
+        });
     }
     
   }

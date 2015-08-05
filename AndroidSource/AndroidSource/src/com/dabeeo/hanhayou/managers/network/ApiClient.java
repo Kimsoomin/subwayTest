@@ -890,6 +890,15 @@ public class ApiClient
     try
     {
       JSONObject obj = new JSONObject(result.response);
+      if(obj.has("result"))
+      {
+        JSONObject resultObj = obj.getJSONObject("result");
+        if(resultObj.getString("status").equals("FAIL_UNKNOWN_EXCEPTION"))
+        {
+          return null;
+        }
+      }
+      
       productDetail.setJSONObject(obj);
     }
     catch (Exception e)

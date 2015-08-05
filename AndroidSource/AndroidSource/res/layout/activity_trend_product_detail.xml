@@ -392,7 +392,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@color/gray" />
+                        android:background="@color/gray"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <!-- 반품교환 -->
