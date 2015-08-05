@@ -24,7 +24,6 @@ import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;

@@ -48,8 +48,8 @@
                         android:layout_marginTop="2dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="Loading"
                         android:padding="8dp"
+                        android:text="Loading"
                         android:textColor="@color/darker_gray"
                         android:textSize="19sp" />
 
@@ -247,7 +247,8 @@
                                             android:id="@+id/btn_wishlist"
                                             android:layout_width="25dp"
                                             android:layout_height="25dp"
-                                            android:background="@drawable/wishlist_button" />
+                                            android:background="@drawable/wishlist_button" 
+                                            android:visibility="gone"/>
 
                                         <Button
                                             android:id="@+id/btn_share"
@@ -360,12 +361,38 @@
                         android:layout_height="1dp"
                         android:background="@color/gray" />
 
-                    <TextView
-                        android:id="@+id/text_product_detail_delivery_info"
+                    <LinearLayout
+                        android:id="@+id/product_detail_delivery_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:visibility="gone" />
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/term_product_detail_delivery_info"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/term_product_detail_delivery_description"
+                            android:textColor="@color/light_gray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/product_detail_delivery_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/gray" />
                 </LinearLayout>
 
                 <!-- 반품교환 -->
@@ -400,14 +427,55 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#CECECE" />
+                        android:background="@color/gray" />
 
-                    <TextView
-                        android:id="@+id/text_product_detail_refund"
+                    <LinearLayout
+                        android:id="@+id/product_detail_refund_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:visibility="gone" />
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/term_product_detail_refund"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/term_product_detail_refund_description"
+                            android:textColor="@color/light_gray"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/term_product_detail_refund_description2"
+                            android:textColor="@color/light_gray"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/text_refund_link"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/brown"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <View
@@ -473,6 +541,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
+        android:clickable="true"
         android:visibility="gone" />
 
     <com.dabeeo.hanhayou.views.SharePickView
@@ -506,7 +575,8 @@
             android:layout_weight="1"
             android:background="@color/darker_gray_transparent"
             android:text="@string/term_my_cart"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_checkout"
@@ -515,7 +585,8 @@
             android:layout_weight="1"
             android:background="@color/dark_pink_transparent"
             android:text="@string/term_buy_immediately"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

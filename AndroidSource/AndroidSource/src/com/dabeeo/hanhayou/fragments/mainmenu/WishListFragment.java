@@ -120,7 +120,6 @@ public class WishListFragment extends Fragment
     
     popularWishListContainer = (LinearLayout) view.findViewById(R.id.wish_list_container);
     
-    
     loadWishList();
     
     return view;
@@ -133,7 +132,6 @@ public class WishListFragment extends Fragment
   
   private class getWishListTask extends AsyncTask<Void, Void, NetworkResult>
   {
-    
     @Override
     protected void onPreExecute()
     {

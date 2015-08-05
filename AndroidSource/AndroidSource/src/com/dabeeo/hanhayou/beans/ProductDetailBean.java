@@ -27,11 +27,31 @@ public class ProductDetailBean
   public String productDetailInfo;
   public ArrayList<InformationDesc> inforDescArray;
   public float currencyConvert;  
+  public ArrayList<ProductOptionInfo> productOptionArr;
+  public JSONObject productOptionList;
   
   public void setJSONObject(JSONObject obj)
   {
     try
     { 
+      if(obj.has("product_option_info"))
+      {
+        productOptionArr = new ArrayList<ProductOptionInfo>();
+        JSONArray objArr = obj.getJSONArray("product_option_info");
+        for(int productOptionPosition = 0; productOptionPosition < objArr.length(); productOptionPosition++)
+        {
+          JSONObject productOptionObj = objArr.getJSONObject(productOptionPosition);
+          ProductOptionInfo productInfo = new ProductOptionInfo();
+          productInfo.setJsonObject(productOptionObj);
+          productOptionArr.add(productInfo);
+        }
+      }
+      
+      if(obj.has("product_option_list"))
+      {
+        productOptionList = obj.getJSONObject("product_option_list");
+        BlinkingCommon.smlLibDebug("asdfjsafkldsjafkjdjksjfkdsajkfjdsak", "productOptionList : " + productOptionList);
+      }
       
       if(obj.has("product_basic_info"))
       {
@@ -63,7 +83,13 @@ public class ProductDetailBean
           currencyCd = productBasicInfo.getString("currency_cd");
         
         if(productBasicInfo.has("discount_price"))
+        {
           discountPrice = productBasicInfo.getInt("discount_price");
+          if(discountPrice == 0)
+          {
+            discountPrice = salePrice;
+          }
+        }
         
         if(productBasicInfo.has("sale_rate"))
         {
@@ -124,6 +150,61 @@ public class ProductDetailBean
     catch (Exception e)
     {
       BlinkingCommon.smlLibPrintException("ProductDetailBean", " e : " + e);
+    }
+  }
+  
+  public class ProductOptionInfo{
+    public String optionAtrributeNm;
+    public ArrayList<OptionAttributeVal> optionAttributeArr;
+    
+    public void setJsonObject(JSONObject obj)
+    {
+      try
+      {
+        if(obj.has("option_attribute_nm"))
+        {
+          optionAtrributeNm = obj.getString("option_attribute_nm");
+        }
+        
+        if(obj.has("option_attribute_val"))
+        {
+          optionAttributeArr = new ArrayList<OptionAttributeVal>();
+          JSONArray objArr = obj.getJSONArray("option_attribute_val");
+          for(int attibuteValPositon = 0; attibuteValPositon < objArr.length(); attibuteValPositon++)
+          {
+            JSONObject attributeValObj = objArr.getJSONObject(attibuteValPositon);
+            OptionAttributeVal optionVal = new OptionAttributeVal();
+            optionVal.setJsonObjcet(attributeValObj);
+            optionAttributeArr.add(optionVal);
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        BlinkingCommon.smlLibPrintException("ProductDetailBean", " e :" + e);
+      }
+    }
+    
+    public class OptionAttributeVal
+    {
+      public String optionId;
+      public String attributeNm;
+      
+      public void setJsonObjcet(JSONObject obj)
+      {
+        try
+        {
+          if(obj.has("option_id"))
+            optionId = obj.getString("option_id");
+          
+          if(obj.has("attribute_nm"))
+            attributeNm = obj.getString("attribute_nm");
+        }
+        catch (Exception e)
+        {
+          BlinkingCommon.smlLibPrintException("ProductDetailBean", " e :" + e);
+        }
+      }
     }
   }
   

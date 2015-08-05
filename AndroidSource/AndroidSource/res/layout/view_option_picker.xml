@@ -4,8 +4,14 @@
     android:layout_height="match_parent" >
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/first_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+    
+    <Spinner 
+        android:id="@+id/second_option"
+        android:layout_below="@+id/first_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
 </RelativeLayout>

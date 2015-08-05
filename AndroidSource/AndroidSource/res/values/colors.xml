@@ -28,6 +28,7 @@
     <color name="tutorial_skip">#686868</color>
     <color name="setting_cell_color">#c8c7cc</color>
     <color name="appcolor_dark">#5dacaa</color>
+    <color name="brown">#7f3a11</color>
     <!-- Caldroid -->
     <color name="caldroid_white">#FFFFFF</color>
     <color name="caldroid_black">#000000</color>

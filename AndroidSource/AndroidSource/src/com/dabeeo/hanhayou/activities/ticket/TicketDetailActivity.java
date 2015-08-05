@@ -222,7 +222,7 @@ public class TicketDetailActivity extends ActionBarActivity
 //        new addTicketToCartTask().execute();
         optionAmountPickerView.setVisibility(View.VISIBLE);
         optionAmountPickerView.view.setVisibility(View.VISIBLE);
-        optionAmountPickerView.setOptions(null);
+//        optionAmountPickerView.setOptions(null);
         optionAmountPickerView.bringToFront();
       }
       else if (v.getId() == R.id.btn_checkout)
@@ -230,7 +230,7 @@ public class TicketDetailActivity extends ActionBarActivity
 //        checkout();
         optionAmountPickerView.setVisibility(View.VISIBLE);
         optionAmountPickerView.view.setVisibility(View.VISIBLE);
-        optionAmountPickerView.setOptions(null);
+//        optionAmountPickerView.setOptions(null);
         optionAmountPickerView.bringToFront();
       }
       else if (v.getId() == R.id.btn_show_location)

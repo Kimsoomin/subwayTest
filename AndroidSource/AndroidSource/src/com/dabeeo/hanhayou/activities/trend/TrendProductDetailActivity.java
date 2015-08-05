@@ -6,10 +6,12 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,14 +28,18 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ProductDetailBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendProductImageViewPagerAdapter;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.dabeeo.hanhayou.views.CustomScrollView;
@@ -54,8 +60,9 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private Button btnCart, btnBuy, btnSoldOut;
   private LinearLayout productDtailInfo, deliveryInfo, refundInfo;
   private ImageView toggleProductDetailInfo, toggleDeliveryInfo, toggleRefund;
-  private LinearLayout containerProductDetailInfo;
-  private TextView textDeliveryInfo, textRefundInfo;
+  private LinearLayout containerProductDetailInfo, containerProductRefundInfo, containerProductDeliveryInfo;
+  private View productDeliveryUnderLine;
+  private TextView textRefundLink;
   private LinearLayout recommendProductContainer;
   private ProgressBar progressBar;
   
@@ -73,6 +80,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private ProductDetailBean productDetail;
   private ApiClient apiClient;
   private ArrayList<String> imageUrls;
+  
+  public String itemAttribute;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -111,8 +120,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
     
     btnWishList = (Button) findViewById(R.id.btn_wishlist);
     btnShare = (Button) findViewById(R.id.btn_share);
-    btnCart = (Button) findViewById(R.id.btn_checkout);
-    btnBuy = (Button) findViewById(R.id.btn_my_cart);
+    btnCart = (Button) findViewById(R.id.btn_my_cart);
+    btnBuy = (Button) findViewById(R.id.btn_checkout);
     btnImageDetail = (Button) findViewById(R.id.btn_image_detail);
     btnTop = (Button) findViewById(R.id.btn_top);
     btnSoldOut = (Button) findViewById(R.id.btn_soldout);
@@ -124,8 +133,23 @@ public class TrendProductDetailActivity extends ActionBarActivity
     refundInfo = (LinearLayout) findViewById(R.id.product_detail_refund);
     toggleRefund = (ImageView) findViewById(R.id.toggle_product_detail_refund);
     containerProductDetailInfo = (LinearLayout) findViewById(R.id.container_product_detail_info);
-    textDeliveryInfo = (TextView) findViewById(R.id.text_product_detail_delivery_info);
-    textRefundInfo = (TextView) findViewById(R.id.text_product_detail_refund);
+    containerProductDeliveryInfo = (LinearLayout) findViewById(R.id.product_detail_delivery_layout);
+    productDeliveryUnderLine = (View) findViewById(R.id.product_detail_delivery_view);
+    containerProductRefundInfo = (LinearLayout) findViewById(R.id.product_detail_refund_layout);
+    
+    textRefundLink = (TextView) findViewById(R.id.text_refund_link);  
+    textRefundLink.setText(Html.fromHtml("<u>"+getString(R.string.term_product_detail_refund_link)+"</u>"));
+    textRefundLink.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        Uri uri = Uri.parse("https://www.google.co.kr/search?q=com.cklee.hashtags&oq=com.cklee.hashtags&aqs=chrome..69i57.561j0j9&sourceid=chrome&es_sm=93&ie=UTF-8#newwindow=1&q=%EB%8B%A4%EB%B9%84%EC%98%A4");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        startActivity(intent);
+      }
+    });
     
     recommendProductContainer = (LinearLayout) findViewById(R.id.container_product);
     
@@ -172,10 +196,24 @@ public class TrendProductDetailActivity extends ActionBarActivity
     
   }
   
+  @Override
+  public void onBackPressed()
+  {
+    super.onBackPressed();
+    if(optionAmountPickerView.getVisibility() == View.VISIBLE)
+    {
+      optionAmountPickerView.setVisibility(View.GONE);
+      optionAmountPickerView.view.setVisibility(View.GONE);
+    }else
+    {
+      finish();
+    }
+  }
+  
   
   private void displayProductInfo()
   {
-    if (productDetail.tempOut)
+    if (productDetail.tempOut || productDetail.productOptionList.length() == 0)
     {
       btnSoldOut.setVisibility(View.VISIBLE);
       btnCart.setVisibility(View.GONE);
@@ -187,6 +225,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       btnSoldOut.setVisibility(View.GONE);
       btnCart.setVisibility(View.VISIBLE);
       btnBuy.setVisibility(View.VISIBLE);
+      optionAmountPickerView.setOptions(productDetail.productOptionArr, productDetail.productOptionList);
     }
     
     imageUrls = new ArrayList<String>();
@@ -203,8 +242,6 @@ public class TrendProductDetailActivity extends ActionBarActivity
     discountPriceCn.setText(ch_price);
     textDeliverySpecificDate.setVisibility(View.VISIBLE);
     discountRate.setText(productDetail.saleRate + getString(R.string.term_sale_rate));
-    textRefundInfo.setText("- 自顾客收到所订购商品之日起(以签收日期为准), 7日之内提供退换货服务。退换货时仅限于同类 产品、同一颜色、同一型号。\n- 以下情况将不提供退换货服务:\n- 商品外包装(包括附带赠品)发生破损现象,并且 影响二次销售时;\n- 商品表面及内部出现使用过的痕迹(包括附带赠 品)或者商品本身破损时;\n- 衣物类商品经过洗涤时;\n- 商品附件、说明书、保修单、标签等有缺失。 若商品有吊牌,吊牌被剪掉或损坏时;");
-    textDeliveryInfo.setText("- 本购物商城员工将会按照顾客所提交的订单中的 期望收货时间,按时配送到顾客赴韩后所下榻的酒 店,宾馆等、如顾客外出或暂时不在酒店、宾馆时, 则会委托所下榻酒店或宾馆的工作人员转交给顾客。 - 本购物商城会竭尽全力使整个配送流程可以快 速·准确·顺利完成,如因一些不可抗力(如火山爆 发、台风、地震、海啸等)或韩国公休日等情况下, 不能完全按照顾客期望收货时间配送货物时,敬请 谅解。- 顾客亦可提早在赴韩之前在本购物商城订购商品, 我们会根据顾客所提供的赴韩时间及预计下榻酒店、 宾馆进行配送货物。");
     
     reviewContainerView = new ProductReviewContainerView(TrendProductDetailActivity.this, "place", "");
     reviewLayout.addView(reviewContainerView);
@@ -256,6 +293,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
         startActivity(i);
       }
     });
+    
     productDtailInfo.setOnClickListener(toggleClickListener);
     deliveryInfo.setOnClickListener(toggleClickListener);
     refundInfo.setOnClickListener(toggleClickListener);
@@ -289,12 +327,54 @@ public class TrendProductDetailActivity extends ActionBarActivity
     @Override
     public void onClick(View v)
     {
+      if(optionAmountPickerView.getOptionSelected())
+      {
+        setItemAttributes(optionAmountPickerView.optionColor, optionAmountPickerView.optionSize, optionAmountPickerView.amount);
+        if(v.getId() == R.id.btn_my_cart)
+        {
+          Toast.makeText(TrendProductDetailActivity.this, "add cart", Toast.LENGTH_SHORT).show();
+        }else if(v.getId() == R.id.btn_checkout)
+        {
+          Toast.makeText(TrendProductDetailActivity.this, "buy now", Toast.LENGTH_SHORT).show();
+        }
+      }else
+      {
+        if(optionAmountPickerView.view.getVisibility() == View.VISIBLE)
+        {
+          new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(getString(R.string.term_alert), "옵션을 선택해주세요.", 
+              getString(R.string.term_ok), null, new AlertListener()
+          {
+            
+            @Override
+            public void onPositiveButtonClickListener()
+            { 
+            }
+            
+            
+            @Override
+            public void onNegativeButtonClickListener()
+            {
+            }
+          });
+        }
+      }
       optionAmountPickerView.setVisibility(View.VISIBLE);
       optionAmountPickerView.view.setVisibility(View.VISIBLE);
-      optionAmountPickerView.setOptions(null);
       optionAmountPickerView.bringToFront();
     }
   };
+  
+  
+  public void setItemAttributes(String optionColor, String optionSize, int amount)
+  {
+    itemAttribute = "[{itemAttributes={\"" + "color" +"\"" + ":\"" + optionColor + "\"";
+    if(optionSize == null)
+      itemAttribute = itemAttribute + "},quantity=" + amount+ "}]";
+    else
+      itemAttribute = itemAttribute + ",\"" + "size" + "\"" + ":\"" + optionSize + "\"},quantity="+amount+"}]";
+    BlinkingCommon.smlLibDebug("asdfasfdasfdasfdasfdas", "itemAttribute : " + itemAttribute);
+  }
+  
   
   private OnClickListener toggleClickListener = new OnClickListener()
   {
@@ -317,17 +397,23 @@ public class TrendProductDetailActivity extends ActionBarActivity
       else if (v.getId() == deliveryInfo.getId())
       {
         if (!toggleDeliveryInfo.isActivated())
-          textDeliveryInfo.setVisibility(View.VISIBLE);
+        {
+          containerProductDeliveryInfo.setVisibility(View.VISIBLE);
+          productDeliveryUnderLine.setVisibility(View.VISIBLE);
+        }
         else
-          textDeliveryInfo.setVisibility(View.GONE);
+        {
+          containerProductDeliveryInfo.setVisibility(View.GONE);
+          productDeliveryUnderLine.setVisibility(View.GONE);
+        }
         toggleDeliveryInfo.setActivated(!toggleDeliveryInfo.isActivated());
       }
       else if (v.getId() == refundInfo.getId())
       {
         if (!toggleRefund.isActivated())
-          textRefundInfo.setVisibility(View.VISIBLE);
+          containerProductRefundInfo.setVisibility(View.VISIBLE);
         else
-          textRefundInfo.setVisibility(View.GONE);
+          containerProductRefundInfo.setVisibility(View.GONE);
         toggleRefund.setActivated(!toggleRefund.isActivated());
       }
     }
@@ -361,7 +447,6 @@ public class TrendProductDetailActivity extends ActionBarActivity
     protected void onPreExecute()
     {
       progressBar.bringToFront();
-//      getWindow().setDimAmount(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
       progressBar.setVisibility(View.VISIBLE);
       super.onPreExecute();
     }
