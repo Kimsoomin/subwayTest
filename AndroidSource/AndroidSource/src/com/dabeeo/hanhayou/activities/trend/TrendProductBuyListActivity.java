@@ -27,9 +27,9 @@ public class TrendProductBuyListActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
-    trendOrder = (WebView) findViewById(R.id.trend_cart_webview);    
+    trendOrder = (WebView) findViewById(R.id.trend_buy_list_webview);    
     trendOrder.getSettings().setJavaScriptEnabled(true);
-    trendOrder.loadUrl("https://devm.hanhayou.com/ecom/account/orders/1?_hgy_token=");
+    trendOrder.loadUrl("https://devm.hanhayou.com/ecom/account/orders/1?_hgy_token=9723");
 //    trendCart.postUrl("https://", EncodingUtils.getBytes("", "utf-8"));
     trendOrder.setWebViewClient(new WebViewClientClass());  
   }

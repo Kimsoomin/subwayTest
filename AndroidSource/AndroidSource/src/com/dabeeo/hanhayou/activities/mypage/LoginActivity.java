@@ -25,7 +25,6 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.FindPasswordActivity;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;

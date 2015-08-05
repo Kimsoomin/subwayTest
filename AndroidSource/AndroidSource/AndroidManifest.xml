@@ -117,6 +117,9 @@
         <activity 
             android:name="com.dabeeo.hanhayou.activities.trend.TrendCartActivity"
             android:screenOrientation="portrait"/>
+        <activity 
+            android:name="com.dabeeo.hanhayou.activities.trend.TrendProductBuyListActivity"
+            android:screenOrientation="portrait"/>        
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.PromotionActivity"
