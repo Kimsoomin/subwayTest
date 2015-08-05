@@ -89,15 +89,15 @@ public class LoginActivity extends Activity
           return;
         }
         
-        if (TextUtils.isEmpty(editPassword.getText().toString()))
-        {
-          alertView.setAlert(getString(R.string.msg_please_write_password));
-          return;
-        }
-        
         if (!validCheckEmail(editEmail.getText().toString()))
         {
           alertView.setAlert(getString(R.string.msg_please_valid_check_email));
+          return;
+        }
+        
+        if (TextUtils.isEmpty(editPassword.getText().toString()))
+        {
+          alertView.setAlert(getString(R.string.msg_please_write_password));
           return;
         }
         
