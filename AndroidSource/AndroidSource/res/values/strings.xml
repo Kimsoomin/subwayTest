@@ -138,7 +138,7 @@
     <string name="msg_agreement">同意使用条款</string>
     <string name="msg_private_agreement">同意隐私条款</string>
     <string name="msg_gps_agreement">同意位置信息条款</string>
-    <string name="msg_above_fourteen_agreement">14岁以上。</string>
+    <string name="msg_above_fourteen_agreement">14岁以上。(必选)</string>
     <string name="term_requirement">(必选)</string>
     <string name="msg_date_of_birth">请输入出生日期</string>
     <string name="term_send">发送</string>
