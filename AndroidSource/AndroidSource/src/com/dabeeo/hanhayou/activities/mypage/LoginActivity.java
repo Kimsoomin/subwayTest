@@ -29,6 +29,7 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.services.BackService;
 import com.dabeeo.hanhayou.views.LoginBottomAlertView;
 
 public class LoginActivity extends Activity
@@ -75,7 +76,6 @@ public class LoginActivity extends Activity
     findViewById(R.id.btn_cancel).setOnClickListener(clickListener);
   }
   
-
   private OnClickListener clickListener = new OnClickListener()
   {
     @Override
@@ -176,6 +176,7 @@ public class LoginActivity extends Activity
         PreferenceManager.getInstance(mContext).setUserProfile(profile);
         PreferenceManager.getInstance(mContext).setIsAutoLogin(autoLogin.isChecked());
         
+        startService(new Intent(LoginActivity.this, BackService.class));
         new SyncMyPlanAndShceduleTask().execute();
       }
       else

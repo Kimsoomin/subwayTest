@@ -44,7 +44,7 @@ public class BackService extends Service
   private BackLocationListener listener;
   private double currentLat, currentLon;
   
-  private long minTime = (1000 * 60) * 10;
+  private long minTime = (1000 * 10);
   private long notificationRequestTime = (1000 * 60) * 60;
   private int notificationId = 12342;
   
@@ -203,6 +203,7 @@ public class BackService extends Service
     
     listener = new BackLocationListener();
     manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, listener);
+    manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, listener);
   }
   
   
