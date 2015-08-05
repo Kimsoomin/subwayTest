@@ -36,6 +36,8 @@ import com.dabeeo.hanhayou.activities.mypage.MyPlaceActivity;
 import com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity;
 import com.dabeeo.hanhayou.activities.sub.PhotoSelectActivity;
 import com.dabeeo.hanhayou.activities.sub.SettingActivity;
+import com.dabeeo.hanhayou.activities.trend.TrendCartActivity;
+import com.dabeeo.hanhayou.activities.trend.TrendProductBuyListActivity;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
 import com.dabeeo.hanhayou.external.libraries.RoundedImageView;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
@@ -226,14 +228,20 @@ public class MyPageFragment extends Fragment
         if (!SystemUtil.isConnectNetwork(getActivity()))
           new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
         else
-          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+        {
+          startActivity(new Intent(getActivity(), TrendProductBuyListActivity.class));
+          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }
       }
       else if (v.getId() == conatinerMyCart.getId())
       {
         if (!SystemUtil.isConnectNetwork(getActivity()))
           new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
         else
-          Toast.makeText(getActivity(), "준비중입니다", Toast.LENGTH_LONG).show();
+        {
+          startActivity(new Intent(getActivity(), TrendCartActivity.class));
+          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }
       }
     }
   };
