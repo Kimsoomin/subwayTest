@@ -292,6 +292,7 @@ public class RecommendScheduleActivity extends ActionBarActivity
       i.putExtra("theme", theme);
       i.putExtra("startDate", startDate);
       startActivity(i);
+      finish();
       super.onPostExecute(result);
     }
   }

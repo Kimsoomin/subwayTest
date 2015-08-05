@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.schedule.RecommendScheduleActivity;
 import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
@@ -112,6 +113,17 @@ public class MySchedulesActivity extends ActionBarActivity
     listView.setOnScrollListener(scrollListener);
     
     loadSchedules();
+  }
+  
+  
+  @Override
+  public void onBackPressed()
+  {
+    Intent i = new Intent(MySchedulesActivity.this, MainActivity.class);
+    i.putExtra("position", MainActivity.POSITION_MY_PAGE);
+    startActivity(i);
+    finish();
+    super.onBackPressed();
   }
   
   
