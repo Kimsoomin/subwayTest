@@ -211,7 +211,15 @@
     <string name="term_product_detail_info">配送信息</string>
     <string name="term_product_detail_review">累计评价</string>
     <string name="term_product_detail_delivery_info">商品参数</string>
-    <string name="term_product_detail_refund">退换商品</string>
+    <string name="term_product_detail_delivery_description">- 本购物商城员工将会按照顾客所提交的订单中的 期望收货时间,按时配送到顾客赴韩后所下榻的酒 店,宾馆等、如顾客外出或暂时不在酒店、宾馆时, 则会委托所下榻酒店或宾馆的工作人员转交给顾客。
+        \n- 本购物商城会竭尽全力使整个配送流程可以快 速·准确·顺利完成,如因一些不可抗力(如火山爆 发、台风、地震、海啸等)或韩国公休日等情况下, 不能完全按照顾客期望收货时间配送货物时,敬请 谅解。
+        \n- 顾客亦可提早在赴韩之前在本购物商城订购商品, 我们会根据顾客所提供的赴韩时间及预计下榻酒店、 宾馆进行配送货物。</string>
+    <string name="term_product_detail_refund">退换货明细 </string>
+    <string name="term_product_detail_refund_description">- 自顾客收到所订购商品之日起(以签收日期为准)，7日之内提供退换货服务。退换货时仅限于同类产品、同一颜色、同一型号\n
+        - 以下情况将不提供退换货服务：\n- 商品外包装(包括附带赠品)发生破损现象，并且影响二次销售时；\n- 商品表面及内部出现使用过的痕迹(包括附带赠品)或者商品本身破损时;\n- 衣物类商品经过洗涤时；
+        \n- 商品附件、说明书、保修单、标签等有缺失。若商品有吊牌，吊牌被剪掉或损坏时；</string>
+    <string name="term_product_detail_refund_description2">电子商务等相关消费者保护法律中制定的退货 法规优先于卖家制定的退货条件。\n 若购买者是未成年人，\n法定代理人的不同意的话，\n 本人或者法定代理人可以取消购买。</string>
+    <string name="term_product_detail_refund_link">详细</string>
     <string name="term_buy">立即购买</string>
     <string name="term_all_rate">"/5.0"</string>
     <!-- 티켓 -->
