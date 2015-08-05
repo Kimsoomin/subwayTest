@@ -79,6 +79,7 @@ public class TravelStrategyActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    getSupportActionBar().setElevation(3);
     
     containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
     containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
