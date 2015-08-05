@@ -116,7 +116,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
     TextView likeCount = (TextView) view.findViewById(R.id.like_count);
     TextView reviewCount = (TextView) view.findViewById(R.id.review_count);
     
-    int height = (int) ((imageWidth / 3) * 2.5);
+    int height = (int) (imageWidth * 0.77);
     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) imageWidth, height);
     imageView.setLayoutParams(params);
     
