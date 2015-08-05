@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +39,7 @@ import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.TicketBean;
+import com.dabeeo.hanhayou.external.libraries.stikkylistview.StikkyHeader;
 import com.dabeeo.hanhayou.external.libraries.stikkylistview.StikkyHeaderBuilder;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
@@ -92,6 +94,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   public TextView placeTitle;
   private FrameLayout header;
   private ViewGroup layoutRecommendProduct;
+  private StikkyHeader stikkyheader;
   
   int rate = 0;
   
@@ -151,24 +154,15 @@ public class PlaceDetailActivity extends ActionBarActivity
       @Override
       public void onScrollChanged(CustomScrollView scrollView, int x, int y, int oldx, int oldy)
       {
-        Resources r = getResources();
-        if (scrollView.getScrollY() > 100 * density)
+        if (scrollView.getScrollY() > 200 * density)
         {
           titleView.title.setVisibility(View.INVISIBLE);
           titleView.titleDivider.setVisibility(View.VISIBLE);
-          
-          FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
-          layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 58, r.getDisplayMetrics());
-          scrollView.setLayoutParams(layoutParams);
         }
         else
         {
           titleView.title.setVisibility(View.VISIBLE);
           titleView.titleDivider.setVisibility(View.GONE);
-          
-          FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
-          layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, r.getDisplayMetrics());
-          scrollView.setLayoutParams(layoutParams);
         }
         
         View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
@@ -187,21 +181,9 @@ public class PlaceDetailActivity extends ActionBarActivity
     findViewById(R.id.btn_write_review).setOnClickListener(clickListener);
     
     header = (FrameLayout) findViewById(R.id.header);
-    Resources r = getResources();
-    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, r.getDisplayMetrics());
-    StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
+    float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
+    stikkyheader = StikkyHeaderBuilder.stickTo(scrollView).setHeader(header).minHeightHeaderPixel((int) px).build();
     
-    if (!SystemUtil.isConnectNetwork(this))
-    {
-      headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
-      header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics())));
-//      scrollView.setPadding(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
-//          r.getDisplayMetrics()));
-      FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
-      layoutParams.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78, r.getDisplayMetrics());
-      layoutParams.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, r.getDisplayMetrics());
-      scrollView.setLayoutParams(layoutParams);
-    }
     layoutRecommendProduct = (ViewGroup) findViewById(R.id.layout_recommend_product);
     loadPlaceDetail();
   }
@@ -288,7 +270,6 @@ public class PlaceDetailActivity extends ActionBarActivity
       btnBookmark.setActivated(bean.isBookmarked);
       btnLike.setActivated(bean.isLiked);
       displayContentData();
-      headerView.setBean(bean);
       
       String shareBody = bean.title + "\n" + bean.contents + "\n ";
       String imageUrl = "";
@@ -416,7 +397,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     }
     
     textRate.setText(Float.toString(bean.rate));
-//    textDetail.setText(bean.contents);
     
     addDetailInfo(getString(R.string.term_place_detail_info), bean.contents);
     addDetailInfo(getString(R.string.term_address), bean.address);
@@ -428,12 +408,20 @@ public class PlaceDetailActivity extends ActionBarActivity
     
     titleView.setBean(bean);
     
-    if (TextUtils.isEmpty(bean.imageUrl))
+    if (!SystemUtil.isConnectNetwork(this) || TextUtils.isEmpty(bean.imageUrl))
     {
-      headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 0));
-      header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 78,
-          getResources().getDisplayMetrics())));
-      scrollView.setPadding(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()), 0, 0);
+      if (titleView.title.getLineCount() > 1)
+        stikkyheader.setHeightHeader((int) (titleView.getMeasuredHeight() * 1.3));
+      else
+        stikkyheader.setHeightHeader(titleView.getMeasuredHeight());
+    }
+    else
+    {
+      int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
+      header.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
+      headerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, height));
+      stikkyheader.setHeightHeader(height);
+      headerView.setBean(bean);
     }
   }
   

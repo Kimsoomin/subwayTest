@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.external.libraries.stikkylistview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public abstract class StikkyHeader
       //waiting for the height
       mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
       {
+        @SuppressLint("NewApi")
         @Override
         public void onGlobalLayout()
         {
@@ -46,7 +48,7 @@ public abstract class StikkyHeader
   }
   
   
-  protected void setHeightHeader(final int heightHeader)
+  public void setHeightHeader(final int heightHeader)
   {
     mHeightHeader = heightHeader;
     
@@ -75,7 +77,6 @@ public abstract class StikkyHeader
   
   protected void setupAnimator()
   {
-    
     mHeaderAnimator.setupAnimator(mHeader, mMinHeightHeader, mHeightHeader, mMaxHeaderTransaction);
   }
   

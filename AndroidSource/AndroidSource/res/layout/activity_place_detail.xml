@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -11,230 +12,224 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="match_parent" >
 
-        <FrameLayout
+        <com.dabeeo.hanhayou.views.CustomScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="-80dp" >
 
-            <com.dabeeo.hanhayou.views.CustomScrollView
-                android:id="@+id/scrollview"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp" >
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/container_coupon_and_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/rate_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginTop="5dip"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="16dip" >
+
+                    <TextView
+                        android:id="@+id/text_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/appcolor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/term_all_rate"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/light_gray" />
+
+                    <Button
+                        android:id="@+id/btn_review_best"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/circle_button"
+                        android:padding="4dp"
+                        android:text="@string/term_review_best"
+                        android:textColor="@color/color_normal_gray_select_white"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_review_soso"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/circle_button"
+                        android:padding="4dp"
+                        android:text="@string/term_review_soso"
+                        android:textColor="@color/color_normal_gray_select_white"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_review_worst"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/circle_button"
+                        android:padding="4dp"
+                        android:text="@string/term_review_worst"
+                        android:textColor="@color/color_normal_gray_select_white"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/white"
                     android:orientation="vertical" >
 
                     <LinearLayout
-                        android:id="@+id/container_coupon_and_ticket"
+                        android:id="@+id/layout_place_detail_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:visibility="gone" />
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_recommend_by_expect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="24dp"
+                    android:paddingTop="24dp" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="bottom"
+                        android:contentDescription="@null"
+                        android:src="@drawable/deco_color_dot_l" />
+
+                    <Button
+                        android:id="@+id/btn_recommend_by_expert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/btn_recommend_expert_state"
+                        android:paddingBottom="12dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:paddingTop="12dp"
+                        android:text="@string/term_more_pro_guide"
+                        android:textColor="@color/color_normal_appcolor_select_white" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="bottom"
+                        android:contentDescription="@null"
+                        android:src="@drawable/deco_color_dot_r" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_recommend_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="gone" >
 
                     <LinearLayout
-                        android:id="@+id/rate_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dip"
-                        android:layout_marginTop="5dip"
-                        android:background="@android:color/white"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="16dip" >
+                        android:padding="8dp" >
 
                         <TextView
-                            android:id="@+id/text_rate"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="@color/appcolor" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/term_all_rate"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/light_gray" />
-
-                        <Button
-                            android:id="@+id/btn_review_best"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_margin="8dp"
-                            android:background="@drawable/circle_button"
-                            android:padding="4dp"
-                            android:text="@string/term_review_best"
-                            android:textColor="@color/color_normal_gray_select_white"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:id="@+id/btn_review_soso"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_margin="8dp"
-                            android:background="@drawable/circle_button"
-                            android:padding="4dp"
-                            android:text="@string/term_review_soso"
-                            android:textColor="@color/color_normal_gray_select_white"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:id="@+id/btn_review_worst"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:layout_margin="8dp"
-                            android:background="@drawable/circle_button"
-                            android:padding="4dp"
-                            android:text="@string/term_review_worst"
-                            android:textColor="@color/color_normal_gray_select_white"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:orientation="vertical" >
+                            android:layout_weight="1"
+                            android:text="@string/term_recommend_product"
+                            android:textColor="@color/darker_gray"
+                            android:textStyle="bold" />
 
                         <LinearLayout
-                            android:id="@+id/layout_place_detail_info"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/white"
-                            android:orientation="vertical" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/container_recommend_by_expect"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingBottom="24dp"
-                        android:paddingTop="24dp" >
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="bottom"
-                            android:contentDescription="@null"
-                            android:src="@drawable/deco_color_dot_l" />
-
-                        <Button
-                            android:id="@+id/btn_recommend_by_expert"
+                            android:id="@+id/more_product_layout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:background="@drawable/btn_recommend_expert_state"
-                            android:paddingBottom="12dp"
-                            android:paddingLeft="30dp"
-                            android:paddingRight="30dp"
-                            android:paddingTop="12dp"
-                            android:text="@string/term_more_pro_guide"
-                            android:textColor="@color/color_normal_appcolor_select_white" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="bottom"
-                            android:contentDescription="@null"
-                            android:src="@drawable/deco_color_dot_r" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_recommend_product"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:background="@android:color/white"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:visibility="gone" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="8dp" >
+                            android:orientation="horizontal" >
 
                             <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/darker_gray"
-                                android:text="@string/term_recommend_product"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:id="@+id/more_product_layout"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal" >
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/term_more" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:text="@string/term_more" />
-
-                                <ImageView
-                                    android:id="@+id/btn_more_product"
-                                    android:layout_width="12dp"
-                                    android:layout_height="12dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginTop="2dp"
-                                    android:contentDescription="@null"
-                                    android:src="@drawable/btn_list_more_arrow" />
-                            </LinearLayout>
+                            <ImageView
+                                android:id="@+id/btn_more_product"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="2dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/btn_list_more_arrow" />
                         </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/container_product"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical" />
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/review_layout"
+                    <LinearLayout
+                        android:id="@+id/container_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:orientation="vertical" />
                 </LinearLayout>
-            </com.dabeeo.hanhayou.views.CustomScrollView>
-        </FrameLayout>
-    </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/review_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </com.dabeeo.hanhayou.views.CustomScrollView>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/max_height_header" >
+        android:layout_height="wrap_content" >
 
         <com.dabeeo.hanhayou.views.PlaceDetailHeaderView
             android:id="@+id/header_view"
             android:layout_width="match_parent"
-            android:layout_height="300dip" />
+            android:layout_height="0dp" />
 
         <com.dabeeo.hanhayou.views.PlaceDetailTitleView
             android:id="@+id/title_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" />
     </FrameLayout>
