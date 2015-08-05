@@ -345,6 +345,14 @@ public class WriteReviewActivity extends ActionBarActivity
           });
           imageContainer.addView(addImageView);
         }
+        
+        imageScrollView.postDelayed(new Runnable()
+        {
+          public void run()
+          {
+            imageScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+          }
+        }, 10);
       }
       
       btnAddPic.setVisibility(View.GONE);
