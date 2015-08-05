@@ -177,6 +177,7 @@ public class LoginActivity extends Activity
         PreferenceManager.getInstance(mContext).setIsAutoLogin(autoLogin.isChecked());
         
         startService(new Intent(LoginActivity.this, BackService.class));
+        sendBroadcast(new Intent(BackService.ACTION_GET_NOTI));
         new SyncMyPlanAndShceduleTask().execute();
       }
       else

@@ -44,6 +44,7 @@ public class BackService extends Service
   private BackLocationListener listener;
   private double currentLat, currentLon;
   
+  public static final String ACTION_GET_NOTI = "com.dabeeo.get.noti";
   private long minTime = (1000 * 10);
   private long notificationRequestTime = (1000 * 60) * 60;
   private int notificationId = 12342;
@@ -185,6 +186,7 @@ public class BackService extends Service
   private void registerNetworkOnOff()
   {
     IntentFilter filter = new IntentFilter(NetworkBraodCastReceiver.ACTION_NETWORK_STATUS_CHANGE);
+    filter.addAction(ACTION_GET_NOTI);
     registerReceiver(receiver, filter);
   }
   
@@ -254,18 +256,26 @@ public class BackService extends Service
     @Override
     public void onReceive(Context context, Intent intent)
     {
-      boolean isNetworkConnected = intent.getBooleanExtra("is_network_connected", false);
-      if (isNetworkConnected)
+      if (intent.getAction().equals(ACTION_GET_NOTI))
       {
-        //온라인 연결 시 SQLite 가져와서 동기화 처리하기
-        Log.w("WARN", "백단 서비스 온라인 연결 동기화 시작 ");
-        ArrayList<OfflineBehaviorBean> behaviors = offlineDatabaseManager.getAllBehavior();
-        Log.w("WARN", "백단 서비스 온라인 : 오프라인 행동의 갯수 : " + behaviors.size());
-        
-        for (int i = 0; i < behaviors.size(); i++)
+        handler.removeCallbacks(pushNotificationRunnable);
+        handler.post(pushNotificationRunnable);
+      }
+      else
+      {
+        boolean isNetworkConnected = intent.getBooleanExtra("is_network_connected", false);
+        if (isNetworkConnected)
         {
-          offlineDatabaseManager.deleteBehavior(behaviors.get(i).id);
-          new OnlineSyncAsyncTask(behaviors.get(i)).execute();
+          //온라인 연결 시 SQLite 가져와서 동기화 처리하기
+          Log.w("WARN", "백단 서비스 온라인 연결 동기화 시작 ");
+          ArrayList<OfflineBehaviorBean> behaviors = offlineDatabaseManager.getAllBehavior();
+          Log.w("WARN", "백단 서비스 온라인 : 오프라인 행동의 갯수 : " + behaviors.size());
+          
+          for (int i = 0; i < behaviors.size(); i++)
+          {
+            offlineDatabaseManager.deleteBehavior(behaviors.get(i).id);
+            new OnlineSyncAsyncTask(behaviors.get(i)).execute();
+          }
         }
       }
     }
