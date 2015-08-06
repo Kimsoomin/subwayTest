@@ -30,7 +30,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   private ImageView imageView;
   private TextView textTitle, textCouponNumber, textValidityPeriod, textValidityCondition, textWhereUseIn, textHowToUse, textInstruction;
   private ApiClient apiClient;
-  private String couponId;
+  private String couponIdx;
   private CouponBean coupon;
   private Button btnUse;
   
@@ -49,7 +49,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
-    couponId = getIntent().getStringExtra("coupon_idx");
+    couponIdx = getIntent().getStringExtra("coupon_idx");
     
     imageView = (ImageView) findViewById(R.id.imageview);
     textTitle = (TextView) findViewById(R.id.text_title);
@@ -112,7 +112,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
       public void run()
       {
         Intent i = new Intent(DownloadedCouponDetailActivity.this, BlinkingMap.class);
-        i.putExtra("idx", couponId);
+        i.putExtra("idx", couponIdx);
         startActivity(i);
       }
     });
@@ -186,7 +186,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.getCouponDetail(couponId);
+      return apiClient.getCouponDetail(couponIdx, null);
     }
     
     
@@ -226,7 +226,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.useCoupon(couponId);
+      return apiClient.useCoupon(couponIdx);
     }
     
     

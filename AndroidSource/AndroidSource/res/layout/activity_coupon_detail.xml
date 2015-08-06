@@ -6,7 +6,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:paddingBottom="30dp" >
 
         <LinearLayout
             android:id="@+id/layout_scroll"
@@ -26,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:padding="8dp"
+                android:padding="14dp"
                 android:text="Title"
                 android:textColor="@color/darker_gray"
                 android:textSize="18sp"
@@ -38,11 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp" >
+                android:padding="14dp" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="@string/term_validity_period"
                     android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
@@ -51,126 +53,88 @@
                     android:id="@+id/text_validity_period"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#f0f0f0" />
+
+            <!-- 쿠폰 소개 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/term_coupon_info"
+                    android:textColor="@color/darker_gray"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_coupon_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@null"
                     android:textColor="@color/light_gray" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_gray" />
+                android:layout_marginTop="8dp"
+                android:background="#f0f0f0" />
+
             <!-- 사용조건 -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp" >
+                android:padding="14dp" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="@string/term_validity_condition"
                     android:textColor="@color/darker_gray"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/text_validity_condition"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@null"
                     android:textColor="@color/light_gray" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="@color/light_gray" />
-            <!-- 사용처 -->
+                android:layout_height="6dp"
+                android:layout_marginTop="8dp"
+                android:background="#f0f0f0" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp" >
+                android:background="@android:color/white"
+                android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/layout_place_detail_info"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/term_where_use_in"
-                        android:textColor="@color/darker_gray"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/text_where_use_in"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/light_gray" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_show_location"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/btn_address_map" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray" />
-            <!-- 사용방법 -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/term_how_to_use"
-                    android:textColor="@color/darker_gray"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_how_to_use"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/light_gray" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray" />
-            <!-- 유의사항 -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:orientation="vertical"
-                android:padding="8dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/term_instructions"
-                    android:textColor="@color/darker_gray"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_instructions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/light_gray" />
+                    android:background="@android:color/white"
+                    android:orientation="vertical" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

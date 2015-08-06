@@ -913,9 +913,10 @@ public class ApiClient
     return productDetail;
   }
   
+  
   public JSONObject addCart(HashMap<String, String> body)
   {
-    return httpClient.requestTrendyPost(devshopUrl  + "cart/newAdd", body);
+    return httpClient.requestTrendyPost(devshopUrl + "cart/newAdd", body);
   }
   
   public NetworkResult getMapBanner(double lat, double lng)
@@ -1007,16 +1008,15 @@ public class ApiClient
   }
   
   
-  public NetworkResult getDownloadedCoupon(int page, String contentType)
+  public NetworkResult getCouponDetail(String couponIdx, String branchIdx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return httpClient.requestGet(siteCouponUrl + "?v=coupon&mode=COUPON_DETAIL&coupon_idx=" + couponIdx + "&branch_idx=" + branchIdx);
   }
   
   
-  public NetworkResult getCouponDetail(String couponId)
+  public NetworkResult getDownloadedCoupon(int page, String contentType)
   {
-//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
-    return new NetworkResult(true, null, 1);
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
   }
   
   

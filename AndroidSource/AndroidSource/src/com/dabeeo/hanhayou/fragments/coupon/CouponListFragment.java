@@ -327,9 +327,15 @@ public class CouponListFragment extends Fragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-//      PlaceBean bean = (PlaceBean) adapter.getItem(position);
+      CouponBean bean = null;
+      if (btnMyLocation.isActivated())
+        bean = (CouponBean) listMyLocationAdapter.getItem(position);
+      else
+        bean = (CouponBean) listPopularAdapter.getItem(position);
+      
       Intent i = new Intent(getActivity(), CouponDetailActivity.class);
-      i.putExtra("coupon_id", position);
+      i.putExtra("coupon_idx", bean.couponIdx);
+      i.putExtra("branch_idx", bean.branchIdx);
       getActivity().startActivityForResult(i, 1);
     }
   };
