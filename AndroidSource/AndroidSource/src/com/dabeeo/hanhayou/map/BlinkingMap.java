@@ -18,6 +18,7 @@ import microsoft.mappoint.TileSystem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.events.MapListener;
@@ -50,6 +51,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
@@ -83,9 +85,12 @@ import android.widget.Toast;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
 import com.dabeeo.hanhayou.activities.mainmenu.SubwayActivity;
+import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ScheduleDayBean;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.SensorUpdater.SensorUpdaterCallback;
 import com.dabeeo.hanhayou.map.SubwayExitInfo.ExitInfo;
 import com.squareup.picasso.Picasso;
@@ -246,8 +251,12 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   //map_banner
   public LinearLayout mapBannerLayout;
+  public TextView mapBannerText;
   public Button mapBannerClose;
-  public boolean bannerVisible = false;  
+  public boolean bannerVisible = false;
+  public String mapBannerId = "";
+  
+  public ApiClient apiClient;
   
   /**
    * ===================================================================================== 
@@ -498,6 +507,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     mContext = this;
     
     blinkingactivity = BlinkingMap.this;
+    apiClient = new ApiClient(mContext);
     
     /*
      * =====================================================================================
@@ -767,13 +777,14 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   {
     bannerVisible = getIntent().getBooleanExtra("bannerVisible", false);
     mapBannerLayout = (LinearLayout) findViewById(R.id.map_banner);
+    mapBannerLayout.setOnClickListener(this);
+    mapBannerText = (TextView) findViewById(R.id.map_banner_text);
     mapBannerClose = (Button) findViewById(R.id.map_banner_close);
     mapBannerClose.setOnClickListener(this);
     
     if(bannerVisible)
     {
-      mapBannerLayout.bringToFront();
-      mapBannerLayout.setVisibility(View.VISIBLE);
+      new BannerAsyncTask().execute();
     }
   }
   
@@ -1232,6 +1243,15 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         
         mapCenterset(0);
         
+        break;
+        
+      case R.id.map_banner:
+        if(!TextUtils.isEmpty(mapBannerId))
+        {
+          Intent i = new Intent(BlinkingMap.this, TrendProductDetailActivity.class);
+          i.putExtra("product_idx", mapBannerId);
+          startActivity(i);
+        }
         break;
         
       case R.id.map_banner_close:
@@ -1957,6 +1977,64 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     return (int) px;
   }
   
+  /**
+   * =====================================================================================
+   *  지도 상단 배너
+   * =====================================================================================
+   */
+  
+  private class BannerAsyncTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      if(place_fLatitude == 0 && place_fLongitute == 0)
+        return apiClient.getMapBanner(37.530713, 126.981770);
+      else
+        return apiClient.getMapBanner(place_fLatitude, place_fLongitute);
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if(obj.has("status"))
+        {
+          if(obj.getString("status").equals("OK"))
+          {
+            String bannerTitle = "";
+            JSONArray objInArr = obj.getJSONArray("product");
+            for(int i = 0; i < objInArr.length(); i++)
+            {
+              JSONObject arrObj = objInArr.getJSONObject(i);
+              bannerTitle = arrObj.getString("recommendTitle");
+              mapBannerId = arrObj.getString("id");
+            }
+            
+            mapBannerText.setText(bannerTitle);
+            mapBannerLayout.setVisibility(View.VISIBLE);
+            mapBannerLayout.bringToFront();
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        BlinkingCommon.smlLibPrintException("BlinkingMap", "e : " + e);
+      }
+    }
+    
+  }
+  
+  
+  /**
+   * =====================================================================================
+   *  MarkerAsyncTask
+   * =====================================================================================
+   */
   public class PlanSetAsyncTask extends AsyncTask<Integer, Integer, Void>
   {
     int daynum = 0;

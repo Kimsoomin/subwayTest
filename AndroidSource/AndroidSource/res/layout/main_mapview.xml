@@ -122,13 +122,13 @@
                 android:visibility="gone" >
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/map_banner_text"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="민호 추천 아이더 자켓\n수지맞는 특별가!"
                     android:textColor="@android:color/white"
                     android:textSize="17sp" />
 
