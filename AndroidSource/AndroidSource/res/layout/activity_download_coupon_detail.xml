@@ -146,7 +146,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/dark_pink_transparent"
         android:enabled="false"
-        android:text="@string/term_download"
+        android:text="@string/term_use_coupon"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 

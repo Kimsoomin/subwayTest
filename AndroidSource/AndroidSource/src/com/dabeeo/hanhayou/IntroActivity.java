@@ -158,8 +158,8 @@ public class IntroActivity extends Activity
       dir.mkdirs();
     }
     File file = new File(Global.GetDatabaseFilePath() + OfflineCouponDatabaseManager.DB_NAME);
-    if (file.exists())
-      file.delete();
+//    if (file.exists())
+//      file.delete();
     
     if (!file.exists())
     {
