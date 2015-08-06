@@ -1,6 +1,28 @@
 package com.dabeeo.hanhayou.managers.network;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
@@ -12,15 +34,18 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
-@SuppressWarnings("deprecation")
 public class HttpClient
 {
   private String siteUrl;
@@ -188,4 +213,139 @@ public class HttpClient
     return result;
   }
   
+  
+  public JSONObject requestTrendyPost(String urlString, HashMap<String, String> body)
+  {
+    JSONObject responseObj = null;
+    try {
+      URL url = new URL(urlString);
+      
+      trustAllHosts();
+      
+      
+      
+      HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+      httpsURLConnection.setHostnameVerifier(new HostnameVerifier() {
+        @Override
+        public boolean verify(String s, SSLSession sslSession) {
+          return true;
+        }
+      });
+      
+      HttpURLConnection connection = httpsURLConnection;
+      
+      connection.setRequestMethod("POST");
+      connection.setDoInput(true);
+      connection.setDoOutput(true);
+      
+      List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
+      
+      for(Entry<String, String> bodyInfo : body.entrySet())
+      {
+        String key = bodyInfo.getKey();
+        String value = bodyInfo.getValue();
+        nameValuePairs.add(new BasicNameValuePair(key, value));
+      }
+      
+      OutputStream outputStream = connection.getOutputStream();
+      BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+      bufferedWriter.write(getURLQuery(nameValuePairs));
+      bufferedWriter.flush();
+      bufferedWriter.close();
+      outputStream.close();
+      
+      connection.connect();
+      
+      StringBuilder responseStringBuilder = new StringBuilder();
+      if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
+      {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String stringLine;
+        while((stringLine = bufferedReader.readLine()) != null)
+        {
+          responseStringBuilder.append(stringLine + '\n');
+        }
+        bufferedReader.close();
+        
+        try
+        {
+          responseObj = new JSONObject(responseStringBuilder.toString());
+        }
+        catch (JSONException e)
+        {
+          e.printStackTrace();
+        }
+      }else
+        responseObj = null;
+      
+      connection.disconnect();
+      
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    
+    return responseObj;
+  }
+  private static void trustAllHosts() {
+    // Create a trust manager that does not validate certificate chains
+    TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+      public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        return new java.security.cert.X509Certificate[]{};
+      }
+      
+      @Override
+      public void checkClientTrusted(
+          java.security.cert.X509Certificate[] chain,
+          String authType)
+              throws java.security.cert.CertificateException {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void checkServerTrusted(
+          java.security.cert.X509Certificate[] chain,
+          String authType)
+              throws java.security.cert.CertificateException {
+        // TODO Auto-generated method stub
+        
+      }
+    }};
+    
+    // Install the all-trusting trust manager
+    try {
+      SSLContext sc = SSLContext.getInstance("TLS");
+      sc.init(null, trustAllCerts, new java.security.SecureRandom());
+      HttpsURLConnection
+      .setDefaultSSLSocketFactory(sc.getSocketFactory());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
+  private String getURLQuery(List<BasicNameValuePair> params){
+    StringBuilder stringBuilder = new StringBuilder();
+    boolean first = true;
+    
+    for (BasicNameValuePair pair : params)
+    {
+      if (first)
+        first = false;
+      else
+        stringBuilder.append("&");
+      
+      try {
+        stringBuilder.append(URLEncoder.encode(pair.getName(), "UTF-8"));
+        stringBuilder.append("=");
+        stringBuilder.append(URLEncoder.encode(pair.getValue(), "UTF-8"));
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+      }
+    }
+    
+    return stringBuilder.toString();
+  }  
 }

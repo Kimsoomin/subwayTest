@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 
-@SuppressWarnings("deprecation")
+//@SuppressWarnings("deprecation")
 public class TrendProductImagePopupActivity extends ActionBarActivity
 {
   private WebView webView;
@@ -43,10 +43,12 @@ public class TrendProductImagePopupActivity extends ActionBarActivity
     webView = (WebView) findViewById(R.id.webview);
     webView.getSettings().setBuiltInZoomControls(true);
     webView.getSettings().setDisplayZoomControls(false);
+    webView.getSettings().setUseWideViewPort(true);
     String imageUrl = getIntent().getStringExtra("image_url");
     
-    String data = "<html><head></head><body><center><img width=\"100%\" src=\"" + imageUrl + "\" /></center></body></html>";
-    webView.loadData(data, "text/html", null);
+//    String data = "<html><head></head><body><center><img width=\"100%\" src=\"" + imageUrl + "\" /></center></body></html>";
+//    webView.loadData(data, "text/html", null);
+    webView.loadUrl(imageUrl);
     
     new Handler().postDelayed(new Runnable()
     {

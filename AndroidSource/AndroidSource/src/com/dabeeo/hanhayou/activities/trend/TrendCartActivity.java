@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 
 public class TrendCartActivity extends ActionBarActivity
 {
@@ -37,7 +38,10 @@ public class TrendCartActivity extends ActionBarActivity
     
     trendCart = (WebView) findViewById(R.id.trend_cart_webview);    
     trendCart.getSettings().setJavaScriptEnabled(true);
-    trendCart.loadUrl("https://devorder.hanhayou.com/ecom/cart/list?_hgy_token=242");
+//    String url = "https://devshop.hanhayou.com/ecom/cart/newOrderNow?product_id=78&_hgy_token=9723&itemAttributesList=[{itemAttributes={\"color\":\"블랙\",\"size\":\"XS-S(55)\"},quantity=1}]";
+//    BlinkingCommon.smlLibDebug("TrendCartActivity", "URL : " + url);
+    trendCart.loadUrl("https://devm.hanhayou.com/ecom/cart/list?_hgy_token=" +PreferenceManager.getInstance(TrendCartActivity.this).getUserSeq());
+//    trendCart.postUrl("https://", EncodingUtils.getBytes("", "utf-8"));
     trendCart.setWebViewClient(new WebViewClientClass());  
   }
   

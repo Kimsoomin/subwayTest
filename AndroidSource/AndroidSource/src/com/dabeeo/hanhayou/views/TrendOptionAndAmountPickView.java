@@ -38,6 +38,8 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
   public String itemAttribute;
   public JSONObject productOptionObj;
   public boolean selected = false;
+  public SpinnerAdapter spinnerArrayAdapter2;
+  public SpinnerAdapter spinnerArrayAdapter;
   
   public ArrayList<productSet> productSetList = new ArrayList<productSet>();
   
@@ -73,6 +75,14 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
   public boolean getOptionSelected()
   {
     return selected;
+  }
+  
+  
+  public void initSpinner()
+  {
+    firstOption.setSelection(0);
+    secondOption.setSelection(0);
+    setOptionSelected(false);
   }
   
   
@@ -124,7 +134,7 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
     }
     
     final ArrayList<String> secondOptions = new ArrayList<String>();
-    final SpinnerAdapter spinnerArrayAdapter2 = new SpinnerAdapter(context, android.R.layout.simple_spinner_dropdown_item, secondOptions);;
+    spinnerArrayAdapter2 = new SpinnerAdapter(context, android.R.layout.simple_spinner_dropdown_item, secondOptions);;
     if(attributeArray.size() > 1)
     {
       secondOptions.add(attributeArray.get(1).optionAtrributeNm);
@@ -159,7 +169,7 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
       secondOption.setVisibility(View.GONE);
     }
     
-    final SpinnerAdapter spinnerArrayAdapter = new SpinnerAdapter(context, android.R.layout.simple_spinner_dropdown_item, firstOptions);
+    spinnerArrayAdapter = new SpinnerAdapter(context, android.R.layout.simple_spinner_dropdown_item, firstOptions);
     firstOption.setAdapter(spinnerArrayAdapter);
     firstOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
     {
@@ -221,7 +231,6 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
         
       }
     });
-    
     
     return view;
   }

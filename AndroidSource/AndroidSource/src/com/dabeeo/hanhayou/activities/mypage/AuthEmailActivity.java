@@ -128,6 +128,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
         dialog.dismiss();
         if (isSuccess)
         {
+          finish();
           startActivity(new Intent(mContext, CongratulateJoinActivity.class));
         }
       }

@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.activities.trend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONObject;
 
@@ -252,7 +253,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       addDetailInfo(productDetail.inforDescArray.get(i).name, productDetail.inforDescArray.get(i).conetent);
     }
     
-    String productDetailUrl = "https://dev.hanhayou.com/_html/product_detail_desc.php?idx=" + productId;
+    final String productDetailUrl = "http://dev.hanhayou.com/_html/product.detail.desc.php?idx=" + productId;
     productImage.loadUrl(productDetailUrl);
     
     btnCart.setOnClickListener(cartClickListener);
@@ -289,7 +290,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       public void onClick(View arg0)
       {
         Intent i = new Intent(TrendProductDetailActivity.this, TrendProductImagePopupActivity.class);
-        i.putExtra("image_url", "http://gaengs.co.kr/web/2015/g0522/22.jpg");
+        i.putExtra("image_url", productDetailUrl);
         startActivity(i);
       }
     });
@@ -333,6 +334,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
         if(v.getId() == R.id.btn_my_cart)
         {
           Toast.makeText(TrendProductDetailActivity.this, "add cart", Toast.LENGTH_SHORT).show();
+          new AddCartTask().execute();
         }else if(v.getId() == R.id.btn_checkout)
         {
           Toast.makeText(TrendProductDetailActivity.this, "buy now", Toast.LENGTH_SHORT).show();
@@ -509,5 +511,83 @@ public class TrendProductDetailActivity extends ActionBarActivity
     }
   }
   
+  private class AddCartTask extends AsyncTask<String, Void, JSONObject>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      optionAmountPickerView.initSpinner();
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected JSONObject doInBackground(String... params)
+    {
+      HashMap<String, String> body = new HashMap<String, String>();
+      body.put("product_id", productId);
+      body.put("itemAttributesList", itemAttribute);
+      body.put("_hgy_token", PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq());
+      return apiClient.addCart(body);
+    }
+    
+    @Override
+    protected void onPostExecute(JSONObject result)
+    {
+      super.onPostExecute(result);
+      optionAmountPickerView.view.setVisibility(View.GONE);
+      optionAmountPickerView.setVisibility(View.GONE);
+      if(result != null)
+      {
+        try
+        {
+          if (result.has("result"))
+          {
+            JSONObject obj = result.getJSONObject("result");
+            if(obj.getInt("status_code") == 0)
+              createAddCartAlert(true);
+            else
+              createAddCartAlert(false);
+          }
+        }
+        catch (Exception e)
+        {
+          BlinkingCommon.smlLibPrintException("TrendProductDetail", "e : " + e);
+        }
+      }else
+        createAddCartAlert(false);
+    }
+  }
+  
+  public void createAddCartAlert(boolean addCart)
+  {
+    String title = getString(R.string.term_alert);
+    String message = "";
+    String okString = "";
+    String cancelString = "";
+    if(addCart)
+    {
+      message = getString(R.string.term_product_add_cart);
+      okString = getString(R.string.term_product_cart_move);
+      cancelString = getString(R.string.term_product_shopping);
+      new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(title, message, okString, cancelString, new AlertListener()
+      {
+        @Override
+        public void onPositiveButtonClickListener()
+        {
+        }
+        
+        @Override
+        public void onNegativeButtonClickListener()
+        {
+        }
+      });
+    }
+    else
+    {
+      message = getString(R.string.term_product_fail_cart);
+      okString = getString(R.string.term_ok);
+      new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(title, message, okString, null, null);
+    }      
+  }
   
 }

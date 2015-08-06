@@ -222,6 +222,10 @@
     <string name="term_product_detail_refund_link">详细</string>
     <string name="term_buy">立即购买</string>
     <string name="term_all_rate">"/5.0"</string>
+    <string name="term_product_add_cart">상품이 장바구니에 담겼습니다.</string>
+    <string name="term_product_cart_move">장바구니로 이동</string>
+    <string name="term_product_shopping">계속 쇼핑하기</string>
+    <string name="term_product_fail_cart">장바구니 담기에 실패하였습니다.\n잠시후 다시 시도해주세요.</string>
     <!-- 티켓 -->
     <string name="term_all_tickets">所有电子兑换券</string>
     <string name="term_bought_ticket">已购电子兑换券</string>

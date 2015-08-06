@@ -3,6 +3,7 @@ package com.dabeeo.hanhayou.managers.network;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class ApiClient
 {
   private String siteUrl = "http://gs.blinking.kr:8900/_libs/api.common.php";
   private String devUrl = "http://dev.hanhayou.com/_libs/api.common.php";
+  private String devshopUrl = "https://devshop.hanhayou.com/ecom/";
 //  private String testUrl = "http://10.53.13.18/_libs/api.common.php";
   private HttpClient httpClient;
   private Context context;
@@ -66,7 +68,7 @@ public class ApiClient
   //오프라인 컨텐츠 
   public NetworkResult getOfflineContents()
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=OFFLINE_CONTENTS");
+    return httpClient.requestGet(siteUrl + "?v=m1&mode=OFFLINE_CONTENTS");
   }
   
   
@@ -887,7 +889,7 @@ public class ApiClient
   public ProductDetailBean getProductDetail(String productId)
   {
     ProductDetailBean productDetail = new ProductDetailBean();
-    NetworkResult result = httpClient.requestGet("https://devshop.hanhayou.com/ecom/product/" + productId);
+    NetworkResult result = httpClient.requestGet(devshopUrl + "product/" + productId);
     try
     {
       JSONObject obj = new JSONObject(result.response);
@@ -908,6 +910,11 @@ public class ApiClient
     }
     
     return productDetail;
+  }
+  
+  public JSONObject addCart(HashMap<String, String> body)
+  {
+    return httpClient.requestTrendyPost(devshopUrl  + "cart/newAdd", body);
   }
   
   
