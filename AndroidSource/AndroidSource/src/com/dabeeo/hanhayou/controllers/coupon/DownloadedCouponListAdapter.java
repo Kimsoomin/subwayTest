@@ -1,5 +1,6 @@
 package com.dabeeo.hanhayou.controllers.coupon;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -12,12 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.beans.CouponBean;
+import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 
 public class DownloadedCouponListAdapter extends BaseAdapter
 {
-  private ArrayList<CouponBean> items = new ArrayList<>();
+  private ArrayList<CouponDetailBean> items = new ArrayList<>();
   private Context context;
   
   
@@ -27,7 +28,14 @@ public class DownloadedCouponListAdapter extends BaseAdapter
   }
   
   
-  public void add(CouponBean bean)
+  public void addAll(ArrayList<CouponDetailBean> beans)
+  {
+    this.items.addAll(beans);
+    notifyDataSetChanged();
+  }
+  
+  
+  public void add(CouponDetailBean bean)
   {
     this.items.add(bean);
     notifyDataSetChanged();
@@ -66,24 +74,33 @@ public class DownloadedCouponListAdapter extends BaseAdapter
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
-    CouponBean bean = (CouponBean) items.get(position);
-    int resId = R.layout.list_item_downloaded_coupon;
+    CouponDetailBean bean = (CouponDetailBean) items.get(position);
+    int resId = R.layout.list_item_coupon;
     View view = LayoutInflater.from(parent.getContext()).inflate(resId, null);
     
     ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView description = (TextView) view.findViewById(R.id.text_description);
-    description.setVisibility(View.GONE);
     TextView validityDate = (TextView) view.findViewById(R.id.text_validity_period);
-    TextView isUsed = (TextView) view.findViewById(R.id.text_used);
     
-//    Picasso.with(parent.getContext()).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
-    ImageDownloader.displayImage(context, "", imageView, null);
-    
+    ImageDownloader.displayImage(context, bean.couponImageUrl, imageView, null);
     title.setText(bean.title);
-//    description.setText(bean.description);
-//    validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);
-//    isUsed.setVisibility(bean.isUsed ? View.VISIBLE : View.GONE);
+    description.setText(bean.branchName);
+    
+    try
+    {
+      SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+      if (bean.isNotimeLimit)
+        validityDate.setText(context.getString(R.string.term_notimelimit));
+      if (bean.isExhaustion)
+        validityDate.setText(format.format(bean.startDate) + context.getString(R.string.term_exhaustion));
+      if (!bean.isExhaustion && !bean.isNotimeLimit)
+        validityDate.setText(format.format(bean.startDate) + "~" + format.format(bean.endDate));
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
     return view;
   }
 }

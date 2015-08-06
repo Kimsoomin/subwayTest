@@ -74,6 +74,13 @@ public class CouponActivity extends ActionBarActivity
     displayTitles();
   }
   
+  
+  public void setViewPagerPosition(int position)
+  {
+    viewPager.setCurrentItem(position);
+    getSupportActionBar().setSelectedNavigationItem(position);
+  }
+  
   /**************************************************
    * listener
    ***************************************************/
@@ -147,8 +154,8 @@ public class CouponActivity extends ActionBarActivity
   {
     super.onActivityResult(requestCode, resultCode, data);
     
-    // 쿠폰 상세에서 다운로드 버튼 누른 다음에 나오는 팝업창에서 쿠폰 내역보기를 선택했을 때 할 일
-    getSupportActionBar().setSelectedNavigationItem(1);
+    if (resultCode == RESULT_OK)
+      getSupportActionBar().setSelectedNavigationItem(1);
   }
   
   

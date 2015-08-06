@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +20,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.dabeeo.hanhayou.beans.PlaceBean;
+import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.map.Global;
 
@@ -221,76 +219,91 @@ public class OfflineCouponDatabaseManager extends SQLiteOpenHelper
   public boolean isHaveCoupon(String couponIdx, String branchIdx)
   {
     this.openDataBase();
-    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON + " WHERE coupon_idx = " + couponIdx + " and branch_idx = " + branchIdx + " and userSeq = "
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON + " WHERE coupon_idx = " + couponIdx + " AND branch_idx = " + branchIdx + " AND userSeq = "
         + PreferenceManager.getInstance(context).getUserSeq(), null);
-    Log.w("WARN", "isHave a coupon? " + c.getColumnCount());
-    if (c.getColumnCount() > 0)
+    Log.w("WARN", "isHave a coupon? " + c.getCount());
+    if (c.getCount() > 0)
       return true;
     else
       return false;
   }
   
   
-  public ArrayList<PlaceBean> getPlaceList(int categoryId)
+  public CouponDetailBean getDownloadCoupon(String couponIdx, String branchIdx)
   {
-    return getPlaceList(categoryId, false);
+    this.openDataBase();
+    ArrayList<CouponDetailBean> coupons = new ArrayList<CouponDetailBean>();
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON + " WHERE userSeq = " + PreferenceManager.getInstance(context).getUserSeq() + " AND coupon_idx =" + couponIdx
+        + " AND branch_idx = " + branchIdx, null);
+    CouponDetailBean bean = null;
+    if (c.getCount() > 0)
+    {
+      if (c.moveToFirst())
+      {
+        try
+        {
+          bean = new CouponDetailBean();
+          bean.setCursor(c);
+          coupons.add(bean);
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+      }
+    }
+    return bean;
   }
   
   
-  public ArrayList<PlaceBean> getPlaceList(int categoryId, boolean isSortPopular)
+  public ArrayList<CouponDetailBean> getDownloadCoupons()
   {
-    ArrayList<PlaceBean> beans = new ArrayList<PlaceBean>();
-    try
+    this.openDataBase();
+    ArrayList<CouponDetailBean> coupons = new ArrayList<CouponDetailBean>();
+    Cursor c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON + " WHERE userSeq = " + PreferenceManager.getInstance(context).getUserSeq() + " AND is_use = 0", null);
+    Log.w("WARN", "Download UnUseCoupoons : " + c.getCount());
+    if (c.getCount() > 0)
     {
-      this.openDataBase();
-      
-      Cursor c;
-      if (categoryId == 9)
-      {
-        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON + " WHERE category = " + "1 or category = 3 or category = 4 or category = 5 or category = 6", null);
-      }
-      else
-        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON + " WHERE category = " + categoryId, null);
-      if (categoryId == 0)
-        c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON, null);
       if (c.moveToFirst())
       {
         do
         {
           try
           {
-            PlaceBean bean = new PlaceBean();
+            CouponDetailBean bean = new CouponDetailBean();
             bean.setCursor(c);
-            if (!bean.premiumIdx.equals("null"))
-              beans.add(bean);
+            coupons.add(bean);
           }
           catch (Exception e)
           {
+            e.printStackTrace();
           }
         } while (c.moveToNext());
       }
-      
-      if (isSortPopular)
-      {
-        Comparator<PlaceBean> compare = new Comparator<PlaceBean>()
-        {
-          @Override
-          public int compare(PlaceBean lhs, PlaceBean rhs)
-          {
-            return rhs.likeCount - lhs.likeCount;
-          }
-        };
-        Collections.sort(beans, compare);
-      }
-      
-      c.close();
-      myDataBase.close();
     }
-    catch (Exception e)
+    
+    c = myDataBase.rawQuery("SELECT * FROM " + TABLE_NAME_COUPON + " WHERE userSeq = " + PreferenceManager.getInstance(context).getUserSeq() + " AND is_use = 1", null);
+    Log.w("WARN", "Download UseCoupoons : " + c.getCount());
+    if (c.getCount() > 0)
     {
-      e.printStackTrace();
+      if (c.moveToFirst())
+      {
+        do
+        {
+          try
+          {
+            CouponDetailBean bean = new CouponDetailBean();
+            bean.setCursor(c);
+            coupons.add(bean);
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
+        } while (c.moveToNext());
+      }
     }
-    return beans;
+    return coupons;
   }
   
 }

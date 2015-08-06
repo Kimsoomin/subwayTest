@@ -505,6 +505,9 @@
     <string name="term_sort_my_location">내 위치순</string>
     <string name="term_sort_popular">인기순</string>
     <string name="msg_empty_coupon">쿠폰이 없습니다.</string>
+    <string name="msg_empty_downloaded_coupon">다운로드한 쿠폰이 없습니다.</string>
+    <string name="msg_help_download_coupon">한하요우 쿠폰을 둘러보고\n다운로드 받아보세요!</string>
+    <string name="term_showing_coupon">쿠폰 둘러보기</string>
     <string name="term_notimelimit">제한없음</string>
     <string name="term_exhaustion">~ 소진시까지</string>
     <string name="term_coupon_info">쿠폰소개</string>
@@ -512,5 +515,6 @@
     <string name="term_coupon_tel">사용처 전화번호</string>
     <string name="term_coupon_how_to">사용방법</string>
     <string name="term_coupon_notice">유의사항</string>
+    <string name="msg_delete_after">유효기간이 지난 쿠폰은 자동 삭제 처리 됩니다.</string>
 
 </resources>

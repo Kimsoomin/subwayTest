@@ -160,6 +160,7 @@ public class IntroActivity extends Activity
     File file = new File(Global.GetDatabaseFilePath() + OfflineCouponDatabaseManager.DB_NAME);
     if (file.exists())
       file.delete();
+    
     if (!file.exists())
     {
       //오프라인 쿠폰 database를 만듬

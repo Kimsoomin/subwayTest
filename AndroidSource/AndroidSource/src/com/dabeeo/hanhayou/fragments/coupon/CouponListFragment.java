@@ -62,7 +62,7 @@ public class CouponListFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
-    int resId = R.layout.fragment_ticket_list;
+    int resId = R.layout.fragment_coupon;
     return inflater.inflate(resId, null);
   }
   

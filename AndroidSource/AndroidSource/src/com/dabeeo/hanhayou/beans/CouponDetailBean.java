@@ -1,17 +1,18 @@
 package com.dabeeo.hanhayou.beans;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-
-import com.dabeeo.hanhayou.managers.PreferenceManager;
+import android.database.Cursor;
+import android.text.TextUtils;
 
 public class CouponDetailBean
 {
-  public int idx;
   public String couponIdx;
   public String branchIdx;
   public String scopeIdx;
@@ -39,6 +40,80 @@ public class CouponDetailBean
   public String couponImageUrl;
   public String downloadCouponImage;
   
+  public boolean isUse = false;
+  
+  
+  @SuppressLint("SimpleDateFormat")
+  public void setCursor(Cursor c)
+  {
+    try
+    {
+      couponIdx = c.getString(c.getColumnIndex("coupon_idx"));
+      branchIdx = c.getString(c.getColumnIndex("branch_idx"));
+      scopeIdx = c.getString(c.getColumnIndex("scope_idx"));
+      placeIdx = c.getString(c.getColumnIndex("place_idx"));
+      brandName = c.getString(c.getColumnIndex("brand_name"));
+      branchName = c.getString(c.getColumnIndex("branch_name"));
+      category = c.getString(c.getColumnIndex("category"));
+      categoryName = c.getString(c.getColumnIndex("category_name"));
+      
+      try
+      {
+        String dateStr = c.getString(c.getColumnIndex("start_date"));
+        if (!TextUtils.isEmpty(dateStr))
+        {
+          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+          startDate = format.parse(dateStr);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
+      try
+      {
+        String dateStr = c.getString(c.getColumnIndex("end_date"));
+        if (!TextUtils.isEmpty(dateStr))
+        {
+          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+          endDate = format.parse(dateStr);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
+      isExhaustion = c.getString(c.getColumnIndex("is_exhaustion")).equals("true");
+      isNotimeLimit = c.getString(c.getColumnIndex("is_notimelimit")).equals("true");
+      title = c.getString(c.getColumnIndex("title"));
+      info = c.getString(c.getColumnIndex("info"));
+      condition = c.getString(c.getColumnIndex("condition"));
+      howto = c.getString(c.getColumnIndex("howto"));
+      address = c.getString(c.getColumnIndex("address"));
+      tel = c.getString(c.getColumnIndex("tel"));
+      notice = c.getString(c.getColumnIndex("notice"));
+      try
+      {
+        lat = Double.parseDouble(c.getString(c.getColumnIndex("lat")));
+        lon = Double.parseDouble(c.getString(c.getColumnIndex("lng")));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      couponImageUrl = c.getString(c.getColumnIndex("coupon_image"));
+      downloadCouponImage = c.getString(c.getColumnIndex("download_image"));
+      
+      isUse = c.getInt(c.getColumnIndex("is_use")) == 1;
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
   
   public JSONObject getJSONObject(Context context)
   {
@@ -46,7 +121,6 @@ public class CouponDetailBean
     
     try
     {
-      obj.put("idx", Integer.toString(idx));
       obj.put("coupon_idx", couponIdx);
       obj.put("branch_idx", branchIdx);
       obj.put("scope_idx", scopeIdx);
@@ -74,8 +148,15 @@ public class CouponDetailBean
       {
       }
       
-      obj.put("is_exhaustion", isExhaustion);
-      obj.put("is_notimelimit", isNotimeLimit);
+      if (isExhaustion)
+        obj.put("is_exhaustion", true);
+      else
+        obj.put("is_exhaustion", false);
+      
+      if (isNotimeLimit)
+        obj.put("is_notimelimit", true);
+      else
+        obj.put("is_notimelimit", false);
       obj.put("title", title);
       obj.put("info", info);
       obj.put("condition", condition);
