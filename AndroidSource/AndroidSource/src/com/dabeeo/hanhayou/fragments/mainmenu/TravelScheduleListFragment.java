@@ -143,7 +143,14 @@ public class TravelScheduleListFragment extends Fragment
     listView.setInvisibleFooterView(footerLoadView);
     listView.setOnScrollListener(scrollListener);
     listView.setAdapter(adapter);
+  }
+  
+  
+  @Override
+  public void onResume()
+  {
     loadSchedules();
+    super.onResume();
   }
   
   
@@ -196,6 +203,7 @@ public class TravelScheduleListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
+      adapter.clear();
       if (adapter.getCount() != 0)
         listView.setVisibleFooterView(footerLoadView);
       super.onPreExecute();

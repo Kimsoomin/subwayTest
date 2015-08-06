@@ -167,9 +167,20 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
         i.putExtra("isRecommend", true);
         i.putExtra("startDate", bean.startDateString);
         i.putExtra("dayCount", bean.dayCount);
-        startActivity(i);
+        startActivityForResult(i, 101);
       }
     });
+  }
+  
+  
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent arg2)
+  {
+    if (resultCode == RESULT_OK)
+    {
+      finish();
+    }
+    super.onActivityResult(requestCode, resultCode, arg2);
   }
   
   
@@ -207,8 +218,6 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
         @Override
         public void onClick(DialogInterface dialog, int which)
         {
-          Intent i = new Intent(RecommendScheduleCompeletedActivity.this, MySchedulesActivity.class);
-          startActivity(i);
           finish();
         }
       });
@@ -304,7 +313,6 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      startActivity(new Intent(RecommendScheduleCompeletedActivity.this, MySchedulesActivity.class));
       finish();
     }
   }

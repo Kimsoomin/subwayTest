@@ -392,7 +392,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      startActivity(new Intent(TravelScheduleDetailActivity.this, MySchedulesActivity.class));
+      setResult(RESULT_OK);
       finish();
     }
   }

@@ -111,8 +111,14 @@ public class MySchedulesActivity extends ActionBarActivity
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(itemClickListener);
     listView.setOnScrollListener(scrollListener);
-    
+  }
+  
+  
+  @Override
+  protected void onResume()
+  {
     loadSchedules();
+    super.onResume();
   }
   
   
@@ -326,6 +332,7 @@ public class MySchedulesActivity extends ActionBarActivity
     protected void onPreExecute()
     {
       isLoading = true;
+      adapter.clear();
       progressBar.setVisibility(View.VISIBLE);
       progressBar.bringToFront();
       if (adapter.getCount() != 0)
