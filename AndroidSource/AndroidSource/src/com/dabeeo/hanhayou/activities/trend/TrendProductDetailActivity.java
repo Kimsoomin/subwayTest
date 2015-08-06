@@ -333,11 +333,17 @@ public class TrendProductDetailActivity extends ActionBarActivity
         setItemAttributes(optionAmountPickerView.optionColor, optionAmountPickerView.optionSize, optionAmountPickerView.amount);
         if(v.getId() == R.id.btn_my_cart)
         {
-          Toast.makeText(TrendProductDetailActivity.this, "add cart", Toast.LENGTH_SHORT).show();
+//          Toast.makeText(TrendProductDetailActivity.this, "add cart", Toast.LENGTH_SHORT).show();
           new AddCartTask().execute();
         }else if(v.getId() == R.id.btn_checkout)
         {
-          Toast.makeText(TrendProductDetailActivity.this, "buy now", Toast.LENGTH_SHORT).show();
+          String url = "newOrderNow?_hgy_token="+PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq()
+              + "&product_id=" + productId + "&itemAttributesList=" + itemAttribute;
+          Intent i = new Intent(TrendProductDetailActivity.this, TrendCartActivity.class);
+          i.putExtra("Cart_url", url);
+          startActivity(i);
+          optionAmountPickerView.initSpinner();
+//          Toast.makeText(TrendProductDetailActivity.this, "buy now", Toast.LENGTH_SHORT).show();
         }
       }else
       {
@@ -574,6 +580,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
         @Override
         public void onPositiveButtonClickListener()
         {
+          startActivity(new Intent(TrendProductDetailActivity.this, TrendCartActivity.class));
         }
         
         @Override

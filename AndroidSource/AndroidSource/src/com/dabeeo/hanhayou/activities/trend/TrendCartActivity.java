@@ -19,6 +19,7 @@ import com.dabeeo.hanhayou.managers.PreferenceManager;
 public class TrendCartActivity extends ActionBarActivity
 {
   private WebView trendCart;
+  private String url = "https://devm.hanhayou.com/ecom/cart/";
   
   @SuppressLint("SetJavaScriptEnabled")
   @Override
@@ -40,8 +41,12 @@ public class TrendCartActivity extends ActionBarActivity
     trendCart.getSettings().setJavaScriptEnabled(true);
 //    String url = "https://devshop.hanhayou.com/ecom/cart/newOrderNow?product_id=78&_hgy_token=9723&itemAttributesList=[{itemAttributes={\"color\":\"블랙\",\"size\":\"XS-S(55)\"},quantity=1}]";
 //    BlinkingCommon.smlLibDebug("TrendCartActivity", "URL : " + url);
-    trendCart.loadUrl("https://devm.hanhayou.com/ecom/cart/list?_hgy_token=" +PreferenceManager.getInstance(TrendCartActivity.this).getUserSeq());
-//    trendCart.postUrl("https://", EncodingUtils.getBytes("", "utf-8"));
+    if(getIntent().hasExtra("Cart_url"))
+      url = url + getIntent().getStringExtra("Cart_url");
+    else
+      url ="/list?_hgy_token=" +PreferenceManager.getInstance(TrendCartActivity.this).getUserSeq();
+    trendCart.loadUrl(url);
+    
     trendCart.setWebViewClient(new WebViewClientClass());  
   }
   
