@@ -1,5 +1,11 @@
 package com.dabeeo.hanhayou.activities.coupon;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -9,29 +15,32 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.activities.mainmenu.PlaceDetailActivity;
-import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
+import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingMap;
+import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
 
@@ -46,6 +55,7 @@ public class CouponDetailActivity extends ActionBarActivity
   private CouponDetailBean bean;
   private Button btnDownload;
   private ViewGroup layoutInfos;
+  private OfflineCouponDatabaseManager couponDatabase;
   
   
   @Override
@@ -62,6 +72,7 @@ public class CouponDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    couponDatabase = new OfflineCouponDatabaseManager(this);
     couponIdx = getIntent().getStringExtra("coupon_idx");
     branchIdx = getIntent().getStringExtra("branch_idx");
     
@@ -241,7 +252,9 @@ public class CouponDetailActivity extends ActionBarActivity
     public void onClick(View v)
     {
       if (v.getId() == btnDownload.getId())
+      {
         new CheckAlreadyHaveTask().execute();
+      }
       else if (v.getId() == R.id.btn_show_location)
         displayOnMap();
     }
@@ -283,26 +296,20 @@ public class CouponDetailActivity extends ActionBarActivity
     }
   }
   
-  private class CheckAlreadyHaveTask extends AsyncTask<Void, Void, NetworkResult>
+  private class CheckAlreadyHaveTask extends AsyncTask<Void, Void, Boolean>
   {
     @Override
-    protected NetworkResult doInBackground(Void... params)
+    protected Boolean doInBackground(Void... params)
     {
-      return apiClient.couponDownload(couponIdx);
+      return couponDatabase.isHaveCoupon(bean.couponIdx, bean.branchIdx);
     }
     
     
     @Override
-    protected void onPostExecute(NetworkResult result)
+    protected void onPostExecute(Boolean result)
     {
       super.onPostExecute(result);
-      
-      if (!result.isSuccess)
-        return;
-      
-      // TODO 랜덤 true/false를 위해 
-      boolean randomBoolean = Calendar.getInstance().getTimeInMillis() % 2 == 1;
-      onAfterCheckAlreadyHave(randomBoolean);
+      onAfterCheckAlreadyHave(result);
     }
   }
   
@@ -311,7 +318,66 @@ public class CouponDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.couponDownload(couponIdx);
+      File dir = new File(com.dabeeo.hanhayou.map.Global.GetCouponImageFilePath());
+      
+      if (!dir.exists())
+        dir.mkdir();
+      
+      try
+      {
+        URL url = new URL(bean.downloadCouponImage);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoInput(true);
+        connection.connect();
+        InputStream input = connection.getInputStream();
+        Bitmap myBitmap = BitmapFactory.decodeStream(input);
+        File file = new File(Global.GetCouponImageFilePath(), bean.couponIdx + ".jpg");
+        if (!file.exists())
+          file.createNewFile();
+        
+        bean.downloadCouponImage = file.getAbsolutePath();
+        
+        FileOutputStream stream = new FileOutputStream(file);
+        ByteArrayOutputStream outstream = new ByteArrayOutputStream();
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outstream);
+        byte[] byteArray = outstream.toByteArray();
+        
+        stream.write(byteArray);
+        stream.close();
+        
+        Log.w("WARN", "CouponDownload!");
+        
+        url = new URL(bean.couponImageUrl);
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setDoInput(true);
+        connection.connect();
+        input = connection.getInputStream();
+        myBitmap = BitmapFactory.decodeStream(input);
+        
+        file = new File(Global.GetCouponImageFilePath(), bean.couponIdx + "_thumbnail.jpg");
+        if (!file.exists())
+          file.createNewFile();
+        
+        bean.downloadCouponImage = file.getAbsolutePath();
+        
+        stream = new FileOutputStream(file);
+        
+        outstream = new ByteArrayOutputStream();
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outstream);
+        byteArray = outstream.toByteArray();
+        
+        stream.write(byteArray);
+        stream.close();
+        
+        Log.w("WARN", "Coupon Thumbnail Download!");
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
+      couponDatabase.insert(bean.getJSONObject(CouponDetailActivity.this));
+      return null;
     }
     
     
@@ -319,10 +385,6 @@ public class CouponDetailActivity extends ActionBarActivity
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      
-      if (!result.isSuccess)
-        return;
-      
       showAlert(getString(R.string.term_coupon_download_completed));
     }
   }

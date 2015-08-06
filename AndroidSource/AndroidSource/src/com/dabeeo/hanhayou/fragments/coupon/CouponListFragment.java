@@ -144,6 +144,8 @@ public class CouponListFragment extends Fragment
         buildAlertMessageNoGps();
       else
       {
+        myLocationListpage = 1;
+        listMyLocationAdapter.clear();
         progressBar.setVisibility(View.VISIBLE);
         progressBar.bringToFront();
         
@@ -155,6 +157,8 @@ public class CouponListFragment extends Fragment
     }
     else
     {
+      popularListpage = 1;
+      listPopularAdapter.clear();
       btnPopular.setActivated(true);
       listPopular.setVisibility(View.VISIBLE);
       listMyLocation.setVisibility(View.GONE);

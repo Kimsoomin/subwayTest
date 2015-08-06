@@ -5,6 +5,10 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
+import com.dabeeo.hanhayou.managers.PreferenceManager;
+
 public class CouponDetailBean
 {
   public int idx;
@@ -34,6 +38,62 @@ public class CouponDetailBean
   
   public String couponImageUrl;
   public String downloadCouponImage;
+  
+  
+  public JSONObject getJSONObject(Context context)
+  {
+    JSONObject obj = new JSONObject();
+    
+    try
+    {
+      obj.put("idx", Integer.toString(idx));
+      obj.put("coupon_idx", couponIdx);
+      obj.put("branch_idx", branchIdx);
+      obj.put("scope_idx", scopeIdx);
+      obj.put("place_idx", placeIdx);
+      obj.put("number", number);
+      obj.put("brand_name", brandName);
+      obj.put("branch_name", branchName);
+      obj.put("category", category);
+      obj.put("category_name", categoryName);
+      
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+      try
+      {
+        obj.put("start_date", format.format(startDate));
+      }
+      catch (Exception e)
+      {
+      }
+      
+      try
+      {
+        obj.put("end_date", format.format(endDate));
+      }
+      catch (Exception e)
+      {
+      }
+      
+      obj.put("is_exhaustion", isExhaustion);
+      obj.put("is_notimelimit", isNotimeLimit);
+      obj.put("title", title);
+      obj.put("info", info);
+      obj.put("condition", condition);
+      obj.put("howto", howto);
+      obj.put("address", address);
+      obj.put("tel", tel);
+      obj.put("notice", notice);
+      obj.put("lat", lat);
+      obj.put("lon", lon);
+      obj.put("coupon_image", couponImageUrl);
+      obj.put("download_image", downloadCouponImage);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return obj;
+  }
   
   
   public void setJSONObject(JSONObject obj)

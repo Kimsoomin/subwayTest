@@ -919,6 +919,7 @@ public class ApiClient
     return httpClient.requestTrendyPost(devshopUrl + "cart/newAdd", body);
   }
   
+  
   public NetworkResult getMapBanner(double lat, double lng)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_AREA_BANNER&lat=" + lat + "&lng=" + lng);
@@ -1014,6 +1015,13 @@ public class ApiClient
   }
   
   
+  public NetworkResult couponDownload(String couponIdx, String branchIdx)
+  {
+    return httpClient.requestGet(siteCouponUrl + "?v=coupon&mode=COUPON_DOWNLOAD&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&coupon_idx=" + couponIdx + "&branch_idx="
+        + branchIdx);
+  }
+  
+  
   public NetworkResult getDownloadedCoupon(int page, String contentType)
   {
     return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
@@ -1021,13 +1029,6 @@ public class ApiClient
   
   
   public NetworkResult checkAlreadyHaveCoupon(String couponId)
-  {
-//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
-    return new NetworkResult(true, null, 1);
-  }
-  
-  
-  public NetworkResult couponDownload(String couponId)
   {
 //    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
     return new NetworkResult(true, null, 1);

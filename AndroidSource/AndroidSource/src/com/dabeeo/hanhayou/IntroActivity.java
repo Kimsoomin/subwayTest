@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hanhayou.activities.sub.GuideActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
+import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.SetLogMapDownload;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
@@ -69,7 +70,7 @@ public class IntroActivity extends Activity
     if (!preferenceManager.getIsAutoLogin())
       preferenceManager.clearUserInfo();
     
-    if(TextUtils.isEmpty(preferenceManager.getDeviceId()))
+    if (TextUtils.isEmpty(preferenceManager.getDeviceId()))
       preferenceManager.setDeviceId(Global.getDeviceID(getBaseContext(), getContentResolver()));
     
     progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -156,8 +157,24 @@ public class IntroActivity extends Activity
     {
       dir.mkdirs();
     }
+    File file = new File(Global.GetDatabaseFilePath() + OfflineCouponDatabaseManager.DB_NAME);
+    if (file.exists())
+      file.delete();
+    if (!file.exists())
+    {
+      //오프라인 쿠폰 database를 만듬
+      OfflineCouponDatabaseManager couponDatabase = new OfflineCouponDatabaseManager(this);
+      try
+      {
+        couponDatabase.createDataBase();
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
     
-    File file = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
+    file = new File(Global.GetDatabaseFilePath() + OfflineContentDatabaseManager.DB_NAME);
     
     if (file.exists())
     {
@@ -549,7 +566,7 @@ public class IntroActivity extends Activity
     {
       if (pView.isShowing())
         pView.dismiss();
-            
+      
       new SetLogMapDownload().execute(IntroActivity.this);
       checkAllowAlarm();
       super.onPostExecute(result);
@@ -604,13 +621,12 @@ public class IntroActivity extends Activity
   
   private class setFirstStartTask extends AsyncTask<Void, Void, NetworkResult>
   {
-
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
       return client.setLogApp(PreferenceManager.getInstance(IntroActivity.this).getDeviceId(), 1);
     }
   }
-  
   
 }

@@ -959,6 +959,12 @@ public class Global
     return strImageFilePath;
   }
   
+  public static String GetCouponImageFilePath()
+  {
+    String sdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+    String strImageFilePath = sdCardPath + "/Android/data/com.dabeeo.hanhayou/file/.couponimages/";
+    return strImageFilePath;
+  }
   
   // -v1.5 추가.
   
