@@ -93,13 +93,13 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   private void displayData()
   {
     ImageDownloader.displayImage(this, "", imageView, null);
-    textTitle.setText(coupon.title);
-    textCouponNumber.setText(coupon.couponNumber);
-    textValidityPeriod.setText(coupon.fromValidityDate + "~" + coupon.toValidityDate);
-    textValidityCondition.setText(coupon.validityCondition);
-    textWhereUseIn.setText(coupon.whereUseIn);
-    textHowToUse.setText(coupon.howToUse);
-    textInstruction.setText(coupon.instruction);
+//    textTitle.setText(coupon.title);
+//    textCouponNumber.setText(coupon.couponNumber);
+//    textValidityPeriod.setText(coupon.fromValidityDate + "~" + coupon.toValidityDate);
+//    textValidityCondition.setText(coupon.validityCondition);
+//    textWhereUseIn.setText(coupon.whereUseIn);
+//    textHowToUse.setText(coupon.howToUse);
+//    textInstruction.setText(coupon.instruction);
     btnUse.setEnabled(true);
   }
   
@@ -204,13 +204,13 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
 //        bean.setJSONObject(new JSONObject(result.response));
         
         coupon.title = "아쿠아리움 입장권";
-        coupon.couponNumber = "2897642937492378492";
-        coupon.fromValidityDate = "2015.01.01";
-        coupon.toValidityDate = "2015.12.31";
-        coupon.validityCondition = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        coupon.whereUseIn = "신사 아쿠아리움";
-        coupon.howToUse = "결제 시 매장 직원에게 제시";
-        coupon.instruction = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+//        coupon.couponNumber = "2897642937492378492";
+//        coupon.fromValidityDate = "2015.01.01";
+//        coupon.toValidityDate = "2015.12.31";
+//        coupon.validityCondition = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+//        coupon.whereUseIn = "신사 아쿠아리움";
+//        coupon.howToUse = "결제 시 매장 직원에게 제시";
+//        coupon.instruction = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
         
         displayData();
       }

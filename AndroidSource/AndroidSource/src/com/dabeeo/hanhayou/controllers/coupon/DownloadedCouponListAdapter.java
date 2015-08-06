@@ -81,9 +81,9 @@ public class DownloadedCouponListAdapter extends BaseAdapter
     ImageDownloader.displayImage(context, "", imageView, null);
     
     title.setText(bean.title);
-    description.setText(bean.description);
-    validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);
-    isUsed.setVisibility(bean.isUsed ? View.VISIBLE : View.GONE);
+//    description.setText(bean.description);
+//    validityDate.setText(bean.fromValidityDate + "~" + bean.toValidityDate);
+//    isUsed.setVisibility(bean.isUsed ? View.VISIBLE : View.GONE);
     return view;
   }
 }

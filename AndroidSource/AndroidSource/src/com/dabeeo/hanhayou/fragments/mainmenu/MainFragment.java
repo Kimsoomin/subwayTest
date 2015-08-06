@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
 import com.dabeeo.hanhayou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity;
@@ -23,6 +24,7 @@ import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.map.Global;
@@ -180,22 +182,16 @@ public class MainFragment extends Fragment
       else if (v.getId() == containerCoupon.getId())
       {
         //temp alert
-        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
+//        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
 //        //네트워크 연결 체크 후 연결했을 때만 실행
-//        if (!SystemUtil.isConnectNetwork(getActivity()))
-//        {
-//          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-//          return;
-//        }
-//        
-//        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
-//        {
-//          startActivity(new Intent(getActivity(), CouponActivity.class));
-//        }
-//        else
-//        {
-//          new AlertDialogManager(getActivity()).showNeedLoginDialog();
-//        }
+        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+        {
+          startActivity(new Intent(getActivity(), CouponActivity.class));
+        }
+        else
+        {
+          new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
+        }
       }
     }
   };
