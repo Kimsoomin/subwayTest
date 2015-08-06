@@ -158,8 +158,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:text="@string/msg_product_price_currency"
                                                 android:textColor="@color/light_gray"
-                                                android:textSize="10sp"
-                                                android:textStyle="bold" />
+                                                android:textSize="10sp" />
                                         </LinearLayout>
                                     </LinearLayout>
                                     <!-- 할인쿠폰 -->
@@ -245,16 +244,16 @@
 
                                         <Button
                                             android:id="@+id/btn_wishlist"
-                                            android:layout_width="25dp"
-                                            android:layout_height="25dp"
-                                            android:background="@drawable/wishlist_button" 
-                                            android:visibility="gone"/>
+                                            android:layout_width="37dp"
+                                            android:layout_height="37dp"
+                                            android:background="@drawable/wishlist_button"
+                                            android:visibility="gone" />
 
                                         <Button
                                             android:id="@+id/btn_share"
-                                            android:layout_width="25dp"
-                                            android:layout_height="25dp"
-                                            android:layout_marginLeft="4dp"
+                                            android:layout_width="37dp"
+                                            android:layout_height="37dp"
+                                            android:layout_marginLeft="8dp"
                                             android:background="@drawable/btn_detail_share" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -266,7 +265,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:background="@color/gray" />
+                    android:background="@color/box_stroke" />
 
                 <!-- 상세정보 -->
 
@@ -285,9 +284,11 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
                             android:layout_weight="1"
-                            android:padding="8dp"
-                            android:text="@string/term_product_detail_info" />
+                            android:text="@string/term_product_detail_info"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="14sp" />
 
                         <ImageView
                             android:id="@+id/toggle_product_detail_info"
@@ -301,7 +302,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray" />
+                        android:background="@color/box_stroke" />
 
                     <LinearLayout
                         android:id="@+id/container_product_detail_info"
@@ -324,6 +325,14 @@
                             android:layout_marginTop="8dp"
                             android:layout_weight="1" />
                     </LinearLayout>
+                    
+                    <View
+                        android:id="@+id/product_detail_info_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/box_stroke"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <!-- 배송정보 -->
@@ -343,9 +352,11 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
                             android:layout_weight="1"
-                            android:padding="8dp"
-                            android:text="@string/term_product_detail_delivery_info" />
+                            android:text="@string/term_product_detail_delivery_info"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="14sp" />
 
                         <ImageView
                             android:id="@+id/toggle_product_detail_delivery_info"
@@ -359,7 +370,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray" />
+                        android:background="@color/box_stroke" />
 
                     <LinearLayout
                         android:id="@+id/product_detail_delivery_layout"
@@ -392,7 +403,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@color/gray"
+                        android:background="@color/box_stroke"
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -413,9 +424,11 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
                             android:layout_weight="1"
-                            android:padding="8dp"
-                            android:text="@string/term_product_detail_refund" />
+                            android:text="@string/term_product_detail_refund"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="14sp" />
 
                         <ImageView
                             android:id="@+id/toggle_product_detail_refund"
@@ -428,7 +441,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray" />
+                        android:background="@color/box_stroke" />
 
                     <LinearLayout
                         android:id="@+id/product_detail_refund_layout"
@@ -459,7 +472,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="12dp"
-                            android:background="@color/gray" />
+                            android:background="@color/box_stroke" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -482,7 +495,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:background="@color/gray" />
+                    android:background="@color/box_stroke" />
 
                 <!-- 추천상품 -->
 
@@ -524,7 +537,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/gray"
+                    android:background="@color/box_stroke"
                     android:paddingBottom="50dp" />
 
                 <RelativeLayout
@@ -574,7 +587,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/darker_gray_transparent"
+            android:background="@drawable/btn_background_blue"
             android:text="@string/term_my_cart"
             android:textColor="@android:color/white"
             android:visibility="gone" />
@@ -584,7 +597,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/dark_pink_transparent"
+            android:background="@drawable/btn_background_pink"
             android:text="@string/term_buy_immediately"
             android:textColor="@android:color/white"
             android:visibility="gone" />

@@ -29,7 +29,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
@@ -62,7 +61,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private LinearLayout productDtailInfo, deliveryInfo, refundInfo;
   private ImageView toggleProductDetailInfo, toggleDeliveryInfo, toggleRefund;
   private LinearLayout containerProductDetailInfo, containerProductRefundInfo, containerProductDeliveryInfo;
-  private View productDeliveryUnderLine;
+  private View productDeliveryUnderLine, productDetailUnderLine;
   private TextView textRefundLink;
   private LinearLayout recommendProductContainer;
   private ProgressBar progressBar;
@@ -134,6 +133,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     refundInfo = (LinearLayout) findViewById(R.id.product_detail_refund);
     toggleRefund = (ImageView) findViewById(R.id.toggle_product_detail_refund);
     containerProductDetailInfo = (LinearLayout) findViewById(R.id.container_product_detail_info);
+    productDetailUnderLine = (View) findViewById(R.id.product_detail_info_view);
     containerProductDeliveryInfo = (LinearLayout) findViewById(R.id.product_detail_delivery_layout);
     productDeliveryUnderLine = (View) findViewById(R.id.product_detail_delivery_view);
     containerProductRefundInfo = (LinearLayout) findViewById(R.id.product_detail_refund_layout);
@@ -226,6 +226,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       btnSoldOut.setVisibility(View.GONE);
       btnCart.setVisibility(View.VISIBLE);
       btnBuy.setVisibility(View.VISIBLE);
+      btnWishList.setVisibility(View.VISIBLE);
       optionAmountPickerView.setOptions(productDetail.productOptionArr, productDetail.productOptionList);
     }
     
@@ -333,17 +334,15 @@ public class TrendProductDetailActivity extends ActionBarActivity
         setItemAttributes(optionAmountPickerView.optionColor, optionAmountPickerView.optionSize, optionAmountPickerView.amount);
         if(v.getId() == R.id.btn_my_cart)
         {
-//          Toast.makeText(TrendProductDetailActivity.this, "add cart", Toast.LENGTH_SHORT).show();
           new AddCartTask().execute();
         }else if(v.getId() == R.id.btn_checkout)
         {
-          String url = "newOrderNow?_hgy_token="+PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq()
+          String url = "_hgy_token="+PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq()
               + "&product_id=" + productId + "&itemAttributesList=" + itemAttribute;
           Intent i = new Intent(TrendProductDetailActivity.this, TrendCartActivity.class);
-          i.putExtra("Cart_url", url);
+          i.putExtra("cart_parameter", url);
           startActivity(i);
           optionAmountPickerView.initSpinner();
-//          Toast.makeText(TrendProductDetailActivity.this, "buy now", Toast.LENGTH_SHORT).show();
         }
       }else
       {
@@ -394,11 +393,16 @@ public class TrendProductDetailActivity extends ActionBarActivity
         btnTop.setVisibility(View.VISIBLE);
         btnImageDetail.setVisibility(View.VISIBLE);
         if (!toggleProductDetailInfo.isActivated())
+        {
           containerProductDetailInfo.setVisibility(View.VISIBLE);
-        else{
+          productDetailUnderLine.setVisibility(View.VISIBLE);
+        }
+        else
+        {
           containerProductDetailInfo.setVisibility(View.GONE);
           btnImageDetail.setVisibility(View.GONE);
           btnTop.setVisibility(View.GONE);
+          productDetailUnderLine.setVisibility(View.GONE);
         }
         toggleProductDetailInfo.setActivated(!toggleProductDetailInfo.isActivated());
       }
