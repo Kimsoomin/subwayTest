@@ -796,7 +796,7 @@ public class ApiClient
       NetworkResult result;
       
       if (TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
-        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1" + "&limit=2");
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1&limit=2");
       else
         result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&palceIdx=" + idx + "&lang=zh_cn&isRandom=1" + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq()
             + "&limit=2");
@@ -915,6 +915,11 @@ public class ApiClient
   public JSONObject addCart(HashMap<String, String> body)
   {
     return httpClient.requestTrendyPost(devshopUrl  + "cart/newAdd", body);
+  }
+  
+  public NetworkResult getMapBanner(double lat, double lng)
+  {
+    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_AREA_BANNER&lat=" + lat + "&lng=" + lng);
   }
   
   
