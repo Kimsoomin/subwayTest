@@ -3,17 +3,28 @@ package com.dabeeo.hanhayou.fragments.coupon;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -27,9 +38,25 @@ import com.dabeeo.hanhayou.managers.network.NetworkResult;
 public class CouponListFragment extends Fragment
 {
   private ProgressBar progressBar;
-  private CouponListAdapter adapter;
-  private int page = 1;
+  private ListView listMyLocation, listPopular;
+  private CouponListAdapter listMyLocationAdapter;
+  private CouponListAdapter listPopularAdapter;
+  private int myLocationListpage = 1;
+  private int popularListpage = 1;
   private ApiClient apiClient;
+  private LocationManager locationManager;
+  private LocationListener locationListener;
+  
+  private Handler handler = new Handler();
+  private static int LCOATION_TIME_OUT_SECOND = 30 * 1000;
+  
+  private boolean isMyLocationLoadEnded = false;
+  private boolean isPopularLoadEnded = false;
+  private Button btnMyLocation, btnPopular;
+  private Location currentLocation;
+  private boolean isResultGPSOn = false;
+  
+  private LinearLayout emptyContainer;
   
   
   @Override
@@ -48,38 +75,253 @@ public class CouponListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
     
-    adapter = new CouponListAdapter(getActivity());
+    listMyLocationAdapter = new CouponListAdapter(getActivity());
+    listMyLocation = (ListView) getView().findViewById(R.id.list_my_location);
+    listMyLocation.setOnItemClickListener(itemClickListener);
+    listMyLocation.setOnScrollListener(scrollListener);
+    listMyLocation.setAdapter(listMyLocationAdapter);
     
-    ListView listView = (ListView) getView().findViewById(android.R.id.list);
-    listView.setOnItemClickListener(itemClickListener);
-//    listView.setOnScrollListener(scrollListener);
-    listView.setAdapter(adapter);
+    listPopularAdapter = new CouponListAdapter(getActivity());
+    listPopular = (ListView) getView().findViewById(R.id.list_popular);
+    listPopular.setOnItemClickListener(itemClickListener);
+    listPopular.setOnScrollListener(scrollListener);
+    listPopular.setAdapter(listPopularAdapter);
     
-    load(page);
+    btnMyLocation = (Button) getView().findViewById(R.id.btn_my_location);
+    btnPopular = (Button) getView().findViewById(R.id.btn_popular);
+    btnMyLocation.setOnClickListener(btnClickListener);
+    btnPopular.setOnClickListener(btnClickListener);
+    btnMyLocation.setActivated(true);
+    
+    locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+    locationListener = new SubwayLocationListener();
+    
+    emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
+    selectedListView(true);
   }
   
   
-  private void load(int offset)
+  @Override
+  public void onResume()
   {
-//    progressBar.setVisibility(View.VISIBLE);
-//    new GetAsyncTask().execute();
+    if (isResultGPSOn)
+    {
+      selectedListView(true);
+      isResultGPSOn = false;
+    }
+    super.onResume();
+  }
+  
+  private Runnable timeOutFindStationCallBack = new Runnable()
+  {
+    public void run()
+    {
+      selectedListView(false);
+    }
+  };
+  
+  private OnClickListener btnClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if (v.getId() == btnMyLocation.getId())
+        selectedListView(true);
+      else
+        selectedListView(false);
+    }
+  };
+  
+  
+  private void selectedListView(boolean isMyLocation)
+  {
+    btnMyLocation.setActivated(false);
+    btnPopular.setActivated(false);
     
-    CouponBean bean = new CouponBean();
-    bean.title = "더페이스샵 5천원 할인쿠폰 (홍대점)";
-    bean.fromValidityDate = "2015.04.11";
-    bean.toValidityDate = "2015.09.11";
-    adapter.add(bean);
+    if (isMyLocation)
+    {
+      if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        buildAlertMessageNoGps();
+      else
+      {
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.bringToFront();
+        
+        handler.postDelayed(timeOutFindStationCallBack, LCOATION_TIME_OUT_SECOND);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        btnMyLocation.setActivated(true);
+      }
+    }
+    else
+    {
+      btnPopular.setActivated(true);
+      listPopular.setVisibility(View.VISIBLE);
+      listMyLocation.setVisibility(View.GONE);
+      
+      load();
+    }
+  }
+  
+  
+  private void buildAlertMessageNoGps()
+  {
+    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setTitle(R.string.app_name).setMessage(R.string.msg_please_gps_enable).setCancelable(false).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+    {
+      public void onClick(final DialogInterface dialog, final int id)
+      {
+        isResultGPSOn = true;
+        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+      }
+    }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+    {
+      public void onClick(final DialogInterface dialog, final int id)
+      {
+        selectedListView(false);
+        dialog.cancel();
+      }
+    });
+    final AlertDialog alert = builder.create();
+    alert.show();
+  }
+  
+  
+  private void load()
+  {
+    progressBar.setVisibility(View.VISIBLE);
+    progressBar.bringToFront();
+    new GetAsyncTask().execute();
+  }
+  
+  /**************************************************
+   * async task
+   ***************************************************/
+  private class GetAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      if (btnMyLocation.isActivated())
+        return apiClient.getCouponWithMyLocation(myLocationListpage, currentLocation.getLatitude(), currentLocation.getLongitude());
+      else
+        return apiClient.getCouponPopular(popularListpage);
+    }
     
-    bean = new CouponBean();
-    bean.title = "크리스피 크림 도넛 더즌 1+1 쿠폰 (롯데 백화점 본점) 크리스피 크림 도넛 더즌 1+1";
-    bean.fromValidityDate = "2015.04.11";
-    bean.toValidityDate = "2015.09.11";
-    adapter.add(bean);
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      if (!result.isSuccess)
+        return;
+      
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if (obj.has("coupon"))
+        {
+          JSONArray arr = obj.getJSONArray("coupon");
+          for (int i = 0; i < arr.length(); i++)
+          {
+            JSONObject objInArr = arr.getJSONObject(i);
+            CouponBean bean = new CouponBean();
+            bean.setJSONObject(objInArr);
+            if (btnMyLocation.isActivated())
+              listMyLocationAdapter.add(bean);
+            else
+              listPopularAdapter.add(bean);
+          }
+          
+          if (btnMyLocation.isActivated())
+            listMyLocationAdapter.notifyDataSetChanged();
+          else
+            listPopularAdapter.notifyDataSetChanged();
+        }
+        else
+        {
+          if (btnMyLocation.isActivated())
+            isMyLocationLoadEnded = true;
+          if (btnPopular.isActivated())
+            isPopularLoadEnded = true;
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
+      if (btnMyLocation.isActivated())
+      {
+        if (listMyLocationAdapter.getCount() == 0)
+        {
+          listMyLocation.setVisibility(View.GONE);
+          listPopular.setVisibility(View.GONE);
+          emptyContainer.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+          listMyLocation.setVisibility(View.VISIBLE);
+          listPopular.setVisibility(View.GONE);
+          emptyContainer.setVisibility(View.GONE);
+        }
+      }
+      else
+      {
+        if (listPopularAdapter.getCount() == 0)
+        {
+          listMyLocation.setVisibility(View.GONE);
+          listPopular.setVisibility(View.GONE);
+          emptyContainer.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+          listMyLocation.setVisibility(View.GONE);
+          listPopular.setVisibility(View.VISIBLE);
+          emptyContainer.setVisibility(View.GONE);
+        }
+      }
+      
+      progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
   }
   
   /**************************************************
    * listener
    ***************************************************/
+  private class SubwayLocationListener implements LocationListener
+  {
+    
+    @Override
+    public void onLocationChanged(Location loc)
+    {
+      handler.removeCallbacks(timeOutFindStationCallBack);
+      Log.w("WARN", "LocationChanged! " + loc.getLatitude() + " / " + loc.getLongitude());
+      locationManager.removeUpdates(locationListener);
+      
+      currentLocation = loc;
+      load();
+    }
+    
+    
+    @Override
+    public void onProviderDisabled(String provider)
+    {
+    }
+    
+    
+    @Override
+    public void onProviderEnabled(String provider)
+    {
+    }
+    
+    
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras)
+    {
+    }
+  }
+  
   private OnItemClickListener itemClickListener = new OnItemClickListener()
   {
     @Override
@@ -105,53 +347,19 @@ public class CouponListFragment extends Fragment
     {
       if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
       {
-        page++;
-        load(page);
+        if (btnMyLocation.isActivated() && isMyLocationLoadEnded)
+          return;
+        if (btnPopular.isActivated() && isPopularLoadEnded)
+          return;
+        
+        if (btnMyLocation.isActivated())
+          myLocationListpage++;
+        else
+          popularListpage++;
+        
+        load();
       }
     }
   };
   
-  /**************************************************
-   * async task
-   ***************************************************/
-  private class GetAsyncTask extends AsyncTask<String, Integer, NetworkResult>
-  {
-    @Override
-    protected NetworkResult doInBackground(String... params)
-    {
-      return apiClient.getAllCoupon(page, "Place");
-    }
-    
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      if (!result.isSuccess)
-        return;
-      
-      try
-      {
-        JSONObject obj = new JSONObject(result.response);
-        JSONArray arr = obj.getJSONArray("travelog");
-        for (int i = 0; i < arr.length(); i++)
-        {
-          JSONObject objInArr = arr.getJSONObject(i);
-          CouponBean bean = new CouponBean();
-          bean.setJSONObject(objInArr);
-          bean.description = "200,000 이상 구매시";
-          bean.fromValidityDate = "2015.04.11";
-          bean.toValidityDate = "2015.09.11";
-          adapter.add(bean);
-        }
-        adapter.notifyDataSetChanged();
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-      
-      progressBar.setVisibility(View.GONE);
-      super.onPostExecute(result);
-    }
-  }
 }

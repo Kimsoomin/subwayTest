@@ -50,27 +50,27 @@ public class DownloadedCouponListFragment extends Fragment
     
     adapter = new DownloadedCouponListAdapter(getActivity());
     
-    ListView listView = (ListView) getView().findViewById(android.R.id.list);
-    listView.setOnItemClickListener(itemClickListener);
+//    ListView listView = (ListView) getView().findViewById(android.R.id.list);
+//    listView.setOnItemClickListener(itemClickListener);
 //    listView.setOnScrollListener(scrollListener);
-    listView.setAdapter(adapter);
+//    listView.setAdapter(adapter);
     
 //    load(page);
     
     //TEST BEAN
-    CouponBean bean = new CouponBean();
-    bean.title = "더페이스샵 5천원 할인쿠폰 (홍대점)";
-    bean.fromValidityDate = "2015.04.11";
-    bean.toValidityDate = "2015.09.11";
-    bean.isUsed = false;
-    adapter.add(bean);
-    
-    bean = new CouponBean();
-    bean.title = "크리스피 크림 도넛 더즌 1+1 쿠폰 (롯데 백화점 본점) 크리스피 크림 도넛 더즌 1+1";
-    bean.fromValidityDate = "2015.04.11";
-    bean.toValidityDate = "2015.09.11";
-    bean.isUsed = true;
-    adapter.add(bean);
+//    CouponBean bean = new CouponBean();
+//    bean.title = "더페이스샵 5천원 할인쿠폰 (홍대점)";
+//    bean.fromValidityDate = "2015.04.11";
+//    bean.toValidityDate = "2015.09.11";
+//    bean.isUsed = false;
+//    adapter.add(bean);
+//    
+//    bean = new CouponBean();
+//    bean.title = "크리스피 크림 도넛 더즌 1+1 쿠폰 (롯데 백화점 본점) 크리스피 크림 도넛 더즌 1+1";
+//    bean.fromValidityDate = "2015.04.11";
+//    bean.toValidityDate = "2015.09.11";
+//    bean.isUsed = true;
+//    adapter.add(bean);
   }
   
   
@@ -89,12 +89,12 @@ public class DownloadedCouponListFragment extends Fragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
       CouponBean bean = (CouponBean) adapter.getItem(position);
-      if (!bean.isUsed)
-      {
-        Intent i = new Intent(getActivity(), DownloadedCouponDetailActivity.class);
-        i.putExtra("coupon_id", position);
-        startActivity(i);
-      }
+//      if (!bean.isUsed)
+//      {
+//        Intent i = new Intent(getActivity(), DownloadedCouponDetailActivity.class);
+//        i.putExtra("coupon_id", position);
+//        startActivity(i);
+//      }
     }
   };
   
@@ -146,11 +146,11 @@ public class DownloadedCouponListFragment extends Fragment
           JSONObject objInArr = arr.getJSONObject(i);
           CouponBean bean = new CouponBean();
           bean.setJSONObject(objInArr);
-          bean.description = "100,000이상 구매 시";
-          bean.fromValidityDate = "2015.04.11";
-          bean.toValidityDate = "2015.09.11";
-          bean.isUsed = i % 2 == 1;
-          adapter.add(bean);
+//          bean.description = "100,000이상 구매 시";
+//          bean.fromValidityDate = "2015.04.11";
+//          bean.toValidityDate = "2015.09.11";
+//          bean.isUsed = i % 2 == 1;
+//          adapter.add(bean);
         }
       }
       catch (Exception e)

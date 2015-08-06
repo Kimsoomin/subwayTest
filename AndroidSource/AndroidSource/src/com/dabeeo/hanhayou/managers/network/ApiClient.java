@@ -34,6 +34,7 @@ import com.dabeeo.hanhayou.utils.SystemUtil;
 public class ApiClient
 {
   private String siteUrl = "http://gs.blinking.kr:8900/_libs/api.common.php";
+  private String siteCouponUrl = "http://gs2.blinking.kr:8900/_libs/api.common.php";
   private String devUrl = "http://dev.hanhayou.com/_libs/api.common.php";
   private String devshopUrl = "https://devshop.hanhayou.com/ecom/";
 //  private String testUrl = "http://10.53.13.18/_libs/api.common.php";
@@ -994,9 +995,15 @@ public class ApiClient
   }
   
   
-  public NetworkResult getAllCoupon(int page, String contentType)
+  public NetworkResult getCouponWithMyLocation(int page, double lat, double lon)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return httpClient.requestGet(siteCouponUrl + "?mode=COUPON_LIST&page=" + page + "&list_type=page&page_count=5&v=coupon&sort_type=distance&lat=" + lat + "&lng=" + lon);
+  }
+  
+  
+  public NetworkResult getCouponPopular(int page)
+  {
+    return httpClient.requestGet(siteCouponUrl + "?mode=COUPON_LIST&page=" + page + "&list_type=page&page_count=5&v=coupon&sort_type=rating");
   }
   
   

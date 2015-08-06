@@ -501,4 +501,11 @@
     <string name="msg_not_find_email">您输入的帐号不存在</string>
     <string name="msg_not_chinese">该服务仅限中国人注册使用。</string>
 
+    <!-- 추가 스트링 -->
+    <string name="term_sort_my_location">내 위치순</string>
+    <string name="term_sort_popular">인기순</string>
+    <string name="msg_empty_coupon">쿠폰이 없습니다.</string>
+    <string name="term_notimelimit">제한없음</string>
+    <string name="term_exhaustion">~ 소진시까지</string>
+
 </resources>
