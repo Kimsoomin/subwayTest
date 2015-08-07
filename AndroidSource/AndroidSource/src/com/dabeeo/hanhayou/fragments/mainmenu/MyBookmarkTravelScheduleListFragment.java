@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,8 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ import com.dabeeo.hanhayou.controllers.mypage.MySchedulesListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MyBookmarkTravelScheduleListFragment extends Fragment
 {
@@ -56,6 +60,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   public boolean isEditmode = false;
   public View bottomMargin;
   
+  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -73,6 +78,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     
     allCheckContainer = (LinearLayout) getView().findViewById(R.id.container_all_checking);
     allCheckBox = (CheckBox) getView().findViewById(R.id.all_check_box);
+    allCheckBox.setOnCheckedChangeListener(checkedChangeListener);
     selectDelete = (TextView) getView().findViewById(R.id.select_delete);
     selectDelete.setOnClickListener(deleteButtonClickListener);
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
@@ -96,12 +102,13 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
       {
-        if(isEditmode)
+        if (isEditmode)
         {
           if (totalItemCount > 0 && totalItemCount == firstVisibleItem + visibleItemCount)
           {
             bottomMargin.setVisibility(View.VISIBLE);
-          }else
+          }
+          else
           {
             bottomMargin.setVisibility(View.GONE);
           }
@@ -186,8 +193,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       if (idxes.isEmpty())
         return;
       
-      final String[] idxesString = idxes.toArray(new String[idxes.size()]);
-      
+      final ArrayList<String> finalIdxs = idxes;
       Builder dialog = new AlertDialog.Builder(getActivity());
       dialog.setTitle(getString(R.string.term_alert));
       dialog.setMessage(getString(R.string.term_delete_confirm));
@@ -207,7 +213,33 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
             ((MyBookmarkActivity) getActivity()).toggleEditMode(false);
           }
           
-          new DelAsyncTask().execute(idxesString);
+          String deleteIdxs = "";
+          if (finalIdxs.size() > 1)
+          {
+            for (int i = 0; i < finalIdxs.size(); i++)
+            {
+              deleteIdxs += finalIdxs.get(i);
+              if (i != finalIdxs.size() - 1)
+                deleteIdxs += ",";
+            }
+          }
+          else
+          {
+            try
+            {
+              deleteIdxs = finalIdxs.get(0);
+            }
+            catch (Exception e)
+            {
+              e.printStackTrace();
+            }
+          }
+          
+          if (SystemUtil.isConnectNetwork(getActivity()))
+          {
+            if (!TextUtils.isEmpty(deleteIdxs))
+              new DelAsyncTask().execute(deleteIdxs);
+          }
         }
       });
       dialog.setNegativeButton(android.R.string.cancel, null);
@@ -220,10 +252,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
     @Override
     protected Void doInBackground(String... params)
     {
-      for (String idx : params)
-      {
-        apiClient.setUsedLog(PreferenceManager.getInstance(getActivity()).getUserSeq(), idx, "plan", "B");
-      }
+      apiClient.reqeustBookmarkCancel(PreferenceManager.getInstance(getActivity()).getUserSeq(), params[0], "plan");
       return null;
     }
   }
@@ -231,6 +260,15 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
   /**************************************************
    * listener
    ***************************************************/
+  private OnCheckedChangeListener checkedChangeListener = new OnCheckedChangeListener()
+  {
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+    {
+      adapter.setAllCheck(isChecked);
+    }
+  };
+  
   private OnItemClickListener itemClickListener = new OnItemClickListener()
   {
     @Override
