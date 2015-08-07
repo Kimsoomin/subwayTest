@@ -148,7 +148,7 @@ public class TrendProductWithCategoryActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.getCategoryProductList(categoryId);
+      return apiClient.getCategoryProductList(categoryId, 0);
     }
     
     @Override

@@ -598,7 +598,7 @@ public class ApiClient
     ArrayList<ReviewBean> beans = new ArrayList<ReviewBean>();
     if (SystemUtil.isConnectNetwork(context))
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=10");
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=REVIEW_LIST&parentType=" + parentType + "&parentIdx=" + parentIdx + "&p=" + page + "&pn=3");
       JSONObject obj;
       try
       {
@@ -729,7 +729,7 @@ public class ApiClient
   }
   
   
-  public NetworkResult getCategoryProductList(String categoryId)
+  public NetworkResult getCategoryProductList(String categoryId, int limit)
   {
     String url = getSiteUrl() + "?v=m1&mode=PRODUCT_LIST";
     
@@ -745,6 +745,11 @@ public class ApiClient
     if (!TextUtils.isEmpty(PreferenceManager.getInstance(context).getUserSeq()))
     {
       url += "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
+    }
+    
+    if(limit != 0)
+    {
+      url += "&limit=" + limit;
     }
     
     return httpClient.requestGet(url);

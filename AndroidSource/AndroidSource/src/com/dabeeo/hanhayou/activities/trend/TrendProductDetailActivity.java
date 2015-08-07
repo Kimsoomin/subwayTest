@@ -3,6 +3,7 @@ package com.dabeeo.hanhayou.activities.trend;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -71,6 +72,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private Button btnImageDetail, btnTop;
   private CustomScrollView scrollView;
   
+  private ProductJustOneView recommendProductView;
   private RelativeLayout reviewLayout;
   private ProductReviewContainerView reviewContainerView;
   private TrendOptionAndAmountPickView optionAmountPickerView;
@@ -193,7 +195,10 @@ public class TrendProductDetailActivity extends ActionBarActivity
       }
     });
     
+    recommendProductView = new ProductJustOneView(TrendProductDetailActivity.this);
+    
     new GetProductDetailTask().execute();
+    new GetProductDetailRecomendProductTask().execute();
     
   }
   
@@ -245,7 +250,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     textDeliverySpecificDate.setVisibility(View.VISIBLE);
     discountRate.setText(productDetail.saleRate + getString(R.string.term_sale_rate));
     
-    reviewContainerView = new ProductReviewContainerView(TrendProductDetailActivity.this, "place", "");
+    reviewContainerView = new ProductReviewContainerView(TrendProductDetailActivity.this, "product", productId);
     reviewLayout.addView(reviewContainerView);
     reviewContainerView.testLoadMore();
     
@@ -299,14 +304,6 @@ public class TrendProductDetailActivity extends ActionBarActivity
     productDtailInfo.setOnClickListener(toggleClickListener);
     deliveryInfo.setOnClickListener(toggleClickListener);
     refundInfo.setOnClickListener(toggleClickListener);
-    
-    recommendProductContainer.removeAllViews();
-    for (int i = 0; i < 7; i++)
-    {
-      ProductJustOneView view = new ProductJustOneView(TrendProductDetailActivity.this);
-      view.setBean(new ProductBean());
-      recommendProductContainer.addView(view);
-    }
   }
   
   
@@ -449,6 +446,40 @@ public class TrendProductDetailActivity extends ActionBarActivity
     return super.onOptionsItemSelected(item);
   }
   
+  
+  public void createAddCartAlert(boolean addCart)
+  {
+    String title = getString(R.string.term_alert);
+    String message = "";
+    String okString = "";
+    String cancelString = "";
+    if(addCart)
+    {
+      message = getString(R.string.term_product_add_cart);
+      okString = getString(R.string.term_product_cart_move);
+      cancelString = getString(R.string.term_product_shopping);
+      new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(title, message, okString, cancelString, new AlertListener()
+      {
+        @Override
+        public void onPositiveButtonClickListener()
+        {
+          startActivity(new Intent(TrendProductDetailActivity.this, TrendCartActivity.class));
+        }
+        
+        @Override
+        public void onNegativeButtonClickListener()
+        {
+        }
+      });
+    }
+    else
+    {
+      message = getString(R.string.term_product_fail_cart);
+      okString = getString(R.string.term_ok);
+      new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(title, message, okString, null, null);
+    }      
+  }
+  
   /**
    * AsyncTask 
    **/
@@ -568,37 +599,43 @@ public class TrendProductDetailActivity extends ActionBarActivity
     }
   }
   
-  public void createAddCartAlert(boolean addCart)
+  private class GetProductDetailRecomendProductTask extends AsyncTask<Void, Void, NetworkResult>
   {
-    String title = getString(R.string.term_alert);
-    String message = "";
-    String okString = "";
-    String cancelString = "";
-    if(addCart)
+
+    @Override
+    protected NetworkResult doInBackground(Void... params)
     {
-      message = getString(R.string.term_product_add_cart);
-      okString = getString(R.string.term_product_cart_move);
-      cancelString = getString(R.string.term_product_shopping);
-      new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(title, message, okString, cancelString, new AlertListener()
+      return apiClient.getCategoryProductList("0", 3);
+    }
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      super.onPostExecute(result);
+      recommendProductContainer.removeAllViews();
+      try
       {
-        @Override
-        public void onPositiveButtonClickListener()
+        ArrayList<ProductBean> productList = new ArrayList<ProductBean>();
+        JSONObject obj = new JSONObject(result.response);
+        if(obj.has("product"))
         {
-          startActivity(new Intent(TrendProductDetailActivity.this, TrendCartActivity.class));
+          JSONArray objInArr = obj.getJSONArray("product");
+          for(int i = 0; i < objInArr.length(); i++)
+          {
+            ProductBean product = new ProductBean();
+            JSONObject productobj = objInArr.getJSONObject(i);
+            product.setJSONObject(productobj);
+            productList.add(product);
+          }
         }
         
-        @Override
-        public void onNegativeButtonClickListener()
-        {
-        }
-      });
+        recommendProductView.setBean(productList);
+        recommendProductContainer.addView(recommendProductView);
+      }
+      catch (Exception e)
+      {
+        BlinkingCommon.smlLibPrintException("TrendProductDetailActivity", "e : " + e);
+      }
     }
-    else
-    {
-      message = getString(R.string.term_product_fail_cart);
-      okString = getString(R.string.term_ok);
-      new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(title, message, okString, null, null);
-    }      
   }
-  
 }
