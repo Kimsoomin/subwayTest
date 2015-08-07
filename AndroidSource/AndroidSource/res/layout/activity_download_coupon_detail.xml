@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:contentDescription="@null"
-                android:scaleType="centerInside" />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/text_title"

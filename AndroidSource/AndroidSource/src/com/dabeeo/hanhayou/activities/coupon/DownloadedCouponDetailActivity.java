@@ -115,9 +115,8 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   
   private void displayData()
   {
-//    Picasso.with(this).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
-    ImageDownloader.displayImage(this, bean.couponImageUrl, imageView, null);
-    ImageDownloader.displayImage(this, bean.downloadCouponImage, barcodeImageView, null);
+    ImageDownloader.displayImage(this, "file:///" + bean.couponImageUrl, imageView, null);
+    ImageDownloader.displayImageWithListener(this, "file:///" + bean.downloadCouponImage, barcodeImageView, null);
     
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
     if (bean.isNotimeLimit)
@@ -284,6 +283,14 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
+      try
+      {
+        apiClient.useCoupon(couponIdx, branchIdx);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
       couponDatabase.setUseCoupon(couponIdx, branchIdx);
       return null;
     }

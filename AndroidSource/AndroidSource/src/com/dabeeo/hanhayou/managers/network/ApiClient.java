@@ -1022,20 +1022,13 @@ public class ApiClient
   }
   
   
-  public NetworkResult getDownloadedCoupon(int page, String contentType)
+  public NetworkResult useCoupon(String couponIdx, String branchIdx)
   {
-    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
+    return httpClient.requestGet(siteCouponUrl + "?v=coupon&mode=COUPON_USED&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&coupon_idx=" + couponIdx + "&branch_idx=" + branchIdx);
   }
   
   
   public NetworkResult checkAlreadyHaveCoupon(String couponId)
-  {
-//    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
-    return new NetworkResult(true, null, 1);
-  }
-  
-  
-  public NetworkResult useCoupon(String couponId)
   {
 //    return httpClient.requestGet(getSiteUrl() + "?v=m1&mode=TRAVELOG_LIST&p=" + page + "&contentType=" + contentType);
     return new NetworkResult(true, null, 1);
