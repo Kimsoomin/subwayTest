@@ -122,7 +122,7 @@ public class TrendProductListAdapter extends BaseAdapter
     
     Picasso.with(context).load(bean.imageUrl).fit().centerCrop().into(imageView);
     title.setText(bean.name);
-    price.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(bean.priceSale)));
+    price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(bean.priceSale)));
     String ch_price = Global.getCurrencyConvert(context, Integer.parseInt(bean.priceSale), Float.parseFloat(bean.currencyConvert));
     chinesePrice.setText(ch_price);
     discountRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));

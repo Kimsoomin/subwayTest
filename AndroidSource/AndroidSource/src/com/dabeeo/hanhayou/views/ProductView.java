@@ -65,7 +65,7 @@ public class ProductView extends RelativeLayout
       firstImageView.setImageResource(R.drawable.sample_place_detail_shopping_list1);
       firstContainer.setVisibility(View.VISIBLE);
       firstTitle.setText(firstBean.name);
-      firstOriginalPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(firstBean.priceSale)));
+      firstOriginalPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(firstBean.priceSale)));
       ch_price = Global.getCurrencyConvert(context, Integer.parseInt(firstBean.priceSale), Float.parseFloat(firstBean.currencyConvert));
       firstCnPrice.setText(ch_price);
       firstDiscountRate.setText(firstBean.saleRate + context.getString(R.string.term_sale_rate));
@@ -89,7 +89,7 @@ public class ProductView extends RelativeLayout
       secondContainer.setVisibility(View.VISIBLE);
       Picasso.with(context).load(secondBean.imageUrl).fit().centerCrop().into(secondImageView);
       secondTitle.setText(secondBean.name);
-      secondOriginalPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(secondBean.priceSale)));
+      secondOriginalPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(secondBean.priceSale)));
       ch_price = Global.getCurrencyConvert(context, Integer.parseInt(secondBean.priceSale), Float.parseFloat(secondBean.currencyConvert));
       secondCnPrice.setText(ch_price);
       secondDiscountRate.setText(secondBean.saleRate + context.getString(R.string.term_sale_rate));

@@ -143,7 +143,7 @@ public class WishListAdapter extends BaseAdapter
     });
     
     title.setText(bean.name);
-    price.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(bean.priceSale)));
+    price.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(bean.priceSale)));
     String ch_price = Global.getCurrencyConvert(context, Integer.parseInt(bean.priceSale), Float.parseFloat(bean.currencyConvert));
     chinaPrice.setText(ch_price);
     saleRate.setText(bean.saleRate + context.getString(R.string.term_sale_rate));

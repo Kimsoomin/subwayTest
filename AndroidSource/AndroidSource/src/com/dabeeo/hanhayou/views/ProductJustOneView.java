@@ -72,7 +72,7 @@ public class ProductJustOneView extends RelativeLayout
     if(firstProduct != null)
     {
       Picasso.with(context).load(firstProduct.imageUrl).fit().centerCrop().into(firstProudctImage);
-      firstPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(firstProduct.priceSale)));
+      firstPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(firstProduct.priceSale)));
       firstChinaPrice.setText(Global.getCurrencyConvert(context, Integer.parseInt(firstProduct.priceSale), Float.parseFloat(firstProduct.currencyConvert)));
     }else
     {
@@ -82,7 +82,7 @@ public class ProductJustOneView extends RelativeLayout
     if(secondProduct != null)
     {
       Picasso.with(context).load(secondProduct.imageUrl).fit().centerCrop().into(secondProductImage);
-      secondPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(secondProduct.priceSale)));
+      secondPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(secondProduct.priceSale)));
       secondChinaPrice.setText(Global.getCurrencyConvert(context, Integer.parseInt(secondProduct.priceSale), Float.parseFloat(secondProduct.currencyConvert)));
     }else
     {
@@ -92,7 +92,7 @@ public class ProductJustOneView extends RelativeLayout
     if(thirdProduct != null)
     {
       Picasso.with(context).load(thirdProduct.imageUrl).fit().centerCrop().into(thirdProductImage);
-      thirdPrice.setText(context.getString(R.string.term_won) + " " + NumberFormatter.addComma(Integer.parseInt(thirdProduct.priceSale)));
+      thirdPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(thirdProduct.priceSale)));
       thirdChinaPrice.setText(Global.getCurrencyConvert(context, Integer.parseInt(thirdProduct.priceSale), Float.parseFloat(thirdProduct.currencyConvert)));
     }else
     {

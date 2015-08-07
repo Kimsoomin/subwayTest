@@ -26,7 +26,6 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -65,7 +64,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private View productDeliveryUnderLine, productDetailUnderLine;
   private TextView textRefundLink;
   private LinearLayout recommendProductContainer;
-  private ProgressBar progressBar;
+  private RelativeLayout progressLayout;
   
   private LinearLayout productTextContentContainer;
   private WebView productImage;
@@ -103,7 +102,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
-    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+    progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
     
     viewPager = (ViewPager) findViewById(R.id.viewpager);
     adapter = new TrendProductImageViewPagerAdapter(this, getSupportFragmentManager());
@@ -243,8 +242,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
     adapter.addAll(imageUrls);
     
     productTitle.setText(productDetail.cnName);
-    price.setText(getString(R.string.term_won) + " "+ NumberFormatter.addComma(productDetail.salePrice));
-    discountPrice.setText(getString(R.string.term_won) + " " + NumberFormatter.addComma(productDetail.discountPrice));
+    price.setText(getString(R.string.term_won) + NumberFormatter.addComma(productDetail.salePrice));
+    discountPrice.setText(getString(R.string.term_won) + NumberFormatter.addComma(productDetail.discountPrice));
     String ch_price = Global.getCurrencyConvert(this, productDetail.salePrice, productDetail.currencyConvert);
     discountPriceCn.setText(ch_price);
     textDeliverySpecificDate.setVisibility(View.VISIBLE);
@@ -489,8 +488,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
     @Override
     protected void onPreExecute()
     {
-      progressBar.bringToFront();
-      progressBar.setVisibility(View.VISIBLE);
+      progressLayout.bringToFront();
+      progressLayout.setVisibility(View.VISIBLE);
       super.onPreExecute();
     }
     
@@ -504,7 +503,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     protected void onPostExecute(ProductDetailBean result)
     {
       super.onPostExecute(result);
-      progressBar.setVisibility(View.GONE);
+      progressLayout.setVisibility(View.GONE);
       productDetail = result;
       
       if(productDetail != null)
