@@ -65,7 +65,6 @@ public class DownloadedCouponListFragment extends Fragment
     listView.setAdapter(adapter);
     
     couponDatabase = new OfflineCouponDatabaseManager(getActivity());
-    load();
   }
   
   

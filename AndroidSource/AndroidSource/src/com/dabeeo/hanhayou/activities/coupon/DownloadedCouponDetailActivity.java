@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   private Button btnUse;
   private ViewGroup layoutInfos;
   private OfflineCouponDatabaseManager couponDatabase;
+  private ImageView barcodeImageView;
   
   
   @Override
@@ -73,6 +75,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     couponIdx = getIntent().getStringExtra("coupon_idx");
     branchIdx = getIntent().getStringExtra("branch_idx");
     
+    barcodeImageView = (ImageView) findViewById(R.id.bacode_image);
     imageView = (ImageView) findViewById(R.id.imageview);
     textTitle = (TextView) findViewById(R.id.text_title);
     textValidityPeriod = (TextView) findViewById(R.id.text_validity_period);
@@ -114,6 +117,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   {
 //    Picasso.with(this).load("http://lorempixel.com/400/200/cats").fit().centerCrop().into(imageView);
     ImageDownloader.displayImage(this, bean.couponImageUrl, imageView, null);
+    ImageDownloader.displayImage(this, bean.downloadCouponImage, barcodeImageView, null);
     
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
     if (bean.isNotimeLimit)
@@ -132,6 +136,21 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     addDetailInfo(getString(R.string.term_coupon_tel), bean.tel);
     addDetailInfo(getString(R.string.term_coupon_how_to), bean.howto);
     addDetailInfo(getString(R.string.term_coupon_notice), bean.notice);
+    
+    if (bean.isUse)
+    {
+      btnUse.setEnabled(false);
+      btnUse.setBackgroundDrawable(getResources().getDrawable(R.drawable.dark_gray));
+      btnUse.setTextColor(Color.WHITE);
+      btnUse.setText(getString(R.string.term_used));
+    }
+    else
+    {
+      btnUse.setEnabled(true);
+      btnUse.setBackgroundColor(getResources().getColor(R.color.dark_pink_transparent));
+      btnUse.setTextColor(Color.WHITE);
+      btnUse.setText(getString(R.string.term_use_coupon));
+    }
   }
   
   
@@ -206,39 +225,6 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     });
   }
   
-  
-  private void onAfterCheckAlreadyHave(boolean alreadyHave)
-  {
-    if (!alreadyHave)
-    {
-      new CouponDownloadTask().execute();
-      return;
-    }
-    
-    showAlert(getString(R.string.term_already_have_coupon));
-  }
-  
-  
-  private void showAlert(String msg)
-  {
-    new AlertDialog.Builder(this).setTitle(R.string.term_alert).setMessage(msg).setNegativeButton(android.R.string.cancel, null).setPositiveButton(R.string.term_show_coupon_list,
-        new DialogInterface.OnClickListener()
-        {
-          @Override
-          public void onClick(DialogInterface dialog, int which)
-          {
-            goToDownloadedCouponList();
-          }
-        }).create().show();
-  }
-  
-  
-  private void goToDownloadedCouponList()
-  {
-    setResult(RESULT_OK);
-    finish();
-  }
-  
   /**************************************************
    * listener
    ***************************************************/
@@ -249,6 +235,19 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     {
       if (v.getId() == btnUse.getId())
       {
+        new AlertDialog.Builder(DownloadedCouponDetailActivity.this).setTitle(R.string.term_alert)
+                                                                    .setMessage(getString(R.string.msg_use_confirm))
+                                                                    .setNegativeButton(android.R.string.cancel, null)
+                                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                                                                    {
+                                                                      @Override
+                                                                      public void onClick(DialogInterface dialog, int which)
+                                                                      {
+                                                                        new UseAsyncTask().execute();
+                                                                      }
+                                                                    })
+                                                                    .create()
+                                                                    .show();
       }
       else if (v.getId() == R.id.btn_show_location)
         displayOnMap();
@@ -280,70 +279,12 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     }
   }
   
-  private class CouponDownloadTask extends AsyncTask<Void, Void, NetworkResult>
+  private class UseAsyncTask extends AsyncTask<Void, Void, NetworkResult>
   {
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      File dir = new File(com.dabeeo.hanhayou.map.Global.GetCouponImageFilePath());
-      
-      if (!dir.exists())
-        dir.mkdir();
-      
-      try
-      {
-        URL url = new URL(bean.downloadCouponImage);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setDoInput(true);
-        connection.connect();
-        InputStream input = connection.getInputStream();
-        Bitmap myBitmap = BitmapFactory.decodeStream(input);
-        File file = new File(Global.GetCouponImageFilePath(), bean.couponIdx + ".jpg");
-        if (!file.exists())
-          file.createNewFile();
-        
-        bean.downloadCouponImage = file.getAbsolutePath();
-        
-        FileOutputStream stream = new FileOutputStream(file);
-        ByteArrayOutputStream outstream = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outstream);
-        byte[] byteArray = outstream.toByteArray();
-        
-        stream.write(byteArray);
-        stream.close();
-        
-        Log.w("WARN", "CouponDownload!");
-        
-        url = new URL(bean.couponImageUrl);
-        connection = (HttpURLConnection) url.openConnection();
-        connection.setDoInput(true);
-        connection.connect();
-        input = connection.getInputStream();
-        myBitmap = BitmapFactory.decodeStream(input);
-        
-        file = new File(Global.GetCouponImageFilePath(), bean.couponIdx + "_thumbnail.jpg");
-        if (!file.exists())
-          file.createNewFile();
-        
-        bean.downloadCouponImage = file.getAbsolutePath();
-        
-        stream = new FileOutputStream(file);
-        
-        outstream = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outstream);
-        byteArray = outstream.toByteArray();
-        
-        stream.write(byteArray);
-        stream.close();
-        
-        Log.w("WARN", "Coupon Thumbnail Download!");
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-      }
-      
-      couponDatabase.insert(bean.getJSONObject(DownloadedCouponDetailActivity.this));
+      couponDatabase.setUseCoupon(couponIdx, branchIdx);
       return null;
     }
     
@@ -352,7 +293,19 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      showAlert(getString(R.string.term_coupon_download_completed));
+      new AlertDialog.Builder(DownloadedCouponDetailActivity.this).setTitle(R.string.term_alert)
+                                                                  .setMessage(getString(R.string.msg_use_complete))
+                                                                  .setNegativeButton(android.R.string.cancel, null)
+                                                                  .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                                                                  {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which)
+                                                                    {
+                                                                      new GetAsyncTask().execute();
+                                                                    }
+                                                                  })
+                                                                  .create()
+                                                                  .show();
     }
   }
 }

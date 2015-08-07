@@ -229,6 +229,16 @@ public class OfflineCouponDatabaseManager extends SQLiteOpenHelper
   }
   
   
+  public void setUseCoupon(String couponIdx, String branchIdx)
+  {
+    this.openDataBase();
+    
+    ContentValues values = new ContentValues();
+    values.put("is_use", 1);
+    myDataBase.update(TABLE_NAME_COUPON, values, "coupon_idx=? AND branch_idx=?", new String[] { couponIdx, branchIdx });
+  }
+  
+  
   public CouponDetailBean getDownloadCoupon(String couponIdx, String branchIdx)
   {
     this.openDataBase();
