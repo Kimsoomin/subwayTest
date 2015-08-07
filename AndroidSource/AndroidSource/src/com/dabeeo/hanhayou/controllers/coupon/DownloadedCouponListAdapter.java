@@ -86,7 +86,7 @@ public class DownloadedCouponListAdapter extends BaseAdapter
     TextView validityDate = (TextView) view.findViewById(R.id.text_validity_period);
     RelativeLayout useContainer = (RelativeLayout) view.findViewById(R.id.use_container);
     
-    ImageDownloader.displayImage(context, bean.couponImageUrl, imageView, null);
+    ImageDownloader.displayImage(context, "file:///" + bean.couponImageUrl, imageView, null);
     title.setText(bean.title);
     description.setText(bean.branchName);
     

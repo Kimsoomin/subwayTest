@@ -7,13 +7,13 @@
     <RelativeLayout
         android:id="@+id/use_container"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="110dp"
         android:background="#E6ffffff"
         android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="vertical" >
