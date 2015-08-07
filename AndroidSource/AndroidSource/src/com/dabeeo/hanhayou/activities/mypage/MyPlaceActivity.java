@@ -84,12 +84,16 @@ public class MyPlaceActivity extends ActionBarActivity
       MyPlaceListFragment fragment = adapter.getFragment(viewPager.getCurrentItem());
       if (fragment.listCount() == 0)
       {
-        editMenuItem.setVisible(false);
-        closeMenuItem.setVisible(false);
+        if (!isEditMode)
+        {
+          editMenuItem.setVisible(false);
+          closeMenuItem.setVisible(false);
+        }
       }
       else
       {
-        editMenuItem.setVisible(true);
+        editMenuItem.setVisible(!isEditMode);
+        closeMenuItem.setVisible(isEditMode);
       }
     }
     catch (Exception e)
