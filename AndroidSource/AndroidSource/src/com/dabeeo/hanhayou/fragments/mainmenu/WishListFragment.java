@@ -120,9 +120,16 @@ public class WishListFragment extends Fragment
     
     popularWishListContainer = (LinearLayout) view.findViewById(R.id.wish_list_container);
     
-    loadWishList();
+//    loadWishList();
     
     return view;
+  }
+  
+  @Override
+  public void onResume()
+  {
+    super.onResume();
+    loadWishList();
   }
   
   public void loadWishList()
@@ -154,6 +161,7 @@ public class WishListFragment extends Fragment
   
   public void responseParser(String result)
   {
+    adapter.clear();
     try
     {
       JSONObject obj = new JSONObject(result);
