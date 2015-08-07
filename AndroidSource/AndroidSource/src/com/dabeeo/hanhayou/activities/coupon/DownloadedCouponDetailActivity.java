@@ -113,6 +113,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   }
   
   
+  @SuppressLint("SimpleDateFormat")
   private void displayData()
   {
     ImageDownloader.displayImage(this, "file:///" + bean.couponImageUrl, imageView, null);

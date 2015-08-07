@@ -356,7 +356,7 @@ public class CouponDetailActivity extends ActionBarActivity
         
         Log.w("WARN", "CouponDownload!");
         
-        url = new URL(bean.couponImageUrl);
+        url = new URL(bean.downloadCouponImage);
         connection = (HttpURLConnection) url.openConnection();
         connection.setDoInput(true);
         connection.connect();
