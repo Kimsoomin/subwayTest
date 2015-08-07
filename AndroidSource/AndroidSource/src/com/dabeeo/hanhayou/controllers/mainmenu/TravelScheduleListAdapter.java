@@ -122,7 +122,7 @@ public class TravelScheduleListAdapter extends BaseAdapter
     
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
     if (bean.startDate != null)
-      startDate.setText(format.format(bean.startDate));
+      startDate.setText(format.format(bean.insertDate));
     title.setText(bean.title);
     month.setText(Integer.toString(bean.dayCount) + "天");
     likeCount.setText(Integer.toString(bean.likeCount));
