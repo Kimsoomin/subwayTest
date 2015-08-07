@@ -74,7 +74,13 @@ public class ProductReviewContainerView extends LinearLayout
     ReviewBean bean = new ReviewBean();
     bean.content = "로컬 더미 데이터입니다. 테스트 용입니다.";
     bean.userName = "Tourplan B";
-    bean.insertDateString = "2015.01.01 15:30:20";
+    bean.insertDateString = "2015.01.01 15:30";
+    bean.imageUrls.add("http://image.gsshop.com/planprd/banner_MAINCORNER/25077562_02.jpg");
+    bean.imageUrls.add("http://image.gsshop.com/planprd/banner_MAINCORNER/25077562_02.jpg");
+    bean.imageUrls.add("http://image.gsshop.com/planprd/banner_MAINCORNER/25077562_02.jpg");
+    bean.imageUrls.add("http://image.gsshop.com/planprd/banner_MAINCORNER/25077562_02.jpg");
+    bean.imageUrls.add("http://image.gsshop.com/planprd/banner_MAINCORNER/25077562_02.jpg");
+    bean.imageUrls.add("http://image.gsshop.com/planprd/banner_MAINCORNER/25077562_02.jpg");
     bean.imageUrls.add("http://image.gsshop.com/planprd/banner_MAINCORNER/25077562_02.jpg");
     addReviewView(bean);
   }
@@ -147,8 +153,8 @@ public class ProductReviewContainerView extends LinearLayout
     container.addView(reviewView);
     
     View line = new View(context);
-    line.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 1));
-    line.setBackgroundColor(Color.parseColor("#c3c3c3"));
+    line.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 3));
+    line.setBackgroundColor(Color.parseColor("#f0f0f0"));
     container.addView(line);
   }
 }

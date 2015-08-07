@@ -4,12 +4,19 @@
     android:layout_height="match_parent"
     android:background="@android:color/white" >
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,6 +44,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:background="@android:color/white"
                     android:gravity="center"
                     android:orientation="vertical" >
@@ -89,7 +99,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/term_price"
                                             android:textColor="@color/darker_gray"
-                                            android:textSize="8sp" />
+                                            android:textSize="10sp" />
 
                                         <TextView
                                             android:id="@+id/price"
@@ -97,7 +107,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="8dp"
                                             android:textColor="@color/light_gray"
-                                            android:textSize="11sp" />
+                                            android:textSize="14sp" />
                                     </LinearLayout>
 
                                     <!-- 쿠폰할인가 -->
@@ -114,7 +124,7 @@
                                             android:layout_marginTop="3dp"
                                             android:text="@string/term_coupon_price"
                                             android:textColor="@color/darker_gray"
-                                            android:textSize="8sp" />
+                                            android:textSize="10sp" />
 
                                         <LinearLayout
                                             android:layout_width="0dp"
@@ -126,7 +136,6 @@
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:gravity="center_vertical"
                                                 android:orientation="horizontal" >
 
                                                 <TextView
@@ -134,18 +143,18 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:textColor="@color/darker_gray"
-                                                    android:textSize="15sp"
+                                                    android:textSize="17sp"
                                                     android:textStyle="bold" />
 
                                                 <TextView
                                                     android:id="@+id/discount_china_currency"
-                                                    android:layout_width="wrap_content"
+                                                    android:layout_width="0dp"
                                                     android:layout_height="wrap_content"
                                                     android:layout_gravity="bottom"
                                                     android:layout_marginLeft="4dp"
                                                     android:layout_weight="1"
                                                     android:textColor="@color/light_gray"
-                                                    android:textSize="11sp" />
+                                                    android:textSize="12sp" />
                                             </LinearLayout>
 
                                             <TextView
@@ -170,7 +179,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/term_product_coupon"
                                             android:textColor="@color/darker_gray"
-                                            android:textSize="8sp" />
+                                            android:textSize="10sp" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -194,7 +203,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/term_delivery"
                                             android:textColor="@color/darker_gray"
-                                            android:textSize="8sp" />
+                                            android:textSize="10sp" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -280,6 +289,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="14dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:text="@string/term_product_detail_info"
                             android:textColor="@color/darker_gray"
@@ -348,6 +358,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="14dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:text="@string/term_product_detail_delivery_info"
                             android:textColor="@color/darker_gray"
@@ -381,6 +392,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="10dp"
                             android:text="@string/term_product_detail_delivery_info"
                             android:textColor="@color/darker_gray"
@@ -451,6 +463,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="10dp"
                             android:text="@string/term_product_detail_refund"
                             android:textColor="@color/darker_gray"
@@ -505,6 +518,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/term_recommend_product"
                         android:textColor="@color/darker_gray"
                         android:textSize="13sp" />
@@ -518,7 +533,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="3dp"
                     android:background="@color/box_stroke"
                     android:paddingBottom="50dp" />
 
