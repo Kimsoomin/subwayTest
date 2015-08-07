@@ -34,13 +34,16 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
+import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
 import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
+import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 @SuppressWarnings("deprecation")
 public class DownloadedCouponDetailActivity extends ActionBarActivity
@@ -54,6 +57,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
   private Button btnUse;
   private ViewGroup layoutInfos;
   private OfflineCouponDatabaseManager couponDatabase;
+  private OfflineDeleteManager offlineBehaviorDatabase;
   private ImageView barcodeImageView;
   
   
@@ -71,6 +75,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     
+    offlineBehaviorDatabase = new OfflineDeleteManager(this);
     couponDatabase = new OfflineCouponDatabaseManager(this);
     couponIdx = getIntent().getStringExtra("coupon_idx");
     branchIdx = getIntent().getStringExtra("branch_idx");
@@ -284,6 +289,12 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
+      if (!SystemUtil.isConnectNetwork(DownloadedCouponDetailActivity.this))
+      {
+        OfflineBehaviorBean bean = new OfflineBehaviorBean();
+        bean.setUseCoupon(DownloadedCouponDetailActivity.this, couponIdx, branchIdx);
+        offlineBehaviorDatabase.addBehavior(bean);
+      }
       try
       {
         apiClient.useCoupon(couponIdx, branchIdx);

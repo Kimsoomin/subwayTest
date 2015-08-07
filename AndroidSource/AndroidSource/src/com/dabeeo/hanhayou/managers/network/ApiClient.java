@@ -1024,7 +1024,13 @@ public class ApiClient
   
   public NetworkResult useCoupon(String couponIdx, String branchIdx)
   {
-    return httpClient.requestGet(siteCouponUrl + "?v=coupon&mode=COUPON_USED&userSeq=" + PreferenceManager.getInstance(context).getUserSeq() + "&coupon_idx=" + couponIdx + "&branch_idx=" + branchIdx);
+    return useCoupon(couponIdx, branchIdx, PreferenceManager.getInstance(context).getUserSeq());
+  }
+  
+  
+  public NetworkResult useCoupon(String couponIdx, String branchIdx, String userSeq)
+  {
+    return httpClient.requestGet(siteCouponUrl + "?v=coupon&mode=COUPON_USED&userSeq=" + userSeq + "&coupon_idxs=" + couponIdx + "&branch_idxs=" + branchIdx);
   }
   
   

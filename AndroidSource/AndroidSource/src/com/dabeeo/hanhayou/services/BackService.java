@@ -297,6 +297,13 @@ public class BackService extends Service
     {
       if (bean.behavior.equals(OfflineBehaviorBean.BEHAVIOR_DELETE_MY_PLAN))
         return apiClient.deleteMyPlan(bean.idx, bean.userSeq);
+      if (bean.behavior.equals(OfflineBehaviorBean.BEHAVIOR_USE_COUPOON))
+      {
+        String[] idxs = bean.idx.split("/");
+        String couponIdx = idxs[0];
+        String branchIdx = idxs[1];
+        return apiClient.useCoupon(couponIdx, branchIdx, bean.userSeq);
+      }
       else
         return apiClient.deleteMyPlace(bean.idx, bean.userSeq);
     }

@@ -334,7 +334,7 @@ public class CouponDetailActivity extends ActionBarActivity
       
       try
       {
-        URL url = new URL(bean.downloadCouponImage);
+        URL url = new URL(bean.couponImageUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoInput(true);
         connection.connect();
