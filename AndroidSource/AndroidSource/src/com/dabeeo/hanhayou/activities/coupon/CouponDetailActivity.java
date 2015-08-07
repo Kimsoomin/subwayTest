@@ -318,6 +318,15 @@ public class CouponDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
+      try
+      {
+        apiClient.couponDownload(couponIdx, branchIdx);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
       File dir = new File(com.dabeeo.hanhayou.map.Global.GetCouponImageFilePath());
       
       if (!dir.exists())
@@ -325,7 +334,7 @@ public class CouponDetailActivity extends ActionBarActivity
       
       try
       {
-        URL url = new URL(bean.downloadCouponImage);
+        URL url = new URL(bean.couponImageUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoInput(true);
         connection.connect();
@@ -335,7 +344,7 @@ public class CouponDetailActivity extends ActionBarActivity
         if (!file.exists())
           file.createNewFile();
         
-        bean.downloadCouponImage = file.getAbsolutePath();
+        bean.couponImageUrl = file.getAbsolutePath();
         
         FileOutputStream stream = new FileOutputStream(file);
         ByteArrayOutputStream outstream = new ByteArrayOutputStream();
@@ -347,7 +356,7 @@ public class CouponDetailActivity extends ActionBarActivity
         
         Log.w("WARN", "CouponDownload!");
         
-        url = new URL(bean.couponImageUrl);
+        url = new URL(bean.downloadCouponImage);
         connection = (HttpURLConnection) url.openConnection();
         connection.setDoInput(true);
         connection.connect();

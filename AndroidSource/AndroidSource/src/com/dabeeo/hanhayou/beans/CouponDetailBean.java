@@ -1,6 +1,5 @@
 package com.dabeeo.hanhayou.beans;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class CouponDetailBean
 {
@@ -41,6 +41,8 @@ public class CouponDetailBean
   public String downloadCouponImage;
   
   public boolean isUse = false;
+  public Date useDate;
+  public String userSeq;
   
   
   @SuppressLint("SimpleDateFormat")
@@ -107,6 +109,30 @@ public class CouponDetailBean
       downloadCouponImage = c.getString(c.getColumnIndex("download_image"));
       
       isUse = c.getInt(c.getColumnIndex("is_use")) == 1;
+      
+      try
+      {
+        String dateStr = c.getString(c.getColumnIndex("useDate"));
+        if (!TextUtils.isEmpty(dateStr))
+        {
+          SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+          Log.w("WARN", "UseDate : " + dateStr);
+          useDate = format.parse(dateStr);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      
+      try
+      {
+        userSeq = c.getString(c.getColumnIndex("userSeq"));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
     }
     catch (Exception e)
     {

@@ -5,7 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -229,6 +232,27 @@ public class OfflineCouponDatabaseManager extends SQLiteOpenHelper
   }
   
   
+  public void deleteCoupon(String couponIdx, String branchIdx, String userSeq)
+  {
+    this.openDataBase();
+    myDataBase.delete(TABLE_NAME_COUPON, "coupon_idx=? AND branch_idx=? AND userSeq=?", new String[] { couponIdx, branchIdx, userSeq });
+  }
+  
+  
+  @SuppressLint("SimpleDateFormat")
+  public void setUseCoupon(String couponIdx, String branchIdx)
+  {
+    this.openDataBase();
+    
+    ContentValues values = new ContentValues();
+    values.put("is_use", 1);
+    SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+    String date = format.format(new Date());
+    values.put("useDate", date);
+    myDataBase.update(TABLE_NAME_COUPON, values, "coupon_idx=? AND branch_idx=?", new String[] { couponIdx, branchIdx });
+  }
+  
+  
   public CouponDetailBean getDownloadCoupon(String couponIdx, String branchIdx)
   {
     this.openDataBase();
@@ -303,6 +327,7 @@ public class OfflineCouponDatabaseManager extends SQLiteOpenHelper
         } while (c.moveToNext());
       }
     }
+    
     return coupons;
   }
   

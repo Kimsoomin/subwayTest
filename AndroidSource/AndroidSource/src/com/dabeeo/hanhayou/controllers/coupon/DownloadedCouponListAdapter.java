@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -70,7 +72,7 @@ public class DownloadedCouponListAdapter extends BaseAdapter
   }
   
   
-  @SuppressLint("ViewHolder")
+  @SuppressLint({ "ViewHolder", "SimpleDateFormat" })
   @Override
   public View getView(int position, View convertView, ViewGroup parent)
   {
@@ -82,8 +84,9 @@ public class DownloadedCouponListAdapter extends BaseAdapter
     TextView title = (TextView) view.findViewById(R.id.title);
     TextView description = (TextView) view.findViewById(R.id.text_description);
     TextView validityDate = (TextView) view.findViewById(R.id.text_validity_period);
+    RelativeLayout useContainer = (RelativeLayout) view.findViewById(R.id.use_container);
     
-    ImageDownloader.displayImage(context, bean.couponImageUrl, imageView, null);
+    ImageDownloader.displayImage(context, "file:///" + bean.couponImageUrl, imageView, null);
     title.setText(bean.title);
     description.setText(bean.branchName);
     
@@ -100,6 +103,12 @@ public class DownloadedCouponListAdapter extends BaseAdapter
     catch (Exception e)
     {
       e.printStackTrace();
+    }
+    
+    if (bean.isUse)
+    {
+      useContainer.setVisibility(View.VISIBLE);
+      useContainer.bringToFront();
     }
     return view;
   }

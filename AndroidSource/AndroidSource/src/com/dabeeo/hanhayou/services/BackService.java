@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.json.JSONObject;
 
@@ -27,9 +28,11 @@ import android.util.Log;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendProductPopupActivity;
+import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.beans.OfflineBehaviorBean;
 import com.dabeeo.hanhayou.beans.PushBean;
 import com.dabeeo.hanhayou.controllers.NetworkBraodCastReceiver;
+import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
@@ -40,6 +43,7 @@ public class BackService extends Service
   private Handler handler = new Handler();
   private ApiClient apiClient;
   private OfflineDeleteManager offlineDatabaseManager;
+  private OfflineCouponDatabaseManager offlineCouponManager;
   private LocationManager manager;
   private BackLocationListener listener;
   private double currentLat, currentLon;
@@ -66,6 +70,7 @@ public class BackService extends Service
     Log.w("WARN", "서비스 시작");
     apiClient = new ApiClient(this);
     offlineDatabaseManager = new OfflineDeleteManager(this);
+    offlineCouponManager = new OfflineCouponDatabaseManager(this);
     
     registerLocationListener();
     unRegisterRestart();
@@ -95,11 +100,51 @@ public class BackService extends Service
     }
   };
   
+  
+  private void checkDownloadCoupon()
+  {
+    try
+    {
+      ArrayList<CouponDetailBean> coupons = offlineCouponManager.getDownloadCoupons();
+      Calendar today = Calendar.getInstance();
+      for (int i = 0; i < coupons.size(); i++)
+      {
+        CouponDetailBean bean = coupons.get(i);
+        if (bean.useDate != null)
+        {
+          long diff = today.getTimeInMillis() - bean.useDate.getTime();
+          long days = diff / (24 * 60 * 60 * 1000);
+          if (days > 29)
+          {
+            Log.w("WARN", "사용 30일 된 쿠폰 삭제");
+            offlineCouponManager.deleteCoupon(bean.couponIdx, bean.branchIdx, bean.userSeq);
+          }
+        }
+        if (bean.endDate != null)
+        {
+          long diff = today.getTimeInMillis() - bean.endDate.getTime();
+          long days = diff / (24 * 60 * 60 * 1000);
+          if (days > 29)
+          {
+            Log.w("WARN", "유효기간 30일 된 쿠폰 삭제");
+            offlineCouponManager.deleteCoupon(bean.couponIdx, bean.branchIdx, bean.userSeq);
+          }
+        }
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
   private class PushNotificationAPIAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     @Override
     protected NetworkResult doInBackground(String... params)
     {
+      checkDownloadCoupon();
+      
       return apiClient.reqeustPushNotification(currentLat, currentLon);
     }
     
@@ -265,6 +310,7 @@ public class BackService extends Service
         boolean isNetworkConnected = intent.getBooleanExtra("is_network_connected", false);
         if (isNetworkConnected)
         {
+          new DeteleCouponAsyncTask().execute();
           //온라인 연결 시 SQLite 가져와서 동기화 처리하기
           Log.w("WARN", "백단 서비스 온라인 연결 동기화 시작 ");
           ArrayList<OfflineBehaviorBean> behaviors = offlineDatabaseManager.getAllBehavior();
@@ -281,6 +327,16 @@ public class BackService extends Service
   };
   
   //AsyncTask
+  private class DeteleCouponAsyncTask extends AsyncTask<String, Integer, NetworkResult>
+  {
+    @Override
+    protected NetworkResult doInBackground(String... params)
+    {
+      checkDownloadCoupon();
+      return null;
+    }
+  };
+  
   private class OnlineSyncAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     private OfflineBehaviorBean bean;
@@ -297,6 +353,13 @@ public class BackService extends Service
     {
       if (bean.behavior.equals(OfflineBehaviorBean.BEHAVIOR_DELETE_MY_PLAN))
         return apiClient.deleteMyPlan(bean.idx, bean.userSeq);
+      if (bean.behavior.equals(OfflineBehaviorBean.BEHAVIOR_USE_COUPOON))
+      {
+        String[] idxs = bean.idx.split("/");
+        String couponIdx = idxs[0];
+        String branchIdx = idxs[1];
+        return apiClient.useCoupon(couponIdx, branchIdx, bean.userSeq);
+      }
       else
         return apiClient.deleteMyPlace(bean.idx, bean.userSeq);
     }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -26,6 +27,7 @@ import com.dabeeo.hanhayou.bases.BaseNavigationTabActivity;
 import com.dabeeo.hanhayou.controllers.coupon.CouponViewPagerAdapter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class CouponActivity extends ActionBarActivity
 {
@@ -75,6 +77,16 @@ public class CouponActivity extends ActionBarActivity
   }
   
   
+  @Override
+  protected void onResume()
+  {
+    if (!SystemUtil.isConnectNetwork(this))
+      setViewPagerPosition(1);
+    super.onResume();
+  }
+  
+  
+  @SuppressWarnings("deprecation")
   public void setViewPagerPosition(int position)
   {
     viewPager.setCurrentItem(position);
@@ -178,6 +190,7 @@ public class CouponActivity extends ActionBarActivity
   /**************************************************
    * listener
    ***************************************************/
+  @SuppressWarnings("deprecation")
   protected TabListener tabListener = new TabListener()
   {
     @Override
@@ -201,12 +214,27 @@ public class CouponActivity extends ActionBarActivity
     }
   };
   
+  @SuppressWarnings("deprecation")
   protected ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener()
   {
     @Override
     public void onPageSelected(int position)
     {
       getSupportActionBar().setSelectedNavigationItem(position);
+      if (position == 0 && !SystemUtil.isConnectNetwork(CouponActivity.this))
+      {
+        new AlertDialogManager(CouponActivity.this).showDontNetworkConnectDialog();
+        Runnable runnn = new Runnable()
+        {
+          @Override
+          public void run()
+          {
+            getSupportActionBar().setSelectedNavigationItem(1);
+          }
+        };
+        Handler handler = new Handler();
+        handler.post(runnn);
+      }
     }
   };
 }
