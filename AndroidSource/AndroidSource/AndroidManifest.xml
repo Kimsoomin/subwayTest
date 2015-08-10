@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -39,14 +39,15 @@
         <activity
             android:name="com.dabeeo.hanhayou.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
         <!-- MainMenu Activities -->
         <activity
             android:name="com.dabeeo.hanhayou.activities.mainmenu.SubwayActivity"
             android:label="@string/term_famous_place"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.mainmenu.SubwayStationsActivity"
@@ -114,12 +115,12 @@
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity"
             android:screenOrientation="portrait" />
-        <activity 
+        <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendCartActivity"
-            android:screenOrientation="portrait"/>
-        <activity 
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendProductBuyListActivity"
-            android:screenOrientation="portrait"/>        
+            android:screenOrientation="portrait" />
         <!-- MyPage Sub Activities -->
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.PromotionActivity"
@@ -200,10 +201,8 @@
             android:screenOrientation="portrait" />
 
         <!-- Sub Activities -->
-        <activity
-            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity" />
-        <activity
-            android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpJustOneActivity" />
+        <activity android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity" />
+        <activity android:name="com.dabeeo.hanhayou.activities.sub.ImagePopUpJustOneActivity" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.sub.GuideActivity"
             android:launchMode="singleTask"
