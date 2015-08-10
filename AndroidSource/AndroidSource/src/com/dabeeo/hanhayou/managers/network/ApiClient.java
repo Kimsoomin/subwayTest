@@ -36,7 +36,7 @@ public class ApiClient
   private String siteUrl = "http://gs.blinking.kr:8900/_libs/api.common.php";
   private String siteCouponUrl = "http://gs2.blinking.kr:8900/_libs/api.common.php";
   private String devUrl = "http://dev.hanhayou.com/_libs/api.common.php";
-  private String devshopUrl = "https://devshop.hanhayou.com/ecom/";
+  private String devshopUrl = "https://devm.hanhayou.com/ecom/";
 //  private String testUrl = "http://10.53.13.18/_libs/api.common.php";
   private HttpClient httpClient;
   private Context context;
@@ -936,7 +936,7 @@ public class ApiClient
     ArrayList<ProductBean> searchList = new ArrayList<ProductBean>();
     try
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
       
       JSONObject obj = new JSONObject(result.response);
       if(obj.getString("status").equals("OK"))
