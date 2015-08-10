@@ -203,7 +203,8 @@ public class TravelScheduleListFragment extends Fragment
     protected void onPreExecute()
     {
       isLoading = true;
-      adapter.clear();
+      if (type != SCHEDULE_TYPE_POPULAR)
+        adapter.clear();
       if (adapter.getCount() != 0)
         listView.setVisibleFooterView(footerLoadView);
       super.onPreExecute();
