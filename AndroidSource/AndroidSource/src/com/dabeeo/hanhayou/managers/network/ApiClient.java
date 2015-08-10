@@ -1032,6 +1032,12 @@ public class ApiClient
   }
   
   
+  public NetworkResult getCouponWithProduct(String placeIdx)
+  {
+    return httpClient.requestGet(siteCouponUrl + "?mode=COUPON_LIST&v=coupon&place_idx=" + placeIdx + "&coupon_count=2");
+  }
+  
+  
   public NetworkResult getCouponCategory()
   {
     if (SystemUtil.isConnectNetwork(context))

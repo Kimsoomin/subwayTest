@@ -2,6 +2,7 @@ package com.dabeeo.hanhayou.activities.mainmenu;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -36,6 +37,7 @@ import com.dabeeo.hanhayou.activities.ticket.TicketDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.beans.CouponBean;
+import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.TicketBean;
@@ -96,6 +98,7 @@ public class PlaceDetailActivity extends ActionBarActivity
   private ViewGroup layoutRecommendProduct;
   private StikkyHeader stikkyheader;
   
+  private ArrayList<CouponDetailBean> coupons = new ArrayList<CouponDetailBean>();
   int rate = 0;
   
   
@@ -327,39 +330,22 @@ public class PlaceDetailActivity extends ActionBarActivity
   {
     rateBtnSet();
     placeTitle.setText(bean.title);
-    TicketBean ticketBean = new TicketBean();
-    ticketBean.title = "경복궁 동반1인 무료 입장";
-    DetailTicketView view = new DetailTicketView(PlaceDetailActivity.this);
-    view.setBean(ticketBean);
-    view.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View v)
-      {
-        if (!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
-          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-        else
-          startActivity(new Intent(PlaceDetailActivity.this, TicketDetailActivity.class));
-      }
-    });
-    containerTicketAndCoupon.addView(view);
-    
-    CouponBean couponBean = new CouponBean();
-    couponBean.title = "서울 시티투어 버스 20% 할인";
-    DetailCouponView couponView = new DetailCouponView(PlaceDetailActivity.this);
-    couponView.setBean(couponBean);
-    couponView.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View v)
-      {
-        if (!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
-          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
-        else
-          startActivity(new Intent(PlaceDetailActivity.this, CouponDetailActivity.class));
-      }
-    });
-    containerTicketAndCoupon.addView(couponView);
+//    TicketBean ticketBean = new TicketBean();
+//    ticketBean.title = "경복궁 동반1인 무료 입장";
+//    DetailTicketView view = new DetailTicketView(PlaceDetailActivity.this);
+//    view.setBean(ticketBean);
+//    view.setOnClickListener(new OnClickListener()
+//    {
+//      @Override
+//      public void onClick(View v)
+//      {
+//        if (!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+//          new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+//        else
+//          startActivity(new Intent(PlaceDetailActivity.this, TicketDetailActivity.class));
+//      }
+//    });
+//    containerTicketAndCoupon.addView(view);
     
     if (bean == null)
       return;
@@ -423,6 +409,9 @@ public class PlaceDetailActivity extends ActionBarActivity
       stikkyheader.setHeightHeader(height);
       headerView.setBean(bean);
     }
+    
+    if (SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+      new GetCouponInfoAsyncTask().execute();
   }
   
   
@@ -611,6 +600,71 @@ public class PlaceDetailActivity extends ActionBarActivity
   /**************************************************
    * async task
    ***************************************************/
+  private class GetCouponInfoAsyncTask extends AsyncTask<Void, Void, NetworkResult>
+  {
+    
+    @Override
+    protected NetworkResult doInBackground(Void... params)
+    {
+      return apiClient.getCouponWithProduct(bean.idx);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(NetworkResult result)
+    {
+      try
+      {
+        JSONObject obj = new JSONObject(result.response);
+        if (obj.has("coupon"))
+        {
+          JSONArray arr = obj.getJSONArray("coupon");
+          for (int i = 0; i < arr.length(); i++)
+          {
+            JSONObject jsonObj = arr.getJSONObject(i);
+            CouponDetailBean bean = new CouponDetailBean();
+            bean.setJSONObject(jsonObj);
+            coupons.add(bean);
+          }
+        }
+        
+        if (coupons.size() > 0)
+        {
+          for (int j = 0; j < coupons.size(); j++)
+          {
+            DetailCouponView couponView = new DetailCouponView(PlaceDetailActivity.this);
+            final CouponDetailBean couponBean = coupons.get(j);
+            couponView.setBean(couponBean);
+            couponView.setOnClickListener(new OnClickListener()
+            {
+              @Override
+              public void onClick(View v)
+              {
+                if (!SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+                  new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
+                else
+                {
+                  Intent i = new Intent(PlaceDetailActivity.this, CouponDetailActivity.class);
+                  i.putExtra("coupon_idx", couponBean.couponIdx);
+                  i.putExtra("branch_idx", couponBean.branchIdx);
+                  startActivity(i);
+                }
+                
+              }
+            });
+            containerTicketAndCoupon.addView(couponView);
+          }
+          containerTicketAndCoupon.setVisibility(View.VISIBLE);
+        }
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      super.onPostExecute(result);
+    }
+  }
+  
   /**
    * post rate AsyncTask
    */
@@ -621,13 +675,6 @@ public class PlaceDetailActivity extends ActionBarActivity
     protected NetworkResult doInBackground(Void... params)
     {
       return apiClient.postReviewRate("place", placeIdx, PreferenceManager.getInstance(getApplicationContext()).getUserSeq(), rate * 2, null);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(NetworkResult result)
-    {
-      super.onPostExecute(result);
     }
   }
   
