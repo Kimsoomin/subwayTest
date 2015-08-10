@@ -49,8 +49,8 @@ public class PlaceDetailBean
   public String imageUrl;
   public ArrayList<String> imageUrls = new ArrayList<String>();
   
-  public String updateDateString;
-  public Date updateDate;
+  public String insertDateString;
+  public Date insertDate;
   
   public boolean isPremium = false;
   public String premiumIdx, premiumTitle;
@@ -123,11 +123,11 @@ public class PlaceDetailBean
       if (obj.has("isBookmarked"))
         isBookmarked = obj.getInt("isBookmarked") != 0;
       
-      if (obj.has("updateDate"))
+      if (obj.has("insertDate"))
       {
-        updateDateString = obj.getString("updateDate");
+        insertDateString = obj.getString("insertDate");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        updateDate = format.parse(updateDateString);
+        insertDate = format.parse(insertDateString);
       }
       
       if (obj.has("image"))
@@ -189,7 +189,7 @@ public class PlaceDetailBean
       bookmarkCount = c.getInt(c.getColumnIndex("bookmarkCount"));
       shareCount = c.getInt(c.getColumnIndex("shareCount"));
       reviewCount = c.getInt(c.getColumnIndex("reviewCount"));
-      updateDateString = c.getString(c.getColumnIndex("updateDate"));
+      insertDateString = c.getString(c.getColumnIndex("updateDate"));
       
       imageUrl = c.getString(c.getColumnIndex("offlineimage"));
     }

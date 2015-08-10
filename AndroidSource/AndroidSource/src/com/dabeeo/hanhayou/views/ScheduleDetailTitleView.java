@@ -79,7 +79,7 @@ public class ScheduleDetailTitleView extends RelativeLayout
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
     try
     {
-      time.setText(format.format(bean.updateDate));
+      time.setText(format.format(bean.insertDate));
     }
     catch (Exception e)
     {

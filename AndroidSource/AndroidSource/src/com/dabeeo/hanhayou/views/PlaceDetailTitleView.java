@@ -68,8 +68,8 @@ public class PlaceDetailTitleView extends RelativeLayout
     title.setText(bean.title);
     name.setText(bean.userName);
     SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
-    if (bean.updateDate != null)
-      time.setText(format.format(bean.updateDate));
+    if (bean.insertDate != null)
+      time.setText(format.format(bean.insertDate));
     likeCount.setText(Integer.toString(bean.likeCount));
     bookmarkCount.setText(Integer.toString(bean.bookmarkCount));
     ImageDownloader.displayProfileImage(context, bean.mfidx, imageView);
