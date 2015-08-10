@@ -369,6 +369,23 @@ public class CouponActivity extends ActionBarActivity
         Handler handler = new Handler();
         handler.post(runnn);
       }
+      else if (position == 1)
+      {
+        if (!PreferenceManager.getInstance(CouponActivity.this).isLoggedIn())
+        {
+          new AlertDialogManager(CouponActivity.this).showNeedLoginDialog(-1);
+          Runnable runnn = new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              getSupportActionBar().setSelectedNavigationItem(0);
+            }
+          };
+          Handler handler = new Handler();
+          handler.post(runnn);
+        }
+      }
     }
   };
 }

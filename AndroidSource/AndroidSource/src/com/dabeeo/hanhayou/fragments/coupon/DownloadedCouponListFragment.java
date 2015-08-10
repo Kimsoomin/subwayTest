@@ -20,10 +20,12 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
+import com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hanhayou.activities.coupon.DownloadedCouponDetailActivity;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.controllers.coupon.DownloadedCouponListAdapter;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 
 public class DownloadedCouponListFragment extends Fragment
 {
@@ -86,7 +88,8 @@ public class DownloadedCouponListFragment extends Fragment
   
   private void load()
   {
-    new GetAsyncTask().execute();
+    if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+      new GetAsyncTask().execute();
   }
   
   /**************************************************
