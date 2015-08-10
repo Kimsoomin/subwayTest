@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.PopularWishBean;
@@ -747,7 +748,7 @@ public class ApiClient
       url += "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq();
     }
     
-    if(limit != 0)
+    if (limit != 0)
     {
       url += "&limit=" + limit;
     }
@@ -939,10 +940,10 @@ public class ApiClient
       NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
       
       JSONObject obj = new JSONObject(result.response);
-      if(obj.getString("status").equals("OK"))
+      if (obj.getString("status").equals("OK"))
       {
         JSONArray objArr = obj.getJSONArray("product");
-        for(int i = 0; i < objArr.length(); i++)
+        for (int i = 0; i < objArr.length(); i++)
         {
           JSONObject searchObj = objArr.getJSONObject(i);
           ProductBean bean = new ProductBean();
@@ -1028,6 +1029,25 @@ public class ApiClient
   public NetworkResult getAgreementPrivate()
   {
     return httpClient.requestGet(getSiteUrl() + "?v=agree&mode=MEMBER");
+  }
+  
+  
+  public NetworkResult getCouponWithProduct(String placeIdx)
+  {
+    return httpClient.requestGet(siteCouponUrl + "?mode=COUPON_LIST&v=coupon&place_idx=" + placeIdx + "&coupon_count=2");
+  }
+  
+  
+  public NetworkResult getCouponCategory()
+  {
+    if (SystemUtil.isConnectNetwork(context))
+    {
+      NetworkResult result = httpClient.requestGet(siteCouponUrl + "?v=coupon&mode=CATEGORY_LIST");
+      PreferenceManager.getInstance(context).setCouponCategoryJSONString(result.response);
+      return result;
+    }
+    else
+      return new NetworkResult(true, PreferenceManager.getInstance(context).getCouponCategoryJSONString(), 200);
   }
   
   

@@ -22,4 +22,10 @@ public class CategoryBean
       e.printStackTrace();
     }
   }
+  
+  
+  public String toString()
+  {
+    return name;
+  }
 }

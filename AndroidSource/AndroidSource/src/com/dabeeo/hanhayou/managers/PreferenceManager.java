@@ -52,9 +52,23 @@ public class PreferenceManager extends BasePreferenceManager
   
   private static final String KEY_SYNC_ONLY_WIFI = "key_sync_only_wifi";
   
+  private static final String KEY_COUPON_CATEGORY = "key_coupon_category";
+  
   private static final String KEY_AGREEMENT = "key_agreement";
   private static final String KEY_AGREEMENT_PRIVATE = "key_agreement_private";
   private static final String KEY_AGREEMENT_GPS_INFO = "key_agreement_gps_info";
+  
+  
+  public void setCouponCategoryJSONString(String value)
+  {
+    put(KEY_COUPON_CATEGORY, value);
+  }
+  
+  
+  public String getCouponCategoryJSONString()
+  {
+    return get(KEY_COUPON_CATEGORY);
+  }
   
   
   public void setAgreementHtmlString(String value)

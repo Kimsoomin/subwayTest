@@ -13,6 +13,8 @@ import com.dabeeo.hanhayou.fragments.coupon.DownloadedCouponListFragment;
 public class CouponViewPagerAdapter extends FragmentPagerAdapter
 {
   private ArrayList<String> titles = new ArrayList<String>();
+  private CouponListFragment couponListFragment;
+  private DownloadedCouponListFragment downloadCouponListFragment;
   
   
   public CouponViewPagerAdapter(Context context, FragmentManager fm)
@@ -31,9 +33,17 @@ public class CouponViewPagerAdapter extends FragmentPagerAdapter
   public Fragment getItem(int position)
   {
     if (position == 0)
-      return new CouponListFragment();
+    {
+      if (couponListFragment == null)
+        couponListFragment = new CouponListFragment();
+      return couponListFragment;
+    }
     else
-      return new DownloadedCouponListFragment();
+    {
+      if (downloadCouponListFragment == null)
+        downloadCouponListFragment = new DownloadedCouponListFragment();
+      return downloadCouponListFragment;
+    }
   }
   
   

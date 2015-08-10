@@ -181,17 +181,7 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerCoupon.getId())
       {
-        //temp alert
-//        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
-//        //네트워크 연결 체크 후 연결했을 때만 실행
-        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
-        {
-          startActivity(new Intent(getActivity(), CouponActivity.class));
-        }
-        else
-        {
-          new AlertDialogManager(getActivity()).showNeedLoginDialog(-1);
-        }
+        startActivity(new Intent(getActivity(), CouponActivity.class));
       }
     }
   };

@@ -37,6 +37,8 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingMap;
@@ -253,6 +255,11 @@ public class CouponDetailActivity extends ActionBarActivity
     {
       if (v.getId() == btnDownload.getId())
       {
+        if (!PreferenceManager.getInstance(CouponDetailActivity.this).isLoggedIn())
+        {
+          new AlertDialogManager(CouponDetailActivity.this).showNeedLoginDialog(-1);
+          return;
+        }
         new CheckAlreadyHaveTask().execute();
       }
       else if (v.getId() == R.id.btn_show_location)

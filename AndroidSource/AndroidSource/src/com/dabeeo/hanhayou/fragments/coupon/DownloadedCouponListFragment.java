@@ -20,10 +20,12 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
+import com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hanhayou.activities.coupon.DownloadedCouponDetailActivity;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.controllers.coupon.DownloadedCouponListAdapter;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 
 public class DownloadedCouponListFragment extends Fragment
 {
@@ -33,6 +35,7 @@ public class DownloadedCouponListFragment extends Fragment
   
   private LinearLayout emptyContainer;
   private OfflineCouponDatabaseManager couponDatabase;
+  private int categoryId = -1;
   
   
   @Override
@@ -68,6 +71,13 @@ public class DownloadedCouponListFragment extends Fragment
   }
   
   
+  public void changeFilteringMode(int categoryId)
+  {
+    this.categoryId = categoryId;
+    load();
+  }
+  
+  
   @Override
   public void onResume()
   {
@@ -78,8 +88,8 @@ public class DownloadedCouponListFragment extends Fragment
   
   private void load()
   {
-    progressBar.setVisibility(View.VISIBLE);
-    new GetAsyncTask().execute();
+    if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+      new GetAsyncTask().execute();
   }
   
   /**************************************************
@@ -109,6 +119,14 @@ public class DownloadedCouponListFragment extends Fragment
     @Override
     protected void onPreExecute()
     {
+      try
+      {
+        progressBar.setVisibility(View.VISIBLE);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
       adapter.clear();
       super.onPreExecute();
     }
@@ -135,7 +153,16 @@ public class DownloadedCouponListFragment extends Fragment
       {
         listView.setVisibility(View.VISIBLE);
         emptyContainer.setVisibility(View.GONE);
-        adapter.addAll(result);
+        if (categoryId == -1)
+          adapter.addAll(result);
+        else
+        {
+          for (int i = 0; i < result.size(); i++)
+          {
+            if (Integer.parseInt(result.get(i).category) == categoryId)
+              adapter.add(result.get(i));
+          }
+        }
       }
       
       progressBar.setVisibility(View.GONE);
