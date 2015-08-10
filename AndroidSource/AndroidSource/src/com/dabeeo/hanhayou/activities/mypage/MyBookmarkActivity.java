@@ -30,6 +30,7 @@ public class MyBookmarkActivity extends ActionBarActivity
   private MenuItem editMenuItem, closeMenuItem;
   public boolean isEditMode = false;
   private MyBookmarkViewPagerAdapter adapter;
+  private int lastSelectedTab = 0;
   
   
   @Override
@@ -80,6 +81,34 @@ public class MyBookmarkActivity extends ActionBarActivity
     closeMenuItem = menu.findItem(R.id.close);
     editMenuItem.setVisible(!isEditMode);
     closeMenuItem.setVisible(isEditMode);
+    
+    if (lastSelectedTab == 0)
+    {
+      if (((MyBookmarkPlaceListFragment) adapter.getFragment(lastSelectedTab)).getCount() == 0)
+      {
+        editMenuItem.setVisible(false);
+        closeMenuItem.setVisible(false);
+      }
+      else
+      {
+        editMenuItem.setVisible(!isEditMode);
+        closeMenuItem.setVisible(isEditMode);
+      }
+    }
+    else
+    {
+      if (((MyBookmarkTravelScheduleListFragment) adapter.getFragment(lastSelectedTab)).getCount() == 0)
+      {
+        editMenuItem.setVisible(false);
+        closeMenuItem.setVisible(false);
+      }
+      else
+      {
+        editMenuItem.setVisible(!isEditMode);
+        closeMenuItem.setVisible(isEditMode);
+      }
+    }
+    
     return super.onCreateOptionsMenu(menu);
   }
   
@@ -113,7 +142,7 @@ public class MyBookmarkActivity extends ActionBarActivity
       ((MyBookmarkPlaceListFragment) fragment).setEditMode(isEditMode);
     else
       ((MyBookmarkTravelScheduleListFragment) fragment).setEditMode(isEditMode);
-    if(isEditMode)
+    if (isEditMode)
       viewPager.setPagingDisabled();
     else
       viewPager.setPagingEnabled();
@@ -152,6 +181,8 @@ public class MyBookmarkActivity extends ActionBarActivity
     @Override
     public void onPageSelected(int position)
     {
+      lastSelectedTab = position;
+      invalidateOptionsMenu();
       getSupportActionBar().setSelectedNavigationItem(position);
     }
   };

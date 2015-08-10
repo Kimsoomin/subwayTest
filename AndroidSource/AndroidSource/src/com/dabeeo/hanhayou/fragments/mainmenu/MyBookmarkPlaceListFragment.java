@@ -51,6 +51,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
   public boolean isEditmode = false;
   public View bottomMargin;
   
+  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -219,6 +220,12 @@ public class MyBookmarkPlaceListFragment extends Fragment
     }
   };
   
+  
+  public int getCount()
+  {
+    return adapter.getCount();
+  }
+  
   /**************************************************
    * async task
    ***************************************************/
@@ -244,6 +251,7 @@ public class MyBookmarkPlaceListFragment extends Fragment
         emptyContainer.setVisibility(View.VISIBLE);
       }
       progressBar.setVisibility(View.GONE);
+      ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
       super.onPostExecute(result);
     }
   }
@@ -255,6 +263,14 @@ public class MyBookmarkPlaceListFragment extends Fragment
     {
       apiClient.reqeustBookmarkCancel(PreferenceManager.getInstance(getActivity()).getUserSeq(), params[0], "place");
       return null;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(Void result)
+    {
+      ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
+      super.onPostExecute(result);
     }
   }
 }

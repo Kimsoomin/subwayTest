@@ -175,6 +175,7 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       }
       progressBar.setVisibility(View.GONE);
       isLoading = false;
+      ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
       super.onPostExecute(result);
     }
   }
@@ -255,6 +256,20 @@ public class MyBookmarkTravelScheduleListFragment extends Fragment
       apiClient.reqeustBookmarkCancel(PreferenceManager.getInstance(getActivity()).getUserSeq(), params[0], "plan");
       return null;
     }
+    
+    
+    @Override
+    protected void onPostExecute(Void result)
+    {
+      ((MyBookmarkActivity) getActivity()).invalidateOptionsMenu();
+      super.onPostExecute(result);
+    }
+  }
+  
+  
+  public int getCount()
+  {
+    return adapter.getCount();
   }
   
   /**************************************************
