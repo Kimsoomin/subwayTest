@@ -57,13 +57,17 @@ public class CouponListFragment extends Fragment
   private boolean isResultGPSOn = false;
   
   private LinearLayout emptyContainer;
+  private int categoryId = -1;
   
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
     int resId = R.layout.fragment_coupon;
-    return inflater.inflate(resId, null);
+    View view = inflater.inflate(resId, null);
+    btnMyLocation = (Button) view.findViewById(R.id.btn_my_location);
+    btnPopular = (Button) view.findViewById(R.id.btn_popular);
+    return view;
   }
   
   
@@ -87,8 +91,6 @@ public class CouponListFragment extends Fragment
     listPopular.setOnScrollListener(scrollListener);
     listPopular.setAdapter(listPopularAdapter);
     
-    btnMyLocation = (Button) getView().findViewById(R.id.btn_my_location);
-    btnPopular = (Button) getView().findViewById(R.id.btn_popular);
     btnMyLocation.setOnClickListener(btnClickListener);
     btnPopular.setOnClickListener(btnClickListener);
     btnMyLocation.setActivated(true);
@@ -98,6 +100,22 @@ public class CouponListFragment extends Fragment
     
     emptyContainer = (LinearLayout) getView().findViewById(R.id.empty_container);
     selectedListView(true);
+  }
+  
+  
+  public void changeFilteringMode(int categoryId)
+  {
+    this.categoryId = categoryId;
+    if (btnMyLocation.isActivated())
+      myLocationListpage = 1;
+    else
+      popularListpage = 1;
+    
+    if (btnMyLocation.isActivated())
+      listMyLocationAdapter.clear();
+    else
+      listPopularAdapter.clear();
+    load();
   }
   
   
@@ -193,8 +211,6 @@ public class CouponListFragment extends Fragment
   
   private void load()
   {
-    progressBar.setVisibility(View.VISIBLE);
-    progressBar.bringToFront();
     new GetAsyncTask().execute();
   }
   
@@ -204,10 +220,29 @@ public class CouponListFragment extends Fragment
   private class GetAsyncTask extends AsyncTask<String, Integer, NetworkResult>
   {
     @Override
+    protected void onPreExecute()
+    {
+      try
+      {
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.bringToFront();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+      super.onPreExecute();
+    }
+    
+    
+    @Override
     protected NetworkResult doInBackground(String... params)
     {
       if (btnMyLocation.isActivated())
-        return apiClient.getCouponWithMyLocation(myLocationListpage, currentLocation.getLatitude(), currentLocation.getLongitude());
+        if (currentLocation != null)
+          return apiClient.getCouponWithMyLocation(myLocationListpage, currentLocation.getLatitude(), currentLocation.getLongitude());
+        else
+          return null;
       else
         return apiClient.getCouponPopular(popularListpage);
     }
@@ -216,7 +251,7 @@ public class CouponListFragment extends Fragment
     @Override
     protected void onPostExecute(NetworkResult result)
     {
-      if (!result.isSuccess)
+      if (result == null && !result.isSuccess)
         return;
       
       try
@@ -230,10 +265,27 @@ public class CouponListFragment extends Fragment
             JSONObject objInArr = arr.getJSONObject(i);
             CouponBean bean = new CouponBean();
             bean.setJSONObject(objInArr);
-            if (btnMyLocation.isActivated())
-              listMyLocationAdapter.add(bean);
+            
+            if (categoryId == -1)
+            {
+              if (btnMyLocation.isActivated())
+                listMyLocationAdapter.add(bean);
+              else
+                listPopularAdapter.add(bean);
+            }
             else
-              listPopularAdapter.add(bean);
+            {
+              if (btnMyLocation.isActivated())
+              {
+                if (Integer.parseInt(bean.category) == categoryId)
+                  listMyLocationAdapter.add(bean);
+              }
+              else
+              {
+                if (Integer.parseInt(bean.category) == categoryId)
+                  listPopularAdapter.add(bean);
+              }
+            }
           }
           
           if (btnMyLocation.isActivated())
