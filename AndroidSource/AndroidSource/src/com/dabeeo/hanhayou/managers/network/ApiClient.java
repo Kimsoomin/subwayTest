@@ -931,6 +931,35 @@ public class ApiClient
   }
   
   
+  public ArrayList<ProductBean> getProductListSearch(String keyWord)
+  {
+    ArrayList<ProductBean> searchList = new ArrayList<ProductBean>();
+    try
+    {
+      NetworkResult result = httpClient.requestGet(getSiteUrl() + "v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
+      
+      JSONObject obj = new JSONObject(result.response);
+      if(obj.getString("status").equals("OK"))
+      {
+        JSONArray objArr = obj.getJSONArray("product");
+        for(int i = 0; i < objArr.length(); i++)
+        {
+          JSONObject searchObj = objArr.getJSONObject(i);
+          ProductBean bean = new ProductBean();
+          bean.setJSONObject(searchObj);
+          searchList.add(bean);
+        }
+      }
+    }
+    catch (Exception e)
+    {
+      BlinkingCommon.smlLibPrintException("ApiClient", " e : " + e);
+    }
+    
+    return searchList;
+  }
+  
+  
   /**
    * 통계 데이터 API
    */
