@@ -302,7 +302,7 @@
                     android:id="@+id/container_subway"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="25"
+                    android:layout_weight="27"
                     android:background="@drawable/empty_round_box" >
 
                     <TextView
@@ -348,7 +348,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="19"
+                    android:layout_weight="17"
                     android:orientation="horizontal"
                     android:weightSum="45.5" >
 

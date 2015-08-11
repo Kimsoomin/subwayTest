@@ -45,7 +45,7 @@ public class CouponActivity extends ActionBarActivity
   private ViewPager viewPager;
   private CouponViewPagerAdapter adapter;
   
-  private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
+  private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuWishList, bottomMenuSearch;
   private LinearLayout containerBottomTab;
   
   private ApiClient apiClient;
@@ -75,12 +75,10 @@ public class CouponActivity extends ActionBarActivity
     containerBottomTab = (LinearLayout) findViewById(R.id.container_bottom_tab);
     bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
     bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
-    bottomMenuPhotolog = (LinearLayout) findViewById(R.id.container_menu_photolog);
     bottomMenuWishList = (LinearLayout) findViewById(R.id.container_menu_wishlist);
     bottomMenuSearch = (LinearLayout) findViewById(R.id.container_menu_search);
     bottomMenuHome.setOnClickListener(bottomMenuClickListener);
     bottomMenuMyPage.setOnClickListener(bottomMenuClickListener);
-    bottomMenuPhotolog.setOnClickListener(bottomMenuClickListener);
     bottomMenuWishList.setOnClickListener(bottomMenuClickListener);
     bottomMenuSearch.setOnClickListener(bottomMenuClickListener);
     

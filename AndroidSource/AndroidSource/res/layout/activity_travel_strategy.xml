@@ -14,7 +14,7 @@
     <LinearLayout
         android:id="@+id/container_bottom_tab"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="53dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_navigation_bar"
         android:orientation="horizontal" >
@@ -30,13 +30,13 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_background_main_home" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textSize="11sp" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -55,13 +55,13 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_background_main_mypage" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textSize="11sp" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -81,13 +81,13 @@
             android:visibility="gone" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_bottom_menu_photolog" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textSize="11sp" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -106,13 +106,13 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_background_main_wishlist" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textSize="11sp" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -131,13 +131,13 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_background_main_search" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textSize="11sp" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="53dp"
         android:background="@drawable/bottom_navigation_bar"
         android:orientation="horizontal"
         android:paddingTop="2dp" >
@@ -42,18 +42,18 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_background_main_home" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/term_home"
-                android:textColor="@drawable/btn_background_text_color" />
+                android:textColor="@drawable/btn_background_text_color"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <!-- 마이페이지 -->
@@ -68,12 +68,12 @@
 
             <RelativeLayout
                 android:layout_width="25dp"
-                android:layout_height="20dp"
+                android:layout_height="23dp"
                 android:layout_gravity="center" >
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
                     android:layout_centerInParent="true"
                     android:contentDescription="@null"
                     android:src="@drawable/btn_background_main_mypage" />
@@ -90,12 +90,12 @@
             </RelativeLayout>
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/term_my_page"
-                android:textColor="@drawable/btn_background_text_color" />
+                android:textColor="@drawable/btn_background_text_color"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <!-- 포토로그 등록 -->
@@ -110,18 +110,18 @@
             android:visibility="gone" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_bottom_menu_photolog" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/term_register_photolog"
-                android:textColor="@drawable/btn_background_text_color" />
+                android:textColor="@drawable/btn_background_text_color"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <!-- 위시리스트 -->
@@ -135,18 +135,18 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_background_main_wishlist" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/term_wishlist"
-                android:textColor="@drawable/btn_background_text_color" />
+                android:textColor="@drawable/btn_background_text_color"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <!-- 검색 -->
@@ -160,18 +160,18 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_background_main_search" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/term_search"
-                android:textColor="@drawable/btn_background_text_color" />
+                android:textColor="@drawable/btn_background_text_color"
+                android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>
 
