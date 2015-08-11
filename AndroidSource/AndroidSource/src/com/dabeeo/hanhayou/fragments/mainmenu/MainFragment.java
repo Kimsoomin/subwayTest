@@ -73,10 +73,10 @@ public class MainFragment extends Fragment
     drawable.setColor(Color.parseColor("#6a8bf1"));
     drawable = (GradientDrawable) containerSubway.getBackground();
     drawable.setColor(Color.parseColor("#69a2f3"));
-    drawable = (GradientDrawable) containerTicket.getBackground();
-    drawable.setColor(Color.parseColor("#9584f8"));
-    drawable = (GradientDrawable) containerCoupon.getBackground();
-    drawable.setColor(Color.parseColor("#ae7ff3"));
+//    drawable = (GradientDrawable) containerTicket.getBackground();
+//    drawable.setColor(Color.parseColor("#9584f8"));
+//    drawable = (GradientDrawable) containerCoupon.getBackground();
+//    drawable.setColor(Color.parseColor("#ae7ff3"));
     
     containerStrategySeoul.setOnClickListener(menuClickListener);
     containerTravelSchedule.setOnClickListener(menuClickListener);
