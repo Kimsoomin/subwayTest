@@ -10,7 +10,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.ReviewDetailActivity;
@@ -29,13 +31,18 @@ public class ProductReviewContainerView extends LinearLayout
   
   private RelativeLayout progressLayout;
   
+  private RatingBar reviewRating;
+  private TextView reviewRatingText;
   
-  public ProductReviewContainerView(Activity context, String parentType, String parentIdx)
+  private float rate = 0;
+  
+  public ProductReviewContainerView(Activity context, String parentType, String parentIdx, float rate)
   {
     super(context);
     this.context = context;
     this.parentType = parentType;
     this.parentIdx = parentIdx;
+    this.rate = rate;
     init();
   }
   
@@ -62,6 +69,11 @@ public class ProductReviewContainerView extends LinearLayout
     LayoutInflater inflater = LayoutInflater.from(context);
     int resId = R.layout.view_product_review_container;
     View view = inflater.inflate(resId, null);
+    
+    reviewRating = (RatingBar) view.findViewById(R.id.product_rate_bar);
+    reviewRating.setRating(rate/2);
+    reviewRatingText = (TextView) view.findViewById(R.id.product_rate_text);
+    reviewRatingText.setText(""+rate*10);
     
     container = (LinearLayout) view.findViewById(R.id.content);
     progressLayout = (RelativeLayout) view.findViewById(R.id.progress_layout);
