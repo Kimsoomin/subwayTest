@@ -14,11 +14,14 @@ public class TrendProductImageViewPagerAdapter extends FragmentPagerAdapter
   private ArrayList<String> imageUrls = new ArrayList<>();
   private Context context;
   
+  private int imageWidth = 0;
   
-  public TrendProductImageViewPagerAdapter(Context context, FragmentManager fm)
+  
+  public TrendProductImageViewPagerAdapter(Context context, FragmentManager fm, int imageWidth)
   {
     super(fm);
     this.context = context;
+    this.imageWidth = imageWidth;
   }
   
   
@@ -33,7 +36,7 @@ public class TrendProductImageViewPagerAdapter extends FragmentPagerAdapter
   public Fragment getItem(int position)
   {
     TrendProductimageFragment fragment = new TrendProductimageFragment();
-    fragment.setImageUrl(imageUrls, imageUrls.get(position));
+    fragment.setImageUrl(imageUrls, imageUrls.get(position), imageWidth);
     return fragment;
   }
   

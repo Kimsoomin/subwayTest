@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.ImagePopUpActivity;
-import com.dabeeo.hanhayou.utils.ImageDownloader;
+import com.squareup.picasso.Picasso;
 
 public class TrendProductimageFragment extends Fragment
 {
@@ -21,7 +21,8 @@ public class TrendProductimageFragment extends Fragment
   private ArrayList<String> imageUrls = new ArrayList<String>();
   private String imageUrl;
   
-  
+  private int imageWidth = 0;
+    
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
   {
@@ -38,17 +39,18 @@ public class TrendProductimageFragment extends Fragment
   }
   
   
-  public void setImageUrl(ArrayList<String> imageUrls, String imageUrl)
+  public void setImageUrl(ArrayList<String> imageUrls, String imageUrl, int imageWidth)
   {
     this.imageUrl = imageUrl;
     this.imageUrls.addAll(imageUrls);
+    this.imageWidth = imageWidth;
   }
   
   
   @Override
   public void onResume()
   {
-    ImageDownloader.displayImage(getActivity(), imageUrl, imageView, null);
+    Picasso.with(getActivity()).load(imageUrl).resize(imageWidth, imageWidth).centerCrop().into(imageView);
     imageView.setOnClickListener(new OnClickListener()
     {
       @Override

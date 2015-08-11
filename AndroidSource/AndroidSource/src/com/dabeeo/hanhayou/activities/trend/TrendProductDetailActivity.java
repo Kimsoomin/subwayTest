@@ -15,11 +15,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -105,7 +107,16 @@ public class TrendProductDetailActivity extends ActionBarActivity
     progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
     
     viewPager = (ViewPager) findViewById(R.id.viewpager);
-    adapter = new TrendProductImageViewPagerAdapter(this, getSupportFragmentManager());
+    
+    DisplayMetrics metrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    int deviceWidth = metrics.widthPixels;
+    
+    adapter = new TrendProductImageViewPagerAdapter(this, getSupportFragmentManager(), deviceWidth);
+    ViewGroup.LayoutParams p = viewPager.getLayoutParams();
+    p.width = deviceWidth;
+    p.height = deviceWidth;
+    viewPager.setLayoutParams(p);
     viewPager.setAdapter(adapter);
     
     sharePickView = (SharePickView) findViewById(R.id.view_share_pick);
@@ -333,7 +344,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
           new AddCartTask().execute();
         }else if(v.getId() == R.id.btn_checkout)
         {
-          String url = "_hgy_token="+PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq()
+          String url = "newOrderNow?_hgy_token="+PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq()
               + "&product_id=" + productId + "&itemAttributesList=" + itemAttribute;
           Intent i = new Intent(TrendProductDetailActivity.this, TrendCartActivity.class);
           i.putExtra("cart_parameter", url);
@@ -600,7 +611,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
   
   private class GetProductDetailRecomendProductTask extends AsyncTask<Void, Void, NetworkResult>
   {
-
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
