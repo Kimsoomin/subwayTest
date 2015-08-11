@@ -240,11 +240,11 @@ public class CouponListFragment extends Fragment
     {
       if (btnMyLocation.isActivated())
         if (currentLocation != null)
-          return apiClient.getCouponWithMyLocation(myLocationListpage, currentLocation.getLatitude(), currentLocation.getLongitude());
+          return apiClient.getCouponWithMyLocation(myLocationListpage, currentLocation.getLatitude(), currentLocation.getLongitude(), categoryId);
         else
           return null;
       else
-        return apiClient.getCouponPopular(popularListpage);
+        return apiClient.getCouponPopular(popularListpage, categoryId);
     }
     
     

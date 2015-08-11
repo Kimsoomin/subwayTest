@@ -1051,15 +1051,21 @@ public class ApiClient
   }
   
   
-  public NetworkResult getCouponWithMyLocation(int page, double lat, double lon)
+  public NetworkResult getCouponWithMyLocation(int page, double lat, double lon, int categoryId)
   {
-    return httpClient.requestGet(siteCouponUrl + "?mode=COUPON_LIST&page=" + page + "&list_type=page&page_count=5&v=coupon&sort_type=distance&lat=" + lat + "&lng=" + lon);
+    String url = siteCouponUrl + "?mode=COUPON_LIST&page=" + page + "&list_type=page&page_count=5&v=coupon&sort_type=distance&lat=" + lat + "&lng=" + lon;
+    if (categoryId != -1)
+      url += "&category_id=" + categoryId;
+    return httpClient.requestGet(url);
   }
   
   
-  public NetworkResult getCouponPopular(int page)
+  public NetworkResult getCouponPopular(int page, int categoryId)
   {
-    return httpClient.requestGet(siteCouponUrl + "?mode=COUPON_LIST&page=" + page + "&list_type=page&page_count=5&v=coupon&sort_type=rating");
+    String url = siteCouponUrl + "?mode=COUPON_LIST&page=" + page + "&list_type=page&page_count=5&v=coupon&sort_type=rating";
+    if (categoryId != -1)
+      url += "&category_id=" + categoryId;
+    return httpClient.requestGet(url);
   }
   
   

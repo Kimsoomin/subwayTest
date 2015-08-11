@@ -30,11 +30,13 @@ import android.widget.TextView;
 
 import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.mypage.LoginActivity;
 import com.dabeeo.hanhayou.beans.CategoryBean;
 import com.dabeeo.hanhayou.controllers.coupon.CouponViewPagerAdapter;
 import com.dabeeo.hanhayou.fragments.coupon.CouponListFragment;
 import com.dabeeo.hanhayou.fragments.coupon.DownloadedCouponListFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
@@ -371,17 +373,47 @@ public class CouponActivity extends ActionBarActivity
       {
         if (!PreferenceManager.getInstance(CouponActivity.this).isLoggedIn())
         {
-          new AlertDialogManager(CouponActivity.this).showNeedLoginDialog(-1);
-          Runnable runnn = new Runnable()
+          AlertDialog.Builder builder = new AlertDialog.Builder(CouponActivity.this);
+          builder.setTitle(getString(R.string.term_alert));
+          builder.setMessage(getString(R.string.msg_require_login));
+          builder.setCancelable(false);
+          builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
           {
             @Override
-            public void run()
+            public void onClick(DialogInterface dialog, int which)
             {
-              getSupportActionBar().setSelectedNavigationItem(0);
+              if (SystemUtil.isConnectNetwork(CouponActivity.this))
+                startActivity(new Intent(CouponActivity.this, LoginActivity.class));
+              else
+              {
+                new AlertDialogManager(CouponActivity.this).showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_dont_connect_network), getString(android.R.string.ok), null,
+                    new AlertListener()
+                    {
+                      @Override
+                      public void onPositiveButtonClickListener()
+                      {
+                        finish();
+                      }
+                      
+                      
+                      @Override
+                      public void onNegativeButtonClickListener()
+                      {
+                        finish();
+                      }
+                    });
+              }
             }
-          };
-          Handler handler = new Handler();
-          handler.post(runnn);
+          });
+          builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+          {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+              finish();
+            }
+          });
+          builder.create().show();
         }
       }
     }

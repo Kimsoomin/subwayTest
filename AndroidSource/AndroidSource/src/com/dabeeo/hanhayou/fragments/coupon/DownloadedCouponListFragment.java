@@ -2,6 +2,9 @@ package com.dabeeo.hanhayou.fragments.coupon;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,8 +23,8 @@ import android.widget.ProgressBar;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
-import com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hanhayou.activities.coupon.DownloadedCouponDetailActivity;
+import com.dabeeo.hanhayou.activities.mypage.LoginActivity;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.controllers.coupon.DownloadedCouponListAdapter;
@@ -81,7 +84,33 @@ public class DownloadedCouponListFragment extends Fragment
   @Override
   public void onResume()
   {
-    load();
+//    if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+      load();
+//    else
+//    {
+//      Builder builder = new AlertDialog.Builder(getActivity());
+//      builder.setTitle(getString(R.string.term_alert));
+//      builder.setMessage(getString(R.string.msg_require_login));
+//      builder.setCancelable(false);
+//      builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+//      {
+//        @Override
+//        public void onClick(DialogInterface dialog, int which)
+//        {
+//          startActivity(new Intent(getActivity(), LoginActivity.class));
+//        }
+//      });
+//      builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
+//      {
+//        @Override
+//        public void onClick(DialogInterface dialog, int which)
+//        {
+//          getActivity().finish();
+//        }
+//      });
+//      
+//      builder.create().show();
+//    }
     super.onResume();
   }
   
