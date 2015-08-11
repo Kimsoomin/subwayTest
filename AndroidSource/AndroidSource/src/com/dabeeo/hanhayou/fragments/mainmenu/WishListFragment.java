@@ -24,6 +24,7 @@ import com.dabeeo.hanhayou.activities.sub.WishListSearchActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.beans.PopularWishBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
+import com.dabeeo.hanhayou.beans.ProductDetailBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter;
 import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter.WishListListener;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
@@ -32,6 +33,7 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.PopularWishListParticleView;
+import com.dabeeo.hanhayou.views.TrendOptionAndAmountPickView;
 
 public class WishListFragment extends Fragment
 {
@@ -45,6 +47,8 @@ public class WishListFragment extends Fragment
   private ApiClient apiClient;
   public ArrayList<ProductBean> ProductArray;
   public ArrayList<PopularWishBean> popularWishArray;
+  
+  private TrendOptionAndAmountPickView optionAmountPickerView;
   
   
   @SuppressLint("InflateParams")
@@ -86,6 +90,8 @@ public class WishListFragment extends Fragment
       }
     });
     
+    optionAmountPickerView = (TrendOptionAndAmountPickView) view.findViewById(R.id.option_picker_view);
+    
     wishListListener = new WishListListener()
     {
       
@@ -110,6 +116,12 @@ public class WishListFragment extends Fragment
       public void onRefresh()
       {
         loadWishList();        
+      }
+      
+      @Override
+      public void onOptionSelected(ProductDetailBean productDetailInfo)
+      {
+        optionAmountPickerView.setOptions(productDetailInfo.productOptionArr, productDetailInfo.productOptionList);
       }
     };
     
