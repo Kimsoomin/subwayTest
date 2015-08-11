@@ -22,6 +22,8 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendProductListAdapter;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.views.TrendExhibitionTopView;
@@ -100,8 +102,14 @@ public class TrendExhibitionActivity extends ActionBarActivity
     }
     else if (id == R.id.cart)
     {
-      Intent i = new Intent(TrendExhibitionActivity.this, TrendCartActivity.class);
-      startActivity(i);
+      if(PreferenceManager.getInstance(TrendExhibitionActivity.this).isLoggedIn())
+      {
+        Intent i = new Intent(TrendExhibitionActivity.this, TrendCartActivity.class);
+        startActivity(i);
+      }else
+      {
+        new AlertDialogManager(TrendExhibitionActivity.this).showNeedLoginDialog(-1);
+      }
     }
     return super.onOptionsItemSelected(item);
   }
@@ -113,7 +121,7 @@ public class TrendExhibitionActivity extends ActionBarActivity
     {
       super.onPreExecute();
     }
-
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {

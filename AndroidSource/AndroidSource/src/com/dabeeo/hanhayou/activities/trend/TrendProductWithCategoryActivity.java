@@ -26,125 +26,136 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendProductListAdapter;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.views.TrendProductCategoryView;
 
 public class TrendProductWithCategoryActivity extends ActionBarActivity
 {
-	private GridView gridView;
-	private TrendProductListAdapter adapter;
-	private LinearLayout categoryContainer;
-	private HashMap<String, LinearLayout> categoriesLayouts = new HashMap<>();
-	
-	public ApiClient apiClient;
-	public String categoryId;
-	public ArrayList<ProductBean> ProductArray;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_trend_product_with_category_list);
-		
-		apiClient = new ApiClient(TrendProductWithCategoryActivity.this);
-		
-		@SuppressLint("InflateParams")
-		View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
-		TextView title = (TextView) customActionBar.findViewById(R.id.title);
-		getSupportActionBar().setCustomView(customActionBar);
-		getSupportActionBar().setDisplayShowCustomEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		
-		String categoryTitle = getIntent().getStringExtra("category_title");
-		title.setText(categoryTitle);
-		
-		categoryId = getIntent().getStringExtra("categoryId");
-		
-		categoryContainer = (LinearLayout) findViewById(R.id.category_container);
-		gridView = (GridView) findViewById(R.id.product_list);
-		adapter = new TrendProductListAdapter(this);
-		gridView.setAdapter(adapter);
-		
-		gridView.setOnItemClickListener(new OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-			{
-			  Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendProductDetailActivity.class);
-			  i.putExtra("product_idx", ProductArray.get(position).id);
-				startActivity(i);
-			}
-		});
-		
-		loadCategoryItems();
+  private GridView gridView;
+  private TrendProductListAdapter adapter;
+  private LinearLayout categoryContainer;
+  private HashMap<String, LinearLayout> categoriesLayouts = new HashMap<>();
+  
+  public ApiClient apiClient;
+  public String categoryId;
+  public ArrayList<ProductBean> ProductArray;
+  
+  @Override
+  protected void onCreate(Bundle savedInstanceState)
+  {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_trend_product_with_category_list);
+    
+    apiClient = new ApiClient(TrendProductWithCategoryActivity.this);
+    
+    @SuppressLint("InflateParams")
+    View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
+    TextView title = (TextView) customActionBar.findViewById(R.id.title);
+    getSupportActionBar().setCustomView(customActionBar);
+    getSupportActionBar().setDisplayShowCustomEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
+    
+    String categoryTitle = getIntent().getStringExtra("category_title");
+    title.setText(categoryTitle);
+    
+    categoryId = getIntent().getStringExtra("categoryId");
+    
+    categoryContainer = (LinearLayout) findViewById(R.id.category_container);
+    gridView = (GridView) findViewById(R.id.product_list);
+    adapter = new TrendProductListAdapter(this);
+    gridView.setAdapter(adapter);
+    
+    gridView.setOnItemClickListener(new OnItemClickListener()
+    {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+      {
+        Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendProductDetailActivity.class);
+        i.putExtra("product_idx", ProductArray.get(position).id);
+        i.putExtra("product_isWished", ProductArray.get(position).isWished);
+        i.putExtra("proudct_categoryId", ProductArray.get(position).categoryId);
+        i.putExtra("product_rate", ProductArray.get(position).rate);
+        startActivity(i);
+      }
+    });
+    
+    loadCategoryItems();
 //		displayCategories();
-	}
-	
-	private void loadCategoryItems()
-	{
-	  new GetCategoryProductList().execute();
-	}
-	
-	
-	private void displayCategories()
-	{
-		TrendProductCategoryView view = new TrendProductCategoryView(this);
-		view.setData("스킨케어", "메이크업");
-		categoriesLayouts.put("스킨케어", view.leftContainer);
-		categoriesLayouts.put("메이크업", view.rightContainer);
-		view.leftContainer.setOnClickListener(categoryContainerClickListener);
-		view.rightContainer.setOnClickListener(categoryContainerClickListener);
-		categoryContainer.addView(view);
-	}
-	
-	private OnClickListener categoryContainerClickListener = new OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendProductWithCategoryActivity.class);
-			startActivity(i);
-		}
-	};
-	
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		getMenuInflater().inflate(R.menu.menu_search, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-	
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		int id = item.getItemId();
-		if (id == android.R.id.home)
-			finish();
-		else if (id == R.id.search)
-		{
-			Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendSearchActivity.class);
-			startActivity(i);
-		}
-		else if (id == R.id.cart)
-		{
-		  Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendCartActivity.class);
+  }
+  
+  private void loadCategoryItems()
+  {
+    new GetCategoryProductList().execute();
+  }
+  
+  
+  private void displayCategories()
+  {
+    TrendProductCategoryView view = new TrendProductCategoryView(this);
+    view.setData("스킨케어", "메이크업");
+    categoriesLayouts.put("스킨케어", view.leftContainer);
+    categoriesLayouts.put("메이크업", view.rightContainer);
+    view.leftContainer.setOnClickListener(categoryContainerClickListener);
+    view.rightContainer.setOnClickListener(categoryContainerClickListener);
+    categoryContainer.addView(view);
+  }
+  
+  private OnClickListener categoryContainerClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendProductWithCategoryActivity.class);
       startActivity(i);
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-	private class GetCategoryProductList extends AsyncTask<Void, Void, NetworkResult>
+    }
+  };
+  
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    getMenuInflater().inflate(R.menu.menu_search, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+  
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    int id = item.getItemId();
+    if (id == android.R.id.home)
+      finish();
+    else if (id == R.id.search)
+    {
+      Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendSearchActivity.class);
+      startActivity(i);
+    }
+    else if (id == R.id.cart)
+    {
+      if(PreferenceManager.getInstance(TrendProductWithCategoryActivity.this).isLoggedIn())
+      {
+        Intent i = new Intent(TrendProductWithCategoryActivity.this, TrendCartActivity.class);
+        startActivity(i);
+      }else
+      {
+        new AlertDialogManager(TrendProductWithCategoryActivity.this).showNeedLoginDialog(-1);
+      }
+    }
+    return super.onOptionsItemSelected(item);
+  }
+  
+  private class GetCategoryProductList extends AsyncTask<Void, Void, NetworkResult>
   {
     @Override
     protected void onPreExecute()
     {
       super.onPreExecute();
     }
-
+    
     @Override
     protected NetworkResult doInBackground(Void... params)
     {

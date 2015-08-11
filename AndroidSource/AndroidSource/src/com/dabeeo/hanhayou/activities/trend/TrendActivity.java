@@ -29,6 +29,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.TrendKoreaBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendKoreaListAdapter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
@@ -268,8 +269,14 @@ public class TrendActivity extends ActionBarActivity
     }
     else if (id == R.id.cart)
     {
-      Intent i = new Intent(TrendActivity.this, TrendCartActivity.class);
-      startActivity(i);
+      if(PreferenceManager.getInstance(TrendActivity.this).isLoggedIn())
+      {
+        Intent i = new Intent(TrendActivity.this, TrendCartActivity.class);
+        startActivity(i);
+      }else
+      {
+        new AlertDialogManager(TrendActivity.this).showNeedLoginDialog(-1);
+      }
     }
     return super.onOptionsItemSelected(item);
   }
@@ -281,7 +288,7 @@ public class TrendActivity extends ActionBarActivity
     {
       super.onPreExecute();
     }
-
+    
     @Override
     protected ArrayList<TrendKoreaBean> doInBackground(Void... params)
     {
