@@ -22,10 +22,7 @@ public class TrendCartActivity extends ActionBarActivity
 {
   private WebView trendCart;
   private String url = "https://devm.hanhayou.com/ecom/cart/";
-  
-//  private String productId = "";
-//  private String itemAttributesList = "";
-  
+    
   @SuppressLint("SetJavaScriptEnabled")
   @Override
   protected void onCreate(Bundle savedInstanceState)
