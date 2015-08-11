@@ -76,6 +76,9 @@ public class ProductView extends RelativeLayout
         {
           Intent i = new Intent(context, TrendProductDetailActivity.class);
           i.putExtra("product_idx", firstBean.id);
+          i.putExtra("product_isWished", firstBean.isWished);
+          i.putExtra("proudct_categoryId", firstBean.categoryId);
+          i.putExtra("product_rate", firstBean.rate);
           context.startActivity(i);
         }
       });
@@ -100,6 +103,9 @@ public class ProductView extends RelativeLayout
         {
           Intent i = new Intent(context, TrendProductDetailActivity.class);
           i.putExtra("product_idx", secondBean.id);
+          i.putExtra("product_isWished", secondBean.isWished);
+          i.putExtra("proudct_categoryId", secondBean.categoryId);
+          i.putExtra("product_rate", secondBean.rate);
           context.startActivity(i);
         }
       });

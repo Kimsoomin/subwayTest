@@ -19,6 +19,8 @@ public class ProductBean
   public String imageTitle;
   public String imageUrl;
   public boolean isWished = false;
+  public String categoryId;
+  public int rate;
   public boolean productNull = false;
   
   public void setJSONObject(JSONObject obj)
@@ -70,6 +72,12 @@ public class ProductBean
       
       if(obj.has("isWished"))
         isWished = obj.getInt("isWished") != 0;
+      
+      if(obj.has("categoryId"))
+        categoryId = obj.getString("categoryId");
+      
+      if(obj.has("rate"))
+        rate = obj.getInt("rate");
     }
     catch (Exception e)
     {

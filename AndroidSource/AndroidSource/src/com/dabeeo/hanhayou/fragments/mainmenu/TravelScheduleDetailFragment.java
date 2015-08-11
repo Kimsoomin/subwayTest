@@ -81,6 +81,8 @@ public class TravelScheduleDetailFragment extends Fragment
   
   private ArrayList<ProductBean> scheduleProductList;
   
+  private ProductBean prdouct;
+  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -365,11 +367,10 @@ public class TravelScheduleDetailFragment extends Fragment
   {
     if (spotNum == 0 && SystemUtil.isConnectNetwork(getActivity()))
     {
-      ProductBean bean = new ProductBean();
-      bean = scheduleProductList.get(position);
-      final String id = bean.id;
+      prdouct = new ProductBean();
+      prdouct = scheduleProductList.get(position);
       ProductRecommendScheduleView productRecommendView = new ProductRecommendScheduleView(getActivity());
-      productRecommendView.setBean(bean);
+      productRecommendView.setBean(prdouct);
       productRecommendView.setOnClickListener(new OnClickListener()
       {
         @Override
@@ -380,7 +381,10 @@ public class TravelScheduleDetailFragment extends Fragment
           else
           {
             Intent i = new Intent(getActivity(), TrendProductDetailActivity.class);
-            i.putExtra("product_idx", id);
+            i.putExtra("product_idx", prdouct.id);
+            i.putExtra("product_isWished", prdouct.isWished);
+            i.putExtra("proudct_categoryId", prdouct.categoryId);
+            i.putExtra("product_rate", prdouct.rate);
             getActivity().startActivity(i);
           }
         }

@@ -21,7 +21,9 @@ import android.widget.Toast;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
+import com.dabeeo.hanhayou.beans.ProductDetailBean;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
@@ -37,6 +39,7 @@ public class WishListAdapter extends BaseAdapter
   private WishListListener listener;
   private ApiClient apiClient;
   
+  private ProductDetailBean productDetail;
   
   public WishListAdapter(Activity context, WishListListener listener)
   {
@@ -63,6 +66,7 @@ public class WishListAdapter extends BaseAdapter
   {
     public void onRemove();
     public void onRefresh();
+    public void onOptionSelected(ProductDetailBean productDetailInfo);
   }
   
   
@@ -124,10 +128,11 @@ public class WishListAdapter extends BaseAdapter
       @Override
       public void onClick(View v)
       {
-        if (!SystemUtil.isConnectNetwork(context))
-          new AlertDialogManager(context).showDontNetworkConnectDialog();
-        else
-          Toast.makeText(context, "준비 중입니다", Toast.LENGTH_LONG).show();
+//        if (!SystemUtil.isConnectNetwork(context))
+//          new AlertDialogManager(context).showDontNetworkConnectDialog();
+//        else
+//          Toast.makeText(context, "준비 중입니다", Toast.LENGTH_LONG).show();
+        new GetProductDetailTask().execute(bean.id);
       }
     });
     btnBuy.setOnClickListener(new OnClickListener()
@@ -135,10 +140,11 @@ public class WishListAdapter extends BaseAdapter
       @Override
       public void onClick(View v)
       {
-        if (!SystemUtil.isConnectNetwork(context))
-          new AlertDialogManager(context).showDontNetworkConnectDialog();
-        else
-          Toast.makeText(context, "준비 중입니다", Toast.LENGTH_LONG).show();
+//        if (!SystemUtil.isConnectNetwork(context))
+//          new AlertDialogManager(context).showDontNetworkConnectDialog();
+//        else
+//          Toast.makeText(context, "준비 중입니다", Toast.LENGTH_LONG).show();
+        new GetProductDetailTask().execute(bean.id);
       }
     });
     
@@ -158,7 +164,10 @@ public class WishListAdapter extends BaseAdapter
         else
         {
           Intent i = new Intent(context, TrendProductDetailActivity.class);
-          i.putExtra("product_id", bean.id);
+          i.putExtra("product_idx", bean.id);
+          i.putExtra("product_isWished", bean.isWished);
+          i.putExtra("proudct_categoryId", bean.categoryId);
+          i.putExtra("product_rate", bean.rate);
           context.startActivity(i);
         }
       }
@@ -197,5 +206,52 @@ public class WishListAdapter extends BaseAdapter
         e.printStackTrace();
       }
     }
+  }
+  
+  private class GetProductDetailTask extends AsyncTask<String, Void, ProductDetailBean>
+  {
+    
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected ProductDetailBean doInBackground(String... params)
+    {
+      return apiClient.getProductDetail(params[0]);
+    }
+    
+    @Override
+    protected void onPostExecute(ProductDetailBean result)
+    {
+      super.onPostExecute(result);
+      productDetail = result;
+      
+      if(productDetail != null)
+      {
+        if (listener != null)
+        {
+          listener.onOptionSelected(productDetail);
+        }
+      }else
+      {
+        new AlertDialogManager(context).showAlertDialog(context.getString(R.string.term_alert), "상품 정보 오류", 
+            context.getString(R.string.term_ok), null, new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+          }
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          { 
+          }
+        });
+      }
+    }
+    
   }
 }

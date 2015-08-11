@@ -139,6 +139,9 @@ public class TrendProductListAdapter extends BaseAdapter
           BlinkingCommon.smlLibDebug("TrendProducTList", "bean.id"+bean.id);
           Intent i = new Intent(context, TrendProductDetailActivity.class);
           i.putExtra("product_idx", bean.id);
+          i.putExtra("product_isWished", bean.isWished);
+          i.putExtra("proudct_categoryId", bean.categoryId);
+          i.putExtra("product_rate", bean.rate);
           context.startActivity(i);
         }
       }

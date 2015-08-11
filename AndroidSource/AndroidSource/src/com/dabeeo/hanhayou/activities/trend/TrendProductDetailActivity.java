@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
@@ -80,6 +81,9 @@ public class TrendProductDetailActivity extends ActionBarActivity
   private SharePickView sharePickView;
   
   private String productId;
+  private boolean isWished = false;
+  private String categoryId = "0";
+  private int rate = 0;
   private ProductDetailBean productDetail;
   private ApiClient apiClient;
   private ArrayList<String> imageUrls;
@@ -93,7 +97,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     setContentView(R.layout.activity_trend_product_detail);
     
     apiClient = new ApiClient(TrendProductDetailActivity.this);
-    productId = getIntent().getStringExtra("product_idx");
+    productIntentSet();
     
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -208,8 +212,27 @@ public class TrendProductDetailActivity extends ActionBarActivity
     recommendProductView = new ProductJustOneView(TrendProductDetailActivity.this);
     
     new GetProductDetailTask().execute();
-    new GetProductDetailRecomendProductTask().execute();
+  }
+  
+  public void productIntentSet()
+  {
+    if(getIntent().hasExtra("product_idx"))
+      productId = getIntent().getStringExtra("product_idx");
     
+    if(getIntent().hasExtra("product_isWished"))
+      isWished = getIntent().getBooleanExtra("product_isWished", false);
+    
+    if(getIntent().hasExtra("proudct_categoryId"))
+    {  
+      categoryId = getIntent().getStringExtra("proudct_categoryId");
+      if (TextUtils.isEmpty(categoryId))
+      {
+        categoryId = "0";
+      }
+    }
+    
+    if(getIntent().hasExtra("product_rate"))
+      rate = getIntent().getIntExtra("product_rate", 0);
   }
   
   @Override
@@ -225,7 +248,6 @@ public class TrendProductDetailActivity extends ActionBarActivity
       finish();
     }
   }
-  
   
   private void displayProductInfo()
   {
@@ -260,7 +282,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     textDeliverySpecificDate.setVisibility(View.VISIBLE);
     discountRate.setText(productDetail.saleRate + getString(R.string.term_sale_rate));
     
-    reviewContainerView = new ProductReviewContainerView(TrendProductDetailActivity.this, "product", productId);
+    reviewContainerView = new ProductReviewContainerView(TrendProductDetailActivity.this, "product", productId, rate);
     reviewLayout.addView(reviewContainerView);
     reviewContainerView.testLoadMore();
     
@@ -274,14 +296,22 @@ public class TrendProductDetailActivity extends ActionBarActivity
     
     btnCart.setOnClickListener(cartClickListener);
     btnBuy.setOnClickListener(cartClickListener);
+    btnWishList.setActivated(isWished);
     btnWishList.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View arg0)
       {
-        new ToggleWishList().execute(productId);
+        if(PreferenceManager.getInstance(TrendProductDetailActivity.this).isLoggedIn())
+        {
+          new ToggleWishList().execute(productId);
+        }else
+        {
+          new AlertDialogManager(TrendProductDetailActivity.this).showNeedLoginDialog(-1);
+        }
       }
     });
+    
     btnShare.setOnClickListener(new OnClickListener()
     {
       @Override
@@ -292,6 +322,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
         sharePickView.bringToFront();
       }
     });
+    
     btnTop.setOnClickListener(new OnClickListener()
     {
       @Override
@@ -300,6 +331,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
         scrollView.fullScroll(ScrollView.FOCUS_UP);
       }
     });
+    
     btnImageDetail.setOnClickListener(new OnClickListener()
     {
       @Override
@@ -338,18 +370,24 @@ public class TrendProductDetailActivity extends ActionBarActivity
     {
       if(optionAmountPickerView.getOptionSelected())
       {
-        setItemAttributes(optionAmountPickerView.optionColor, optionAmountPickerView.optionSize, optionAmountPickerView.amount);
-        if(v.getId() == R.id.btn_my_cart)
+        if(PreferenceManager.getInstance(TrendProductDetailActivity.this).isLoggedIn())
         {
-          new AddCartTask().execute();
-        }else if(v.getId() == R.id.btn_checkout)
+          setItemAttributes(optionAmountPickerView.optionColor, optionAmountPickerView.optionSize, optionAmountPickerView.amount);
+          if(v.getId() == R.id.btn_my_cart)
+          {
+            new AddCartTask().execute();
+          }else if(v.getId() == R.id.btn_checkout)
+          {
+            String url = "newOrderNow?_hgy_token="+PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq()
+                + "&product_id=" + productId + "&itemAttributesList=" + itemAttribute;
+            Intent i = new Intent(TrendProductDetailActivity.this, TrendCartActivity.class);
+            i.putExtra("cart_parameter", url);
+            startActivity(i);
+            optionAmountPickerView.initSpinner();
+          }
+        }else
         {
-          String url = "newOrderNow?_hgy_token="+PreferenceManager.getInstance(TrendProductDetailActivity.this).getUserSeq()
-              + "&product_id=" + productId + "&itemAttributesList=" + itemAttribute;
-          Intent i = new Intent(TrendProductDetailActivity.this, TrendCartActivity.class);
-          i.putExtra("cart_parameter", url);
-          startActivity(i);
-          optionAmountPickerView.initSpinner();
+          new AlertDialogManager(TrendProductDetailActivity.this).showNeedLoginDialog(-1);
         }
       }else
       {
@@ -518,8 +556,12 @@ public class TrendProductDetailActivity extends ActionBarActivity
       productDetail = result;
       
       if(productDetail != null)
+      {
         displayProductInfo();
+        new GetProductDetailRecomendProductTask().execute();
+      }
       else
+      {
         new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(getString(R.string.term_alert), "상품 정보 오류", 
             getString(R.string.term_ok), null, new AlertListener()
         {
@@ -534,6 +576,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
           { 
           }
         });
+      }
     }
     
   }
@@ -554,6 +597,10 @@ public class TrendProductDetailActivity extends ActionBarActivity
       {
         JSONObject obj = new JSONObject(result.response);
         btnWishList.setActivated(obj.getString("result").equals("INS"));
+        if(obj.getString("result").equals("INS"))
+        {
+          Toast.makeText(TrendProductDetailActivity.this, getString(R.string.msg_add_wishlist), Toast.LENGTH_SHORT).show();;
+        }
       }
       catch (Exception e)
       {
@@ -615,7 +662,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.getCategoryProductList("0", 3);
+      return apiClient.getCategoryProductList(categoryId, 3);
     }
     
     @Override
