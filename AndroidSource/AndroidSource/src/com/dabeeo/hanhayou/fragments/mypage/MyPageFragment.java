@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -323,8 +324,11 @@ public class MyPageFragment extends Fragment
       try
       {
         JSONObject obj = new JSONObject(result.response);
-        Picasso.with(getActivity()).load(obj.getString("mfidx")).fit().centerCrop().into(imageProfile);
-        PreferenceManager.getInstance(getActivity()).setUserProfile(obj.getString("mfidx"));
+        if(!TextUtils.isEmpty(obj.getString("mfidx")) && obj.getString("mfidx") != null)
+        {
+          Picasso.with(getActivity()).load(obj.getString("mfidx")).fit().centerCrop().into(imageProfile);
+          PreferenceManager.getInstance(getActivity()).setUserProfile(obj.getString("mfidx"));
+        }
       }
       catch (JSONException e)
       {
