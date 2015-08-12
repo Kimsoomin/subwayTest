@@ -243,6 +243,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     {
       optionAmountPickerView.setVisibility(View.GONE);
       optionAmountPickerView.view.setVisibility(View.GONE);
+      return;
     }else
     {
       finish();

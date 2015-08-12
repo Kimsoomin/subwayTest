@@ -61,6 +61,8 @@ public class MainActivity extends ActionBarActivity
   private MainActiviListener activityListener;
   private RelativeLayout progressLayout;
   
+  private WishListFragment wishlistFrgment;
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -200,10 +202,17 @@ public class MainActivity extends ActionBarActivity
     {
       if(currentFragmentPosition == POSITION_WISHLIST)
       {
-        if(bottomLyaout.getVisibility() != View.VISIBLE)
-          bottomLyaout.setVisibility(View.VISIBLE);
-        else
-          setFragments(POSITION_HOME);
+        if(progressLayout.getVisibility() == View.VISIBLE)
+        {
+          return;
+        }else
+        {
+          if(wishlistFrgment.optionAmountPickerView.getVisibility() == View.VISIBLE)
+            wishlistFrgment.wishListListener.onOptionClose();
+          else
+            setFragments(POSITION_HOME);
+        }
+        
       }else
         setFragments(POSITION_HOME);
       return;
@@ -281,6 +290,7 @@ public class MainActivity extends ActionBarActivity
         titleImage.setVisibility(View.INVISIBLE);
         title.setText(getString(R.string.term_wishlist));
         fragment = new WishListFragment(activityListener);
+        wishlistFrgment = (WishListFragment) fragment;
         break;
     }
     

@@ -42,7 +42,7 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
   public SpinnerAdapter spinnerArrayAdapter2;
   public SpinnerAdapter spinnerArrayAdapter;
   
-  public ArrayList<productSet> productSetList = new ArrayList<productSet>();
+  public ArrayList<productSet> productSetList;
   
   private WishListListener wishListener;
   
@@ -83,8 +83,8 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
   
   public void initSpinner()
   {
-    firstOption.setSelection(0);
-    secondOption.setSelection(0);
+    spinnerArrayAdapter.clear();
+    spinnerArrayAdapter2.clear();
     setOptionSelected(false);
   }
   
@@ -104,6 +104,7 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
     
     try
     {
+      productSetList = new ArrayList<productSet>();
       for(int i = 0; i < options.get(0).optionAttributeArr.size(); i++)
       {
         String optionId = options.get(0).optionAttributeArr.get(i).optionId;

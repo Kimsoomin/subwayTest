@@ -47,7 +47,7 @@ public class WishListFragment extends Fragment
   private GridViewWithHeaderAndFooter listView;
   private WishListAdapter adapter;
   private Button btnPopularProduct;
-  private WishListListener wishListListener;
+  public WishListListener wishListListener;
   
   private ApiClient apiClient;
   public ArrayList<ProductBean> ProductArray;
@@ -55,8 +55,8 @@ public class WishListFragment extends Fragment
   
   private MainActiviListener mainLsitener;
   
-  private LinearLayout optionButtonLayout;
-  private TrendOptionAndAmountPickView optionAmountPickerView;
+  public LinearLayout optionButtonLayout;
+  public TrendOptionAndAmountPickView optionAmountPickerView;
   public String itemAttribute;
   private Button btnCart;
   private Button btnCheckOut;
@@ -83,7 +83,6 @@ public class WishListFragment extends Fragment
     apiClient = new ApiClient(getActivity());
     
     popularWishArray = new ArrayList<PopularWishBean>();
-    
     emptyContainer = (ScrollView) view.findViewById(R.id.empty_container);
     btnPopularProduct = (Button) view.findViewById(R.id.btn_go_to_popular_product);
     btnPopularProduct.setOnClickListener(new OnClickListener()
