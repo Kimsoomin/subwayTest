@@ -271,20 +271,22 @@
                     android:id="@+id/search_not_exist_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="8dp"
                         android:background="@android:color/white"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:visibility="gone" >
+                        android:orientation="vertical" >
 
                         <ImageView
                             android:layout_width="70dp"
                             android:layout_height="70dp"
+                            android:layout_gravity="center_horizontal"
                             android:src="@drawable/character_list_blank" />
 
                         <TextView
