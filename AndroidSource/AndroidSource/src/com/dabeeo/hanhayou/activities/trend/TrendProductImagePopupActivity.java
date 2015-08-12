@@ -1,10 +1,11 @@
 package com.dabeeo.hanhayou.activities.trend;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +29,7 @@ public class TrendProductImagePopupActivity extends ActionBarActivity
   public void onCreate(Bundle savedInstanceState)
   {
     getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     super.onCreate(savedInstanceState);
     @SuppressLint("InflateParams")
     View customActionBar = LayoutInflater.from(this).inflate(R.layout.custom_action_bar, null);
@@ -44,21 +46,32 @@ public class TrendProductImagePopupActivity extends ActionBarActivity
     webView.getSettings().setBuiltInZoomControls(true);
     webView.getSettings().setDisplayZoomControls(false);
     webView.getSettings().setUseWideViewPort(true);
+    webView.getSettings().setLoadWithOverviewMode(true);
+
     String imageUrl = getIntent().getStringExtra("image_url");
     
 //    String data = "<html><head></head><body><center><img width=\"100%\" src=\"" + imageUrl + "\" /></center></body></html>";
 //    webView.loadData(data, "text/html", null);
     webView.loadUrl(imageUrl);
     
-    new Handler().postDelayed(new Runnable()
-    {
+    webView.setWebViewClient(new WebViewClient(){
       @Override
-      public void run()
+      public void onPageFinished(WebView view, String url)
       {
+        super.onPageFinished(view, url);
         ((LinearLayout) findViewById(R.id.container_help)).setVisibility(View.GONE);
       }
-    }, 5000);
+    });
   }
+  
+  @SuppressLint("UseValueOf")
+private int getScale(int PIC_WIDTH){
+    Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
+    int width = display.getWidth(); 
+    Double val = new Double(width)/new Double(PIC_WIDTH);
+    val = val * 100d;
+    return val.intValue();
+}
   
   
   @Override

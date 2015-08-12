@@ -122,14 +122,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
-        android:clickable="true"
         android:visibility="gone" />
-    <LinearLayout
+
+    <LinearLayout
+        android:id="@+id/option_btn_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/btn_my_cart"
@@ -138,8 +140,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_background_blue"
             android:text="@string/term_my_cart"
-            android:textColor="@android:color/white"
-            android:visibility="visible" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btn_checkout"
@@ -148,8 +149,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_background_pink"
             android:text="@string/term_buy_immediately"
-            android:textColor="@android:color/white"
-            android:visibility="visible" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </RelativeLayout>

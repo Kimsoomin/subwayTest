@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -22,7 +21,7 @@ public class TrendCartActivity extends ActionBarActivity
 {
   private WebView trendCart;
   private String url = "https://devm.hanhayou.com/ecom/cart/";
-    
+  
   @SuppressLint("SetJavaScriptEnabled")
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -41,6 +40,8 @@ public class TrendCartActivity extends ActionBarActivity
     
     trendCart = (WebView) findViewById(R.id.trend_cart_webview);    
     trendCart.getSettings().setJavaScriptEnabled(true);
+    trendCart.getSettings().setSupportMultipleWindows(false);
+    trendCart.getSettings().setLoadWithOverviewMode(true);
     
     if(getIntent().hasExtra("cart_parameter"))
     {
@@ -60,10 +61,8 @@ public class TrendCartActivity extends ActionBarActivity
 //    trendCart.postUrl(url, EncodingUtils.getBytes(hgyToken, "base64"));
 //    trendCart.loadUrl("https://devshop.hanhayou.com/ecom/cart/newOrderNow", headers);
     trendCart.loadUrl(url);
-    
-    
-    
-    trendCart.setWebViewClient(new WebViewClientClass());  
+    trendCart.setWebViewClient(new WebViewClientClass());
+//    trendCart.setWebChromeClient(new WebChromeClient());
   }
   
   @Override
@@ -78,9 +77,12 @@ public class TrendCartActivity extends ActionBarActivity
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) 
   { 
-    if ((keyCode == KeyEvent.KEYCODE_BACK) && trendCart.canGoBack()) 
+    if ((keyCode == KeyEvent.KEYCODE_BACK)) 
     { 
-      trendCart.goBack(); 
+      if(trendCart.canGoBack())
+        trendCart.goBack(); 
+      else
+        finish();
       return true; 
     } 
     return super.onKeyDown(keyCode, event);
@@ -89,6 +91,7 @@ public class TrendCartActivity extends ActionBarActivity
   private class WebViewClientClass extends WebViewClient { 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) { 
+      BlinkingCommon.smlLibDebug("TrendCartActivity", "url : " + url);
       view.loadUrl(url); 
       return true; 
     } 
@@ -103,12 +106,8 @@ public class TrendCartActivity extends ActionBarActivity
     @Override
     public void onPageFinished(WebView view, String url)
     {
-      DisplayMetrics metrics = new DisplayMetrics();
-      getWindowManager().getDefaultDisplay().getMetrics(metrics);
-      int deviceWidth = metrics.widthPixels;
-      BlinkingCommon.smlLibDebug("TrendCartActivity", "deviceWidth : " + deviceWidth);
-      BlinkingCommon.smlLibDebug("TrendCartActivity", "getWidth : " + trendCart.getWidth());
+      BlinkingCommon.smlLibDebug("TrendCartActivity", "url : " + url);
       super.onPageFinished(view, url);
     }
-  }
+  }  
 }

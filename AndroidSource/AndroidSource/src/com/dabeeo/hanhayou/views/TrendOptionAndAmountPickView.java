@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductDetailBean.ProductOptionInfo;
 import com.dabeeo.hanhayou.controllers.SpinnerAdapter;
+import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter.WishListListener;
 import com.dabeeo.hanhayou.map.BlinkingCommon;
 
 public class TrendOptionAndAmountPickView extends RelativeLayout
@@ -42,6 +43,8 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
   public SpinnerAdapter spinnerArrayAdapter;
   
   public ArrayList<productSet> productSetList = new ArrayList<productSet>();
+  
+  private WishListListener wishListener;
   
   public TrendOptionAndAmountPickView(Context context)
   {
@@ -83,6 +86,11 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
     firstOption.setSelection(0);
     secondOption.setSelection(0);
     setOptionSelected(false);
+  }
+  
+  public void setWishListener(WishListListener wishListenr)
+  {
+    this.wishListener = wishListenr;
   }
   
   
@@ -281,6 +289,8 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
     public void onClick(View v)
     {
       view.setVisibility(View.GONE);
+      if(wishListener != null)
+        wishListener.onOptionClose();
     }
   };
   

@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import com.dabeeo.hanhayou.fragments.mainmenu.MainFragment;
 import com.dabeeo.hanhayou.fragments.mainmenu.SearchFragment;
 import com.dabeeo.hanhayou.fragments.mainmenu.SubwayFragment;
 import com.dabeeo.hanhayou.fragments.mainmenu.WishListFragment;
+import com.dabeeo.hanhayou.fragments.mainmenu.WishListFragment.MainActiviListener;
 import com.dabeeo.hanhayou.fragments.mypage.MyPageFragment;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
@@ -47,7 +49,7 @@ public class MainActivity extends ActionBarActivity
   public final static int POSITION_WISHLIST = 3;
   
   private FragmentManager fragmentManager;
-  private LinearLayout bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
+  private LinearLayout  bottomLyaout, bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
   private TextView title;
   private ImageView titleImage;
   
@@ -56,6 +58,8 @@ public class MainActivity extends ActionBarActivity
   private int currentFragmentPosition = POSITION_HOME;
   private ApiClient client;
   
+  private MainActiviListener activityListener;
+  private RelativeLayout progressLayout;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +80,8 @@ public class MainActivity extends ActionBarActivity
     
     client = new ApiClient(this);
     fragmentManager = getFragmentManager();
-    
+    progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
+    bottomLyaout = (LinearLayout) findViewById(R.id.main_tab_layout);
     bottomMenuHome = (LinearLayout) findViewById(R.id.container_menu_home);
     bottomMenuMyPage = (LinearLayout) findViewById(R.id.container_menu_mypage);
     bottomMenuPhotolog = (LinearLayout) findViewById(R.id.container_menu_photolog);
@@ -90,6 +95,35 @@ public class MainActivity extends ActionBarActivity
     
     bottomMenuHome.setSelected(true);
     setFragments(POSITION_HOME);
+    
+    activityListener = new MainActiviListener()
+    {
+      @Override
+      public void ontabBarVisibleSet(boolean visible)
+      {
+        if(visible)
+        {
+          bottomLyaout.setVisibility(View.VISIBLE);
+        }else
+        {
+          bottomLyaout.setVisibility(View.GONE);
+        }
+      }
+      
+      @Override
+      public void onProgressLayoutVisibleSet(boolean visible)
+      { 
+        if(visible)
+        {
+          progressLayout.bringToFront();
+          progressLayout.setVisibility(View.VISIBLE);
+        }else
+        {
+          progressLayout.setVisibility(View.GONE);
+        }
+      }
+      
+    };
     
     // promotion 실제 동작하기전에 임시로 히든 처리
 //    checkPromotion();
@@ -164,7 +198,14 @@ public class MainActivity extends ActionBarActivity
   {
     if (currentFragmentPosition != POSITION_HOME)
     {
-      setFragments(POSITION_HOME);
+      if(currentFragmentPosition == POSITION_WISHLIST)
+      {
+        if(bottomLyaout.getVisibility() != View.VISIBLE)
+          bottomLyaout.setVisibility(View.VISIBLE);
+        else
+          setFragments(POSITION_HOME);
+      }else
+        setFragments(POSITION_HOME);
       return;
     }
     
@@ -239,7 +280,7 @@ public class MainActivity extends ActionBarActivity
         title.setVisibility(View.VISIBLE);
         titleImage.setVisibility(View.INVISIBLE);
         title.setText(getString(R.string.term_wishlist));
-        fragment = new WishListFragment();
+        fragment = new WishListFragment(activityListener);
         break;
     }
     
@@ -305,6 +346,5 @@ public class MainActivity extends ActionBarActivity
         e.printStackTrace();
       }
     }
-    
   }
 }

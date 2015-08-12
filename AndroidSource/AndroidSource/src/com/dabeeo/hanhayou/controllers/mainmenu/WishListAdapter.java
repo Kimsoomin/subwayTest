@@ -16,7 +16,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
@@ -66,7 +65,9 @@ public class WishListAdapter extends BaseAdapter
   {
     public void onRemove();
     public void onRefresh();
+    public void onProgressVisibleSet(boolean visible);
     public void onOptionSelected(ProductDetailBean productDetailInfo);
+    public void onOptionClose();
   }
   
   
@@ -214,6 +215,8 @@ public class WishListAdapter extends BaseAdapter
     @Override
     protected void onPreExecute()
     {
+      if(listener != null)
+        listener.onProgressVisibleSet(true);
       super.onPreExecute();
     }
     
@@ -227,14 +230,14 @@ public class WishListAdapter extends BaseAdapter
     protected void onPostExecute(ProductDetailBean result)
     {
       super.onPostExecute(result);
-      productDetail = result;
       
+      if (listener != null)
+        listener.onProgressVisibleSet(false);
+      
+      productDetail = result;
       if(productDetail != null)
       {
-        if (listener != null)
-        {
-          listener.onOptionSelected(productDetail);
-        }
+        listener.onOptionSelected(productDetail);
       }else
       {
         new AlertDialogManager(context).showAlertDialog(context.getString(R.string.term_alert), "상품 정보 오류", 

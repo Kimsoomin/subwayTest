@@ -1,6 +1,7 @@
 package com.dabeeo.hanhayou.fragments.mainmenu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,11 +18,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.WishListSearchActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendActivity;
+import com.dabeeo.hanhayou.activities.trend.TrendCartActivity;
 import com.dabeeo.hanhayou.beans.PopularWishBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ProductDetailBean;
@@ -29,8 +32,11 @@ import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter;
 import com.dabeeo.hanhayou.controllers.mainmenu.WishListAdapter.WishListListener;
 import com.dabeeo.hanhayou.external.libraries.GridViewWithHeaderAndFooter;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
+import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
+import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.dabeeo.hanhayou.views.PopularWishListParticleView;
 import com.dabeeo.hanhayou.views.TrendOptionAndAmountPickView;
@@ -48,8 +54,25 @@ public class WishListFragment extends Fragment
   public ArrayList<ProductBean> ProductArray;
   public ArrayList<PopularWishBean> popularWishArray;
   
-  private TrendOptionAndAmountPickView optionAmountPickerView;
+  private MainActiviListener mainLsitener;
   
+  private LinearLayout optionButtonLayout;
+  private TrendOptionAndAmountPickView optionAmountPickerView;
+  public String itemAttribute;
+  private Button btnCart;
+  private Button btnCheckOut;
+  private String productId;
+  
+  public interface MainActiviListener
+  {
+    public void ontabBarVisibleSet(boolean visible);
+    public void onProgressLayoutVisibleSet(boolean visible);
+  }
+  
+  public WishListFragment(MainActiviListener listener)
+  {
+    this.mainLsitener = listener;
+  }
   
   @SuppressLint("InflateParams")
   @Override
@@ -90,7 +113,13 @@ public class WishListFragment extends Fragment
       }
     });
     
+    optionButtonLayout = (LinearLayout) view.findViewById(R.id.option_btn_layout);
     optionAmountPickerView = (TrendOptionAndAmountPickView) view.findViewById(R.id.option_picker_view);
+    
+    btnCart = (Button) view.findViewById(R.id.btn_my_cart);
+    btnCart.setOnClickListener(cartClickListener);
+    btnCheckOut = (Button) view.findViewById(R.id.btn_checkout);
+    btnCheckOut.setOnClickListener(cartClickListener);
     
     wishListListener = new WishListListener()
     {
@@ -121,7 +150,35 @@ public class WishListFragment extends Fragment
       @Override
       public void onOptionSelected(ProductDetailBean productDetailInfo)
       {
-        optionAmountPickerView.setOptions(productDetailInfo.productOptionArr, productDetailInfo.productOptionList);
+        if(mainLsitener != null)
+        {
+          mainLsitener.ontabBarVisibleSet(false);
+          productId = productDetailInfo.productId;
+          optionAmountPickerView.setOptions(productDetailInfo.productOptionArr, productDetailInfo.productOptionList);
+          optionAmountPickerView.setWishListener(wishListListener);
+          optionButtonLayout.setVisibility(View.VISIBLE);
+          optionAmountPickerView.setVisibility(View.VISIBLE);
+          optionAmountPickerView.view.setVisibility(View.VISIBLE);
+        }
+      }
+      
+      @Override
+      public void onOptionClose()
+      {
+        if(mainLsitener != null)
+        {
+          mainLsitener.ontabBarVisibleSet(true);
+          optionAmountPickerView.initSpinner();
+          optionButtonLayout.setVisibility(View.VISIBLE);
+          optionAmountPickerView.setVisibility(View.GONE);
+          optionButtonLayout.setVisibility(View.GONE);
+        }
+      }
+      
+      @Override
+      public void onProgressVisibleSet(boolean visible)
+      {
+        mainLsitener.onProgressLayoutVisibleSet(visible);
       }
     };
     
@@ -132,10 +189,9 @@ public class WishListFragment extends Fragment
     
     popularWishListContainer = (LinearLayout) view.findViewById(R.id.wish_list_container);
     
-//    loadWishList();
-    
     return view;
   }
+  
   
   @Override
   public void onResume()
@@ -147,6 +203,141 @@ public class WishListFragment extends Fragment
   public void loadWishList()
   {
     new getWishListTask().execute();
+  }
+  
+  public void setItemAttributes(String optionColor, String optionSize, int amount)
+  {
+    itemAttribute = "[{itemAttributes={\"" + "color" +"\"" + ":\"" + optionColor + "\"";
+    if(optionSize == null)
+      itemAttribute = itemAttribute + "},quantity=" + amount+ "}]";
+    else
+      itemAttribute = itemAttribute + ",\"" + "size" + "\"" + ":\"" + optionSize + "\"},quantity="+amount+"}]";
+    BlinkingCommon.smlLibDebug("asdfasfdasfdasfdasfdas", "itemAttribute : " + itemAttribute);
+  }
+  
+  private OnClickListener cartClickListener = new OnClickListener()
+  {
+    @Override
+    public void onClick(View v)
+    {
+      if(optionAmountPickerView.getOptionSelected())
+      {
+        setItemAttributes(optionAmountPickerView.optionColor, optionAmountPickerView.optionSize, optionAmountPickerView.amount);
+        if(v.getId() == R.id.btn_my_cart)
+        {
+          new AddCartTask().execute();
+        }else if(v.getId() == R.id.btn_checkout)
+        {
+          String url = "newOrderNow?_hgy_token="+PreferenceManager.getInstance(getActivity()).getUserSeq()
+              + "&product_id=" + productId + "&itemAttributesList=" + itemAttribute;
+          Intent i = new Intent(getActivity(), TrendCartActivity.class);
+          i.putExtra("cart_parameter", url);
+          startActivity(i);
+          optionAmountPickerView.initSpinner();
+        }
+        
+      }else
+      {
+        if(optionAmountPickerView.view.getVisibility() == View.VISIBLE)
+        {
+          new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "옵션을 선택해주세요.", 
+              getString(R.string.term_ok), null, new AlertListener()
+          {
+            
+            @Override
+            public void onPositiveButtonClickListener()
+            { 
+            }
+            
+            
+            @Override
+            public void onNegativeButtonClickListener()
+            {
+            }
+          });
+        }
+      }
+    }
+  };
+  
+  public void createAddCartAlert(boolean addCart)
+  {
+    String title = getString(R.string.term_alert);
+    String message = "";
+    String okString = "";
+    String cancelString = "";
+    if(addCart)
+    {
+      message = getString(R.string.term_product_add_cart);
+      okString = getString(R.string.term_product_cart_move);
+      cancelString = getString(R.string.term_product_shopping);
+      new AlertDialogManager(getActivity()).showAlertDialog(title, message, okString, cancelString, new AlertListener()
+      {
+        @Override
+        public void onPositiveButtonClickListener()
+        {
+          startActivity(new Intent(getActivity(), TrendCartActivity.class));
+        }
+        
+        @Override
+        public void onNegativeButtonClickListener()
+        {
+        }
+      });
+    }
+    else
+    {
+      message = getString(R.string.term_product_fail_cart);
+      okString = getString(R.string.term_ok);
+      new AlertDialogManager(getActivity()).showAlertDialog(title, message, okString, null, null);
+    }      
+  }
+  
+  private class AddCartTask extends AsyncTask<String, Void, JSONObject>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      optionAmountPickerView.initSpinner();
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected JSONObject doInBackground(String... params)
+    {
+      HashMap<String, String> body = new HashMap<String, String>();
+      body.put("product_id", "");
+      body.put("itemAttributesList", "");
+      body.put("_hgy_token", PreferenceManager.getInstance(getActivity()).getUserSeq());
+      return apiClient.addCart(body);
+    }
+    
+    @Override
+    protected void onPostExecute(JSONObject result)
+    {
+      super.onPostExecute(result);
+      optionAmountPickerView.view.setVisibility(View.GONE);
+      optionAmountPickerView.setVisibility(View.GONE);
+      if(result != null)
+      {
+        try
+        {
+          if (result.has("result"))
+          {
+            JSONObject obj = result.getJSONObject("result");
+            if(obj.getInt("status_code") == 0)
+              createAddCartAlert(true);
+            else
+              createAddCartAlert(false);
+          }
+        }
+        catch (Exception e)
+        {
+          BlinkingCommon.smlLibPrintException("TrendProductDetail", "e : " + e);
+        }
+      }else
+        createAddCartAlert(false);
+    }
   }
   
   private class getWishListTask extends AsyncTask<Void, Void, NetworkResult>

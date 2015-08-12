@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.controllers.trend.TrendSearchListAdapter;
+import com.dabeeo.hanhayou.managers.network.ApiClient;
 
 public class TrendSearchActivity extends Activity
 {
@@ -39,6 +40,9 @@ public class TrendSearchActivity extends Activity
   //Bottom
   private LinearLayout containerAll, containerCosmetic, containerShoesbag, containerAccessory, containerBaby, containerFood;
   
+  //API
+  private ApiClient apiClient;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -47,6 +51,8 @@ public class TrendSearchActivity extends Activity
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_trend_search);
+    
+    apiClient = new ApiClient(TrendSearchActivity.this);
     
     containerAll = (LinearLayout) findViewById(R.id.container_all);
     containerCosmetic = (LinearLayout) findViewById(R.id.container_cosmetic);
@@ -91,7 +97,7 @@ public class TrendSearchActivity extends Activity
       public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
       {
 //        Intent i = new Intent(TrendSearchActivity.this, TrendProductDetailActivity.class);
-//        i.putExtra("product_id", value)
+//        i.putExtra("product_idx", value)
 //        startActivity(i);
       }
     });
