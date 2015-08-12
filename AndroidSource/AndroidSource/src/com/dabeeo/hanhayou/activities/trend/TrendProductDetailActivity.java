@@ -383,6 +383,8 @@ public class TrendProductDetailActivity extends ActionBarActivity
             Intent i = new Intent(TrendProductDetailActivity.this, TrendCartActivity.class);
             i.putExtra("cart_parameter", url);
             startActivity(i);
+            optionAmountPickerView.view.setVisibility(View.GONE);
+            optionAmountPickerView.setVisibility(View.GONE);
             optionAmountPickerView.initSpinner();
           }
         }else

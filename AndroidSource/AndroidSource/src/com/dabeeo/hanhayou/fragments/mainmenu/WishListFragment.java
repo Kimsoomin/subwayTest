@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.dabeeo.hanhayou.R;
@@ -169,7 +168,7 @@ public class WishListFragment extends Fragment
         {
           mainLsitener.ontabBarVisibleSet(true);
           optionAmountPickerView.initSpinner();
-          optionButtonLayout.setVisibility(View.VISIBLE);
+          optionButtonLayout.setVisibility(View.GONE);
           optionAmountPickerView.setVisibility(View.GONE);
           optionButtonLayout.setVisibility(View.GONE);
         }
@@ -212,7 +211,6 @@ public class WishListFragment extends Fragment
       itemAttribute = itemAttribute + "},quantity=" + amount+ "}]";
     else
       itemAttribute = itemAttribute + ",\"" + "size" + "\"" + ":\"" + optionSize + "\"},quantity="+amount+"}]";
-    BlinkingCommon.smlLibDebug("asdfasfdasfdasfdasfdas", "itemAttribute : " + itemAttribute);
   }
   
   private OnClickListener cartClickListener = new OnClickListener()
@@ -222,6 +220,7 @@ public class WishListFragment extends Fragment
     {
       if(optionAmountPickerView.getOptionSelected())
       {
+        
         setItemAttributes(optionAmountPickerView.optionColor, optionAmountPickerView.optionSize, optionAmountPickerView.amount);
         if(v.getId() == R.id.btn_my_cart)
         {
@@ -233,7 +232,7 @@ public class WishListFragment extends Fragment
           Intent i = new Intent(getActivity(), TrendCartActivity.class);
           i.putExtra("cart_parameter", url);
           startActivity(i);
-          optionAmountPickerView.initSpinner();
+          wishListListener.onOptionClose();
         }
         
       }else
@@ -298,7 +297,6 @@ public class WishListFragment extends Fragment
     @Override
     protected void onPreExecute()
     {
-      optionAmountPickerView.initSpinner();
       super.onPreExecute();
     }
     
@@ -306,8 +304,8 @@ public class WishListFragment extends Fragment
     protected JSONObject doInBackground(String... params)
     {
       HashMap<String, String> body = new HashMap<String, String>();
-      body.put("product_id", "");
-      body.put("itemAttributesList", "");
+      body.put("product_id", productId);
+      body.put("itemAttributesList", itemAttribute);
       body.put("_hgy_token", PreferenceManager.getInstance(getActivity()).getUserSeq());
       return apiClient.addCart(body);
     }
@@ -316,8 +314,7 @@ public class WishListFragment extends Fragment
     protected void onPostExecute(JSONObject result)
     {
       super.onPostExecute(result);
-      optionAmountPickerView.view.setVisibility(View.GONE);
-      optionAmountPickerView.setVisibility(View.GONE);
+      wishListListener.onOptionClose();
       if(result != null)
       {
         try
