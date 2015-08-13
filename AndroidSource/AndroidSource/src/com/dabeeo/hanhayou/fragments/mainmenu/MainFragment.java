@@ -8,10 +8,12 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -85,6 +87,34 @@ public class MainFragment extends Fragment
     containerTicket.setOnClickListener(menuClickListener);
     containerCoupon.setOnClickListener(menuClickListener);
     return view;
+  }
+  
+  
+  @Override
+  public void onStart()
+  {
+    super.onStart();
+  }
+  
+  
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState)
+  {
+    ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+    {
+      
+      @SuppressWarnings("deprecation")
+      @Override
+      public void onGlobalLayout()
+      {
+        containerTicket.getLayoutParams().height = containerTicket.getMeasuredWidth();
+        containerCoupon.getLayoutParams().height = containerTicket.getMeasuredWidth();
+        
+        ((View) getView().findViewById(R.id.divider_bottom_subway)).getLayoutParams().height = ((View) getView().findViewById(R.id.divider)).getWidth();
+        ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().removeGlobalOnLayoutListener(this);
+      }
+    });
+    super.onActivityCreated(savedInstanceState);
   }
   
   
