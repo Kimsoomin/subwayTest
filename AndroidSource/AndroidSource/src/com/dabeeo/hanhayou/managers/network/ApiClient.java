@@ -903,7 +903,7 @@ public class ApiClient
       if (obj.has("result"))
       {
         JSONObject resultObj = obj.getJSONObject("result");
-        if (resultObj.getString("status").equals("FAIL_UNKNOWN_EXCEPTION"))
+        if (resultObj.getInt("status_code") != 0)
         {
           return null;
         }
