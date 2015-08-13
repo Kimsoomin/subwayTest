@@ -114,9 +114,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendCartActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.trend.TrendProductBuyListActivity"
