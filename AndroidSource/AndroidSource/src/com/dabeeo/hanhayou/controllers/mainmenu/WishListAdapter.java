@@ -119,7 +119,20 @@ public class WishListAdapter extends BaseAdapter
       @Override
       public void onClick(View v)
       {
-        new DelWishList().execute(bean);
+        new AlertDialogManager(context).showAlertDialog(context.getString(R.string.term_alert), context.getString(R.string.term_delete_confirm), 
+            context.getString(R.string.term_ok), context.getString(R.string.term_cancel), new AlertListener()
+        {
+          @Override
+          public void onPositiveButtonClickListener()
+          {
+            new DelWishList().execute(bean);
+          }
+          
+          @Override
+          public void onNegativeButtonClickListener()
+          { 
+          }
+        });
       }
     });
     Button btnCart = (Button) view.findViewById(R.id.btn_cart);
