@@ -70,6 +70,7 @@ public class RecommendScheduleCompeletedActivity extends ActionBarActivity
     profileImage = (RoundedImageView) findViewById(R.id.profile_image);
     String profile = PreferenceManager.getInstance(RecommendScheduleCompeletedActivity.this).getUserProfile();
     Picasso.with(RecommendScheduleCompeletedActivity.this).load(profile).fit().centerCrop().into(profileImage);
+    
     textCompelete = (TextView) findViewById(R.id.text_compelete);
     containerRecommendSchedule = (LinearLayout) findViewById(R.id.container_recommend_schedule);
     
