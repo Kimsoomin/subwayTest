@@ -18,12 +18,11 @@
 
             <ImageButton
                 android:id="@+id/back_btn"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/btn_title_back_state"
-                android:visibility="visible" />
+                android:background="@drawable/btn_title_back_state" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

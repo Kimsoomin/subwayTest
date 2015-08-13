@@ -1034,6 +1034,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   
   public void HideKeyboard(View view)
   {
+    searchEditText.clearFocus();
     InputMethodManager manager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
     manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
   }
