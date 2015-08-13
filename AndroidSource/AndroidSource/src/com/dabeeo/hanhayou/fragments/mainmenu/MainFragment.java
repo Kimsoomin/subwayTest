@@ -91,15 +91,18 @@ public class MainFragment extends Fragment
   
   
   @Override
-  public void onStart()
+  public void onResume()
   {
-    super.onStart();
-  }
-  
-  
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState)
-  {
+    File directory = new File(Global.GetDatabaseFilePath());
+    if (!directory.exists())
+      directory.mkdirs();
+    
+    File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
+    if (!file.exists())
+      containerMsgDownloadMap.setVisibility(View.VISIBLE);
+    else
+      containerMsgDownloadMap.setVisibility(View.GONE);
+    
     ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
     {
       
@@ -114,22 +117,6 @@ public class MainFragment extends Fragment
         ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().removeGlobalOnLayoutListener(this);
       }
     });
-    super.onActivityCreated(savedInstanceState);
-  }
-  
-  
-  @Override
-  public void onResume()
-  {
-    File directory = new File(Global.GetDatabaseFilePath());
-    if (!directory.exists())
-      directory.mkdirs();
-    
-    File file = new File(Global.GetDatabaseFilePath() + Global.g_strMapDBFileName);
-    if (!file.exists())
-      containerMsgDownloadMap.setVisibility(View.VISIBLE);
-    else
-      containerMsgDownloadMap.setVisibility(View.GONE);
     super.onResume();
   }
   
