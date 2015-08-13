@@ -1644,7 +1644,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   {
     planDay.setVisibility(View.VISIBLE);
     ymdText.setText(planYMD);
-    String dayNum = "" + planDayNum + "日";
+    String dayNum = "第" + planDayNum + "天";
     diffday = (int) daydiff;
     dayText.setText(dayNum);
     
@@ -1665,7 +1665,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public void planLeft()
   {
     planDayNum = planDayNum - 1;
-    String dayNum = "" + planDayNum + "日";
+    String dayNum = "第" + planDayNum + "天";
     dayText.setText(dayNum);
     
     if (planDayNum < diffday)
@@ -1688,7 +1688,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public void planRight()
   {
     planDayNum = planDayNum + 1;
-    String dayNum = "" + planDayNum + "日";
+    String dayNum = "第" + planDayNum + "天";
     dayText.setText(dayNum);
     
     if (planDayNum == diffday)
