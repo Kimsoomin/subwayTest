@@ -6,11 +6,14 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,8 +26,6 @@ import com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity;
 import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
-import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.map.Global;
@@ -85,7 +86,32 @@ public class MainFragment extends Fragment
     containerSubway.setOnClickListener(menuClickListener);
     containerTicket.setOnClickListener(menuClickListener);
     containerCoupon.setOnClickListener(menuClickListener);
+    
     return view;
+  }
+  
+  
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState)
+  {
+    ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+    {
+      @SuppressWarnings("deprecation")
+      @Override
+      public void onGlobalLayout()
+      {
+        Log.w("WARN", "Gloabal!");
+//        containerTicket.getLayoutParams().height = containerTicket.getWidth();
+//        containerCoupon.getLayoutParams().height = containerCoupon.getWidth();
+        containerTicket.setLayoutParams(new LinearLayout.LayoutParams(containerCoupon.getWidth(), containerCoupon.getWidth()));
+        containerCoupon.setLayoutParams(new LinearLayout.LayoutParams(containerCoupon.getWidth(), containerCoupon.getWidth()));
+        
+        containerSubway.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f));
+        ((View) getView().findViewById(R.id.divider_bottom_subway)).getLayoutParams().height = ((View) getView().findViewById(R.id.divider)).getWidth();
+        ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().removeGlobalOnLayoutListener(this);
+      }
+    });
+    super.onActivityCreated(savedInstanceState);
   }
   
   
@@ -153,31 +179,36 @@ public class MainFragment extends Fragment
       {
         //temp
         
-        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
-        {
-          
-          @Override
-          public void onPositiveButtonClickListener()
-          {
-            Global.useDevUrl = false;
-          }
-          
-          
-          @Override
-          public void onNegativeButtonClickListener()
-          {
-            Global.useDevUrl = true;
-          }
-        });
-//        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
-//        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+//        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), getString(R.string.term_cancel), new AlertListener()
 //        {
-//          startActivity(new Intent(getActivity(), TicketActivity.class));
-//        }
-//        else
-//        {
-//          new AlertDialogManager(getActivity()).showNeedLoginDialog();
-//        }
+//          
+//          @Override
+//          public void onPositiveButtonClickListener()
+//          {
+//            Global.useDevUrl = false;
+//          }
+//          
+//          
+//          @Override
+//          public void onNegativeButtonClickListener()
+//          {
+//            Global.useDevUrl = true;
+//          }
+//        });
+////        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "준비중입니다.", getString(R.string.term_ok), null, null);
+////        if (PreferenceManager.getInstance(getActivity()).isLoggedIn())
+////        {
+////          startActivity(new Intent(getActivity(), TicketActivity.class));
+////        }
+////        else
+////        {
+////          new AlertDialogManager(getActivity()).showNeedLoginDialog();
+////        }
+        
+        String url = "https://seoultravelpass.com/hanhayou/";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
       }
       else if (v.getId() == containerCoupon.getId())
       {

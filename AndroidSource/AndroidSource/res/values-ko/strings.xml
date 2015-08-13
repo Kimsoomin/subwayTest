@@ -399,5 +399,23 @@
     <string name="msg_recommend_schedule_title">#1님에게 딱 맞는 #2일 맞춤일정</string>
     <string name="msg_not_find_email">입력하신 E-mail 주소로 등록된 계정이 없습니다.</string>
     <string name="msg_not_chinese">본 서비스의 회원가입은 중국인만 가능합니다.</string>
+    <!-- 추가 스트링 -->
+    <string name="term_sort_my_location">내 위치순</string>
+    <string name="term_sort_popular">인기순</string>
+    <string name="msg_empty_coupon">쿠폰이 없습니다.</string>
+    <string name="msg_empty_downloaded_coupon">다운로드한 쿠폰이 없습니다.</string>
+    <string name="msg_help_download_coupon">한하요우 쿠폰을 둘러보고\n다운로드 받아보세요!</string>
+    <string name="term_showing_coupon">쿠폰 둘러보기</string>
+    <string name="term_notimelimit">제한없음</string>
+    <string name="term_exhaustion">~ 소진시까지</string>
+    <string name="term_coupon_info">쿠폰소개</string>
+    <string name="term_coupon_address">사용처 주소</string>
+    <string name="term_coupon_tel">사용처 전화번호</string>
+    <string name="term_coupon_how_to">사용방법</string>
+    <string name="term_coupon_notice">유의사항</string>
+    <string name="msg_delete_after">유효기간이 지난 쿠폰은 자동 삭제 처리 됩니다.</string>
+    <string name="msg_use_confirm">매장 담당자가 확인하는 버튼입니다. 확인 후에는 취소가 불가능합니다. 쿠폰을 사용하시겠습니까?</string>
+    <string name="msg_use_complete">사용완료하였습니다</string>
+    <string name="msg_delete_30_days">사용완료 된 쿠폰은 30일 이후,\n자동 삭제처리됩니다.</string>
 
 </resources>

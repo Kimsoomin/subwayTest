@@ -241,7 +241,9 @@ public class CouponDetailActivity extends ActionBarActivity
   
   private void goToDownloadedCouponList()
   {
-    setResult(RESULT_OK);
+    Intent i = new Intent(CouponDetailActivity.this, CouponActivity.class);
+    i.putExtra("is_show_download", true);
+    startActivity(i);
     finish();
   }
   

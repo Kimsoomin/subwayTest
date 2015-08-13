@@ -302,6 +302,7 @@ public class BackService extends Service
     {
       if (intent.getAction().equals(ACTION_GET_NOTI))
       {
+        Log.w("WARN", "로그인! 푸쉬 확인! ");
         handler.removeCallbacks(pushNotificationRunnable);
         handler.post(pushNotificationRunnable);
       }

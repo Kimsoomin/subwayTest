@@ -130,7 +130,7 @@ public class TravelScheduleDetailFragment extends Fragment
       if (isRecommendSchedule)
         tempPx = 71;
       else
-        tempPx = 66;
+        tempPx = 58;
     }
     else
     {

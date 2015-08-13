@@ -179,7 +179,19 @@ public class CouponActivity extends ActionBarActivity
   {
     if (!SystemUtil.isConnectNetwork(this))
       setViewPagerPosition(1);
+    
+    if (getIntent().getBooleanExtra("is_show_download", false))
+      setViewPagerPosition(1);
     super.onResume();
+  }
+  
+  
+  @Override
+  protected void onNewIntent(Intent intent)
+  {
+    if (intent.getBooleanExtra("is_show_download", false))
+      setViewPagerPosition(1);
+    super.onNewIntent(intent);
   }
   
   

@@ -260,6 +260,7 @@
         <activity
             android:name="com.dabeeo.hanhayou.activities.coupon.CouponActivity"
             android:label="@string/term_coupon"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity"
