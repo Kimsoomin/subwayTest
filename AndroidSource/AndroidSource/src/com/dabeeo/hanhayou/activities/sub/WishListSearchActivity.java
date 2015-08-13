@@ -3,13 +3,16 @@ package com.dabeeo.hanhayou.activities.sub;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +36,9 @@ public class WishListSearchActivity extends Activity
   private WishSearchListAdapter adapter;
   
   private ApiClient apiClient;
+  private ArrayList<ProductBean> productList;
+  
+  private boolean resultStataus = true;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -59,6 +65,7 @@ public class WishListSearchActivity extends Activity
       @Override
       public void onClick(View arg0)
       {
+        hideKeyboard();
         editSearch.setText("");
       }
     });
@@ -68,6 +75,21 @@ public class WishListSearchActivity extends Activity
       @Override
       public void afterTextChanged(Editable s)
       {
+        Log.w("WARN", "length: " + editSearch.getText().toString().length());
+        if (editSearch.getText().toString().length() > 1)
+        {
+          typingCancel.setVisibility(View.VISIBLE);
+          listView.setVisibility(View.VISIBLE);
+          emptyContainer.setVisibility(View.GONE);
+          new GetProductListAsyncTask().execute(editSearch.getText().toString());
+        }
+        else
+        {
+          typingCancel.setVisibility(View.GONE);
+          listView.setVisibility(View.GONE);
+          emptyContainer.setVisibility(View.VISIBLE);
+          adapter.clear();
+        }
       }
       
       
@@ -80,34 +102,6 @@ public class WishListSearchActivity extends Activity
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count)
       {
-        Log.w("WARN", "length: " + editSearch.getText().toString().length());
-        if (editSearch.getText().toString().length() > 1)
-        {
-          typingCancel.setVisibility(View.VISIBLE);
-          listView.setVisibility(View.VISIBLE);
-          emptyContainer.setVisibility(View.GONE);
-          
-          ProductBean bean = new ProductBean();
-          bean.name = "[숨]워터풀 타임리스 워터젤 크림";
-          bean.priceSale = "80000";
-          bean.priceDiscount = "452000";
-          adapter.add(bean);
-          
-          bean = new ProductBean();
-          bean.name = "[SKII]나이트밤";
-          bean.priceSale = "100000";
-          bean.priceDiscount = "252000";
-          adapter.add(bean);
-        }
-        else
-        {
-          typingCancel.setVisibility(View.GONE);
-          listView.setVisibility(View.GONE);
-          emptyContainer.setVisibility(View.VISIBLE);
-          
-          adapter.clear();
-        }
-        
       }
     };
     editSearch.addTextChangedListener(watcher);
@@ -121,6 +115,68 @@ public class WishListSearchActivity extends Activity
         finish();
       }
     });
+  }
+  
+  private void hideKeyboard()
+  {
+    editSearch.clearFocus();
+    try
+    {
+      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  private void searchResult(int result)
+  {
+    String title = getString(R.string.term_search_result)+" ("+result+")";
+    
+//    searchTitle.setText(title);
+//    searchContainer.setVisibility(View.VISIBLE);
+//    searchTitle.setVisibility(View.VISIBLE);
+//    categoryContainer.setVisibility(View.GONE);
+    
+    if(result>0)
+    {
+//      searchListView.setVisibility(View.VISIBLE);
+//      searchNotExistContainer.setVisibility(View.GONE);
+    }else
+    {
+//      searchListView.setVisibility(View.GONE);
+//      searchNotExistContainer.setVisibility(View.VISIBLE);
+    }
+  }
+  
+  private class GetProductListAsyncTask extends AsyncTask<String, Void, ArrayList<ProductBean>>
+  {
+    
+    @Override
+    protected ArrayList<ProductBean> doInBackground(String... params) 
+    {
+      if(!TextUtils.isEmpty(params[0]))
+      {
+        productList = apiClient.getProductListSearch(params[0]);
+      }
+      
+      return productList;
+    }
+    
+    @Override
+    protected void onPostExecute(ArrayList<ProductBean> result) 
+    {
+      adapter.clear();
+      adapter.addAll(result);
+      
+//      if(!resultStataus){
+//        searchResult(productList.size());
+//      }
+      
+      super.onPostExecute(result);
+    }
   }
   
   private class PopularWishList extends AsyncTask<Void, Void, ArrayList<PopularWishBean>>
