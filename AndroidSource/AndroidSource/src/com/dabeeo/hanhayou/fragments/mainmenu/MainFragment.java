@@ -86,7 +86,32 @@ public class MainFragment extends Fragment
     containerSubway.setOnClickListener(menuClickListener);
     containerTicket.setOnClickListener(menuClickListener);
     containerCoupon.setOnClickListener(menuClickListener);
+    
     return view;
+  }
+  
+  
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState)
+  {
+    ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+    {
+      @SuppressWarnings("deprecation")
+      @Override
+      public void onGlobalLayout()
+      {
+        Log.w("WARN", "Gloabal!");
+//        containerTicket.getLayoutParams().height = containerTicket.getWidth();
+//        containerCoupon.getLayoutParams().height = containerCoupon.getWidth();
+        containerTicket.setLayoutParams(new LinearLayout.LayoutParams(containerCoupon.getWidth(), containerCoupon.getWidth()));
+        containerCoupon.setLayoutParams(new LinearLayout.LayoutParams(containerCoupon.getWidth(), containerCoupon.getWidth()));
+        
+        containerSubway.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f));
+        ((View) getView().findViewById(R.id.divider_bottom_subway)).getLayoutParams().height = ((View) getView().findViewById(R.id.divider)).getWidth();
+        ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().removeGlobalOnLayoutListener(this);
+      }
+    });
+    super.onActivityCreated(savedInstanceState);
   }
   
   
@@ -102,21 +127,6 @@ public class MainFragment extends Fragment
       containerMsgDownloadMap.setVisibility(View.VISIBLE);
     else
       containerMsgDownloadMap.setVisibility(View.GONE);
-    
-    ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-    {
-      
-      @SuppressWarnings("deprecation")
-      @Override
-      public void onGlobalLayout()
-      {
-        containerTicket.getLayoutParams().height = containerTicket.getMeasuredWidth();
-        containerCoupon.getLayoutParams().height = containerTicket.getMeasuredWidth();
-        
-        ((View) getView().findViewById(R.id.divider_bottom_subway)).getLayoutParams().height = ((View) getView().findViewById(R.id.divider)).getWidth();
-        ((LinearLayout) getView().findViewById(R.id.ticket_coupon_container)).getViewTreeObserver().removeGlobalOnLayoutListener(this);
-      }
-    });
     super.onResume();
   }
   

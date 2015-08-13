@@ -330,7 +330,7 @@ public class MyPageFragment extends Fragment
           PreferenceManager.getInstance(getActivity()).setUserProfile(obj.getString("mfidx"));
         }
       }
-      catch (JSONException e)
+      catch (Exception e)
       {
         e.printStackTrace();
       }

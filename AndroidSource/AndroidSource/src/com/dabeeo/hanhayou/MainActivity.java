@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity
   public final static int POSITION_WISHLIST = 3;
   
   private FragmentManager fragmentManager;
-  private LinearLayout  bottomLyaout, bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
+  private LinearLayout bottomLyaout, bottomMenuHome, bottomMenuMyPage, bottomMenuPhotolog, bottomMenuWishList, bottomMenuSearch;
   private TextView title;
   private ImageView titleImage;
   
@@ -62,6 +62,8 @@ public class MainActivity extends ActionBarActivity
   private RelativeLayout progressLayout;
   
   private WishListFragment wishlistFrgment;
+  private Fragment mainFragment;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -103,23 +105,26 @@ public class MainActivity extends ActionBarActivity
       @Override
       public void ontabBarVisibleSet(boolean visible)
       {
-        if(visible)
+        if (visible)
         {
           bottomLyaout.setVisibility(View.VISIBLE);
-        }else
+        }
+        else
         {
           bottomLyaout.setVisibility(View.GONE);
         }
       }
       
+      
       @Override
       public void onProgressLayoutVisibleSet(boolean visible)
-      { 
-        if(visible)
+      {
+        if (visible)
         {
           progressLayout.bringToFront();
           progressLayout.setVisibility(View.VISIBLE);
-        }else
+        }
+        else
         {
           progressLayout.setVisibility(View.GONE);
         }
@@ -200,20 +205,22 @@ public class MainActivity extends ActionBarActivity
   {
     if (currentFragmentPosition != POSITION_HOME)
     {
-      if(currentFragmentPosition == POSITION_WISHLIST)
+      if (currentFragmentPosition == POSITION_WISHLIST)
       {
-        if(progressLayout.getVisibility() == View.VISIBLE)
+        if (progressLayout.getVisibility() == View.VISIBLE)
         {
           return;
-        }else
+        }
+        else
         {
-          if(wishlistFrgment.optionAmountPickerView.getVisibility() == View.VISIBLE)
+          if (wishlistFrgment.optionAmountPickerView.getVisibility() == View.VISIBLE)
             wishlistFrgment.wishListListener.onOptionClose();
           else
             setFragments(POSITION_HOME);
         }
         
-      }else
+      }
+      else
         setFragments(POSITION_HOME);
       return;
     }
@@ -240,6 +247,7 @@ public class MainActivity extends ActionBarActivity
     appFininshToast.show();
   }
   
+  
   public void setFragments(int position)
   {
     bottomMenuHome.setSelected(false);
@@ -255,9 +263,12 @@ public class MainActivity extends ActionBarActivity
         bottomMenuHome.setSelected(true);
         title.setVisibility(View.INVISIBLE);
         titleImage.setVisibility(View.VISIBLE);
-        fragment = new MainFragment();
-        break;
+        if (mainFragment == null)
+          mainFragment = new MainFragment();
         
+        fragment = mainFragment;
+        break;
+      
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
@@ -270,7 +281,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
-        
+      
       case POSITION_SEARCH:
         bottomMenuSearch.setSelected(true);
         title.setVisibility(View.VISIBLE);
@@ -278,7 +289,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(R.string.term_search);
         fragment = new SearchFragment();
         break;
-        
+      
       case POSITION_WISHLIST:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
