@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -251,8 +250,6 @@ public class TrendSearchActivity extends Activity
       
       super.onPostExecute(result);
     }
-    
-    
   }
   
   private void hideKeyboard()
@@ -269,8 +266,8 @@ public class TrendSearchActivity extends Activity
     }
   }
   
-  private void changeUI(int size) {
-    Log.i("etgkqo : changeUI",String.valueOf(size));
+  private void changeUI(int size) 
+  {
     if (size >= 2)
     {
       searchContainer.setVisibility(View.VISIBLE);

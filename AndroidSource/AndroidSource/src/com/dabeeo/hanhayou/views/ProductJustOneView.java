@@ -3,6 +3,7 @@ package com.dabeeo.hanhayou.views;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,9 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
+import com.dabeeo.hanhayou.activities.trend.TrendProductDetailActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
+import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.squareup.picasso.Picasso;
 
 
@@ -26,7 +30,7 @@ public class ProductJustOneView extends RelativeLayout
   private ImageView firstProudctImage, secondProductImage, thirdProductImage;
   private TextView firstPrice, secondPrice, thirdPrice;
   private TextView firstChinaPrice, secondChinaPrice, thirdChinaPrice;
-    
+  
   public ProductJustOneView(Activity context)
   {
     super(context);
@@ -74,6 +78,14 @@ public class ProductJustOneView extends RelativeLayout
       Picasso.with(context).load(firstProduct.imageUrl).fit().centerCrop().into(firstProudctImage);
       firstPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(firstProduct.priceSale)));
       firstChinaPrice.setText(Global.getCurrencyConvert(context, Integer.parseInt(firstProduct.priceSale), Float.parseFloat(firstProduct.currencyConvert)));
+      firstProductLayout.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          productDetail(firstProduct.id, firstProduct.isWished, firstProduct.categoryId, firstProduct.rate);
+        }
+      });
     }else
     {
       firstProductLayout.setVisibility(View.GONE);
@@ -84,6 +96,14 @@ public class ProductJustOneView extends RelativeLayout
       Picasso.with(context).load(secondProduct.imageUrl).fit().centerCrop().into(secondProductImage);
       secondPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(secondProduct.priceSale)));
       secondChinaPrice.setText(Global.getCurrencyConvert(context, Integer.parseInt(secondProduct.priceSale), Float.parseFloat(secondProduct.currencyConvert)));
+      secondProductLayout.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          productDetail(secondProduct.id, secondProduct.isWished, secondProduct.categoryId, secondProduct.rate);
+        }
+      });
     }else
     {
       secondProductLayout.setVisibility(View.GONE);
@@ -94,11 +114,34 @@ public class ProductJustOneView extends RelativeLayout
       Picasso.with(context).load(thirdProduct.imageUrl).fit().centerCrop().into(thirdProductImage);
       thirdPrice.setText(context.getString(R.string.term_won) + NumberFormatter.addComma(Integer.parseInt(thirdProduct.priceSale)));
       thirdChinaPrice.setText(Global.getCurrencyConvert(context, Integer.parseInt(thirdProduct.priceSale), Float.parseFloat(thirdProduct.currencyConvert)));
+      thirdProductLayout.setOnClickListener(new OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          productDetail(thirdProduct.id, thirdProduct.isWished, thirdProduct.categoryId, thirdProduct.rate);          
+        }
+      });
     }else
     {
       thirdProductLayout.setVisibility(View.GONE);
     }
     
     addView(view);
+  }
+  
+  public void productDetail(String id, boolean isWished, String categoryId, int rate)
+  {
+    if (!SystemUtil.isConnectNetwork(context))
+      new AlertDialogManager(context).showDontNetworkConnectDialog();
+    else
+    {
+      Intent i = new Intent(context, TrendProductDetailActivity.class);
+      i.putExtra("product_idx", id);
+      i.putExtra("product_isWished", isWished);
+      i.putExtra("proudct_categoryId", categoryId);
+      i.putExtra("product_rate", rate);
+      context.startActivity(i);
+    }
   }
 }
