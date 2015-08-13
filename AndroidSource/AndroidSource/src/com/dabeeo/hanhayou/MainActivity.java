@@ -268,7 +268,7 @@ public class MainActivity extends ActionBarActivity
         
         fragment = mainFragment;
         break;
-      
+        
       case POSITION_MY_PAGE:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
@@ -281,7 +281,7 @@ public class MainActivity extends ActionBarActivity
         title.setText(getString(R.string.term_my_page));
         fragment = new MyPageFragment();
         break;
-      
+        
       case POSITION_SEARCH:
         bottomMenuSearch.setSelected(true);
         title.setVisibility(View.VISIBLE);
@@ -289,19 +289,26 @@ public class MainActivity extends ActionBarActivity
         title.setText(R.string.term_search);
         fragment = new SearchFragment();
         break;
-      
+        
       case POSITION_WISHLIST:
         if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
         {
           new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
-          return;
+        }else
+        {
+          if(SystemUtil.isConnectNetwork(MainActivity.this))
+          {
+            bottomMenuWishList.setSelected(true);
+            title.setVisibility(View.VISIBLE);
+            titleImage.setVisibility(View.INVISIBLE);
+            title.setText(getString(R.string.term_wishlist));
+            fragment = new WishListFragment(activityListener);
+            wishlistFrgment = (WishListFragment) fragment;
+          }else
+          {
+            new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
+          }
         }
-        bottomMenuWishList.setSelected(true);
-        title.setVisibility(View.VISIBLE);
-        titleImage.setVisibility(View.INVISIBLE);
-        title.setText(getString(R.string.term_wishlist));
-        fragment = new WishListFragment(activityListener);
-        wishlistFrgment = (WishListFragment) fragment;
         break;
     }
     
