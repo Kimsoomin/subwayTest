@@ -88,6 +88,13 @@ public class TrendOptionAndAmountPickView extends RelativeLayout
     setOptionSelected(false);
   }
   
+  public void setInitSelect()
+  {
+    firstOption.setSelection(0);
+    secondOption.setSelection(0);
+    setOptionSelected(false);
+  }
+  
   public void setWishListener(WishListListener wishListenr)
   {
     this.wishListener = wishListenr;

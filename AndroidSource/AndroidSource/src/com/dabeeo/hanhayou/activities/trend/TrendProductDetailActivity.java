@@ -617,7 +617,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
     @Override
     protected void onPreExecute()
     {
-      optionAmountPickerView.initSpinner();
+      optionAmountPickerView.setInitSelect();
       super.onPreExecute();
     }
     
