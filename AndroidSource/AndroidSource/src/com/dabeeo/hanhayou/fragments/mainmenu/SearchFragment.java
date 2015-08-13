@@ -53,7 +53,7 @@ public class SearchFragment extends Fragment
   private LinearLayout popularKeywordOuterContainer, popularKeyworkdContainer;
   private ListView searchListView;
   private ScrollView emptyContainer;
-  private RelativeLayout searchContainer; 
+  private RelativeLayout searchContainer;
   private LinearLayout searchEmptyContainer;
   
   public ApiClient apiClient;
@@ -152,7 +152,12 @@ public class SearchFragment extends Fragment
       
     };
     inputWord.addTextChangedListener(watcher);
-    
+  }
+  
+  
+  @Override
+  public void onResume()
+  {
     if (SystemUtil.isConnectNetwork(getActivity()))
     {
       loadPopularWords();
@@ -163,6 +168,7 @@ public class SearchFragment extends Fragment
       layoutRecommedProductParent.setVisibility(View.GONE);
       popularKeywordOuterContainer.setVisibility(View.GONE);
     }
+    super.onResume();
   }
   
   
@@ -361,13 +367,15 @@ public class SearchFragment extends Fragment
       super.onPreExecute();
     }
     
+    
     @Override
     protected ArrayList<ProductBean> doInBackground(Void... params)
     {
-      ArrayList<ProductBean> result  = null;
+      ArrayList<ProductBean> result = null;
       result = apiClient.getSearchProduct();
       return result;
     }
+    
     
     @Override
     protected void onPostExecute(ArrayList<ProductBean> result)
@@ -377,12 +385,12 @@ public class SearchFragment extends Fragment
       ProductBean leftProduct = null;
       ProductBean rightProduct = null;
       
-      if(result.size() > 0)
+      if (result.size() > 0)
       {
         leftProduct = result.get(0);
       }
       
-      if(result.size() == 2)
+      if (result.size() == 2)
       {
         rightProduct = result.get(1);
       }
