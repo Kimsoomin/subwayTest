@@ -108,9 +108,12 @@ public class TrendSearchActivity extends Activity
       @Override
       public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
       {
-        //        Intent i = new Intent(TrendSearchActivity.this, TrendProductDetailActivity.class);
-        //        i.putExtra("product_id", value)
-        //        startActivity(i);
+        Intent i = new Intent(TrendSearchActivity.this, TrendProductDetailActivity.class);
+        i.putExtra("product_idx", productList.get(position).id);
+        i.putExtra("product_isWished", productList.get(position).isWished);
+        i.putExtra("proudct_categoryId", productList.get(position).categoryId);
+        i.putExtra("product_rate", productList.get(position).rate);
+        startActivity(i);
       }
     });
     
@@ -119,7 +122,6 @@ public class TrendSearchActivity extends Activity
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count)
       {
-        Log.i("etgkqo","onTextChanged");
         changeUI(editSearch.getText().toString().length());
         
       }
@@ -127,8 +129,8 @@ public class TrendSearchActivity extends Activity
       @Override
       public void afterTextChanged(Editable s)
       {
-        if(editSearch.getText().toString().length()>1){
-          Log.i("etgkqo","afterTextChanged");
+        if(editSearch.getText().toString().length()>1)
+        {
           imageX.setVisibility(View.VISIBLE);
           resultStataus = true;
           new GetProductListAsyncTask().execute(editSearch.getText().toString());
@@ -150,15 +152,12 @@ public class TrendSearchActivity extends Activity
       @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
       {
-        Log.i("etgkqo","onEditorAction");
         if (actionId == EditorInfo.IME_ACTION_SEARCH)
         {
           hideKeyboard();
           
           if(!TextUtils.isEmpty(editSearch.getText()))
           {
-            Log.i("etgkqo",editSearch.getText().toString());
-            
             resultStataus = false;
             new GetProductListAsyncTask().execute(editSearch.getText().toString());
           }
@@ -178,7 +177,6 @@ public class TrendSearchActivity extends Activity
         editSearch.removeTextChangedListener(watcher);
         editSearch.setText("");
         imageX.setVisibility(View.GONE);
-//        editSearch.requestFocus();
         changeUI(editSearch.getText().toString().length());
         hideKeyboard();
         editSearch.addTextChangedListener(watcher);
@@ -244,12 +242,11 @@ public class TrendSearchActivity extends Activity
     @Override
     protected void onPostExecute(ArrayList<ProductBean> result) 
     {
-      Log.i("etgkqo.onPostExecute",String.valueOf(result.size()));
       adapter.clear();
       adapter.addAll(result);
       
       if(!resultStataus){
-        searcgResult(productList.size());
+        searchResult(productList.size());
       }
       
       super.onPostExecute(result);
@@ -260,6 +257,7 @@ public class TrendSearchActivity extends Activity
   
   private void hideKeyboard()
   {
+    editSearch.clearFocus();
     try
     {
       InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -292,10 +290,9 @@ public class TrendSearchActivity extends Activity
     }
   }
   
-  private void searcgResult(int result)
+  private void searchResult(int result)
   {
     String title = getString(R.string.term_search_result)+" ("+result+")";
-    Log.i("etgkqo : title",title);
     
     searchTitle.setText(title);
     searchContainer.setVisibility(View.VISIBLE);
