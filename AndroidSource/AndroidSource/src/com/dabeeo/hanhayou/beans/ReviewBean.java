@@ -49,7 +49,7 @@ public class ReviewBean
 				reviewSeqCode = obj.getString("reviewSeqCode");
 			
 			if (obj.has("rate"))
-				rate = obj.getInt("rate");
+				rate = obj.getInt("rate")/2;
 			if (obj.has("likeCount"))
 				likeCount = obj.getInt("likeCount");
 			
