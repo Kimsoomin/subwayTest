@@ -206,7 +206,7 @@ public class CouponDetailActivity extends ActionBarActivity
       public void run()
       {
         Intent i = new Intent(CouponDetailActivity.this, BlinkingMap.class);
-        i.putExtra("idx", couponIdx);
+        i.putExtra("placeIdx", couponIdx);
         startActivity(i);
       }
     });
