@@ -396,7 +396,7 @@ public class TrendProductDetailActivity extends ActionBarActivity
       {
         if(optionAmountPickerView.view.getVisibility() == View.VISIBLE)
         {
-          new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(getString(R.string.term_alert), "옵션을 선택해주세요.", 
+          new AlertDialogManager(TrendProductDetailActivity.this).showAlertDialog(getString(R.string.term_alert), getString(R.string.term_product_select_option), 
               getString(R.string.term_ok), null, new AlertListener()
           {
             
