@@ -157,7 +157,7 @@
     <string name="map_gps_noUse">为了流畅使用，请将位置信息设为‘使用’。</string>
     <string name="map_gps_Location_fail">定位失败</string>
     <string name="map_subway_start">从这里出发</string>
-    <string name="map_subway_end">到这里取</string>
+    <string name="map_subway_end">到这里去</string>
     <string name="msg_is_download_map">现在去下载地图吗？</string>
     <string name="msg_dest_arrived">已到达目的地</string>
     <string name="app_finish">再按一次后退键退出应用。</string>
