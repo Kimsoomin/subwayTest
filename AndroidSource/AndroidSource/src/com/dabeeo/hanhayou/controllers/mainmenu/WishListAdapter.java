@@ -142,10 +142,6 @@ public class WishListAdapter extends BaseAdapter
       @Override
       public void onClick(View v)
       {
-//        if (!SystemUtil.isConnectNetwork(context))
-//          new AlertDialogManager(context).showDontNetworkConnectDialog();
-//        else
-//          Toast.makeText(context, "준비 중입니다", Toast.LENGTH_LONG).show();
         new GetProductDetailTask().execute(bean.id);
       }
     });
@@ -154,10 +150,6 @@ public class WishListAdapter extends BaseAdapter
       @Override
       public void onClick(View v)
       {
-//        if (!SystemUtil.isConnectNetwork(context))
-//          new AlertDialogManager(context).showDontNetworkConnectDialog();
-//        else
-//          Toast.makeText(context, "준비 중입니다", Toast.LENGTH_LONG).show();
         new GetProductDetailTask().execute(bean.id);
       }
     });

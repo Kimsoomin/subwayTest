@@ -22,7 +22,6 @@ import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.NumberFormatter;
 import com.dabeeo.hanhayou.utils.SystemUtil;
@@ -136,7 +135,6 @@ public class TrendProductListAdapter extends BaseAdapter
           new AlertDialogManager(context).showDontNetworkConnectDialog();
         else
         {
-          BlinkingCommon.smlLibDebug("TrendProducTList", "bean.id"+bean.id);
           Intent i = new Intent(context, TrendProductDetailActivity.class);
           i.putExtra("product_idx", bean.id);
           i.putExtra("product_isWished", bean.isWished);

@@ -111,8 +111,8 @@ public class MapTileProvderEx extends MapTileProviderBase
   }
   
   // XXX Rescale bitmap
-  private Drawable resize(Drawable image, final int rx, final int ry,
-      final int zoomLevelDiff) {
+  private Drawable resize(Drawable image, final int rx, final int ry, final int zoomLevelDiff) 
+  {
     int mTileSizePixels = 128; // 256
     int px = rx % (2 * zoomLevelDiff);
     int py = ry % (2 * zoomLevelDiff);

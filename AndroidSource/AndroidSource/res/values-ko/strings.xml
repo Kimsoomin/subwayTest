@@ -48,8 +48,8 @@
         <item>전체</item>
         <item>한류특화지역</item>
         <item>신촌/이대/홍대</item>
-        <item>명동/동대문</item>
         <item>압구정/청담/강남 일대</item>
+        <item>명동/동대문</item>
         <item>인사동/시청 (전통문화지구)</item>
         <item>그 외 명소</item>
     </array>
@@ -386,7 +386,6 @@
     <!-- 프로모션 -->
     <string name="term_show_detail">자세히보기</string>
     <string name="term_dont_show_a_day">오늘하루 보지 않기</string>
-    <string name="term_go">바로가기</string>
     <string name="msg_resend_emil_auth">가입하신 이메일로 인증번호를 발송하였습니다. 인증번호를 확인 후, 인증번호 입력창에 입력해주세요</string>
     <string name="msg_warn_password_not_same_name">프로필이름과 동일한 비밀번호를 사용할 수 없습니다.</string>
     <string name="msg_require_login">로그인시, 이용가능합니다.</string>

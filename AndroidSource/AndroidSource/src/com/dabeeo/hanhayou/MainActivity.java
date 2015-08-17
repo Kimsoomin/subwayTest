@@ -213,16 +213,24 @@ public class MainActivity extends ActionBarActivity
         }
         else
         {
-          if (wishlistFrgment.optionAmountPickerView.getVisibility() == View.VISIBLE)
-            wishlistFrgment.wishListListener.onOptionClose();
-          else
-            setFragments(POSITION_HOME);
+          if(wishlistFrgment != null)
+          {
+            if (wishlistFrgment.optionAmountPickerView.getVisibility() == View.VISIBLE)
+              wishlistFrgment.wishListListener.onOptionClose();
+            else
+            {
+              setFragments(POSITION_HOME);
+              return;
+            }
+          }
         }
         
       }
       else
+      {
         setFragments(POSITION_HOME);
-      return;
+        return;
+      }
     }
     
     if (System.currentTimeMillis() > backKeyPressedTime + 2000)
