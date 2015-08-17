@@ -238,7 +238,7 @@ public class WishListFragment extends Fragment
       {
         if(optionAmountPickerView.view.getVisibility() == View.VISIBLE)
         {
-          new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), "옵션을 선택해주세요.", 
+          new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), getString(R.string.term_product_select_option), 
               getString(R.string.term_ok), null, new AlertListener()
           {
             
