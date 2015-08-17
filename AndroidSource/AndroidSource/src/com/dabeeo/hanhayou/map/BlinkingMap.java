@@ -1433,7 +1433,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     else if (type == LocationFail)
       ab.setMessage(R.string.map_gps_Location_fail);
     else if (type == OutOfSeoul)
-      ab.setMessage(R.string.map_gps_out_of_Seoul);
+      ab.setMessage(R.string.msg_dont_support_outside_seoul);
     ab.show();
   }
   

@@ -38,8 +38,6 @@ public class WishListSearchActivity extends Activity
   private ApiClient apiClient;
   private ArrayList<ProductBean> productList;
   
-  private boolean resultStataus = true;
-  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -132,21 +130,16 @@ public class WishListSearchActivity extends Activity
   }
   
   private void searchResult(int result)
-  {
-    String title = getString(R.string.term_search_result)+" ("+result+")";
-    
-//    searchTitle.setText(title);
+  { 
 //    searchContainer.setVisibility(View.VISIBLE);
-//    searchTitle.setVisibility(View.VISIBLE);
-//    categoryContainer.setVisibility(View.GONE);
     
     if(result>0)
     {
-//      searchListView.setVisibility(View.VISIBLE);
+//      listView.setVisibility(View.VISIBLE);
 //      searchNotExistContainer.setVisibility(View.GONE);
     }else
     {
-//      searchListView.setVisibility(View.GONE);
+//      listView.setVisibility(View.GONE);
 //      searchNotExistContainer.setVisibility(View.VISIBLE);
     }
   }
@@ -171,9 +164,7 @@ public class WishListSearchActivity extends Activity
       adapter.clear();
       adapter.addAll(result);
       
-//      if(!resultStataus){
-//        searchResult(productList.size());
-//      }
+      searchResult(productList.size());
       
       super.onPostExecute(result);
     }

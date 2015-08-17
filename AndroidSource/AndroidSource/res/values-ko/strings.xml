@@ -172,7 +172,6 @@
     <!-- 맵 -->
     <string name="map_gps_noUse">원활한 서비스 이용을 위해서 GPS를 ‘사용’으로 해주세요.</string>
     <string name="map_gps_Location_fail">위치를 찾을 수 없습니다.</string>
-    <string name="map_gps_out_of_Seoul">서울외 지역은 서비스 준비중입니다.</string>
     <string name="map_subway_start">출발지로 선택</string>
     <string name="map_subway_end">도착지로 선택</string>
     <string name="msg_is_download_map">지도 다운로드 후, 이용가능합니다. 서울지도를 다운로드하시겠습니까?</string>
