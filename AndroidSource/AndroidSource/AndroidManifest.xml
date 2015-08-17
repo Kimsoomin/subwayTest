@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dabeeo.hanhayou"
-    android:versionCode="23"
-    android:versionName="1.2.11" >
+    android:versionCode="24"
+    android:versionName="1.2.12" >
 
     <uses-sdk
         android:minSdkVersion="15"
