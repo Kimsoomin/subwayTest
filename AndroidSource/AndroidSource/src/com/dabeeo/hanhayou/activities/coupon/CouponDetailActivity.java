@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import org.json.JSONObject;
 
@@ -46,7 +45,6 @@ import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
 
-@SuppressWarnings("deprecation")
 public class CouponDetailActivity extends ActionBarActivity
 {
   private ImageView imageView;
@@ -169,6 +167,7 @@ public class CouponDetailActivity extends ActionBarActivity
               public void run()
               {
                 Intent i = new Intent(CouponDetailActivity.this, BlinkingMap.class);
+                i.putExtra("placeIdx", bean.placeIdx);
                 startActivity(i);
               }
             });
@@ -206,7 +205,7 @@ public class CouponDetailActivity extends ActionBarActivity
       public void run()
       {
         Intent i = new Intent(CouponDetailActivity.this, BlinkingMap.class);
-        i.putExtra("placeIdx", couponIdx);
+        i.putExtra("placeIdx", bean.placeIdx);
         startActivity(i);
       }
     });

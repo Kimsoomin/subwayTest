@@ -2,9 +2,6 @@ package com.dabeeo.hanhayou.fragments.coupon;
 
 import java.util.ArrayList;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,7 +21,6 @@ import android.widget.ProgressBar;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
 import com.dabeeo.hanhayou.activities.coupon.DownloadedCouponDetailActivity;
-import com.dabeeo.hanhayou.activities.mypage.LoginActivity;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.controllers.coupon.DownloadedCouponListAdapter;

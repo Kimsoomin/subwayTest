@@ -1,19 +1,11 @@
 package com.dabeeo.hanhayou.activities.coupon;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +31,6 @@ import com.dabeeo.hanhayou.controllers.OfflineDeleteManager;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.BlinkingMap;
-import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
 import com.dabeeo.hanhayou.utils.SystemUtil;
@@ -187,6 +177,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
               public void run()
               {
                 Intent i = new Intent(DownloadedCouponDetailActivity.this, BlinkingMap.class);
+                i.putExtra("placeIdx", bean.placeIdx);
                 startActivity(i);
               }
             });
@@ -224,7 +215,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
       public void run()
       {
         Intent i = new Intent(DownloadedCouponDetailActivity.this, BlinkingMap.class);
-        i.putExtra("idx", couponIdx);
+        i.putExtra("placeIdx", bean.placeIdx);
         startActivity(i);
       }
     });
