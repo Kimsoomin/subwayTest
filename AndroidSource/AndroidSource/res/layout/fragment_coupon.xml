@@ -16,6 +16,7 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/top_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#f3f3f3"
@@ -23,26 +24,32 @@
             android:orientation="horizontal"
             android:padding="8dp" >
 
-            <Button
+            <TextView
                 android:id="@+id/btn_my_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_white_selected_appcolor"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="8dp"
                 android:text="@string/term_sort_my_location"
-                android:textColor="@color/color_normal_gray_select_white" />
+                android:textColor="@color/color_normal_gray_select_white"
+                android:textSize="11sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_popular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:background="@drawable/rectangle_white_selected_appcolor"
-                android:padding="8dp"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="8dp"
                 android:text="@string/term_sort_popular"
-                android:textColor="@color/color_normal_gray_select_white" />
+                android:textColor="@color/color_normal_gray_select_white"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -53,12 +60,16 @@
             <ListView
                 android:id="@+id/list_my_location"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:divider="#f0f0f0"
+                android:dividerHeight="6dp" />
 
             <ListView
                 android:id="@+id/list_popular"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:divider="#f0f0f0"
+                android:dividerHeight="6dp" />
 
             <LinearLayout
                 android:id="@+id/empty_container"
