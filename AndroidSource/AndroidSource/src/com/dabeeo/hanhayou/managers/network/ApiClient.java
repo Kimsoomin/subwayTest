@@ -937,7 +937,12 @@ public class ApiClient
     ArrayList<ProductBean> searchList = new ArrayList<ProductBean>();
     try
     {
-      NetworkResult result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
+    	NetworkResult result;
+    	
+    	if(PreferenceManager.getInstance(context).isLoggedIn())
+    		result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+    	else
+    		result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
       
       JSONObject obj = new JSONObject(result.response);
       if (obj.getString("status").equals("OK"))
