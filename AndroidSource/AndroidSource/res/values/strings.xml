@@ -241,7 +241,7 @@
     <!-- 쿠폰 -->
     <string name="term_all_coupons">所有优惠券</string>
     <string name="term_downloaded_coupon">已收优惠券</string>
-    <string name="term_used">已使用</string>
+    <string name="term_used">成功使用</string>
     <string name="term_ticket_en">"电子兑换券"</string>
     <string name="term_ticket_and_coupon_buy">购买</string>
     <string name="term_coupon_en">"优惠券 "</string>

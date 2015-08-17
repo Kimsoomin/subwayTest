@@ -428,9 +428,6 @@ public class CouponListFragment extends Fragment
 				load();
 			}
 			
-			Log.w("WARN", "First : " + firstVisibleItem);
-			Log.w("WARN", "Last : " + lastVisibleItem);
-			
 			if (firstVisibleItem > 1)
 			{
 				if (topContainer.getVisibility() == View.VISIBLE)
