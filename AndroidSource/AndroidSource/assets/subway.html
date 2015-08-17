@@ -474,7 +474,14 @@
               this.end_station.remove()
             }
 
-            station = Snap.select(".station#"+this.start_station_id)
+            // //예외 케이스 '-' 때문에 해당 역은 예외로 추가함
+            var temp_stationd_id = this.start_station_id;
+            if(this.start_station_id == "line234")
+              temp_stationd_id = "line140line234"
+            if(this.start_station_id == "line211")
+              temp_stationd_id = "line211_1_"
+
+            station = Snap.select(".station#"+temp_stationd_id)
 
             try{
               bound = station.getBBox()
@@ -496,6 +503,8 @@
               }
             }
 
+            var adjustX = 0;
+            var adjustY = 0;
             if(80 >bound.width  && bound.width > 58){
               //환승역3/4개
               adjustX = 22;
@@ -513,7 +522,13 @@
 
             this.start_station = s.image('./ui/images/pin_subway_start.png', bound.x - 3 + adjustX, bound.y - 42 + adjustY, 35, 50);
 
-            station = Snap.select(".station#"+this.end_station_id)
+            temp_stationd_id = this.end_station_id;
+            if(this.end_station_id == "line234")
+              temp_stationd_id = "line140line234"
+            if(this.end_station_id == "line211")
+              temp_stationd_id = "line211_1_"
+            
+            station = Snap.select(".station#"+temp_stationd_id)
 
             try{
               bound = station.getBBox()
