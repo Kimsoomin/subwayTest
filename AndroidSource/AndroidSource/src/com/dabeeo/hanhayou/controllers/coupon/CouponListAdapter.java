@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
+import com.dabeeo.hanhayou.utils.NumberFormatter;
 
 public class CouponListAdapter extends BaseAdapter
 {
@@ -97,8 +98,8 @@ public class CouponListAdapter extends BaseAdapter
   @SuppressLint("DefaultLocale")
   private String changeMeter(int meter)
   {
-    float km = meter / 1000.0f;
-    String kmStr = String.format("%.1f", km);
-    return kmStr + "km";
+//    float km = meter / 1000.0f;
+    String kmStr = NumberFormatter.addComma(meter);
+    return kmStr + "m";
   }
 }
