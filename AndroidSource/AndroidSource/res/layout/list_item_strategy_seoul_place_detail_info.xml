@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical" >
 
@@ -8,15 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="14dp" >
+        android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="14dp" >
 
             <TextView
                 android:id="@+id/text_title"
@@ -35,25 +35,33 @@
                 android:textColor="@color/light_gray" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/btn_call"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/btn_direct_call"
-            android:contentDescription="@null"
-            android:visibility="gone" />
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp" >
 
-        <ImageView
-            android:id="@+id/btn_address"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/btn_address_map"
-            android:contentDescription="@null"
-            android:visibility="gone" />
+            <ImageView
+                android:id="@+id/btn_call"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_direct_call"
+                android:contentDescription="@null"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/btn_address"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_address_map"
+                android:contentDescription="@null"
+                android:visibility="gone" />
+        </RelativeLayout>
     </LinearLayout>
 
     <View
