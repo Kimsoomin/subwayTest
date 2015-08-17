@@ -1,9 +1,5 @@
 package com.dabeeo.hanhayou.managers;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-
 import android.content.Context;
 import android.text.TextUtils;
 

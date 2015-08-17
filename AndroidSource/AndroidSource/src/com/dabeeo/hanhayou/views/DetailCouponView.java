@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 

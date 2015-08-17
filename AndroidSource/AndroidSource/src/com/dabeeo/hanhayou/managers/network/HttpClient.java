@@ -43,7 +43,6 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class HttpClient
