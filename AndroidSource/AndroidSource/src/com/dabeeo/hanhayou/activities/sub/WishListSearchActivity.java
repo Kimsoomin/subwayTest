@@ -10,12 +10,17 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.beans.PopularWishBean;
@@ -34,6 +39,7 @@ public class WishListSearchActivity extends Activity
   private LinearLayout emptyContainer, popularWishListContainer;
   private GridViewWithHeaderAndFooter listView;
   private WishSearchListAdapter adapter;
+  private RelativeLayout searchNotExistContainer;
   
   private ApiClient apiClient;
   private ArrayList<ProductBean> productList;
@@ -52,6 +58,7 @@ public class WishListSearchActivity extends Activity
     listView.setAdapter(adapter);
     
     popularWishListContainer = (LinearLayout) findViewById(R.id.wish_list_container);
+    searchNotExistContainer = (RelativeLayout) findViewById(R.id.search_not_exist_container);
     
     new PopularWishList().execute();
     
@@ -79,10 +86,12 @@ public class WishListSearchActivity extends Activity
           typingCancel.setVisibility(View.VISIBLE);
           listView.setVisibility(View.VISIBLE);
           emptyContainer.setVisibility(View.GONE);
+          searchNotExistContainer.setVisibility(View.GONE);
           new GetProductListAsyncTask().execute(editSearch.getText().toString());
         }
         else
         {
+          searchNotExistContainer.setVisibility(View.GONE);
           typingCancel.setVisibility(View.GONE);
           listView.setVisibility(View.GONE);
           emptyContainer.setVisibility(View.VISIBLE);
@@ -103,6 +112,25 @@ public class WishListSearchActivity extends Activity
       }
     };
     editSearch.addTextChangedListener(watcher);
+    
+    OnEditorActionListener editorActionListener = new OnEditorActionListener()
+    {
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+      {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH)
+        {
+          hideKeyboard();
+          
+          if(!TextUtils.isEmpty(editSearch.getText()))
+          {
+            new GetProductListAsyncTask().execute(editSearch.getText().toString());
+          }
+        }
+        return false;
+      }
+    };
+    editSearch.setOnEditorActionListener(editorActionListener);
     
     backImage = (ImageView) findViewById(R.id.image_back_button);
     backImage.setOnClickListener(new OnClickListener()
@@ -129,20 +157,37 @@ public class WishListSearchActivity extends Activity
     }
   }
   
-  private void searchResult(int result)
-  { 
-//    searchContainer.setVisibility(View.VISIBLE);
-    
-    if(result>0)
+  @Override
+  public void onBackPressed()
+  {
+    if(listView.getVisibility() == View.VISIBLE)
     {
-//      listView.setVisibility(View.VISIBLE);
-//      searchNotExistContainer.setVisibility(View.GONE);
-    }else
-    {
-//      listView.setVisibility(View.GONE);
-//      searchNotExistContainer.setVisibility(View.VISIBLE);
+      emptyContainer.setVisibility(View.GONE);
+      listView.setVisibility(View.GONE);
+      editSearch.setText("");
+      return;
     }
+    else{
+      finish();
+    }
+    
+    super.onBackPressed();
   }
+  
+  private void searchResult(int result)
+	{ 
+		if(result > 0)
+		{
+			emptyContainer.setVisibility(View.GONE);
+			listView.setVisibility(View.VISIBLE);
+			searchNotExistContainer.setVisibility(View.GONE);
+		}else
+		{
+			emptyContainer.setVisibility(View.VISIBLE);
+			listView.setVisibility(View.GONE);
+			searchNotExistContainer.setVisibility(View.VISIBLE);
+		}
+	}
   
   private class GetProductListAsyncTask extends AsyncTask<String, Void, ArrayList<ProductBean>>
   {
@@ -164,7 +209,7 @@ public class WishListSearchActivity extends Activity
       adapter.clear();
       adapter.addAll(result);
       
-      searchResult(productList.size());
+      searchResult(result.size());
       
       super.onPostExecute(result);
     }
@@ -195,6 +240,7 @@ public class WishListSearchActivity extends Activity
       String rightId = "";
       super.onPostExecute(result);
       
+      popularWishListContainer.removeAllViews();
       int position = 0;
       for(int i = 0; i < result.size(); i++)
       {
@@ -214,6 +260,7 @@ public class WishListSearchActivity extends Activity
         pView.setBean(position, leftName, rightName, leftId, rightId);
         position = position + 1;
         i = i + 1;
+        
         popularWishListContainer.addView(pView);
       }
     }
