@@ -7,8 +7,8 @@
 
     <RelativeLayout
         android:id="@+id/nearby_popup"
-        android:layout_width="286dip"
-        android:layout_height="317dip"
+        android:layout_width="286dp"
+        android:layout_height="317dp"
         android:background="@android:color/white" >
 
         <LinearLayout
@@ -16,15 +16,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="11dip"
-            android:layout_marginRight="8dip"
-            android:orientation="horizontal"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/nearby_all_btn_state"
-            android:clickable="true" >
+            android:clickable="true"
+            android:orientation="horizontal" >
 
             <ImageView
-                android:layout_width="20dip"
-                android:layout_height="20dip"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/nearby_all_image_state" />
 
             <TextView
@@ -41,38 +41,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/category_all"
-            android:layout_marginBottom="8dip"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dip"
-            android:background="#c3c3c3">
+            android:background="@color/gray" >
 
             <LinearLayout
                 android:id="@+id/attraction"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:background="@android:color/white"
                 android:gravity="center"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:id="@+id/attraction_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_attraction_btn_state" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dip"
+                        android:layout_marginTop="4dp"
                         android:text="ATTRACTIONS"
                         android:textColor="@drawable/nearby_text_color"
                         android:textSize="12sp"
@@ -82,9 +82,9 @@
 
             <LinearLayout
                 android:id="@+id/shopping"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
-                android:layout_marginLeft="0.5dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="0.5dp"
                 android:layout_toRightOf="@+id/attraction"
                 android:background="@android:color/white"
                 android:gravity="center"
@@ -92,22 +92,22 @@
 
                 <LinearLayout
                     android:id="@+id/shopping_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_shopping_btn_state" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dip"
+                        android:layout_marginTop="4dp"
                         android:text="SHOPPING"
                         android:textColor="@drawable/nearby_text_color"
                         android:textSize="12sp"
@@ -117,9 +117,9 @@
 
             <LinearLayout
                 android:id="@+id/restaurant"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
-                android:layout_marginLeft="0.5dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="0.5dp"
                 android:layout_toRightOf="@+id/shopping"
                 android:background="@android:color/white"
                 android:gravity="center"
@@ -127,22 +127,22 @@
 
                 <LinearLayout
                     android:id="@+id/restaurant_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_restaurant_btn_state" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dip"
+                        android:layout_marginTop="4dp"
                         android:text="RESTAURANT"
                         android:textColor="@drawable/nearby_text_color"
                         android:textSize="12sp"
@@ -152,26 +152,26 @@
 
             <LinearLayout
                 android:id="@+id/subway"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/attraction"
-                android:layout_marginTop="0.5dip"
+                android:layout_marginTop="0.5dp"
                 android:background="@android:color/white"
                 android:gravity="center"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:id="@+id/subway_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_subway_btn_state" />
 
                     <TextView
@@ -187,11 +187,11 @@
 
             <LinearLayout
                 android:id="@+id/cosmetic"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/shopping"
-                android:layout_marginLeft="0.5dip"
-                android:layout_marginTop="0.5dip"
+                android:layout_marginLeft="0.5dp"
+                android:layout_marginTop="0.5dp"
                 android:layout_toRightOf="@+id/subway"
                 android:background="@android:color/white"
                 android:gravity="center"
@@ -199,16 +199,16 @@
 
                 <LinearLayout
                     android:id="@+id/cosmetic_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_cosmetic_btn_state" />
 
                     <TextView
@@ -223,11 +223,11 @@
 
             <LinearLayout
                 android:id="@+id/tourinfo"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/restaurant"
-                android:layout_marginLeft="0.5dip"
-                android:layout_marginTop="0.5dip"
+                android:layout_marginLeft="0.5dp"
+                android:layout_marginTop="0.5dp"
                 android:layout_toRightOf="@+id/cosmetic"
                 android:background="@android:color/white"
                 android:gravity="center"
@@ -235,22 +235,22 @@
 
                 <LinearLayout
                     android:id="@+id/tourinfo_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_tourinfo_btn_state" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dip"
+                        android:layout_marginTop="4dp"
                         android:text="TOURIST INFO."
                         android:textColor="@drawable/nearby_text_color"
                         android:textSize="12sp"
@@ -260,32 +260,32 @@
 
             <LinearLayout
                 android:id="@+id/drugstore"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/subway"
-                android:layout_marginTop="0.5dip"
+                android:layout_marginTop="0.5dp"
                 android:background="@android:color/white"
                 android:gravity="center"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:id="@+id/drugstore_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_drugstore_btn_state" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dip"
+                        android:layout_marginTop="4dp"
                         android:text="DRUG STORE"
                         android:textColor="@drawable/nearby_text_color"
                         android:textSize="12sp"
@@ -295,11 +295,11 @@
 
             <LinearLayout
                 android:id="@+id/mcdonalds"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/cosmetic"
-                android:layout_marginLeft="0.5dip"
-                android:layout_marginTop="0.5dip"
+                android:layout_marginLeft="0.5dp"
+                android:layout_marginTop="0.5dp"
                 android:layout_toRightOf="@+id/drugstore"
                 android:background="@android:color/white"
                 android:gravity="center"
@@ -307,22 +307,22 @@
 
                 <LinearLayout
                     android:id="@+id/mcdonalds_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_mcdonalds_btn_state" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dip"
+                        android:layout_marginTop="4dp"
                         android:text="MCDONALDS"
                         android:textColor="@drawable/nearby_text_color"
                         android:textSize="12sp"
@@ -332,11 +332,11 @@
 
             <LinearLayout
                 android:id="@+id/starbucks"
-                android:layout_width="90dip"
-                android:layout_height="90dip"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/tourinfo"
-                android:layout_marginLeft="0.5dip"
-                android:layout_marginTop="0.5dip"
+                android:layout_marginLeft="0.5dp"
+                android:layout_marginTop="0.5dp"
                 android:layout_toRightOf="@+id/mcdonalds"
                 android:background="@android:color/white"
                 android:gravity="center"
@@ -344,22 +344,22 @@
 
                 <LinearLayout
                     android:id="@+id/starbucks_btn"
-                    android:layout_width="85dip"
-                    android:layout_height="85dip"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:background="@drawable/nearby_btn_state"
-                    android:gravity="center"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="27dip"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
                         android:background="@drawable/nearby_starbucks_btn_state" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dip"
+                        android:layout_marginTop="4dp"
                         android:text="STARBUCKS"
                         android:textColor="@drawable/nearby_text_color"
                         android:textSize="12sp"
