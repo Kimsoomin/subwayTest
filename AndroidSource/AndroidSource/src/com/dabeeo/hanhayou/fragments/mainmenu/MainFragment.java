@@ -24,7 +24,6 @@ import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
 import com.dabeeo.hanhayou.activities.mainmenu.SubwayActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelSchedulesActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyActivity;
-import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
@@ -32,7 +31,6 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.map.BlinkingMap;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
-import com.dabeeo.hanhayou.utils.SystemUtil;
 
 public class MainFragment extends Fragment
 {
@@ -202,9 +200,9 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerCoupon.getId())
       {
-//        startActivity(new Intent(getActivity(), CouponActivity.class));
-//        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), CouponActivity.class));
+        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+//        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
         
       }
     }
