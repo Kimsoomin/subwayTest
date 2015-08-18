@@ -53,7 +53,7 @@ public class CouponDetailActivity extends ActionBarActivity
   private TextView textTitle, textValidityPeriod, textValidityCondition, textInfo;
   private ApiClient apiClient;
   private String couponIdx;
-  private String branchIdx;
+  private String branchIdx, placeIdx;
   private CouponDetailBean bean;
   private Button btnDownload;
   private ViewGroup layoutInfos;
@@ -77,6 +77,7 @@ public class CouponDetailActivity extends ActionBarActivity
     couponDatabase = new OfflineCouponDatabaseManager(this);
     couponIdx = getIntent().getStringExtra("coupon_idx");
     branchIdx = getIntent().getStringExtra("branch_idx");
+    placeIdx = getIntent().getStringExtra("place_idx");
     
     imageView = (ImageView) findViewById(R.id.imageview);
     textTitle = (TextView) findViewById(R.id.text_title);
@@ -206,7 +207,7 @@ public class CouponDetailActivity extends ActionBarActivity
       public void run()
       {
         Intent i = new Intent(CouponDetailActivity.this, BlinkingMap.class);
-        i.putExtra("placeIdx", couponIdx);
+        i.putExtra("placeIdx", placeIdx);
         startActivity(i);
       }
     });
