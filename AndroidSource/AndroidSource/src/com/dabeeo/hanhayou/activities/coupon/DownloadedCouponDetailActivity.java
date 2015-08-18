@@ -187,6 +187,7 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
 							public void run()
 							{
 								Intent i = new Intent(DownloadedCouponDetailActivity.this, BlinkingMap.class);
+								i.putExtra("palceIdx", bean.placeIdx);
 								startActivity(i);
 							}
 						});
