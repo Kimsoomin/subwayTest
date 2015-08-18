@@ -140,7 +140,6 @@ public class DownloadedCouponListFragment extends Fragment
 				Intent i = new Intent(getActivity(), DownloadedCouponDetailActivity.class);
 				i.putExtra("coupon_idx", bean.couponIdx);
 				i.putExtra("branch_idx", bean.branchIdx);
-				i.putExtra("place_idx", bean.placeIdx);
 				startActivity(i);
 			}
 		}
