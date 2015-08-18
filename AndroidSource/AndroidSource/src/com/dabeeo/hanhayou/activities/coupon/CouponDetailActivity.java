@@ -71,6 +71,7 @@ public class CouponDetailActivity extends ActionBarActivity
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
+    setTitle(getString(R.string.term_coupon_detail_title));
     
     couponDatabase = new OfflineCouponDatabaseManager(this);
     couponIdx = getIntent().getStringExtra("coupon_idx");

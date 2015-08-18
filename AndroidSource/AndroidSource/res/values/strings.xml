@@ -500,6 +500,7 @@
     <string name="msg_not_chinese">该服务仅限中国人注册使用。</string>
 
     <!-- 추가 스트링 -->
+    <string name="term_coupon_detail_title">查看优惠券</string>
     <string name="term_sort_my_location">내 위치순</string>
     <string name="term_sort_popular">按人气排序</string>
     <string name="msg_empty_coupon">쿠폰이 없습니다.</string>
