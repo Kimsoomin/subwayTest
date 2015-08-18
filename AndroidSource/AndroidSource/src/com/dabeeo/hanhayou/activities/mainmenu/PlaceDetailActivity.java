@@ -234,6 +234,7 @@ public class PlaceDetailActivity extends ActionBarActivity
     progressBar.bringToFront();
     new GetPlaceDetailAsyncTask().execute();
     
+    
     //TODO: donghyun temp Prodcut Info Hidden
     layoutRecommendProduct.setVisibility(View.GONE);
 //    if (SystemUtil.isConnectNetwork(this))
@@ -250,7 +251,6 @@ public class PlaceDetailActivity extends ActionBarActivity
 //      new GetPlaceProductAsyncTask().execute();
 //    }
   }
-  
   
   private void displayContentData()
   {
