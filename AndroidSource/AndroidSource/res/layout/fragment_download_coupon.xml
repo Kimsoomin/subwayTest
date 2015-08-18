@@ -40,7 +40,10 @@
 
             <ListView
                 android:id="@+id/listview"
+                android:background="#f0f0f0"
                 android:layout_width="match_parent"
+                android:divider="#f0f0f0"
+                android:dividerHeight="6dp"
                 android:layout_height="match_parent" />
 
             <LinearLayout

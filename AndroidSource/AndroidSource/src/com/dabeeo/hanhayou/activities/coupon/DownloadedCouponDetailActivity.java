@@ -145,14 +145,14 @@ public class DownloadedCouponDetailActivity extends ActionBarActivity
 		if (bean.isUse)
 		{
 			btnUse.setEnabled(false);
-			btnUse.setBackgroundDrawable(getResources().getDrawable(R.drawable.dark_gray));
+			btnUse.setBackgroundDrawable(getResources().getDrawable(R.drawable.dark_gray_transparent));
 			btnUse.setTextColor(Color.WHITE);
 			btnUse.setText(getString(R.string.term_used));
 		}
 		else
 		{
 			btnUse.setEnabled(true);
-			btnUse.setBackgroundColor(getResources().getColor(R.color.dark_pink_transparent));
+			btnUse.setBackgroundDrawable(getResources().getDrawable(R.drawable.dark_trans_pink_pressed_dark_pink));
 			btnUse.setTextColor(Color.WHITE);
 			btnUse.setText(getString(R.string.term_use_coupon));
 		}

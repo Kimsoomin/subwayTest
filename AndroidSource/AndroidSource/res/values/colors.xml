@@ -58,6 +58,9 @@
 
     <drawable name="transparent_actionbar">#00000000</drawable>
     <drawable name="dark_gray">#444a4b</drawable>
+    <drawable name="dark_gray_transparent">#90444a4b</drawable>
+    <drawable name="dark_pink_darawable">#ff6262</drawable>
+    <drawable name="dark_pink_transparent_drawable">#90ff6262</drawable>
     <drawable name="white">#ffffff</drawable>
 
 </resources>
