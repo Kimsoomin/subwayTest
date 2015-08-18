@@ -9,13 +9,13 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:padding="10dip"
+        android:padding="10dp"
         android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dip"
+            android:layout_marginTop="14dp"
             android:text="@string/term_alert"
             android:textColor="@color/darker_gray"
             android:textSize="14sp" />
@@ -24,17 +24,18 @@
             android:id="@+id/character_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginTop="7dip"
-            android:layout_marginLeft="5dip"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="5dp"
             android:contentDescription="@null"
-            android:src="@drawable/icon_popup_download" />
+            android:src="@drawable/icon_popup_download"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/circle_progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="-6dip"
+            android:layout_marginTop="5dp"
             android:background="@drawable/circle_progress_shape"
             android:indeterminate="false"
             android:indeterminateDuration="500"
