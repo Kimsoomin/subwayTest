@@ -155,7 +155,8 @@ public class MainFragment extends Fragment
 //				}
 //				startActivity(new Intent(getActivity(), TrendActivity.class));
 //				getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
+        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), getString(R.string.term_ready_service), 
+            getString(R.string.term_ok), null, null);
       }
       else if (v.getId() == containerMap.getId())
       {
@@ -202,8 +203,8 @@ public class MainFragment extends Fragment
       {
 //        startActivity(new Intent(getActivity(), CouponActivity.class));
 //        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
-        
+        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), getString(R.string.term_ready_service), 
+            getString(R.string.term_ok), null, null);
       }
     }
   };
