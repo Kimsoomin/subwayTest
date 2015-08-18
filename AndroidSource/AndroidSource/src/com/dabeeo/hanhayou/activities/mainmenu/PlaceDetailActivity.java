@@ -580,9 +580,11 @@ public class PlaceDetailActivity extends ActionBarActivity
             //리뷰쓰기
             Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
             if (bean != null)
+            {
               i.putExtra("idx", bean.idx);
-            i.putExtra("type", "place");
-            startActivity(i);
+              i.putExtra("type", "place");
+              startActivity(i);
+            }
           }
         }
         else

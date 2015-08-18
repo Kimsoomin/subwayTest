@@ -12,6 +12,7 @@
     <string name="term_alert">알림</string>
     <string name="term_ok">확인</string>
     <string name="term_cancel">취소</string>
+    <string name="term_ready_service">서비스 준비 중입니다.</string>
 
     <!-- Guide Term -->
     <string name="term_skip">넘어가기</string>

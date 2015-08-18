@@ -93,6 +93,7 @@ import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.SensorUpdater.SensorUpdaterCallback;
 import com.dabeeo.hanhayou.map.SubwayExitInfo.ExitInfo;
+import com.dabeeo.hanhayou.utils.SystemUtil;
 import com.squareup.picasso.Picasso;
 
 public class BlinkingMap extends Activity implements OnClickListener, SensorUpdaterCallback, OnEditorActionListener
@@ -782,7 +783,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     mapBannerClose = (Button) findViewById(R.id.map_banner_close);
     mapBannerClose.setOnClickListener(this);
     
-    if(bannerVisible)
+    if(bannerVisible && SystemUtil.isConnectNetwork(mContext))
     {
       new BannerAsyncTask().execute();
     }

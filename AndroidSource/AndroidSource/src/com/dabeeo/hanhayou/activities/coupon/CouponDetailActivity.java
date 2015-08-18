@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import org.json.JSONObject;
 
@@ -46,14 +45,13 @@ import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.utils.ImageDownloader;
 import com.dabeeo.hanhayou.utils.MapCheckUtil;
 
-@SuppressWarnings("deprecation")
 public class CouponDetailActivity extends ActionBarActivity
 {
   private ImageView imageView;
   private TextView textTitle, textValidityPeriod, textValidityCondition, textInfo;
   private ApiClient apiClient;
   private String couponIdx;
-  private String branchIdx, placeIdx;
+  private String branchIdx;
   private CouponDetailBean bean;
   private Button btnDownload;
   private ViewGroup layoutInfos;
@@ -77,7 +75,6 @@ public class CouponDetailActivity extends ActionBarActivity
     couponDatabase = new OfflineCouponDatabaseManager(this);
     couponIdx = getIntent().getStringExtra("coupon_idx");
     branchIdx = getIntent().getStringExtra("branch_idx");
-    placeIdx = getIntent().getStringExtra("place_idx");
     
     imageView = (ImageView) findViewById(R.id.imageview);
     textTitle = (TextView) findViewById(R.id.text_title);
@@ -170,6 +167,7 @@ public class CouponDetailActivity extends ActionBarActivity
               public void run()
               {
                 Intent i = new Intent(CouponDetailActivity.this, BlinkingMap.class);
+                i.putExtra("placeIdx", bean.placeIdx);
                 startActivity(i);
               }
             });
@@ -207,7 +205,7 @@ public class CouponDetailActivity extends ActionBarActivity
       public void run()
       {
         Intent i = new Intent(CouponDetailActivity.this, BlinkingMap.class);
-        i.putExtra("placeIdx", placeIdx);
+        i.putExtra("placeIdx", bean.placeIdx);
         startActivity(i);
       }
     });

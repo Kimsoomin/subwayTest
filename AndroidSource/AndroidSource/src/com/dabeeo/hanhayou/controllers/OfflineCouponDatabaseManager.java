@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONException;
@@ -30,7 +29,6 @@ import com.dabeeo.hanhayou.map.Global;
 public class OfflineCouponDatabaseManager extends SQLiteOpenHelper
 {
 	@SuppressLint("SdCardPath")
-//  public static String DB_PATH = "";
 	public static String DB_NAME = "coupon.sqlite";
 	//Tables
 	private static String TABLE_NAME_COUPON = "Coupon";
