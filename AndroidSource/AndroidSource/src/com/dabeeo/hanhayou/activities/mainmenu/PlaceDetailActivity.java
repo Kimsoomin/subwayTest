@@ -320,8 +320,8 @@ public class PlaceDetailActivity extends ActionBarActivity
 			headerView.setBean(bean);
 		}
 		
-		if (SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
-			new GetCouponInfoAsyncTask().execute();
+//		if (SystemUtil.isConnectNetwork(PlaceDetailActivity.this))
+//			new GetCouponInfoAsyncTask().execute();
 	}
 	
 	
