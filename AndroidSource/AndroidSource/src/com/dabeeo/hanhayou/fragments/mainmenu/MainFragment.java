@@ -200,9 +200,9 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerCoupon.getId())
       {
-        startActivity(new Intent(getActivity(), CouponActivity.class));
-        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-//        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
+//        startActivity(new Intent(getActivity(), CouponActivity.class));
+//        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
         
       }
     }
