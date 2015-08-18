@@ -37,6 +37,7 @@ import com.dabeeo.hanhayou.beans.CouponBean;
 import com.dabeeo.hanhayou.controllers.coupon.CouponListAdapter;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.views.ListFooterProgressView;
 
 public class CouponListFragment extends Fragment
 {
@@ -49,6 +50,7 @@ public class CouponListFragment extends Fragment
 	private ApiClient apiClient;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
+	private boolean isLoading = false;
 	
 	private Handler handler = new Handler();
 	private static int LCOATION_TIME_OUT_SECOND = 30 * 1000;
@@ -65,6 +67,8 @@ public class CouponListFragment extends Fragment
 	private boolean isAnimation = false;
 	private int lastVisibleItem = 0;
 	private LinearLayout topContainer;
+	
+	private ListFooterProgressView footerLoadView;
 	
 	
 	@Override
@@ -84,6 +88,7 @@ public class CouponListFragment extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 		
+		footerLoadView = new ListFooterProgressView(getActivity());
 		apiClient = new ApiClient(getActivity());
 		progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
 		
@@ -151,6 +156,7 @@ public class CouponListFragment extends Fragment
 		@Override
 		public void onClick(View v)
 		{
+			isLoading = false;
 			if (v.getId() == btnMyLocation.getId())
 				selectedListView(true);
 			else
@@ -230,6 +236,7 @@ public class CouponListFragment extends Fragment
 		@Override
 		protected void onPreExecute()
 		{
+			isLoading = true;
 			try
 			{
 				progressBar.setVisibility(View.VISIBLE);
@@ -237,6 +244,17 @@ public class CouponListFragment extends Fragment
 			} catch (Exception e)
 			{
 				e.printStackTrace();
+			}
+			
+			if (btnMyLocation.isActivated())
+			{
+				if (listMyLocationAdapter.getCount() != 0)
+					listMyLocation.addFooterView(footerLoadView);
+			}
+			else
+			{
+				if (listPopularAdapter.getCount() != 0)
+					listPopular.addFooterView(footerLoadView);
 			}
 			super.onPreExecute();
 		}
@@ -258,7 +276,8 @@ public class CouponListFragment extends Fragment
 		@Override
 		protected void onPostExecute(NetworkResult result)
 		{
-			if (result == null && !result.isSuccess)
+			isLoading = false;
+			if (result == null || !result.isSuccess)
 				return;
 			
 			try
@@ -344,6 +363,10 @@ public class CouponListFragment extends Fragment
 			}
 			
 			progressBar.setVisibility(View.GONE);
+			if (btnMyLocation.isActivated())
+				listMyLocation.removeFooterView(footerLoadView);
+			else
+				listPopular.removeFooterView(footerLoadView);
 			super.onPostExecute(result);
 		}
 	}
@@ -413,7 +436,7 @@ public class CouponListFragment extends Fragment
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
 		{
-			if (totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+			if (!isLoading && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
 			{
 				if (btnMyLocation.isActivated() && isMyLocationLoadEnded)
 					return;

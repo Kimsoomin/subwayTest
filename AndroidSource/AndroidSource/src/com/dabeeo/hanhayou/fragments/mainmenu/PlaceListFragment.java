@@ -29,177 +29,178 @@ import com.dabeeo.hanhayou.views.ListFooterProgressView;
 
 public class PlaceListFragment extends Fragment
 {
-  public static final int FILTERING_MODE_ALL = 0;
-  public static final int FILTERING_MODE_PUPOLAR = 1;
-  public static final int FILTERING_MODE_BOOKMARKED = 2;
-  public static final int FILTERING_MODE_ADDED_BY_ME = 3;
-  
-  private int categoryId = -1;
-  
-  private ProgressBar progressBar;
-  private PlaceListAdapter adapter;
-  private int page = 1;
-  private boolean isLoadEnded = false;
-  private boolean isLoading = false;
-  private ApiClient apiClient;
-  private ListView listView;
-  private ListFooterProgressView footerLoadView;
-  
-  private int filteringMode = FILTERING_MODE_ALL;
-  
-  public LinearLayout emptyLayout;
-  public TextView emptyText;
-  
-  public PlaceListFragment(int categoryId)
-  {
-    this.categoryId = categoryId;
-  }
-  
-  
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-  {
-    int resId = R.layout.fragment_travel_strategy_list;
-    return inflater.inflate(resId, null);
-  }
-  
-  
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState)
-  {
-    super.onActivityCreated(savedInstanceState);
-    
-    footerLoadView = new ListFooterProgressView(getActivity());
-    
-    apiClient = new ApiClient(getActivity());
-    progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
-    
-    emptyLayout = (LinearLayout) getView().findViewById(R.id.empty_list);
-    emptyText = (TextView) getView().findViewById(R.id.empty_text);
-    
-    adapter = new PlaceListAdapter(getActivity());
-    ((TravelStrategyActivity) getActivity()).showBottomTab(true);
-    
-    listView = (ListView) getView().findViewById(R.id.listview);
-    listView.setOnItemClickListener(itemClickListener);
-    listView.setOnScrollListener(new OnScrollListener()
-    {
-      @Override
-      public void onScrollStateChanged(AbsListView view, int scrollState)
-      {
-      }
-      
-      
-      @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-      {
-        if (SystemUtil.isConnectNetwork(getActivity()) && !isLoading && !isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
-        {
-          page++;
-          load();
-        }
-      }
-    });
-    listView.setAdapter(adapter);
-    
-    load();
-  }
-  
-  
-  private void load()
-  {
-    progressBar.setVisibility(View.VISIBLE);
-    new GetAllAsyncTask().execute();
-  }
-  
-  
-  public void setCategoryId(int categoryId)
-  {
-    //전체, 명소, 쇼핑 등 
-    this.categoryId = categoryId;
-  }
-  
-  
-  public void changeFilteringMode(int mode)
-  {
-    filteringMode = mode;
-    page = 0;
-    adapter.clear();
-    load();
-    
-  }
-  
-  /**************************************************
-   * listener
-   ***************************************************/
-  private OnItemClickListener itemClickListener = new OnItemClickListener()
-  {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
-      PlaceBean bean = (PlaceBean) adapter.getItem(position);
-      Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
-      i.putExtra("place_idx", bean.idx);
-      startActivity(i);
-    }
-  };
-  
-  /**************************************************
-   * async task
-   ***************************************************/
-  private class GetAllAsyncTask extends AsyncTask<Void, Integer, ArrayList<PlaceBean>>
-  {
-    @Override
-    protected void onPreExecute()
-    {
-      isLoading = true;
-      if (adapter.getCount() != 0)
-      listView.addFooterView(footerLoadView);
-      super.onPreExecute();
-    }
-    
-    
-    @Override
-    protected ArrayList<PlaceBean> doInBackground(Void... params)
-    {
-      ArrayList<PlaceBean> result = null;
-      if (filteringMode == FILTERING_MODE_PUPOLAR)
-        result = apiClient.getPlaceListByPopular(page, categoryId);
-      else if (filteringMode == FILTERING_MODE_BOOKMARKED)
-        result = apiClient.getPlaceListByBookmarked(page, categoryId);
-      else if (filteringMode == FILTERING_MODE_ADDED_BY_ME)
-        result = apiClient.getPlaceListByAddedByMe(page, categoryId);
-      else
-        result = apiClient.getPlaceList(page, categoryId);
-      return result;
-    }
-    
-    
-    @Override
-    protected void onPostExecute(ArrayList<PlaceBean> result)
-    {
-      adapter.addAll(result);
-      if (result.size() < 10)
-        isLoadEnded = true;
-      
-      if (adapter.getCount() == 0)
-      {
-        listView.setVisibility(View.GONE);
-        emptyLayout.setVisibility(View.VISIBLE);
-        if (filteringMode == FILTERING_MODE_BOOKMARKED)
-          emptyText.setText(getString(R.string.msg_empty_my_bookmark_place));
-        else if (filteringMode == FILTERING_MODE_ADDED_BY_ME)
-          emptyText.setText(getString(R.string.msg_empty_my_place));
-      }
-      else
-      {
-        listView.setVisibility(View.VISIBLE);
-        emptyLayout.setVisibility(View.GONE);
-      }
-      isLoading = false;
-      progressBar.setVisibility(View.GONE);
-      listView.removeFooterView(footerLoadView);
-      super.onPostExecute(result);
-    }
-  }
+	public static final int FILTERING_MODE_ALL = 0;
+	public static final int FILTERING_MODE_PUPOLAR = 1;
+	public static final int FILTERING_MODE_BOOKMARKED = 2;
+	public static final int FILTERING_MODE_ADDED_BY_ME = 3;
+	
+	private int categoryId = -1;
+	
+	private ProgressBar progressBar;
+	private PlaceListAdapter adapter;
+	private int page = 1;
+	private boolean isLoadEnded = false;
+	private boolean isLoading = false;
+	private ApiClient apiClient;
+	private ListView listView;
+	private ListFooterProgressView footerLoadView;
+	
+	private int filteringMode = FILTERING_MODE_ALL;
+	
+	public LinearLayout emptyLayout;
+	public TextView emptyText;
+	
+	
+	public PlaceListFragment(int categoryId)
+	{
+		this.categoryId = categoryId;
+	}
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		int resId = R.layout.fragment_travel_strategy_list;
+		return inflater.inflate(resId, null);
+	}
+	
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		
+		footerLoadView = new ListFooterProgressView(getActivity());
+		
+		apiClient = new ApiClient(getActivity());
+		progressBar = (ProgressBar) getView().findViewById(R.id.progress_bar);
+		
+		emptyLayout = (LinearLayout) getView().findViewById(R.id.empty_list);
+		emptyText = (TextView) getView().findViewById(R.id.empty_text);
+		
+		adapter = new PlaceListAdapter(getActivity());
+		((TravelStrategyActivity) getActivity()).showBottomTab(true);
+		
+		listView = (ListView) getView().findViewById(R.id.listview);
+		listView.setOnItemClickListener(itemClickListener);
+		listView.setOnScrollListener(new OnScrollListener()
+		{
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState)
+			{
+			}
+			
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+			{
+				if (SystemUtil.isConnectNetwork(getActivity()) && !isLoading && !isLoadEnded && totalItemCount > 0 && totalItemCount <= firstVisibleItem + visibleItemCount)
+				{
+					page++;
+					load();
+				}
+			}
+		});
+		listView.setAdapter(adapter);
+		
+		load();
+	}
+	
+	
+	private void load()
+	{
+		progressBar.setVisibility(View.VISIBLE);
+		new GetAllAsyncTask().execute();
+	}
+	
+	
+	public void setCategoryId(int categoryId)
+	{
+		//전체, 명소, 쇼핑 등 
+		this.categoryId = categoryId;
+	}
+	
+	
+	public void changeFilteringMode(int mode)
+	{
+		filteringMode = mode;
+		page = 0;
+		adapter.clear();
+		load();
+		
+	}
+	
+	/**************************************************
+	 * listener
+	 ***************************************************/
+	private OnItemClickListener itemClickListener = new OnItemClickListener()
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			PlaceBean bean = (PlaceBean) adapter.getItem(position);
+			Intent i = new Intent(getActivity(), PlaceDetailActivity.class);
+			i.putExtra("place_idx", bean.idx);
+			startActivity(i);
+		}
+	};
+	
+	/**************************************************
+	 * async task
+	 ***************************************************/
+	private class GetAllAsyncTask extends AsyncTask<Void, Integer, ArrayList<PlaceBean>>
+	{
+		@Override
+		protected void onPreExecute()
+		{
+			isLoading = true;
+			if (adapter.getCount() != 0)
+				listView.addFooterView(footerLoadView);
+			super.onPreExecute();
+		}
+		
+		
+		@Override
+		protected ArrayList<PlaceBean> doInBackground(Void... params)
+		{
+			ArrayList<PlaceBean> result = null;
+			if (filteringMode == FILTERING_MODE_PUPOLAR)
+				result = apiClient.getPlaceListByPopular(page, categoryId);
+			else if (filteringMode == FILTERING_MODE_BOOKMARKED)
+				result = apiClient.getPlaceListByBookmarked(page, categoryId);
+			else if (filteringMode == FILTERING_MODE_ADDED_BY_ME)
+				result = apiClient.getPlaceListByAddedByMe(page, categoryId);
+			else
+				result = apiClient.getPlaceList(page, categoryId);
+			return result;
+		}
+		
+		
+		@Override
+		protected void onPostExecute(ArrayList<PlaceBean> result)
+		{
+			adapter.addAll(result);
+			if (result.size() < 10)
+				isLoadEnded = true;
+			
+			if (adapter.getCount() == 0)
+			{
+				listView.setVisibility(View.GONE);
+				emptyLayout.setVisibility(View.VISIBLE);
+				if (filteringMode == FILTERING_MODE_BOOKMARKED)
+					emptyText.setText(getString(R.string.msg_empty_my_bookmark_place));
+				else if (filteringMode == FILTERING_MODE_ADDED_BY_ME)
+					emptyText.setText(getString(R.string.msg_empty_my_place));
+			}
+			else
+			{
+				listView.setVisibility(View.VISIBLE);
+				emptyLayout.setVisibility(View.GONE);
+			}
+			isLoading = false;
+			progressBar.setVisibility(View.GONE);
+			listView.removeFooterView(footerLoadView);
+			super.onPostExecute(result);
+		}
+	}
 }
