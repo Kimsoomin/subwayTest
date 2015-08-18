@@ -61,7 +61,8 @@ public class CouponDetailActivity extends ActionBarActivity
 	private OfflineCouponDatabaseManager couponDatabase;
 	
 	
-	@Override
+	@SuppressWarnings("deprecation")
+  @Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
