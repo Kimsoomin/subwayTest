@@ -299,24 +299,25 @@ public class MainActivity extends ActionBarActivity
         break;
         
       case POSITION_WISHLIST:
-        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
-        {
-          new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
-        }else
-        {
-          if(SystemUtil.isConnectNetwork(MainActivity.this))
-          {
-            bottomMenuWishList.setSelected(true);
-            title.setVisibility(View.VISIBLE);
-            titleImage.setVisibility(View.INVISIBLE);
-            title.setText(getString(R.string.term_wishlist));
-            fragment = new WishListFragment(activityListener);
-            wishlistFrgment = (WishListFragment) fragment;
-          }else
-          {
-            new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
-          }
-        }
+//        if (!PreferenceManager.getInstance(getApplicationContext()).isLoggedIn())
+//        {
+//          new AlertDialogManager(MainActivity.this).showNeedLoginDialog(position);
+//        }else
+//        {
+//          if(SystemUtil.isConnectNetwork(MainActivity.this))
+//          {
+//            bottomMenuWishList.setSelected(true);
+//            title.setVisibility(View.VISIBLE);
+//            titleImage.setVisibility(View.INVISIBLE);
+//            title.setText(getString(R.string.term_wishlist));
+//            fragment = new WishListFragment(activityListener);
+//            wishlistFrgment = (WishListFragment) fragment;
+//          }else
+//          {
+//            new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
+//          }
+//        }
+        Toast.makeText(MainActivity.this, getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
         break;
     }
     

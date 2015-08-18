@@ -31,7 +31,6 @@ import android.widget.Toast;
 
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mainmenu.WriteReviewActivity;
-import com.dabeeo.hanhayou.activities.mypage.MySchedulesActivity;
 import com.dabeeo.hanhayou.beans.ProductBean;
 import com.dabeeo.hanhayou.beans.ScheduleDetailBean;
 import com.dabeeo.hanhayou.controllers.mainmenu.TravelScheduleDetailViewPagerAdapter;
@@ -139,7 +138,9 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   
   private void loadScheduleDetail()
   {
-    new LoadScheduleProductAsyncTask().execute();
+  //TODO: donghyun temp Prodcut Info Hidden
+    new LoadScheduleAsyncTask().execute();
+//    new LoadScheduleProductAsyncTask().execute();
   }
   
   
@@ -327,6 +328,13 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
   {
     
     @Override
+    protected void onPreExecute()
+    {
+//      progressBar.setVisibility(View.VISIBLE);
+      super.onPreExecute();
+    }
+    
+    @Override
     protected ArrayList<ProductBean> doInBackground(Void... params)
     {
       
@@ -349,6 +357,7 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
     protected void onPreExecute()
     {
       progressBar.setVisibility(View.VISIBLE);
+      progressBar.bringToFront();
       super.onPreExecute();
     }
     

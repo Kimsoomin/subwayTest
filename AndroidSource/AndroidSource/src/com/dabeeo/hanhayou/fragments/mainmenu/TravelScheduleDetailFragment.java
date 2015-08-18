@@ -317,7 +317,8 @@ public class TravelScheduleDetailFragment extends Fragment
         }
         contentContainer.addView(tView);
         
-        productViewSet(i);
+      //TODO: donghyun temp Prodcut Info Hidden
+//        productViewSet(i);
         
         for (int j = 0; j < bean.days.get(i).spots.size(); j++)
         {
@@ -342,7 +343,8 @@ public class TravelScheduleDetailFragment extends Fragment
       titleView.setLayoutParams(btnLayoutParams);
       titleView.initDayTitle();
       
-      productViewSet(position - 1);
+    //TODO: donghyun temp Prodcut Info Hidden
+//      productViewSet(position - 1);
       
       //하루에 대한 내용
       for (int i = 0; i < dayBean.spots.size(); i++)

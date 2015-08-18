@@ -937,12 +937,12 @@ public class ApiClient
     ArrayList<ProductBean> searchList = new ArrayList<ProductBean>();
     try
     {
-    	NetworkResult result;
-    	
-    	if(PreferenceManager.getInstance(context).isLoggedIn())
-    		result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
-    	else
-    		result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
+      NetworkResult result;
+      
+      if(PreferenceManager.getInstance(context).isLoggedIn())
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord + "&userSeq=" + PreferenceManager.getInstance(context).getUserSeq());
+      else
+        result = httpClient.requestGet(getSiteUrl() + "?v=m1&mode=PRODUCT_LIST&keyword=" + keyWord);
       
       JSONObject obj = new JSONObject(result.response);
       if (obj.getString("status").equals("OK"))
@@ -1212,7 +1212,9 @@ public class ApiClient
             bean.text = obj.getString("title");
             bean.idx = obj.getString("idx");
             bean.setLogType(obj.getString("logType"));
-            results.add(bean);
+            //TODO: donghyun temp Prodcut Info Hidden
+            if(bean.type != 3)
+              results.add(bean);
           }
         }
       }
@@ -1306,6 +1308,8 @@ public class ApiClient
             else if (bean.type == SearchResultBean.TYPE_RECOMMEND_SEOUL)
               premiumList.add(bean);
           }
+          
+          //TODO: 상품검색 구현 필요
           
           Log.w("WARN", "검색결과 장소 사이즈 : " + placeList.size());
           Log.w("WARN", "검색결과 일정 사이즈 : " + planList.size());

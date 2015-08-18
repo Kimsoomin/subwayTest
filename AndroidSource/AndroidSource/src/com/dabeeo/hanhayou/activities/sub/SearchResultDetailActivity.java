@@ -284,7 +284,7 @@ public class SearchResultDetailActivity extends ActionBarActivity
           i.putExtra("place_idx", searchResultBean.idx);
           startActivity(i);
           break;
-        
+          
         case SearchResultBean.TYPE_PRODUCT:
           i = new Intent(SearchResultDetailActivity.this, TrendProductDetailActivity.class);
           i.putExtra("product_idx", searchResultBean.idx);

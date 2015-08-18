@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
@@ -225,23 +226,27 @@ public class MyPageFragment extends Fragment
       }
       else if (v.getId() == conatinerMyOrders.getId())
       {
-        if (!SystemUtil.isConnectNetwork(getActivity()))
-          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-        else
-        {
-          startActivity(new Intent(getActivity(), TrendProductBuyListActivity.class));
-          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        }
+        //TODO: donghyun temp Prodcut Info Hidden
+//        if (!SystemUtil.isConnectNetwork(getActivity()))
+//          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+//        else
+//        {
+//          startActivity(new Intent(getActivity(), TrendProductBuyListActivity.class));
+//          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+//        }
+        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
       }
       else if (v.getId() == conatinerMyCart.getId())
       {
-        if (!SystemUtil.isConnectNetwork(getActivity()))
-          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
-        else
-        {
-          startActivity(new Intent(getActivity(), TrendCartActivity.class));
-          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        }
+        //TODO: donghyun temp Prodcut Info Hidden
+//        if (!SystemUtil.isConnectNetwork(getActivity()))
+//          new AlertDialogManager(getActivity()).showDontNetworkConnectDialog();
+//        else
+//        {
+//          startActivity(new Intent(getActivity(), TrendCartActivity.class));
+//          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+//        }
+        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
       }
     }
   };

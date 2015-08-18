@@ -30,15 +30,14 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
-import android.widget.ProgressBar;
 
 import com.dabeeo.hanhayou.activities.sub.GuideActivity;
 import com.dabeeo.hanhayou.controllers.OfflineContentDatabaseManager;
 import com.dabeeo.hanhayou.controllers.OfflineCouponDatabaseManager;
 import com.dabeeo.hanhayou.managers.AlertDialogManager;
-import com.dabeeo.hanhayou.managers.SetLogMapDownload;
 import com.dabeeo.hanhayou.managers.AlertDialogManager.AlertListener;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.managers.SetLogMapDownload;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
 import com.dabeeo.hanhayou.map.Global;
@@ -48,7 +47,6 @@ import com.dabeeo.hanhayou.views.MapdownloadProgressView;
 
 public class IntroActivity extends Activity
 {
-  private ProgressBar progressBar;
   private AlertDialogManager alertManager;
   private Handler handler = new Handler();
   private AlertDialog tempdialog;
@@ -73,11 +71,8 @@ public class IntroActivity extends Activity
     if (TextUtils.isEmpty(preferenceManager.getDeviceId()))
       preferenceManager.setDeviceId(Global.getDeviceID(getBaseContext(), getContentResolver()));
     
-    progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     alertManager = new AlertDialogManager(this);
     client = new ApiClient(this);
-    
-    progressBar.bringToFront();
     
     startService(new Intent(IntroActivity.this, BackService.class));
     checkNetworkStatus();
@@ -307,7 +302,6 @@ public class IntroActivity extends Activity
       if (dbFile.exists())
         contentDatabaseManager.writeDatabase(result.response);
       
-      publishProgress(10);
       try
       {
         File directory = new File(Global.GetImageFilePath());

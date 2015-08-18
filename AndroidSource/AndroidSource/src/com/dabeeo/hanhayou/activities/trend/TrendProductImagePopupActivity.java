@@ -14,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dabeeo.hanhayou.R;
@@ -47,7 +46,7 @@ public class TrendProductImagePopupActivity extends ActionBarActivity
     webView.getSettings().setDisplayZoomControls(false);
     webView.getSettings().setUseWideViewPort(true);
     webView.getSettings().setLoadWithOverviewMode(true);
-
+    
     String imageUrl = getIntent().getStringExtra("image_url");
     
 //    String data = "<html><head></head><body><center><img width=\"100%\" src=\"" + imageUrl + "\" /></center></body></html>";
@@ -59,19 +58,20 @@ public class TrendProductImagePopupActivity extends ActionBarActivity
       public void onPageFinished(WebView view, String url)
       {
         super.onPageFinished(view, url);
-        ((LinearLayout) findViewById(R.id.container_help)).setVisibility(View.GONE);
+//        ((LinearLayout) findViewById(R.id.container_help)).setVisibility(View.GONE);
       }
     });
   }
   
   @SuppressLint("UseValueOf")
-private int getScale(int PIC_WIDTH){
+  private int getScale(int PIC_WIDTH)
+  {
     Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
     int width = display.getWidth(); 
     Double val = new Double(width)/new Double(PIC_WIDTH);
     val = val * 100d;
     return val.intValue();
-}
+  }
   
   
   @Override
