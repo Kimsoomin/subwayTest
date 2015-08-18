@@ -81,7 +81,7 @@ public class SharePickView extends RelativeLayout
     this.body = "[Hanhayou]\n" + body;
     this.imageUrl = imageUrl;
     if (!TextUtils.isEmpty(idx))
-      this.body += "http://gs.blinking.kr:8900/?type=" + type + "&mode=view&idx=" + 204;
+      this.body += "http://gs.blinking.kr:8900/?type=" + type + "&mode=view&idx=" + idx;
   }
   
   
