@@ -44,6 +44,8 @@ public class WishListSearchActivity extends Activity
   private ApiClient apiClient;
   private ArrayList<ProductBean> productList;
   
+  private boolean searchClick = false;
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -87,6 +89,7 @@ public class WishListSearchActivity extends Activity
           listView.setVisibility(View.VISIBLE);
           emptyContainer.setVisibility(View.GONE);
           searchNotExistContainer.setVisibility(View.GONE);
+          searchClick = false;
           new GetProductListAsyncTask().execute(editSearch.getText().toString());
         }
         else
@@ -124,6 +127,7 @@ public class WishListSearchActivity extends Activity
           
           if(!TextUtils.isEmpty(editSearch.getText()))
           {
+            searchClick = true;
             new GetProductListAsyncTask().execute(editSearch.getText().toString());
           }
         }
@@ -162,12 +166,18 @@ public class WishListSearchActivity extends Activity
   {
     if(listView.getVisibility() == View.VISIBLE)
     {
-      emptyContainer.setVisibility(View.GONE);
+      emptyContainer.setVisibility(View.VISIBLE);
       listView.setVisibility(View.GONE);
       editSearch.setText("");
       return;
-    }
-    else{
+    } else if(searchNotExistContainer.getVisibility() == View.VISIBLE)
+    {
+      emptyContainer.setVisibility(View.VISIBLE);
+      searchNotExistContainer.setVisibility(View.GONE);
+      editSearch.setText("");
+      return;
+    } else
+    {
       finish();
     }
     
@@ -183,9 +193,10 @@ public class WishListSearchActivity extends Activity
 			searchNotExistContainer.setVisibility(View.GONE);
 		}else
 		{
-			emptyContainer.setVisibility(View.VISIBLE);
+			emptyContainer.setVisibility(View.GONE);
 			listView.setVisibility(View.GONE);
-			searchNotExistContainer.setVisibility(View.VISIBLE);
+			if(searchClick)
+			  searchNotExistContainer.setVisibility(View.VISIBLE);
 		}
 	}
   
