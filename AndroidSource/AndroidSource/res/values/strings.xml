@@ -510,6 +510,7 @@
     <string name="term_notimelimit">제한없음</string>
     <string name="term_exhaustion">~ 소진시까지</string>
     <string name="term_coupon_info">쿠폰소개</string>
+    <string name="term_enddate_retail">까지</string>
     <string name="term_coupon_address">使用商家</string>
     <string name="term_coupon_tel">联系电话</string>
     <string name="term_coupon_how_to">使用方法</string>
