@@ -192,6 +192,23 @@ public class CouponActivity extends ActionBarActivity
 		
 		if (getIntent().getBooleanExtra("is_show_download", false))
 			setViewPagerPosition(1);
+		
+		if (lastSelectedTab == 1)
+		{
+			if (!PreferenceManager.getInstance(this).isLoggedIn())
+			{
+				Runnable runnn = new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						getSupportActionBar().setSelectedNavigationItem(0);
+					}
+				};
+				Handler handler = new Handler();
+				handler.post(runnn);
+			}
+		}
 		super.onResume();
 	}
 	
