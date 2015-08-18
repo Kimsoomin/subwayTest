@@ -518,5 +518,5 @@
     <string name="msg_use_confirm">仅限商店工作人员使用的按键。使用后不能取消或退钱。确认使用吗？</string>
     <string name="msg_use_complete">成功使用</string>
     <string name="msg_delete_30_days">사용완료 된 쿠폰은 30일 이후,\n자동 삭제처리됩니다.</string>
-
+<string name="msg_connect_ticket">티켓으로 연결하시겠습니까? </string>
 </resources>
