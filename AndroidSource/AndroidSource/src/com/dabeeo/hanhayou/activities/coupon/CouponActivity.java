@@ -431,7 +431,16 @@ public class CouponActivity extends ActionBarActivity
 						@Override
 						public void onClick(DialogInterface dialog, int which)
 						{
-							finish();
+							Runnable runnn = new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									getSupportActionBar().setSelectedNavigationItem(0);
+								}
+							};
+							Handler handler = new Handler();
+							handler.post(runnn);
 						}
 					});
 					builder.create().show();
