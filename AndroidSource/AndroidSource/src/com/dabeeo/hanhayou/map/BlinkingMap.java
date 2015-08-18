@@ -1185,7 +1185,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
               @Override
               public void onPositiveButtonClickListener()
               {
-//                Toast.makeText(mContext, "서비스 준비중입니다.", Toast.LENGTH_SHORT).show();
                 destSubwayIntent = new Intent(BlinkingMap.this, SubwayActivity.class);
                 double[] destLatLong = new double[3];
                 destLatLong[0] = place_fLatitude;

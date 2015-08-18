@@ -234,7 +234,8 @@ public class MyPageFragment extends Fragment
 //          startActivity(new Intent(getActivity(), TrendProductBuyListActivity.class));
 //          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 //        }
-        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
+        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), getString(R.string.term_ready_service), 
+            getString(R.string.term_ok), null, null);
       }
       else if (v.getId() == conatinerMyCart.getId())
       {
@@ -246,7 +247,8 @@ public class MyPageFragment extends Fragment
 //          startActivity(new Intent(getActivity(), TrendCartActivity.class));
 //          getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 //        }
-        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
+        new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), getString(R.string.term_ready_service), 
+            getString(R.string.term_ok), null, null);
       }
     }
   };

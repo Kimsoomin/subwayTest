@@ -317,7 +317,8 @@ public class MainActivity extends ActionBarActivity
 //            new AlertDialogManager(MainActivity.this).showDontNetworkConnectDialog();
 //          }
 //        }
-        Toast.makeText(MainActivity.this, getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
+        new AlertDialogManager(MainActivity.this).showAlertDialog(getString(R.string.term_alert), getString(R.string.term_ready_service), 
+            getString(R.string.term_ok), null, null);
         break;
     }
     
