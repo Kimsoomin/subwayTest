@@ -530,7 +530,7 @@ public class PlaceDetailActivity extends ActionBarActivity
 			btnLike.setActivated(bean.isLiked);
 			displayContentData();
 			
-			String shareBody = bean.title + "\n" + bean.contents + "\n ";
+			String shareBody = bean.title + "\n";
 			String imageUrl = "";
 			if (!TextUtils.isEmpty(bean.imageUrl))
 				imageUrl = bean.imageUrl;
