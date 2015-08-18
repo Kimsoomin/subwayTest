@@ -158,6 +158,16 @@ public class ImageDownloader
 		imageLoader.displayImage(url, imageView, options);
 	}
 	
+	public static void displayCouponImage(Context context, String url, ImageView imageView)
+	{
+		if (imageLoader == null)
+			initImageLoader(context);
+		
+		DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_profile_s).bitmapConfig(Bitmap.Config.ARGB_8888)
+				.showImageForEmptyUri(R.drawable.default_profile_s).showImageOnFail(R.drawable.default_profile_s).imageScaleType(ImageScaleType.NONE).cacheInMemory(false)
+				.cacheOnDisc(true).handler(new Handler()).displayer(new RoundedBitmapDisplayer(150)).build();
+		imageLoader.displayImage(url, imageView, options);
+	}
 	
 	private static void initImageLoader(Context context)
 	{
