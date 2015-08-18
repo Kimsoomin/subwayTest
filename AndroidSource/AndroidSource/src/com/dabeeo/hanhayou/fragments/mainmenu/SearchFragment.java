@@ -161,7 +161,9 @@ public class SearchFragment extends Fragment
     if (SystemUtil.isConnectNetwork(getActivity()))
     {
       loadPopularWords();
-      loadRecommendProduct();
+      //TODO: donghyun temp Prodcut Info Hidden
+      layoutRecommedProductParent.setVisibility(View.GONE);
+//      loadRecommendProduct();
     }
     else
     {

@@ -102,7 +102,9 @@ public class TravelStrategyListFragment extends Fragment
     });
     listView.setAdapter(adapter);
     
-    loadThemeList();
+//    loadThemeList();
+    //TODO: donghyun temp Prodcut Info Hidden
+    load();
   }
   
   private void loadThemeList()
@@ -182,17 +184,18 @@ public class TravelStrategyListFragment extends Fragment
             JSONObject objInArr = arr.getJSONObject(i);
             PremiumBean bean = new PremiumBean();
             
-            if(themeList.size()-1 > themePosition)
-            {
-              if((i+1) % 5 == 0)
-              {
-                bean.idx = themeList.get(themePosition).idx;
-                bean.title = null;
-                bean.imageUrl = themeList.get(themePosition).imageUrl;
-                themePosition = themePosition + 1;
-              }else
-                bean.setJSONObject(objInArr);
-            }else
+          //TODO: donghyun temp Prodcut Info Hidden
+//            if(themeList.size()-1 > themePosition)
+//            {
+//              if((i+1) % 5 == 0)
+//              {
+//                bean.idx = themeList.get(themePosition).idx;
+//                bean.title = null;
+//                bean.imageUrl = themeList.get(themePosition).imageUrl;
+//                themePosition = themePosition + 1;
+//              }else
+//                bean.setJSONObject(objInArr);
+//            }else
               bean.setJSONObject(objInArr);
             places.add(bean);
           }

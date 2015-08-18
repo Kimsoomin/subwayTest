@@ -661,7 +661,8 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     databaseRead();
     SearchSetting();
     planButtonSetting();
-    MapBannerSetting();
+    //TODO: donghyun temp Prodcut Info Hidden
+//    MapBannerSetting();
     allIntent();
   } // - onCreate end..
   

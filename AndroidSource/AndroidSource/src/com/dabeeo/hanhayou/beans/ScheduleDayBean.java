@@ -35,7 +35,6 @@ public class ScheduleDayBean implements Serializable
 				JSONArray spotArray = obj.getJSONArray("spot");
 				for (int i = 0; i < spotArray.length(); i++)
 				{
-					JSONObject spotJSONObject = spotArray.getJSONObject(i);
 					SpotBean spotBean = new SpotBean();
 					spotBean.setJSONObject(spotArray.getJSONObject(i));
 					spots.add(spotBean);

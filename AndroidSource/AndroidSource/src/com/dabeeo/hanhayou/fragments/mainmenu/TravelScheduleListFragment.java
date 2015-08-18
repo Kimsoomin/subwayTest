@@ -117,28 +117,29 @@ public class TravelScheduleListFragment extends Fragment
     adapter = new TravelScheduleListAdapter(getActivity());
     adapter.setType(type);
     listView = (GridViewWithHeaderAndFooter) getView().findViewById(R.id.gridview);
-    if (SystemUtil.isConnectNetwork(getActivity()) && (type == SCHEDULE_TYPE_POPULAR))
-    {
-      DisplayMetrics metrics = new DisplayMetrics();
-      getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-      int imageWidth = metrics.widthPixels;
-      int imageheight = (int) (imageWidth * 0.43);
-      
-      headerView = new ScheduleListHeaderMallView(getActivity(), imageWidth, imageheight);
-      new GetScheduleThemeAsyncTask().execute();
-      headerView.setOnClickListener(new OnClickListener()
-      {
-        @Override
-        public void onClick(View arg0)
-        {
-          Intent i = new Intent(getActivity(), TrendExhibitionActivity.class);
-          i.putExtra("themeIdx", bean.idx);
-          i.putExtra("themeImageUrl", bean.imageUrl);
-          startActivity(i);
-        }
-      });
-      listView.addHeaderView(headerView);
-    }
+    //TODO: donghyun temp Prodcut Info Hidden
+//    if (SystemUtil.isConnectNetwork(getActivity()) && (type == SCHEDULE_TYPE_POPULAR))
+//    {
+//      DisplayMetrics metrics = new DisplayMetrics();
+//      getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//      int imageWidth = metrics.widthPixels;
+//      int imageheight = (int) (imageWidth * 0.43);
+//      
+//      headerView = new ScheduleListHeaderMallView(getActivity(), imageWidth, imageheight);
+//      new GetScheduleThemeAsyncTask().execute();
+//      headerView.setOnClickListener(new OnClickListener()
+//      {
+//        @Override
+//        public void onClick(View arg0)
+//        {
+//          Intent i = new Intent(getActivity(), TrendExhibitionActivity.class);
+//          i.putExtra("themeIdx", bean.idx);
+//          i.putExtra("themeImageUrl", bean.imageUrl);
+//          startActivity(i);
+//        }
+//      });
+//      listView.addHeaderView(headerView);
+//    }
     listView.addFooterView(footerLoadView);
     listView.setInvisibleFooterView(footerLoadView);
     listView.setOnScrollListener(scrollListener);

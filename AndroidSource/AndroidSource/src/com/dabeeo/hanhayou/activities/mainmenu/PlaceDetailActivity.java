@@ -32,7 +32,6 @@ import android.widget.Toast;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.coupon.CouponDetailActivity;
 import com.dabeeo.hanhayou.activities.travel.TravelStrategyDetailActivity;
-import com.dabeeo.hanhayou.activities.trend.TrendActivity;
 import com.dabeeo.hanhayou.beans.CouponDetailBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.ProductBean;
@@ -235,88 +234,21 @@ public class PlaceDetailActivity extends ActionBarActivity
     progressBar.bringToFront();
     new GetPlaceDetailAsyncTask().execute();
     
-    if (SystemUtil.isConnectNetwork(this))
-    {
-      moreProductLayout = (LinearLayout) findViewById(R.id.more_product_layout);
-      moreProductLayout.setOnClickListener(new OnClickListener()
-      {
-        @Override
-        public void onClick(View v)
-        {
-          startActivity(new Intent(PlaceDetailActivity.this, TrendActivity.class));
-        }
-      });
-      new GetPlaceProductAsyncTask().execute();
-    }
-  }
-  
-  private class GetPlaceDetailAsyncTask extends AsyncTask<String, Integer, PlaceDetailBean>
-  {
-    
-    @Override
-    protected PlaceDetailBean doInBackground(String... params)
-    {
-      return apiClient.getPlaceDetail(placeIdx);
-    }
-    
-    
-    @Override
-    protected void onPostExecute(PlaceDetailBean result)
-    {
-      bean = result;
-      btnBookmark.setActivated(bean.isBookmarked);
-      btnLike.setActivated(bean.isLiked);
-      displayContentData();
-      
-      String shareBody = bean.title + "\n" + bean.contents + "\n ";
-      String imageUrl = "";
-      if (!TextUtils.isEmpty(bean.imageUrl))
-        imageUrl = bean.imageUrl;
-      sharePickView.setData(shareBody, imageUrl, "place", bean.idx);
-      
-      progressBar.setVisibility(View.GONE);
-      super.onPostExecute(result);
-    }
-  }
-  
-  private class GetPlaceProductAsyncTask extends AsyncTask<String, Integer, ArrayList<ProductBean>>
-  {
-    
-    @Override
-    protected ArrayList<ProductBean> doInBackground(String... params)
-    {
-      ArrayList<ProductBean> result = null;
-      result = apiClient.getPlaceProduct(placeIdx);
-      return result;
-    }
-    
-    
-    @Override
-    protected void onPostExecute(ArrayList<ProductBean> result)
-    {
-      super.onPostExecute(result);
-      
-      ProductBean leftProduct = null;
-      ProductBean rightProduct = null;
-      
-      if (result.size() > 0)
-      {
-        leftProduct = result.get(0);
-      }
-      
-      if (result.size() == 2)
-      {
-        rightProduct = result.get(1);
-      }
-      
-      layoutRecommendProduct.setVisibility(View.VISIBLE);
-      containerProduct.removeAllViews();
-      ProductView productView = new ProductView(PlaceDetailActivity.this);
-      
-      productView.setBean(leftProduct, rightProduct);
-      containerProduct.addView(productView);
-    }
-    
+    //TODO: donghyun temp Prodcut Info Hidden
+    layoutRecommendProduct.setVisibility(View.GONE);
+//    if (SystemUtil.isConnectNetwork(this))
+//    {
+//      moreProductLayout = (LinearLayout) findViewById(R.id.more_product_layout);
+//      moreProductLayout.setOnClickListener(new OnClickListener()
+//      {
+//        @Override
+//        public void onClick(View v)
+//        {
+//          startActivity(new Intent(PlaceDetailActivity.this, TrendActivity.class));
+//        }
+//      });
+//      new GetPlaceProductAsyncTask().execute();
+//    }
   }
   
   
@@ -596,6 +528,75 @@ public class PlaceDetailActivity extends ActionBarActivity
   /**************************************************
    * async task
    ***************************************************/
+  private class GetPlaceDetailAsyncTask extends AsyncTask<String, Integer, PlaceDetailBean>
+  {
+    
+    @Override
+    protected PlaceDetailBean doInBackground(String... params)
+    {
+      return apiClient.getPlaceDetail(placeIdx);
+    }
+    
+    
+    @Override
+    protected void onPostExecute(PlaceDetailBean result)
+    {
+      bean = result;
+      btnBookmark.setActivated(bean.isBookmarked);
+      btnLike.setActivated(bean.isLiked);
+      displayContentData();
+      
+      String shareBody = bean.title + "\n" + bean.contents + "\n ";
+      String imageUrl = "";
+      if (!TextUtils.isEmpty(bean.imageUrl))
+        imageUrl = bean.imageUrl;
+      sharePickView.setData(shareBody, imageUrl, "place", bean.idx);
+      
+      progressBar.setVisibility(View.GONE);
+      super.onPostExecute(result);
+    }
+  }
+  
+  private class GetPlaceProductAsyncTask extends AsyncTask<String, Integer, ArrayList<ProductBean>>
+  {
+    
+    @Override
+    protected ArrayList<ProductBean> doInBackground(String... params)
+    {
+      ArrayList<ProductBean> result = null;
+      result = apiClient.getPlaceProduct(placeIdx);
+      return result;
+    }
+    
+    
+    @Override
+    protected void onPostExecute(ArrayList<ProductBean> result)
+    {
+      super.onPostExecute(result);
+      
+      ProductBean leftProduct = null;
+      ProductBean rightProduct = null;
+      
+      if (result.size() > 0)
+      {
+        leftProduct = result.get(0);
+      }
+      
+      if (result.size() == 2)
+      {
+        rightProduct = result.get(1);
+      }
+      
+      layoutRecommendProduct.setVisibility(View.VISIBLE);
+      containerProduct.removeAllViews();
+      ProductView productView = new ProductView(PlaceDetailActivity.this);
+      
+      productView.setBean(leftProduct, rightProduct);
+      containerProduct.addView(productView);
+    }
+    
+  }
+  
   private class GetCouponInfoAsyncTask extends AsyncTask<Void, Void, NetworkResult>
   {
     
