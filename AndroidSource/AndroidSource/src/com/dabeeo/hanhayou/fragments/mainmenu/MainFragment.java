@@ -184,7 +184,6 @@ public class MainFragment extends Fragment
         new AlertDialogManager(getActivity()).showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_connect_ticket), getString(R.string.term_ok),
             getString(R.string.term_cancel), new AlertListener()
         {
-          
           @Override
           public void onPositiveButtonClickListener()
           {
@@ -193,7 +192,6 @@ public class MainFragment extends Fragment
             i.setData(Uri.parse(url));
             startActivity(i);
           }
-          
           
           @Override
           public void onNegativeButtonClickListener()
@@ -204,7 +202,10 @@ public class MainFragment extends Fragment
       }
       else if (v.getId() == containerCoupon.getId())
       {
-        startActivity(new Intent(getActivity(), CouponActivity.class));
+//        startActivity(new Intent(getActivity(), CouponActivity.class));
+//        getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        Toast.makeText(getActivity(), getString(R.string.term_ready_service), Toast.LENGTH_SHORT).show();
+        
       }
     }
   };
