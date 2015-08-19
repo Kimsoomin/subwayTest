@@ -257,6 +257,13 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
   public boolean bannerVisible = false;
   public String mapBannerId = "";
   
+  //cupon Setting
+  public boolean cuponMarking = false;
+  public String cuponTitle;
+  public String cuponAdress;
+  public double cuponLat;
+  public double cuponLng;
+  
   public ApiClient apiClient;
   
   /**
@@ -531,7 +538,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     
     // final float scale =
     // getBaseContext().getResources().getDisplayMetrics().density;
-    final int nTileSize = (int) (256 * 1.5);
+    final int nTileSize = (int) (256 * 1.3);
     
     final XYTileSource tileSource = new XYTileSource("My Tile Source", ResourceProxy.string.offline_mode, nMinZoomLevel, nMaxZoomLevel, nTileSize, ".png", null);
     
@@ -564,7 +571,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     m_mapView.setClickable(true);
     m_mapView.setBackgroundColor(Color.WHITE);
     
-    // zoom level 14 ~ 18
+    // zoom level 13 ~ 18
     m_mapView.setMaxZoomLevel(nMaxZoomLevel);
     m_mapView.setMinZoomLevel(nMinZoomLevel);
     
@@ -634,6 +641,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
             idx = null;
             lineId = "";
             markerSel(selectItem);
+            cuponMarking = false;
           }
           
           markerRefresh();
@@ -1535,6 +1543,17 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
       selectItem = 1;
       selectMarker(idx, selectItem);
+    }else if (intent.hasExtra("cuponTitle"))
+    {
+      m_mapView.getController().setZoom(17);
+      cuponMarking = true;
+      cuponTitle = intent.getStringExtra("cuponTitle");
+      cuponAdress = intent.getStringExtra("cuponAddress");
+      cuponLat = intent.getDoubleExtra("cuponLat", 0);
+      cuponLng = intent.getDoubleExtra("cuponLng", 0);
+      place_fLatitude = cuponLat;
+      place_fLongitute = cuponLng;
+      mapCenterset(0);
     }
   }
   
@@ -1563,6 +1582,17 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         idx = MapPlaceDataManager.getInstance(mContext).getPremiumfromIDX(preimumIdx);
         selectItem = 1;
         selectMarker(idx, selectItem);
+      }else if (intent.hasExtra("cuponTitle"))
+      {
+        m_mapView.getController().setZoom(17);
+        cuponMarking = true;
+        cuponTitle = intent.getStringExtra("cuponTitle");
+        cuponAdress = intent.getStringExtra("cuponAddress");
+        cuponLat = intent.getDoubleExtra("cuponLat", 0);
+        cuponLng = intent.getDoubleExtra("cuponLng", 0);
+        place_fLatitude = cuponLat;
+        place_fLongitute = cuponLng;
+        mapCenterset(0);
       }
     }
     else
@@ -1766,6 +1796,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     if (onePlaceOverlay != null)
     {
       m_mapView.getOverlays().remove(onePlaceOverlay);
+      BlinkingCommon.smlLibDebug("BlinkingMap", "OnePlaceOverlay Clear");
     }
     
     if (select == 1)
@@ -1855,9 +1886,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       place_fLatitude = subwayinfo.lat;
       place_fLongitute = subwayinfo.lng;
       mapCenterset(0);
-      BlinkingCommon.smlLibDebug("BlinkingMap", "placeLat : " + place_fLatitude + " placeLng : " + place_fLongitute);
       DestinationTitle = subwayinfo.name_cn;
-      summaryTitle.setText(DestinationTitle);
       summarysubTitle.setVisibility(View.INVISIBLE);
       subwaylineNumSet(idx);
       summaryViewVisibleSet(summaryViewVisible, 2);
@@ -2261,8 +2290,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
 // - ui
   public void refreshState()
   {
-    
-    
     if (exitItems != null)
     {
       subwayExitOverlay = new SubwayExitOverlay(exitItems, null, new DefaultResourceProxyImpl(mContext), mContext, exitNumber);
@@ -2356,6 +2383,55 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         m_mapView.invalidate();
       }
     });
+    
+    if(cuponMarking)
+    {
+      new CuponMarkerAsyncTask().execute();
+    }
+  }
+  
+  private class CuponMarkerAsyncTask extends AsyncTask <Integer, Void, Integer>
+  {
+    @Override
+    protected void onPreExecute()
+    {
+      super.onPreExecute();
+    }
+    
+    @Override
+    protected Integer doInBackground(Integer... params)
+    {
+      BlinkingCommon.smlLibDebug("BlinkingMap", "cuponLat : " + cuponLat + "cuponLng : " + cuponLng);
+      onePlaceItems = new ArrayList<OverlayItem>();
+      OverlayItem item = new OverlayItem("","","",new GeoPoint(cuponLat, cuponLng));
+      onePlaceItems.add(item);
+      
+      return onePlaceItems.size();
+    }
+    
+    @Override
+    protected void onPostExecute(Integer result)
+    {
+      super.onPostExecute(result);
+      if(onePlaceItems.size() > 0)
+      {
+        
+        onePlaceOverlay = new OnePlaceOverlay(onePlaceItems, null, new DefaultResourceProxyImpl(mContext), mContext);
+        m_mapView.getOverlays().add(onePlaceOverlay);
+        
+        summaryAddressInit();
+        summaryLikeLayout.setVisibility(View.INVISIBLE);
+        DestinationTitle = cuponTitle;
+        summaryTitle.setText(DestinationTitle);
+        summarysubTitle.setText(cuponAdress);
+        summaryDetail = false;
+        m_locMarkTarget = new Location("MarkTaget");
+        m_locMarkTarget.setLatitude(cuponLat);
+        m_locMarkTarget.setLongitude(cuponLng);
+        summaryViewVisibleSet(summaryViewVisible, 2);
+        cuponMarking = false;
+      }
+    }
   }
   
 // - ui
@@ -2546,7 +2622,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       
       if (summaryUrl != null)
       {
-        Picasso.with(mContext).load(summaryUrl).fit().centerCrop().into(summaryImage);
+        Picasso.with(mContext).load(summaryUrl).fit().placeholder(R.drawable.thumbnail_map_default).centerCrop().into(summaryImage);
       }
     }
   }

@@ -191,7 +191,7 @@ public class CouponDetailBean
       obj.put("tel", tel);
       obj.put("notice", notice);
       obj.put("lat", lat);
-      obj.put("lon", lng);
+      obj.put("lng", lng);
       obj.put("coupon_image", couponImageUrl);
       obj.put("download_image", downloadCouponImage);
     }
