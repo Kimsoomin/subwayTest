@@ -65,6 +65,12 @@ public class ScheduleDetailTitleView extends RelativeLayout
       likeCount.setText(Integer.toString(count));
   }
   
+  public void reloadBookmarkCount(int count)
+  {
+    if (count != -1)
+      bookmarkCount.setText(Integer.toString(count));
+  }
+  
   
   public void setTitle(String titleStr)
   {

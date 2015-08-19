@@ -50,6 +50,21 @@ public class TravelScheduleDetailViewPagerAdapter extends FragmentPagerAdapter
     notifyDataSetChanged();
   }
   
+  public void setBookmarkCountUpAndDown(boolean isUp)
+  {
+    if (isUp)
+      this.bean.bookmarkCount++;
+    else
+      this.bean.bookmarkCount--;
+    
+    for (Entry<Integer, Fragment> entry : framgents.entrySet())
+    {
+      Fragment value = entry.getValue();
+      ((TravelScheduleDetailFragment) value).titleView.reloadBookmarkCount(this.bean.bookmarkCount);
+    }
+    notifyDataSetChanged();
+  }
+  
   
   public void setIsMySchedule(boolean isMySchedule)
   {

@@ -432,6 +432,8 @@ public class TravelScheduleDetailActivity extends ActionBarActivity
         {
           btnBookmark.setActivated(false);
         }
+        
+        adapter.setBookmarkCountUpAndDown(obj.getString("result").equals("INS"));
       }
       catch (Exception e)
       {
