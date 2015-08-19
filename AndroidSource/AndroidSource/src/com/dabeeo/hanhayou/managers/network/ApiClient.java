@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.dabeeo.hanhayou.R;
-import com.dabeeo.hanhayou.activities.coupon.CouponActivity;
 import com.dabeeo.hanhayou.beans.PlaceBean;
 import com.dabeeo.hanhayou.beans.PlaceDetailBean;
 import com.dabeeo.hanhayou.beans.PopularWishBean;

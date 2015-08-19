@@ -40,7 +40,6 @@ import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.SetLogMapDownload;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
-import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.services.BackService;
 import com.dabeeo.hanhayou.utils.SystemUtil;

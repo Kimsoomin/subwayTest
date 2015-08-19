@@ -18,7 +18,8 @@
             android:layout_marginTop="14dp"
             android:text="@string/term_alert"
             android:textColor="@color/darker_gray"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/character_image"
