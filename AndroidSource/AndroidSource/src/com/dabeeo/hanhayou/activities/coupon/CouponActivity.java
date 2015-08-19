@@ -114,7 +114,7 @@ public class CouponActivity extends ActionBarActivity
 			if (lastSelectedTab == 1)
 			{
 				DownloadedCouponListFragment fragment = (DownloadedCouponListFragment) adapter.getItem(lastSelectedTab);
-				if (fragment.getCount() == 0)
+				if (sortItem.getTitle().equals(getString(R.string.term_all)) && fragment.getCount() == 0)
 					sortItem.setVisible(false);
 				else
 					sortItem.setVisible(true);

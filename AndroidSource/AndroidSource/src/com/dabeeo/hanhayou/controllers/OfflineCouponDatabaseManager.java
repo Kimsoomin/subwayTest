@@ -188,8 +188,10 @@ public class OfflineCouponDatabaseManager extends SQLiteOpenHelper
 			insertValues.put("address", obj.getString("address"));
 			insertValues.put("tel", obj.getString("tel"));
 			insertValues.put("notice", obj.getString("notice"));
-			insertValues.put("lat", obj.getString("lat"));
-			insertValues.put("lng", obj.getString("lon"));
+			if (obj.has("lat"))
+				insertValues.put("lat", obj.getString("lat"));
+			if (obj.has("lng"))
+				insertValues.put("lng", obj.getString("lng"));
 			insertValues.put("coupon_image", obj.getString("coupon_image"));
 			insertValues.put("download_image", obj.getString("download_image"));
 			insertValues.put("userSeq", PreferenceManager.getInstance(context).getUserSeq());

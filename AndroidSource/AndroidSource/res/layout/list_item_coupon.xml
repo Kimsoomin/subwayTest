@@ -8,13 +8,13 @@
     <RelativeLayout
         android:id="@+id/use_container"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="125dp"
         android:background="#E6ffffff"
         android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="125dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="vertical" >
@@ -50,16 +50,16 @@
 
             <ImageView
                 android:id="@+id/imageview"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:orientation="vertical"
-                android:padding="8dp" >
+                android:padding="10dp" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
