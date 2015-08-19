@@ -69,7 +69,6 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
     {
       try
       {
-        
         copyDataBase();
       }
       catch (IOException e)
