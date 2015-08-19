@@ -20,7 +20,7 @@ public class NumberFormatter
         timeString = timeString + Integer.toString(minutes) + "m";
       
       if(timeString.length() == 0)
-        timeString = "0h";
+        timeString = "1h";
     }
     catch (Exception e)
     {
