@@ -450,17 +450,6 @@ public class CouponListFragment extends Fragment
 				
 				load();
 			}
-			
-			if (firstVisibleItem > 1)
-			{
-				if (topContainer.getVisibility() == View.VISIBLE)
-					topContainer.setVisibility(View.GONE);
-			}
-			else
-			{
-				if (topContainer.getVisibility() == View.GONE)
-					topContainer.setVisibility(View.VISIBLE);
-			}
 		}
 	};
 	
