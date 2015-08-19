@@ -35,7 +35,7 @@ public class CouponDetailBean
   public String tel;
   public String notice;
   public double lat;
-  public double lon;
+  public double lng;
   
   public String couponImageUrl;
   public String downloadCouponImage;
@@ -99,7 +99,7 @@ public class CouponDetailBean
       try
       {
         lat = Double.parseDouble(c.getString(c.getColumnIndex("lat")));
-        lon = Double.parseDouble(c.getString(c.getColumnIndex("lng")));
+        lng = Double.parseDouble(c.getString(c.getColumnIndex("lng")));
       }
       catch (Exception e)
       {
@@ -191,7 +191,7 @@ public class CouponDetailBean
       obj.put("tel", tel);
       obj.put("notice", notice);
       obj.put("lat", lat);
-      obj.put("lon", lon);
+      obj.put("lng", lng);
       obj.put("coupon_image", couponImageUrl);
       obj.put("download_image", downloadCouponImage);
     }
@@ -277,8 +277,8 @@ public class CouponDetailBean
       
       if (obj.has("lat"))
         lat = obj.getDouble("lat");
-      if (obj.has("lon"))
-        lon = obj.getDouble("lon");
+      if (obj.has("lng"))
+        lng = obj.getDouble("lng");
       
       if (obj.has("download_image"))
         downloadCouponImage = obj.getString("download_image");

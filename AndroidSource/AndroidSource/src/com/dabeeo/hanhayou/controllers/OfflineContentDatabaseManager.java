@@ -33,6 +33,7 @@ import com.dabeeo.hanhayou.beans.SearchResultBean;
 import com.dabeeo.hanhayou.beans.StationBean;
 import com.dabeeo.hanhayou.managers.FileManager;
 import com.dabeeo.hanhayou.managers.PreferenceManager;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.Global;
 
 public class OfflineContentDatabaseManager extends SQLiteOpenHelper
@@ -473,44 +474,65 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
       
 //			putSubwayStationDatas();
       
-      //Plan
-      JSONArray arr = obj.getJSONArray("plan");
-      for (int i = 0; i < arr.length(); i++)
+      JSONArray arr;
+      if(obj.has("place"))
       {
-        JSONObject innerObj = arr.getJSONObject(i);
-        try
+        arr = obj.getJSONArray("place");
+        for (int i = 0; i < arr.length(); i++)
         {
-          insert(TABLE_NAME_PLAN, innerObj);
+          JSONObject innerObj = arr.getJSONObject(i);
+          try
+          {
+            insert(TABLE_NAME_PLACE, innerObj);
+          }
+          catch (Exception e)
+          {
+            BlinkingCommon.smlLibPrintException("offlineContents", "palce e: " + e);
+          }
         }
-        catch (Exception e)
-        {
-        }
+      }else
+      {
+        BlinkingCommon.smlLibDebug("offlineContents", "NO_PLACE_DATA");
       }
       
-      arr = obj.getJSONArray("place");
-      for (int i = 0; i < arr.length(); i++)
+      if(obj.has("plan"))
       {
-        JSONObject innerObj = arr.getJSONObject(i);
-        try
+        arr = obj.getJSONArray("plan");
+        for (int i = 0; i < arr.length(); i++)
         {
-          insert(TABLE_NAME_PLACE, innerObj);
+          JSONObject innerObj = arr.getJSONObject(i);
+          try
+          {
+            insert(TABLE_NAME_PLAN, innerObj);
+          }
+          catch (Exception e)
+          {
+            BlinkingCommon.smlLibPrintException("offlineContents", "plan e: " + e);
+          }
         }
-        catch (Exception e)
-        {
-        }
+      }else
+      {
+        BlinkingCommon.smlLibDebug("offlineContents", "NO_PLAN_DATA");
       }
       
-      arr = obj.getJSONArray("review");
-      for (int i = 0; i < arr.length(); i++)
+      if(obj.has("review"))
       {
-        JSONObject innerObj = arr.getJSONObject(i);
-        try
+        arr = obj.getJSONArray("review");
+        for (int i = 0; i < arr.length(); i++)
         {
-          insert(TABLE_NAME_REVIEW, innerObj);
+          JSONObject innerObj = arr.getJSONObject(i);
+          try
+          {
+            insert(TABLE_NAME_REVIEW, innerObj);
+          }
+          catch (Exception e)
+          {
+            BlinkingCommon.smlLibPrintException("offlineContents", "review e: " + e);
+          }
         }
-        catch (Exception e)
-        {
-        }
+      }else
+      {
+        BlinkingCommon.smlLibDebug("offlineContents", "NO_REVIEW_DATA");
       }
       
     }
@@ -566,14 +588,14 @@ public class OfflineContentDatabaseManager extends SQLiteOpenHelper
       if (isSortPopular)
       {
         Comparator<PlaceBean> compare = new Comparator<PlaceBean>()
-        {
+            {
           @Override
           public int compare(PlaceBean lhs, PlaceBean rhs)
           {
             return rhs.likeCount - lhs.likeCount;
           }
-        };
-        Collections.sort(beans, compare);
+            };
+            Collections.sort(beans, compare);
       }
       
       c.close();

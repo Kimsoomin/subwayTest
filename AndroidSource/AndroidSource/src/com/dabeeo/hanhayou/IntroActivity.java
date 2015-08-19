@@ -40,6 +40,7 @@ import com.dabeeo.hanhayou.managers.PreferenceManager;
 import com.dabeeo.hanhayou.managers.SetLogMapDownload;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 import com.dabeeo.hanhayou.map.Global;
 import com.dabeeo.hanhayou.services.BackService;
 import com.dabeeo.hanhayou.utils.SystemUtil;
@@ -573,22 +574,22 @@ public class IntroActivity extends Activity
     {
       alertManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.message_alert_allow_notification), getString(R.string.term_ok), getString(R.string.term_cancel),
           new AlertListener()
-          {
-            @Override
-            public void onPositiveButtonClickListener()
-            {
-              PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
-              startGuideActivity();
-            }
-            
-            
-            @Override
-            public void onNegativeButtonClickListener()
-            {
-              PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(false);
-              startGuideActivity();
-            }
-          });
+      {
+        @Override
+        public void onPositiveButtonClickListener()
+        {
+          PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(true);
+          startGuideActivity();
+        }
+        
+        
+        @Override
+        public void onNegativeButtonClickListener()
+        {
+          PreferenceManager.getInstance(IntroActivity.this).setAllowPopup(false);
+          startGuideActivity();
+        }
+      });
     }
     else
     {
