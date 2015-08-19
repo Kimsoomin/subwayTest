@@ -1181,6 +1181,7 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         {
           select_lat = 0;
           select_lng = 0;
+          cuponMarking = false;
           if(distancCheck(m_locMarkTarget))
           {
             navigationStart();
@@ -2401,10 +2402,14 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
     @Override
     protected Integer doInBackground(Integer... params)
     {
+      if(onePlaceOverlay != null)
+        m_mapView.getOverlays().remove(onePlaceOverlay);
       BlinkingCommon.smlLibDebug("BlinkingMap", "cuponLat : " + cuponLat + "cuponLng : " + cuponLng);
       onePlaceItems = new ArrayList<OverlayItem>();
       OverlayItem item = new OverlayItem("","","",new GeoPoint(cuponLat, cuponLng));
       onePlaceItems.add(item);
+      onePlaceOverlay = new OnePlaceOverlay(onePlaceItems, null, new DefaultResourceProxyImpl(mContext), mContext);
+      m_mapView.getOverlays().add(onePlaceOverlay);
       
       return onePlaceItems.size();
     }
@@ -2415,10 +2420,6 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
       super.onPostExecute(result);
       if(onePlaceItems.size() > 0)
       {
-        
-        onePlaceOverlay = new OnePlaceOverlay(onePlaceItems, null, new DefaultResourceProxyImpl(mContext), mContext);
-        m_mapView.getOverlays().add(onePlaceOverlay);
-        
         summaryAddressInit();
         summaryLikeLayout.setVisibility(View.INVISIBLE);
         DestinationTitle = cuponTitle;
@@ -2429,7 +2430,13 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
         m_locMarkTarget.setLatitude(cuponLat);
         m_locMarkTarget.setLongitude(cuponLng);
         summaryViewVisibleSet(summaryViewVisible, 2);
-        cuponMarking = false;
+        runOnUiThread(new Runnable()
+        {
+          public void run()
+          {
+            m_mapView.invalidate();
+          }
+        });
       }
     }
   }
