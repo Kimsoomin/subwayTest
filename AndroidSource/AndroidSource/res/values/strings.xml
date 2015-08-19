@@ -501,24 +501,24 @@
 
     <!-- 추가 스트링 -->
     <string name="term_coupon_detail_title">查看优惠券</string>
-    <string name="term_sort_my_location">내 위치순</string>
+    <string name="term_sort_my_location">距离近到远</string>
     <string name="term_sort_popular">按人气排序</string>
-    <string name="msg_empty_coupon">쿠폰이 없습니다.</string>
-    <string name="msg_empty_downloaded_coupon">다운로드한 쿠폰이 없습니다.</string>
-    <string name="msg_help_download_coupon">한하요우 쿠폰을 둘러보고\n다운로드 받아보세요!</string>
-    <string name="term_showing_coupon">쿠폰 둘러보기</string>
-    <string name="term_notimelimit">제한없음</string>
-    <string name="term_exhaustion">~ 소진시까지</string>
-    <string name="term_coupon_info">쿠폰소개</string>
-    <string name="term_enddate_retail">까지</string>
+    <string name="msg_empty_coupon">您没有下载的优惠券。</string>
+    <string name="msg_empty_downloaded_coupon">您没有下载的优惠券。</string>
+    <string name="msg_help_download_coupon">请您看一看韩哈游的优惠券，下载一下哦！</string>
+    <string name="term_showing_coupon">查看优惠券</string>
+    <string name="term_notimelimit">无限制</string>
+    <string name="term_exhaustion">~ 无限制</string>
+    <string name="term_coupon_info">优惠券介绍</string>
+    <string name="term_enddate_retail"></string>
     <string name="term_coupon_address">使用商家</string>
     <string name="term_coupon_tel">联系电话</string>
     <string name="term_coupon_how_to">使用方法</string>
     <string name="term_coupon_notice">购买须知</string>
-    <string name="msg_delete_after">유효기간이 지난 쿠폰은 자동 삭제 처리 됩니다.</string>
+    <string name="msg_delete_after">已过期的优惠券将被自动删除。</string>
     <string name="msg_use_confirm">仅限商店工作人员使用的按键。使用后不能取消或退钱。确认使用吗？</string>
     <string name="msg_use_complete">成功使用</string>
-    <string name="msg_delete_30_days">사용완료 된 쿠폰은 30일 이후,\n자동 삭제처리됩니다.</string>
+    <string name="msg_delete_30_days">已使用的优惠券30天后将被自动删除。</string>
     <string name="msg_connect_ticket">为提供韩哈游的电子兑换券服务， 系统自动转至首尔旅游PASS(官网)</string>
 
 </resources>
