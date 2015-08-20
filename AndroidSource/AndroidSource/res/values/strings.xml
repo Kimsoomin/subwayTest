@@ -466,7 +466,7 @@
     <string name="msg_not_correct_email_auth">验证码不符。请确认后再试。</string>
     <string name="msg_re_send_email_fail">验证码重新发送失败。</string>
     <string name="msg_complete_auth">邮箱验证成功。</string>
-    <string name="term_congratulate">韩哈游 恭喜您已注册成功</string>
+    <string name="term_congratulate">恭喜您已注册成功</string>
     <string name="msg_success_join">您可以在韩哈游享受更多的服务了！</string>
     <string name="msg_please_error_id">您输入的帐号不存在</string>
     <string name="msg_erro_auto_id">正在等待认证</string>
