@@ -40,12 +40,18 @@
                     android:textColor="@color/darker_gray"
                     android:textSize="16sp" />
 
-                <ImageView
+                <LinearLayout
                     android:id="@+id/btn_trash"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/btn_wishlist_del" />
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/btn_wishlist_del" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
