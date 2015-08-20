@@ -471,41 +471,39 @@ public class PlaceDetailActivity extends ActionBarActivity
         new AlertDialogManager(PlaceDetailActivity.this).showDontNetworkConnectDialog();
         return;
       }
-      if (v.getId() == R.id.btn_share)
+      
+      if (PreferenceManager.getInstance(PlaceDetailActivity.this).isLoggedIn())
       {
-        // 공유하기
-        sharePickView.setVisibility(View.VISIBLE);
-        sharePickView.view.setVisibility(View.VISIBLE);
-        sharePickView.bringToFront();
-      }
-      else
-      {
-        if (PreferenceManager.getInstance(PlaceDetailActivity.this).isLoggedIn())
+        if (v.getId() == R.id.btn_share)
         {
-          if (v.getId() == R.id.btn_bookmark)
+          // 공유하기
+          sharePickView.setVisibility(View.VISIBLE);
+          sharePickView.view.setVisibility(View.VISIBLE);
+          sharePickView.bringToFront();
+        }
+        else if (v.getId() == R.id.btn_bookmark)
+        {
+          new ToggleBookmarkTask().execute();
+        }
+        else if (v.getId() == R.id.btn_like)
+        {
+          //좋아요 
+          new ToggleLikeTask().execute();
+        }
+        else if (v.getId() == R.id.btn_write_review)
+        {
+          //리뷰쓰기
+          Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
+          if (bean != null)
           {
-            new ToggleBookmarkTask().execute();
-          }
-          else if (v.getId() == R.id.btn_like)
-          {
-            //좋아요 
-            new ToggleLikeTask().execute();
-          }
-          else if (v.getId() == R.id.btn_write_review)
-          {
-            //리뷰쓰기
-            Intent i = new Intent(PlaceDetailActivity.this, WriteReviewActivity.class);
-            if (bean != null)
-            {
-              i.putExtra("idx", bean.idx);
-              i.putExtra("type", "place");
-              startActivity(i);
-            }
+            i.putExtra("idx", bean.idx);
+            i.putExtra("type", "place");
+            startActivity(i);
           }
         }
-        else
-          new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
       }
+      else
+        new AlertDialogManager(PlaceDetailActivity.this).showNeedLoginDialog(-1);
     }
   };
   
@@ -644,7 +642,8 @@ public class PlaceDetailActivity extends ActionBarActivity
           layoutParams.setMargins(0, (int) top, 0, (int) bottom);
           scrollView.setLayoutParams(layoutParams);
         }
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -694,7 +693,8 @@ public class PlaceDetailActivity extends ActionBarActivity
           btnBookmark.setActivated(false);
         }
         titleView.reloadBookmarkCount(bean.bookmarkCount);
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
@@ -725,7 +725,8 @@ public class PlaceDetailActivity extends ActionBarActivity
           bean.likeCount--;
         }
         titleView.reloadLikeCount(bean.likeCount);
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         e.printStackTrace();
       }
