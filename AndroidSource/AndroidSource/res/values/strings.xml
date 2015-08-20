@@ -126,7 +126,7 @@
     <string name="term_join">注册</string>
     <string name="term_email">邮箱</string>
     <string name="term_password">密码</string>
-    <string name="term_name">姓名</string>
+    <string name="term_name">昵称</string>
     <string name="term_password_join">密码</string>
     <string name="term_re_password_join">确认密码</string>
     <string name="term_gender">性别</string>
