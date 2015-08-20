@@ -2186,14 +2186,14 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
               }
               else if (categoryType == -1)
               {
-                if(m_mapView.getZoomLevel() == nMinZoomLevel)
+                if(m_mapView.getZoomLevel() == 14)
                 {
                   if(!info.premiumIdx.equals("null") && (info.category == 4 || info.category == 2))
                   {
                     OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                     localPlaceItems.add(item);
                   }
-                }else if(m_mapView.getZoomLevel() == nMinZoomLevel + 1)
+                }else if(m_mapView.getZoomLevel() == 15)
                 {
                   if(!info.premiumIdx.equals("null") && (info.category == 4 || info.category == 2 
                       || info.category == 1 || info.category == 5 ))
@@ -2201,30 +2201,9 @@ public class BlinkingMap extends Activity implements OnClickListener, SensorUpda
                     OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                     localPlaceItems.add(item);
                   }
-                }else if(m_mapView.getZoomLevel() == nMinZoomLevel + 2)
+                }else if(m_mapView.getZoomLevel() >= 16)
                 {
                   if(!info.premiumIdx.equals("null"))
-                  {
-                    OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
-                    localPlaceItems.add(item);
-                  }
-                }else if(m_mapView.getZoomLevel() == nMinZoomLevel + 3)
-                {
-                  if(!info.premiumIdx.equals("null"))
-                  {
-                    OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
-                    localPlaceItems.add(item);
-                  }else
-                  {
-                    if(info.category == 1 || info.category == 2 || info.category == 4 || info.category == 5)
-                    {
-                      OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
-                      localPlaceItems.add(item);
-                    }
-                  }
-                }else if(m_mapView.getZoomLevel() == nMinZoomLevel + 4 || m_mapView.getZoomLevel() == nMaxZoomLevel)
-                {
-                  if(info.category != 40 && info.category != 50 && info.category != 60 && info.category != 70 && info.category != 80)
                   {
                     OverlayItem item = new OverlayItem("" + info.category, info.title, info.idx, new GeoPoint(info.lat, info.lng));
                     localPlaceItems.add(item);
