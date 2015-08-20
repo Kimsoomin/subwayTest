@@ -22,6 +22,7 @@ import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.sub.CongratulateJoinActivity;
 import com.dabeeo.hanhayou.managers.network.ApiClient;
 import com.dabeeo.hanhayou.managers.network.NetworkResult;
+import com.dabeeo.hanhayou.map.BlinkingCommon;
 
 public class AuthEmailActivity extends Activity implements OnClickListener
 {
@@ -29,14 +30,21 @@ public class AuthEmailActivity extends Activity implements OnClickListener
   private Button btnReSend;
   private Button btnAuth;
   private Button btnAuthCancel;
-  private String userSeq = null;
   private RelativeLayout progressLayout;
   
   private ApiClient apiClient;
   
   public Context mContext;
-  private String emailAddress;
   
+  private String email;
+  private String passWord;
+  private String name;
+  private String phoneNum;
+  private String mailFemail;
+  private String dateOfbirth;
+  private String allowReceiveMail;
+  private String allowReceiveSms;
+  private int authKey;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -46,13 +54,6 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     
     mContext = this;
     apiClient = new ApiClient(mContext);
-    
-    Intent intent = getIntent();
-    if (intent.hasExtra("userSeq"))
-      userSeq = intent.getStringExtra("userSeq");
-    
-    if (intent.hasExtra("email"))
-      emailAddress = intent.getStringExtra("email");
     
     progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
     
@@ -93,6 +94,8 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       }
     };
     editText.addTextChangedListener(watcher);
+    
+    getUserInfo();
   }
   
   
@@ -102,17 +105,35 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     switch (v.getId())
     {
       case R.id.btn_auth:
-        new emailAuthCheckTask().execute();
+        if(editText.getText().toString().equals(""+authKey))
+          new UserJoinAsyncTask().execute();
+        else
+          CreateAlert(getString(R.string.msg_not_correct_email_auth), false);
         break;
-      
+        
       case R.id.btn_auth_cancel:
         finish();
         break;
-      
+        
       case R.id.btn_re_send:
         new emailKeyResendTask().execute();
         break;
     }
+  }
+  
+  
+  public void getUserInfo()
+  {
+    Intent intent = getIntent();    
+    email = intent.getStringExtra("email");
+    passWord = intent.getStringExtra("passWord");
+    name = intent.getStringExtra("name");
+    phoneNum = intent.getStringExtra("phoneNum");
+    mailFemail = intent.getStringExtra("mailFemail");
+    dateOfbirth = intent.getStringExtra("dateOfbirth");
+    allowReceiveMail = intent.getStringExtra("allowReceiveMail");
+    allowReceiveSms = intent.getStringExtra("allowReceiveSms");
+    authKey = intent.getIntExtra("authKey", 0);
   }
   
   
@@ -152,7 +173,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      return apiClient.userEmailKeyResend(emailAddress);
+      return apiClient.userEmailKeyResend(email);
     }
     
     
@@ -179,12 +200,26 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       
       if (status.equals("OK"))
       {
-        CreateAlert(getString(R.string.msg_resend_emil_auth), true);
+        CreateAlert(getString(R.string.msg_resend_emil_auth), false);
+        JSONObject resultResponse;
+        try
+        {
+          resultResponse = new JSONObject(result.response);
+          if (resultResponse.has("key"))
+          {
+            authKey = resultResponse.getInt("key");
+          }
+        }
+        catch (JSONException e)
+        {
+          BlinkingCommon.smlLibDebug("AuthEmail", " e :" + e);
+        }
+        
       }
       else
       {
         if (status.equals("ERROR_EMAIL"))
-          CreateAlert(getString(R.string.msg_re_send_email_fail), false);
+          CreateAlert(getString(R.string.msg_send_email_fail), false);
         else
           CreateAlert(message, false);
       }
@@ -193,7 +228,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     
   }
   
-  private class emailAuthCheckTask extends AsyncTask<Void, Void, NetworkResult>
+  private class UserJoinAsyncTask extends AsyncTask<Void, Void, NetworkResult>
   {
     
     @Override
@@ -208,8 +243,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
     @Override
     protected NetworkResult doInBackground(Void... params)
     {
-      
-      return apiClient.userEmailKeycheck(userSeq, editText.getText().toString());
+      return apiClient.userJoin(email, passWord, name, phoneNum, mailFemail, dateOfbirth, allowReceiveMail, allowReceiveSms);
     }
     
     
@@ -238,7 +272,7 @@ public class AuthEmailActivity extends Activity implements OnClickListener
       }
       else
       {
-        CreateAlert(getString(R.string.msg_not_correct_email_auth), false);
+        CreateAlert(getString(R.string.msg_general_error), false);
       }
       
       super.onPostExecute(result);

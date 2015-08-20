@@ -406,7 +406,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         alertView.setAlert(getString(R.string.msg_check_above_fourteen_agreement));
         return;
       }
-      new JoinHanhayouTask().execute();
+      new AuthEmailSendTask().execute();
     }
   };
   
@@ -667,8 +667,12 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     }
   }
   
-  private class JoinHanhayouTask extends AsyncTask<Void, Void, NetworkResult>
+  private class AuthEmailSendTask extends AsyncTask<Void, Void, NetworkResult>
   {
+    String allowReceiveMail = null;
+    String allowReceiveSms = null;
+    int authKey = 0;
+    
     @Override
     protected void onPreExecute()
     {
@@ -680,14 +684,11 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     
     @Override
     protected NetworkResult doInBackground(Void... params)
-    {
-      String allowReceiveMail = null;
-      String allowReceiveSms = null;
-      
+    { 
       allowReceiveMail = checkAllowReceiveMail.isChecked() ? "1" : "0";
       allowReceiveSms = checkAllowReceivePhone.isChecked() ? "1" : "0";
       
-      return apiClient.userJoin(email, passWord, name, phoneNum, mailFemail, btnDateOfbirth.getText().toString(), allowReceiveMail, allowReceiveSms);
+      return apiClient.userEmailKeyResend(email);
     }
     
     
@@ -695,7 +696,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
     protected void onPostExecute(NetworkResult result)
     {
       super.onPostExecute(result);
-      String userSeq = null;
+      
       progressLayout.setVisibility(View.GONE);
       String status = responseParser(result.response);
       
@@ -704,9 +705,9 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
         try
         {
           JSONObject resultResponse = new JSONObject(result.response);
-          if (resultResponse.has("userSeq"))
+          if (resultResponse.has("key"))
           {
-            userSeq = resultResponse.getString("userSeq");
+            authKey = resultResponse.getInt("key");
           }
         }
         catch (JSONException e)
@@ -714,7 +715,7 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           e.printStackTrace();
         }
         
-        final String finalUserSeq = userSeq;
+        
         AlertDialog.Builder ab = new AlertDialog.Builder(JoinActivity.this);
         ab.setTitle(R.string.term_alert);
         ab.setMessage(R.string.msg_send_auth_number);
@@ -724,18 +725,23 @@ public class JoinActivity extends Activity implements OnFocusChangeListener
           public void onClick(DialogInterface dialog, int which)
           {
             Intent intent = new Intent(JoinActivity.this, AuthEmailActivity.class);
-            intent.putExtra("email", editEmail.getText().toString());
-            intent.putExtra("userSeq", finalUserSeq);
+            intent.putExtra("email", email);
+            intent.putExtra("passWord", passWord);
+            intent.putExtra("name", name);
+            intent.putExtra("phoneNum", phoneNum);
+            intent.putExtra("mailFemail", mailFemail);
+            intent.putExtra("dateOfbirth", btnDateOfbirth.getText().toString());
+            intent.putExtra("allowReceiveMail", allowReceiveMail);
+            intent.putExtra("allowReceiveSms", allowReceiveSms);
+            intent.putExtra("authKey", authKey);
             startActivity(intent);
             finish();
           }
         });
         ab.show();
-        
-      }
-      else
+      } else 
       {
-        alertView.setAlert(getString(R.string.msg_please_check_user_info));
+        alertView.setAlert(getString(R.string.msg_send_email_fail));
       }
     }
   }

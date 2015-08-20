@@ -50,6 +50,8 @@ public class LoginActivity extends Activity
   
   private int mainActivityPosition = -1;
   
+  public static Activity loginActivity;
+  
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -58,6 +60,7 @@ public class LoginActivity extends Activity
     setContentView(R.layout.activity_login);
     
     mContext = this;
+    loginActivity = this;
     apiClient = new ApiClient(mContext);
     alertDialogManager = new AlertDialogManager(LoginActivity.this);
     
@@ -182,32 +185,6 @@ public class LoginActivity extends Activity
       else
       {
         String alertMessage = "";
-//        if (status.equals("ERROR_AUTH"))
-//        {
-//          if (jsonObject.has("userSeq"))
-//            userSeq = jsonObject.getString("userSeq");
-//          String message = getString(R.string.msg_please_error_auth);
-//          alertDialogManager.showAlertDialog(getString(R.string.term_alert), message, getString(R.string.term_ok), null, new AlertListener()
-//          {
-//            @Override
-//            public void onPositiveButtonClickListener()
-//            {
-//              Intent i = new Intent(LoginActivity.this, AuthEmailActivity.class);
-//              i.putExtra("email", editEmail.getText().toString());
-//              i.putExtra("userSeq", userSeq);
-//              startActivity(i);
-//            }
-//            
-//            
-//            @Override
-//            public void onNegativeButtonClickListener()
-//            {
-//              
-//            }
-//          });
-//        }
-//        else
-//        {
         if (status.equals("ERROR_ID"))
         {
           alertMessage = getString(R.string.msg_please_error_id);
@@ -222,15 +199,14 @@ public class LoginActivity extends Activity
         }
         else
         {
-          alertMessage = getString(R.string.msg_please_check_user_info);
+          alertMessage = getString(R.string.msg_general_error);
         }
         alertDialogManager.showAlertDialog(getString(R.string.term_alert), alertMessage, getString(R.string.term_ok), null, null);
-//        }
       }
     }
     catch (JSONException e)
     {
-      alertDialogManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_dont_connect_network), getString(R.string.term_ok), null, null);
+      alertDialogManager.showAlertDialog(getString(R.string.term_alert), getString(R.string.msg_general_error), getString(R.string.term_ok), null, null);
       e.printStackTrace();
     }
   }

@@ -1,13 +1,11 @@
 package com.dabeeo.hanhayou.activities.sub;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.dabeeo.hanhayou.MainActivity;
 import com.dabeeo.hanhayou.R;
 import com.dabeeo.hanhayou.activities.mypage.LoginActivity;
 
@@ -30,8 +28,6 @@ public class CongratulateJoinActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Intent i = new Intent(CongratulateJoinActivity.this, LoginActivity.class);
-				startActivity(i);
 				finish();
 			}
 		});
@@ -40,8 +36,8 @@ public class CongratulateJoinActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Intent i = new Intent(CongratulateJoinActivity.this, MainActivity.class);
-				startActivity(i);
+			  if(LoginActivity.loginActivity != null)
+			    LoginActivity.loginActivity.finish();
 				finish();
 			}
 		});
