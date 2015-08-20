@@ -13,6 +13,7 @@
     <string name="term_ok">确认</string>
     <string name="term_cancel">取消</string>
     <string name="term_ready_service">该服务正在准备中。</string>
+    <string name="msg_general_error">不要意思，加载失败，请重试。</string>
 
     <!-- Guide Term -->
     <string name="term_skip">直接进入</string>
