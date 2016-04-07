@@ -77,6 +77,7 @@ public class MainActivity extends ActionBarActivity
     title = (TextView) customActionBar.findViewById(R.id.title);
     title.setText(getString(R.string.app_name));
     titleImage = (ImageView) customActionBar.findViewById(R.id.titleImage);
+    
     getSupportActionBar().setCustomView(customActionBar);
     getSupportActionBar().setDisplayShowCustomEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(false);
